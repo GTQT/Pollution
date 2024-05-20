@@ -1,5 +1,6 @@
 package keqing.pollution.loaders.recipes;
 
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.common.blocks.*;
 import gregtech.common.items.MetaItems;
@@ -15,6 +16,7 @@ import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -39,6 +41,10 @@ public class MagicGCYMRecipes {
         materials();
     }
 
+    private static MetaTileEntity getDistillationTowerMTE()
+    {
+        return Loader.isModLoaded("gtqtcore")?GTQTMetaTileEntities.DISTILLATION_TOWER:MetaTileEntities.DISTILLATION_TOWER;
+    }
     private static void materials(){
         //加一个直接炼矿的
         /*
@@ -497,7 +503,7 @@ public class MagicGCYMRecipes {
                 "circuitMv",
                 "oreCrystalAir",
                 "oreCrystalWater",
-                GTQTMetaTileEntities.DISTILLATION_TOWER.getStackForm(),
+                getDistillationTowerMTE().getStackForm(),
                 PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_COLD)));
         //酿造三合一
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_brewery"), new InfusionRecipe(

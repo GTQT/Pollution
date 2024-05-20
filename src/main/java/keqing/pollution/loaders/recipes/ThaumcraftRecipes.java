@@ -16,6 +16,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -30,6 +31,10 @@ import static gregtech.api.unification.material.Materials.*;
 
 
 public class ThaumcraftRecipes {
+    private static ItemStack getSolarPlateMKI()
+    {
+        return Loader.isModLoaded("gtqtcore")?MetaItems.COVER_SOLAR_PANEL.getStackForm(1):GTQTMetaItems.SOLAR_PLATE_MKI.getStackForm(1);
+    }
     public static void init(){
         catalyst();
         misc();
@@ -44,7 +49,7 @@ public class ThaumcraftRecipes {
                 2,
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.AIR, 16),
                 "frameGtMansussteel",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                getSolarPlateMKI(),
                 "circuitLv",
                 "circuitLv",
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
