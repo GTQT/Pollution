@@ -392,6 +392,43 @@ public class MagicGCYMRecipes {
                 .duration(300)
                 .EUt(120)
                 .buildAndRegister();
+        //节点机、聚变主方块
+        ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "node_producer"), new InfusionRecipe(
+                "INFUSION@2",
+                PollutionMetaTileEntities.NODE_PRODUCER.getStackForm(),
+                8,
+                new AspectList().add(Aspect.MAGIC, 128).add(Aspect.MECHANISM, 250).add(Aspect.AURA, 250).add(Aspect.VOID, 250),
+                PollutionMetaBlocks.FUSION_REACTOR.getItemVariant(POFusionReactor.FusionBlockType.FRAME_I),
+                "gemValonite",
+                new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+                new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+                new ItemStack(BlocksTC.logSilverwood),
+                new ItemStack(BlocksTC.crystalAir),
+                new ItemStack(BlocksTC.crystalFire),
+                new ItemStack(BlocksTC.crystalEarth),
+                new ItemStack(BlocksTC.crystalWater),
+                new ItemStack(BlocksTC.crystalOrder),
+                new ItemStack(BlocksTC.crystalEntropy),
+                "frameGtMansussteel",
+                new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+                PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.VOID_PRISM)));
+
+        ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_fusion_reactor"), new InfusionRecipe(
+                "INFUSION@2",
+                PollutionMetaTileEntities.MAGIC_FUSION_REACTOR.getStackForm(),
+                8,
+                new AspectList().add(Aspect.ENERGY, 250).add(Aspect.ENTROPY, 250).add(Aspect.MAGIC, 128).add(Aspect.VOID, 64),
+                PollutionMetaBlocks.FUSION_REACTOR.getItemVariant(POFusionReactor.FusionBlockType.FRAME_I),
+                "gemValonite",
+                new ItemStack(BlocksTC.crystalAir),
+                new ItemStack(BlocksTC.crystalEntropy),
+                new ItemStack(ItemsTC.causalityCollapser),
+                "blockVoid",
+                new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
+                new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+                "frameGtMansussteel",
+                "blockUranium235",
+                PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.VOID_PRISM)));
         //聚灵阵
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "essence_collector"), new InfusionRecipe(
                 "INFUSION@2",
