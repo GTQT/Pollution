@@ -7,14 +7,10 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.unification.material.Material;
-import gregtech.api.util.GTTransferUtils;
-import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import keqing.pollution.api.block.impl.WrappedIntTired;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -26,7 +22,6 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -34,7 +29,6 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.aura.AuraHelper;
 
@@ -49,6 +43,7 @@ import static net.minecraft.util.math.MathHelper.ceil;
 import static net.minecraft.util.math.MathHelper.sqrt;
 
 public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithControl{
+	private static final int BASIC_CAPACITY = 8192;
 	public MetaTileEntityLargeNodeGenerator(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId);
 	}
@@ -58,7 +53,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	}
 
 	//随机数
-	private Random random = new Random();
+	private final Random random = new Random();
 	//计数器
 	private int tickCount = 0;
 	//线圈等级
@@ -75,7 +70,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	private int finalCapacity = 0;
 	//源质类型
 	private final FluidStack INFUSED_ORDER = PollutionMaterials.infused_order.getFluid(1);
-	private final FluidStack INFUSED_AURA = PollutionMaterials.infused_order.getFluid(1);
+	private final FluidStack INFUSED_AURA = PollutionMaterials.infused_aura.getFluid(1);
 
 	@Override
 	protected void formStructure(PatternMatchContext context) {
@@ -89,25 +84,29 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	//计算总发电乘数
 	private float getNodeCapacityMultiplier(ItemStack node){
 		float nodeCapacityMultiplier = 1.0f;
-		//检查nodeTire
-		assert node.getTagCompound() != null;
-		float amplifierTire = switch (node.getTagCompound().getString("nodeTire")) {
-			case "Withering" -> 0.25f;
-			case "Bright", "Pale" -> 4;
-			default -> 1;
-		};
+		float amplifierTire = 1.0F;
+		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeTier")) {
+			amplifierTire = switch (node.getTagCompound().getString("nodeTire")) {
+				case "Withering" -> 0.25f;
+				case "Bright", "Pale" -> 4.0F;
+				default -> 1.0F;
+			};
+		}
 		nodeCapacityMultiplier *= amplifierTire;
-		//检查nodeType
-		float amplifierType = switch (node.getTagCompound().getString("nodeType")) {
-			case "Ominous", "Pure" -> 4;
-			case "Concussive" -> 8;
-			case "Voracious" -> 16;
-			default -> 1;
-		};
+		float amplifierType = 1.0F;
+		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeType")) {
+			amplifierType = switch (node.getTagCompound().getString("nodeType")) {
+				case "Ominous", "Pure" -> 4;
+				case "Concussive" -> 8;
+				case "Voracious" -> 16;
+				default -> 1;
+			};
+		}
 		nodeCapacityMultiplier *= amplifierType;
 		//计算火、秩序、混沌
 		//混沌大于20开始线性降低效率
 		//火和秩序按照几何平均数计算倍率
+		//TODO: NBT key validation, check whether the compound tag exists and whether it contains the key.
 		nodeCapacityMultiplier *= min((1.2f - 0.01f * node.getTagCompound().getInteger("EssenceEntropy")), 1);
 		nodeCapacityMultiplier *= (1 + 0.01f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceFire")));
 		//处理饕餮
@@ -142,6 +141,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				if (random.nextDouble() <= basicRemovePossibility * 10 && !INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))){
 					this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
 				}
+				// TODO: amplify energy production to 64x
 		}
 	}
 
@@ -154,18 +154,22 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 
 			if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
 				ItemStack stack = this.getInputInventory().getStackInSlot(i);
-				if (stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem()) {
+				if (stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && stack.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
 					//发电乘数加总
-					overallCapacityMultiplier *= getNodeCapacityMultiplier(stack) * coilLevel;
+					overallCapacityMultiplier *= (getNodeCapacityMultiplier(stack) * coilLevel);
 					//计算最终的发电量
 					//基础发电量8192
-					int basicCapacity = 8192;
-					expectedFinalCapacity += ceil(basicCapacity * overallCapacityMultiplier);
+					expectedFinalCapacity += (int) (BASIC_CAPACITY * overallCapacityMultiplier);
 					//计算源质消耗
-					assert stack.getTagCompound() != null;
-					essenceCostSpeedMultiplier *= max(0.2, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
-					//计算发电量方差，方差是所有风的方差值加起来除以6
-					varience += (float) stack.getTagCompound().getInteger("EssenceAir") / 1000;
+					if (stack.hasTagCompound() ) {
+						if (stack.getTagCompound().hasKey("EssenceWater")) {
+							essenceCostSpeedMultiplier *= max(0.2, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
+						}
+						if (stack.getTagCompound().hasKey("EssenceAir")) {
+							//计算发电量方差，方差是所有风的方差值加起来除以6
+							varience += (float) stack.getTagCompound().getInteger("EssenceAir") / 1000;
+						}
+					}
 				}
 			}
 			varience /= 6;
@@ -175,25 +179,29 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		if (tickCount % 20 == 0) {
 			int essenceCost = ceil(20 * essenceCostSpeedMultiplier);
 			if (INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false))) {
-				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), false);
+				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), true);
 			}
 			if (INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
-				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), false);
+				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), true);
 			}
 			for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
 				if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
 					doSpecialNodeBehaviors(this.inputInventory.getStackInSlot(i), i);
 				}
 			}
+			tickCount = 0;
 		}
 		//动力仓输出电，溢出式发电
+		finalCapacity = (int) (expectedFinalCapacity * ((1 + random.nextDouble()) * varience));
 		if (this.isWorkingEnabled() && (this.outEnergyContainer.getEnergyCapacity() - this.outEnergyContainer.getEnergyStored()) >= finalCapacity) {
 			//计算最终发电量并输出
-			this.outEnergyContainer.addEnergy(ceil(expectedFinalCapacity * ((1 + random.nextDouble()) * varience)));
+			this.outEnergyContainer.addEnergy(finalCapacity);
+		} else {
+			//TODO: How to deal with energy when sufficient space in output hatch
 		}
-		if (overallCapacityMultiplier != 0){
-			overallCapacityMultiplier = 0;
-		}
+		overallCapacityMultiplier = 1.0F;
+		expectedFinalCapacity = 0;
+		varience = 0.0F;
 	}
 
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
@@ -203,6 +211,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.3", new Object[0]));
 		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.4", new Object[0]));
 		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.5", new Object[0]));
+		// TODO: remove redundant new Object[0], I18n for tooltips.
 	}
 
 	@Override
@@ -210,6 +219,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		super.addDisplayText(textList);
 		textList.add(new TextComponentTranslation("pollution.machine.large_node_generator_expectedfinalcapacity", this.expectedFinalCapacity).setStyle((new Style()).setColor(TextFormatting.RED)));
 		textList.add((new TextComponentTranslation("pollution.machine.large_node_generator_finalcapacity", this.finalCapacity)).setStyle((new Style()).setColor(TextFormatting.RED)));
+		//TODO: display text I18n.
 	}
 
 	@Override
@@ -225,6 +235,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(6).setPreviewCount(6)))
+				//TODO: item validation check override.
 				.where('C', states(getCasingState2()))
 				.where('D', states(getCasingState3()))
 				.where('A', states(getCasingState4()))
