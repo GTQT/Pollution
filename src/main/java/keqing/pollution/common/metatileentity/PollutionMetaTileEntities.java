@@ -67,6 +67,7 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityEssenceCollector ESSENCE_COLLECTOR;
     public static MetaTileEntityMagicFusionReactor MAGIC_FUSION_REACTOR;
     public static MetaTileEntityNodeProducer NODE_PRODUCER;
+    public static MetaTileEntityLargeNodeGenerator LARGE_NODE_GENERATOR;
     public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
     public static MetaTileEntityTankHatch[] TANK_HATCH = new MetaTileEntityTankHatch[1];
     public static MetaTileEntityLargeTurbine LARGE_MAGIC_TURBINE;
@@ -133,6 +134,7 @@ public class PollutionMetaTileEntities {
                 POTextures.SPELL_PRISM_HOT, true, Textures.HPCA_OVERLAY));
 
         NODE_PRODUCER = registerMetaTileEntity(15962, new MetaTileEntityNodeProducer(gtqtcoreId("node_producer")));
+        LARGE_NODE_GENERATOR = registerMetaTileEntity(15963, new MetaTileEntityLargeNodeGenerator(gtqtcoreId("large_node_generator")));
 
         for (int i = 1; i <= 8; i++) {
             String tierName = GTValues.VN[i].toLowerCase();

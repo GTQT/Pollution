@@ -391,7 +391,6 @@ pollution.machine.essence_collector_iffocused=聚焦模式：%s
 
 #节点发生仪
 pollution.machine.node_producer.name=参宿魔力节点创生室
-
 pollution.machine.node_producer.tooltip.1=§5你当敬奉盗灵者Timicasto，祂将天外节点带诸凡间§r
 pollution.machine.node_producer.tooltip.2=通入能量源质，创生封装灵气节点！
 pollution.machine.node_producer.tooltip.3=基础工作电压EV，单次基础创生时长30s，每超频一次都会大幅增加能量源质消耗
@@ -399,6 +398,16 @@ pollution.machine.node_producer.tooltip.4=中途源质断供会立刻终止创�
 pollution.machine.node_producer.tooltip.5=升级线圈和电压能小幅提高生成高ignis、ordo要素值节点的概率
 pollution.machine.node_producer_duration=每节点创生时长：%s
 pollution.machine.node_producer_infusedcost=每t消耗流体源质：%s
+
+#节点发电机
+pollution.machine.large_node_generator.name=星光先驱节点反应堆
+pollution.machine.large_node_generator.tooltip.1=§5我誓将己身献出，为愿者，也为不愿者点亮路途。我誓将指引前路。我誓将照明驱暗。我誓将拒绝仁慈。我将踏上已显现的路途，无论代价为何。我等生来注定追求辉光，一如火花向上飞舞。§r
+pollution.machine.large_node_generator.tooltip.2=对封装灵气节点进行充能激活，实现巨量发电
+pollution.machine.large_node_generator.tooltip.3=基础发电量8192eu/t，节点特性决定最终发电量、发电波动、维持节点稳定的源质的消耗量等
+pollution.machine.large_node_generator.tooltip.4=凶险、震荡、饕餮节点有概率工作中消失，凶险、饕餮节点可以分别通过通入Aura、Ordo源质防止消失
+pollution.machine.large_node_generator.tooltip.5=工作时凶险节点产生污染，纯净节点消除污染
+pollution.machine.large_node_generator_expectedfinalcapacity=期望发电量：%s eu/t
+pollution.machine.large_node_generator_finalcapacity=实际最终发电量：%s eu/t
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵

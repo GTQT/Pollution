@@ -91,5 +91,11 @@ public class CompoundAspectMaterials {
                 .ore().gem().fluid()
                 .components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_entropy, 1)
                 .build();
+        //灵气=魔法+风
+        PollutionMaterials.infused_aura = new Material.Builder(getMaterialsId(), gregtechId("infused_aura"))
+                .color(0xF7AEFF)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_magic, 1, PollutionMaterials.infused_air, 1)
+                .build();
     }
 }
