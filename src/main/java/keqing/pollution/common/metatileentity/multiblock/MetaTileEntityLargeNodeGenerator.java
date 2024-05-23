@@ -7,10 +7,14 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.unification.material.Material;
+import gregtech.api.util.GTTransferUtils;
+import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import keqing.pollution.api.block.impl.WrappedIntTired;
+import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -22,6 +26,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -29,6 +34,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.aura.AuraHelper;
 
@@ -153,6 +159,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		expectedFinalCapacity = 0;
 		//先检测每个输入总线内的节点
 		for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
+
 			if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
 				ItemStack stack = this.getInputInventory().getStackInSlot(i);
 				if (stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && stack.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
