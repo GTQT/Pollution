@@ -153,7 +153,6 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		expectedFinalCapacity = 0;
 		//先检测每个输入总线内的节点
 		for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
-
 			if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
 				ItemStack stack = this.getInputInventory().getStackInSlot(i);
 				if (stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && stack.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
