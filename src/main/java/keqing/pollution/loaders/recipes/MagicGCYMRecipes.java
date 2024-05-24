@@ -392,6 +392,15 @@ public class MagicGCYMRecipes {
                 .duration(300)
                 .EUt(120)
                 .buildAndRegister();
+        //冷冻的配方
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.plate, aquasilver, 6)
+                .input(OrePrefix.frameGt, mansussteel, 1)
+                .outputs(PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_COLD))
+                .circuitMeta(6)
+                .duration(300)
+                .EUt(120)
+                .buildAndRegister();
         //节点机、聚变主方块
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "node_producer"), new InfusionRecipe(
                 "INFUSION@2",

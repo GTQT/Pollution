@@ -87,19 +87,20 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		float amplifierTire = 1.0F;
 		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeTier")) {
 			amplifierTire = switch (node.getTagCompound().getString("nodeTire")) {
-				case "Withering" -> 0.25f;
-				case "Bright", "Pale" -> 4.0F;
-				default -> 1.0F;
+				case "Withering" -> 0.25F;
+				case "Pale" -> 0.5F;
+				case "Bright" -> 4.0F;
+			    default -> 1.0F;
 			};
 		}
 		nodeCapacityMultiplier *= amplifierTire;
 		float amplifierType = 1.0F;
 		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeType")) {
 			amplifierType = switch (node.getTagCompound().getString("nodeType")) {
-				case "Ominous", "Pure" -> 4;
-				case "Concussive" -> 8;
-				case "Voracious" -> 16;
-				default -> 1;
+				case "Ominous", "Pure" -> 4.0F;
+				case "Concussive" -> 8.0F;
+				case "Voracious" -> 16.0F;
+				default -> 1.0F;
 			};
 		}
 		nodeCapacityMultiplier *= amplifierType;
@@ -107,9 +108,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		//混沌大于20开始线性降低效率
 		//火和秩序按照几何平均数计算倍率
 		//TODO: NBT key validation, check whether the compound tag exists and whether it contains the key.
-		nodeCapacityMultiplier *= min((1.2f - 0.01f * node.getTagCompound().getInteger("EssenceEntropy")), 1);
-		nodeCapacityMultiplier *= (1 + 0.01f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceFire")));
-		//处理饕餮
+		nodeCapacityMultiplier *= max((1.2f - 0.01f * node.getTagCompound().getInteger("EssenceEntropy")), 0);
+		nodeCapacityMultiplier *= (1 + 0.01f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceOrder")));
+		//处理饕餮到64倍
 		if (node.getTagCompound().getString("nodeType").equals("Voracious")
 				&& INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))){
 			nodeCapacityMultiplier *= 4;
@@ -141,7 +142,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				if (random.nextDouble() <= basicRemovePossibility * 10 && !INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))){
 					this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
 				}
-				// TODO: amplify energy production to 64x
+			//64x在上面办好了
 		}
 	}
 
@@ -149,69 +150,69 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		if (!this.isActive()) {
 			setActive(true);
 		}
+		expectedFinalCapacity = 0;
 		//先检测每个输入总线内的节点
 		for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
-
 			if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
 				ItemStack stack = this.getInputInventory().getStackInSlot(i);
 				if (stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && stack.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
 					//发电乘数加总
-					overallCapacityMultiplier *= (getNodeCapacityMultiplier(stack) * coilLevel);
+					overallCapacityMultiplier += getNodeCapacityMultiplier(stack) * coilLevel;
 					//计算最终的发电量
 					//基础发电量8192
 					expectedFinalCapacity += (int) (BASIC_CAPACITY * overallCapacityMultiplier);
 					//计算源质消耗
 					if (stack.hasTagCompound() ) {
 						if (stack.getTagCompound().hasKey("EssenceWater")) {
-							essenceCostSpeedMultiplier *= max(0.2, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
+							essenceCostSpeedMultiplier += max(0.2, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
 						}
 						if (stack.getTagCompound().hasKey("EssenceAir")) {
 							//计算发电量方差，方差是所有风的方差值加起来除以6
 							varience += (float) stack.getTagCompound().getInteger("EssenceAir") / 1000;
 						}
 					}
+					overallCapacityMultiplier = 0.0F;
 				}
 			}
-			varience /= 6;
 		}
 		//处理消耗源质问题和节点特性问题，每秒一次
 		tickCount++;
 		if (tickCount % 20 == 0) {
-			int essenceCost = ceil(20 * essenceCostSpeedMultiplier);
+			int essenceCost = ceil(200 * essenceCostSpeedMultiplier);
 			if (INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false))) {
-				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), true);
+				this.inputFluidInventory.drain(PollutionMaterials.infused_aura.getFluid(essenceCost), true);
 			}
 			if (INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
 				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), true);
 			}
 			for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
-				if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
+				if (!this.inputInventory.getStackInSlot(i).isEmpty()
+						&& this.inputInventory.getStackInSlot(i).getItem() != PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem()
+						&& this.inputInventory.getStackInSlot(i).getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
 					doSpecialNodeBehaviors(this.inputInventory.getStackInSlot(i), i);
 				}
 			}
 			tickCount = 0;
 		}
 		//动力仓输出电，溢出式发电
-		finalCapacity = (int) (expectedFinalCapacity * ((1 + random.nextDouble()) * varience));
+		finalCapacity = (int) (expectedFinalCapacity * (1 + random.nextDouble() * varience / this.getInputInventory().getSlots()));
 		if (this.isWorkingEnabled() && (this.outEnergyContainer.getEnergyCapacity() - this.outEnergyContainer.getEnergyStored()) >= finalCapacity) {
 			//计算最终发电量并输出
 			this.outEnergyContainer.addEnergy(finalCapacity);
 		} else {
 			//TODO: How to deal with energy when sufficient space in output hatch
 		}
-		overallCapacityMultiplier = 1.0F;
-		expectedFinalCapacity = 0;
+        essenceCostSpeedMultiplier = 0;
 		varience = 0.0F;
 	}
 
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
 		super.addInformation(stack, world, tooltip, advanced);
-		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.1", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.2", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.3", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.4", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.5", new Object[0]));
-		// TODO: remove redundant new Object[0], I18n for tooltips.
+		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.1"));
+		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.2"));
+		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.3"));
+		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.4"));
+		tooltip.add(I18n.format("pollution.machine.large_node_generator.tooltip.5"));
 	}
 
 	@Override
