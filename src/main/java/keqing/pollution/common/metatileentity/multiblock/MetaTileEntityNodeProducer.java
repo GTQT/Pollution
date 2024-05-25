@@ -12,7 +12,8 @@ import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import keqing.pollution.api.block.impl.WrappedIntTired;
+import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
+import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -42,7 +43,7 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_
 import static net.minecraft.util.math.MathHelper.abs;
 import static net.minecraft.util.math.MathHelper.ceil;
 
-public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl{
+public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 	public MetaTileEntityNodeProducer(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId);
 	}

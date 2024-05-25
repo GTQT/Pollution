@@ -6,8 +6,8 @@ import gregtech.api.pattern.PatternStringError;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.util.BlockInfo;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import keqing.pollution.api.block.impl.ITired;
-import keqing.pollution.api.block.impl.WrappedIntTired;
+import keqing.gtqtcore.api.blocks.ITired;
+import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import net.minecraft.block.state.IBlockState;
 

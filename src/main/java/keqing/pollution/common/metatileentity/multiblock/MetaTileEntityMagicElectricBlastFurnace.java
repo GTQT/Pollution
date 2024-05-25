@@ -16,7 +16,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.core.sound.GTSoundEvents;
-import keqing.pollution.api.block.impl.WrappedIntTired;
+import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.api.utils.POUtils;

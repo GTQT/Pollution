@@ -21,7 +21,7 @@ import gregtech.client.shader.postprocessing.BloomType;
 import gregtech.client.utils.*;
 import gregtech.common.ConfigHolder;
 import keqing.gtqtcore.api.GTQTValue;
-import keqing.pollution.api.block.impl.WrappedIntTired;
+import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import net.minecraft.client.renderer.BufferBuilder;
