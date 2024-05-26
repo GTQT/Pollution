@@ -1,5 +1,6 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
+import com.google.common.collect.Lists;
 import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -51,7 +52,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-import scala.actors.threadpool.Arrays;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.blocks.BlocksTC;
 
@@ -260,13 +260,13 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 					this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
 					GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory,
 							false,
-							Arrays.asList(new Object[]{PollutionMaterials.infused_air.getFluid(finalSpeedPerTick),
+							Lists.newArrayList(PollutionMaterials.infused_air.getFluid(finalSpeedPerTick),
 									PollutionMaterials.infused_fire.getFluid(finalSpeedPerTick),
 									PollutionMaterials.infused_earth.getFluid(finalSpeedPerTick),
 									PollutionMaterials.infused_water.getFluid(finalSpeedPerTick),
 									PollutionMaterials.infused_order.getFluid(finalSpeedPerTick),
-									PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick)})
-					);
+									PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick)));
+
 				}
 			}
 		}
