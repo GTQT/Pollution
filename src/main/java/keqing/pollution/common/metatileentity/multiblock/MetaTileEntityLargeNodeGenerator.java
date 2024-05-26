@@ -96,8 +96,8 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	private float getNodeCapacityMultiplier(ItemStack node) {
 		float nodeCapacityMultiplier = 1.0f;
 		float amplifierTire = 1.0F;
-		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeTier")) {
-			amplifierTire = switch (node.getTagCompound().getString("nodeTire")) {
+		if (node.hasTagCompound() && node.getTagCompound().hasKey("NodeTier")) {
+			amplifierTire = switch (node.getTagCompound().getString("NodeTire")) {
 				case "Withering" -> 0.25F;
 				case "Pale" -> 0.5F;
 				case "Bright" -> 4.0F;
@@ -106,8 +106,8 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		}
 		nodeCapacityMultiplier *= amplifierTire;
 		float amplifierType = 1.0F;
-		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeType")) {
-			amplifierType = switch (node.getTagCompound().getString("nodeType")) {
+		if (node.hasTagCompound() && node.getTagCompound().hasKey("NodeType")) {
+			amplifierType = switch (node.getTagCompound().getString("NodeType")) {
 				case "Ominous", "Pure" -> 4.0F;
 				case "Concussive" -> 8.0F;
 				case "Voracious" -> 16.0F;
@@ -122,7 +122,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		nodeCapacityMultiplier *= max((1.2f - 0.01f * node.getTagCompound().getInteger("EssenceEntropy")), 0);
 		nodeCapacityMultiplier *= (1 + 0.01f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceOrder")));
 		//处理饕餮到64倍
-		if (node.getTagCompound().getString("nodeType").equals("Voracious")
+		if (node.getTagCompound().getString("NodeType").equals("Voracious")
 				&& INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
 			nodeCapacityMultiplier *= 4;
 		}
@@ -133,7 +133,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	private void doSpecialNodeBehaviors(ItemStack node, int slotNumber) {
 		double basicRemovePossibility = 0.001;
 
-		switch (Objects.requireNonNull(node.getTagCompound()).getString("nodeType")) {
+		switch (Objects.requireNonNull(node.getTagCompound()).getString("NodeType")) {
 			//凶险：缓慢提高区块污染，工作一段时间后不加源质有概率直接消失
 			case "Ominous":
 				AuraHelper.polluteAura(getWorld(), getPos(), 0.1f, true);
