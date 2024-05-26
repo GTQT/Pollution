@@ -438,6 +438,24 @@ public class MagicGCYMRecipes {
                 "frameGtMansussteel",
                 "blockUranium235",
                 PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.VOID_PRISM)));
+        //节点发电机
+        ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "large_node_generator"), new InfusionRecipe(
+                "INFUSION@2",
+                PollutionMetaTileEntities.LARGE_NODE_GENERATOR.getStackForm(),
+                8,
+                new AspectList().add(Aspect.MAGIC, 128).add(Aspect.MECHANISM, 250).add(Aspect.AURA, 250).add(Aspect.MOTION, 64),
+                PollutionMetaTileEntities.AURA_GENERATORS[4].getStackForm(),
+                "gemValonite",
+                "gemScabyst",
+                PollutionMetaBlocks.FUSION_REACTOR.getItemVariant(POFusionReactor.FusionBlockType.FRAME_I),
+                new ItemStack(BlocksTC.arcaneWorkbenchCharger),
+                new ItemStack(BlocksTC.rechargePedestal),
+                new ItemStack(BlocksTC.visBattery),
+                new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+                new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+                "frameGtMansussteel",
+                new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+                PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.VOID_PRISM)));
         //聚灵阵
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "essence_collector"), new InfusionRecipe(
                 "INFUSION@2",

@@ -61,8 +61,12 @@ public class PollutionMaterials {
     public static Material super_sticky_tar;
     public static Material magic_nitrobenzene;
     public static Material pure_tar;
+
     public static Material RichAura;
     public static Material ErichAura;
+    public static Material Sunnarium;
+    public static Material Whitemansus;
+    public static Material Blackmansus;
 
     public PollutionMaterials() {}
 
