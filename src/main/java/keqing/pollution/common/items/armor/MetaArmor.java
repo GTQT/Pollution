@@ -2,8 +2,6 @@ package keqing.pollution.common.items.armor;
 
 import gregtech.api.items.armor.ArmorMetaItem;
 import gregtech.common.ConfigHolder;
-import gregtech.common.items.armor.AdvancedJetpack;
-import gregtech.common.items.armor.NightvisionGoggles;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;

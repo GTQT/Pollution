@@ -1,6 +1,5 @@
 package keqing.pollution.common.items;
 
-import gregtech.api.items.armor.ArmorMetaItem;
 import gregtech.api.items.metaitem.MetaItem;
 import keqing.pollution.common.items.armor.MetaArmor;
 

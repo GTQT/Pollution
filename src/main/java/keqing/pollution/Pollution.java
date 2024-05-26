@@ -2,8 +2,8 @@ package keqing.pollution;
 
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.CommonProxy;
-import keqing.pollution.common.block.blocks.PollutionBlocksInit;
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.block.blocks.PollutionBlocksInit;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import keqing.pollution.dimension.worldgen.PODimensionManager;
@@ -17,38 +17,38 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(
-        modid = "pollution",
-        name="Pollution",
-        acceptedMinecraftVersions = "[1.12.2,1.13)",
-        version = "0.0.1-beta" ,
-        dependencies = "required-after:gregtech@[2.8.5-beta,) ;"
+		modid = "pollution",
+		name = "Pollution",
+		acceptedMinecraftVersions = "[1.12.2,1.13)",
+		version = "0.0.1-beta",
+		dependencies = "required-after:gregtech@[2.8.5-beta,) ;"
 )
-public class Pollution  {
-    public static final String MODID = "pollution";
-    public static final String NAME = "Pollution";
-    public static final String VERSION = "1.0";
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
+public class Pollution {
+	public static final String MODID = "pollution";
+	public static final String NAME = "Pollution";
+	public static final String VERSION = "1.0";
+	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    @SidedProxy(
-            clientSide = "keqing.pollution.client.ClientProxy",
-            serverSide = "keqing.pollution.common.CommonProxy"
-    )
-    public static CommonProxy proxy;
+	@SidedProxy(
+			clientSide = "keqing.pollution.client.ClientProxy",
+			serverSide = "keqing.pollution.common.CommonProxy"
+	)
+	public static CommonProxy proxy;
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        proxy.init();
-    }
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent event) {
+		proxy.init();
+	}
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        PollutionLog.init(event.getModLog());
-        PollutionMetaBlocks.init();
-        PollutionMetaItems.initialization();
-        PODimensionType.init();
-        PODimensionManager.init();
-        proxy.preLoad();
-        MinecraftForge.EVENT_BUS.register(new PollutionBlocksInit());
-        PollutionMetaTileEntities.initialization();
-    }
+	@Mod.EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		PollutionLog.init(event.getModLog());
+		PollutionMetaBlocks.init();
+		PollutionMetaItems.initialization();
+		PODimensionType.init();
+		PODimensionManager.init();
+		proxy.preLoad();
+		MinecraftForge.EVENT_BUS.register(new PollutionBlocksInit());
+		PollutionMetaTileEntities.initialization();
+	}
 }

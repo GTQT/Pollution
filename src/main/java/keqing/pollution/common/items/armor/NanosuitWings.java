@@ -2,11 +2,8 @@ package keqing.pollution.common.items.armor;
 
 import gregtech.api.capability.GregtechCapabilities;
 import gregtech.api.capability.IElectricItem;
-import gregtech.api.items.armor.ArmorLogicSuite;
-import gregtech.api.items.armor.ArmorUtils;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.input.KeyBind;
-
 import gregtech.common.items.armor.Jetpack;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;

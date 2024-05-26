@@ -18,7 +18,10 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
-import keqing.pollution.common.block.metablocks.*;
+import keqing.pollution.common.block.metablocks.POFusionReactor;
+import keqing.pollution.common.block.metablocks.POGlass;
+import keqing.pollution.common.block.metablocks.POMBeamCore;
+import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -37,15 +40,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import static gregtech.api.pattern.FactoryBlockPattern.start;
 import static java.lang.Math.max;
-import static java.lang.Math.min;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static net.minecraft.util.math.MathHelper.ceil;
 import static net.minecraft.util.math.MathHelper.sqrt;
 
 public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithControl {
 	private static final int BASIC_CAPACITY = 8192;
+
 	public MetaTileEntityLargeNodeGenerator(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId);
 	}
@@ -89,7 +91,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	}
 
 	//计算总发电乘数
-	private float getNodeCapacityMultiplier(ItemStack node){
+	private float getNodeCapacityMultiplier(ItemStack node) {
 		float nodeCapacityMultiplier = 1.0f;
 		float amplifierTire = 1.0F;
 		if (node.hasTagCompound() && node.getTagCompound().hasKey("nodeTier")) {
@@ -97,7 +99,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				case "Withering" -> 0.25F;
 				case "Pale" -> 0.5F;
 				case "Bright" -> 4.0F;
-			    default -> 1.0F;
+				default -> 1.0F;
 			};
 		}
 		nodeCapacityMultiplier *= amplifierTire;
@@ -119,37 +121,37 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		nodeCapacityMultiplier *= (1 + 0.01f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceOrder")));
 		//处理饕餮到64倍
 		if (node.getTagCompound().getString("nodeType").equals("Voracious")
-				&& INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))){
+				&& INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
 			nodeCapacityMultiplier *= 4;
 		}
 		return nodeCapacityMultiplier;
 	}
 
 	//处理节点的各种奇怪特性
-	private void doSpecialNodeBehaviors(ItemStack node, int slotNumber){
+	private void doSpecialNodeBehaviors(ItemStack node, int slotNumber) {
 		double basicRemovePossibility = 0.001;
 
-		switch (Objects.requireNonNull(node.getTagCompound()).getString("nodeType")){
+		switch (Objects.requireNonNull(node.getTagCompound()).getString("nodeType")) {
 			//凶险：缓慢提高区块污染，工作一段时间后不加源质有概率直接消失
 			case "Ominous":
-				AuraHelper.polluteAura(getWorld(),getPos(), 0.1f,true);
-				if (random.nextDouble() <= basicRemovePossibility && !INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false))){
+				AuraHelper.polluteAura(getWorld(), getPos(), 0.1f, true);
+				if (random.nextDouble() <= basicRemovePossibility && !INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false))) {
 					this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
 				}
-			//纯净：缓慢降低区块污染
+				//纯净：缓慢降低区块污染
 			case "Pure":
-				AuraHelper.drainFlux(getWorld(),getPos(), 0.1f,true);
-			//震荡：工作时大概率直接消失
+				AuraHelper.drainFlux(getWorld(), getPos(), 0.1f, true);
+				//震荡：工作时大概率直接消失
 			case "Concussive":
-				if (random.nextDouble() <= basicRemovePossibility * 10){
+				if (random.nextDouble() <= basicRemovePossibility * 10) {
 					this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
 				}
-			//饕餮：工作时不通源质有大概率直接消失，持续提供源质时发电提升至64x
+				//饕餮：工作时不通源质有大概率直接消失，持续提供源质时发电提升至64x
 			case "Voracious":
-				if (random.nextDouble() <= basicRemovePossibility * 10 && !INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))){
+				if (random.nextDouble() <= basicRemovePossibility * 10 && !INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
 					this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
 				}
-			//64x在上面办好了
+				//64x在上面办好了
 		}
 	}
 
@@ -159,7 +161,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		}
 		expectedFinalCapacity = 0;
 		//先检测每个输入总线内的节点
-		for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
+		for (var i = 0; i < this.getInputInventory().getSlots(); ++i) {
 			if (!this.inputInventory.getStackInSlot(i).isEmpty()) {
 				ItemStack stack = this.getInputInventory().getStackInSlot(i);
 				if (stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && stack.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
@@ -169,7 +171,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 					//基础发电量8192
 					expectedFinalCapacity += (int) (BASIC_CAPACITY * overallCapacityMultiplier);
 					//计算源质消耗
-					if (stack.hasTagCompound() ) {
+					if (stack.hasTagCompound()) {
 						if (stack.getTagCompound().hasKey("EssenceWater")) {
 							essenceCostSpeedMultiplier += max(0.2, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
 						}
@@ -192,7 +194,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 			if (INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
 				this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), true);
 			}
-			for (var i = 0 ; i < this.getInputInventory().getSlots() ; ++i) {
+			for (var i = 0; i < this.getInputInventory().getSlots(); ++i) {
 				if (!this.inputInventory.getStackInSlot(i).isEmpty()
 						&& this.inputInventory.getStackInSlot(i).getItem() != PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem()
 						&& this.inputInventory.getStackInSlot(i).getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
@@ -209,7 +211,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		} else {
 			//TODO: How to deal with energy when sufficient space in output hatch
 		}
-        essenceCostSpeedMultiplier = 0;
+		essenceCostSpeedMultiplier = 0;
 		varience = 0.0F;
 	}
 
@@ -273,19 +275,22 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				.build();
 	}
 
-	private static IBlockState getCasingState(){
+	private static IBlockState getCasingState() {
 		return MetaBlocks.FRAMES.get(PollutionMaterials.mansussteel).getBlock(PollutionMaterials.mansussteel);
 	}
 
 	private static IBlockState getCasingState2() {
 		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.VOID_PRISM);
 	}
+
 	private static IBlockState getCasingState3() {
 		return PollutionMetaBlocks.FUSION_REACTOR.getState(POFusionReactor.FusionBlockType.FRAME_II);
 	}
+
 	private static IBlockState getCasingState4() {
 		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_4);
 	}
+
 	private static IBlockState getCasingState5() {
 		return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.BAMINATED_GLASS);
 	}

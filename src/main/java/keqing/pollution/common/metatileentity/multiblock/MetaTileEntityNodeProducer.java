@@ -17,8 +17,8 @@ import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTil
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
-import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static java.lang.Integer.getInteger;
 import static java.lang.Math.*;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static net.minecraft.util.math.MathHelper.abs;
@@ -82,7 +81,7 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 				0);
 	}
 
-	public ItemStack getRandomAuraNode(){
+	public ItemStack getRandomAuraNode() {
 		ItemStack auraNode = new ItemStack(PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem(), 1, 100);
 		NBTTagCompound nodeTagCompound = new NBTTagCompound();
 		double tire_probability = random.nextDouble() * 100; // 生成0到100之间的随机数
@@ -213,46 +212,55 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 				.build();
 	}
 
-		private static IBlockState getCasingState() {
-			return PollutionMetaBlocks.FUSION_REACTOR.getState(POFusionReactor.FusionBlockType.FRAME_II);
-		}
-		private static IBlockState getCasingState2(){
-			return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.LAMINATED_GLASS);
-		}
-		private static IBlockState getCasingState3() {
-			return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.VOID_PRISM);
-		}
-		private static IBlockState getCasingState4() {
-			return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_0);
-		}
-		private static IBlockState getCasingState5() {
-			return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_1);
-		}
-		private static IBlockState getCasingState6() {
-			return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM);
-		}
-		private static IBlockState getCasingState7() {
-			return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
-		}
-		private static IBlockState getCasingState8() {
-			return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_4);
-		}
-		private static IBlockState getCasingState9() {
-			return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
-		}
-		private static IBlockState getCasingState10() {
-			return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_3);
-		}
+	private static IBlockState getCasingState() {
+		return PollutionMetaBlocks.FUSION_REACTOR.getState(POFusionReactor.FusionBlockType.FRAME_II);
+	}
 
-		@Override
-		public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-			return POTextures.FRAME_I;
-		}
+	private static IBlockState getCasingState2() {
+		return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.LAMINATED_GLASS);
+	}
 
-		@Override
-		protected OrientedOverlayRenderer getFrontOverlay() {
-			return Textures.HPCA_OVERLAY;
-		}
+	private static IBlockState getCasingState3() {
+		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.VOID_PRISM);
+	}
+
+	private static IBlockState getCasingState4() {
+		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_0);
+	}
+
+	private static IBlockState getCasingState5() {
+		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_1);
+	}
+
+	private static IBlockState getCasingState6() {
+		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM);
+	}
+
+	private static IBlockState getCasingState7() {
+		return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
+	}
+
+	private static IBlockState getCasingState8() {
+		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_4);
+	}
+
+	private static IBlockState getCasingState9() {
+		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
+	}
+
+	private static IBlockState getCasingState10() {
+		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_3);
+	}
+
+	@Override
+	public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+		return POTextures.FRAME_I;
+	}
+
+	@Override
+	protected OrientedOverlayRenderer getFrontOverlay() {
+		return Textures.HPCA_OVERLAY;
+	}
 
 }
 

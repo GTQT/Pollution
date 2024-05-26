@@ -70,7 +70,7 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
 				0);
 	}
 
-	private String decideType(FluidStack stack){
+	private String decideType(FluidStack stack) {
 		String type = "";
 		return type;
 	}
@@ -125,13 +125,15 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
 	private static IBlockState getCasingState() {
 		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT);
 	}
-	private static IBlockState getCasingState2(){
+
+	private static IBlockState getCasingState2() {
 		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_4);
 	}
 
 	private static IBlockState getCasingState3() {
 		return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.AAMINATED_GLASS);
 	}
+
 	private static IBlockState getCasingState4() {
 		return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.POLYTETRAFLUOROETHYLENE_PIPE);
 	}
