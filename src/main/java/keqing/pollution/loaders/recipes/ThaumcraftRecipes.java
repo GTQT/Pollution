@@ -40,7 +40,7 @@ public class ThaumcraftRecipes {
         //太阳能试写
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "air_solar_1"), new InfusionRecipe(
                 "",
-                PollutionMetaTileEntities.SOLAR_PLATE[1],
+                PollutionMetaTileEntities.SOLAR_PLATE[1].getStackForm(),
                 2,
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.AIR, 16),
                 "frameGtMansussteel",
