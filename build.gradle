@@ -107,15 +107,15 @@ dependencies {
     // Example of deobfuscating a dependency
     // implementation rfg.deobf('curse.maven:had-enough-items-557549:4543375')
     implementation rfg.deobf("curse.maven:code-chicken-lib-1-8-242818:2779848")
-    implementation rfg.deobf(files("libs/GregicalityMultiblocks-1.2.7.jar"))
-    implementation rfg.deobf(files("libs/Baubles-1.12-1.5.2.jar"))
-    implementation rfg.deobf(files("libs/Thaumcraft-1.12.2-6.1.BETA26.jar"))
-    implementation rfg.deobf(files("libs/gregtechfoodoption-1.12.2-1.11.0.jar"))
-    implementation rfg.deobf(files("libs/!mixinbooter-8.9.jar"))
+    implementation rfg.deobf("curse.maven:gregicality-multiblocks-564858:4910674")
+    implementation rfg.deobf("curse.maven:baubles-227083:2518667")
+    implementation rfg.deobf("curse.maven:thaumcraft-223628:2629023")
+    implementation rfg.deobf("curse.maven:gregtech-food-option-477021:5079056")
+    implementation rfg.deobf("curse.maven:mixin-booter-419286:4835295")
     implementation rfg.deobf(files("libs/gtqtcore-1.0.jar"))
-    implementation rfg.deobf(files("libs/gregtech-1.12.2-2.8.8-beta.jar"))
-    implementation rfg.deobf(files("libs/theoneprobe-1.12-1.4.28.jar"))
-    implementation rfg.deobf(files("libs/Chisel-MC1.12.2-1.0.2.45.jar"))
+    implementation rfg.deobf("curse.maven:gregtech-ce-unofficial-557242:5322654")
+    implementation rfg.deobf("curse.maven:the-one-probe-245211:2667280")
+    implementation rfg.deobf("curse.maven:chisel-235279:2915375")
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
         String mixin = modUtils.enableMixins('org.spongepowered:mixin:0.8.3', "mixins.${project.archives_base_name}.refmap.json")
