@@ -55,7 +55,7 @@ import java.util.Objects;
 
 public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl implements IBloomEffect, IFastRenderMetaTileEntity {
 	public Aspect al;
-	public String name = null;
+	public String name;
 	public int storage = 0;
 	public int number = 0;
 	FluidStack AIR_STACK = PollutionMaterials.infused_air.getFluid(1);
@@ -65,7 +65,7 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 	FluidStack ORDER_STACK = PollutionMaterials.infused_order.getFluid(1);
 	FluidStack ENTROPY_STACK = PollutionMaterials.infused_entropy.getFluid(1);
 	boolean work;
-	int RadomTime = 0;
+	int randomTime = 0;
 
 	public MetaTileEntityInfusedExchange(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId);
@@ -98,15 +98,15 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 
 	public void update() {
 		super.update();
-		if (!backA) if (RadomTime <= 10) RadomTime++;
-		if (backA) if (RadomTime >= -10) RadomTime--;
-		if (RadomTime == 10) {
+		if (!backA) if (randomTime <= 10) randomTime++;
+		if (backA) if (randomTime >= -10) randomTime--;
+		if (randomTime == 10) {
 			backA = true;
 		}
-		if (RadomTime == -10) {
+		if (randomTime == -10) {
 			backA = false;
 		}
-		setFusionRingColor(0xFF000000 + RadomTime * 1250 * 50);
+		setFusionRingColor(0xFF000000 + randomTime * 1250 * 50);
 	}
 
 	public void updateFormedValid() {
@@ -315,21 +315,21 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 					getPos().getX() - context.cameraX() + relativeBack.getXOffset() + 0.5,
 					getPos().getY() - context.cameraY() + relativeBack.getYOffset() + 12,
 					getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() + 0.5,
-					RadomTime, 0.2, 10, 20,
+					randomTime, 0.2, 10, 20,
 					r, g, b, a, EnumFacing.Axis.Y);
 
 			RenderBufferHelper.renderRing(buffer,
 					getPos().getX() - context.cameraX() + relativeBack.getXOffset() + 0.5,
 					getPos().getY() - context.cameraY() + relativeBack.getYOffset() + 12,
 					getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() + 0.5,
-					RadomTime * 2, 0.2, 10, 20,
+					randomTime * 2, 0.2, 10, 20,
 					r, g, b, a, EnumFacing.Axis.Y);
 
 			RenderBufferHelper.renderRing(buffer,
 					getPos().getX() - context.cameraX() + relativeBack.getXOffset() + 0.5,
 					getPos().getY() - context.cameraY() + relativeBack.getYOffset() + 12,
 					getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() + 0.5,
-					RadomTime * 3, 0.2, 10, 20,
+					randomTime * 3, 0.2, 10, 20,
 					r, g, b, a, EnumFacing.Axis.Y);
 
 		}

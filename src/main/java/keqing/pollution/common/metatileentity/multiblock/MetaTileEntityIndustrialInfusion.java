@@ -74,8 +74,7 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_GLASS
 
 public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithControl implements IBloomEffect, IFastRenderMetaTileEntity {
 	private UUID uuid = null;
-	private AspectList aspectList = new AspectList();
-	private AspectList al2 = new AspectList();
+	private final AspectList aspectList = new AspectList();
 	private ItemStack outputItem = ItemStack.EMPTY;
 	private int tick = 0;
 	private int timeAmount = 0;
@@ -91,7 +90,6 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 	@Override
 	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
 		return new MetaTileEntityIndustrialInfusion(this.metaTileEntityId);
-
 	}
 
 	@Override
@@ -248,7 +246,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 				}
 			}
 			InfusionRecipe recipe = null;
-			if (list.size() > 0 && center != null && center != ItemStack.EMPTY && !canOutput)
+			if (!list.isEmpty() && center != ItemStack.EMPTY && !canOutput)
 				recipe = ThaumcraftCraftingManager.findMatchingInfusionRecipe(list, center, getWorld().getPlayerEntityByUUID(this.uuid));
 			if (recipe != null && !canOutput) {
 				outputItem = ((ItemStack) recipe.recipeOutput).copy();
@@ -257,7 +255,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 				Aspect[] var7 = al.getAspects();
 				int var8 = var7.length;
 				timeAmount = 0;
-				al2 = new AspectList();
+				AspectList al2 = new AspectList();
 				for (int var9 = 0; var9 < var8; ++var9) {
 					Aspect as = var7[var9];
 					if ((int) ((float) al.getAmount(as)) * 0.5 > 0) {
@@ -273,7 +271,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 					}
 				}
 				//此物品够热 可以开机 消耗掉缓存源质和物品
-				if (bl == true) {
+				if (bl) {
 					for (var a : al2.getAspects()) {
 						this.aspectList.reduce(a, al2.getAmount(a));
 					}
@@ -300,13 +298,13 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
 		super.addInformation(stack, world, tooltip, advanced);
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.1", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.2", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.3", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.4", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.5", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.6", new Object[0]));
-		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.7", new Object[0]));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.1"));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.2"));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.3"));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.4"));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.5"));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.6"));
+		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.7"));
 	}
 
 	@Override
@@ -333,7 +331,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 				for (int z = -radius; z <= radius; z++) {
 					BlockPos currentPos = centerPos.add(x, y, z);
 					TileEntity te = this.getWorld().getTileEntity(currentPos);
-					if (te != null && te instanceof IAspectSource) {
+					if (te instanceof IAspectSource) {
 						if (this.energyContainer != null && this.energyContainer.getEnergyStored() > 128) {
 							this.energyContainer.changeEnergy(-128l);
 							final var s = (IAspectSource) te;

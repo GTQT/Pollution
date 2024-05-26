@@ -60,15 +60,16 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
 		int aY = this.getPos().getY();
 		int aZ = this.getPos().getZ();
 		for (int x = -tier; x <= tier; x++)
-			for (int y = -tier; y <= tier; y++)
-				if (AuraHelper.drainFlux(getWorld(), new BlockPos(aX + x * 16, aY, aZ + y * 16), (float) VisTicks, true) > 0.01) {
+			for (int y = -tier; y <= tier; y++) {
+				BlockPos pos = new BlockPos(aX + x * 16, aY, aZ + y * 16);
+				if (AuraHelper.drainFlux(getWorld(), pos, (float) VisTicks, true) > 0.01) {
 					if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer) {
 						energyContainer.removeEnergy(energyAmountPer);
 						isWorkingEnabled = true;
-						AuraHelper.drainFlux(getWorld(), new BlockPos(aX + x * 16, aY, aZ + y * 16), (float) VisTicks, false);
+						AuraHelper.drainFlux(getWorld(), pos, (float) VisTicks, false);
 					} else isWorkingEnabled = false;
 				}
-
+			}
 	}
 
 	@Override
