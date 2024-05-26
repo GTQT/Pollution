@@ -116,6 +116,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:gregtech-ce-unofficial-557242:5322654")
     implementation rfg.deobf("curse.maven:the-one-probe-245211:2667280")
     implementation rfg.deobf("curse.maven:chisel-235279:2915375")
+    implementation rfg.deobf("curse.maven:ctm-267602:2915363")
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
         String mixin = modUtils.enableMixins('org.spongepowered:mixin:0.8.3', "mixins.${project.archives_base_name}.refmap.json")
