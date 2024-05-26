@@ -1,7 +1,9 @@
 package keqing.pollution.common;
 
 import gregtech.api.unification.material.event.MaterialEvent;
+import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
@@ -34,7 +36,7 @@ public class EventLoader {
 	static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
 		if (event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
-			Random rand = new Random();
+			Random rand = Pollution.RANDOM;
 			int randomNum = rand.nextInt(50000);
 
 

@@ -14,6 +14,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
+import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -21,6 +22,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -57,7 +59,7 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 	}
 
 	//随机数
-	private Random random = new Random();
+	private final Random random = Pollution.RANDOM;
 	//计时器和计数器
 	private int timer = 0;
 	private int tickCount = 0;

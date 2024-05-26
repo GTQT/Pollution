@@ -14,6 +14,7 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
+import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -24,6 +25,7 @@ import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -62,8 +64,8 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	}
 
 	//随机数
-	private final Random random = new Random();
-	//计数器
+	private final Random random = Pollution.RANDOM;
+	//计数器0
 	private int tickCount = 0;
 	//线圈等级
 	private int coilLevel;
