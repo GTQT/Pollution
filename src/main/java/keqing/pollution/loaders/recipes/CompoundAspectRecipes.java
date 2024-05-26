@@ -167,6 +167,14 @@ public class CompoundAspectRecipes {
                 .duration(200)
                 .EUt(30)
                 .buildAndRegister();
+        //光明
+        RecipeMaps.MIXER_RECIPES.recipeBuilder()
+                .fluidInputs(PollutionMaterials.infused_fire.getFluid(1000))
+                .fluidInputs(PollutionMaterials.infused_air.getFluid(1000))
+                .fluidOutputs(PollutionMaterials.infused_light.getFluid(2000))
+                .duration(200)
+                .EUt(30)
+                .buildAndRegister();
 
         //核裂变
         //水晶
@@ -244,6 +252,13 @@ public class CompoundAspectRecipes {
                 .fluidOutputs(PollutionMaterials.infused_magic.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.infused_water.getFluid(1000))
                 .fluidInputs(PollutionMaterials.infused_alchemy.getFluid(2000))
+                .duration(200)
+                .buildAndRegister();
+        //光明
+        MAGIC_FUSION_REACTOR.recipeBuilder()
+                .fluidOutputs(PollutionMaterials.infused_fire.getFluid(1000))
+                .fluidOutputs(PollutionMaterials.infused_air.getFluid(1000))
+                .fluidInputs(PollutionMaterials.infused_light.getFluid(2000))
                 .duration(200)
                 .buildAndRegister();
     }

@@ -52,21 +52,21 @@ public class PollutionElementMaterials {
                 .fluid()
                 .element(Elements.Ma)
                 .build();
-        PollutionMaterials.Sunnarium = new Material.Builder(getMaterialsId(), gregtechId("sunnarium"))
+        PollutionMaterials.sunnarium = new Material.Builder(getMaterialsId(), gregtechId("sunnarium"))
                 .color(0xFAF20E)
                 .dust().fluid()
                 .iconSet(SHINY)
                 .element(Elements.Su)
                 .build();
-        PollutionMaterials.Whitemansus = new Material.Builder(getMaterialsId(), gregtechId("whitemansus"))
+        PollutionMaterials.whitemansus = new Material.Builder(getMaterialsId(), gregtechId("whitemansus"))
                 .color(0xEFF0FF)
-                .dust().fluid()
+                .fluid()
                 .iconSet(SHINY)
                 .element(Elements.Wma)
                 .build();
-        PollutionMaterials.Blackmansus = new Material.Builder(getMaterialsId(), gregtechId("Blackmansus"))
+        PollutionMaterials.blackmansus = new Material.Builder(getMaterialsId(), gregtechId("Blackmansus"))
                 .color(0xFAF20E)
-                .dust().fluid()
+                .fluid()
                 .iconSet(SHINY)
                 .element(Elements.Bma)
                 .build();

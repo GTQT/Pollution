@@ -18,6 +18,7 @@ gregtech.material.infused_exchange=易
 gregtech.material.infused_magic=魔
 gregtech.material.infused_alchemy=炼金
 gregtech.material.infused_cold=寒
+gregtech.material.infused_light=光
 
 gregtech.material.thaumium=神秘
 gregtech.material.syrmorite=赛摩铜
@@ -53,6 +54,9 @@ metaitem.ingotKobemetal.tooltip=牢大，想你了
 
 gregtech.material.rich_aura=灵气流质
 gregtech.material.erich_aura=富集灵气流质
+gregtech.material.whitemansus=素牡漫宿
+gregtech.material.blackmansus=玄牝漫宿
+gregtech.material.sunnarium=阳光化合物
 
 metaitem.ingotAertitanium.tooltip=律动清风
 metaitem.ingotIgnissteel.tooltip=残日流火

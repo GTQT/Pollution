@@ -97,5 +97,11 @@ public class CompoundAspectMaterials {
                 .ore().gem().fluid()
                 .components(PollutionMaterials.infused_magic, 1, PollutionMaterials.infused_air, 1)
                 .build();
+        //光明=火+风
+        PollutionMaterials.infused_light = new Material.Builder(getMaterialsId(), gregtechId("infused_light"))
+                .color(0xF3FF80)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_air, 1)
+                .build();
     }
 }

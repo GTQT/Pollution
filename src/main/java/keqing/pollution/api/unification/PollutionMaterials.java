@@ -28,6 +28,7 @@ public class PollutionMaterials {
     public static Material infused_alchemy;
     public static Material infused_cold;
     public static Material infused_aura;
+    public static Material infused_light;
     //mana酱
     public static Material mana;
     //材料
@@ -64,9 +65,9 @@ public class PollutionMaterials {
 
     public static Material RichAura;
     public static Material ErichAura;
-    public static Material Sunnarium;
-    public static Material Whitemansus;
-    public static Material Blackmansus;
+    public static Material sunnarium;
+    public static Material whitemansus;
+    public static Material blackmansus;
 
     public PollutionMaterials() {}
 
