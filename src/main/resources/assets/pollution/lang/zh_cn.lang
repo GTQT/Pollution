@@ -413,16 +413,6 @@ pollution.machine.large_node_generator.tooltip.5=（待实现功能）凶险、�
 pollution.machine.large_node_generator_expectedfinalcapacity=期望发电量：%s eu/t
 pollution.machine.large_node_generator_finalcapacity=实际最终发电量：%s eu/t
 
-#节点发电机
-pollution.machine.large_node_generator.name=星光先驱节点反应堆
-pollution.machine.large_node_generator.tooltip.1=§5我等生来注定追求辉光，一如火花向上飞舞...§r
-pollution.machine.large_node_generator.tooltip.2=对封装灵气节点进行充能激活，实现巨量发电
-pollution.machine.large_node_generator.tooltip.3=基础发电量8192eu/t，节点特性决定最终发电量、发电波动、维持节点稳定的源质的消耗量等
-pollution.machine.large_node_generator.tooltip.4=工作时凶险节点产生污染，纯净节点消除污染
-pollution.machine.large_node_generator.tooltip.5=（待实现功能）凶险、震荡、饕餮节点有概率工作中消失，凶险、饕餮节点可以分别通过通入Aura、Ordo源质防止消失
-pollution.machine.large_node_generator_expectedfinalcapacity=期望发电量：%s eu/t
-pollution.machine.large_node_generator_finalcapacity=实际最终发电量：%s eu/t
-
 #洗点机
 pollution.machine.node_washer.name=节点重诞净灵池
 pollution.machine.node_washer.tooltip.1=奥术浴场，但是GT
