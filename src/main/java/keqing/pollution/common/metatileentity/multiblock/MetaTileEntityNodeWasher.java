@@ -12,6 +12,8 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
+import keqing.pollution.Pollution;
+import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -53,13 +55,20 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
 	}
 
 	//随机数
-	private final Random random = new Random();
+	private final Random random = Pollution.RANDOM;
 	//线圈等级
 	private int coilLevel;
 	//选择洗的属性
 	private String infusedType;
 	//最高洗点数值
 	private int maxInfusedValue;
+	//六种流体
+	private final FluidStack INFUSED_AIR = PollutionMaterials.infused_air.getFluid(1);
+	private final FluidStack INFUSED_FIRE = PollutionMaterials.infused_fire.getFluid(1);
+	private final FluidStack INFUSED_EARTH = PollutionMaterials.infused_earth.getFluid(1);
+	private final FluidStack INFUSED_WATER = PollutionMaterials.infused_water.getFluid(1);
+	private final FluidStack INFUSED_ORDER = PollutionMaterials.infused_order.getFluid(1);
+	private final FluidStack INFUSED_ENTROPY = PollutionMaterials.infused_entropy.getFluid(1);
 
 	@Override
 	protected void formStructure(PatternMatchContext context) {

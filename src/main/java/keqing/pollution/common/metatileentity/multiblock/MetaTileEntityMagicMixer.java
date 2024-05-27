@@ -3,6 +3,7 @@ package keqing.pollution.common.metatileentity.multiblock;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
@@ -43,7 +44,13 @@ public class MetaTileEntityMagicMixer extends PORecipeMapMultiblockController {
 				.aisle("XXXXX", "XACAX", "XAAAX", "XACAX", "XAAAX", "##G##")
 				.aisle("#XXX#", "#XSX#", "#XFX#", "#XXX#", "#XXX#", "##G##")
 				.where('S', selfPredicate())
-				.where('X', states(getCasingState()).setMinGlobalLimited(50).or(autoAbilities()))
+				.where('X', states(getCasingState()).setMinGlobalLimited(40)
+						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(6).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(6).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(6).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(6).setPreviewCount(1)))
 				.where('P', states(getCasingState2()))
 				.where('C', states(getCasingState3()))
 				.where('G', states(getCasingState4()))
