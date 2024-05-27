@@ -116,8 +116,9 @@ dependencies {
     implementation rfg.deobf("curse.maven:gregtech-ce-unofficial-557242:5322654")
     implementation rfg.deobf("curse.maven:the-one-probe-245211:2667280")
     implementation rfg.deobf("curse.maven:chisel-235279:2915375")
-    implementation rfg.deobf("curse.maven:ctm-267602:2915363")
-    implementation rfg.deobf("curse.maven:jei-238222:5101347")
+    implementation "curse.maven:ctm-267602:2915363-deobf"
+    runtimeOnly rfg.deobf("curse.maven:jei-238222:5101347")
+    runtimeOnly rfg.deobf("curse.maven:thaumic-jei-285492:2705304")
 
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
