@@ -104,7 +104,7 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
 				.aisle("XXX", "C#C", "C#C", "XMX")
 				.aisle("FSX", "CCC", "CCC", "XXX")
 				.where('S', selfPredicate())
-				.where('X', states(getCasingState()).setMinGlobalLimited(9)
+				.where('X', states(getCasingState()).setMinGlobalLimited(6)
 						.or(autoAbilities(true, true, true, true, true, true, false)))
 				.where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
 				.where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))

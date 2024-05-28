@@ -405,6 +405,87 @@ public class MagicGCYMRecipes {
 				.duration(300)
 				.EUt(120)
 				.buildAndRegister();
+		//三个小机器
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "turbine_1"), new ShapedArcaneRecipe(
+				new ResourceLocation(""),
+				"FIRSTSTEPS@2",
+				50,
+				new AspectList().add(Aspect.FIRE, 1).add(Aspect.ORDER, 1),
+				PollutionMetaTileEntities.MAGIC_TURBINE[0].getStackForm(),
+				"CEC",
+				"DBD",
+				"AFA",
+				'A', "gearMansussteel",
+				'B', MetaTileEntities.HULL[1].getStackForm(),
+				'C', new ItemStack(MetaItems.ELECTRIC_PISTON_LV.getMetaItem(), 1, 172),
+				'D', new ItemStack(MetaItems.ELECTRIC_MOTOR_LV.getMetaItem(), 1, 127),
+				'E', "circuitLv",
+				'F', "cableGtSingleTin"));
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "turbine_2"), new ShapedArcaneRecipe(
+				new ResourceLocation(""),
+				"FIRSTSTEPS@2",
+				100,
+				new AspectList().add(Aspect.FIRE, 2).add(Aspect.ORDER, 2),
+				PollutionMetaTileEntities.MAGIC_TURBINE[1].getStackForm(),
+				"CEC",
+				"DBD",
+				"AFA",
+				'A', "gearMansussteel",
+				'B', MetaTileEntities.HULL[2].getStackForm(),
+				'C', new ItemStack(MetaItems.ELECTRIC_PISTON_MV.getMetaItem(), 1, 173),
+				'D', new ItemStack(MetaItems.ELECTRIC_MOTOR_MV.getMetaItem(), 1, 128),
+				'E', "circuitMv",
+				'F', "cableGtSingleCopper"));
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "turbine_3"), new ShapedArcaneRecipe(
+				new ResourceLocation(""),
+				"FIRSTSTEPS@2",
+				150,
+				new AspectList().add(Aspect.FIRE, 4).add(Aspect.ORDER, 4),
+				PollutionMetaTileEntities.MAGIC_TURBINE[2].getStackForm(),
+				"CEC",
+				"DBD",
+				"AFA",
+				'A', "gearMansussteel",
+				'B', MetaTileEntities.HULL[3].getStackForm(),
+				'C', new ItemStack(MetaItems.ELECTRIC_PISTON_HV.getMetaItem(), 1, 174),
+				'D', new ItemStack(MetaItems.ELECTRIC_MOTOR_HV.getMetaItem(), 1, 129),
+				'E', "circuitHv",
+				'F', "cableGtSingleGold"));
+		//魔法燃气
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "large_magic_turbine"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.LARGE_MAGIC_TURBINE.getStackForm(),
+				4,
+				new AspectList().add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128).add(Aspect.ENERGY, 64).add(Aspect.MOTION, 16),
+				new ItemStack(SEGREGATECORE.getMetaItem(), 1, 6),
+				"gemValonite",
+				"circuitHv",
+				"circuitHv",
+				"circuitHv",
+				"circuitHv",
+				"frameGtMansussteel",
+				"oreCrystalAir",
+				"oreCrystalOrder",
+				"oreCrystalFire",
+				PollutionMetaTileEntities.MAGIC_TURBINE[2].getStackForm(),
+				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
+		//魔法炖屎
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_alloy_blast"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.MAGIC_ALLOY_BLAST.getStackForm(),
+				4,
+				new AspectList().add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128).add(Aspect.FIRE, 64),
+				new ItemStack(HOTCORE.getMetaItem(), 1, 3),
+				"gemValonite",
+				"circuitMv",
+				"circuitMv",
+				"circuitMv",
+				"circuitMv",
+				"oreCrystalFire",
+				"oreCrystalOrder",
+				"oreCrystalEarth",
+				MetaTileEntities.ALLOY_SMELTER[MV].getStackForm(),
+				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
 		//节点机、聚变主方块
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "node_producer"), new InfusionRecipe(
 				"INFUSION@2",
