@@ -16,48 +16,48 @@ public class CompoundAspectRecipes {
 		MAGIC_TURBINE_FUELS.recipeBuilder()
 				.fluidInputs(ErichAura.getFluid(4))
 				.fluidOutputs(RichAura.getFluid(4))
+				.duration(320)
+				.EUt(32)
+				.buildAndRegister();
+
+		MAGIC_TURBINE_FUELS.recipeBuilder()
+				.fluidInputs(magic_nitrobenzene.getFluid(1))
+				.duration(270)
+				.EUt(32)
+				.buildAndRegister();
+
+		MAGIC_TURBINE_FUELS.recipeBuilder()
+				.fluidInputs(infused_air.getFluid(80))
 				.duration(80)
 				.EUt(32)
 				.buildAndRegister();
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(magic_nitrobenzene.getFluid(4))
-				.duration(60)
-				.EUt(32)
-				.buildAndRegister();
-
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_air.getFluid(160))
+				.fluidInputs(infused_fire.getFluid(80))
 				.duration(80)
 				.EUt(32)
 				.buildAndRegister();
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_fire.getFluid(160))
+				.fluidInputs(infused_water.getFluid(80))
 				.duration(80)
 				.EUt(32)
 				.buildAndRegister();
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_water.getFluid(160))
+				.fluidInputs(infused_earth.getFluid(80))
 				.duration(80)
 				.EUt(32)
 				.buildAndRegister();
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_earth.getFluid(160))
+				.fluidInputs(infused_entropy.getFluid(80))
 				.duration(80)
 				.EUt(32)
 				.buildAndRegister();
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_entropy.getFluid(160))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
-
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_order.getFluid(160))
+				.fluidInputs(infused_order.getFluid(80))
 				.duration(80)
 				.EUt(32)
 				.buildAndRegister();

@@ -8,7 +8,7 @@ public class RecipeManger {
 		AERecipes.init();
 		ThaumcraftRecipes.init();
 		MagicGCYMRecipes.init();
-		MagicGCYMRecipes.init();
+		InfusedManager.init();
 		CompoundAspectRecipes.init();
 		MagicChemicalRecipes.init();
 	}
