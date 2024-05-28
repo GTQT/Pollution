@@ -20,77 +20,77 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class POGlass extends VariantActiveBlock<POGlass.MagicBlockType> {
 
-    public POGlass() {
-        super(Material.GLASS);
-        setTranslationKey("glass");
-        setHardness(5.0F);
-        setResistance(5.0F);
-        setSoundType(SoundType.GLASS);
-        setHarvestLevel(ToolClasses.PICKAXE, 1);
-        this.setDefaultState(this.getState(MagicBlockType.LAMINATED_GLASS));
-    }
+	public POGlass() {
+		super(Material.GLASS);
+		setTranslationKey("glass");
+		setHardness(5.0F);
+		setResistance(5.0F);
+		setSoundType(SoundType.GLASS);
+		setHarvestLevel(ToolClasses.PICKAXE, 1);
+		this.setDefaultState(this.getState(MagicBlockType.LAMINATED_GLASS));
+	}
 
-    public boolean canCreatureSpawn(@Nonnull IBlockState state,
-                                    @Nonnull IBlockAccess world,
-                                    @Nonnull BlockPos pos,
-                                    @Nonnull EntityLiving.SpawnPlacementType type) {
-        return false;
-    }
+	public boolean canCreatureSpawn(@Nonnull IBlockState state,
+	                                @Nonnull IBlockAccess world,
+	                                @Nonnull BlockPos pos,
+	                                @Nonnull EntityLiving.SpawnPlacementType type) {
+		return false;
+	}
 
 
-    @Override
-    @Nonnull
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
+	@Override
+	@Nonnull
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.CUTOUT;
+	}
 
-    @Override
-    public boolean canRenderInLayer(@Nonnull IBlockState state, @Nonnull BlockRenderLayer layer) {
-        return super.canRenderInLayer(state, layer);
-    }
+	@Override
+	public boolean canRenderInLayer(@Nonnull IBlockState state, @Nonnull BlockRenderLayer layer) {
+		return super.canRenderInLayer(state, layer);
+	}
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean isOpaqueCube(@Nonnull IBlockState state) {
-        return false;
-    }
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean isOpaqueCube(@Nonnull IBlockState state) {
+		return false;
+	}
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean isFullCube(@Nonnull IBlockState state) {
-        return false;
-    }
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean isFullCube(@Nonnull IBlockState state) {
+		return false;
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    @SuppressWarnings("deprecation")
-    public boolean shouldSideBeRendered(@Nonnull IBlockState state, IBlockAccess world, BlockPos pos,
-                                        @Nonnull EnumFacing side) {
-        IBlockState sideState = world.getBlockState(pos.offset(side));
+	@Override
+	@SideOnly(Side.CLIENT)
+	@SuppressWarnings("deprecation")
+	public boolean shouldSideBeRendered(@Nonnull IBlockState state, IBlockAccess world, BlockPos pos,
+	                                    @Nonnull EnumFacing side) {
+		IBlockState sideState = world.getBlockState(pos.offset(side));
 
-        return sideState.getBlock() == this ?
-                getState(sideState) != getState(state) :
-                super.shouldSideBeRendered(state, world, pos, side);
-    }
+		return sideState.getBlock() == this ?
+				getState(sideState) != getState(state) :
+				super.shouldSideBeRendered(state, world, pos, side);
+	}
 
-    public enum MagicBlockType implements IStringSerializable {
+	public enum MagicBlockType implements IStringSerializable {
 
-        LAMINATED_GLASS("laminated_glass"),
-        AAMINATED_GLASS("aaminated_glass"),
-        BAMINATED_GLASS("baminated_glass"),
-        CAMINATED_GLASS("caminated_glass"),
-        DAMINATED_GLASS("daminated_glass");
+		LAMINATED_GLASS("laminated_glass"),
+		AAMINATED_GLASS("aaminated_glass"),
+		BAMINATED_GLASS("baminated_glass"),
+		CAMINATED_GLASS("caminated_glass"),
+		DAMINATED_GLASS("daminated_glass");
 
-        private final String name;
+		private final String name;
 
-        MagicBlockType(String name) {
-            this.name = name;
-        }
+		MagicBlockType(String name) {
+			this.name = name;
+		}
 
-        @Nonnull
-        @Override
-        public String getName() {
-            return name;
-        }
-    }
+		@Nonnull
+		@Override
+		public String getName() {
+			return name;
+		}
+	}
 }

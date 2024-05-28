@@ -1,8 +1,8 @@
 package keqing.pollution.api.metatileentity;
 
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import keqing.pollution.api.capability.IVisHatch;
 import keqing.pollution.api.capability.ITankHatch;
+import keqing.pollution.api.capability.IVisHatch;
 
 @SuppressWarnings("InstantiationOfUtilityClass")
 public final class POMultiblockAbility {

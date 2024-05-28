@@ -4,12 +4,13 @@ import org.apache.logging.log4j.Logger;
 
 public class PollutionLog {
 
-    public static Logger logger;
+	public static Logger logger;
 
-    public PollutionLog() {}
+	public PollutionLog() {
+	}
 
-    public static void init(Logger modLogger) {
-        logger = modLogger;
-    }
+	public static void init(Logger modLogger) {
+		logger = modLogger;
+	}
 
 }
