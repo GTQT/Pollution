@@ -217,7 +217,7 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 		protected void modifyOverclockPost(int[] resultOverclock, IRecipePropertyStorage storage) {
 			super.modifyOverclockPost(resultOverclock, storage);
 
-			resultOverclock[0] *= (int) (1.0f - getn() * 0.00005); // each coil above cupronickel (coilTier = 0) uses 10% less
+			resultOverclock[0] *= 1.0f - visStorage*0.00005; // each coil above cupronickel (coilTier = 0) uses 10% less
 			// energy
 			resultOverclock[0] = Math.max(1, resultOverclock[0]);
 		}
