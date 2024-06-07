@@ -7,6 +7,7 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
 import static gregtech.api.util.GTUtility.gregtechId;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
@@ -86,7 +87,7 @@ public class FirstDegreeMaterials {
 				.components(Bauxite, 2, Aluminium, 1, Manganese, 1, infused_air, 5)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		PollutionMaterials.ignissteel = new Material.Builder(getMaterialsId(), gregtechId("ignissteel"))
@@ -95,7 +96,7 @@ public class FirstDegreeMaterials {
 				.components(Steel, 2, Magnesium, 1, Lithium, 1, infused_fire, 5)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		PollutionMaterials.aquasilver = new Material.Builder(getMaterialsId(), gregtechId("aquasilver"))
@@ -104,7 +105,7 @@ public class FirstDegreeMaterials {
 				.components(Silver, 2, Tin, 1, Mercury, 1, infused_water, 5)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		PollutionMaterials.terracopper = new Material.Builder(getMaterialsId(), gregtechId("terracopper"))
@@ -113,7 +114,7 @@ public class FirstDegreeMaterials {
 				.components(Copper, 2, Boron, 1, Carbon, 1, infused_earth, 5)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		PollutionMaterials.ordolead = new Material.Builder(getMaterialsId(), gregtechId("ordolead"))
@@ -122,7 +123,7 @@ public class FirstDegreeMaterials {
 				.components(Lead, 2, Silicon, 1, Gold, 1, infused_order, 5)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		PollutionMaterials.perditioaluminium = new Material.Builder(getMaterialsId(), gregtechId("perditioaluminium"))
@@ -131,7 +132,7 @@ public class FirstDegreeMaterials {
 				.components(Aluminium, 2, Fluorine, 1, Thorium, 1, infused_entropy, 5)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		//不纯魔力 魔力钢 世界盐 漫宿钢
@@ -159,7 +160,7 @@ public class FirstDegreeMaterials {
 				.components(manasteel, 3, thaumium, 2, salismundus, 1)
 				.iconSet(METALLIC)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-				.blast(2700)
+				.blast(2700, LOW)
 				.build();
 
 		//牢大 想你了

@@ -253,7 +253,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(infused_air.getFluid(144))
 				.output(ingotHot, aertitanium, 1)
 				.circuitMeta(11)
-				.duration(600)
+				.duration(500)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
 				.buildAndRegister();
@@ -262,7 +262,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(infused_fire.getFluid(144))
 				.output(ingotHot, ignissteel, 1)
 				.circuitMeta(11)
-				.duration(600)
+				.duration(500)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
 				.buildAndRegister();
@@ -271,7 +271,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(infused_water.getFluid(144))
 				.output(ingotHot, aquasilver, 1)
 				.circuitMeta(11)
-				.duration(600)
+				.duration(500)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
 				.buildAndRegister();
@@ -280,7 +280,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(infused_earth.getFluid(144))
 				.output(ingotHot, terracopper, 1)
 				.circuitMeta(11)
-				.duration(600)
+				.duration(500)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
 				.buildAndRegister();
@@ -289,7 +289,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(infused_order.getFluid(144))
 				.output(ingotHot, ordolead, 1)
 				.circuitMeta(11)
-				.duration(600)
+				.duration(500)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
 				.buildAndRegister();
@@ -298,7 +298,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(infused_entropy.getFluid(144))
 				.output(ingotHot, perditioaluminium, 1)
 				.circuitMeta(11)
-				.duration(600)
+				.duration(500)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
 				.buildAndRegister();
@@ -1152,7 +1152,7 @@ public class MagicGCYMRecipes {
 				"FIRSTSTEPS@2",
 				25,
 				new AspectList().add(Aspect.FIRE, 1),
-				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.AAMINATED_GLASS, 2),
+				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.AAMINATED_GLASS, 4),
 				"ADA",
 				"BCB",
 				"ADA",
@@ -1166,7 +1166,7 @@ public class MagicGCYMRecipes {
 				"FIRSTSTEPS@2",
 				25,
 				new AspectList().add(Aspect.AIR, 1),
-				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.BAMINATED_GLASS, 2),
+				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.BAMINATED_GLASS, 4),
 				"ADA",
 				"BCB",
 				"ADA",
@@ -1180,7 +1180,7 @@ public class MagicGCYMRecipes {
 				"FIRSTSTEPS@2",
 				25,
 				new AspectList().add(Aspect.WATER, 1),
-				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.CAMINATED_GLASS, 2),
+				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.CAMINATED_GLASS, 4),
 				"ADA",
 				"BCB",
 				"ADA",
@@ -1194,7 +1194,7 @@ public class MagicGCYMRecipes {
 				"FIRSTSTEPS@2",
 				25,
 				new AspectList().add(Aspect.ENTROPY, 1),
-				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.DAMINATED_GLASS, 2),
+				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.DAMINATED_GLASS, 4),
 				"ADA",
 				"BCB",
 				"ADA",
@@ -1208,7 +1208,7 @@ public class MagicGCYMRecipes {
 				"FIRSTSTEPS@2",
 				25,
 				new AspectList().add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.LAMINATED_GLASS, 2),
+				PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.LAMINATED_GLASS, 4),
 				"ADA",
 				"BCB",
 				"ADA",
