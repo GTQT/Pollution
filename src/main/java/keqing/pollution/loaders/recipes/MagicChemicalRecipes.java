@@ -12,6 +12,7 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.Thaumcraft;
@@ -162,7 +163,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.oil_with_llp.getFluid(1000))
 				.output(OrePrefix.dust, PollutionMaterials.llp, 1)
-				.fluidOutputs(GTQTMaterials.PreTreatedCrudeOil.getFluid(1000))
+				.fluidOutputs(GTQTMaterials.PreTreatedCrudeOil.getFluid(1500))
 				.fluidOutputs(Materials.SaltWater.getFluid(200))
 				.duration(20)
 				.EUt(120)
@@ -326,6 +327,33 @@ public class MagicChemicalRecipes {
 				.duration(200)
 				.EUt(480)
 				.buildAndRegister();
-
+        //木头焦化不纯魔力
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
+				.input(BlocksTC.logGreatwood, 16)
+				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(),1, 3))
+				.output(OrePrefix.dust, Materials.Ash, 4)
+				.fluidOutputs(PollutionMaterials.impuremana.getFluid(576))
+				.duration(400)
+				.EUt(120)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
+				.input(BlocksTC.logSilverwood, 8)
+				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(),1, 3))
+				.output(OrePrefix.dust, Materials.Ash, 4)
+				.fluidOutputs(PollutionMaterials.impuremana.getFluid(576))
+				.duration(400)
+				.EUt(120)
+				.buildAndRegister();
+		//双氧水
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
+				.fluidInputs(Materials.Water.getFluid(2000))
+				.fluidInputs(Materials.Oxygen.getFluid(1000))
+				.fluidOutputs(GCYSMaterials.HydrogenPeroxide.getFluid(2000))
+				.duration(200)
+				.EUt(1920)
+				.buildAndRegister();
 	}
 }
