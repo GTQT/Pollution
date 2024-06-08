@@ -9,10 +9,12 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.Textures;
+import keqing.pollution.POConfig;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.world.aura.AuraHandler;
@@ -47,14 +49,18 @@ public class MetaTileEntityVisGenerator extends TieredMetaTileEntity {
 	public void update() {
 		super.update();
 		if (!getWorld().isRemote) {
-			euRest = energyContainer.getEnergyCapacity() - energyContainer.getEnergyStored();
-			euDesired = Math.min(euRest, energyContainer.getOutputVoltage() * energyContainer.getOutputAmperage());
-			desiredVis = (float) euDesired / euPerVis;
-			drainedVis = AuraHandler.drainVis(getWorld(), getPos(), desiredVis, false);
-			euGeneration = (long) Math.floor(drainedVis * euPerVis);
+			euRest=energyContainer.getEnergyCapacity()-energyContainer.getEnergyStored();
+			euDesired=Math.min(euRest,energyContainer.getOutputVoltage()*energyContainer.getOutputAmperage());
+			desiredVis=(float) euDesired/ POConfig.visGeneratorEuPerVis;
+			drainedVis= AuraHandler.drainVis(getWorld(),getPos(),desiredVis,false);
+			euGeneration=(long)Math.floor(drainedVis*POConfig.visGeneratorEuPerVis);
 			energyContainer.changeEnergy(euGeneration);
-			if (euGeneration > 0) {
-				AuraHelper.polluteAura(getWorld(), getPos(), Math.min(drainedVis * 0.1f, 1.0f), true);
+			if(euGeneration >0)
+			{
+				AuraHelper.polluteAura(getWorld(),getPos(),
+						MathHelper.clamp(drainedVis*POConfig.visGeneratorPollutionMultiplier,
+								POConfig.visGeneratorMinPollution,POConfig.visGeneratorMaxPollution),
+						POConfig.visGeneratorPollutionShowEffects);
 			}
 		}
 	}
@@ -65,7 +71,8 @@ public class MetaTileEntityVisGenerator extends TieredMetaTileEntity {
 		if (I18n.hasKey(mainKey)) {
 			tooltip.add(1, I18n.format(mainKey));
 		}
-		tooltip.add(I18n.format("gregtech.universal.tooltip.consume", VA[getTier()] / euPerVis, euPerVis));
+		tooltip.add(I18n.format("gregtech.universal.tooltip.consume",
+				VA[getTier()]/POConfig.visGeneratorEuPerVis,POConfig.visGeneratorEuPerVis));
 		tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]));
 		tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", this.energyContainer.getEnergyCapacity()));
 	}

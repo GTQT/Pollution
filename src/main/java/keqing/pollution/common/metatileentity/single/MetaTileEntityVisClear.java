@@ -8,6 +8,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.Textures;
+import keqing.pollution.POConfig;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -31,8 +32,8 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	public MetaTileEntityVisClear(ResourceLocation metaTileEntityId, int tier) {
 		super(metaTileEntityId, tier);
 		this.tier = tier;
-		this.VisTicks = tier * 0.004;
-		this.energyAmountPer = GTValues.V[tier];
+		this.VisTicks =  tier* POConfig.fluxScrubberMultiplier;
+		this.energyAmountPer = GTValues.VA[tier];
 		initializeInventory();
 	}
 

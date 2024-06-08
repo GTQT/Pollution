@@ -17,6 +17,7 @@ import gregtech.client.particle.VanillaParticleEffects;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.utils.TooltipHelper;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import keqing.pollution.POConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,8 +66,9 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
 		for (ItemStack stack : recoveryItems) {
 			stacksize += stack.getCount();
 		}
-		float pollution = (float) ((float) stacksize * pollutionMultiplier * 0.02);
-		AuraHelper.polluteAura(getWorld(), getPos(), (pollution), true);
+		float pollution = ((float) stacksize * pollutionMultiplier);
+		pollution*= POConfig.mufflerPollutionMultiplier;
+		AuraHelper.polluteAura(getWorld(), getPos(), pollution, POConfig.mufflerPollutionShowEffects);
 	}
 
 
