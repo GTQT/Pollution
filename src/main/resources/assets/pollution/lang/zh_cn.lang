@@ -81,6 +81,8 @@ metaitem.hot_catalyst_core.tooltip=§c熊熊烈焰§r
 metaitem.integration_catalyst_core.tooltip=§6百川东流§r
 metaitem.segregation_catalyst_core.tooltip=§a大风起兮§r
 metaitem.coking_catalyst_core.tooltip=§8§l焦油踽行§r
+
+metaitem.vis_checker.name=污染检测器
 #装具
 metaitem.wing_nano.name=魔导纳米飞行魂导器
 metaitem.wing_quantum.name=魔导量子飞行魂导器

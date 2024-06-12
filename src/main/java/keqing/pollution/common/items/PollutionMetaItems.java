@@ -4,7 +4,8 @@ import gregtech.api.items.metaitem.MetaItem;
 import keqing.pollution.common.items.armor.MetaArmor;
 
 public class PollutionMetaItems {
-	public static MetaItem<?>.MetaValueItem NANO_GOGGLES;
+	public static MetaItem<?>.MetaValueItem VIS_CHECKER;
+    public static MetaItem<?>.MetaValueItem NANO_GOGGLES;
 	public static MetaItem<?>.MetaValueItem WING_QUANTUM;
 	public static MetaItem<?>.MetaValueItem WING_NANO;
 	public static MetaItem<?>.MetaValueItem TEST;

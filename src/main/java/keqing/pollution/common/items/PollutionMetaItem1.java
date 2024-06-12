@@ -5,6 +5,7 @@ import gregtech.api.items.metaitem.StandardMetaItem;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 import keqing.pollution.common.CommonProxy;
+import keqing.pollution.common.items.behaviors.VisCheckerBehavior;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -93,6 +94,9 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		//封装灵气节点
 		PollutionMetaItems.PACKAGED_AURA_NODE = this.addItem(100, "packaged_aura_node").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(CommonProxy.Pollution_TAB);
 
+
+		//实用物品
+		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_TAB);
 	}
 
 }

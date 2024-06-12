@@ -18,6 +18,8 @@ import thaumcraft.api.aura.AuraHelper;
 
 import java.util.Random;
 
+import static keqing.pollution.POConfig.EntityPollutionEvent;
+
 @Mod.EventBusSubscriber(
 		modid = "pollution"
 )
@@ -34,7 +36,7 @@ public class EventLoader {
 
 	@SubscribeEvent
 	static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-		if (event.getEntity() instanceof EntityPlayer) {
+		if (EntityPollutionEvent&&event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 			Random rand = Pollution.RANDOM;
 			int randomNum = rand.nextInt(50000);
