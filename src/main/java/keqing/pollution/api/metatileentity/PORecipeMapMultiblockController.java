@@ -33,6 +33,7 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 	int visStorage;
 	int tier;
 	int visStorageMax;
+	int time;
 	boolean checkVis = false;
 	Material material;
 	//这里提供需要要素的接口
@@ -132,7 +133,9 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 	@Override
 	public void update() {
 		super.update();
-		if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier), true) > 0) {
+		time++;
+		if(time==20) if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier), true) > 0) {
+			time=0;
 			if (visStorage < visStorageMax) {
 				AuraHelper.drainVis(getWorld(), new BlockPos(aX, aY, aZ), (float) (tier * tier * 0.01), false);
 				visStorage += tier * tier;
