@@ -21,6 +21,7 @@ import java.util.List;
 public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	private final double VisTicks;
 	int tier;
+	int time;
 	private final long energyAmountPer;
 	private boolean isActive;
 
@@ -50,8 +51,8 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	public void update() {
 		super.update();
 
-		for (int time = 1; time <= 20; time++)
-			if (time == 20)
+		time++;
+		if (time == 20)
 				if (AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, true) > 0) {
 					if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer) {
 						energyContainer.removeEnergy(energyAmountPer);

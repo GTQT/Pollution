@@ -20,6 +20,7 @@ import java.util.List;
 
 public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
 	private final double VisTicks;
+	int time;
 	int tier;
 	private final long energyAmountPer;
 
@@ -32,6 +33,7 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
 		super(metaTileEntityId, tier);
 		this.VisTicks =  tier * POConfig.visProviderMultiplier;
 		this.energyAmountPer = GTValues.VA[tier];
+		this.tier=tier;
 		initializeInventory();
 	}
 
@@ -43,13 +45,13 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
 	@Override
 	public void update() {
 		super.update();
-		for (int time = 1; time <= 20; time++)
-			if (time == 20)
-				if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer&&AuraHelper.getVis(getWorld(),getPos())<200) {
-					energyContainer.removeEnergy(energyAmountPer);
-					AuraHelper.addVis(getWorld(), getPos(), (float) (VisTicks) * 10);
-					time = 1;
-				}
+		time++;
+		if (time == 20)
+			if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer&&AuraHelper.getVis(getWorld(),getPos())<200) {
+				energyContainer.removeEnergy(energyAmountPer);
+				AuraHelper.addVis(getWorld(), getPos(), (float) (VisTicks) * 10*tier);
+				time = 0;
+			}
 	}
 
 	@Override
