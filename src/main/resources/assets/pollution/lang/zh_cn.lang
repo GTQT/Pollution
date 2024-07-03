@@ -198,6 +198,12 @@ metaitem.rubber_slime.tooltip=擦不完的橡皮
 metaitem.packaged_aura_node.name=封装灵气节点
 
 #机器
+pollution.machine.mana_gen_lv.name=基础魔力发电机
+pollution.machine.mana_gen_mv.name=进阶魔力发电机
+pollution.machine.mana_gen_hv.name=涡轮魔力发电机
+pollution.machine.mana_gen_ev.name=脉冲魔力发电机
+pollution.machine.mana_gen_iv.name=爆喷魔力发电机
+
 pollution.machine.vis.lv.name=基础灵气发电机（§7LV§r）
 pollution.machine.vis.mv.name=进阶灵气发电机（§bMV§r）
 pollution.machine.vis.hv.name=涡轮灵气发电机（§6HV§r）
@@ -425,3 +431,6 @@ pollution.machine.node_washer.tooltip.5=清洗过程是随机的，时间可长�
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵
+
+#
+itemGroup.Pollution=污染

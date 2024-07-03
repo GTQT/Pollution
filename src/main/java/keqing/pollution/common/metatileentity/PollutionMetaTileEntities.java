@@ -5,6 +5,7 @@ import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
@@ -16,12 +17,10 @@ import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.block.metablocks.POTurbine;
 import keqing.pollution.common.metatileentity.multiblock.*;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityFluxMuffler;
+import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityTankHatch;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityVisHatch;
-import keqing.pollution.common.metatileentity.single.MetaTileEntitySolarPlate;
-import keqing.pollution.common.metatileentity.single.MetaTileEntityVisClear;
-import keqing.pollution.common.metatileentity.single.MetaTileEntityVisGenerator;
-import keqing.pollution.common.metatileentity.single.MetaTileEntityVisProvider;
+import keqing.pollution.common.metatileentity.single.*;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
@@ -69,9 +68,11 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityNodeWasher NODE_WASHER;
 	public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
 	public static MetaTileEntityTankHatch[] TANK_HATCH = new MetaTileEntityTankHatch[1];
+	public static MetaTileEntityManaHatch[] MANA_HATCH = new MetaTileEntityManaHatch[14];
 	public static MetaTileEntityLargeTurbine LARGE_MAGIC_TURBINE;
 	public static MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
 	public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
+	public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR =new SimpleGeneratorMetaTileEntity[6];
 
 	public static void initialization() {
 
@@ -137,6 +138,12 @@ public class PollutionMetaTileEntities {
 		LARGE_NODE_GENERATOR = registerMetaTileEntity(15963, new MetaTileEntityLargeNodeGenerator(gtqtcoreId("large_node_generator")));
 		NODE_WASHER = registerMetaTileEntity(15964, new MetaTileEntityNodeWasher(gtqtcoreId("node_washer")));
 
+		MANA_GENERATOR[1] = registerMetaTileEntity(15965, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_lv"), 1));
+		MANA_GENERATOR[2] = registerMetaTileEntity(15966, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_mv"), 2));
+		MANA_GENERATOR[3] = registerMetaTileEntity(15967, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_hv"), 3));
+		MANA_GENERATOR[4] = registerMetaTileEntity(15968, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_ev"), 4));
+		MANA_GENERATOR[5] = registerMetaTileEntity(15969, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_iv"), 5));
+
 		for (int i = 1; i <= 8; i++) {
 			String tierName = GTValues.VN[i].toLowerCase();
 			FLUX_MUFFLERS[i] = registerMetaTileEntity(16000 + i - 1, new MetaTileEntityFluxMuffler(gtqtcoreId("pollution_muffler_hatch." + tierName), i));
@@ -163,6 +170,11 @@ public class PollutionMetaTileEntities {
 			SOLAR_PLATE[kind * 3 - 1] = registerMetaTileEntity(16060 + kind * 3 - 1, new MetaTileEntitySolarPlate(
 					gtqtcoreId(String.format("solar_plate_%s.%s", 3, kind)), 3, kind, SOLAR_PLATE_III));
 
+		}
+
+		for (int i = 0; i < MANA_HATCH.length; i++) {
+			int tier = GTValues.LV + i;
+			MANA_HATCH[i] = registerMetaTileEntity(15800 + i, new MetaTileEntityManaHatch(gtqtcoreId(String.format("mana_hatch.%s", GTValues.VN[tier])), tier));
 		}
 	}
 }
