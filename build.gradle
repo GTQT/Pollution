@@ -119,6 +119,7 @@ dependencies {
     implementation "curse.maven:ctm-267602:2915363-deobf"
     runtimeOnly rfg.deobf("curse.maven:jei-238222:5101347")
     runtimeOnly rfg.deobf("curse.maven:thaumic-jei-285492:2705304")
+    implementation rfg.deobf(files("libs/Botania r1.10-364.4.jar"))
 
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
