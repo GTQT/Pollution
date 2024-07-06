@@ -7,6 +7,7 @@ import gregicality.multiblocks.api.render.GCYMTextures;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IControllable;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
@@ -22,17 +23,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import vazkii.botania.api.mana.IManaReceiver;
 import vazkii.botania.api.mana.ManaNetworkEvent;
 
 import java.util.List;
 
 public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch {
-    int mana;
+    int mana=0;
     int MAX_MANA;
     int tier;
-    int Update;
-    boolean addMana;
     public MetaTileEntityManaHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier=tier;
@@ -52,12 +53,13 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         builder.dynamicLabel(7, 50, () -> {
             return "Tier: " + this.getTier();
         }, 2302755);
-        builder.dynamicLabel(7, 70, () -> {
-            return "Mana: " + this.mana+" Max: " + this.MAX_MANA;
-        }, 2302755);
+        builder.widget((new AdvancedTextWidget(7, 70, this::addDisplayText, 2302755)).setMaxWidthLimit(181));
         return builder.build(this.getHolder(), entityPlayer);
     }
+    protected void addDisplayText(List<ITextComponent> textList) {
+        textList.add(new TextComponentString( "Mana: " + this.mana+" Max: " + this.MAX_MANA));
 
+    }
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (this.shouldRenderOverlay()) {
@@ -84,7 +86,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     public boolean canPartShare() {
         return false;
     }
-/*
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setInteger("mana", this.mana);
@@ -99,18 +101,16 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
 
     @Override
-	public void writeInitialSyncData(PacketBuffer buf) {
-		super.writeInitialSyncData(buf);
-		buf.writeInt(this.mana);
-	}
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        buf.writeInt(this.mana);
+    }
 
-	@Override
-	public void receiveInitialSyncData(PacketBuffer buf) {
-		super.receiveInitialSyncData(buf);
-		this.mana = buf.readInt();
-	}
-
- */
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        this.mana = buf.readInt();
+    }
 
     @Override
     public int getMaxMana() {
@@ -120,6 +120,11 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     @Override
     public int getMana() {
         return this.mana;
+    }
+
+    @Override
+    public int getTier() {
+        return this.tier;
     }
 
     @Override
@@ -149,3 +154,4 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         list.add(this);
     }
 }
+

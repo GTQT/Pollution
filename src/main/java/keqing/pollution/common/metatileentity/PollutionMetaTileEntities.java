@@ -63,6 +63,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityMagicAlloyBlastSmelter MAGIC_ALLOY_BLAST;
 	public static MetaTileEntityEssenceCollector ESSENCE_COLLECTOR;
 	public static MetaTileEntityMagicFusionReactor MAGIC_FUSION_REACTOR;
+	public static TESTMetaTileEntityLargeAssembler TEST_MANA;
 	public static MetaTileEntityNodeProducer NODE_PRODUCER;
 	public static MetaTileEntityLargeNodeGenerator LARGE_NODE_GENERATOR;
 	public static MetaTileEntityNodeWasher NODE_WASHER;
@@ -176,5 +177,7 @@ public class PollutionMetaTileEntities {
 			int tier = GTValues.LV + i;
 			MANA_HATCH[i] = registerMetaTileEntity(15800 + i, new MetaTileEntityManaHatch(gtqtcoreId(String.format("mana_hatch.%s", GTValues.VN[tier])), tier));
 		}
+
+		TEST_MANA = registerMetaTileEntity(15850, new TESTMetaTileEntityLargeAssembler(gtqtcoreId("test")));
 	}
 }
