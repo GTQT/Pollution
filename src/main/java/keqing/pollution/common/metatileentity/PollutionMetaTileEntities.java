@@ -16,10 +16,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.block.metablocks.POTurbine;
 import keqing.pollution.common.metatileentity.multiblock.*;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityFluxMuffler;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityTankHatch;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityVisHatch;
+import keqing.pollution.common.metatileentity.multiblockpart.*;
 import keqing.pollution.common.metatileentity.single.*;
 import net.minecraft.util.ResourceLocation;
 
@@ -70,6 +67,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
 	public static MetaTileEntityTankHatch[] TANK_HATCH = new MetaTileEntityTankHatch[1];
 	public static MetaTileEntityManaHatch[] MANA_HATCH = new MetaTileEntityManaHatch[14];
+	public static MetaTileEntityManaPoolHatch[] MANA_POOL_HATCH = new MetaTileEntityManaPoolHatch[14];
 	public static MetaTileEntityLargeTurbine LARGE_MAGIC_TURBINE;
 	public static MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
 	public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
@@ -176,6 +174,10 @@ public class PollutionMetaTileEntities {
 		for (int i = 0; i < MANA_HATCH.length; i++) {
 			int tier = GTValues.LV + i;
 			MANA_HATCH[i] = registerMetaTileEntity(15800 + i, new MetaTileEntityManaHatch(gtqtcoreId(String.format("mana_hatch.%s", GTValues.VN[tier])), tier));
+		}
+		for (int i = 0; i < MANA_POOL_HATCH.length; i++) {
+			int tier = GTValues.LV + i;
+			MANA_POOL_HATCH[i] = registerMetaTileEntity(15815 + i, new MetaTileEntityManaPoolHatch(gtqtcoreId(String.format("mana_pool_hatch.%s", GTValues.VN[tier])), tier));
 		}
 
 		TEST_MANA = registerMetaTileEntity(15850, new TESTMetaTileEntityLargeAssembler(gtqtcoreId("test")));

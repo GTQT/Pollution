@@ -18,6 +18,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import vazkii.botania.api.mana.IManaPool;
+import vazkii.botania.common.block.tile.mana.TilePool;
 
 public class MultiblockManaProvider implements  IProbeInfoProvider {
 
@@ -45,6 +47,15 @@ public class MultiblockManaProvider implements  IProbeInfoProvider {
                 }
 
             }
+        }
+         if(!world.isRemote && world.getTileEntity(iProbeHitData.getPos()) instanceof TilePool)
+        {
+            TilePool pool = (TilePool)world.getTileEntity(iProbeHitData.getPos());
+            iProbeInfo.progress(pool.getCurrentMana(), pool.manaCap, iProbeInfo.defaultProgressStyle()
+                    .suffix(" / " + TextFormattingUtil.formatNumbers(pool.manaCap) + " Mana")
+                    .filledColor(0xFFEEE600)
+                    .alternateFilledColor(0xFFEEE600)
+                    .borderColor(0xFF555555).numberFormat(mcjty.theoneprobe.api.NumberFormat.COMMAS));
         }
     }
 }

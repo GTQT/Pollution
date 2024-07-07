@@ -13,42 +13,45 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
-import keqing.pollution.api.utils.PollutionLog;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import vazkii.botania.api.mana.IManaPool;
 import vazkii.botania.api.mana.IManaReceiver;
-import vazkii.botania.api.mana.ManaNetworkEvent;
 
 import java.util.List;
 
-public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch {
+public class MetaTileEntityManaPoolHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch{
     int mana=0;
     int MAX_MANA;
     int tier;
-    public MetaTileEntityManaHatch(ResourceLocation metaTileEntityId, int tier) {
+    int speed;
+    public MetaTileEntityManaPoolHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier=tier;
-        this.MAX_MANA= (int) (Math.pow(2,tier)*10000);
+        this.MAX_MANA= (int) (Math.pow(2,tier)*100000);
+        this.speed = (int) (Math.pow(2,tier)*128);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
-        return new MetaTileEntityManaHatch(metaTileEntityId, getTier());
+        return new MetaTileEntityManaPoolHatch(metaTileEntityId, getTier());
     }
 
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.defaultBuilder();
         builder.dynamicLabel(7, 30, () -> {
-            return "Mana Hatch";
+            return "Mana Pool Hatch";
         }, 2302755);
         builder.dynamicLabel(7, 50, () -> {
             return "Tier: " + this.getTier();
@@ -58,6 +61,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     }
     protected void addDisplayText(List<ITextComponent> textList) {
         textList.add(new TextComponentString( "Mana: " + this.mana+" Max: " + this.MAX_MANA));
+        textList.add(new TextComponentString( "Speed: " + this.speed));
 
     }
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
@@ -81,6 +85,39 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
             }
         }
 
+    }
+
+    @Override
+    public void update() {
+        if(!getWorld().isRemote)
+        {
+            super.update();
+            EnumFacing[] var4 = EnumFacing.VALUES;
+            int var5 = var4.length;
+            for(int var6 = 0; var6 < var5; ++var6)
+            {
+                EnumFacing dir = var4[var6];
+                if(getWorld().getTileEntity(this.getPos().offset(dir)) instanceof IManaReceiver && !(GTUtility.getMetaTileEntity(getWorld(),this.getPos().offset(dir)) instanceof MetaTileEntityManaPoolHatch))
+                {
+
+                    IManaReceiver manaReceiver = (IManaReceiver)getWorld().getTileEntity(this.getPos().offset(dir));
+                    int output=Math.min(Math.max(0,this.mana),speed);
+                    boolean isf = manaReceiver.isFull();
+                    if(GTUtility.getMetaTileEntity(getWorld(),this.getPos().offset(dir)) instanceof MetaTileEntityManaHatch)
+                    {
+                        MetaTileEntityManaHatch ManaHatch = (MetaTileEntityManaHatch)GTUtility.getMetaTileEntity(getWorld(),this.getPos().offset(dir));
+                        isf = ManaHatch.isFull();
+                    }
+                    if(!isf && output>0)
+                    {
+
+                        this.consumeMana(-output);
+                        manaReceiver.recieveMana(output);
+                    }
+
+                }
+            }
+        }
     }
 
     public boolean canPartShare() {
@@ -114,7 +151,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
     @Override
     public int getMaxMana() {
-        return MAX_MANA;
+        return this.MAX_MANA;
     }
 
     @Override
@@ -129,30 +166,26 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
     @Override
     public boolean consumeMana(int amount) {
-        if(mana>amount&&mana-amount>0)
+        if(!this.isFull() || amount<0)
         {
-            mana-=amount;
+            int amounts = this.getMana() + amount;
+            this.mana = Math.max(0, Math.min(amounts, this.MAX_MANA));
             return true;
         }
         return false;
     }
 
+
     public boolean isFull() {
         return mana>=MAX_MANA;
     }
 
-    public void reciveMana(int amount) {
-
-        if(!isFull())mana += amount * getTier();
-        this.mana = Math.max(this.mana,this.getMaxMana());
-    }
-
     public MultiblockAbility<IManaHatch> getAbility() {
-        return POMultiblockAbility.MANA_HATCH;
+        return POMultiblockAbility.MANA_POOL_HATCH;
     }
 
     public void registerAbilities(List<IManaHatch> list) {
         list.add(this);
     }
-}
 
+}
