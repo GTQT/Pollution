@@ -72,7 +72,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
 	public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
 	public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR =new SimpleGeneratorMetaTileEntity[6];
-
+	public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
 	public static void initialization() {
 
 		for (int i = 0; i <= 4; i++) {
@@ -181,5 +181,6 @@ public class PollutionMetaTileEntities {
 		}
 
 		TEST_MANA = registerMetaTileEntity(15850, new TESTMetaTileEntityLargeAssembler(gtqtcoreId("test")));
+		ENDOFLAME_ARRAY = registerMetaTileEntity(15851,new MetaTileEntityEndoflameArray(gtqtcoreId("endoflame_array")));
 	}
 }
