@@ -12,6 +12,7 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
@@ -24,9 +25,11 @@ import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
@@ -59,7 +62,8 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                     {
                         num += inputInventory.getStackInSlot(i).getCount();
                     }
-                    int time = GameRegistry.getFuelValue(inputInventory.getStackInSlot(i));
+                    ItemStack stack = inputInventory.getStackInSlot(i);
+                    int time = TileEntityFurnace.getItemBurnTime(stack);
                     if(time>0)
                     {
                         inputInventory.extractItem(i,1,false);
