@@ -276,6 +276,7 @@ pollution.machine.flux_clear.hv.name=空气过滤机（§6HV§r）
 pollution.machine.flux_clear.ev.name=大型空气过滤机（§5EV§r）
 pollution.machine.flux_clear.iv.name=大型空气过滤机（§1IV§r）
 pollution.flux_clear.tire=§5结构等级:%s 单次(1tick)污染清洁量:%s Vis
+pollution.flux_clear.amount=§5清理范围半径：%s 区块
 pollution.flux_clear.tire1=%s
 pollution.flux_clear.flux=污染剩余:%s Vis
 pollution.flux_clear.tooltip=§b专业空气清洁

@@ -7,6 +7,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.blocks.PollutionBlocksInit;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
+import keqing.pollution.dimension.biome.POBiomeHandler;
 import keqing.pollution.dimension.worldgen.PODimensionManager;
 import keqing.pollution.dimension.worldgen.PODimensionType;
 import keqing.pollution.integration.POIntegration;

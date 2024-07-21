@@ -83,6 +83,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
 	protected void addDisplayText(List<ITextComponent> textList) {
 		super.addDisplayText(textList);
 		textList.add(new TextComponentTranslation("pollution.flux_clear.tire", tier, VisTicks));
+		textList.add(new TextComponentTranslation("pollution.flux_clear.amount", tier));
 	}
 
 	@Nonnull

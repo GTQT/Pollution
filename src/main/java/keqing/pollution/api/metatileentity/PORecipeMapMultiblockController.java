@@ -33,7 +33,6 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 	int visStorage;
 	int tier;
 	int visStorageMax;
-	int time;
 	boolean checkVis = false;
 	Material material;
 	//这里提供需要要素的接口
@@ -48,7 +47,6 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 	//定义储罐
 
 	private static Map<Material, FluidStack> STACK_MAP = new HashMap<>();
-
 
 	//在此处添加你需要的要素 格式FluidStack xxx_STACK = infused_axx.getFluid(1);
 	static final FluidStack AIR_STACK = infused_air.getFluid(1);
@@ -133,15 +131,13 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 	@Override
 	public void update() {
 		super.update();
-		time++;
-		if(time==20) if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier), true) > 0) {
-			time=0;
+
+		if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier), true) > 0) {
 			if (visStorage < visStorageMax) {
 				AuraHelper.drainVis(getWorld(), new BlockPos(aX, aY, aZ), (float) (tier * tier * 0.01), false);
 				visStorage += tier * tier;
 			}
 		}
-		if (isActive()) if (visStorage > 10) visStorage -= tier;
 	}
 
 	@Override
@@ -235,23 +231,14 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 		}
 
 		protected void updateRecipeProgress() {
-			if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-				this.drawEnergy(this.recipeEUt, false);
-				if (!enough()) this.maxProgressTime++;
-
+			if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, false)) {
 				if (enough() && isCheckVis(material, true)) {
+					if (visStorage > 10) visStorage -= tier;
 					if (++this.progressTime > this.maxProgressTime) {
 						this.completeRecipe();
 					}
 				}
-				if (this.hasNotEnoughEnergy && this.getEnergyInputPerSecond() > 19L * (long) this.recipeEUt) {
-					this.hasNotEnoughEnergy = false;
-				}
-			} else if (this.recipeEUt > 0) {
-				this.hasNotEnoughEnergy = true;
-				this.decreaseProgress();
 			}
-
 		}
 	}
 }
