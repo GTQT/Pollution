@@ -48,6 +48,7 @@ public class PollutionMaterials {
 	public static Material manasteel;
 	public static Material salismundus;
 	public static Material mansussteel;
+	public static Material keqinggold;
 	//man what can I say
 	public static Material kobemetal;
 	//催化剂
