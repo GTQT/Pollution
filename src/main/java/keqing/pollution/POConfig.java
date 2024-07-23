@@ -2,13 +2,16 @@ package keqing.pollution;
 import net.minecraftforge.common.config.Config;
 @Config(modid = Pollution.MODID)
 public class POConfig {
+    @Config.Comment("机器污染开关")
+    public static boolean enablePollution =true;
+
     @Config.Comment("机器爆炸污染")
     public static boolean ExplosionPollution =true;
 
-    @Config.Comment("玩家污染DEBUFF")
+    @Config.Comment("玩家污染DEBUFF(包括泥土变沙子，药水效果)")
     public static boolean EntityPollutionEvent =true;
 
-    @Config.Comment("消声仓污染倍率")
+    @Config.Comment("消声仓污染倍率(0为无污染)")
     public static float mufflerPollutionMultiplier =0.02f;
 
     @Config.Comment("是否开启消声仓污染特效")

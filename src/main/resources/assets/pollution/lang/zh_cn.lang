@@ -211,8 +211,8 @@ pollution.machine.vis.ev.name=爆燃灵气发电机（§5EV§r）
 pollution.machine.vis.iv.name=爆喷灵气发电机（§1IV§r）
 gregtech.universal.tooltip.consume=§6灵气转换:污染(1:0.1)量:%s Vis 单位灵气产值:%s EU
 
-pollution.muffler.pollution_tooltip1=§6每运行十次配方会根据污染率产生一次污染（基础倍率为0.1）
-pollution.muffler.pollution_tooltip2=§6污染率: %s
+pollution.muffler.pollution_tooltip1=§6每tick会根据污染率产生一次污染（基础污染为0.001）
+pollution.muffler.pollution_tooltip2=§6污染率: %s（实际污染为基础污染*污染率）
 pollution.machine.pollution_muffler_hatch.lv.name=简易消声仓（§7LV§r）
 pollution.machine.pollution_muffler_hatch.mv.name=简易消声仓（§bMV§r）
 pollution.machine.pollution_muffler_hatch.hv.name=简易消声仓（§6HV§r）
