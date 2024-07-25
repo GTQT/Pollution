@@ -162,6 +162,14 @@ public class FirstDegreeMaterials {
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.blast(2700, LOW)
 				.build();
+		//泰拉钢
+		PollutionMaterials.Terrasteel = new Material.Builder(getMaterialsId(), gregtechId("terrasteel"))
+				.color(0x58FF0B)
+				.ingot().fluid()
+				.components(Iron, 4,Carbon,4,EnderPearl,4, mana, 3)
+				.iconSet(METALLIC)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.build();
 
 		//牢大 想你了
 		PollutionMaterials.kobemetal = new Material.Builder(getMaterialsId(), gregtechId("kobemetal"))

@@ -32,6 +32,8 @@ public class POTextures {
 	public static SimpleOverlayRenderer SPELL_PRISM_EARTH;
 	public static SimpleOverlayRenderer VOID_PRISM;
 	public static SimpleOverlayRenderer MAGIC_BATTERY;
+	public static SimpleOverlayRenderer TERRA_WATERTIGHT_CASING;
+
 
 	public static void init() {
 		AIR = new SimpleOverlayRenderer("machines/solars/airside");
@@ -56,6 +58,7 @@ public class POTextures {
 		SPELL_PRISM_EARTH = new SimpleOverlayRenderer("magicblock/spell_prism_earth");
 		VOID_PRISM = new SimpleOverlayRenderer("magicblock/void_prism");
 		MAGIC_BATTERY = new SimpleOverlayRenderer("magicblock/magic_battery");
+		TERRA_WATERTIGHT_CASING = new SimpleOverlayRenderer("botblock/terra_watertight_casing");
 	}
 
 	public static void register(TextureMap textureMap) {
