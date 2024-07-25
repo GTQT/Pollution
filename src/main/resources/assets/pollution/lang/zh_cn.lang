@@ -349,6 +349,10 @@ pollution.machine.magic_brewery.tooltip=适量饮酒也有害健康哦
 pollution.machine.magic_distillery.tooltip=你说得对，但是我们的整合包正在蒸蒸日上！
 pollution.machine.magic_green_house.tooltip=作为魔法使，我们只生产温室里的食人花
 pollution.machine.magic_battery.tooltip=§5纵使神曈黯淡，亦可再造鸿蒙§r
+#植魔多方块
+pollution.machine.bot_distillery.name=植物魔馏塔
+
+pollution.machine.bot_distillery.tooltip1=生活碾压我，只会让我变得扁平舒适
 
 #魔法电池
 pollution.eke.count=魔导核心：%s 线圈等级：%s

@@ -36,12 +36,12 @@ public class TESTMetaTileEntityLargeAssembler extends POManaMultiblock {
     public TESTMetaTileEntityLargeAssembler(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, determineRecipeMaps());
     }
-
+    //工作配方
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new TESTMetaTileEntityLargeAssembler(this.metaTileEntityId);
     }
-
+    //方块注册
     @Override
     protected  BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start(FRONT, UP, RIGHT)
@@ -58,18 +58,18 @@ public class TESTMetaTileEntityLargeAssembler extends POManaMultiblock {
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1)))
                 .where('C', states(getCasingState2()))
                 .where('A', air())
-                .where('#', any())
+                .where(' ', any())
                 .build();
     }
 
     private static IBlockState getCasingState() {
         return GCYMMetaBlocks.LARGE_MULTIBLOCK_CASING.getState(BlockLargeMultiblockCasing.CasingType.ASSEMBLING_CASING);
     }
-
+    //设置外壳方块1
     private static IBlockState getCasingState2() {
         return MetaBlocks.TRANSPARENT_CASING.getState(BlockGlassCasing.CasingType.TEMPERED_GLASS);
     }
-
+    //设置外壳方块2
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
         return GCYMTextures.ASSEMBLING_CASING;
