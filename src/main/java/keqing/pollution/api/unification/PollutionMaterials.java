@@ -68,6 +68,8 @@ public class PollutionMaterials {
 	public static Material sunnarium;
 	public static Material whitemansus;
 	public static Material blackmansus;
+	public static Material Terrasteel;
+
 
 	public PollutionMaterials() {
 	}

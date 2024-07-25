@@ -17,6 +17,7 @@ public class PollutionMetaBlocks {
 	public static POCoilBlock WIRE_COIL;
 	public static POFusionReactor FUSION_REACTOR;
 	public static POGlass GLASS;
+	public static POBotBlock BOT_BLOCK;
 
 	private PollutionMetaBlocks() {
 	}
@@ -38,6 +39,9 @@ public class PollutionMetaBlocks {
 		FUSION_REACTOR.setRegistryName("fusion_reactor");
 		GLASS = new POGlass();
 		GLASS.setRegistryName("glass");
+
+		BOT_BLOCK = new POBotBlock();
+		BOT_BLOCK.setRegistryName("bot_block");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -48,6 +52,7 @@ public class PollutionMetaBlocks {
 		registerItemModel(WIRE_COIL);
 		registerItemModel(FUSION_REACTOR);
 		registerItemModel(GLASS);
+		registerItemModel(BOT_BLOCK);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -58,7 +58,7 @@ public class TESTMetaTileEntityLargeAssembler extends POManaMultiblock {
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1)))
                 .where('C', states(getCasingState2()))
                 .where('A', air())
-                .where(' ', any())
+                .where('#', any())
                 .build();
     }
 
