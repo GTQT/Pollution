@@ -1,10 +1,7 @@
 package keqing.pollution.api.unification;
 
 import gregtech.api.unification.material.Material;
-import keqing.pollution.api.unification.materials.CatalystMaterials;
-import keqing.pollution.api.unification.materials.CompoundAspectMaterials;
-import keqing.pollution.api.unification.materials.FirstDegreeMaterials;
-import keqing.pollution.api.unification.materials.PollutionElementMaterials;
+import keqing.pollution.api.unification.materials.*;
 
 public class PollutionMaterials {
 	//基础六要素
@@ -48,6 +45,7 @@ public class PollutionMaterials {
 	public static Material manasteel;
 	public static Material salismundus;
 	public static Material mansussteel;
+	public static Material keqinggold;
 	//man what can I say
 	public static Material kobemetal;
 	//催化剂
@@ -69,6 +67,38 @@ public class PollutionMaterials {
 	public static Material whitemansus;
 	public static Material blackmansus;
 
+	//刻金线
+	public static Material sulfo_plumbic_salt;
+	public static Material magical_sulfo_plumbic_salt;
+	public static Material alchemical_residue1;
+	public static Material alchemical_vapor1;
+	public static Material alchemical_residue2;
+	public static Material alchemical_vapor2;
+	public static Material alchemical_residue3;
+	public static Material alchemical_vapor3;
+	public static Material alchemical_residue4;
+	public static Material alchemical_vapor4;
+	public static Material alchemical_residue5;
+	public static Material alchemical_vapor5;
+	public static Material alchemical_residue6;
+	public static Material alchemical_vapor6;
+	public static Material magical_tin_solution;
+	public static Material magical_stannous_sulfate_solution;
+	public static Material highmana_stannous_sulfate;
+	public static Material impure_mercuric_salt_solution;
+	public static Material mercuric_salt_solution;
+	public static Material magic_activated_iron_chloride_solution;
+	public static Material magic_activated_ferrous_chloride_ethanol_solution;
+	public static Material purified_activated_ferrous_chloride_ethanol_solution;
+	public static Material purified_activated_ferrous_chloride;
+	public static Material syrmorite_doped_magic_water_solution;
+	public static Material unformed_embryo_magic_water;
+	public static Material embryo_magic_water;
+	public static Material unstable_dimensional_silver;
+	public static Material impure_hyperdimensional_silver;
+	public static Material hyperdimensional_silver;
+	public static Material dimensional_transforming_agent;
+
 	public PollutionMaterials() {
 	}
 
@@ -77,5 +107,6 @@ public class PollutionMaterials {
 		FirstDegreeMaterials.register();
 		CatalystMaterials.register();
 		CompoundAspectMaterials.register();
+		KeqingChainMaterials.register();
 	}
 }

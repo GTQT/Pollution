@@ -1,5 +1,6 @@
 package keqing.pollution.loaders.recipes;
 
+import com.cleanroommc.groovyscript.compat.mods.botania.Botania;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
@@ -25,6 +26,9 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.items.ItemsTC;
+import vazkii.botania.api.BotaniaAPI;
+import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.item.material.ItemManaResource;
 
 import static gregtech.api.unification.material.Materials.*;
 
@@ -568,5 +572,19 @@ public class ThaumcraftRecipes {
 				"gemExquisiteOpal",
 				new ItemStack(ItemsTC.voidSeed),
 				new ItemStack(BlocksTC.crystalEntropy)));
+
+		//打粉 希望有用？
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(ModItems.manaResource)
+				.output(OrePrefix.dust, PollutionMaterials.manasteel)
+				.duration(10)
+				.EUt(2)
+				.buildAndRegister();
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(ItemsTC.ingots)
+				.output(OrePrefix.dust, PollutionMaterials.thaumium)
+				.duration(10)
+				.EUt(2)
+				.buildAndRegister();
 	}
 }

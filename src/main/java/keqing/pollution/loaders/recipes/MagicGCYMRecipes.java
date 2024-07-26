@@ -486,6 +486,26 @@ public class MagicGCYMRecipes {
 				"oreCrystalEarth",
 				MetaTileEntities.ALLOY_SMELTER[MV].getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
+		//工业注魔主方块
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "industrial_infusion"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.INDUSTRIAL_INFUSION.getStackForm(),
+				12,
+				new AspectList().add(Aspect.MAGIC, 250).add(Aspect.AURA, 250).add(Aspect.VOID, 64).add(Aspect.MIND, 128).add(Aspect.CRAFT, 128),
+				new ItemStack(BlocksTC.infusionMatrix),
+				"blockValonite",
+				new ItemStack(BlocksTC.matrixCost),
+				new ItemStack(BlocksTC.matrixSpeed),
+				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+		        new ItemStack(ItemsTC.causalityCollapser),
+				PollutionMetaBlocks.FUSION_REACTOR.getItemVariant(POFusionReactor.FusionBlockType.FRAME_V),
+				PollutionMetaBlocks.FUSION_REACTOR.getItemVariant(POFusionReactor.FusionBlockType.COMPOSE_IV)));
+
 		//节点机、聚变主方块
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "node_producer"), new InfusionRecipe(
 				"INFUSION@2",
@@ -1303,6 +1323,18 @@ public class MagicGCYMRecipes {
 				new ItemStack(ItemsTC.visResonator),
 				new ItemStack(ItemsTC.morphicResonator)));
 		//管道
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-bronze"), new ShapedArcaneRecipe(
+				new ResourceLocation(""),
+				"FIRSTSTEPS@2",
+				25,
+				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
+				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.BRONZE_PIPE),
+				"BBB",
+				"ACA",
+				"BBB",
+				'A', "plateMansussteel",
+				'B', "plateBronze",
+				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.BRONZE_PIPE)));
 		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-steel"), new ShapedArcaneRecipe(
 				new ResourceLocation(""),
 				"FIRSTSTEPS@2",
@@ -1352,6 +1384,18 @@ public class MagicGCYMRecipes {
 				'B', "plateTungstenSteel",
 				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.TUNGSTENSTEEL_PIPE)));
 		//齿轮
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_bronze"), new ShapedArcaneRecipe(
+				new ResourceLocation(""),
+				"FIRSTSTEPS@2",
+				25,
+				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
+				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.BRONZE_GEARBOX),
+				"BBB",
+				"ACA",
+				"BBB",
+				'A', "plateMansussteel",
+				'B', "plateBronze",
+				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.BRONZE_GEARBOX)));
 		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_steel"), new ShapedArcaneRecipe(
 				new ResourceLocation(""),
 				"FIRSTSTEPS@2",
