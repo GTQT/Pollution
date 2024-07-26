@@ -66,9 +66,11 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
 		for (ItemStack stack : recoveryItems) {
 			stacksize += stack.getCount();
 		}
-		float pollution = ((float) stacksize * pollutionMultiplier);
-		pollution*= POConfig.mufflerPollutionMultiplier;
-		AuraHelper.polluteAura(getWorld(), getPos(), pollution, POConfig.mufflerPollutionShowEffects);
+		if(POConfig.enablePollution) {
+			float pollution = ((float) stacksize * pollutionMultiplier);
+			pollution *= POConfig.mufflerPollutionMultiplier;
+			AuraHelper.polluteAura(getWorld(), getPos(), pollution, POConfig.mufflerPollutionShowEffects);
+		}
 	}
 
 
@@ -115,7 +117,7 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
 		super.addInformation(stack, player, tooltip, advanced);
 		tooltip.add(I18n.format("gregtech.machine.muffler_hatch.tooltip1"));
 		tooltip.add(I18n.format("pollution.muffler.pollution_tooltip1"));
-		tooltip.add(I18n.format("pollution.muffler.pollution_tooltip2", 100.0 * pollutionMultiplier));
+		tooltip.add(I18n.format("pollution.muffler.pollution_tooltip2",pollutionMultiplier));
 		tooltip.add(I18n.format("gregtech.universal.enabled"));
 		tooltip.add(TooltipHelper.BLINKING_RED + I18n.format("gregtech.machine.muffler_hatch.tooltip2"));
 	}

@@ -141,10 +141,10 @@ public class MetaTileEntitySolarPlate extends TieredMetaTileEntity {
 
 	public boolean checkNaturalLighting() {
 
-		if (kind == 2) return true;
+		if (kind == 2||kind==4) return true;
 		if (!this.getWorld().isDaytime())
 			return false;
-		if(kind==3||kind==4)return true;
+		if(kind==3)return true;
 		for (BlockPos pos : BlockPos.getAllInBox(this.getPos().up(8).offset(this.frontFacing.rotateY(), 3),
 				this.getPos().up(8).offset(this.getFrontFacing().rotateYCCW(), 3).offset(this.getFrontFacing().getOpposite(), 6))) {
 			if (!this.getWorld().canSeeSky(pos.up())) {
