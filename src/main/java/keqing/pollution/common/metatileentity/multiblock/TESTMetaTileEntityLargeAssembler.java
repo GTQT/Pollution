@@ -4,7 +4,9 @@ import static gregtech.api.util.RelativeDirection.*;
 
 import java.util.List;
 
+import gregicality.multiblocks.api.metatileentity.GCYMMultiblockAbility;
 import keqing.pollution.api.metatileentity.POManaMultiblock;
+import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -53,9 +55,10 @@ public class TESTMetaTileEntityLargeAssembler extends POManaMultiblock {
                 .aisle("XXX", "XAX", "#XX")
                 .aisle("XXX", "XXX", "XXX")
                 .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(40)
-                        .or(autoAbilities(false, true, true, true, true, true, true))
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1)))
+                .where('X', states(getCasingState()).setMinGlobalLimited(50)
+                        .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1))
+                        .or(abilities(GCYMMultiblockAbility.PARALLEL_HATCH).setExactLimit(1))
+                        .or(autoAbilities()))
                 .where('C', states(getCasingState2()))
                 .where('A', air())
                 .where('#', any())

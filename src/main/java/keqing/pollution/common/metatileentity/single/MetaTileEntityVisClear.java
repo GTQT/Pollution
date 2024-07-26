@@ -50,20 +50,14 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	@Override
 	public void update() {
 		super.update();
-
-		time++;
-		if (time == 20)
-				if (AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, true) > 0) {
-					if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer) {
-						energyContainer.removeEnergy(energyAmountPer);
-						isActive = true;
-						{
-							AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks * 20, false);
-							time = 1;
-						}
-
-					} else isActive = false;
-				}
+		if (AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, true) > 0) {
+			if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer) {
+				energyContainer.removeEnergy(energyAmountPer);
+				isActive = true;
+				AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, false);
+				time = 1;
+			} else isActive = false;
+		}
 	}
 
 	public boolean isActive() {

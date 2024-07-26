@@ -48,19 +48,6 @@ public abstract  class POManaMultiblock extends MultiMapMultiblockController imp
     }
 
     @Override
-    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn,
-                                               boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut,
-                                               boolean checkMuffler) {
-        TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn,
-                checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
-        if (isMana())
-            predicate = predicate
-                    .or(abilities(POMultiblockAbility.MANA_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
-                    .or(abilities(GCYMMultiblockAbility.PARALLEL_HATCH).setMaxGlobalLimited(1).setPreviewCount(1));
-        return predicate;
-    }
-
-    @Override
     public void addInformation(ItemStack stack,  World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         if (isParallel())
