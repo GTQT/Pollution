@@ -24,5 +24,5 @@ public class Elements {
 	public static final Element Su = add(1, 8, -1, null, "Sunnarium", "Su", false);
 	public static final Element Wma = add(1, 9, -1, null, "Whitemansus", "Wma", false);
 	public static final Element Bma = add(1, 10, -1, null, "Blackmansus", "Bma", false);
-	public static final Element Kq = add(1, 11, -1,  null, "Keqinggold", "Kq", false);
+	public static final Element Kqt = add(1, 11, -1,  null, "Keqinggold", "Kqt", false);
 }

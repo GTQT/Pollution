@@ -169,7 +169,7 @@ public class FirstDegreeMaterials {
 				.color(0xFFD700)
 				.fluid().ingot()
 				.iconSet(SHINY)
-				.element(Elements.Kq)
+				.element(Elements.Kqt)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
 				.build();
 
