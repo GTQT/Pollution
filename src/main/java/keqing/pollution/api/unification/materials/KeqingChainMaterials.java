@@ -64,51 +64,51 @@ public class KeqingChainMaterials {
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_residue1 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue1"))
+		PollutionMaterials.alchemical_residue_1 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue_1"))
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_vapor1 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor1"))
+		PollutionMaterials.alchemical_vapor_1 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor_1"))
 				.color(0xFEFE7D)
 				.fluid()
 				.build();
-		PollutionMaterials.alchemical_residue2 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue2"))
+		PollutionMaterials.alchemical_residue_2 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue_2"))
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_vapor2 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor2"))
+		PollutionMaterials.alchemical_vapor_2 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor_2"))
 				.color(0xFEFE7D)
 				.fluid()
 				.build();
-		PollutionMaterials.alchemical_residue3 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue3"))
+		PollutionMaterials.alchemical_residue_3 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue_3"))
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_vapor3 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor3"))
+		PollutionMaterials.alchemical_vapor_3 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor_3"))
 				.color(0xFEFE7D)
 				.fluid()
 				.build();
-		PollutionMaterials.alchemical_residue4 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue4"))
+		PollutionMaterials.alchemical_residue_4 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue_4"))
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_vapor4 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor4"))
+		PollutionMaterials.alchemical_vapor_4 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor_4"))
 				.color(0xFEFE7D)
 				.fluid()
 				.build();
-		PollutionMaterials.alchemical_residue5 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue5"))
+		PollutionMaterials.alchemical_residue_5 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue_5"))
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_vapor5 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor5"))
+		PollutionMaterials.alchemical_vapor_5 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor_5"))
 				.color(0xFEFE7D)
 				.fluid()
 				.build();
-		PollutionMaterials.alchemical_residue6 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue6"))
+		PollutionMaterials.alchemical_residue_6 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_residue_6"))
 				.color(0xFEFE7D)
 				.dust()
 				.build();
-		PollutionMaterials.alchemical_vapor6 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor6"))
+		PollutionMaterials.alchemical_vapor_6 = new Material.Builder(getMaterialsId(), gregtechId("alchemical_vapor_6"))
 				.color(0xFEFE7D)
 				.fluid()
 				.build();

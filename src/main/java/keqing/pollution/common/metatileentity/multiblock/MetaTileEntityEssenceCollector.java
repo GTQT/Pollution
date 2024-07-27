@@ -49,16 +49,15 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.blocks.BlocksTC;
+import thaumcraft.api.items.ItemsTC;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Math.log;
 import static java.lang.Math.pow;
@@ -251,13 +250,32 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 					&& this.energyContainer.getEnergyStored() > this.energyContainer.getInputVoltage()
 					&& this.energyContainer.getInputVoltage() >= EUt) {
 
-				this.type = MetaTileEntityEssenceCollector.materialMap.get(this.getInputInventory().getStackInSlot(0).getItem());
+				//this.type = MetaTileEntityEssenceCollector.materialMap.get(this.getInputInventory().getStackInSlot(0).getItem());
 				this.isFocused = true;
 				if (this.outputFluidInventory != null && this.outputFluidInventory.getTanks() >= finalSpeedPerTick) {
-					this.energyContainer.changeEnergy(this.energyContainer.getInputVoltage());
-					GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(type.getFluid(finalSpeedPerTick * 3)));
+					this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
+					switch (Objects.requireNonNull(this.getInputInventory().getStackInSlot(0).getTranslationKey())){
+						case "tile.crystal_aer":
+							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_air.getFluid(finalSpeedPerTick * 3)));
+							break;
+						case "tile.crystal_ignis":
+							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_fire.getFluid(finalSpeedPerTick * 3)));
+							break;
+						case "tile.crystal_terra":
+							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_earth.getFluid(finalSpeedPerTick * 3)));
+							break;
+						case "tile.crystal_aqua":
+							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_water.getFluid(finalSpeedPerTick * 3)));
+							break;
+						case "tile.crystal_ordo":
+							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_order.getFluid(finalSpeedPerTick * 3)));
+							break;
+						case "tile.crystal_perditio":
+							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick * 3)));
+							break;
+					}
 				}
-			} else if (this.energyContainer.getEnergyStored() > 480 && this.inputInventory.getStackInSlot(0).isEmpty()) {
+			} else if (this.energyContainer.getEnergyStored() > this.energyContainer.getInputVoltage() && this.inputInventory.getStackInSlot(0).isEmpty()) {
 				if (this.outputFluidInventory != null && this.outputFluidInventory.getTanks() >= finalSpeedPerTick) {
 					isFocused = false;
 					this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
