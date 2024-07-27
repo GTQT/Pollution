@@ -15,7 +15,7 @@ public class KeqingChainMaterials {
 	public KeqingChainMaterials() {
 	}
 
-	private static int startId = 16400;
+	private static int startId = 16700;
 	private static final int END_ID = startId + 100;
 
 	private static int getMaterialsId() {
