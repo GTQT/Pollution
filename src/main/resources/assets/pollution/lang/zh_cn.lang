@@ -334,6 +334,7 @@ pollution.machine.magic_chemical_reactor.name="空忆级"魔导化学催化控�
 pollution.machine.magic_green_house.name=魔导植物精华淬炼仪
 pollution.machine.industrial_infusion.name=魔导自动工业注魔矩阵
 pollution.machine.infused_exchange.name=魔导要素转换矩阵
+pollution.machine.bot_distillery.name=植物精华淬炼塔
 
 pollution.machine.magic_bender.tooltip=生活碾压我，只会让我变得扁平舒适
 pollution.machine.magic_centrifuge.tooltip=旅行者，你知道风元素有几种元素反应吗
