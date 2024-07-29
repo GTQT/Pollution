@@ -102,12 +102,13 @@ public class MetaTileEntityBotDistillery extends POManaMultiblock implements IBl
                         .or(abilities(GCYMMultiblockAbility.PARALLEL_HATCH).setExactLimit(1))//必须要的仓 限定1及可
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1)))//必须要的仓 限定1及可
                 .where('Y', states(getCasingState2()))
-                .where('M', metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
+                .where('M',states(getCasingState())
+                        .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
                         .filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch)
                                 && !(mte instanceof MetaTileEntityMEOutputHatch)
                                 && !(mte instanceof MetaTileEntityPlusMultiFluidHatch))
                         .toArray(MetaTileEntity[]::new))
-                        .setMinLayerLimited(1).setMaxLayerLimited(1))
+                        .setMinLayerLimited(1).setMaxLayerLimited(1)))
                 .where('Z', states(getCasingState3()))
                 .where('_', any())
                 .build();
