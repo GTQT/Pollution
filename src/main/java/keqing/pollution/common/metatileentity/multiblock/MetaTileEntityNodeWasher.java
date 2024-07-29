@@ -21,6 +21,7 @@ import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.block.metablocks.POTurbine;
+import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -62,6 +63,9 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
 	private String infusedType;
 	//最高洗点数值
 	private int maxInfusedValue;
+	//计时器，洗点时间
+	private int timer = 0;
+	private int timeCost;
 	//六种流体
 	private final FluidStack INFUSED_AIR = PollutionMaterials.infused_air.getFluid(1);
 	private final FluidStack INFUSED_FIRE = PollutionMaterials.infused_fire.getFluid(1);
@@ -91,6 +95,9 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
 		//计算最高洗点数值
 		int EUtTier = ceil(log((double) this.energyContainer.getInputVoltage() / 32) / log(4) + 1);
 		maxInfusedValue = coilLevel * EUtTier * 25;
+		//首先如果输入仓内部有流体，能源仓有电(EV)，则消耗掉输入总线里面的节点
+		if (this.getInputInventory().getStackInSlot(0) == PollutionMetaItems.PACKAGED_AURA_NODE.getStackForm()
+				&& this.energyContainer.getEnergyStored() > 1920){}
 
 	}
 

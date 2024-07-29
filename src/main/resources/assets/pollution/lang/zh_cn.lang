@@ -39,7 +39,7 @@ gregtech.material.impuremana=不纯魔力
 gregtech.material.manasteel=魔力钢
 gregtech.material.salismundus=世界盐
 gregtech.material.mansussteel=漫宿钢
-gregtech.material.terrasteel=泰拉钢
+gregtech.material.keqinggold=刻金
 
 gregtech.material.lotus_dust=荷叶
 gregtech.material.ethyl_silicate=硅酸乙酯
@@ -68,8 +68,6 @@ metaitem.ingotPerditioaluminium.tooltip=无极混沌
 metaitem.ingotMansussteel.tooltip=§7林地生长于漫宿墙外，但每一个研习诸史的人都知道，漫宿无墙§r
 metaitem.plateMansussteel.tooltip=§7撷漫宿诸梦，倾轧板材§r
 item.material.oreprefix.frameGtMansussteel.tooltip=§7采漫宿散魂，铸构骨架（这条还不能生效，不知道怎么改捏）§r
-
-metaitem.ingotTerrasteel.tooltip=以大地为名
 #  物品
 metaitem.blank_catalyst_core.name=§8空白催化剂核心§r
 metaitem.cold_catalyst_core.name=§b凛冰催化剂核心§r
@@ -144,10 +142,6 @@ tile.fusion_reactor.compose_i.name=一阶魂导裂解核心
 tile.fusion_reactor.compose_ii.name=二阶魂导裂解核心
 tile.fusion_reactor.compose_iii.name=三阶魂导裂解核心
 tile.fusion_reactor.compose_iv.name=四阶魂导裂解核心
-
-tile.bot_block.terra_watertight_casing.name=泰拉防水机械方块
-
-
 
 #线圈
 tile.wire_coil.machine_coil_cupronickel.name=一级炽焱凝聚富集符文
@@ -356,10 +350,6 @@ pollution.machine.magic_brewery.tooltip=适量饮酒也有害健康哦
 pollution.machine.magic_distillery.tooltip=你说得对，但是我们的整合包正在蒸蒸日上！
 pollution.machine.magic_green_house.tooltip=作为魔法使，我们只生产温室里的食人花
 pollution.machine.magic_battery.tooltip=§5纵使神曈黯淡，亦可再造鸿蒙§r
-#植魔多方块
-pollution.machine.bot_distillery.name=植物魔馏塔
-
-pollution.machine.bot_distillery.tooltip1=生活碾压我，只会让我变得扁平舒适
 
 #魔法电池
 pollution.eke.count=魔导核心：%s 线圈等级：%s

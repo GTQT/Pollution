@@ -2,6 +2,7 @@ package keqing.pollution.api.unification.materials;
 
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.ToolProperty;
+import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
 
 import static gregtech.api.unification.material.Materials.*;
@@ -169,6 +170,15 @@ public class FirstDegreeMaterials {
 				.components(Iron, 4,Carbon,4,EnderPearl,4, mana, 3)
 				.iconSet(METALLIC)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.build();
+
+		//刻金
+		PollutionMaterials.keqinggold = new Material.Builder(getMaterialsId(), gregtechId("Keqinggold"))
+				.color(0xFFD700)
+				.fluid().ingot()
+				.iconSet(SHINY)
+				.element(Elements.Kqt)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
 				.build();
 
 		//牢大 想你了
