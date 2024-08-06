@@ -21,7 +21,6 @@ import java.util.List;
 public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	private final double VisTicks;
 	int tier;
-	int time;
 	private final long energyAmountPer;
 	private boolean isActive;
 
@@ -55,7 +54,6 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 				energyContainer.removeEnergy(energyAmountPer);
 				isActive = true;
 				AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, false);
-				time = 1;
 			} else isActive = false;
 		}
 	}
