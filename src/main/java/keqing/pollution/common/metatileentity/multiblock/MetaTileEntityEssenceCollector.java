@@ -129,7 +129,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 				.where('A', states(getCasingState()).setMinGlobalLimited(200)
 						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.INPUT_ENERGY).setMaxGlobalLimited(2).setPreviewCount(1)))
-				.where('B', CP_COIL_CASING)
+				.where('B', CP_COIL_CASING.get())
 				.where('C', states(getCasingState2()))
 				.where('E', states(getCasingState3()))
 				.where('F', states(getCasingState4()))

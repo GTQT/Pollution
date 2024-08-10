@@ -272,7 +272,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(6).setPreviewCount(6)))
 				.where('E', states(getCasingState4()))
 				.where('F', states(getCasingState5()))
-				.where('D', CP_COIL_CASING)
+				.where('D', CP_COIL_CASING.get())
 				.where(' ', any())
 				.build();
 	}

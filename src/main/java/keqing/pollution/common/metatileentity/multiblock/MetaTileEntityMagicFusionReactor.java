@@ -133,10 +133,10 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
 				.aisle("           ", "     A     ", "     A     ", "   BBABB   ", "   B   B   ", "  AA A AA  ", "   B   B   ", "   BBABB   ", "     A     ", "     A     ", "           ")
 				.aisle("           ", "           ", "           ", "     A     ", "     A     ", "   AASAA   ", "     A     ", "     A     ", "           ", "           ", "           ")
 				.where('S', selfPredicate())
-				.where('A', CP_FRAME.setMinGlobalLimited(105).or(autoAbilities()))
-				.where('B', CP_COIL_CASING)
-				.where('C', CP_COMPOSE)
-				.where('D', CP_GLASS)
+				.where('A', CP_FRAME.get().setMinGlobalLimited(105).or(autoAbilities()))
+				.where('B', CP_COIL_CASING.get())
+				.where('C', CP_COMPOSE.get())
+				.where('D', CP_GLASS.get())
 				.where(' ', any())
 				.build();
 	}

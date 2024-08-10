@@ -208,7 +208,7 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 				.where('F', states(getCasingState6()))
 				.where('G', states(getCasingState7()))
 				.where('H', states(getCasingState8()))
-				.where('I', CP_COIL_CASING)
+				.where('I', CP_COIL_CASING.get())
 				.where('K', states(getCasingState9()))
 				.where('L', states(getCasingState10()))
 				.build();

@@ -133,7 +133,7 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
 				.where('C', states(getCasingState2()))
 				.where('D', states(getCasingState3()))
 				.where('A', states(getCasingState4()))
-				.where('E', CP_COIL_CASING)
+				.where('E', CP_COIL_CASING.get())
 				.where('#', any())
 				.build();
 	}

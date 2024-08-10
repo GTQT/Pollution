@@ -130,7 +130,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 				.aisle("           BBABABB           ", "        BBB C   C BBB        ", "           BBABABB           ")
 				.aisle("             ABA             ", "          BBBASABBB          ", "             ABA             ")
 				.where('S', selfPredicate())
-				.where('A', CP_COIL_CASING)
+				.where('A', CP_COIL_CASING.get())
 				.where('B', states(getCasingState())
 						.or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(0).setMaxGlobalLimited(2).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(0).setMaxGlobalLimited(2).setPreviewCount(1))
@@ -141,7 +141,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 				.where('D', states(getCasingState2()))
 				.where('E', states(getCasingState3()))
 				.where('F', states(getCasingState4()))
-				.where('G', CP_GLASS)
+				.where('G', CP_GLASS.get())
 				.where(' ', any())
 				.build();
 	}

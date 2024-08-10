@@ -265,8 +265,8 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
 						.or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(16).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.OUTPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(16).setPreviewCount(1))
 				)
-				.where('B', CP_BEAM_CORE)
-				.where('C', CP_COIL_CASING)
+				.where('B', CP_BEAM_CORE.get())
+				.where('C', CP_COIL_CASING.get())
 				.where(' ', any());
 
 		return pattern.build();

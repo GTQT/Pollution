@@ -1,6 +1,7 @@
 package keqing.pollution;
 
 import keqing.gtqtcore.integration.GTQTIntegration;
+import keqing.pollution.api.POAPI;
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.CommonProxy;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -50,6 +51,7 @@ public class Pollution {
 	public void preInit(FMLPreInitializationEvent event) {
 		PollutionLog.init(event.getModLog());
 		PollutionMetaBlocks.init();
+		POAPI.init();
 		PollutionMetaItems.initialization();
 		PODimensionType.init();
 		PODimensionManager.init();
