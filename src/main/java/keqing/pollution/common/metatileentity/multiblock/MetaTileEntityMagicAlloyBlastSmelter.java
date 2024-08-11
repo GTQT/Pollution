@@ -58,7 +58,7 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockC
 	@Override
 	protected void formStructure(PatternMatchContext context) {
 		super.formStructure(context);
-		Object CoilLevel = context.get("COILTiredStats");
+		Object CoilLevel = context.get("COILTieredStats");
 		this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) CoilLevel).getIntTier(),
 				0);

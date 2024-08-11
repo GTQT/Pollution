@@ -144,19 +144,19 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
 	@Override
 	protected void formStructure(PatternMatchContext context) {
 		super.formStructure(context);
-		Object coil = context.get("COILTiredStats");
+		Object coil = context.get("COILTieredStats");
 		this.coil = POUtils.getOrDefault(() -> coil instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) coil).getIntTier(),
 				1);
-		Object glass = context.get("GLASSTiredStats");
+		Object glass = context.get("GLASSTieredStats");
 		this.glass = POUtils.getOrDefault(() -> glass instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) glass).getIntTier(),
 				1);
-		Object frame = context.get("FRAMETiredStats");
+		Object frame = context.get("FRAMETieredStats");
 		this.frame = POUtils.getOrDefault(() -> frame instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) frame).getIntTier(),
 				1);
-		Object compose = context.get("COMPOSETiredStats");
+		Object compose = context.get("COMPOSETieredStats");
 		this.compose = POUtils.getOrDefault(() -> compose instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) compose).getIntTier(),
 				1);

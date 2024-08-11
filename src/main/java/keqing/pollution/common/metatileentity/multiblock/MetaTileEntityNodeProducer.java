@@ -77,7 +77,7 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 	@Override
 	protected void formStructure(PatternMatchContext context) {
 		super.formStructure(context);
-		Object coilLevel = context.get("COILTiredStats");
+		Object coilLevel = context.get("COILTieredStats");
 		this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) coilLevel).getIntTier(),
 				0);

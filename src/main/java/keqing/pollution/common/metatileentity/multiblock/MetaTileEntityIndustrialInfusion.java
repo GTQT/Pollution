@@ -211,11 +211,11 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 	@Override
 	protected void formStructure(PatternMatchContext context) {
 		super.formStructure(context);
-		Object coil = context.get("COILTiredStats");
+		Object coil = context.get("COILTieredStats");
 		this.coil = POUtils.getOrDefault(() -> coil instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) coil).getIntTier(),
 				0);
-		Object glass = context.get("GLASSTiredStats");
+		Object glass = context.get("GLASSTieredStats");
 		this.glass = POUtils.getOrDefault(() -> glass instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) glass).getIntTier(),
 				0);

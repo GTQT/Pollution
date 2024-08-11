@@ -230,8 +230,8 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
 	protected void formStructure(PatternMatchContext context) {
 		super.formStructure(context);
 		initializeAbilities();
-		Object CoilLevel = context.get("COILTiredStats");
-		Object beamCore = context.get("BEAMTiredStats");
+		Object CoilLevel = context.get("COILTieredStats");
+		Object beamCore = context.get("BEAMTieredStats");
 		this.coilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) CoilLevel).getIntTier(),
 				0);
