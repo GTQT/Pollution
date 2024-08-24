@@ -37,6 +37,7 @@ gregtech.material.perditioaluminium=Perditioaluminium
 gregtech.material.mana=Mana
 gregtech.material.impuremana=Impure Mana
 gregtech.material.manasteel=Manasteel
+gregtech.material.elven_elementium=ElvenElementium
 gregtech.material.salismundus=Salismundus
 gregtech.material.mansussteel=Mansussteel
 gregtech.material.terrasteel=Terrasteel
@@ -59,7 +60,7 @@ gregtech.material.erich_aura=Enriched Aura Fluid
 gregtech.material.whitemansus=White Mansus
 gregtech.material.blackmansus=Black Mansus
 gregtech.material.sunnarium=Sunnarium Compound
-
+gregtech.material.elven=Elven
 #Item Tooltips
 metaitem.ingotAertitanium.tooltip=Rhythm of the Breeze
 metaitem.ingotIgnissteel.tooltip=Ember of the Dying Sun
@@ -340,7 +341,7 @@ pollution.machine.magic_green_house.name=Arcane Botanical Essence Refiner
 pollution.machine.industrial_infusion.name=Magic Automated Industrial Infusion Matrix
 pollution.machine.infused_exchange.name=Magic Essence Conversion Matrix
 pollution.machine.bot_distillery.name=Botanical Essence Refining Tower
-
+pollution.machine.mana_plate.name=Mana Plate
 #Tooltips for Magic Machines
 pollution.machine.magic_bender.tooltip=Life crushes me, only to make me flat and comfortable
 pollution.machine.magic_centrifuge.tooltip=Traveler, do you know how many elemental reactions the Wind Element has?

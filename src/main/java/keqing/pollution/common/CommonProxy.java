@@ -59,6 +59,7 @@ public class CommonProxy {
 		registry.register(PollutionMetaBlocks.FUSION_REACTOR);
 		registry.register(PollutionMetaBlocks.GLASS);
 		registry.register(PollutionMetaBlocks.BOT_BLOCK);
+		registry.register(PollutionMetaBlocks.MANA_PLATE);
 	}
 
 	@SubscribeEvent
@@ -78,6 +79,7 @@ public class CommonProxy {
 		registry.register(createItemBlock(PollutionMetaBlocks.FUSION_REACTOR, VariantItemBlock::new));
 		registry.register(createItemBlock(PollutionMetaBlocks.GLASS, VariantItemBlock::new));
 		registry.register(createItemBlock(PollutionMetaBlocks.BOT_BLOCK, VariantItemBlock::new));
+		registry.register(createItemBlock(PollutionMetaBlocks.MANA_PLATE, VariantItemBlock::new));
 	}
 
 	private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {

@@ -4,6 +4,7 @@ import keqing.pollution.loaders.recipes.*;
 
 public class RecipeManger {
 	public static void init() {
+		BotaniaRecipes.init();
 		MachineRecipes.init();
 		AERecipes.init();
 		ThaumcraftRecipes.init();

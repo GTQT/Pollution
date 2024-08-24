@@ -72,5 +72,11 @@ public class PollutionElementMaterials {
 				.iconSet(SHINY)
 				.element(Elements.Bma)
 				.build();
+		PollutionMaterials.elven = new Material.Builder(getMaterialsId(), gregtechId("Elven"))
+				.color(0xEE30A7)
+				.fluid()
+				.iconSet(SHINY)
+				.element(Elements.El)
+				.build();
 	}
 }

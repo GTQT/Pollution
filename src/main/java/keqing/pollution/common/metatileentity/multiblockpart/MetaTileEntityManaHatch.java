@@ -144,7 +144,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     public void reciveMana(int amount) {
 
         if(!isFull())mana += amount * getTier();
-        this.mana = Math.max(this.mana,this.getMaxMana());
+        this.mana = Math.min(this.mana,this.getMaxMana());
     }
 
     public MultiblockAbility<IManaHatch> getAbility() {

@@ -37,6 +37,7 @@ gregtech.material.perditioaluminium=无极铝
 gregtech.material.mana=魔力
 gregtech.material.impuremana=不纯魔力
 gregtech.material.manasteel=魔力钢
+gregtech.material.elven_elementium=源质钢
 gregtech.material.salismundus=世界盐
 gregtech.material.mansussteel=漫宿钢
 gregtech.material.terrasteel=泰拉钢
@@ -59,7 +60,7 @@ gregtech.material.erich_aura=富集灵气流质
 gregtech.material.whitemansus=素牡漫宿
 gregtech.material.blackmansus=玄牝漫宿
 gregtech.material.sunnarium=阳光化合物
-
+gregtech.material.elven=源质
 metaitem.ingotAertitanium.tooltip=律动清风
 metaitem.ingotIgnissteel.tooltip=残日流火
 metaitem.ingotAquasilver.tooltip=捩花流水
@@ -335,7 +336,7 @@ pollution.machine.magic_green_house.name=魔导植物精华淬炼仪
 pollution.machine.industrial_infusion.name=魔导自动工业注魔矩阵
 pollution.machine.infused_exchange.name=魔导要素转换矩阵
 pollution.machine.bot_distillery.name=植物精华淬炼塔
-
+pollution.machine.mana_plate.name=魔导催化平台
 pollution.machine.magic_bender.tooltip=生活碾压我，只会让我变得扁平舒适
 pollution.machine.magic_centrifuge.tooltip=旅行者，你知道风元素有几种元素反应吗
 pollution.machine.magic_electric_blast_furnace.tooltip=铁炉堡专利

@@ -75,6 +75,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
 //植魔系列
 	public static MetaTileEntityBotDistillery BOT_DISTILLERY;
+	public static MetaTileEntityManaPlate Mana_PLATE;
 
 	public static void initialization() {
 
@@ -187,5 +188,6 @@ public class PollutionMetaTileEntities {
 		ENDOFLAME_ARRAY = registerMetaTileEntity(15851,new MetaTileEntityEndoflameArray(gtqtcoreId("endoflame_array")));
 
 		BOT_DISTILLERY = registerMetaTileEntity(15852, new MetaTileEntityBotDistillery(gtqtcoreId("bot_distillery")));
+		Mana_PLATE = registerMetaTileEntity(15853, new MetaTileEntityManaPlate(gtqtcoreId("mana_plate")));
 	}
 }

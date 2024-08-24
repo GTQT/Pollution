@@ -18,7 +18,7 @@ public class PollutionMetaBlocks {
 	public static POFusionReactor FUSION_REACTOR;
 	public static POGlass GLASS;
 	public static POBotBlock BOT_BLOCK;
-
+	public static POManaPlate MANA_PLATE;
 	private PollutionMetaBlocks() {
 	}
 
@@ -42,6 +42,9 @@ public class PollutionMetaBlocks {
 
 		BOT_BLOCK = new POBotBlock();
 		BOT_BLOCK.setRegistryName("bot_block");
+
+		MANA_PLATE = new POManaPlate();
+		MANA_PLATE.setRegistryName("mana_plate");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -53,6 +56,7 @@ public class PollutionMetaBlocks {
 		registerItemModel(FUSION_REACTOR);
 		registerItemModel(GLASS);
 		registerItemModel(BOT_BLOCK);
+		registerItemModel(MANA_PLATE);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -206,5 +206,13 @@ public class FirstDegreeMaterials {
 				.fluid()
 				.iconSet(SHINY)
 				.build();
+
+		PollutionMaterials.ElvenElementium = new Material.Builder(getMaterialsId(), gregtechId("elven_elementium"))
+				.color(0xEE6AA7)
+				.ingot().fluid().ore()
+				.components(Iron, 4, elven, 1)
+				.iconSet(SHINY)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.build();
 	}
 }
