@@ -122,6 +122,8 @@ dependencies {
     implementation rfg.deobf(files("libs/GregicalityMultiblocks-1.2.9.jar"))
     implementation rfg.deobf(files("libs/gregtech-1.12.2-2.8.10-beta.jar"))
     implementation rfg.deobf(files("libs/gregtechfoodoption-1.12.2-1.11.0.jar"))
+    implementation rfg.deobf(files("libs/BloodMagic-1.12.2-2.4.3-105.jar"))
+    implementation rfg.deobf(files("libs/Guide-API-1.12-2.1.8-63.jar"))
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
         String mixin = modUtils.enableMixins('org.spongepowered:mixin:0.8.3', "mixins.${project.archives_base_name}.refmap.json")

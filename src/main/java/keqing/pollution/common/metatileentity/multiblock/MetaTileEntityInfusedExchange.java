@@ -35,6 +35,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
@@ -42,6 +44,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -199,15 +202,15 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 	@Override
 	protected BlockPattern createStructurePattern() {
 		return FactoryBlockPattern.start()
-				.aisle("AA  A  AA", "         ", "         ", "         ", "         ")
-				.aisle("AA  A  AA", " AA   AA ", "         ", "         ", "         ")
-				.aisle("    A    ", " AA A AA ", "  AA AA  ", "         ", "         ")
-				.aisle("         ", "    A    ", "  AAAAA  ", "   A A   ", "         ")
-				.aisle("AAA A AAA", "  AAAAA  ", "   AAA   ", "    S    ", "    F    ")
-				.aisle("         ", "    A    ", "  AAAAA  ", "   A A   ", "         ")
-				.aisle("    A    ", " AA A AA ", "  AA AA  ", "         ", "         ")
-				.aisle("AA  A  AA", " AA   AA ", "         ", "         ", "         ")
-				.aisle("AA  A  AA", "         ", "         ", "         ", "         ")
+				.aisle(" AAAAAAA ", "         ", "         ", "         ", "         ")
+				.aisle("AAAAAAAAA", "    A    ", "         ", "         ", "         ")
+				.aisle("AAAAAAAAA", "  AAAAA  ", "  AA AA  ", "         ", "         ")
+				.aisle("AAAAAAAAA", "  AAAAA  ", "  AAAAA  ", "   A A   ", "         ")
+				.aisle("AAAAAAAAA", " AAAAAAA ", "   AAA   ", "    S    ", "    F    ")
+				.aisle("AAAAAAAAA", "  AAAAA  ", "  AAAAA  ", "   A A   ", "         ")
+				.aisle("AAAAAAAAA", "  AAAAA  ", "  AA AA  ", "         ", "         ")
+				.aisle("AAAAAAAAA", "    A    ", "         ", "         ", "         ")
+				.aisle(" AAAAAAA ", "         ", "         ", "         ", "         ")
 
 				.where('S', selfPredicate())
 				.where('A', states(getCasingState())
@@ -274,7 +277,12 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 		ConfigHolder.FusionBloom fusionBloom = ConfigHolder.client.shader.fusionBloom;
 		return BloomType.fromValue(fusionBloom.useShader ? fusionBloom.bloomStyle : -1);
 	}
-
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+		super.addInformation(stack, player, tooltip, advanced);
+		tooltip.add(I18n.format("在源质仓正上方放置源质罐子即可输入对应的源质"));
+		tooltip.add(I18n.format("仅限：Aer，Terra，Aqua，Ignis，Ordo，Perdition 源质"));
+	}
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderBloomEffect(BufferBuilder buffer, EffectRenderContext context) {

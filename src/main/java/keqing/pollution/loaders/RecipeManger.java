@@ -7,6 +7,8 @@ public class RecipeManger {
 		BotaniaRecipes.init();
 		MachineRecipes.init();
 		AERecipes.init();
+		BloodAltar.init();
+		CircuitManager.init();
 		ThaumcraftRecipes.init();
 		MagicGCYMRecipes.init();
 		InfusedManager.init();
