@@ -16,7 +16,6 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.appeng.MetaTileEntityMEOutputHatch;
-import keqing.gtqtcore.common.metatileentities.multi.multiblockpart.MetaTileEntityPlusMultiFluidHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
@@ -76,8 +75,7 @@ public class MetaTileEntityMagicDistillery extends PORecipeMapMultiblockControll
 				.where('X', casingPredicate
 						.or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
 								.filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch)
-										&& !(mte instanceof MetaTileEntityMEOutputHatch)
-										&& !(mte instanceof MetaTileEntityPlusMultiFluidHatch))
+										&& !(mte instanceof MetaTileEntityMEOutputHatch))
 								.toArray(MetaTileEntity[]::new))
 								.setMinLayerLimited(1).setMaxLayerLimited(1)))
 				.where('Z', casingPredicate)

@@ -37,9 +37,6 @@ import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.appeng.MetaTileEntityMEOutputHatch;
-import keqing.gtqtcore.api.utils.GTQTUtil;
-import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
-import keqing.gtqtcore.common.metatileentities.multi.multiblockpart.MetaTileEntityPlusMultiFluidHatch;
 import keqing.pollution.api.metatileentity.POManaMultiblock;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.client.textures.POTextures;
@@ -105,8 +102,7 @@ public class MetaTileEntityBotDistillery extends POManaMultiblock implements IBl
                 .where('M',states(getCasingState())
                         .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
                         .filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch)
-                                && !(mte instanceof MetaTileEntityMEOutputHatch)
-                                && !(mte instanceof MetaTileEntityPlusMultiFluidHatch))
+                                && !(mte instanceof MetaTileEntityMEOutputHatch))
                         .toArray(MetaTileEntity[]::new))
                         .setMinLayerLimited(1).setMaxLayerLimited(1)))
                 .where('Z', states(getCasingState3()))
