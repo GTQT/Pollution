@@ -67,6 +67,7 @@ public class PollutionMaterials {
 	public static Material whitemansus;
 	public static Material blackmansus;
 	public static Material Terrasteel;
+	public static Material ElvenElementium;
 	public static Material elven;
 
 	//刻金线
@@ -100,8 +101,7 @@ public class PollutionMaterials {
 	public static Material impure_hyperdimensional_silver;
 	public static Material hyperdimensional_silver;
 	public static Material dimensional_transforming_agent;
-    public static Material ElvenElementium;
-
+	public static Material ferrous_chloride;
 
 	public PollutionMaterials() {
 	}

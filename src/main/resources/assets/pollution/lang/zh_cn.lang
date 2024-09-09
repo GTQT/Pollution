@@ -42,6 +42,7 @@ gregtech.material.salismundus=世界盐
 gregtech.material.mansussteel=漫宿钢
 gregtech.material.terrasteel=泰拉钢
 gregtech.material.keqinggold=刻金
+metaitem.ingotKeqinggold.tooltip=§7醉舞纷绮席，清歌绕飞梁。心知不得语，却望玉衡星。§r
 
 gregtech.material.lotus_dust=荷叶
 gregtech.material.ethyl_silicate=硅酸乙酯
@@ -71,6 +72,41 @@ metaitem.ingotMansussteel.tooltip=§7林地生长于漫宿墙外，但每一个�
 metaitem.plateMansussteel.tooltip=§7撷漫宿诸梦，倾轧板材§r
 item.material.oreprefix.frameGtMansussteel.tooltip=§7采漫宿散魂，铸构骨架（这条还不能生效，不知道怎么改捏）§r
 metaitem.ingotTerrasteel.tooltip=以大地为名
+
+#刻金线
+gregtech.material.sulfo_plumbic_salt=硫铅盐
+gregtech.material.magical_sulfo_plumbic_salt=蕴魔硫铅盐
+gregtech.material.alchemical_residue_1=一次炼金残渣
+gregtech.material.alchemical_vapor_1=一次升华蒸汽
+gregtech.material.alchemical_residue_2=二次炼金残渣
+gregtech.material.alchemical_vapor_2=二次升华蒸汽
+gregtech.material.alchemical_residue_3=三次炼金残渣
+gregtech.material.alchemical_vapor_3=三次升华蒸汽
+gregtech.material.alchemical_residue_4=四次炼金残渣
+gregtech.material.alchemical_vapor_4=四次升华蒸汽
+gregtech.material.alchemical_residue_5=五次炼金残渣
+gregtech.material.alchemical_vapor_5=五次升华蒸汽
+gregtech.material.alchemical_residue_6=六次炼金残渣
+gregtech.material.alchemical_vapor_6=六次升华蒸汽
+gregtech.material.magical_tin_solution=神秘锡溶液
+gregtech.material.magical_stannous_sulfate_solution=硫酸亚锡神秘溶液
+gregtech.material.highmana_stannous_sulfate=高魔素硫酸亚锡
+gregtech.material.impure_mercuric_salt_solution=含杂汞盐溶液
+gregtech.material.mercuric_salt_solution=神秘汞盐溶液
+gregtech.material.magic_activated_iron_chloride_solution=魔力激活氯化铁溶液
+gregtech.material.magic_activated_ferrous_chloride_ethanol_solution=魔力激活氯化亚铁甲醇溶液
+gregtech.material.purified_activated_ferrous_chloride_ethanol_solution=除杂激活氯化亚铁甲醇溶液
+gregtech.material.purified_activated_ferrous_chloride=除杂激活氯化亚铁
+gregtech.material.syrmorite_doped_magic_water_solution=赛摩铜掺杂魔水溶液
+gregtech.material.unformed_embryo_magic_water=未成形胚胎魔水
+gregtech.material.embryo_magic_water=胚胎魔水
+gregtech.material.unstable_dimensional_silver=不稳次元银
+gregtech.material.impure_hyperdimensional_silver=超次元含杂秘银流
+gregtech.material.hyperdimensional_silver=超次元秘银
+metaitem.ingotHyperdimensionalSilver.tooltip=§7与我演一场超次元游戏，直到漫宿尽头...§r
+gregtech.material.dimensional_transforming_agent=次元改造剂
+gregtech.material.ferrous_chloride=氯化亚铁
+
 #  物品
 metaitem.blank_catalyst_core.name=§8空白催化剂核心§r
 metaitem.cold_catalyst_core.name=§b凛冰催化剂核心§r
@@ -201,6 +237,8 @@ metaitem.glue_slime.tooltip=打不完的胶
 metaitem.rubber_slime.tooltip=擦不完的橡皮
 
 metaitem.packaged_aura_node.name=封装灵气节点
+metaitem.stone_of_philosopher_1.name=贤者之石（黑土）
+metaitem.stone_of_philosopher_1.tooltip=黑土之仪，拾阶而上
 
 #机器
 pollution.machine.mana_gen_lv.name=基础魔力发电机

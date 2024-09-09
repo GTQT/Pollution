@@ -4,6 +4,7 @@ import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.StandardMetaItem;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
+import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.CommonProxy;
 import keqing.pollution.common.items.behaviors.VisCheckerBehavior;
 import net.minecraft.client.util.ITooltipFlag;
@@ -93,6 +94,9 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 
 		//封装灵气节点
 		PollutionMetaItems.PACKAGED_AURA_NODE = this.addItem(100, "packaged_aura_node").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(CommonProxy.Pollution_TAB);
+
+		//黑土贤者之石
+		PollutionMetaItems.STONE_OF_PHILOSOPHER_1 = this.addItem(150, "stone_of_philosopher_1").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(CommonProxy.Pollution_TAB);
 
 
 		//实用物品

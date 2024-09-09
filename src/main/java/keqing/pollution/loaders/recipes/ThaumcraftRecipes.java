@@ -586,5 +586,24 @@ public class ThaumcraftRecipes {
 				.duration(10)
 				.EUt(2)
 				.buildAndRegister();
+
+		//黑土贤者之石合成
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "stone-1"), new InfusionRecipe(
+				"INFUSION@2",
+				new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150),
+				12,
+				new AspectList().add(Aspect.ALCHEMY, 250).add(Aspect.CRAFT, 250).add(Aspect.MAGIC, 250).add(Aspect.AURA, 64),
+				new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2),
+				new ItemStack(MetaItems.QUANTUM_STAR.getMetaItem(), 1, 282),
+				new ItemStack(MetaItems.QUANTUM_EYE.getMetaItem(), 1, 281),
+				new ItemStack(ItemsTC.voidSeed),
+				new ItemStack(ItemsTC.causalityCollapser),
+				"gemValonite",
+				"blockSubstrate",
+				"blockSubstrate",
+				"gemExquisiteAmethyst",
+				"gemExquisiteOpal",
+				"ingotTerrasteel",
+				PollutionMetaTileEntities.ESSENCE_COLLECTOR.getStackForm()));
 	}
 }

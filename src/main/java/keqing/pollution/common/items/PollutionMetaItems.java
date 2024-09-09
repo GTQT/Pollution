@@ -38,6 +38,7 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_MAX;
 
 	public static MetaItem<?>.MetaValueItem PACKAGED_AURA_NODE;
+	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_1;
 
 	public static void initialization() {
 		PollutionMetaItem1 item1 = new PollutionMetaItem1();
