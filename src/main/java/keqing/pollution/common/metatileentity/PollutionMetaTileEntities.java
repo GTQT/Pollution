@@ -76,6 +76,7 @@ public class PollutionMetaTileEntities {
 //植魔系列
 	public static MetaTileEntityBotDistillery BOT_DISTILLERY;
 	public static MetaTileEntityManaPlate Mana_PLATE;
+	public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
 
 	public static void initialization() {
 
@@ -189,5 +190,6 @@ public class PollutionMetaTileEntities {
 
 		BOT_DISTILLERY = registerMetaTileEntity(15852, new MetaTileEntityBotDistillery(gtqtcoreId("bot_distillery")));
 		Mana_PLATE = registerMetaTileEntity(15853, new MetaTileEntityManaPlate(gtqtcoreId("mana_plate")));
+		MAGIC_ASSEMBLER = registerMetaTileEntity(15854, new MetaTileEntityMagicAssembler(gtqtcoreId("magic_assembler")));
 	}
 }

@@ -9,6 +9,8 @@ import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.api.unification.TJMaterials;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
+import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -381,7 +383,109 @@ public class MagicChemicalRecipes {
 				.duration(1000)
 				.EUt(30)
 				.buildAndRegister();
-
+		//僵尸脑（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(Items.ROTTEN_FLESH, 1)
+				.fluidInputs(PollutionMaterials.infused_death.getFluid(576))
+				.fluidInputs(PollutionMaterials.infused_soul.getFluid(144))
+				.output(ItemsTC.brain, 1)
+				.duration(120)
+				.EUt(120)
+				.buildAndRegister();
+		//海水提溴（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.fluidInputs(GTQTMaterials.SeaWater.getFluid(16000))
+				.fluidOutputs(Materials.Bromine.getFluid(100))
+				.fluidOutputs(Materials.Iodine.getFluid(10))
+				.output(OrePrefix.dust, Materials.Salt, 16)
+				.duration(1200)
+				.EUt(1920)
+				.buildAndRegister();
+		//炽焰铁、赛摩铜、法罗钠（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.gem, Materials.Diamond, 9)
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
+				.fluidInputs(PollutionMaterials.infused_crystal.getFluid(1440))
+				.output(OrePrefix.gem, PollutionMaterials.valonite, 1)
+				.duration(500)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.dust, Materials.Iron, 4)
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(6))
+				.fluidInputs(PollutionMaterials.infused_fire.getFluid(576))
+				.output(OrePrefix.dust, PollutionMaterials.octine, 1)
+				.duration(240)
+				.EUt(1920)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.gem, Materials.Copper, 4)
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(6))
+				.fluidInputs(PollutionMaterials.infused_instrument.getFluid(576))
+				.output(OrePrefix.dust, PollutionMaterials.syrmorite, 1)
+				.duration(240)
+				.EUt(1920)
+				.buildAndRegister();
+		//贤者石复制（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.block, PollutionMaterials.keqinggold, 1)
+				.fluidInputs(PollutionMaterials.infused_alchemy.getFluid(14400))
+				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.duration(10000)
+				.EUt(480)
+				.buildAndRegister();
+		//核心制作（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0))
+				.circuitMeta(1)
+				.duration(1000)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1))
+				.circuitMeta(2)
+				.duration(1000)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2))
+				.circuitMeta(3)
+				.duration(1000)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3))
+				.circuitMeta(4)
+				.duration(1000)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_4))
+				.circuitMeta(5)
+				.duration(1000)
+				.EUt(480)
+				.buildAndRegister();
 	}
 	private static void kqt_chain(){
 

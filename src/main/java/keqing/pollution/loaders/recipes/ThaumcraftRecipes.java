@@ -598,12 +598,13 @@ public class ThaumcraftRecipes {
 				new ItemStack(MetaItems.QUANTUM_EYE.getMetaItem(), 1, 281),
 				new ItemStack(ItemsTC.voidSeed),
 				new ItemStack(ItemsTC.causalityCollapser),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				"gemValonite",
 				"blockSubstrate",
-				"blockSubstrate",
-				"gemExquisiteAmethyst",
-				"gemExquisiteOpal",
-				"ingotTerrasteel",
+				"blockTerrasteel",
 				PollutionMetaTileEntities.ESSENCE_COLLECTOR.getStackForm()));
 	}
 }

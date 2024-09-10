@@ -19,6 +19,8 @@ gregtech.material.infused_magic=魔
 gregtech.material.infused_alchemy=炼金
 gregtech.material.infused_cold=寒
 gregtech.material.infused_light=光
+gregtech.material.infused_aura=灵
+gregtech.material.infused_craft=创
 
 gregtech.material.thaumium=神秘
 gregtech.material.syrmorite=赛摩铜
@@ -183,6 +185,7 @@ tile.fusion_reactor.compose_iii.name=三阶魂导裂解核心
 tile.fusion_reactor.compose_iv.name=四阶魂导裂解核心
 #misc 外壳
 tile.bot_block.terra_watertight_casing.name=泰拉防水机械方块
+tile.mana_plate.mana_basic.name=高阶蕴魔漫宿机械方块
 #线圈
 tile.wire_coil.machine_coil_cupronickel.name=一级炽焱凝聚富集符文
 tile.wire_coil.machine_coil_kanthal.name=二级炽焱凝聚富集符文
@@ -394,6 +397,9 @@ pollution.machine.magic_distillery.tooltip=你说得对，但是我们的整合�
 pollution.machine.magic_green_house.tooltip=作为魔法使，我们只生产温室里的食人花
 pollution.machine.magic_battery.tooltip=§5纵使神曈黯淡，亦可再造鸿蒙§r
 
+pollution.machine.magic_assembler.name=高等应用魔导秩构单元
+pollution.machine.magic_assembler.tooltip=大炮，已组装！ 谁是最大冲击波？
+
 #魔法电池
 pollution.eke.count=魔导核心：%s 线圈等级：%s
 pollution.eke.eu1=输入/输出能量：%s / %s EU/t
@@ -411,6 +417,8 @@ recipemap.magic_blast_smelter.name=锻炉合金
 recipemap.magic_chemical_reactor.name=魔导催化反应
 recipemap.magic_fusion_reactor.name=要素裂解
 recipemap.magic_turbine.name=源质燃烧
+recipemap.magic_assembler.name=应用部件组装
+recipemap.magic_greenhouse.name=魔植培育
 #事件
 pollution.command.slowness=§7你感到行动不便
 pollution.command.weakness=§b你感到一阵虚弱

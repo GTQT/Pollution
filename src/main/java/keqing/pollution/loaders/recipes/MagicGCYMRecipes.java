@@ -30,8 +30,7 @@ import thaumcraft.api.items.ItemsTC;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.dust;
-import static gregtech.api.unification.ore.OrePrefix.ingotHot;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
@@ -1655,5 +1654,42 @@ public class MagicGCYMRecipes {
 				"circuitEv",
 				new ItemStack(ItemsTC.visResonator),
 				new ItemStack(ItemsTC.morphicResonator)));
+		//泰拉方块 高阶漫宿 大组装
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, manasteel, 5)
+				.input(plate, Terrasteel, 1)
+				.input(frameGt, mansussteel ,1)
+				.circuitMeta(16)
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.duration(300)
+				.EUt(1920)
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, thaumium, 2)
+				.input(plate, hyperdimensional_silver, 4)
+				.input(frameGt, mansussteel,1)
+				.circuitMeta(16)
+				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
+				.duration(300)
+				.EUt(1920)
+				.buildAndRegister();
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_assembler"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.MAGIC_ASSEMBLER.getStackForm(),
+				10,
+				new AspectList().add(Aspect.CRAFT, 250).add(Aspect.ORDER, 128).add(Aspect.MAGIC, 64).add(Aspect.MOTION, 64),
+				PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.FILTER_5),
+				"blockValonite",
+				"frameGtKeqinggold",
+				"frameGtHyperdimensionalSilver",
+				"frameGtTerrasteel",
+				new ItemStack(BlocksTC.arcaneWorkbench),
+				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				MetaTileEntities.ASSEMBLER[IV].getStackForm()));
 	}
 }

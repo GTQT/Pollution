@@ -26,6 +26,7 @@ public class PollutionMaterials {
 	public static Material infused_cold;
 	public static Material infused_aura;
 	public static Material infused_light;
+	public static Material infused_craft;
 	//mana酱
 	public static Material mana;
 	//材料
