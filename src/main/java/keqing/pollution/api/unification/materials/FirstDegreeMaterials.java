@@ -9,6 +9,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
 import static gregtech.api.util.GTUtility.gregtechId;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
@@ -174,11 +175,12 @@ public class FirstDegreeMaterials {
 
 		//刻金
 		PollutionMaterials.keqinggold = new Material.Builder(getMaterialsId(), gregtechId("Keqinggold"))
-				.color(0xFFD700)
+				.color(0xFCF770)
 				.fluid().ingot()
 				.iconSet(SHINY)
 				.element(Elements.Kqt)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
+				.blast(3600, MID)
 				.build();
 
 		//牢大 想你了

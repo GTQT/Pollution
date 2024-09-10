@@ -104,5 +104,11 @@ public class CompoundAspectMaterials {
 				.ore().gem().fluid()
 				.components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_air, 1)
 				.build();
+		//合成=交换+工具
+		PollutionMaterials.infused_craft = new Material.Builder(getMaterialsId(), gregtechId("infused_craft"))
+				.color(0xF3FF80)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_exchange, 1, PollutionMaterials.infused_instrument, 1)
+				.build();
 	}
 }
