@@ -3,6 +3,7 @@ package keqing.pollution.loaders.recipes;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtechfoodoption.item.GTFOMetaItem;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GCYSMaterials;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
@@ -400,8 +401,28 @@ public class MagicChemicalRecipes {
 				.fluidOutputs(Materials.Bromine.getFluid(100))
 				.fluidOutputs(Materials.Iodine.getFluid(10))
 				.output(OrePrefix.dust, Materials.Salt, 16)
-				.duration(1200)
+				.duration(120)
 				.EUt(1920)
+				.buildAndRegister();
+		//丙酮（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.fluidInputs(Materials.Methane.getFluid(3000))
+				.fluidInputs(Materials.Water.getFluid(1000))
+				.fluidOutputs(Materials.Acetone.getFluid(1000))
+				.fluidOutputs(Materials.Hydrogen.getFluid(4000))
+				.circuitMeta(20)
+				.duration(120)
+				.EUt(480)
+				.buildAndRegister();
+		//工业制香蕉~（彩蛋，贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.input(OrePrefix.dust, Materials.Barium)
+				.input(OrePrefix.dust, Materials.Sodium, 2)
+				.output(GTFOMetaItem.BANANA.getMetaItem(), 1, 122)
+				.duration(120)
+				.EUt(344)
 				.buildAndRegister();
 		//炽焰铁、赛摩铜、法罗钠（贤者1）
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
