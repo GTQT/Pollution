@@ -242,6 +242,8 @@ metaitem.rubber_slime.tooltip=擦不完的橡皮
 metaitem.packaged_aura_node.name=封装灵气节点
 metaitem.stone_of_philosopher_1.name=贤者之石（黑土）
 metaitem.stone_of_philosopher_1.tooltip=黑土之仪，拾阶而上
+metaitem.stone_of_philosopher_2.name=贤者之石（白垩）
+metaitem.stone_of_philosopher_2.tooltip=白垩之仪，化朽为奇
 
 #机器
 pollution.machine.mana_gen_lv.name=基础魔力发电机

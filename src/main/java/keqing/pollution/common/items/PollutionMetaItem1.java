@@ -95,9 +95,9 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		//封装灵气节点
 		PollutionMetaItems.PACKAGED_AURA_NODE = this.addItem(100, "packaged_aura_node").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(CommonProxy.Pollution_TAB);
 
-		//黑土贤者之石
+		//贤者之石
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_1 = this.addItem(150, "stone_of_philosopher_1").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(CommonProxy.Pollution_TAB);
-
+		PollutionMetaItems.STONE_OF_PHILOSOPHER_2 = this.addItem(151, "stone_of_philosopher_2").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(CommonProxy.Pollution_TAB);
 
 		//实用物品
 		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_TAB);
