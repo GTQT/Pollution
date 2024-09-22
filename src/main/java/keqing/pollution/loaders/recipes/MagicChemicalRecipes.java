@@ -445,7 +445,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.input(OrePrefix.gem, Materials.Copper, 4)
+				.input(OrePrefix.dust, Materials.Copper, 4)
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(6))
 				.fluidInputs(PollutionMaterials.infused_instrument.getFluid(576))
 				.output(OrePrefix.dust, PollutionMaterials.syrmorite, 1)
