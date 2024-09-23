@@ -85,7 +85,7 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
 				.aisle("AAAAAAA", " D   D ", " D   D ", " D   D ", " DBBBD ", " AAAAA ")
 				.aisle(" ABABA ", "  CDC  ", "  CDC  ", "  EDE  ", "  EDE  ", "  AAA  ")
 				.where('S', selfPredicate())
-				.where('A', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
+				.where('A', states(getCasingState()).setMinGlobalLimited(30).or(autoAbilities()))
 				.where('B', states(getCasingState2()))
 				.where('C', states(getCasingState3()))
 				.where('D', states(getCasingState4()))

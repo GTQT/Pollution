@@ -1,5 +1,6 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
+import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -12,6 +13,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.metatileentities.MetaTileEntities;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
 import keqing.pollution.Pollution;
@@ -239,9 +241,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
 				.aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
-				.aisle("ABA", "BBB", "CAC", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
-				.aisle("ABA", "BBB", "CAC", "CAC", "   ", "   ", "DDD", "   ", "DDD", "   ", "   ")
-				.aisle("ABA", "BBB", "CBC", "CBC", " B ", " B ", "DBD", " B ", "DBD", " E ", "   ")
+				.aisle("ABA", "BBB", "HAC", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+				.aisle("ABA", "BBB", "HAC", "CAC", "   ", "   ", "DDD", "   ", "DDD", "   ", "   ")
+				.aisle("ABA", "BBB", "HBC", "CBC", " B ", " B ", "DBD", " B ", "DBD", " E ", "   ")
 				.aisle("ABA", "BBB", " A ", "C C", "C C", " A ", "DDD", "   ", "DDD", "   ", "   ")
 				.aisle("ABA", "BBB", " A ", " A ", " A ", " A ", " A ", " A ", "   ", "   ", "   ")
 				.aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "BBB", "BBB", "BBB", "   ", "   ")
@@ -257,9 +259,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				.aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "BBB", "BBB", "BBB", "   ", "   ")
 				.aisle("ABA", "BBB", " A ", " A ", " A ", " A ", " A ", " A ", "   ", "   ", "   ")
 				.aisle("ABA", "BBB", " A ", "C C", "C C", " A ", "DDD", "   ", "DDD", "   ", "   ")
-				.aisle("ABA", "BBB", "CBC", "CBC", " B ", " B ", "DBD", " B ", "DBD", " E ", "   ")
-				.aisle("ABA", "BBB", "CAC", "CAC", "   ", "   ", "DDD", "   ", "DDD", "   ", "   ")
-				.aisle("ABA", "BBB", "CAC", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+				.aisle("ABA", "BBB", "HBC", "CBC", " B ", " B ", "DBD", " B ", "DBD", " E ", "   ")
+				.aisle("ABA", "BBB", "HAC", "CAC", "   ", "   ", "DDD", "   ", "DDD", "   ", "   ")
+				.aisle("ABA", "BBB", "HAC", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.where('S', selfPredicate())
@@ -268,8 +270,8 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				.where('B', states(getCasingState2()))
 				.where('C', states(getCasingState3()).setMinGlobalLimited(25)
 						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
-						.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
-						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(6).setPreviewCount(6)))
+						.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1)))
+				.where('H', metaTileEntities(MetaTileEntities.ITEM_IMPORT_BUS[GTValues.ULV]))
 				.where('E', states(getCasingState4()))
 				.where('F', states(getCasingState5()))
 				.where('D', CP_COIL_CASING.get())

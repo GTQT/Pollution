@@ -9,6 +9,7 @@ import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.client.textures.POTextures;
@@ -77,6 +78,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityBotDistillery BOT_DISTILLERY;
 	public static MetaTileEntityManaPlate Mana_PLATE;
 	public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
+	public static MetaTileEntityNodeBlastFurnace NODE_BLAST_FURNACE;
 
 	public static void initialization() {
 
@@ -191,5 +193,6 @@ public class PollutionMetaTileEntities {
 		BOT_DISTILLERY = registerMetaTileEntity(15852, new MetaTileEntityBotDistillery(gtqtcoreId("bot_distillery")));
 		Mana_PLATE = registerMetaTileEntity(15853, new MetaTileEntityManaPlate(gtqtcoreId("mana_plate")));
 		MAGIC_ASSEMBLER = registerMetaTileEntity(15854, new MetaTileEntityMagicAssembler(gtqtcoreId("magic_assembler")));
+	    NODE_BLAST_FURNACE = registerMetaTileEntity(15855, new MetaTileEntityNodeBlastFurnace(gtqtcoreId("node_blast_furnace")));
 	}
 }
