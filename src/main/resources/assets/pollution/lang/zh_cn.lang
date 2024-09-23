@@ -439,6 +439,7 @@ pollution.machine.canoutput=源质是否满足:%s
 pollution.machine.output_item=输出物品:%s
 pollution.machine.process=工作进度:%s
 pollution.machine.aspect=源质:%s:%s
+pollution.machine.player.online=绑定玩家未上线！
 
 #聚灵阵
 pollution.machine.essence_collector.name=六彩要素聚灵阵

@@ -226,6 +226,9 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 		if (!this.isActive())
 			setActive(true);
 		if (!this.getWorld().isRemote && this.inputInventory != null && this.inputInventory.getSlots() > 0 && this.uuid != null && this.isWorkingEnabled() && this.isActive()) {
+			if(getWorld().getPlayerEntityByUUID(uuid)==null){
+				return;
+			}
 			if (this.energyContainer.getEnergyStored() > 480 && this.energyContainer.getInputVoltage() >= GTValues.V[GTValues.HV]) {
 				this.energyContainer.changeEnergy(480);
 			} else
@@ -310,6 +313,9 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 	@Override
 	protected void addDisplayText(List<ITextComponent> textList) {
 		super.addDisplayText(textList);
+		if(getWorld().getPlayerEntityByUUID(uuid)==null){
+			textList.add((new TextComponentTranslation("pollution.machine.player.online")).setStyle((new Style()).setColor(TextFormatting.RED)));
+		}
 		textList.add((new TextComponentTranslation("pollution.machine.output_item", this.outputItem.getDisplayName())).setStyle((new Style()).setColor(TextFormatting.RED)));
 		textList.add((new TextComponentTranslation("pollution.machine.canoutput", this.canOutput)).setStyle((new Style()).setColor(TextFormatting.RED)));
 		textList.add((new TextComponentTranslation("pollution.machine.process", this.timeAmount)).setStyle((new Style()).setColor(TextFormatting.RED)));
