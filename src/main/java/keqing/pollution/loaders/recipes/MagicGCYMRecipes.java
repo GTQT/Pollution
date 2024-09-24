@@ -9,7 +9,9 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtechfoodoption.machines.GTFOTileEntities;
+import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
+import keqing.gtqtcore.loaders.recipes.GTQTRecipes;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -43,81 +45,44 @@ public class MagicGCYMRecipes {
 	}
 
 	private static void materials() {
-		//加一个直接炼矿的
-        /*
-        MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(dust,infused_air,  16)
-                .fluidOutputs(infused_air.getFluid(32*144))
-                .notConsumable(HOTCORE)
-                .notConsumable(COLDCORE)
-                .notConsumable(INTEGRATECORE)
-                .notConsumable(SEGREGATECORE)
-                .duration(2400)
-                .blastFurnaceTemp(2700)
-                .EUt(480)
-                .buildAndRegister();
+		//六要素的流体提取机配方
+		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+				.input(dust, infused_air, 1)
+				.fluidOutputs(infused_air.getFluid(144))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+				.input(dust, infused_fire, 1)
+				.fluidOutputs(infused_fire.getFluid(144))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+				.input(dust, infused_water, 1)
+				.fluidOutputs(infused_water.getFluid(144))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+				.input(dust, infused_earth, 1)
+				.fluidOutputs(infused_earth.getFluid(144))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+				.input(dust, infused_order, 1)
+				.fluidOutputs(infused_order.getFluid(144))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+				.input(dust, infused_entropy, 1)
+				.fluidOutputs(infused_entropy.getFluid(144))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
 
-        MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(dust,infused_fire,  16)
-                .fluidOutputs(infused_fire.getFluid(32*144))
-                .notConsumable(HOTCORE)
-                .notConsumable(COLDCORE)
-                .notConsumable(INTEGRATECORE)
-                .notConsumable(SEGREGATECORE)
-                .duration(2400)
-                .blastFurnaceTemp(2700)
-                .EUt(480)
-                .buildAndRegister();
-
-        MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(dust,infused_water,  16)
-                .fluidOutputs(infused_water.getFluid(32*144))
-                .notConsumable(HOTCORE)
-                .notConsumable(COLDCORE)
-                .notConsumable(INTEGRATECORE)
-                .notConsumable(SEGREGATECORE)
-                .duration(2400)
-                .blastFurnaceTemp(2700)
-                .EUt(480)
-                .buildAndRegister();
-
-        MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(dust,infused_earth,  16)
-                .fluidOutputs(infused_earth.getFluid(32*144))
-                .notConsumable(HOTCORE)
-                .notConsumable(COLDCORE)
-                .notConsumable(INTEGRATECORE)
-                .notConsumable(SEGREGATECORE)
-                .duration(2400)
-                .blastFurnaceTemp(2700)
-                .EUt(480)
-                .buildAndRegister();
-
-        MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(dust,infused_entropy,  16)
-                .fluidOutputs(infused_entropy.getFluid(32*144))
-                .notConsumable(HOTCORE)
-                .notConsumable(COLDCORE)
-                .notConsumable(INTEGRATECORE)
-                .notConsumable(SEGREGATECORE)
-                .duration(2400)
-                .blastFurnaceTemp(2700)
-                .EUt(480)
-                .buildAndRegister();
-
-        MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(dust,infused_order,  16)
-                .fluidOutputs(infused_order.getFluid(32*144))
-                .notConsumable(HOTCORE)
-                .notConsumable(COLDCORE)
-                .notConsumable(INTEGRATECORE)
-                .notConsumable(SEGREGATECORE)
-                .duration(2400)
-                .blastFurnaceTemp(2700)
-                .EUt(480)
-                .buildAndRegister();
-
-         */
 		//这里是六个基础外壳材料的搅拌机配方
 		//风要素-律动钛
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
@@ -404,6 +369,19 @@ public class MagicGCYMRecipes {
 				.duration(300)
 				.EUt(120)
 				.buildAndRegister();
+		//转换矩阵
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "infused_exchange"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.INDUSTRIAL_INFUSION.getStackForm(),
+				2,
+				new AspectList().add(Aspect.EXCHANGE, 16).add(Aspect.MOTION, 16).add(Aspect.WATER, 16),
+				GTQTMetaTileEntities.FLUID_EXTRACTOR[MV].getStackForm(),
+				"gemValonite",
+				"circuitMv",
+				"circuitMv",
+				"oreCrystalAir",
+				"oreCrystalWater",
+				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.VOID_PRISM)));
 		//三个小机器
 		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "turbine_1"), new ShapedArcaneRecipe(
 				new ResourceLocation(""),

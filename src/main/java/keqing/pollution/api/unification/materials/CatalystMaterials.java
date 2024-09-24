@@ -87,5 +87,15 @@ public class CatalystMaterials {
 				.color(0x4F4F4F)
 				.fluid()
 				.build();
+
+		//通用奇术基底，高阶奇术基底，用于锻炉
+		PollutionMaterials.basic_substrate = new Material.Builder(getMaterialsId(), gregtechId("basic_substrate"))
+				.color(0xFFFFD8)
+				.fluid()
+				.build();
+		PollutionMaterials.advanced_substrate = new Material.Builder(getMaterialsId(), gregtechId("advanced_substrate"))
+				.color(0xD4FFF0)
+				.fluid()
+				.build();
 	}
 }

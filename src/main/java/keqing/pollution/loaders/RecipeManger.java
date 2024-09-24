@@ -11,6 +11,7 @@ public class RecipeManger {
 		AERecipes.init();
 		BloodAltar.init();
 		//MeteorsHelper.init();
+		ForgeAlchemyRecipes.init();
 		CircuitManager.init();
 		ThaumcraftRecipes.init();
 		MagicGCYMRecipes.init();

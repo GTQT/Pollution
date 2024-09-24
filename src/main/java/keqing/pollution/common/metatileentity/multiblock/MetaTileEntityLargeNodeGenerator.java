@@ -159,7 +159,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		}
 	}
 
-	protected void updateFormedValid() {
+	protected void updateFormedValid(){
 		if (!this.isActive()) {
 			setActive(true);
 		}

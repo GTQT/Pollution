@@ -6,6 +6,7 @@ import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
@@ -468,6 +469,51 @@ public class ThaumcraftRecipes {
 				.EUt(480)
 				.buildAndRegister();
 
+		//奇术基底
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Sulfur, 3)
+				.input(OrePrefix.dust, Salt, 2)
+				.input(OrePrefix.dust, Bismuth)
+				.fluidInputs(Mercury.getFluid(4000))
+				.fluidOutputs(PollutionMaterials.basic_substrate.getFluid(1440))
+				.blastFurnaceTemp(2700)
+				.circuitMeta(20)
+				.duration(600)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Sulfur, 3)
+				.input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+				.input(OrePrefix.dust, Bismuth)
+				.fluidInputs(Mercury.getFluid(4000))
+				.fluidOutputs(PollutionMaterials.basic_substrate.getFluid(5760))
+				.blastFurnaceTemp(2700)
+				.circuitMeta(20)
+				.duration(600)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
+				.input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+				.input(OrePrefix.dust, Bismuth, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(1440))
+				.blastFurnaceTemp(3600)
+				.circuitMeta(20)
+				.duration(1200)
+				.EUt(1920)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
+				.input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+				.input(OrePrefix.dust, PollutionMaterials.syrmorite, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(5760))
+				.blastFurnaceTemp(3600)
+				.circuitMeta(20)
+				.duration(1200)
+				.EUt(1920)
+				.buildAndRegister();
 	}
 
 	private static void misc() {
