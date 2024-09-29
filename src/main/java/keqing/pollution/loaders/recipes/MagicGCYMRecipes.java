@@ -372,7 +372,7 @@ public class MagicGCYMRecipes {
 		//转换矩阵
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "infused_exchange"), new InfusionRecipe(
 				"INFUSION@2",
-				PollutionMetaTileEntities.INDUSTRIAL_INFUSION.getStackForm(),
+				PollutionMetaTileEntities.TANK.getStackForm(),
 				2,
 				new AspectList().add(Aspect.EXCHANGE, 16).add(Aspect.MOTION, 16).add(Aspect.WATER, 16),
 				GTQTMetaTileEntities.FLUID_EXTRACTOR[MV].getStackForm(),
@@ -899,7 +899,7 @@ public class MagicGCYMRecipes {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(OrePrefix.dust, PollutionMaterials.infused_order)
 				.input(OrePrefix.dust, PollutionMaterials.infused_entropy)
-				.fluidOutputs(PollutionMaterials.impuremana.getFluid(18))
+				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)
@@ -907,7 +907,7 @@ public class MagicGCYMRecipes {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(OrePrefix.dust, PollutionMaterials.infused_air)
 				.input(OrePrefix.dust, PollutionMaterials.infused_earth)
-				.fluidOutputs(PollutionMaterials.impuremana.getFluid(18))
+				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)
@@ -915,7 +915,7 @@ public class MagicGCYMRecipes {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(OrePrefix.dust, PollutionMaterials.infused_fire)
 				.input(OrePrefix.dust, PollutionMaterials.infused_water)
-				.fluidOutputs(PollutionMaterials.impuremana.getFluid(18))
+				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)

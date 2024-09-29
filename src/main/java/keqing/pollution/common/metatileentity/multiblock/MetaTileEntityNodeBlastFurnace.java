@@ -16,11 +16,13 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
+import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -28,6 +30,7 @@ import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
+import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -40,19 +43,28 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
-import static org.spongepowered.asm.util.perf.Profiler.setActive;
 
 public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController {
 
 	int CoilLevel;
 	int Temp;
 
+	//计时器开关
+	boolean timerSwitch = false;
+	//每三十秒(600tick)的会重置的计时器
+	int resetTimer = 0;
+	//连续运行配方时长计时器
+	int continuousProgressingTimer = 0;
+	//空的要素列表
+	ArrayList<Integer> essence = new ArrayList<Integer>();
+
 	public  MetaTileEntityNodeBlastFurnace(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BLAST_RECIPES, PORecipeMaps.FORGE_ALCHEMY_RECIPES});
-		this.recipeMapWorkable = new MetaTileEntityNodeBlastFurnace.NodeBlastFurnaceRecipeLogic(this);
+		this.recipeMapWorkable = new NodeBlastFurnaceRecipeLogic(this);
 	}
 
 	@Override
@@ -93,8 +105,11 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 	@Override
 	protected void addDisplayText(List<ITextComponent> textList) {
 		super.addDisplayText(textList);
-		textList.add(new TextComponentTranslation("Temperature: %s", Temp));
+		textList.add(new TextComponentTranslation("线圈温度: %s", Temp));
 		textList.add(new TextComponentTranslation("pollution.machine.node_blast_furnace_coillevel", this.CoilLevel).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+		textList.add(new TextComponentTranslation("炼金术是否可运行: %s", timerSwitch));
+		textList.add(new TextComponentTranslation("炼金术配方耗能减免: %s", Math.min(0.25, (double) continuousProgressingTimer / 200000)));
+		textList.add(new TextComponentTranslation("上一个碾碎节点含Ordo和Perditio要素: %s", essence));
 	}
 
 	@Override
@@ -125,35 +140,156 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 			super(tileEntity);
 		}
 
+		public void fillTanks() {
+			if (!essence.isEmpty()) {
+				GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.whitemansus.getFluid(essence.get(0) * this.maxProgressTime / 10)));
+				GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.blackmansus.getFluid(essence.get(1) * this.maxProgressTime / 10)));
+			}
+		}
+
 		@Override
 		public int getParallelLimit() {
-			if(this.getRecipeMap() == RecipeMaps.BLAST_RECIPES){
+			if (this.getRecipeMap() == RecipeMaps.BLAST_RECIPES) {
 				return 256;
-			}
-			else if (this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES){
+			} else if (this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
 				return 16;
-			}
-			else return 1;
+			} else return 1;
 		}
 
 		@Override
 		public void setMaxProgress(int maxProgress) {
-			this.maxProgressTime = (int)(maxProgress * (1 - 0.05 * CoilLevel));
+			this.maxProgressTime = (int) (maxProgress * (1 - 0.05 * CoilLevel));
+		}
+
+		@Override
+		protected boolean drawEnergy(int recipeEUt, boolean simulate) {
+			//每100s + 1%减免 上限25%
+			long finalRecipeEUt = (long) (recipeEUt * (1 - Math.min(0.25, (double) continuousProgressingTimer / 200000)));
+			long resultEnergy = this.getEnergyStored() - finalRecipeEUt;
+			if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {
+				if (!simulate) {
+					this.getEnergyContainer().changeEnergy(-finalRecipeEUt);
+				}
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		//如果配方成功且输出仓有空位，输出漫宿物质
+		@Override
+		protected void updateRecipeProgress() {
+			this.drawEnergy(this.recipeEUt, false);
+			if (!timerSwitch){return;}
+			if (++this.progressTime > this.maxProgressTime) {
+				if (this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES){
+					this.fillTanks();
+				}
+				this.completeRecipe();
+			}
+		}
+
+		@Override
+		public boolean checkRecipe(@NotNull Recipe recipe) {
+            if (!timerSwitch && this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
+				return false;
+			}
+			else if (timerSwitch && this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
+				return true;
+			}
+			else if (this.getRecipeMap() == RecipeMaps.BLAST_RECIPES) {
+			RecipeMapMultiblockController controller = (RecipeMapMultiblockController)this.metaTileEntity;
+				if (controller.checkRecipe(recipe, false)) {
+					controller.checkRecipe(recipe, true);
+					return super.checkRecipe(recipe);
+				}
+			}
+			else {return false;}
+			return false;
 		}
 	}
+
 
 	//节点锻炉核心逻辑
 	//锻炉先检测是否是锻炉炼金配方，如果是才进行后续，否则一般处理
 	//在锻炉炼金配方，每30s检测输入总线是否有封装灵气节点，如果有则消耗掉，并且在接下来30s内允许配方运行
 	//每当一个锻炉炼金配方运行成功，根据当前30s内消耗掉的封装灵气节点的属性，向输出仓输出不同量的两种漫宿物质
 	//同时保持一个计时器计算连续允许配方运行的时长，进行越来越高的耗能减免，封顶25%
-	/*
-	protected void updateFormedValid(){
-		if (!this.isActive()) {
-			setActive(true);
+
+	@Override
+	public void update(){
+		super.update();
+		if (this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES){
+			//如果检测到节点，且开关是false，则消耗节点并记录，开关变true
+			if (checkNode() && !timerSwitch){
+				writeNodeData(essence);
+				timerSwitch = true;
+			}
+
+			//开关打开时，计时器正常跑动且允许工作
+			if (timerSwitch){
+				resetTimer++;
+				continuousProgressingTimer++;
+			}
+
+			//30s后，重置计时器，如果此时没有节点，那么持续计时器也重置，开关关闭
+			if (resetTimer == 600){
+				resetTimer = 0;
+				if (!checkNode()){
+					continuousProgressingTimer = 0;
+					timerSwitch = false;
+				}
+				else {
+					writeNodeData(essence);
+				}
+			}
 		}
 	}
-	*/
+
+	private void writeNodeData(ArrayList<Integer> NodeEssence){
+		var slots = this.getInputInventory().getSlots();
+		for (int i = 0; i < slots; i++) {
+			ItemStack item = this.getInputInventory().getStackInSlot(i);
+			if (item.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && item.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaValue()) {
+				assert item.getTagCompound() != null;
+				int ordo = item.getTagCompound().getInteger("EssenceOrder");
+				int perditio = item.getTagCompound().getInteger("EssenceEntropy");
+				if (NodeEssence.isEmpty()){
+					NodeEssence.add(ordo);
+					NodeEssence.add(perditio);
+				}
+				else {
+					NodeEssence.set(0, ordo);
+					NodeEssence.set(1, perditio);
+				}
+				this.getInputInventory().extractItem(i, 1, false);
+				return;
+			}
+		}
+	}
+
+	/*
+	private void consumeNode() {
+		var slots = this.getInputInventory().getSlots();
+		for (int i = 0; i < slots; i++) {
+			ItemStack item = this.getInputInventory().getStackInSlot(i);
+			if (item.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && item.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaValue()) {
+			}
+		}
+	}
+
+	 */
+
+	private boolean checkNode() {
+		var slots = this.getInputInventory().getSlots();
+		for (int i = 0; i < slots; i++) {
+			ItemStack item = this.getInputInventory().getStackInSlot(i);
+			if (item.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && item.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaValue()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	protected BlockPattern createStructurePattern() {

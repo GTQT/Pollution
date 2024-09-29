@@ -161,6 +161,14 @@ public class CompoundAspectRecipes {
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
+		//创造
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(infused_instrument.getFluid(1000))
+				.fluidInputs(infused_exchange.getFluid(1000))
+				.fluidOutputs(infused_craft.getFluid(2000))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
 
 		//核裂变
 		//水晶

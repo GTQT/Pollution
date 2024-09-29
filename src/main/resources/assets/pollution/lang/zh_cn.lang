@@ -483,11 +483,11 @@ pollution.machine.large_node_generator_finalcapacity=实际最终发电量：%s 
 pollution.machine.node_blast_furnace.name=昕旦司辰节点融毁锻炉
 pollution.machine.node_blast_furnace.tooltip.1=§5铸炉或有悔恨，为置闰而低泣，但对其余作为则乐见其是。此后诸事将成，日光将驱散月光，如同我等从弧月的钟点过渡至昕旦的钟点。§r
 pollution.machine.node_blast_furnace.tooltip.2=强大的神秘学锻炉，实现了炼金术自古以来的梦想！可切换模式
-pollution.machine.node_blast_furnace.tooltip.3=高炉模式下自带256并行，线圈每升级一次减少5%%配方总耗时
+pollution.machine.node_blast_furnace.tooltip.3=两种模式下，线圈每升级一次均减少5%%配方总耗时。高炉模式下最高256并行
 pollution.machine.node_blast_furnace.tooltip.4=锻炉炼金术模式下，机器最高16并行，且每30s需碾碎一颗输入总线内的封装灵气节点，以维持锻炉的持续运作
 pollution.machine.node_blast_furnace.tooltip.5=每当一个锻炉炼金术配方运行成功，锻炉将向输出仓输出副产的素牡漫宿和玄牝漫宿，灵气节点断供会暂停配方
 pollution.machine.node_blast_furnace.tooltip.6=配方时间越长，消耗掉的封装灵气节点其Ordo和Perditio属性越高，漫宿物质的产能就越高
-pollution.machine.node_blast_furnace.tooltip.7=锻炉在持续消耗灵气节点的过程中，耗能减免也将逐渐提升，封顶耗能可节省25%%
+pollution.machine.node_blast_furnace.tooltip.7=锻炉炼金术在持续消耗灵气节点的过程中，耗能减免也将逐渐提升，封顶耗能可节省25%%
 pollution.machine.node_blast_furnace.tooltip.8=强大的节点融毁锻炉同时额外支持激光仓！
 pollution.machine.node_blast_furnace_coillevel=线圈等级：%s
 
