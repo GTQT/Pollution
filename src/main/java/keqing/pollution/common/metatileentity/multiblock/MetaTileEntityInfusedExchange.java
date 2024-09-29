@@ -61,12 +61,12 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 	public String name;
 	public int storage = 0;
 	public int number = 0;
-	FluidStack AIR_STACK = PollutionMaterials.infused_air.getFluid(1);
-	FluidStack FIRE_STACK = PollutionMaterials.infused_fire.getFluid(1);
-	FluidStack WATER_STACK = PollutionMaterials.infused_water.getFluid(1);
-	FluidStack ERATH_STACK = PollutionMaterials.infused_earth.getFluid(1);
-	FluidStack ORDER_STACK = PollutionMaterials.infused_order.getFluid(1);
-	FluidStack ENTROPY_STACK = PollutionMaterials.infused_entropy.getFluid(1);
+	FluidStack AIR_STACK = PollutionMaterials.infused_air.getFluid(144);
+	FluidStack FIRE_STACK = PollutionMaterials.infused_fire.getFluid(144);
+	FluidStack WATER_STACK = PollutionMaterials.infused_water.getFluid(144);
+	FluidStack ERATH_STACK = PollutionMaterials.infused_earth.getFluid(144);
+	FluidStack ORDER_STACK = PollutionMaterials.infused_order.getFluid(144);
+	FluidStack ENTROPY_STACK = PollutionMaterials.infused_entropy.getFluid(144);
 	boolean work;
 	int randomTime = 0;
 
@@ -281,7 +281,7 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
 		super.addInformation(stack, player, tooltip, advanced);
 		tooltip.add(I18n.format("在源质仓正上方放置源质罐子即可输入对应的源质"));
-		tooltip.add(I18n.format("仅限：Aer，Terra，Aqua，Ignis，Ordo，Perdition 源质"));
+		tooltip.add(I18n.format("仅限：Aer，Terra，Aqua，Ignis，Ordo，Perditio源质"));
 	}
 	@Override
 	@SideOnly(Side.CLIENT)

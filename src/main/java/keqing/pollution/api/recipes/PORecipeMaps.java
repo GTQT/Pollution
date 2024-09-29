@@ -36,4 +36,14 @@ public class PORecipeMaps {
 			.allowEmptyOutput()
 			.setSound(GTSoundEvents.TURBINE);
 
+	public static final RecipeMap<BlastRecipeBuilder> FORGE_ALCHEMY_RECIPES = new RecipeMap<>("forge_alchemy", 9, 3,
+			6, 3, new BlastRecipeBuilder(), false)
+			.setSlotOverlay(false, false, false, GuiTextures.FURNACE_OVERLAY_1)
+			.setSlotOverlay(false, false, true, GuiTextures.FURNACE_OVERLAY_1)
+			.setSlotOverlay(false, true, false, GuiTextures.FURNACE_OVERLAY_2)
+			.setSlotOverlay(false, true, true, GuiTextures.FURNACE_OVERLAY_2)
+			.setSlotOverlay(true, true, false, GuiTextures.FURNACE_OVERLAY_2)
+			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
+			.setSound(GTSoundEvents.FURNACE);
+
 }

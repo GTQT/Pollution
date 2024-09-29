@@ -74,6 +74,8 @@ metaitem.ingotMansussteel.tooltip=§7林地生长于漫宿墙外，但每一个�
 metaitem.plateMansussteel.tooltip=§7撷漫宿诸梦，倾轧板材§r
 item.material.oreprefix.frameGtMansussteel.tooltip=§7采漫宿散魂，铸构骨架（这条还不能生效，不知道怎么改捏）§r
 metaitem.ingotTerrasteel.tooltip=以大地为名
+gregtech.material.basic_substrate=通用奇术基底
+gregtech.material.advanced_substrate=高阶奇术基底
 
 #刻金线
 gregtech.material.sulfo_plumbic_salt=硫铅盐
@@ -421,6 +423,7 @@ recipemap.magic_fusion_reactor.name=要素裂解
 recipemap.magic_turbine.name=源质燃烧
 recipemap.magic_assembler.name=应用部件组装
 recipemap.magic_greenhouse.name=魔植培育
+recipemap.forge_alchemy.name=锻炉炼金术
 #事件
 pollution.command.slowness=§7你感到行动不便
 pollution.command.weakness=§b你感到一阵虚弱
@@ -476,6 +479,18 @@ pollution.machine.large_node_generator.tooltip.4=工作时凶险节点产生污�
 pollution.machine.large_node_generator.tooltip.5=（待实现功能）凶险、震荡、饕餮节点有概率工作中消失，凶险、饕餮节点可以分别通过通入Aura、Ordo源质防止消失
 pollution.machine.large_node_generator_expectedfinalcapacity=期望发电量：%s eu/t
 pollution.machine.large_node_generator_finalcapacity=实际最终发电量：%s eu/t
+
+#节点锻炉
+pollution.machine.node_blast_furnace.name=昕旦司辰节点融毁锻炉
+pollution.machine.node_blast_furnace.tooltip.1=§5铸炉或有悔恨，为置闰而低泣，但对其余作为则乐见其是。此后诸事将成，日光将驱散月光，如同我等从弧月的钟点过渡至昕旦的钟点。§r
+pollution.machine.node_blast_furnace.tooltip.2=强大的神秘学锻炉，实现了炼金术自古以来的梦想！可切换模式
+pollution.machine.node_blast_furnace.tooltip.3=两种模式下，线圈每升级一次均减少5%%配方总耗时。高炉模式下最高256并行
+pollution.machine.node_blast_furnace.tooltip.4=锻炉炼金术模式下，机器最高16并行，且每30s需碾碎一颗输入总线内的封装灵气节点，以维持锻炉的持续运作
+pollution.machine.node_blast_furnace.tooltip.5=每当一个锻炉炼金术配方运行成功，锻炉将向输出仓输出副产的素牡漫宿和玄牝漫宿，灵气节点断供会暂停配方
+pollution.machine.node_blast_furnace.tooltip.6=配方时间越长，消耗掉的封装灵气节点其Ordo和Perditio属性越高，漫宿物质的产能就越高
+pollution.machine.node_blast_furnace.tooltip.7=锻炉炼金术在持续消耗灵气节点的过程中，耗能减免也将逐渐提升，封顶耗能可节省25%%
+pollution.machine.node_blast_furnace.tooltip.8=强大的节点融毁锻炉同时额外支持激光仓！
+pollution.machine.node_blast_furnace_coillevel=线圈等级：%s
 
 #洗点机
 pollution.machine.node_washer.name=节点重诞净灵池

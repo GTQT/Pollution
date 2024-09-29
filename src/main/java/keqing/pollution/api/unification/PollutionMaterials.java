@@ -70,6 +70,8 @@ public class PollutionMaterials {
 	public static Material Terrasteel;
 	public static Material ElvenElementium;
 	public static Material elven;
+	public static Material basic_substrate;
+	public static Material advanced_substrate;
 
 	//刻金线
 	public static Material sulfo_plumbic_salt;
