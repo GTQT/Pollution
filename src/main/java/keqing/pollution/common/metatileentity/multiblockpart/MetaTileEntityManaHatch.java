@@ -58,8 +58,8 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     }
     protected void addDisplayText(List<ITextComponent> textList) {
         textList.add(new TextComponentString( "Mana: " + this.mana+" Max: " + this.MAX_MANA));
-
     }
+
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (this.shouldRenderOverlay()) {

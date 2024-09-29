@@ -33,6 +33,7 @@ public abstract  class POManaMultiblock extends MultiMapMultiblockController imp
 
     public POManaMultiblock(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         this(metaTileEntityId, new RecipeMap<?>[] { recipeMap });
+        this.recipeMapWorkable = new POManaMultiblockRecipeLogic(this);
     }
 
     public POManaMultiblock(ResourceLocation metaTileEntityId, RecipeMap<?>[] recipeMaps) {
