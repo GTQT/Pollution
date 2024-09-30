@@ -33,7 +33,12 @@ public class POManaPlate extends VariantBlock<POManaPlate.ManaBlockType> {
 
     public enum ManaBlockType implements IStringSerializable {
 
-        MANA_BASIC("mana_basic");
+        MANA_BASIC("mana_basic"),
+        MANA_1("mana_1"),
+        MANA_2("mana_2"),
+        MANA_3("mana_3"),
+        MANA_4("mana_4"),
+        MANA_5("mana_5");
 
 
         private final String name;

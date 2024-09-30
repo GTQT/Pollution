@@ -62,6 +62,10 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.SEGREGATECORE = this.addItem(6, "segregation_catalyst_core").setMaxStackSize(64).setCreativeTabs(CommonProxy.Pollution_TAB);
 		//焦化催化核心，用于史莱姆线
 		PollutionMetaItems.COKINGCORE = this.addItem(7, "coking_catalyst_core").setMaxStackSize(64).setCreativeTabs(CommonProxy.Pollution_TAB);
+		//嬗变催化核心，用于塑料
+		PollutionMetaItems.EVOLUTIONCORE = this.addItem(8, "evolution_catalyst_core").setMaxStackSize(64).setCreativeTabs(CommonProxy.Pollution_TAB);
+
+
 
 		//史莱姆
 		//焦油史莱姆

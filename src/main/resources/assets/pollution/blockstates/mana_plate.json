@@ -13,6 +13,36 @@
         "textures": {
           "all": "gregtech:blocks/magicblock/mana_basic"
         }
+      },
+      "mana_1": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/magicblock/mana_1"
+        }
+      },
+      "mana_2": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/magicblock/mana_2"
+        }
+      },
+      "mana_3": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/magicblock/mana_3"
+        }
+      },
+      "mana_4": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/magicblock/mana_4"
+        }
+      },
+      "mana_5": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/magicblock/mana_5"
+        }
       }
     }
   }

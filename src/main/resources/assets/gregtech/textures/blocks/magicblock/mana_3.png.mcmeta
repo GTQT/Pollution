@@ -1,0 +1,13 @@
+{
+    "ctm": {
+        "ctm_version": 1,
+        "type": "CTM",
+        "layer": "CUTOUT",
+        "textures": [
+            "gregtech:blocks/magicblock/mana_3_ctm"
+        ],
+        "extra": {
+            "connect_inside": true
+        }
+    }
+}

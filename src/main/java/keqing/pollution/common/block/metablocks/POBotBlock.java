@@ -34,7 +34,13 @@ public class POBotBlock extends VariantBlock<POBotBlock.BotBlockType> {
 
 	public enum BotBlockType implements IStringSerializable {
 
-		TERRA_WATERTIGHT_CASING("terra_watertight_casing");
+		TERRA_WATERTIGHT_CASING("terra_watertight_casing"),
+		TERRA_1_CASING("terra_1_casing"),
+		TERRA_2_CASING("terra_2_casing"),
+		TERRA_3_CASING("terra_3_casing"),
+		TERRA_4_CASING("terra_4_casing"),
+		TERRA_5_CASING("terra_5_casing"),
+		TERRA_6_CASING("terra_6_casing");
 
 
 		private final String name;

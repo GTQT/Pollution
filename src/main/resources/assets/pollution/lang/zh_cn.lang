@@ -118,6 +118,7 @@ metaitem.hot_catalyst_core.name=§c炽焱催化剂核心§r
 metaitem.integration_catalyst_core.name=§6聚合催化剂核心§r
 metaitem.segregation_catalyst_core.name=§a扩散催化剂核心§r
 metaitem.coking_catalyst_core.name=§8§l焦化催化剂核心§r
+metaitem.evolution_catalyst_core.name=§5§l嬗变催化剂核心§r
 
 metaitem.blank_catalyst_core.tooltip=§8无限可能§r
 metaitem.cold_catalyst_core.tooltip=§b极度冰寒§r
@@ -125,6 +126,7 @@ metaitem.hot_catalyst_core.tooltip=§c熊熊烈焰§r
 metaitem.integration_catalyst_core.tooltip=§6百川东流§r
 metaitem.segregation_catalyst_core.tooltip=§a大风起兮§r
 metaitem.coking_catalyst_core.tooltip=§8§l焦油踽行§r
+metaitem.evolution_catalyst_core.tooltip=§5§l千万变换§r
 
 metaitem.vis_checker.name=污染检测器
 #装具
@@ -533,4 +535,6 @@ pollution.machine.mana_pool_hatch.uev.name=魔力池仓(UEV)
 pollution.machine.mana_pool_hatch.uiv.name=魔力池仓(UIV)
 pollution.machine.mana_pool_hatch.uxv.name=魔力池仓(UXV)
 pollution.machine.mana_pool_hatch.opv.name=魔力池仓(OPV)
-pollution.machine.mana_pool_hatch.max.name=魔力池仓(MAX)
+
+pollution.flux_clear.tier=§5Tier: %s Pollution Cleansed per Tick: %s Vis
+pollution.flux_clear.tier1=%spollution.machine.mana_pool_hatch.max.name=魔力池仓(MAX)

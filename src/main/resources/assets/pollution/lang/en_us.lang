@@ -80,6 +80,7 @@ metaitem.hot_catalyst_core.name="§cFlaming Catalyst Core§r"
 metaitem.integration_catalyst_core.name="§6Integration Catalyst Core§r"
 metaitem.segregation_catalyst_core.name="§aSegregation Catalyst Core§r"
 metaitem.coking_catalyst_core.name="§8§lCoking Catalyst Core§r"
+metaitem.evolution_catalyst_core.name=§5§lEvolution Catalyst Core§r
 
 metaitem.blank_catalyst_core.tooltip="§8Limitless Possibilities§r"
 metaitem.cold_catalyst_core.tooltip="§bExtreme Cold§r"
@@ -87,6 +88,7 @@ metaitem.hot_catalyst_core.tooltip="§cRaging Flames§r"
 metaitem.integration_catalyst_core.tooltip="§6The Rivers Converge§r"
 metaitem.segregation_catalyst_core.tooltip="§aThe Wind Rises§r"
 metaitem.coking_catalyst_core.tooltip="§8§lThe Tar Marches§r"
+metaitem.evolution_catalyst_core.tooltip=§5§lMang Changes§r
 
 metaitem.vis_checker.name=Vis Checker
 

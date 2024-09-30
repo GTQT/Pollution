@@ -15,6 +15,7 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem INTEGRATECORE;
 	public static MetaItem<?>.MetaValueItem SEGREGATECORE;
 	public static MetaItem<?>.MetaValueItem COKINGCORE;
+	public static MetaItem<?>.MetaValueItem EVOLUTIONCORE;
 	public static MetaItem<?>.MetaValueItem TARSLIME;
 	public static MetaItem<?>.MetaValueItem SUGARSLIME;
 	public static MetaItem<?>.MetaValueItem GLUESLIME;
