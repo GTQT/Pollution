@@ -27,7 +27,9 @@ import java.util.Random;
 		name = "Pollution",
 		acceptedMinecraftVersions = "[1.12.2,1.13)",
 		version = "0.0.1-beta",
-		dependencies = "required-after:gregtech@[2.8.5-beta,) ;"
+		dependencies = "required-after:gregtech@[2.8.5-beta,);" +
+						"required-after:bloodmagic@[0,);" +
+						"required-after:botania@[0,);"
 )
 public class Pollution {
 	public static final String MODID = "pollution";

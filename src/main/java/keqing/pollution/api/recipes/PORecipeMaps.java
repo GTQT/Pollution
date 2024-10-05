@@ -7,6 +7,7 @@ import gregtech.api.recipes.builders.FuelRecipeBuilder;
 import gregtech.api.recipes.builders.PrimitiveRecipeBuilder;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.core.sound.GTSoundEvents;
+import keqing.pollution.api.recipes.builder.ManaRecipesBuilder;
 
 public class PORecipeMaps {
 	public static final RecipeMap<BlastRecipeBuilder> MAGIC_ALLOY_BLAST_RECIPES = new RecipeMap<>("magic_blast_smelter", 9, 0,
@@ -45,5 +46,9 @@ public class PORecipeMaps {
 			.setSlotOverlay(true, true, false, GuiTextures.FURNACE_OVERLAY_2)
 			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
 			.setSound(GTSoundEvents.FURNACE);
+
+	//////////////////////////////////////////
+	public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMap<>("mana_infusion_recipes", 2, 1, 0, 0, new ManaRecipesBuilder(), false)
+			.setSound(GTSoundEvents.REPLICATOR);
 
 }

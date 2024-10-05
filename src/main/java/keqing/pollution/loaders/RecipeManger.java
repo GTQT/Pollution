@@ -1,6 +1,7 @@
 package keqing.pollution.loaders;
 
 import keqing.pollution.loaders.recipes.*;
+import keqing.pollution.loaders.recipes.mods.Botania;
 
 import static WayofTime.bloodmagic.meteor.MeteorRegistry.meteorMap;
 
@@ -18,6 +19,7 @@ public class RecipeManger {
 		InfusedManager.init();
 		CompoundAspectRecipes.init();
 		MagicChemicalRecipes.init();
+		Botania.init();
 	}
 
 
