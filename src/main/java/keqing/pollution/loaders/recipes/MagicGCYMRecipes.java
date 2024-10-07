@@ -1809,5 +1809,19 @@ public class MagicGCYMRecipes {
 				.duration(10000)
 				.EUt(7680)
 				.buildAndRegister();
+		//小化工厂
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(MetaTileEntities.CHEMICAL_REACTOR[IV], 4)
+				.input(GTQTMetaTileEntities.CHEMICAL_PLANT, 1)
+				.input(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 4, 206)
+				.input(block, valonite, 1)
+				.input(gear, hyperdimensional_silver, 4)
+				.input(frameGt, keqinggold, 4)
+				.input(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8)
+				.fluidInputs(dimensional_transforming_agent.getFluid(1000))
+				.outputs(PollutionMetaTileEntities.SMALL_CHEMICAL_PLANT.getStackForm())
+				.duration(10000)
+				.EUt(7680)
+				.buildAndRegister();
 	}
 }
