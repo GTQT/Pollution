@@ -15,6 +15,21 @@ public class ForgeAlchemyRecipes {
 	}
 
 	private static void alchemy() {
+		//二级贤者之石
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(99999))
+				.fluidInputs(PollutionMaterials.whitemansus.getFluid(99999))
+				.fluidInputs(GTQTMaterials.Magic.getFluid(99999))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(9999))
+				.input(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150)
+				.input(OrePrefix.dust, PollutionMaterials.Terrasteel, 64)
+				.input(OrePrefix.dust, PollutionMaterials.hyperdimensional_silver, 64)
+				.input(OrePrefix.dust, PollutionMaterials.keqinggold, 64)
+				.chancedOutput(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getStackForm(), 7500, 0)
+				.blastFurnaceTemp(5400)
+				.duration(19980)
+				.EUt(9999)
+				.buildAndRegister();
 		//锻炉炼金术配方 三个一组
 		//铅锡铁 锌镍钴 铜银金
 		//锰钼钕 镓钒铬 锑铍铋

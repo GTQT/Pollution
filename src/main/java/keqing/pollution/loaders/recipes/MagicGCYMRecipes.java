@@ -10,9 +10,11 @@ import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtechfoodoption.machines.GTFOTileEntities;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
 import keqing.gtqtcore.loaders.recipes.GTQTRecipes;
 import keqing.pollution.Pollution;
+import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
@@ -29,6 +31,7 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.items.ItemsTC;
+import vazkii.botania.common.item.ModItems;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
@@ -1669,5 +1672,142 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				MetaTileEntities.ASSEMBLER[IV].getStackForm()));
+		//泰拉系六方块 强制魔法组装 六种合金板+符文+泰拉钢+魔力
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, aquasilver, 3)
+				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.input(plate, Terrasteel, 3)
+				.input(frameGt, keqinggold)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_1_CASING, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, terracopper, 3)
+				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.input(plate, Terrasteel, 3)
+				.input(frameGt, keqinggold)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_2_CASING, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, ordolead, 3)
+				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.input(plate, Terrasteel, 3)
+				.input(frameGt, keqinggold)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_3_CASING, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, ignissteel, 3)
+				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.input(plate, Terrasteel, 3)
+				.input(frameGt, keqinggold)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_4_CASING, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, aertitanium, 3)
+				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.input(plate, Terrasteel, 3)
+				.input(frameGt, keqinggold)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_5_CASING, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, perditioaluminium, 3)
+				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
+				.input(plate, Terrasteel, 3)
+				.input(frameGt, keqinggold)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_6_CASING, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		//漫宿系五方块
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, ignissteel, 3)
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
+				.input(plate, ElvenElementium, 3)
+				.input(ModItems.rune, 1, 1)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_1, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, aertitanium, 3)
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
+				.input(plate, ElvenElementium, 3)
+				.input(ModItems.rune, 1, 3)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_2, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, Terrasteel, 3)
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
+				.input(plate, ElvenElementium, 3)
+				.input(ModItems.rune, 1, 2)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_3, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, aquasilver, 3)
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
+				.input(plate, ElvenElementium, 3)
+				.input(ModItems.rune, 1, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_4, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, terracopper, 3)
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
+				.input(plate, ElvenElementium, 3)
+				.input(ModItems.rune, 1, 6)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_5, 2))
+				.circuitMeta(6)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		//锻炉
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(MetaTileEntities.ELECTRIC_BLAST_FURNACE, 64)
+				.input(BlocksTC.smelterThaumium, 16)
+				.input(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 16, 206)
+				.input(block, valonite, 1)
+				.input(gear, hyperdimensional_silver, 4)
+				.input(frameGt, Terrasteel, 4)
+				.input(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150)
+				.fluidInputs(dimensional_transforming_agent.getFluid(1000))
+				.outputs(PollutionMetaTileEntities.NODE_BLAST_FURNACE.getStackForm())
+				.duration(10000)
+				.EUt(7680)
+				.buildAndRegister();
 	}
 }

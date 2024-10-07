@@ -33,8 +33,19 @@ public class POTextures {
 	public static SimpleOverlayRenderer VOID_PRISM;
 	public static SimpleOverlayRenderer MAGIC_BATTERY;
 	public static SimpleOverlayRenderer TERRA_WATERTIGHT_CASING;
+	public static SimpleOverlayRenderer TERRA_1_CASING;
+	public static SimpleOverlayRenderer TERRA_2_CASING;
+	public static SimpleOverlayRenderer TERRA_3_CASING;
+	public static SimpleOverlayRenderer TERRA_4_CASING;
+	public static SimpleOverlayRenderer TERRA_5_CASING;
+	public static SimpleOverlayRenderer TERRA_6_CASING;
 
 	public static SimpleOverlayRenderer MANA_BASIC;
+	public static SimpleOverlayRenderer MANA_1;
+	public static SimpleOverlayRenderer MANA_2;
+	public static SimpleOverlayRenderer MANA_3;
+	public static SimpleOverlayRenderer MANA_4;
+	public static SimpleOverlayRenderer MANA_5;
 
 
 	public static void init() {
@@ -61,7 +72,18 @@ public class POTextures {
 		VOID_PRISM = new SimpleOverlayRenderer("magicblock/void_prism");
 		MAGIC_BATTERY = new SimpleOverlayRenderer("magicblock/magic_battery");
 		MANA_BASIC = new SimpleOverlayRenderer("magicblock/mana_basic");
+		MANA_1 = new SimpleOverlayRenderer("magicblock/mana_1");
+		MANA_2 = new SimpleOverlayRenderer("magicblock/mana_2");
+		MANA_3 = new SimpleOverlayRenderer("magicblock/mana_3");
+		MANA_4 = new SimpleOverlayRenderer("magicblock/mana_4");
+		MANA_5 = new SimpleOverlayRenderer("magicblock/mana_5");
 		TERRA_WATERTIGHT_CASING = new SimpleOverlayRenderer("botblock/terra_watertight_casing");
+		TERRA_1_CASING = new SimpleOverlayRenderer("botblock/terra_1_casing");
+		TERRA_2_CASING = new SimpleOverlayRenderer("botblock/terra_2_casing");
+		TERRA_3_CASING = new SimpleOverlayRenderer("botblock/terra_3_casing");
+		TERRA_4_CASING = new SimpleOverlayRenderer("botblock/terra_4_casing");
+		TERRA_5_CASING = new SimpleOverlayRenderer("botblock/terra_5_casing");
+		TERRA_6_CASING = new SimpleOverlayRenderer("botblock/terra_6_casing");
 	}
 
 	public static void register(TextureMap textureMap) {

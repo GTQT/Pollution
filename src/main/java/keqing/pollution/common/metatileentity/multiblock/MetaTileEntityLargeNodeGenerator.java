@@ -1,6 +1,8 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
 import gregtech.api.GTValues;
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -39,10 +41,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.aura.AuraHelper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Math.max;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
@@ -92,6 +91,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) coilLevel).getIntTier(),
 				0);
+		List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.OUTPUT_ENERGY));
+		energyContainer.addAll(this.getAbilities(MultiblockAbility.OUTPUT_LASER));
+		this.energyContainer=new EnergyContainerList(energyContainer);
 	}
 
 	//计算总发电乘数
@@ -265,7 +267,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				.aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.where('S', selfPredicate())
-				.where('G', abilities(MultiblockAbility.OUTPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
+				.where('G', states(getCasingState2())
+				.or(abilities(MultiblockAbility.OUTPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
+				.or(abilities(MultiblockAbility.OUTPUT_LASER).setMaxGlobalLimited(1).setPreviewCount(1)))
 				.where('A', states(getCasingState()))
 				.where('B', states(getCasingState2()))
 				.where('C', states(getCasingState3()).setMinGlobalLimited(25)
