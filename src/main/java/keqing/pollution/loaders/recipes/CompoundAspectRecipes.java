@@ -22,7 +22,7 @@ public class CompoundAspectRecipes {
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
 				.fluidInputs(magic_nitrobenzene.getFluid(1))
-				.duration(270)
+				.duration(1080)
 				.EUt(32)
 				.buildAndRegister();
 

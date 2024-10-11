@@ -456,6 +456,18 @@ public class MagicChemicalRecipes {
 				.duration(120)
 				.EUt(480)
 				.buildAndRegister();
+		//甲苯+辛烷（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
+				.fluidInputs(Materials.Methane.getFluid(9000))
+				.fluidInputs(Materials.Benzene.getFluid(1000))
+				.fluidOutputs(Materials.Octane.getFluid(1000))
+				.fluidOutputs(Materials.Toluene.getFluid(1000))
+				.fluidOutputs(Materials.Hydrogen.getFluid(8000))
+				.duration(120)
+				.EUt(1920)
+				.buildAndRegister();
 		//工业制香蕉~（彩蛋，贤者1）
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
