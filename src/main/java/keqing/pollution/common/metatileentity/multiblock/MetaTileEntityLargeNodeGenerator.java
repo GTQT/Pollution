@@ -1,6 +1,8 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
 import gregtech.api.GTValues;
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -39,10 +41,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.aura.AuraHelper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Math.max;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
@@ -92,6 +91,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) coilLevel).getIntTier(),
 				0);
+		List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.OUTPUT_ENERGY));
+		energyContainer.addAll(this.getAbilities(MultiblockAbility.OUTPUT_LASER));
+		this.energyContainer=new EnergyContainerList(energyContainer);
 	}
 
 	//计算总发电乘数
@@ -121,8 +123,8 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 		//混沌大于20开始线性降低效率
 		//火和秩序按照几何平均数计算倍率
 		//TODO: NBT key validation, check whether the compound tag exists and whether it contains the key.
-		nodeCapacityMultiplier *= max((1.2f - 0.01f * node.getTagCompound().getInteger("EssenceEntropy")), 0);
-		nodeCapacityMultiplier *= (1 + 0.01f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceOrder")));
+		nodeCapacityMultiplier *= max((1.2f - 0.005f * node.getTagCompound().getInteger("EssenceEntropy")), 0);
+		nodeCapacityMultiplier *= (1 + 0.02f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceOrder")));
 		//处理饕餮到64倍
 		if (node.getTagCompound().getString("NodeType").equals("Voracious")
 				&& INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
@@ -177,7 +179,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 					//计算源质消耗
 					if (stack.hasTagCompound()) {
 						if (stack.getTagCompound().hasKey("EssenceWater")) {
-							essenceCostSpeedMultiplier += max(0.2, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
+							essenceCostSpeedMultiplier += max(0.15, 1 - (double) stack.getTagCompound().getInteger("EssenceWater") / 400);
 						}
 						if (stack.getTagCompound().hasKey("EssenceAir")) {
 							//计算发电量方差，方差是所有风的方差值加起来除以6
@@ -265,7 +267,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				.aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.where('S', selfPredicate())
-				.where('G', abilities(MultiblockAbility.OUTPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
+				.where('G', states(getCasingState2())
+				.or(abilities(MultiblockAbility.OUTPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
+				.or(abilities(MultiblockAbility.OUTPUT_LASER).setMaxGlobalLimited(1).setPreviewCount(1)))
 				.where('A', states(getCasingState()))
 				.where('B', states(getCasingState2()))
 				.where('C', states(getCasingState3()).setMinGlobalLimited(25)

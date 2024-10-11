@@ -79,6 +79,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityManaPlate Mana_PLATE;
 	public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
 	public static MetaTileEntityNodeBlastFurnace NODE_BLAST_FURNACE;
+	public static MetaTileEntitySmallChemicalPlant SMALL_CHEMICAL_PLANT;
 
 	public static void initialization() {
 
@@ -194,5 +195,6 @@ public class PollutionMetaTileEntities {
 		Mana_PLATE = registerMetaTileEntity(15853, new MetaTileEntityManaPlate(gtqtcoreId("mana_plate")));
 		MAGIC_ASSEMBLER = registerMetaTileEntity(15854, new MetaTileEntityMagicAssembler(gtqtcoreId("magic_assembler")));
 	    NODE_BLAST_FURNACE = registerMetaTileEntity(15855, new MetaTileEntityNodeBlastFurnace(gtqtcoreId("node_blast_furnace")));
+	    SMALL_CHEMICAL_PLANT = registerMetaTileEntity(15856, new MetaTileEntitySmallChemicalPlant(gtqtcoreId("small_chemical_plant")));
 	}
 }
