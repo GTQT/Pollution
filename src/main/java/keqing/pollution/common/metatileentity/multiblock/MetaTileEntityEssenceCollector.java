@@ -72,13 +72,13 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	//基础产速
 	private float basicSpeedPerTick = 0.025f;
 	//最终产速
-	private int finalSpeedPerTick = 0;
+	private int finalSpeedPerTick;
 	//是否聚焦
 	private boolean isFocused = false;
 	//电压等级
-	private int EUtTier = 0;
+	private int EUtTier;
 	//线圈等级
-	private int coilLevel = 0;
+	private int coilLevel;
     //最低输入功率，默认为30
     //输出单种流体的类型,只在聚焦时
 	//当前区块灵气、污染
@@ -241,6 +241,11 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	 */
 	@Override
 	protected void updateFormedValid() {
+		// 检查并设置设备的活动状态
+		if (!this.isActive()) {
+			setActive(true);
+		}
+
 		// 获取设备的位置坐标
 		int aX = this.getPos().getX();
 		int aY = this.getPos().getY();
@@ -254,13 +259,13 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 		if (this.energyContainer.getInputVoltage() == 0) {
 			// 根据缓存的能量估算能够工作的电压
 			int estimatedVoltage = (int) (this.energyContainer.getEnergyStored() / 20); // 估算能够工作的电压，使能量至少能够工作 20 tick
-			int EUtTier = GTUtility.getTierByVoltage(estimatedVoltage);
+			EUtTier = GTUtility.getTierByVoltage(estimatedVoltage);
 			if (this.energyContainer.getEnergyStored() < VA[EUtTier] * 20L) {
 				return; // 如果能量不足以工作 20 tick，则直接返回
 			}
 		} else {
 			// 将能源仓的输入电压转化为 GT 的电压等级
-			int EUtTier = GTUtility.getTierByVoltage(this.energyContainer.getInputVoltage());
+			EUtTier = GTUtility.getTierByVoltage(this.energyContainer.getInputVoltage());
 			// 检查能量是否足够
 			if (this.energyContainer.getEnergyStored() < VA[EUtTier] || this.energyContainer.getInputVoltage() < VA[EUtTier]) {
 				return;
@@ -268,12 +273,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 		}
 
 		// 计算最终每tick处理速度
-		double finalSpeedPerTick = calculateFinalSpeedPerTick(visThisChunk, fluxThisChunk, EUtTier);
-
-		// 检查并设置设备的活动状态
-		if (!this.isActive()) {
-			setActive(true);
-		}
+		finalSpeedPerTick = (int)calculateFinalSpeedPerTick(visThisChunk, fluxThisChunk, EUtTier);
 
 		// 从能源仓中移除能量
 		this.energyContainer.removeEnergy(VA[EUtTier]);
@@ -281,10 +281,12 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 		// 判断输入总线是否为空
 		if (!this.inputInventory.getStackInSlot(0).isEmpty()) {
 			// 处理聚焦模式
+			isFocused = true;
 			handleFocusedMode(finalSpeedPerTick);
 		} else {
 			// 处理正常模式
-			handleNormalMode((int) finalSpeedPerTick);
+			isFocused = false;
+			handleNormalMode(finalSpeedPerTick);
 		}
 	}
 
