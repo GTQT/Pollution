@@ -188,8 +188,19 @@ tile.fusion_reactor.compose_ii.name=二阶魂导裂解核心
 tile.fusion_reactor.compose_iii.name=三阶魂导裂解核心
 tile.fusion_reactor.compose_iv.name=四阶魂导裂解核心
 #misc 外壳
-tile.bot_block.terra_watertight_casing.name=泰拉防水机械方块
+tile.bot_block.terra_watertight_casing.name=泰拉防水魔械外壳
+tile.bot_block.terra_1_casing.name=静水相位强化魔械外壳
+tile.bot_block.terra_2_casing.name=裂地相位强化魔械外壳
+tile.bot_block.terra_3_casing.name=秩构相位强化魔械外壳
+tile.bot_block.terra_4_casing.name=焚天相位强化魔械外壳
+tile.bot_block.terra_5_casing.name=凌岚相位强化魔械外壳
+tile.bot_block.terra_6_casing.name=无羁相位强化魔械外壳
 tile.mana_plate.mana_basic.name=高阶蕴魔漫宿机械方块
+tile.mana_plate.mana_1.name=三昧改性漫宿机械方块
+tile.mana_plate.mana_2.name=从革改性漫宿机械方块
+tile.mana_plate.mana_3.name=枯荣改性漫宿机械方块
+tile.mana_plate.mana_4.name=上善改性漫宿机械方块
+tile.mana_plate.mana_5.name=社稷改性漫宿机械方块
 #线圈
 tile.wire_coil.machine_coil_cupronickel.name=一级炽焱凝聚富集符文
 tile.wire_coil.machine_coil_kanthal.name=二级炽焱凝聚富集符文
@@ -494,8 +505,16 @@ pollution.machine.node_blast_furnace.tooltip.7=锻炉炼金术在持续消耗灵
 pollution.machine.node_blast_furnace.tooltip.8=强大的节点融毁锻炉同时额外支持激光仓！
 pollution.machine.node_blast_furnace_coillevel=线圈等级：%s
 
+#小化工厂
+pollution.machine.small_chemical_plant.name=微缩魔道化工厂
+pollution.machine.small.chemical.plant.tooltip.1=§5♪time stopper♪ 堂堂女仆闪亮登场！§r
+pollution.machine.small.chemical.plant.tooltip.2=更加简练的小型化工厂！
+pollution.machine.small.chemical.plant.tooltip.3=升级线圈，以获得化工厂配方4*线圈等级并行
+pollution.machine.small.chemical.plant.tooltip.4=也可执行魔导催化配方，2*线圈等级并行
+pollution.machine.small.chemical.plant.tooltip.5=所有模式下，线圈每升级一次均减少5%%配方总耗时
+
 #洗点机
-pollution.machine.node_washer.name=节点重诞净灵池
+pollution.machine.node_washer.name=节点重诞净灵池（废案）
 pollution.machine.node_washer.tooltip.1=奥术浴场，但是GT
 pollution.machine.node_washer.tooltip.2=通入要素流体提高灵气节点要素值，就像洗词条一样~
 pollution.machine.node_washer.tooltip.3=aer-terra，aqua-ignis，ordo-perditio互为相反要素，通入一种会降低相反要素的要素值

@@ -67,6 +67,47 @@ public class MagicChemicalRecipes {
 				.duration(3600)
 				.EUt(480)
 				.buildAndRegister();
+
+		//终极催化剂
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
+				.inputs(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
+				.inputs(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(999))
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(9999))
+				.fluidInputs(GTQTMaterials.Magic.getFluid(99999))
+				.outputs(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
+				.duration(19980)
+				.EUt(9999)
+				.buildAndRegister();
+
+		//终极催化-塑料
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(14400))
+				.chancedFluidOutput(Materials.Polyethylene.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(Materials.Epoxy.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(Materials.Polytetrafluoroethylene.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(GCYSMaterials.Polystyrene.getFluid(14400), 2500, 500)
+				.duration(600)
+				.EUt(30720)
+				.buildAndRegister();
+
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(14400))
+				.chancedFluidOutput(Materials.Polybenzimidazole.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(GTQTMaterials.Zylon.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(TJMaterials.Polyetheretherketone.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(GCYSMaterials.Kevlar.getFluid(14400), 2500, 500)
+				.duration(600)
+				.EUt(122880)
+				.buildAndRegister();
+
 		//可燃冰→石墨烯+氢
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.input(OrePrefix.dust, GTQTMaterials.Gashydrate, 4)
@@ -415,6 +456,18 @@ public class MagicChemicalRecipes {
 				.duration(120)
 				.EUt(480)
 				.buildAndRegister();
+		//甲苯+辛烷（贤者1）
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
+				.notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
+				.fluidInputs(Materials.Methane.getFluid(9000))
+				.fluidInputs(Materials.Benzene.getFluid(1000))
+				.fluidOutputs(Materials.Octane.getFluid(1000))
+				.fluidOutputs(Materials.Toluene.getFluid(1000))
+				.fluidOutputs(Materials.Hydrogen.getFluid(8000))
+				.duration(120)
+				.EUt(1920)
+				.buildAndRegister();
 		//工业制香蕉~（彩蛋，贤者1）
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
@@ -507,6 +560,7 @@ public class MagicChemicalRecipes {
 				.duration(1000)
 				.EUt(480)
 				.buildAndRegister();
+
 	}
 	private static void kqt_chain(){
 

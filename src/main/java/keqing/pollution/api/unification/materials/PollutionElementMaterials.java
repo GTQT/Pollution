@@ -67,7 +67,7 @@ public class PollutionElementMaterials {
 				.element(Elements.Wma)
 				.build();
 		PollutionMaterials.blackmansus = new Material.Builder(getMaterialsId(), gregtechId("Blackmansus"))
-				.color(0xFAF20E)
+				.color(0x606060)
 				.fluid()
 				.iconSet(SHINY)
 				.element(Elements.Bma)
