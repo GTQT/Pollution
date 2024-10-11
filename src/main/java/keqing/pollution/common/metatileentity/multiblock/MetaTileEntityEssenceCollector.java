@@ -10,7 +10,9 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTTransferUtils;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.RelativeDirection;
 import gregtech.api.util.interpolate.Eases;
 import gregtech.client.renderer.ICubeRenderer;
@@ -59,9 +61,11 @@ import thaumcraft.api.items.ItemsTC;
 
 import java.util.*;
 
+import static gregtech.api.GTValues.VA;
 import static java.lang.Math.log;
 import static java.lang.Math.pow;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
+import static keqing.pollution.api.unification.PollutionMaterials.*;
 import static net.minecraft.util.math.MathHelper.ceil;
 
 public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithControl implements IBloomEffect, IFastRenderMetaTileEntity {
@@ -75,10 +79,8 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	private int EUtTier = 0;
 	//线圈等级
 	private int coilLevel = 0;
-	//最低输入功率，默认为30
-	private int EUt = 30;
-	//输出单种流体的类型,只在聚焦时
-	private Material type;
+    //最低输入功率，默认为30
+    //输出单种流体的类型,只在聚焦时
 	//当前区块灵气、污染
 	float visThisChunk;
 	float fluxThisChunk;
@@ -86,7 +88,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	private static Map<Item, Material> materialMap = new HashMap<>();
 
 	static {
-		materialMap.put(Item.getItemFromBlock(BlocksTC.crystalAir), PollutionMaterials.infused_air);
+		materialMap.put(Item.getItemFromBlock(BlocksTC.crystalAir), infused_air);
 		materialMap.put(Item.getItemFromBlock(BlocksTC.crystalFire), PollutionMaterials.infused_fire);
 		materialMap.put(Item.getItemFromBlock(BlocksTC.crystalEarth), PollutionMaterials.infused_earth);
 		materialMap.put(Item.getItemFromBlock(BlocksTC.crystalOrder), PollutionMaterials.infused_order);
@@ -208,89 +210,168 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	@Override
 	public void update() {
 		super.update();
-		if (!backA) if (RadomTime <= 10) ++RadomTime;
-		if (backA) if (RadomTime >= -10) --RadomTime;
-		if (RadomTime == 10) {
+
+		// 简化逻辑，减少嵌套
+		if (!backA) {
+			if (randomTime < 10) {
+				++randomTime;
+			}
+		} else {
+			if (randomTime > -10) {
+				--randomTime;
+			}
+		}
+
+		// 处理边界条件
+		if (randomTime == 10) {
 			backA = true;
 		}
-		if (RadomTime == -10) {
+		if (randomTime == -10) {
 			backA = false;
 		}
-		setFusionRingColor(0xFF000000 | (RadomTime * 1250 * 50));
-	}
 
+		// 避免整数溢出
+		int colorValue = 0xFF000000 | (randomTime * 1250 * 50);
+		setFusionRingColor(colorValue);
+	}
+	/**
+	 * 更新设备有效性
+	 * 此方法主要用于根据设备的能量状态和环境灵气状态来调整设备的运行状态
+	 * 它会根据输入电压、能量存储、灵气和污染程度来决定设备是否运行，以及运行的速度和模式
+	 */
 	@Override
 	protected void updateFormedValid() {
-
-
+		// 获取设备的位置坐标
 		int aX = this.getPos().getX();
 		int aY = this.getPos().getY();
 		int aZ = this.getPos().getZ();
+
+		// 计算灵气和污染
+		float visThisChunk = AuraHelper.getVis(this.getWorld(), new BlockPos(aX, aY, aZ));
+		float fluxThisChunk = AuraHelper.getFlux(this.getWorld(), new BlockPos(aX, aY, aZ));
+
+		// 处理输入电压为 0 的情况
+		if (this.energyContainer.getInputVoltage() == 0) {
+			// 根据缓存的能量估算能够工作的电压
+			int estimatedVoltage = (int) (this.energyContainer.getEnergyStored() / 20); // 估算能够工作的电压，使能量至少能够工作 20 tick
+			int EUtTier = GTUtility.getTierByVoltage(estimatedVoltage);
+			if (this.energyContainer.getEnergyStored() < VA[EUtTier] * 20L) {
+				return; // 如果能量不足以工作 20 tick，则直接返回
+			}
+		} else {
+			// 将能源仓的输入电压转化为 GT 的电压等级
+			int EUtTier = GTUtility.getTierByVoltage(this.energyContainer.getInputVoltage());
+			// 检查能量是否足够
+			if (this.energyContainer.getEnergyStored() < VA[EUtTier] || this.energyContainer.getInputVoltage() < VA[EUtTier]) {
+				return;
+			}
+		}
+
+		// 计算最终每tick处理速度
+		double finalSpeedPerTick = calculateFinalSpeedPerTick(visThisChunk, fluxThisChunk, EUtTier);
+
+		// 检查并设置设备的活动状态
 		if (!this.isActive()) {
 			setActive(true);
 		}
-		//4^(tier-1)*32=对应的实际电压V
-		//计算得出tier = log4(V/32)+1
-		if (this.isWorkingEnabled() && this.isActive()) {
-			//统计灵气，污染
-			visThisChunk = AuraHelper.getVis(this.getWorld(), new BlockPos(aX, aY, aZ));
-			fluxThisChunk = AuraHelper.getFlux(this.getWorld(), new BlockPos(aX, aY, aZ));
-			//将能源仓的输入电压转化为GT的电压等级
-			EUtTier = ceil(log((double) this.energyContainer.getInputVoltage() / 32) / log(4) + 1);
-			//计算最终产速
-			if (fluxThisChunk >= visThisChunk) {
-				finalSpeedPerTick = 0;
-			} else {
-				finalSpeedPerTick = ceil(basicSpeedPerTick * (1 + coilLevel) * pow(2, EUtTier) * (1 - fluxThisChunk / visThisChunk) * log(visThisChunk));
-			}
-			//有聚焦器的情况，也就是输入总线第一格不是空的，此时判断是否有电
-			//如果是六种聚焦器（水晶）之一，则说明有聚焦器，再判断是否有仓，且仓是否够大，然后扣电，然后输出一种流体；
-			//如果聚焦器不是六种之一，或者输入总线什么都没有，进入一般模式产出六种
-			if (!this.inputInventory.getStackInSlot(0).isEmpty()
-					&& this.energyContainer.getEnergyStored() > this.energyContainer.getInputVoltage()
-					&& this.energyContainer.getInputVoltage() >= EUt) {
 
-				//this.type = MetaTileEntityEssenceCollector.materialMap.get(this.getInputInventory().getStackInSlot(0).getItem());
-				this.isFocused = true;
-				if (this.outputFluidInventory != null && this.outputFluidInventory.getTanks() >= finalSpeedPerTick) {
-					this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
-					switch (Objects.requireNonNull(this.getInputInventory().getStackInSlot(0).getTranslationKey())){
-						case "tile.crystal_aer":
-							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_air.getFluid(finalSpeedPerTick * 3)));
-							break;
-						case "tile.crystal_ignis":
-							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_fire.getFluid(finalSpeedPerTick * 3)));
-							break;
-						case "tile.crystal_terra":
-							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_earth.getFluid(finalSpeedPerTick * 3)));
-							break;
-						case "tile.crystal_aqua":
-							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_water.getFluid(finalSpeedPerTick * 3)));
-							break;
-						case "tile.crystal_ordo":
-							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_order.getFluid(finalSpeedPerTick * 3)));
-							break;
-						case "tile.crystal_perditio":
-							GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick * 3)));
-							break;
-					}
-				}
-			} else if (this.energyContainer.getEnergyStored() > this.energyContainer.getInputVoltage() && this.inputInventory.getStackInSlot(0).isEmpty()) {
-				if (this.outputFluidInventory != null && this.outputFluidInventory.getTanks() >= finalSpeedPerTick) {
-					isFocused = false;
-					this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
-					GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory,
-							false,
-							Lists.newArrayList(PollutionMaterials.infused_air.getFluid(finalSpeedPerTick),
-									PollutionMaterials.infused_fire.getFluid(finalSpeedPerTick),
-									PollutionMaterials.infused_earth.getFluid(finalSpeedPerTick),
-									PollutionMaterials.infused_water.getFluid(finalSpeedPerTick),
-									PollutionMaterials.infused_order.getFluid(finalSpeedPerTick),
-									PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick)));
+		// 从能源仓中移除能量
+		this.energyContainer.removeEnergy(VA[EUtTier]);
 
-				}
-			}
+		// 判断输入总线是否为空
+		if (!this.inputInventory.getStackInSlot(0).isEmpty()) {
+			// 处理聚焦模式
+			handleFocusedMode(finalSpeedPerTick);
+		} else {
+			// 处理正常模式
+			handleNormalMode((int) finalSpeedPerTick);
 		}
+	}
+
+	/**
+	 * 计算最终每tick处理速度
+	 * 根据当前区块的灵气和污染程度，以及设备的电压等级，计算出设备的最终处理速度
+	 *
+	 * @param visThisChunk 当前区块的灵气值
+	 * @param fluxThisChunk 当前区块的污染值
+	 * @param EUtTier 设备的电压等级
+	 * @return 最终每tick处理速度
+	 */
+	private double calculateFinalSpeedPerTick(float visThisChunk, float fluxThisChunk, int EUtTier) {
+		if (fluxThisChunk >= visThisChunk) {
+			return 0;
+		}
+		double ratio = (double) fluxThisChunk / visThisChunk;
+		double speedFactor = Math.log(visThisChunk) - Math.log(1 + ratio);
+		return Math.ceil(basicSpeedPerTick * (1 + coilLevel) * Math.pow(2, EUtTier) * speedFactor);
+	}
+
+	/**
+	 * 处理聚焦模式
+	 * 根据输入总线中的物品类型，处理对应的污染材料
+	 *
+	 * @param finalSpeedPerTick 最终每tick处理速度
+	 */
+	private void handleFocusedMode(double finalSpeedPerTick) {
+		if (this.outputFluidInventory == null || this.outputFluidInventory.getTanks() < finalSpeedPerTick) {
+			return;
+		}
+
+		String translationKey = Objects.requireNonNull(this.inputInventory.getStackInSlot(0).getTranslationKey());
+		switch (translationKey) {
+			case "tile.crystal_aer":
+				addPollutionMaterial(infused_air, finalSpeedPerTick);
+				break;
+			case "tile.crystal_ignis":
+				addPollutionMaterial(infused_fire, finalSpeedPerTick);
+				break;
+			case "tile.crystal_terra":
+				addPollutionMaterial(infused_earth, finalSpeedPerTick);
+				break;
+			case "tile.crystal_aqua":
+				addPollutionMaterial(infused_water, finalSpeedPerTick);
+				break;
+			case "tile.crystal_ordo":
+				addPollutionMaterial(infused_order, finalSpeedPerTick);
+				break;
+			case "tile.crystal_perditio":
+				addPollutionMaterial(infused_entropy, finalSpeedPerTick);
+				break;
+		}
+	}
+
+	/**
+	 * 处理正常模式
+	 * 在没有聚焦物品的情况下，均匀处理所有类型的污染材料
+	 *
+	 * @param finalSpeedPerTick 最终每tick处理速度
+	 */
+	private void handleNormalMode(int finalSpeedPerTick) {
+		if (this.outputFluidInventory == null || this.outputFluidInventory.getTanks() < finalSpeedPerTick) {
+			return;
+		}
+		List<FluidStack> fluids = Arrays.asList(
+				infused_air.getFluid(finalSpeedPerTick),
+				PollutionMaterials.infused_fire.getFluid(finalSpeedPerTick),
+				PollutionMaterials.infused_earth.getFluid(finalSpeedPerTick),
+				PollutionMaterials.infused_water.getFluid(finalSpeedPerTick),
+				PollutionMaterials.infused_order.getFluid(finalSpeedPerTick),
+				PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick)
+		);
+
+		GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, fluids);
+	}
+
+	/**
+	 * 添加污染材料
+	 * 将指定的污染材料以流的形式添加到输出流库存中
+	 *
+	 * @param Material 污染材料
+	 * @param amount 添加量
+	 */
+	private void addPollutionMaterial(Material Material, double amount) {
+		FluidStack fluid = new FluidStack(Material.getFluid(), (int) (amount * 3));
+		GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(fluid));
 	}
 
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
@@ -319,7 +400,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 		}
 	}
 
-	int RadomTime = 0;
+	int randomTime = 0;
 
 	protected static final int NO_COLOR = 0;
 	private int fusionRingColor = NO_COLOR;

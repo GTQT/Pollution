@@ -1,6 +1,7 @@
 package keqing.pollution.common.items;
 
 import gregtech.api.items.metaitem.MetaItem;
+import keqing.gtqtcore.common.items.GTQTMetaItem1;
 import keqing.pollution.common.items.armor.MetaArmor;
 
 public class PollutionMetaItems {
@@ -41,9 +42,9 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem PACKAGED_AURA_NODE;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_1;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_2;
-
+	public static PollutionMetaItem1 POLLUTION_META_ITEM;
 	public static void initialization() {
-		PollutionMetaItem1 item1 = new PollutionMetaItem1();
+		POLLUTION_META_ITEM = new PollutionMetaItem1();
 		MetaArmor armor = new MetaArmor();
 		armor.setRegistryName("pollution_armor");
 	}
