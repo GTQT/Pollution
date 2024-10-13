@@ -93,7 +93,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				0);
 		List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.OUTPUT_ENERGY));
 		energyContainer.addAll(this.getAbilities(MultiblockAbility.OUTPUT_LASER));
-		this.energyContainer=new EnergyContainerList(energyContainer);
+		this.outEnergyContainer = new EnergyContainerList(energyContainer);
 	}
 
 	//计算总发电乘数
@@ -268,7 +268,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				.aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
 				.where('S', selfPredicate())
 				.where('G', states(getCasingState2())
-				.or(abilities(MultiblockAbility.OUTPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
+				.or(abilities(MultiblockAbility.OUTPUT_ENERGY).setMaxGlobalLimited(1).setPreviewCount(1))
 				.or(abilities(MultiblockAbility.OUTPUT_LASER).setMaxGlobalLimited(1).setPreviewCount(1)))
 				.where('A', states(getCasingState()))
 				.where('B', states(getCasingState2()))
