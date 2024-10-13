@@ -599,7 +599,6 @@ public class MagicChemicalRecipes {
 				.output(OrePrefix.dust, Materials.Sulfur,1)
 				.output(OrePrefix.dust, Materials.Lead, 1)
 				.chancedOutput(OrePrefix.dust, Materials.Silver, 1, 7000, 200)
-				.output(OrePrefix.dust, PollutionMaterials.alchemical_residue_1, 3)
 				.duration(100)
 				.EUt(30)
 				.buildAndRegister();
