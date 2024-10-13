@@ -1,5 +1,6 @@
 package keqing.pollution.api.unification.materials;
 
+import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.ToolProperty;
 import keqing.pollution.api.unification.Elements;
@@ -34,7 +35,7 @@ public class FirstDegreeMaterials {
 				.ingot().fluid()
 				.components(Iron, 1, infused_earth, 5, infused_air, 5, infused_fire, 5, infused_order, 5)
 				.fluidPipeProperties(500, 120, true)
-				.toolStats(new ToolProperty(10, 4, 1024, 3))
+				.toolStats(new ToolProperty(5, 4, 1024, 3))
 				.iconSet(BRIGHT)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build()
@@ -44,8 +45,12 @@ public class FirstDegreeMaterials {
 				.color(0x2414B3)
 				.ingot().fluid().ore()
 				.components(Copper, 1, infused_earth, 10, infused_order, 5)
+				.toolStats(new ToolProperty(2, 4, 384, 3))
+				.rotorStats(6.0F, 3.0F, 512)
+				.fluidPipeProperties(1500, 50, true)
+				.cableProperties(GTValues.V[2], 2, 2)
 				.iconSet(METALLIC)
-				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING)
+				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING,GENERATE_BOLT_SCREW)
 				.build()
 				.setFormula("CuTer5(TerOrd)5", true);
 
@@ -53,6 +58,10 @@ public class FirstDegreeMaterials {
 				.color(0xFFAE33)
 				.ingot().fluid().ore()
 				.components(Iron, 1, infused_fire, 10, infused_air, 5)
+				.toolStats(new ToolProperty(2, 4, 256, 3))
+				.rotorStats(6.0F, 3.0F, 512)
+				.fluidPipeProperties(1250, 100, true)
+				.cableProperties(GTValues.V[2], 4, 2)
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING)
 				.build()
@@ -62,6 +71,7 @@ public class FirstDegreeMaterials {
 				.color(0x53C58D)
 				.gem().fluid().ore()
 				.components(Iron, 1, Silicon, 4, Oxygen, 8, infused_fire, 5, infused_earth, 5, infused_order, 10)
+				.toolStats(new ToolProperty(4, 4, 288, 4))
 				.iconSet(GEM_HORIZONTAL)
 				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING)
 				.build()
@@ -70,6 +80,7 @@ public class FirstDegreeMaterials {
 		PollutionMaterials.valonite = new Material.Builder(getMaterialsId(), gregtechId("valonite"))
 				.color(0xFFCCFF)
 				.gem().fluid().ore()
+				.toolStats(new ToolProperty(4, 4, 1024, 4))
 				.iconSet(EMERALD)
 				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD)
 				.build()
@@ -147,6 +158,10 @@ public class FirstDegreeMaterials {
 				.color(0x1E90FF)
 				.ingot().fluid().ore()
 				.components(Iron, 4, mana, 1)
+				.toolStats(new ToolProperty(6, 6, 2048, 5))
+				.rotorStats(8.0F, 3.0F, 1024)
+				.fluidPipeProperties(2400, 160, true)
+				.cableProperties(GTValues.V[3], 16, 2)
 				.iconSet(METALLIC)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
@@ -160,6 +175,10 @@ public class FirstDegreeMaterials {
 				.color(0xE6E6FA)
 				.ingot().fluid()
 				.components(manasteel, 3, thaumium, 2, salismundus, 1)
+				.toolStats(new ToolProperty(6, 6, 2048, 5))
+				.rotorStats(10.0F, 3.0F, 1440)
+				.fluidPipeProperties(2800, 140, true)
+				.cableProperties(GTValues.V[4], 16, 4)
 				.iconSet(METALLIC)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.blast(2700, LOW)
@@ -169,6 +188,10 @@ public class FirstDegreeMaterials {
 				.color(0x58FF0B)
 				.ingot().fluid()
 				.components(Iron, 4,Carbon,4,EnderPearl,4, mana, 3)
+				.toolStats(new ToolProperty(8, 6, 5120, 6))
+				.rotorStats(10.0F, 3.0F, 1440)
+				.fluidPipeProperties(3400, 200, true)
+				.cableProperties(GTValues.V[5], 16, 2)
 				.iconSet(METALLIC)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
@@ -178,6 +201,10 @@ public class FirstDegreeMaterials {
 				.color(0xFCF770)
 				.fluid().ingot()
 				.iconSet(SHINY)
+				.toolStats(new ToolProperty(8, 10, 14400, 8))
+				.rotorStats(12.0F, 3.0F, 2400)
+				.fluidPipeProperties(6000, 400, true)
+				.cableProperties(GTValues.V[6], 16, 2)
 				.element(Elements.Kqt)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
 				.blast(3600, MID)
@@ -216,5 +243,13 @@ public class FirstDegreeMaterials {
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
+
+		//交错基础材料：
+		//淤泥 Mud
+		Mud = new Material.Builder(getMaterialsId(), gregtechId("mud"))
+				.liquid()
+				.color(0x211b14)
+				.build();
+
 	}
 }

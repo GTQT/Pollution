@@ -2,6 +2,7 @@ package keqing.pollution.loaders;
 
 import keqing.pollution.loaders.recipes.*;
 import keqing.pollution.loaders.recipes.mods.Botania;
+import keqing.pollution.loaders.recipes.mods.TheBetweendLand.VanillaRecipes;
 
 import static WayofTime.bloodmagic.meteor.MeteorRegistry.meteorMap;
 
@@ -20,6 +21,7 @@ public class RecipeManger {
 		CompoundAspectRecipes.init();
 		MagicChemicalRecipes.init();
 		Botania.init();
+		VanillaRecipes.init();
 	}
 
 

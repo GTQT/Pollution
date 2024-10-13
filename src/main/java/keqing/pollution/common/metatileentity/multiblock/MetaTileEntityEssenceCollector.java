@@ -252,8 +252,8 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 		int aZ = this.getPos().getZ();
 
 		// 计算灵气和污染
-		float visThisChunk = AuraHelper.getVis(this.getWorld(), new BlockPos(aX, aY, aZ));
-		float fluxThisChunk = AuraHelper.getFlux(this.getWorld(), new BlockPos(aX, aY, aZ));
+		visThisChunk = AuraHelper.getVis(this.getWorld(), new BlockPos(aX, aY, aZ));
+		fluxThisChunk = AuraHelper.getFlux(this.getWorld(), new BlockPos(aX, aY, aZ));
 
 		// 处理输入电压为 0 的情况
 		if (this.energyContainer.getInputVoltage() == 0) {
@@ -267,7 +267,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 			// 将能源仓的输入电压转化为 GT 的电压等级
 			EUtTier = GTUtility.getTierByVoltage(this.energyContainer.getInputVoltage());
 			// 检查能量是否足够
-			if (this.energyContainer.getEnergyStored() < VA[EUtTier] || this.energyContainer.getInputVoltage() < VA[EUtTier]) {
+			if (this.energyContainer.getEnergyStored() < VA[EUtTier] && this.energyContainer.getInputVoltage() < VA[EUtTier]) {
 				return;
 			}
 		}
