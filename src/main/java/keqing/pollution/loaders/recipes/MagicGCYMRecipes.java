@@ -86,6 +86,80 @@ public class MagicGCYMRecipes {
 				.EUt(30)
 				.buildAndRegister();
 
+		//要素粉
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(BlocksTC.crystalAir)
+				.output(dust, infused_air)
+				.duration(20)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(BlocksTC.crystalFire)
+				.output(dust, infused_fire)
+				.duration(20)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(BlocksTC.crystalWater)
+				.output(dust, infused_water)
+				.duration(20)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(BlocksTC.crystalEarth)
+				.output(dust, infused_earth)
+				.duration(20)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(BlocksTC.crystalOrder)
+				.output(dust, infused_order)
+				.duration(20)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+				.input(BlocksTC.crystalEntropy)
+				.output(dust, infused_entropy)
+				.duration(20)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+				.fluidInputs(infused_air.getFluid(144))
+				.output(BlocksTC.crystalAir)
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+				.fluidInputs(infused_fire.getFluid(144))
+				.output(BlocksTC.crystalFire)
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+				.fluidInputs(infused_water.getFluid(144))
+				.output(BlocksTC.crystalWater)
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+				.fluidInputs(infused_earth.getFluid(144))
+				.output(BlocksTC.crystalEarth)
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+				.fluidInputs(infused_order.getFluid(144))
+				.output(BlocksTC.crystalOrder)
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+				.fluidInputs(infused_entropy.getFluid(144))
+				.output(BlocksTC.crystalEntropy)
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+
 		//这里是六个基础外壳材料的搅拌机配方
 		//风要素-律动钛
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
@@ -95,7 +169,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
 				.output(OrePrefix.dust, PollutionMaterials.aertitanium, 9)
 				.duration(900)
-				.EUt(480)
+				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -116,7 +190,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
 				.output(OrePrefix.dust, PollutionMaterials.ignissteel, 9)
 				.duration(900)
-				.EUt(480)
+				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -137,7 +211,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
 				.output(OrePrefix.dust, PollutionMaterials.aquasilver, 9)
 				.duration(900)
-				.EUt(480)
+				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -158,7 +232,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
 				.output(OrePrefix.dust, PollutionMaterials.terracopper, 9)
 				.duration(900)
-				.EUt(480)
+				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -179,7 +253,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
 				.output(OrePrefix.dust, PollutionMaterials.ordolead, 9)
 				.duration(900)
-				.EUt(480)
+				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -200,7 +274,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.infused_entropy, 5)
 				.output(OrePrefix.dust, perditioaluminium, 9)
 				.duration(900)
-				.EUt(480)
+				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
