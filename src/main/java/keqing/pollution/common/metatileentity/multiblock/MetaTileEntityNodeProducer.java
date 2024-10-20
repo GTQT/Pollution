@@ -128,6 +128,10 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 		return auraNode;
 	}
 
+	private boolean isOutputFull(){
+		return !GTTransferUtils.addItemsToItemHandler(this.outputInventory, true, Collections.singletonList(PollutionMetaItems.PACKAGED_AURA_NODE.getStackForm()));
+	}
+
 	protected void updateFormedValid() {
 		if (!this.isActive()) {
 			setActive(true);
@@ -142,8 +146,8 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
 		if (this.isWorkingEnabled() && INFUSED_ENERGY.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ENERGY, false))) {
 			if (this.energyContainer.getInputVoltage() > EUt && this.energyContainer.getEnergyStored() >= this.energyContainer.getInputVoltage()) {
 				tickCount++;
-				this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
-				if (fluidInputInventory.get(0).getFluidAmount() >= infusedCost) {
+				if (fluidInputInventory.get(0).getFluidAmount() >= infusedCost && !isOutputFull()) {
+					this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
 					this.inputFluidInventory.drain(INFUSED_ENERGY, true);
 				} else {
 					timer = 0; //重置进度

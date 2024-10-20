@@ -1,5 +1,7 @@
 package keqing.pollution.loaders.recipes;
 
+import com.sun.jna.platform.win32.WinNT;
+import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockBoilerCasing;
@@ -613,6 +615,8 @@ public class MagicGCYMRecipes {
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
 				"frameGtMansussteel",
+				"blockKeqinggold",
+				"blockHyperdimensionalSilver",
 				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.VOID_PRISM)));
 		//聚灵阵
@@ -1896,6 +1900,43 @@ public class MagicGCYMRecipes {
 				.outputs(PollutionMetaTileEntities.SMALL_CHEMICAL_PLANT.getStackForm())
 				.duration(10000)
 				.EUt(7680)
+				.buildAndRegister();
+		//并行控制仓（四种）
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(MetaTileEntities.HULL[IV], 4)
+				.input(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206)
+				.input(frameGt, mansussteel, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[0].getStackForm(4))
+				.duration(800)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(MetaTileEntities.HULL[LuV], 4)
+				.input(MetaItems.FIELD_GENERATOR_LuV.getMetaItem(), 1, 207)
+				.input(frameGt, mansussteel, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[1].getStackForm(4))
+				.duration(800)
+				.EUt(30720)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(MetaTileEntities.HULL[ZPM], 4)
+				.input(MetaItems.FIELD_GENERATOR_ZPM.getMetaItem(), 1, 208)
+				.input(frameGt, mansussteel, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[2].getStackForm(4))
+				.duration(800)
+				.EUt(122880)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(MetaTileEntities.HULL[UV], 4)
+				.input(MetaItems.FIELD_GENERATOR_UV.getMetaItem(), 1, 209)
+				.input(frameGt, mansussteel, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[3].getStackForm(4))
+				.duration(800)
+				.EUt(491520)
 				.buildAndRegister();
 	}
 }

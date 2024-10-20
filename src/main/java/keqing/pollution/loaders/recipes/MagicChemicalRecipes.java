@@ -108,6 +108,18 @@ public class MagicChemicalRecipes {
 				.EUt(122880)
 				.buildAndRegister();
 
+		//亚硝酸钾
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Materials.Saltpeter, 2)
+				.fluidInputs(Materials.Water.getFluid(1000))
+				.fluidInputs(Materials.SulfurDioxide.getFluid(3000))
+				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(), 1, 3))
+				.output(OrePrefix.dust, GTQTMaterials.PotassiumNitrite, 2)
+				.fluidOutputs(Materials.SulfuricAcid.getFluid(3000))
+				.duration(200)
+				.EUt(120)
+				.buildAndRegister();
+
 		//可燃冰→石墨烯+氢
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.input(OrePrefix.dust, GTQTMaterials.Gashydrate, 4)

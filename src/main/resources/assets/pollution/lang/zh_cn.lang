@@ -522,6 +522,14 @@ pollution.machine.node_washer.tooltip.3=aer-terra，aqua-ignis，ordo-perditio�
 pollution.machine.node_washer.tooltip.4=线圈等级和电压等级决定重洗后期望要素值
 pollution.machine.node_washer.tooltip.5=清洗过程是随机的，时间可长可短，中途断电会让节点丢失！
 
+#炼金炉
+pollution.machine.essence_smelter.name=魔导小型试作炼金炉
+pollution.machine.essence_smelter_infusedcost=本次配方消耗源质：%s
+pollution.machine.essence_smelter_smeltingduration=熔炼时长：%s
+pollution.machine.essence_smelter_timer=计时器：%s
+pollution.machine.essence_smelter_euttier=电压等级：%s
+pollution.machine.essence_smelter_aspectslist=源质列表：%s
+
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵
 
