@@ -268,18 +268,6 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 		}
 	}
 
-	/*
-	private void consumeNode() {
-		var slots = this.getInputInventory().getSlots();
-		for (int i = 0; i < slots; i++) {
-			ItemStack item = this.getInputInventory().getStackInSlot(i);
-			if (item.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem() && item.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaValue()) {
-			}
-		}
-	}
-
-	 */
-
 	private boolean checkNode() {
 		var slots = this.getInputInventory().getSlots();
 		for (int i = 0; i < slots; i++) {
