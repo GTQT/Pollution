@@ -2,6 +2,7 @@ package keqing.pollution.loaders.recipes.mods.TheBetweendLand;
 
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
@@ -18,17 +19,20 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import thebetweenlands.common.block.terrain.BlockCragrock;
+import thebetweenlands.common.item.misc.ItemMisc;
 import thebetweenlands.common.registries.BlockRegistry;
 import thebetweenlands.common.registries.FluidRegistry;
 import thebetweenlands.common.registries.ItemRegistry;
 
+import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.block;
-import static gregtech.api.unification.ore.OrePrefix.dust;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS;
+import static gregtech.common.items.MetaItems.COMPRESSED_COKE_CLAY;
+import static gregtech.common.items.MetaItems.WOODEN_FORM_BRICK;
 import static keqing.gtqtcore.api.unification.ore.GTQTOrePrefix.motor_stick;
 import static keqing.gtqtcore.common.items.GTQTMetaItems.MOLD_MOTOR;
-import static keqing.pollution.api.unification.PollutionMaterials.Mud;
+import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class VanillaRecipes {
     public static void init() {
@@ -37,28 +41,74 @@ public class VanillaRecipes {
     }
     public static void removeRecipes() {
         //对箱子等交错原版物品的配方魔改
+        //杂草木工作台
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:weedwood_workbench"));
+        ModHandler.addShapedRecipe("weedwood_chest", new ItemStack(BlockRegistry.WEEDWOOD_WORKBENCH),
+                "AA", "BB",
+                'B',"logWood",
+                'A', new ItemStack(Items.FLINT));
+
+        //赛摩铜剪刀
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:syrmorite_shears"));
+        ModHandler.addShapedRecipe("po_shears", new ItemStack(ItemRegistry.SYRMORITE_SHEARS),
+                "PSP", "hRf", "XsX",
+                'P', new UnificationEntry(plate, syrmorite),
+                'S', new UnificationEntry(screw, syrmorite),
+                'R', new UnificationEntry(ring, syrmorite),
+                'X', new UnificationEntry(stick, syrmorite));
+
+        //门
+        //赛摩铜
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:syrmorite_door_item"));
+        ModHandler.addShapedRecipe("syrmorite_door", new ItemStack(ItemRegistry.SYRMORITE_DOOR_ITEM),
+                "PTh", "PRS", "PPd",
+                'P', new UnificationEntry(OrePrefix.plate, syrmorite),
+                'T', new ItemStack(Blocks.IRON_BARS),
+                'R', new UnificationEntry(OrePrefix.ring, syrmorite),
+                'S', new UnificationEntry(OrePrefix.screw, syrmorite));
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.plate, syrmorite, 4)
+                .inputs(new ItemStack(Blocks.IRON_BARS))
+                .fluidInputs(syrmorite.getFluid(L / 9))
+                .outputs(new ItemStack(ItemRegistry.SYRMORITE_DOOR_ITEM))
+                .duration(400).EUt(VA[ULV]).buildAndRegister();
+
+        //硫磺熔炉
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:sulfur_furnace"));
+        ModHandler.addShapedRecipe("sulfur_furnace", new ItemStack(BlockRegistry.SULFUR_FURNACE),
+                "XXX", "CGC", "XXX",
+                'X', "cobblestone",
+                'C', new UnificationEntry(dust, Sulfur),
+                'G', new UnificationEntry(OrePrefix.gearSmall, PollutionMaterials.syrmorite));
+
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:sulfur_furnace_dual"));
+        ModHandler.addShapedRecipe("sulfur_furnace_dual", new ItemStack(BlockRegistry.SULFUR_FURNACE_DUAL),
+                "XXX", "CGC", "XXX",
+                'X', "cobblestone",
+                'C', new ItemStack(BlockRegistry.SULFUR_FURNACE),
+                'G', new UnificationEntry(OrePrefix.gearSmall, PollutionMaterials.syrmorite));
+
+        //杂草木箱子
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:weedwood_chest"));
+        ModHandler.addShapedRecipe("weedwood_chest", new ItemStack(BlockRegistry.WEEDWOOD_CHEST), "LPL", "PFP", "LPL",
+                'L', new ItemStack(BlockRegistry.WEEDWOOD),
+                'P', new ItemStack(BlockRegistry.WEEDWOOD_PLANKS),
+                'F', new ItemStack(Items.FLINT));
+
+        //赛摩铜漏斗
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:syrmorite_hopper"));
         ModHandler.addShapedRecipe("hopper", new ItemStack(BlockRegistry.SYRMORITE_HOPPER, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
                 "XCX", "XGX", "wXh",
                 'X', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite),
                 'C', "chestWood",
                 'G', new UnificationEntry(OrePrefix.gearSmall, PollutionMaterials.syrmorite));
-
-        /*
-        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:syrmorite_door_item"));
-        ModHandler.addShapedRecipe("syrmorite_door", new ItemStack(BlockRegistry.SYRMORITE_DOOR, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
-                "PTh", "PRS", "PPd",
-                'P', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite),
-                'T', new ItemStack(Blocks.IRON_BARS),
-                'R', new UnificationEntry(OrePrefix.ring, PollutionMaterials.syrmorite),
-                'S', new UnificationEntry(OrePrefix.screw, PollutionMaterials.syrmorite));
-        */
-
+        //赛摩铜桶
         ModHandler.addShapedRecipe("syrmorite_anvil", new ItemStack(Blocks.ANVIL), "BBB", "SBS", "PBP",
                 'B', new UnificationEntry(OrePrefix.block, PollutionMaterials.syrmorite),
                 'S', new UnificationEntry(OrePrefix.screw, PollutionMaterials.syrmorite),
                 'P', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite));
-
+        //赛摩铜活版门
         ModHandler.addShapedRecipe("syrmorite_iron_trapdoor", new ItemStack(Blocks.IRON_TRAPDOOR), "SPS", "PTP", "sPd",
                 'S', new UnificationEntry(OrePrefix.screw, PollutionMaterials.syrmorite),
                 'P', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite),
@@ -71,13 +121,32 @@ public class VanillaRecipes {
                 'G',  new ItemStack(BlockRegistry.MUD_BRICKS, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
                 'C', FluidUtil.getFilledBucket(Mud.getFluid(1000)));
 
+        ModHandler.addShapedRecipe("bucket_mud",
+                FluidUtil.getFilledBucket(Mud.getFluid(1000)),
+                " h ", " C ", " B ",
+                'C',  new ItemStack(BlockRegistry.MUD,1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'B', Items.BUCKET);
+
+        ModHandler.addShapedRecipe("po_bricks",
+                new ItemStack(Blocks.BRICK_BLOCK),
+                "GGG", "GCG", "GGG",
+                'G',  new ItemStack(Items.BRICK),
+                'C', FluidUtil.getFilledBucket(Mud.getFluid(1000)));
+
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Blocks.SAND));
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Blocks.DIRT));
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.PEAT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Items.COAL));
+        ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,syrmorite), ItemMisc.EnumItemMisc.SYRMORITE_INGOT.create(1));
+        ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,octine), new ItemStack(ItemRegistry.OCTINE_INGOT));
+        ModHandler.addSmeltingRecipe(FluidUtil.getFilledBucket(Mud.getFluid(1000)), FluidUtil.getFilledBucket(Water.getFluid(1000)));
 
     }
     public static void initRecipes() {
         //神秘的原石变沙砾 沙砾变沙子
+        ModHandler.addShapedRecipe(true, "PoStone0", new ItemStack(Blocks.CLAY),
+                " h", " M",
+                'M',new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+
         ModHandler.addShapedRecipe(true, "PoStone1", new ItemStack(Blocks.GRAVEL),
                 " h", " M",
                 'M',new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
@@ -129,6 +198,20 @@ public class VanillaRecipes {
         ModHandler.addShapedRecipe(true, "PoSand", new ItemStack(Blocks.SAND),
                 " h", " M",
                 'M', Blocks.GRAVEL);
+
+        ModHandler.addShapedRecipe(true, "PoFlint", new ItemStack(Items.FLINT),
+                "MM", "MM",
+                'M', ItemMisc.EnumItemMisc.BETWEENSTONE_PEBBLE.create(1));
+
+        ModHandler.addShapedRecipe(true, "PoString", new ItemStack(Items.STRING),
+                "   ","MMM", "   ",
+                'M', ItemMisc.EnumItemMisc.SWAMP_REED_ROPE.create(1));
+
+        ModHandler.addShapedRecipe("po_paper_dust", OreDictUnifier.get(OrePrefix.dust, Materials.Paper, 2), "SSS",
+                " m ", 'S',   ItemMisc.EnumItemMisc.DRIED_SWAMP_REED.create(1));
+
+        ModHandler.addShapedRecipe("compressed_coke_clay", COMPRESSED_COKE_CLAY.getStackForm(3), "XXX", "SYS", "SSS",
+                'Y', WOODEN_FORM_BRICK.getStackForm(), 'X', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), 'S', "sand");
 
         //原始化反添加沙子变黏土的配方
         GTQTcoreRecipeMaps.PR_MIX.recipeBuilder()
