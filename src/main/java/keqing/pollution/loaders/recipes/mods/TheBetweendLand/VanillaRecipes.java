@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.oredict.OreDictionary;
 import thebetweenlands.common.block.terrain.BlockCragrock;
 import thebetweenlands.common.item.misc.ItemMisc;
 import thebetweenlands.common.registries.BlockRegistry;
@@ -139,14 +140,21 @@ public class VanillaRecipes {
         ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,syrmorite), ItemMisc.EnumItemMisc.SYRMORITE_INGOT.create(1));
         ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,octine), new ItemStack(ItemRegistry.OCTINE_INGOT));
         ModHandler.addSmeltingRecipe(FluidUtil.getFilledBucket(Mud.getFluid(1000)), FluidUtil.getFilledBucket(Water.getFluid(1000)));
-
+        ModHandler.addSmeltingRecipe(ItemMisc.EnumItemMisc.LURKER_SKIN.create(1), new ItemStack(Items.LEATHER));
     }
     public static void initRecipes() {
+        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("sand",new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+
         //神秘的原石变沙砾 沙砾变沙子
         ModHandler.addShapedRecipe(true, "PoStone0", new ItemStack(Blocks.CLAY),
                 " h", " M",
                 'M',new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
+        /*
         ModHandler.addShapedRecipe(true, "PoStone1", new ItemStack(Blocks.GRAVEL),
                 " h", " M",
                 'M',new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
@@ -190,6 +198,7 @@ public class VanillaRecipes {
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
+        */
 
         ModHandler.addShapedRecipe(true, "PoStone5", new ItemStack(Blocks.GRAVEL),
                 " h", " M",
