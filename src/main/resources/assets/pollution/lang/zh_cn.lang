@@ -78,6 +78,14 @@ metaitem.ingotTerrasteel.tooltip=以大地为名
 gregtech.material.basic_substrate=通用奇术基底
 gregtech.material.advanced_substrate=高阶奇术基底
 
+gregtech.material.sentient_metal=感知
+metaitem.ingotSentientMetal.tooltip=远古之战于深幽地域逸散呢喃，Sentient终将得胜，一如既往。
+gregtech.material.starrymansus=星能漫宿
+gregtech.material.blood_of_avernus=阿弗纳斯之血
+metaitem.ingotBloodOfAvernus.tooltip=§c良田万顷偶蹄裂，地狱之国魔影来 埃尔托瑞尔于今日堕入阿弗纳斯...§r
+gregtech.material.iizunamaru_electrum=光风霁月琥珀金
+metaitem.ingotIizunamaruElectrum.tooltip=星风「虹彩陆离乱舞」
+
 #刻金线
 gregtech.material.sulfo_plumbic_salt=硫铅盐
 gregtech.material.magical_sulfo_plumbic_salt=蕴魔硫铅盐
@@ -521,6 +529,23 @@ pollution.machine.node_washer.tooltip.2=通入要素流体提高灵气节点要�
 pollution.machine.node_washer.tooltip.3=aer-terra，aqua-ignis，ordo-perditio互为相反要素，通入一种会降低相反要素的要素值
 pollution.machine.node_washer.tooltip.4=线圈等级和电压等级决定重洗后期望要素值
 pollution.machine.node_washer.tooltip.5=清洗过程是随机的，时间可长可短，中途断电会让节点丢失！
+
+#炼金炉
+pollution.machine.essence_smelter.name=试作型秘源炼金枢纽
+pollution.machine.essence_smelter.tooltip.1=§5凡所存在皆有联系，凡所发生皆有根源，凡所见证皆为神秘。——卡特·萨托莉，末代魔女§r
+pollution.machine.essence_smelter.tooltip.2=工业时代的源质冶炼厂，新神秘学的奠基者
+pollution.machine.essence_smelter.tooltip.3=本机器源质冶炼效率为100%%！不必担心源质浪费！
+pollution.machine.essence_smelter.tooltip.4=此外本机器同时环境友好，不会产生任何污染！
+pollution.machine.essence_smelter.tooltip.5=输入液态焱以作为燃料，通电后每次工作将输入总线内一格物品所含要素冶炼为源质
+pollution.machine.essence_smelter.tooltip.6=如果物品不含任何要素，机器将不会熔炼该物品。小心投料，含要素的物品会§c§l顷刻炼化§r！
+pollution.machine.essence_smelter.tooltip.7=在机器主方块为中心，半径5格的范围内放置源质容器，以接收熔炼而出的源质
+pollution.machine.essence_smelter.tooltip.8=电压等级越高，燃料消耗越低；且每提升一级电压等级，熔炼时长减半
+pollution.machine.essence_smelter.tooltip.9=机器内含源质缓存，源质无浪费，下次熔炼时长=（本次熔炼物品源质+缓存源质）*2s
+pollution.machine.essence_smelter.tooltip.10=因此缓存源质越多，机器下一次工作就越慢，请尽快导出所有源质到容器内...
+pollution.machine.essence_smelter_infusedcost=当前配方每刻源质消耗：%s
+pollution.machine.essence_smelter_smeltingduration=本次熔炼时长：%s
+pollution.machine.essence_smelter_timer=熔炼进度：%s
+pollution.machine.essence_smelter_euttier=电压等级：%s
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵

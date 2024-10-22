@@ -6,8 +6,7 @@ import gregtech.api.unification.material.properties.BlastProperty;
 import gregtech.api.unification.material.properties.ToolProperty;
 import keqing.pollution.api.unification.PollutionMaterials;
 
-import static gregtech.api.unification.material.Materials.Chlorine;
-import static gregtech.api.unification.material.Materials.Iron;
+import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static gregtech.api.util.GTUtility.gregtechId;

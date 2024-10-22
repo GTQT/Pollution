@@ -244,6 +244,24 @@ public class FirstDegreeMaterials {
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
 
+		//高级合金
+		//星辰物质
+		//阿弗纳斯之血、光风霁月琥珀金
+		PollutionMaterials.blood_of_avernus = new Material.Builder(getMaterialsId(), gregtechId("blood_of_avernus"))
+				.color(0x5E0000)
+				.ingot().fluid()
+				.iconSet(BRIGHT)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.build()
+				.setFormula("♆", true);
+		PollutionMaterials.iizunamaru_electrum = new Material.Builder(getMaterialsId(), gregtechId("iizunamaru_electrum"))
+				.color(0xF0FFB2)
+				.ingot().fluid()
+				.iconSet(SHINY)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.build()
+				.setFormula("((Ag50(RnMa)m(AeIgAqTerOrdPe)n)Kqt)Sen4", true);
+
 		//交错基础材料：
 		//淤泥 Mud
 		Mud = new Material.Builder(getMaterialsId(), gregtechId("mud"))

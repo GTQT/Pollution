@@ -4,6 +4,8 @@ import gregtech.api.unification.material.Material;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
 
+import static gregtech.api.unification.material.info.MaterialFlags.*;
+import static gregtech.api.unification.material.info.MaterialIconSet.BRIGHT;
 import static gregtech.api.unification.material.info.MaterialIconSet.SHINY;
 import static gregtech.api.util.GTUtility.gregtechId;
 
@@ -77,6 +79,19 @@ public class PollutionElementMaterials {
 				.fluid()
 				.iconSet(SHINY)
 				.element(Elements.El)
+				.build();
+		PollutionMaterials.starrymansus = new Material.Builder(getMaterialsId(), gregtechId("starrymansus"))
+				.color(0xFFF6FF)
+				.fluid()
+				.iconSet(BRIGHT)
+				.element(Elements.St)
+				.build();
+		PollutionMaterials.sentient_metal = new Material.Builder(getMaterialsId(), gregtechId("sentient_metal"))
+				.color(0x55FFFA)
+				.ingot().fluid()
+				.iconSet(BRIGHT)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.element(Elements.Sen)
 				.build();
 	}
 }

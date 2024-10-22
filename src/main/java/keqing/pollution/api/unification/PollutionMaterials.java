@@ -47,6 +47,10 @@ public class PollutionMaterials {
 	public static Material salismundus;
 	public static Material mansussteel;
 	public static Material keqinggold;
+	public static Material sentient_metal;
+	public static Material starrymansus;
+	public static Material blood_of_avernus;
+	public static Material iizunamaru_electrum;
 	//man what can I say
 	public static Material kobemetal;
 	//催化剂
