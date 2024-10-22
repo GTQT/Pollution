@@ -12,6 +12,7 @@ import keqing.pollution.dimension.biome.POBiomeHandler;
 import keqing.pollution.dimension.worldgen.PODimensionManager;
 import keqing.pollution.dimension.worldgen.PODimensionType;
 import keqing.pollution.integration.POIntegration;
+import keqing.pollution.loaders.loot.GregTechLootTable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,6 +58,7 @@ public class Pollution {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init();
+		GregTechLootTable.init();
 	}
 
 	@Mod.EventHandler
