@@ -78,6 +78,14 @@ metaitem.ingotTerrasteel.tooltip=以大地为名
 gregtech.material.basic_substrate=通用奇术基底
 gregtech.material.advanced_substrate=高阶奇术基底
 
+gregtech.material.sentient_metal=感知
+metaitem.ingotSentientMetal.tooltip=远古之战于深幽地域逸散呢喃，Sentient终将得胜，一如既往。
+gregtech.material.starrymansus=星能漫宿
+gregtech.material.blood_of_avernus=阿弗纳斯之血
+metaitem.ingotBloodOfAvernus.tooltip=§c良田万顷偶蹄裂，地狱之国魔影来 埃尔托瑞尔于今日堕入阿弗纳斯...§r
+gregtech.material.iizunamaru_electrum=光风霁月琥珀金
+metaitem.ingotIizunamaruElectrum.tooltip=星风「虹彩陆离乱舞」
+
 #刻金线
 gregtech.material.sulfo_plumbic_salt=硫铅盐
 gregtech.material.magical_sulfo_plumbic_salt=蕴魔硫铅盐

@@ -194,7 +194,7 @@ public class ForgeAlchemyRecipes {
 
 		//要触媒的
 		//基础：魔力钢 神秘 漫宿钢 六大合金
-		//进阶：超次元秘银 刻金 泰拉钢 玄阴铁 太初铜 花月合金
+		//进阶：超次元秘银 刻金 泰拉钢
 		//超级：源质钢 虚空 感知 阿弗纳斯之血 光风霁月琥珀金
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))

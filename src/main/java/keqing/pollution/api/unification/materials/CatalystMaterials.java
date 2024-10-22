@@ -1,6 +1,7 @@
 package keqing.pollution.api.unification.materials;
 
 import gregtech.api.unification.material.Material;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.unification.PollutionMaterials;
 
 import static gregtech.api.unification.material.Materials.*;
@@ -91,7 +92,7 @@ public class CatalystMaterials {
 		//通用奇术基底，高阶奇术基底，用于锻炉
 		PollutionMaterials.basic_substrate = new Material.Builder(getMaterialsId(), gregtechId("basic_substrate"))
 				.color(0xFFFFD8)
-				.fluid()
+				.fluid().ingot()
 				.build();
 		PollutionMaterials.advanced_substrate = new Material.Builder(getMaterialsId(), gregtechId("advanced_substrate"))
 				.color(0xD4FFF0)

@@ -1938,5 +1938,24 @@ public class MagicGCYMRecipes {
 				.duration(800)
 				.EUt(491520)
 				.buildAndRegister();
+		//炼金枢纽
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "essence_smelter"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.ESSENCE_SMELTER.getStackForm(),
+				4,
+				new AspectList().add(Aspect.ALCHEMY, 128).add(Aspect.FIRE, 64).add(Aspect.MAGIC, 32).add(Aspect.MECHANISM, 16),
+				BlocksTC.smelterThaumium,
+				"gemValonite",
+				"frameGtThaumium",
+				"frameGtMansussteel",
+				new ItemStack(BlocksTC.metalAlchemical),
+				new ItemStack(BlocksTC.metalAlchemical),
+				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
+				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
+				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
+				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
+				MetaTileEntities.CHEMICAL_REACTOR[MV].getStackForm()));
 	}
 }
