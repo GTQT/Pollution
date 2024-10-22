@@ -10,6 +10,7 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
+import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.pollution.api.unification.PollutionMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -148,6 +149,11 @@ public class VanillaRecipes {
         OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
         OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
         OreDictionary.registerOre("sand",new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+
+        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
         //神秘的原石变沙砾 沙砾变沙子
         ModHandler.addShapedRecipe(true, "PoStone0", new ItemStack(Blocks.CLAY),

@@ -154,6 +154,7 @@ public class FirstDegreeMaterials {
 				.fluid()
 				.iconSet(DULL)
 				.build();
+
 		PollutionMaterials.manasteel = new Material.Builder(getMaterialsId(), gregtechId("manasteel"))
 				.color(0x1E90FF)
 				.ingot().fluid().ore()
@@ -165,12 +166,14 @@ public class FirstDegreeMaterials {
 				.iconSet(METALLIC)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
+
 		PollutionMaterials.salismundus = new Material.Builder(getMaterialsId(), gregtechId("salismundus"))
 				.color(0xEE82EE)
 				.dust()
 				.components(Redstone, 2, mana, 1)
 				.iconSet(SHINY)
 				.build();
+
 		PollutionMaterials.mansussteel = new Material.Builder(getMaterialsId(), gregtechId("mansussteel"))
 				.color(0xE6E6FA)
 				.ingot().fluid()
@@ -183,6 +186,7 @@ public class FirstDegreeMaterials {
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.blast(2700, LOW)
 				.build();
+
 		//泰拉钢
 		PollutionMaterials.Terrasteel = new Material.Builder(getMaterialsId(), gregtechId("terrasteel"))
 				.color(0x58FF0B)
