@@ -93,7 +93,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 				0);
 		List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.OUTPUT_ENERGY));
 		energyContainer.addAll(this.getAbilities(MultiblockAbility.OUTPUT_LASER));
-		this.energyContainer=new EnergyContainerList(energyContainer);
+		this.outEnergyContainer = new EnergyContainerList(energyContainer);
 	}
 
 	//计算总发电乘数
