@@ -5,7 +5,6 @@ import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregicality.multiblocks.api.render.GCYMTextures;
 import gregtech.api.capability.GregtechTileCapabilities;
-import gregtech.api.capability.IControllable;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -17,18 +16,15 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
-import keqing.pollution.api.utils.PollutionLog;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import vazkii.botania.api.mana.IManaReceiver;
-import vazkii.botania.api.mana.ManaNetworkEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch {
     int mana=0;
@@ -47,12 +43,8 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.defaultBuilder();
-        builder.dynamicLabel(7, 30, () -> {
-            return "Mana Hatch";
-        }, 2302755);
-        builder.dynamicLabel(7, 50, () -> {
-            return "Tier: " + this.getTier();
-        }, 2302755);
+        builder.dynamicLabel(7, 30, () -> "Mana Hatch", 2302755);
+        builder.dynamicLabel(7, 50, () -> "Tier: " + this.getTier(), 2302755);
         builder.widget((new AdvancedTextWidget(7, 70, this::addDisplayText, 2302755)).setMaxWidthLimit(181));
         return builder.build(this.getHolder(), entityPlayer);
     }
@@ -75,7 +67,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
             }
 
             if (this.getController() != null && this.getController() instanceof RecipeMapMultiblockController) {
-                overlayRenderer.renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), this.getController().isActive(), ((IControllable) this.getController().getCapability(GregtechTileCapabilities.CAPABILITY_CONTROLLABLE, (EnumFacing) null)).isWorkingEnabled());
+                overlayRenderer.renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), this.getController().isActive(), Objects.requireNonNull(this.getController().getCapability(GregtechTileCapabilities.CAPABILITY_CONTROLLABLE, null)).isWorkingEnabled());
             } else {
                 overlayRenderer.renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), false, false);
             }
@@ -141,7 +133,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         return mana>=MAX_MANA;
     }
 
-    public void reciveMana(int amount) {
+    public void receiveMana(int amount) {
 
         if(!isFull())mana += amount * getTier();
         this.mana = Math.min(this.mana,this.getMaxMana());

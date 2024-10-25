@@ -3,7 +3,6 @@ package keqing.pollution.mixin;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.metatileentity.TickableTileEntityBase;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import keqing.pollution.common.metatileentity.single.ManaGeneratorTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -70,7 +69,7 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
             simpleGeneratorMetaTileEntity.reciveMana(mana);
         }
         if(metaTileEntity instanceof MetaTileEntityManaHatch MetaTileEntityMultiblockPart) {
-            MetaTileEntityMultiblockPart.reciveMana(mana);
+            MetaTileEntityMultiblockPart.receiveMana(mana);
         }
     }
 
