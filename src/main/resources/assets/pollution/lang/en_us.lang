@@ -209,8 +209,29 @@ metaitem.glycerol_slime.tooltip=An endless supply of glycerin
 metaitem.glue_slime.tooltip=An endless supply of glue
 metaitem.rubber_slime.tooltip=An endless supply of erasers
 
-metaitem.packaged_aura_node.name=Encapsulated Aura Node
+metaitem.packaged_aura_node.name=Packaged Aura Node
+metaitem.stone_of_philosopher_1.name=Philosopher's Stone (Black Soil)
+metaitem.stone_of_philosopher_1.tooltip=Black Soil Ritual, Ascend the Steps
+metaitem.stone_of_philosopher_2.name=Philosopher's Stone (Chalk)
+metaitem.stone_of_philosopher_2.tooltip=Chalk Ritual, Transform the Worn
+#battery
+metaitem.battery.lv.magic.name=Magic Battery (§7LV§r)
+metaitem.battery.mv.magic.name=Magic Battery (§bMV§r)
+metaitem.battery.hv.magic.name=Magic Battery (§6HV§r)
+metaitem.battery.ev.magic.name=Magic Battery (§5EV§r)
+metaitem.battery.iv.magic.name=Magic Battery (§1IV§r)
+metaitem.battery.luv.magic.name=Magic Battery (§dLuV§r)
+metaitem.battery.zpm.magic.name=Magic Battery (§cZPM§r)
+metaitem.battery.uv.magic.name=Magic Battery (§3UV§r)
 
+metaitem.magic_battery.hull.lv.name=Magic Battery Hull (§7LV§r)
+metaitem.magic_battery.hull.mv.name=Magic Battery Hull (§bMV§r)
+metaitem.magic_battery.hull.hv.name=Magic Battery Hull (§6HV§r)
+metaitem.magic_battery.hull.ev.name=Magic Battery Hull (§5EV§r)
+metaitem.magic_battery.hull.iv.name=Magic Battery Hull (§1IV§r)
+metaitem.magic_battery.hull.luv.name=Magic Battery Hull (§dLuV§r)
+metaitem.magic_battery.hull.zpm.name=Magic Battery Hull (§cZPM§r)
+metaitem.magic_battery.hull.uv.name=Magic Battery Hull (§3UV§r)
 #Machines
 pollution.machine.mana_gen_lv.name=Basic Mana Generator
 pollution.machine.mana_gen_mv.name=Advanced Mana Generator

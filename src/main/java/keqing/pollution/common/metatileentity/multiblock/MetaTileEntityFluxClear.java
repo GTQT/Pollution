@@ -54,12 +54,8 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
 		this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
 	}
 
-	int updateTime=0;
 	@Override
 	protected void updateFormedValid() {
-		updateTime++;
-		if(updateTime<200)return;
-		updateTime=0;
 		int aX = this.getPos().getX();
 		int aY = this.getPos().getY();
 		int aZ = this.getPos().getZ();

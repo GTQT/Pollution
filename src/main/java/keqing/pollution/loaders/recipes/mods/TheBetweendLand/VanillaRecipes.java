@@ -45,7 +45,7 @@ public class VanillaRecipes {
         //对箱子等交错原版物品的配方魔改
         //杂草木工作台
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:weedwood_workbench"));
-        ModHandler.addShapedRecipe("weedwood_chest", new ItemStack(BlockRegistry.WEEDWOOD_WORKBENCH),
+        ModHandler.addShapedRecipe("workbench", new ItemStack(BlockRegistry.WEEDWOOD_WORKBENCH),
                 "AA", "BB",
                 'B',"logWood",
                 'A', new ItemStack(Items.FLINT));
