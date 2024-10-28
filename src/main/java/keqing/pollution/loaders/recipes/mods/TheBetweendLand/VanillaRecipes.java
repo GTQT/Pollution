@@ -93,8 +93,13 @@ public class VanillaRecipes {
 
         //杂草木箱子
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:weedwood_chest"));
-        ModHandler.addShapedRecipe("weedwood_chest", new ItemStack(BlockRegistry.WEEDWOOD_CHEST), "LPL", "PFP", "LPL",
+        ModHandler.addShapedRecipe("weedwood_chest1", new ItemStack(BlockRegistry.WEEDWOOD_CHEST), "LPL", "PFP", "LPL",
                 'L', new ItemStack(BlockRegistry.WEEDWOOD),
+                'P', new ItemStack(BlockRegistry.WEEDWOOD_PLANKS),
+                'F', new ItemStack(Items.FLINT));
+
+        ModHandler.addShapedRecipe("weedwood_chest2", new ItemStack(BlockRegistry.WEEDWOOD_CHEST), "LPL", "PFP", "LPL",
+                'L', new ItemStack(BlockRegistry.LOG_WEEDWOOD),
                 'P', new ItemStack(BlockRegistry.WEEDWOOD_PLANKS),
                 'F', new ItemStack(Items.FLINT));
 
