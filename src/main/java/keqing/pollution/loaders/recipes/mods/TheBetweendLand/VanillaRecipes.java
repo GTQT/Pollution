@@ -10,7 +10,9 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
+import keqing.gtqtcore.common.CommonProxy;
 import keqing.gtqtcore.common.block.GTQTMetaBlocks;
+import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.unification.PollutionMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -26,6 +28,9 @@ import thebetweenlands.common.registries.BlockRegistry;
 import thebetweenlands.common.registries.FluidRegistry;
 import thebetweenlands.common.registries.ItemRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -33,7 +38,9 @@ import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.PRIMITIVE_
 import static gregtech.common.items.MetaItems.COMPRESSED_COKE_CLAY;
 import static gregtech.common.items.MetaItems.WOODEN_FORM_BRICK;
 import static keqing.gtqtcore.api.unification.ore.GTQTOrePrefix.motor_stick;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.MOLD_MOTOR;
+import static keqing.gtqtcore.common.items.GTQTMetaItems.*;
+import static keqing.gtqtcore.common.items.GTQTMetaItems.ZHU_TAN;
+import static keqing.pollution.api.recipes.PORecipeMaps.STOVE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class VanillaRecipes {
@@ -120,13 +127,13 @@ public class VanillaRecipes {
                 'S', new UnificationEntry(OrePrefix.screw, PollutionMaterials.syrmorite),
                 'P', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite),
                 'T', new ItemStack(Blocks.TRAPDOOR));
-
+        //耐火砖新配方
         ModHandler.addShapedRecipe("casing_primitive_bricks",
                 MetaBlocks.METAL_CASING.getItemVariant(PRIMITIVE_BRICKS),
                 "BGB", "BCB", "BGB",
-                'B', MetaItems.FIRECLAY_BRICK.getStackForm(),
-                'G',  new ItemStack(BlockRegistry.MUD_BRICKS, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
-                'C', FluidUtil.getFilledBucket(Mud.getFluid(1000)));
+                'G', ItemMisc.EnumItemMisc.MUD_BRICK.create(1),
+                'B',  new ItemStack(BlockRegistry.MUD_BRICKS, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'C', FluidUtil.getFilledBucket(Materials.Concrete.getFluid(1000)));
 
         ModHandler.addShapedRecipe("bucket_mud",
                 FluidUtil.getFilledBucket(Mud.getFluid(1000)),
@@ -147,6 +154,17 @@ public class VanillaRecipes {
         ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,octine), new ItemStack(ItemRegistry.OCTINE_INGOT));
         ModHandler.addSmeltingRecipe(FluidUtil.getFilledBucket(Mud.getFluid(1000)), FluidUtil.getFilledBucket(Water.getFluid(1000)));
         ModHandler.addSmeltingRecipe(ItemMisc.EnumItemMisc.LURKER_SKIN.create(1), new ItemStack(Items.LEATHER));
+        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), new ItemStack(Items.CLAY_BALL));
+        //泥砖
+        ModHandler.removeFurnaceSmelting(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        ModHandler.addSmeltingRecipe(ItemMisc.EnumItemMisc.MUD_BRICK.create(1), new ItemStack(Items.BRICK));
+        ModHandler.addShapedRecipe("mud_brick_from_clayAndMud", ItemMisc.EnumItemMisc.MUD_BRICK.create(8),
+                "XXX", "SYS", "SSS",
+                'Y', WOODEN_FORM_BRICK.getStackForm(),
+                'X', new ItemStack(Items.CLAY_BALL),
+                'S', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+
+
     }
     public static void initRecipes() {
         OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
@@ -161,10 +179,6 @@ public class VanillaRecipes {
         OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
         //神秘的原石变沙砾 沙砾变沙子
-        ModHandler.addShapedRecipe(true, "PoStone0", new ItemStack(Blocks.CLAY),
-                " h", " M",
-                'M',new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-
         /*
         ModHandler.addShapedRecipe(true, "PoStone1", new ItemStack(Blocks.GRAVEL),
                 " h", " M",
@@ -253,7 +267,7 @@ public class VanillaRecipes {
                 .inputs(new ItemStack(BlockRegistry.SILT_GLASS, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
                 .output(Blocks.GLASS)
                 .fluidInputs(Water.getFluid(1000))
-                .fluidOutputs(Mud.getFluid(100))
+                .fluidOutputs(Mud.getFluid(1000))
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
@@ -262,7 +276,7 @@ public class VanillaRecipes {
                 .inputs(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
                 .output(Blocks.DIRT)
                 .fluidInputs(Water.getFluid(1000))
-                .fluidOutputs(Mud.getFluid(100))
+                .fluidOutputs(Mud.getFluid(1000))
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
@@ -273,6 +287,7 @@ public class VanillaRecipes {
                 .chancedOutput(new ItemStack(Blocks.SAND), 2500, 250)
                 .chancedOutput(new ItemStack(Blocks.GRAVEL), 2500, 250)
                 .chancedOutput(dust,GTQTMaterials.Limestone, 2500, 250)
+                .fluidOutputs(Water.getFluid(1000))
                 .duration(20)
                 .EUt(30)
                 .buildAndRegister();
@@ -280,7 +295,7 @@ public class VanillaRecipes {
         RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
                 .output(Blocks.SAND)
-                .fluidOutputs(Mud.getFluid(100))
+                .fluidOutputs(Mud.getFluid(1000))
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
@@ -288,7 +303,7 @@ public class VanillaRecipes {
         RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
                 .output(Blocks.DIRT)
-                .fluidOutputs(Mud.getFluid(100))
+                .fluidOutputs(Mud.getFluid(1000))
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
@@ -296,12 +311,47 @@ public class VanillaRecipes {
         RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
                 .fluidInputs( new FluidStack(FluidRegistry.SWAMP_WATER, 1000))
                 .fluidOutputs(Water.getFluid(1000))
-                .fluidOutputs(Mud.getFluid(100))
+                .fluidOutputs(Mud.getFluid(1000))
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
 
 
+        List<ItemStack> FuelStacks = new ArrayList<>();
+        FuelStacks.add(OreDictUnifier.get(new UnificationEntry(OrePrefix.gem, Materials.Coal)));
+        FuelStacks.add(OreDictUnifier.get(new UnificationEntry(OrePrefix.gem, Materials.Charcoal)));
+        FuelStacks.add(OreDictUnifier.get(new UnificationEntry(OrePrefix.gem, Materials.Coke)));
+        FuelStacks.add(GTQTMetaItems.JIAO_XIAN_REN_ZHANG.getStackForm());
+        FuelStacks.add(GTQTMetaItems.NONG_SUO_XIAN_REN_ZHANG.getStackForm());
+        FuelStacks.add(GTQTMetaItems.JIAO_TANG_JIAO.getStackForm());
+        FuelStacks.add(GTQTMetaItems.NONG_SUO_TANG_JIAO.getStackForm());
+        FuelStacks.add(GTQTMetaItems.ZHU_TAN.getStackForm());
+
+        for(ItemStack fuel:FuelStacks) {
+            STOVE_RECIPES.recipeBuilder()
+                    .inputs(fuel)
+                    .inputs(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                    .output(Blocks.DIRT)
+                    .fluidOutputs(Mud.getFluid(100))
+                    .duration(200)
+                    .buildAndRegister();
+
+            STOVE_RECIPES.recipeBuilder()
+                    .inputs(fuel)
+                    .inputs(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                    .output(Blocks.SAND)
+                    .fluidOutputs(Mud.getFluid(100))
+                    .duration(200)
+                    .buildAndRegister();
+
+            STOVE_RECIPES.recipeBuilder()
+                    .inputs(fuel)
+                    .inputs(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                    .output(Blocks.CLAY)
+                    .fluidOutputs(Mud.getFluid(100))
+                    .duration(200)
+                    .buildAndRegister();
+        }
 
     }
 }

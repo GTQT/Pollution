@@ -17,6 +17,8 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.block.metablocks.POTurbine;
 import keqing.pollution.common.metatileentity.multiblock.*;
+import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityPrimitiveMudPump;
+import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityStove;
 import keqing.pollution.common.metatileentity.multiblockpart.*;
 import keqing.pollution.common.metatileentity.single.*;
 import net.minecraft.util.ResourceLocation;
@@ -74,14 +76,16 @@ public class PollutionMetaTileEntities {
 	public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
 	public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR =new SimpleGeneratorMetaTileEntity[6];
 	public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
-//植魔系列
+	//植魔系列
 	public static MetaTileEntityBotDistillery BOT_DISTILLERY;
 	public static MetaTileEntityManaPlate Mana_PLATE;
 	public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
 	public static MetaTileEntityNodeBlastFurnace NODE_BLAST_FURNACE;
 	public static MetaTileEntitySmallChemicalPlant SMALL_CHEMICAL_PLANT;
 	public static MetaTileEntityEssenceSmelter ESSENCE_SMELTER;
-
+	//原始设备
+	public static MetaTileEntityPrimitiveMudPump PRIMITIVE_MUD_PUMP;
+	public static MetaTileEntityStove PRIMITIVE_STOVE;
 	public static void initialization() {
 
 		for (int i = 0; i <= 4; i++) {
@@ -198,5 +202,9 @@ public class PollutionMetaTileEntities {
 	    NODE_BLAST_FURNACE = registerMetaTileEntity(15855, new MetaTileEntityNodeBlastFurnace(gtqtcoreId("node_blast_furnace")));
 	    SMALL_CHEMICAL_PLANT = registerMetaTileEntity(15856, new MetaTileEntitySmallChemicalPlant(gtqtcoreId("small_chemical_plant")));
 	    ESSENCE_SMELTER = registerMetaTileEntity(15857, new MetaTileEntityEssenceSmelter(gtqtcoreId("essence_smelter")));
+
+		//Primitive
+		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));
+		PRIMITIVE_STOVE = registerMetaTileEntity(16101, new MetaTileEntityStove(gtqtcoreId("primitive_stove")));
 	}
 }

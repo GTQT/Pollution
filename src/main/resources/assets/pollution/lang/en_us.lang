@@ -386,6 +386,14 @@ pollution.machine.magic_distillery.tooltip=You're right, but our modpack is thri
 pollution.machine.magic_green_house.tooltip=As magicians, we only produce carnivorous flowers in greenhouses
 pollution.machine.magic_battery.tooltip=§5Even if the divine pupils dim, the universe can be reborn§r
 
+pollution.machine.magic_assembler.name=高等应用魔导秩构单元
+pollution.machine.magic_assembler.tooltip=大炮，已组装！ 谁是最大冲击波？
+
+pollution.machine.primitive_mud_pump.name=原始泥泵
+pollution.machine.primitive_mud_pump.tooltip=污泥滚滚
+
+pollution.machine.primitive_stove.name=原始炉窑
+pollution.machine.primitive_stove.tooltip=星星之火
 #Magic Battery Status
 pollution.eke.count=Magic Core: %s Coil Level: %s
 pollution.eke.eu1=Input/Output Energy: %s / %s EU/t
@@ -403,7 +411,7 @@ recipemap.magic_blast_smelter.name=Alloy Smelting Furnace
 recipemap.magic_chemical_reactor.name=Magic Catalytic Reaction
 recipemap.magic_fusion_reactor.name=Essence Disintegration
 recipemap.magic_turbine.name=Primordial Combustion
-
+recipemap.stove.name=烧结
 #Events
 pollution.command.slowness=§7You feel encumbered
 pollution.command.weakness=§bYou feel a surge of weakness
