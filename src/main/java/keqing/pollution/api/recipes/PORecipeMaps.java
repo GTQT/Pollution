@@ -20,6 +20,10 @@ public class PORecipeMaps {
 			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
 			.setSound(GTSoundEvents.FURNACE);
 
+	public static final RecipeMap<PrimitiveRecipeBuilder> STOVE_RECIPES = new RecipeMap<>("stove", 2, 1,
+			0, 1, new PrimitiveRecipeBuilder(), false)
+			.setSound(GTSoundEvents.FURNACE);
+
 	public static final RecipeMap<PrimitiveRecipeBuilder> MAGIC_FUSION_REACTOR = new RecipeMap<>("magic_fusion_reactor", 0, 0,
 			1, 2, new PrimitiveRecipeBuilder(), false)
 			.setSound(GTSoundEvents.CHEMICAL_REACTOR);

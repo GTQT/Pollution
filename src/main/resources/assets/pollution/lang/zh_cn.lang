@@ -268,7 +268,24 @@ metaitem.stone_of_philosopher_1.name=贤者之石（黑土）
 metaitem.stone_of_philosopher_1.tooltip=黑土之仪，拾阶而上
 metaitem.stone_of_philosopher_2.name=贤者之石（白垩）
 metaitem.stone_of_philosopher_2.tooltip=白垩之仪，化朽为奇
+#电池
+metaitem.battery.lv.magic.name=魔导蓄能器（§7LV§r）
+metaitem.battery.mv.magic.name=魔导蓄能器（§bMV§r）
+metaitem.battery.hv.magic.name=魔导蓄能器（§6HV§r）
+metaitem.battery.ev.magic.name=魔导蓄能器（§5EV§r）
+metaitem.battery.iv.magic.name=魔导蓄能器（§1IV§r）
+metaitem.battery.luv.magic.name=魔导蓄能器（§dLuV§r）
+metaitem.battery.zpm.magic.name=魔导蓄能器（§cZPM§r）
+metaitem.battery.uv.magic.name=魔导蓄能器（§3UV§r）
 
+metaitem.magic_battery.hull.lv.name=魔导蓄能器外壳（§7LV§r）
+metaitem.magic_battery.hull.mv.name=魔导蓄能器外壳（§bMV§r）
+metaitem.magic_battery.hull.hv.name=魔导蓄能器外壳（§6HV§r）
+metaitem.magic_battery.hull.ev.name=魔导蓄能器外壳（§5EV§r）
+metaitem.magic_battery.hull.iv.name=魔导蓄能器外壳（§1IV§r）
+metaitem.magic_battery.hull.luv.name=魔导蓄能器外壳（§dLuV§r）
+metaitem.magic_battery.hull.zpm.name=魔导蓄能器外壳（§cZPM§r）
+metaitem.magic_battery.hull.uv.name=魔导蓄能器外壳（§3UV§r）
 #机器
 pollution.machine.mana_gen_lv.name=基础魔力发电机
 pollution.machine.mana_gen_mv.name=进阶魔力发电机
@@ -426,6 +443,11 @@ pollution.machine.magic_battery.tooltip=§5纵使神曈黯淡，亦可再造鸿�
 pollution.machine.magic_assembler.name=高等应用魔导秩构单元
 pollution.machine.magic_assembler.tooltip=大炮，已组装！ 谁是最大冲击波？
 
+pollution.machine.primitive_mud_pump.name=原始泥泵
+pollution.machine.primitive_mud_pump.tooltip=污泥滚滚
+
+pollution.machine.primitive_stove.name=原始炉窑
+pollution.machine.primitive_stove.tooltip=星星之火
 #魔法电池
 pollution.eke.count=魔导核心：%s 线圈等级：%s
 pollution.eke.eu1=输入/输出能量：%s / %s EU/t
@@ -446,6 +468,7 @@ recipemap.magic_turbine.name=源质燃烧
 recipemap.magic_assembler.name=应用部件组装
 recipemap.magic_greenhouse.name=魔植培育
 recipemap.forge_alchemy.name=锻炉炼金术
+recipemap.stove.name=烧结
 #事件
 pollution.command.slowness=§7你感到行动不便
 pollution.command.weakness=§b你感到一阵虚弱
