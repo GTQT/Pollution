@@ -53,7 +53,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
-				.fluidInputs(PollutionMaterials.infused_alchemy.getFluid(2304))
+				.fluidInputs(PollutionMaterials.infused_magic.getFluid(2304))
 				.notConsumable(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
 				.outputs(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
 				.duration(3600)
@@ -61,7 +61,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
-				.fluidInputs(PollutionMaterials.infused_alchemy.getFluid(2304))
+				.fluidInputs(PollutionMaterials.infused_magic.getFluid(2304))
 				.notConsumable(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
 				.outputs(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
 				.duration(3600)
@@ -106,6 +106,15 @@ public class MagicChemicalRecipes {
 				.chancedFluidOutput(GCYSMaterials.Kevlar.getFluid(14400), 2500, 500)
 				.duration(600)
 				.EUt(122880)
+				.buildAndRegister();
+
+		//魔力蒸馏
+		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.impuremana.getFluid(1000))
+				.fluidOutputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidOutputs(Materials.Water.getFluid(500))
+				.duration(400)
+				.EUt(7680)
 				.buildAndRegister();
 
 		//亚硝酸钾

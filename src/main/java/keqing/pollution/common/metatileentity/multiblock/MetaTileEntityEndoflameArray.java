@@ -1,10 +1,5 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
-import com.google.common.collect.Lists;
-import gregtech.api.capability.impl.EnergyContainerList;
-import gregtech.api.capability.impl.FluidTankList;
-import gregtech.api.capability.impl.ItemHandlerList;
-import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -12,31 +7,41 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
-import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
+import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
-import keqing.pollution.common.block.metablocks.POMagicBlock;
+import keqing.pollution.common.block.metablocks.POBotBlock;
+import keqing.pollution.common.block.metablocks.POGlass;
+import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.world.World;
+import vazkii.botania.api.item.IFloatingFlower;
+import vazkii.botania.api.state.BotaniaStateProps;
+import vazkii.botania.api.state.enums.PylonVariant;
+import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.subtile.generating.SubTileEndoflame;
+import vazkii.botania.common.block.tile.TileFloatingSpecialFlower;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
+import static vazkii.botania.api.state.BotaniaStateProps.COLOR;
+import static vazkii.botania.api.state.BotaniaStateProps.SUBTILE_ID;
 
 public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl {
     MetaTileEntityManaPoolHatch MnanaPool=null;
@@ -86,25 +91,56 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("XXX", "XXX", "XXX")
-                .aisle("XXX", "X#X", "XXX")
-                .aisle("XXX", "XSX", "XXX")
+                .aisle("AB   BA", " ABBBA ", "       ", "       ", "       ", "       ")
+                .aisle("BABBBAB", "AAAAAAA", " BCCCB ", " D C D ", "       ", "       ")
+                .aisle(" BAAAB ", "BAAEAAB", " CXFXC ", "  GXG  ", "   C   ", "       ")
+                .aisle(" BAAAB ", "BAEAEAB", " CFXFC ", " CXXXC ", "  CXC  ", "   G   ")
+                .aisle(" BAAAB ", "BAAEAAB", " CXFXC ", "  GXG  ", "   C   ", "       ")
+                .aisle("BABBBAB", "AAAAAAA", " BCCCB ", " D C D ", "       ", "       ")
+                .aisle("AB   BA", " ABSBA ", "       ", "       ", "       ", "       ")
                 .where('S', selfPredicate())
-                .where('X', states(getCasingState())
+                .where('A', states(getCasingState()).setMinGlobalLimited(15)
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1))
                         .or(abilities(POMultiblockAbility.MANA_POOL_HATCH).setExactLimit(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
                 )
-                .where('#', air())
+                .where('B', states(getCasingState2()))
+                .where('C', states(getCasingState3()))
+                .where('D', states(getCasingState4()))
+                .where('E', states(getCasingState5()))
+                .where('F', states(getCasingState6()))
+                .where('G', states(getCasingState7()))
+                .where('X', air())
+                .where(' ', any())
                 .build();
     }
     protected IBlockState getCasingState() {
-        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.MAGIC_BATTERY);
+        return PollutionMetaBlocks.BOT_BLOCK.getState(POBotBlock.BotBlockType.TERRA_4_CASING);
+    }
+    protected IBlockState getCasingState2() {
+        return MetaBlocks.FRAMES.get(PollutionMaterials.keqinggold).getBlock(PollutionMaterials.keqinggold);
+    }
+    protected IBlockState getCasingState3() {
+        return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.AAMINATED_GLASS);
+    }
+    protected IBlockState getCasingState4() {
+        return ModBlocks.pylon.getDefaultState().withProperty(BotaniaStateProps.PYLON_VARIANT, PylonVariant.MANA);
+    }
+    protected IBlockState getCasingState5() {
+	    assert Blocks.DIRT != null;
+	    return Blocks.DIRT.getDefaultState();
+    }
+    protected IBlockState getCasingState6() {
+        return ModBlocks.floatingFlower.getDefaultState();
+    }
+
+    protected IBlockState getCasingState7() {
+        return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_0);
     }
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return POTextures.MAGIC_BATTERY;
+        return POTextures.TERRA_4_CASING;
     }
 
     @Override
@@ -141,8 +177,18 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
-        textList.add(new TextComponentString("Amount:"+num));
-        textList.add(new TextComponentString("OutPut Speed:"+speed));
-        textList.add(new TextComponentString("Burn Ticks:"+fireticks));
+        textList.add(new TextComponentString("火红莲搭载数量:"+num));
+        textList.add(new TextComponentString("每t魔力输出速度:"+speed));
+        textList.add(new TextComponentString("燃料缓存:"+fireticks));
+    }
+
+    //tooltip
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, world, tooltip, advanced);
+        tooltip.add(I18n.format("pollution.machine.endoflame_array.tooltip.1"));
+        tooltip.add(I18n.format("pollution.machine.endoflame_array.tooltip.2"));
+        tooltip.add(I18n.format("pollution.machine.endoflame_array.tooltip.3"));
+        tooltip.add(I18n.format("pollution.machine.endoflame_array.tooltip.4"));
+
     }
 }

@@ -11,6 +11,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
@@ -26,7 +27,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_exchan
 
 public class MetaTileEntityMagicSolidifier extends PORecipeMapMultiblockController {
 	public MetaTileEntityMagicSolidifier(ResourceLocation metaTileEntityId) {
-		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.FLUID_SOLIDFICATION_RECIPES, RecipeMaps.EXTRACTOR_RECIPES, RecipeMaps.CANNER_RECIPES});
+		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.FLUID_SOLIDFICATION_RECIPES, RecipeMaps.EXTRACTOR_RECIPES, RecipeMaps.CANNER_RECIPES, GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES});
 	}
 
 	@Override

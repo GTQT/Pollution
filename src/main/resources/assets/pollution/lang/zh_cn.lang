@@ -541,8 +541,8 @@ pollution.machine.node_blast_furnace_coillevel=线圈等级：%s
 pollution.machine.small_chemical_plant.name=微缩魔道化工厂
 pollution.machine.small.chemical.plant.tooltip.1=§5♪time stopper♪ 堂堂女仆闪亮登场！§r
 pollution.machine.small.chemical.plant.tooltip.2=更加简练的小型化工厂！
-pollution.machine.small.chemical.plant.tooltip.3=升级线圈，以获得化工厂配方4*线圈等级并行
-pollution.machine.small.chemical.plant.tooltip.4=也可执行魔导催化配方，2*线圈等级并行
+pollution.machine.small.chemical.plant.tooltip.3=升级线圈，以获得2^线圈等级并行，化工厂配方上限256；流化床配方上限64
+pollution.machine.small.chemical.plant.tooltip.4=也可执行魔导催化配方，此时并行数为4*线圈等级并行
 pollution.machine.small.chemical.plant.tooltip.5=所有模式下，线圈每升级一次均减少5%%配方总耗时
 
 #洗点机
@@ -569,6 +569,13 @@ pollution.machine.essence_smelter_infusedcost=当前配方每刻源质消耗：%
 pollution.machine.essence_smelter_smeltingduration=本次熔炼时长：%s
 pollution.machine.essence_smelter_timer=熔炼进度：%s
 pollution.machine.essence_smelter_euttier=电压等级：%s
+
+#火红莲阵列
+pollution.machine.endoflame_array.name=火红莲魔力阵列
+pollution.machine.endoflame_array.tooltip.1=碳排放量NO.1，太不环保了！
+pollution.machine.endoflame_array.tooltip.2=在输入总线内放置若干火红莲，以实现火红莲的并行发魔，如同处理阵列一样
+pollution.machine.endoflame_array.tooltip.3=输入总线输入燃料，熔炉内可用的燃料均可转化为燃料缓存
+pollution.machine.endoflame_array.tooltip.4=放置魔力容器，导出魔力池仓内的魔力缓存
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵
