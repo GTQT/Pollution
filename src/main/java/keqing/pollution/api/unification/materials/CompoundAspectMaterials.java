@@ -106,9 +106,105 @@ public class CompoundAspectMaterials {
 				.build();
 		//合成=交换+工具
 		PollutionMaterials.infused_craft = new Material.Builder(getMaterialsId(), gregtechId("infused_craft"))
-				.color(0xF3FF80)
+				.color(0x6D26FC)
 				.ore().gem().fluid()
 				.components(PollutionMaterials.infused_exchange, 1, PollutionMaterials.infused_instrument, 1)
+				.build();
+		//虚空=风+混沌
+		PollutionMaterials.infused_void = new Material.Builder(getMaterialsId(), gregtechId("infused_void"))
+				.color(0xACACAC)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_entropy, 1)
+				.build();
+		//运动=风+秩序
+		PollutionMaterials.infused_motion = new Material.Builder(getMaterialsId(), gregtechId("infused_motion"))
+				.color(0xB3B3B3)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_order, 1)
+				.build();
+		//腐化=混沌+魔法
+		PollutionMaterials.infused_taint = new Material.Builder(getMaterialsId(), gregtechId("infused_taint"))
+				.color(0x7C1280)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_magic, 1, PollutionMaterials.infused_entropy, 1)
+				.build();
+		//黑暗=虚空+光明
+		PollutionMaterials.infused_dark = new Material.Builder(getMaterialsId(), gregtechId("infused_dark"))
+				.color(0x1A1A1A)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_void, 1, PollutionMaterials.infused_light, 1)
+				.build();
+		//异域=虚空+黑暗
+		PollutionMaterials.infused_alien = new Material.Builder(getMaterialsId(), gregtechId("infused_alien"))
+				.color(0xC17EC3)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_void, 1, PollutionMaterials.infused_dark, 1)
+				.build();
+		//飞行=风+运动
+		PollutionMaterials.infused_fly = new Material.Builder(getMaterialsId(), gregtechId("infused_fly"))
+				.color(0xFFFFEC)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_motion, 1)
+				.build();
+		//植物=生命+地
+		PollutionMaterials.infused_plant = new Material.Builder(getMaterialsId(), gregtechId("infused_plant"))
+				.color(0x69FF4B)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_life, 1, PollutionMaterials.infused_earth, 1)
+				.build();
+		//机械=运动+工具
+		PollutionMaterials.infused_mechanics = new Material.Builder(getMaterialsId(), gregtechId("infused_mechanics"))
+				.color(0x727272)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_instrument, 1)
+				.build();
+		//陷阱=运动+混沌
+		PollutionMaterials.infused_trap = new Material.Builder(getMaterialsId(), gregtechId("infused_trap"))
+				.color(0x756060)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_entropy, 1)
+				.build();
+		//亡灵=运动+死亡
+		PollutionMaterials.infused_undead = new Material.Builder(getMaterialsId(), gregtechId("infused_undead"))
+				.color(0x494244)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_death, 1)
+				.build();
+		//思维=火+灵魂
+		PollutionMaterials.infused_thought = new Material.Builder(getMaterialsId(), gregtechId("infused_thought"))
+				.color(0xFF9999)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_soul, 1)
+				.build();
+		//感知=风+灵魂
+		PollutionMaterials.infused_sense = new Material.Builder(getMaterialsId(), gregtechId("infused_sense"))
+				.color(0x57D3FF)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_soul, 1)
+				.build();
+		//野兽=运动+生命
+		PollutionMaterials.infused_animal = new Material.Builder(getMaterialsId(), gregtechId("infused_animal"))
+				.color(0x994C00)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_life, 1)
+				.build();
+		//人类=灵魂+生命
+		PollutionMaterials.infused_human = new Material.Builder(getMaterialsId(), gregtechId("infused_human"))
+				.color(0xFFD6D1)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_life, 1)
+				.build();
+		//贪婪=灵魂+虚空
+		PollutionMaterials.infused_greed = new Material.Builder(getMaterialsId(), gregtechId("infused_greed"))
+				.color(0xF3F303)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_void, 1)
+				.build();
+		//装备=灵魂+地
+		PollutionMaterials.infused_armor = new Material.Builder(getMaterialsId(), gregtechId("infused_armor"))
+				.color(0x03CBF3)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_earth, 1)
 				.build();
 	}
 }

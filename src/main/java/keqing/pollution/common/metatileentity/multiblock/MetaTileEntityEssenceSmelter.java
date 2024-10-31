@@ -158,7 +158,7 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 				for (Integer aspectAmount : tempAspectList.aspects.values()) {
 					smeltingDuration += 20 * 2 * aspectAmount;
 				}
-				smeltingDuration /= (int) Math.pow(2, EUtTier - 1);
+				smeltingDuration /= (int) Math.pow(4, EUtTier - 1);
 				//处理物品没有要素的情况，如果没有要素duration就是0了，应该什么都不做
 				if (!canSmelt(smeltedItem)) {
 					smeltingDuration = 20;
