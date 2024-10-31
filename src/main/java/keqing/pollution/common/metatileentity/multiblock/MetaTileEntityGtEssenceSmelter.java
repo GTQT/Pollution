@@ -6,6 +6,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -13,6 +14,7 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
 import keqing.pollution.api.unification.PollutionMaterials;
+import keqing.pollution.api.utils.POAspectToGtFluidList;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POGlass;
@@ -21,9 +23,7 @@ import keqing.pollution.common.block.metablocks.POMagicBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -31,11 +31,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectHelper;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.blocks.BlocksTC;
 
 import java.util.Collections;
@@ -44,13 +42,13 @@ import java.util.List;
 import static java.lang.Math.log;
 import static net.minecraft.util.math.MathHelper.ceil;
 
-public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
-	public MetaTileEntityEssenceSmelter(ResourceLocation metaTileEntityId) {
+public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithControl {
+	public MetaTileEntityGtEssenceSmelter(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId);
 	}
 
 	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
-		return new MetaTileEntityEssenceSmelter(this.metaTileEntityId);
+		return new MetaTileEntityGtEssenceSmelter(this.metaTileEntityId);
 	}
 
 	//变量
@@ -86,6 +84,7 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 				.where('B', states(getCasingState()).setMinGlobalLimited(15)
 						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(6).setPreviewCount(6))
 						.or(abilities(MultiblockAbility.INPUT_ENERGY).setMaxGlobalLimited(2).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
 				)
@@ -136,7 +135,6 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 	public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
 		return POTextures.SPELL_PRISM_VOID;
 	}
-
 	@Override
 	protected void updateFormedValid() {
 		if (!this.isActive()) {
@@ -169,8 +167,10 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 			}
 		}
 		//消耗流体
-		if (isWorking && fluidInputInventory.get(0).getFluidAmount() >= infusedCost && INFUSED_FIRE.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_FIRE, false))) {
-			this.inputFluidInventory.drain(INFUSED_FIRE, true);
+		if (isWorking && fluidInputInventory.get(0) != null && INFUSED_FIRE.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_FIRE, false))) {
+			if (fluidInputInventory.get(0).getFluidAmount() >= infusedCost) {
+				this.inputFluidInventory.drain(INFUSED_FIRE, true);
+			}
 		}
 		//如果在工作，不断消耗能量，让计时器在能量不足的时候跳回1
 		if (isWorking) {
@@ -180,42 +180,21 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 			}
 		} else {timer = 1;}
 		//冶炼时间完毕：输出源质
-		//把源质自动传出到附近的罐子里面，然后重置所有的数据
+		//把源质传出到输出仓
 		if (timer == smeltingDuration) {
-			transportEssenceToContainers(tempAspectList);
+			transportGtEssenceToInventory(tempAspectList);
 			isWorking = false;
 			timer = 0;
 			smeltingDuration = 0;
 		}
 	}
 
-	private void transportEssenceToContainers (AspectList list){
-		//获取设备的位置坐标
-		//在指定的罐子位找罐子
-		BlockPos centerPos = this.getPos();
-		int radius = 5;
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					BlockPos currentPos = centerPos.add(x, y, z);
-					TileEntity te = this.getWorld().getTileEntity(currentPos);
-					if (te instanceof IAspectSource) {
-						tryAddAspect(te, list);
-					}
-				}
-			}
-		}
-	}
-
-	//向罐子加入要素
-	//每次输入成功，都修改一下自己当前的列表
-	private void tryAddAspect (TileEntity te, AspectList list){
-		for (int i = 0; i < list.size(); i++) {
-			if (te instanceof IAspectSource sourceTe) {
-				Aspect as = list.getAspects()[i];
-				if (list.getAmount(as) != sourceTe.addToContainer(as, list.getAmount(as))){
-					list.remove(as, list.getAmount(as));
-				}
+	private void transportGtEssenceToInventory(AspectList aspectList){
+		POAspectToGtFluidList temp = new POAspectToGtFluidList();
+		for (Aspect aspect: aspectList.getAspects()){
+			if (temp.aspectToGtFluidList.get(aspect) != null){
+				FluidStack fluid = new FluidStack(temp.aspectToGtFluidList.get(aspect).getFluid(), 144 * aspectList.getAmount(aspect));
+				GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(fluid));
 			}
 		}
 	}
@@ -229,25 +208,19 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 	//tooltip
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
 		super.addInformation(stack, world, tooltip, advanced);
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.1"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.2"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.3"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.4"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.5"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.6"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.7"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.8"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.9"));
-		tooltip.add(I18n.format("pollution.machine.essence_smelter.tooltip.10"));
+		tooltip.add(I18n.format("pollution.machine.gt_essence_smelter.tooltip.1"));
+		tooltip.add(I18n.format("pollution.machine.gt_essence_smelter.tooltip.2"));
+		tooltip.add(I18n.format("pollution.machine.gt_essence_smelter.tooltip.3"));
+		tooltip.add(I18n.format("pollution.machine.gt_essence_smelter.tooltip.4"));
 	}
 
 	@Override
 	protected void addDisplayText (List < ITextComponent > textList) {
 		super.addDisplayText(textList);
-		textList.add(new TextComponentTranslation("pollution.machine.essence_smelter_infusedcost", this.infusedCost).setStyle((new Style()).setColor(TextFormatting.RED)));
-		textList.add((new TextComponentTranslation("pollution.machine.essence_smelter_smeltingduration", this.smeltingDuration)).setStyle((new Style()).setColor(TextFormatting.RED)));
-		textList.add((new TextComponentTranslation("pollution.machine.essence_smelter_timer", this.timer)).setStyle((new Style()).setColor(TextFormatting.RED)));
-		textList.add((new TextComponentTranslation("pollution.machine.essence_smelter_euttier", this.EUtTier)).setStyle((new Style()).setColor(TextFormatting.RED)));
+		textList.add(new TextComponentTranslation("pollution.machine.gt_essence_smelter_infusedcost", this.infusedCost).setStyle((new Style()).setColor(TextFormatting.RED)));
+		textList.add((new TextComponentTranslation("pollution.machine.gt_essence_smelter_smeltingduration", this.smeltingDuration)).setStyle((new Style()).setColor(TextFormatting.RED)));
+		textList.add((new TextComponentTranslation("pollution.machine.gt_essence_smelter_timer", this.timer)).setStyle((new Style()).setColor(TextFormatting.RED)));
+		textList.add((new TextComponentTranslation("pollution.machine.gt_essence_smelter_euttier", this.EUtTier)).setStyle((new Style()).setColor(TextFormatting.RED)));
 	}
 
 	@Override

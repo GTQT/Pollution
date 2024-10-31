@@ -610,6 +610,17 @@ pollution.machine.bot_gas_collector_essenceConsumptionSpeed=要素消耗速度�
 pollution.machine.bot_gas_collector_manaConsumptionSpeed=魔力消耗速度：%s
 pollution.machine.bot_gas_collector_finalCollectionSpeed=最终每t收集大气量：%s
 
+#炼金炉gt版
+pollution.machine.gt_essence_smelter.name=工业特化型秘源炼金枢纽
+pollution.machine.gt_essence_smelter.tooltip.1=§5双兔傍地走，安能辩我是雌雄§r
+pollution.machine.gt_essence_smelter.tooltip.2=机制和它的姐妹基本完全一致，查询试作型相关说明
+pollution.machine.gt_essence_smelter.tooltip.3=区别在于此机器直接产出GT流体版本的源质
+pollution.machine.gt_essence_smelter.tooltip.4=建议加装更多输出仓，以应对奔涌而来的源质！
+pollution.machine.gt_essence_smelter_infusedcost=当前配方每刻源质消耗：%s
+pollution.machine.gt_essence_smelter_smeltingduration=本次熔炼时长：%s
+pollution.machine.gt_essence_smelter_timer=熔炼进度：%s
+pollution.machine.gt_essence_smelter_euttier=电压等级：%s
+
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵
 

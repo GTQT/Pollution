@@ -25,7 +25,6 @@ import keqing.pollution.common.block.metablocks.POBotBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POManaPlate;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
