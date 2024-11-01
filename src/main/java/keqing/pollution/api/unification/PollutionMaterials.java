@@ -27,6 +27,22 @@ public class PollutionMaterials {
 	public static Material infused_aura;
 	public static Material infused_light;
 	public static Material infused_craft;
+	public static Material infused_void;
+	public static Material infused_motion;
+	public static Material infused_taint;
+	public static Material infused_dark;
+	public static Material infused_alien;
+	public static Material infused_fly;
+	public static Material infused_plant;
+	public static Material infused_mechanics;
+	public static Material infused_trap;
+	public static Material infused_undead;
+	public static Material infused_thought;
+	public static Material infused_sense;
+	public static Material infused_animal;
+	public static Material infused_human;
+	public static Material infused_greed;
+	public static Material infused_armor;
 	//mana酱
 	public static Material mana;
 	//材料

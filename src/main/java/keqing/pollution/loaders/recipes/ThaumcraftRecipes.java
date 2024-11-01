@@ -381,7 +381,7 @@ public class ThaumcraftRecipes {
 				"",
 				new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2),
 				6,
-				new AspectList().add(Aspect.ALCHEMY, 128).add(Aspect.EXCHANGE, 64).add(Aspect.MAGIC, 128).add(Aspect.ENERGY, 32),
+				new AspectList().add(Aspect.ALCHEMY, 64).add(Aspect.EXCHANGE, 32).add(Aspect.MAGIC, 32).add(Aspect.ENERGY, 16),
 				"gemValonite",
 				"blockSubstrate",
 				"blockSubstrate",

@@ -75,15 +75,17 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
 	public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
 	public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR =new SimpleGeneratorMetaTileEntity[6];
+	//高阶机器，植魔系列
 	public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
-	//植魔系列
 	public static MetaTileEntityBotDistillery BOT_DISTILLERY;
 	public static MetaTileEntityManaPlate Mana_PLATE;
 	public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
 	public static MetaTileEntityNodeBlastFurnace NODE_BLAST_FURNACE;
 	public static MetaTileEntitySmallChemicalPlant SMALL_CHEMICAL_PLANT;
 	public static MetaTileEntityEssenceSmelter ESSENCE_SMELTER;
-	//原始设备
+	public static MetaTileEntityBotGasCollector BOT_GAS_COLLECTOR;
+	public static MetaTileEntityGtEssenceSmelter GT_ESSENCE_SMELTER;
+ 	//原始设备
 	public static MetaTileEntityPrimitiveMudPump PRIMITIVE_MUD_PUMP;
 	public static MetaTileEntityStove PRIMITIVE_STOVE;
 	public static void initialization() {
@@ -202,6 +204,8 @@ public class PollutionMetaTileEntities {
 	    NODE_BLAST_FURNACE = registerMetaTileEntity(15855, new MetaTileEntityNodeBlastFurnace(gtqtcoreId("node_blast_furnace")));
 	    SMALL_CHEMICAL_PLANT = registerMetaTileEntity(15856, new MetaTileEntitySmallChemicalPlant(gtqtcoreId("small_chemical_plant")));
 	    ESSENCE_SMELTER = registerMetaTileEntity(15857, new MetaTileEntityEssenceSmelter(gtqtcoreId("essence_smelter")));
+		BOT_GAS_COLLECTOR = registerMetaTileEntity(15858, new MetaTileEntityBotGasCollector(gtqtcoreId("bot_gas_collector")));
+		GT_ESSENCE_SMELTER = registerMetaTileEntity(15859, new MetaTileEntityGtEssenceSmelter(gtqtcoreId("GT_ESSENCE_SMELTER")));
 
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));

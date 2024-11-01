@@ -44,7 +44,7 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
 	int CoilLevel;
 
 	public MetaTileEntitySmallChemicalPlant(ResourceLocation metaTileEntityId) {
-		super(metaTileEntityId, new RecipeMap[]{GTQTcoreRecipeMaps.CHEMICAL_PLANT, PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES});
+		super(metaTileEntityId, new RecipeMap[]{GTQTcoreRecipeMaps.CHEMICAL_PLANT, PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES, GTQTcoreRecipeMaps.FLUIDIZED_BED});
 		this.recipeMapWorkable = new SmallChemicalPlantRecipeLogic(this);
 	}
 
@@ -89,8 +89,12 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
 		@Override
 		public int getParallelLimit() {
 			if (this.getRecipeMap() == GTQTcoreRecipeMaps.CHEMICAL_PLANT) {
-				return 4 * CoilLevel;
-			} else return 2 * CoilLevel;
+				return (int)Math.max(256, Math.pow(4, CoilLevel));
+			} else if (this.getRecipeMap() == GTQTcoreRecipeMaps.FLUIDIZED_BED) {
+				return (int)Math.max(64, Math.pow(4, CoilLevel));
+			} else {
+				return Math.max(64, 4 * CoilLevel);
+			}
 		}
 
 		@Override

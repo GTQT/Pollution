@@ -306,5 +306,15 @@ public class ForgeAlchemyRecipes {
 				.duration(15000)
 				.EUt(7680)
 				.buildAndRegister();
+		//氦气
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
+				.fluidInputs(Materials.Hydrogen.getFluid(4000))
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.chancedFluidOutput((Materials.Helium.getFluid(1000)),3333, 500)
+				.blastFurnaceTemp(4500)
+				.duration(1000)
+				.EUt(7680)
+				.buildAndRegister();
 	}
 }
