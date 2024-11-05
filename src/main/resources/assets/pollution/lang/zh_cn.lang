@@ -280,10 +280,17 @@ metaitem.glue_slime.tooltip=打不完的胶
 metaitem.rubber_slime.tooltip=擦不完的橡皮
 
 metaitem.packaged_aura_node.name=封装灵气节点
-metaitem.stone_of_philosopher_1.name=贤者之石（黑土）
-metaitem.stone_of_philosopher_1.tooltip=黑土之仪，拾阶而上
-metaitem.stone_of_philosopher_2.name=贤者之石（白垩）
-metaitem.stone_of_philosopher_2.tooltip=白垩之仪，化朽为奇
+metaitem.stone_of_philosopher_1.name=§7贤者之石（黑土）§r
+metaitem.stone_of_philosopher_1.tooltip=§7黑土之仪，拾阶而上§r
+metaitem.stone_of_philosopher_2.name=§f贤者之石（白垩）§r
+metaitem.stone_of_philosopher_2.tooltip=§f白垩之仪，化朽为奇§r
+metaitem.stone_of_philosopher_3.name=§c贤者之石（赤成）§r
+metaitem.stone_of_philosopher_3.tooltip=§c赤成之仪，鬼斧神工§r
+metaitem.stone_of_philosopher_4.name=§6贤者之石（黄金）§r
+metaitem.stone_of_philosopher_4.tooltip=§6黄金之仪，巅峰造化§r
+metaitem.stone_of_philosopher_final.name=§5§l真·贤者之石§r
+metaitem.stone_of_philosopher_final.tooltip=§5§l圆环之理！§r
+
 #电池
 metaitem.battery.lv.magic.name=魔导蓄能器（§7LV§r）
 metaitem.battery.mv.magic.name=魔导蓄能器（§bMV§r）
@@ -494,7 +501,7 @@ pollution.command.blindness=§1你感到头晕目眩
 #工业注魔
 pollution.machine.industrial_infusion.tooltip.1=源质消耗为正常注魔的一半
 pollution.machine.industrial_infusion.tooltip.2=时间长度取决于源质消耗的数量
-pollution.machine.industrial_infusion.tooltip.3=默认耗电2000eu/T 需要ev电压
+pollution.machine.industrial_infusion.tooltip.3=默认耗电2000eu/t 需要ev电压
 pollution.machine.industrial_infusion.tooltip.4=以主方块为中心，吸收长为15的正方体中的源质,每次吸收需要128eu电量
 pollution.machine.industrial_infusion.tooltip.5=注魔中心物品需要放置到第一个输入仓的第一个位置
 pollution.machine.industrial_infusion.tooltip.6=其他物品需要单独放置，不能堆叠，位置随意，你是否能完成自动化呢?
@@ -579,7 +586,7 @@ pollution.machine.essence_smelter.tooltip.5=输入液态焱以作为燃料，通
 pollution.machine.essence_smelter.tooltip.6=如果物品不含任何要素，机器将不会熔炼该物品。小心投料，含要素的物品会§c§l顷刻炼化§r！
 pollution.machine.essence_smelter.tooltip.7=在机器主方块为中心，半径5格的范围内放置源质容器，以接收熔炼而出的源质
 pollution.machine.essence_smelter.tooltip.8=电压等级越高，燃料消耗越低；且每提升一级电压等级，熔炼时长减为1/4
-pollution.machine.essence_smelter.tooltip.9=机器内含源质缓存，源质无浪费，下次熔炼时长=（本次熔炼物品源质+缓存源质）*2s
+pollution.machine.essence_smelter.tooltip.9=机器内含源质缓存，源质无浪费，下次熔炼时长=（本次熔炼物品源质+缓存源质）*0.5s
 pollution.machine.essence_smelter.tooltip.10=因此缓存源质越多，机器下一次工作就越慢，请尽快导出所有源质到容器内...
 pollution.machine.essence_smelter_infusedcost=当前配方每刻源质消耗：%s
 pollution.machine.essence_smelter_smeltingduration=本次熔炼时长：%s
