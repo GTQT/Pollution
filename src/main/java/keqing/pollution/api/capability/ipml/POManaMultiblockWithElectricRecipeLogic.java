@@ -1,42 +1,48 @@
 package keqing.pollution.api.capability.ipml;
 
+import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMaps;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.recipes.PORecipeMaps;
 
 public class POManaMultiblockWithElectricRecipeLogic extends MultiblockRecipeLogic {
+
 	POManaMultiblockWithElectric tileEntity;
 
 	public POManaMultiblockWithElectricRecipeLogic(POManaMultiblockWithElectric tileEntity) {
 		super(tileEntity);
 		this.tileEntity=tileEntity;
 	}
-
+	public IManaHatch getManaHatch() {
+		POManaMultiblockWithElectric controller = (POManaMultiblockWithElectric)this.metaTileEntity;
+		return controller.getIManaHatch();
+	}
 	@Override
-	public void setMaxProgress(int maxProgress) {
-		this.maxProgressTime = maxProgress;
+	public int getParallelLimit() {
+		if(this.getManaHatch().getTier()<4)return 64;
+		else if(this.getManaHatch().getTier()<8)return 64+(this.getManaHatch().getTier()-4)*64;
+		else return 512;
 	}
 
-	public void updateRecipeProgress(){
-		if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-			//此处修改了耗电
-			this.drawEnergy((int)(this.recipeEUt * (1 - 0.05 * tileEntity.getTier())), false);
-			if (++this.progressTime > this.maxProgressTime) {
-				this.completeRecipe();
-			}
+	@Override
+	public void updateRecipeProgress() {
+		if ((getManaHatch().getMana() >= 20 * Math.pow(2, getManaHatch().getTier() - 1))) {
+			if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt/8, true)) {
+				this.drawEnergy(this.recipeEUt / 8, false);
+				getManaHatch().consumeMana((int) (20 * Math.pow(2, getManaHatch().getTier() - 1)));
 
-			if (this.hasNotEnoughEnergy && this.getEnergyInputPerSecond() > 19L * (long)this.recipeEUt) {
-				this.hasNotEnoughEnergy = false;
+				if (++this.progressTime > this.maxProgressTime) {
+					this.completeRecipe();
+				}
 			}
-		} else if (this.recipeEUt > 0) {
-			this.hasNotEnoughEnergy = true;
-			this.decreaseProgress();
 		}
+
 	}
 
 }

@@ -49,9 +49,9 @@ public class MachineRecipes {
 		ModHandler.addShapedRecipe(true, "primitive_stove", PRIMITIVE_STOVE.getStackForm(),
 				"BGB", "XCX", "BGB",
 				'G', new UnificationEntry(OrePrefix.screw, syrmorite),
-				'X', new UnificationEntry(OrePrefix.ring, Lead),
+				'X', new UnificationEntry(OrePrefix.plate, Potin),
 				'B', MetaBlocks.METAL_CASING.getItemVariant(PRIMITIVE_BRICKS),
-				'C', new UnificationEntry(OrePrefix.plate, octine));
+				'C', new UnificationEntry(OrePrefix.stick, octine));
 	}
 
 	private static void muffler() {

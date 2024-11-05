@@ -117,16 +117,19 @@ public class VanillaRecipes {
                 'X', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite),
                 'C', "chestWood",
                 'G', new UnificationEntry(OrePrefix.gearSmall, PollutionMaterials.syrmorite));
+
         //赛摩铜桶
         ModHandler.addShapedRecipe("syrmorite_anvil", new ItemStack(Blocks.ANVIL), "BBB", "SBS", "PBP",
                 'B', new UnificationEntry(OrePrefix.block, PollutionMaterials.syrmorite),
                 'S', new UnificationEntry(OrePrefix.screw, PollutionMaterials.syrmorite),
                 'P', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite));
+
         //赛摩铜活版门
         ModHandler.addShapedRecipe("syrmorite_iron_trapdoor", new ItemStack(Blocks.IRON_TRAPDOOR), "SPS", "PTP", "sPd",
                 'S', new UnificationEntry(OrePrefix.screw, PollutionMaterials.syrmorite),
                 'P', new UnificationEntry(OrePrefix.plate, PollutionMaterials.syrmorite),
                 'T', new ItemStack(Blocks.TRAPDOOR));
+
         //耐火砖新配方
         ModHandler.addShapedRecipe("casing_primitive_bricks",
                 MetaBlocks.METAL_CASING.getItemVariant(PRIMITIVE_BRICKS),
@@ -147,6 +150,7 @@ public class VanillaRecipes {
                 'G',  new ItemStack(Items.BRICK),
                 'C', FluidUtil.getFilledBucket(Mud.getFluid(1000)));
 
+        //熔炉追加配方
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Blocks.SAND));
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Blocks.DIRT));
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.PEAT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Items.COAL));
@@ -155,7 +159,7 @@ public class VanillaRecipes {
         ModHandler.addSmeltingRecipe(FluidUtil.getFilledBucket(Mud.getFluid(1000)), FluidUtil.getFilledBucket(Water.getFluid(1000)));
         ModHandler.addSmeltingRecipe(ItemMisc.EnumItemMisc.LURKER_SKIN.create(1), new ItemStack(Items.LEATHER));
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), new ItemStack(Items.CLAY_BALL));
-        //泥砖
+        //泥砖以及他的后续处理
         ModHandler.removeFurnaceSmelting(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
         ModHandler.addSmeltingRecipe(ItemMisc.EnumItemMisc.MUD_BRICK.create(1), new ItemStack(Items.BRICK));
         ModHandler.addShapedRecipe("mud_brick_from_clayAndMud", ItemMisc.EnumItemMisc.MUD_BRICK.create(8),
@@ -164,9 +168,9 @@ public class VanillaRecipes {
                 'X', new ItemStack(Items.CLAY_BALL),
                 'S', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
-
     }
     public static void initRecipes() {
+        //补充矿辞
         OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
         OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
         OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
@@ -225,6 +229,7 @@ public class VanillaRecipes {
                 .buildAndRegister();
         */
 
+        //通用矿辞处理，补全对原版材料的获取
         ModHandler.addShapedRecipe(true, "PoStone5", new ItemStack(Blocks.GRAVEL),
                 " h", " M",
                 'M', "cobblestone");
@@ -316,7 +321,7 @@ public class VanillaRecipes {
                 .EUt(16)
                 .buildAndRegister();
 
-
+        //原始窑炉配方
         List<ItemStack> FuelStacks = new ArrayList<>();
         FuelStacks.add(OreDictUnifier.get(new UnificationEntry(OrePrefix.gem, Materials.Coal)));
         FuelStacks.add(OreDictUnifier.get(new UnificationEntry(OrePrefix.gem, Materials.Charcoal)));
@@ -330,25 +335,25 @@ public class VanillaRecipes {
         for(ItemStack fuel:FuelStacks) {
             STOVE_RECIPES.recipeBuilder()
                     .inputs(fuel)
-                    .inputs(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                    .output(Blocks.DIRT)
-                    .fluidOutputs(Mud.getFluid(100))
+                    .inputs(new ItemStack(BlockRegistry.SWAMP_DIRT, 16, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                    .output(Blocks.DIRT,16)
+                    .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
 
             STOVE_RECIPES.recipeBuilder()
                     .inputs(fuel)
-                    .inputs(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                    .output(Blocks.SAND)
-                    .fluidOutputs(Mud.getFluid(100))
+                    .inputs(new ItemStack(BlockRegistry.SILT, 16, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                    .output(Blocks.SAND,16)
+                    .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
 
             STOVE_RECIPES.recipeBuilder()
                     .inputs(fuel)
-                    .inputs(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                    .output(Blocks.CLAY)
-                    .fluidOutputs(Mud.getFluid(100))
+                    .inputs(new ItemStack(BlockRegistry.MUD, 16, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                    .output(Blocks.CLAY,16)
+                    .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
         }

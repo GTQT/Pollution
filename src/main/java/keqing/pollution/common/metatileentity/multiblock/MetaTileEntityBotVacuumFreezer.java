@@ -27,6 +27,8 @@ import keqing.gtqtcore.common.block.blocks.BlockCoolingCoil;
 import keqing.gtqtcore.common.block.blocks.GTQTBlockWireCoil;
 import keqing.gtqtcore.common.block.blocks.GTQTTurbineCasing1;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityCryogenicFreezer;
+import keqing.pollution.api.capability.IManaHatch;
+import keqing.pollution.api.capability.IManaMultiblock;
 import keqing.pollution.api.capability.ipml.POManaMultiblockWithElectricRecipeLogic;
 import keqing.pollution.api.metatileentity.POManaMultiblock;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
@@ -60,7 +62,6 @@ import static keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.
 public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric {
 
 	int temperature;
-	MetaTileEntityManaHatch ManaHatch;
 
 	public MetaTileEntityBotVacuumFreezer(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, RecipeMaps.VACUUM_RECIPES);
@@ -72,37 +73,32 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 		return new MetaTileEntityBotVacuumFreezer(this.metaTileEntityId);
 	}
 
-	@Override
 	protected void formStructure(PatternMatchContext context) {
-		List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
-		energyContainer.addAll(this.getAbilities(MultiblockAbility.INPUT_LASER));
-		this.energyContainer=new EnergyContainerList(energyContainer);
+		super.formStructure(context);
 		Object type = context.get("CoolingCoilType");
 		if (type instanceof BlockCoolingCoil.CoolingCoilType) {
 			this.temperature = ((BlockCoolingCoil.CoolingCoilType)type).coilTemperature;
 		} else {
 			this.temperature = BlockCoolingCoil.CoolingCoilType.MANGANESE_IRON_ARSENIC_PHOSPHIDE.coilTemperature;
 		}
-		for (Map.Entry<String, Object> battery : context.entrySet()) {
-			if(battery.getKey().startsWith("Multi")  ) {
-				HashSet set = (HashSet) battery.getValue();
-				for (var s: set
-				) {
-					if(s instanceof MetaTileEntityManaHatch)
-					{
-						this.ManaHatch = (MetaTileEntityManaHatch)s;
-					}
-				}
-
-			}
-		}
 	}
-
+	public int getCoilTier()
+	{
+		if(temperature==160)return 1;
+		if(temperature==50)return 2;
+		if(temperature==1)return 3;
+		return 0;
+	}
 	@Override
 	protected void addDisplayText(List<ITextComponent> textList) {
 		super.addDisplayText(textList);
-		textList.add(new TextComponentTranslation("炉温: %s K", this.temperature).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-		textList.add(new TextComponentTranslation("魔力是否充足: ").setStyle((new Style()).setColor(TextFormatting.WHITE)));
+		if(isStructureFormed()) {
+			textList.add(new TextComponentTranslation("磁致冷线圈温度: %s K", this.temperature).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+			textList.add(new TextComponentTranslation("磁致冷线圈等级: %s K", this.getCoilTier()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+			textList.add(new TextComponentTranslation("魔力仓等级: %s", this.getTier()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+			textList.add(new TextComponentTranslation("魔力仓缓存: %s", this.getMana()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+			textList.add(new TextComponentTranslation("每tick预计消耗: %s", 20 * Math.pow(2, getTier() - 1)).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+		}
 	}
 
 	@Override
@@ -122,42 +118,9 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 		}
 
 		@Override
-		public int getParallelLimit() {
-			return 256;
-		}
-
-		@Override
 		public void setMaxProgress(int maxProgress) {
-			this.maxProgressTime = (int) (maxProgress * (1 - 0.0015 * (300 - temperature)));
+			this.maxProgressTime = (int) (maxProgress*(10-2.0*getCoilTier())/10);
 		}
-
-		@Override
-		public boolean checkRecipe(@NotNull Recipe recipe) {
-			RecipeMapMultiblockController controller = (RecipeMapMultiblockController) this.metaTileEntity;
-			if (controller.checkRecipe(recipe, false)) {
-				controller.checkRecipe(recipe, true);
-				return super.checkRecipe(recipe);
-			} else {return false;}
-		}
-
-		@Override
-		public void updateRecipeProgress() {
-			if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-				this.drawEnergy(this.recipeEUt / 8, false);
-				if (!(ManaHatch.getMana() >= 20 * Math.pow(2, ManaHatch.getTier() - 1))) {
-					return;
-				}
-
-				ManaHatch.consumeMana((int) (20 * Math.pow(2, ManaHatch.getTier() - 1)));
-				if (++this.progressTime > this.maxProgressTime) {
-					this.completeRecipe();
-				}
-
-				this.drawEnergy(this.recipeEUt / 8, false);
-			}
-
-		}
-
 	}
 
 	@Override
@@ -190,14 +153,14 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 				.where(' ', any())
 				.where('A', states(getCasingState()))
 				.where('X', states(getCasingState2())
-						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
+						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
 						.or(abilities(MultiblockAbility.INPUT_ENERGY).setMaxGlobalLimited(2).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.INPUT_LASER).setMaxGlobalLimited(1).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
-						.or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1).setPreviewCount(1)))
+						.or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1)))
 				.where('B', states(getCasingState2()))
 				.where('C', states(getCasingState3()))
 				.where('D', states(getCasingState4()))
@@ -210,7 +173,14 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 				.where('K', states(getCasingState10()))
 				.build();
 	}
-
+	@Override
+	public boolean hasMaintenanceMechanics() {
+		return true;
+	}
+	@Override
+	public boolean hasMufflerMechanics() {
+		return false;
+	}
 	private static IBlockState getCasingState() {
 		return MetaBlocks.FRAMES.get(PollutionMaterials.hyperdimensional_silver).getBlock(PollutionMaterials.hyperdimensional_silver);
 	}
