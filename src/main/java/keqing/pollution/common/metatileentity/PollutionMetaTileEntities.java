@@ -85,6 +85,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityEssenceSmelter ESSENCE_SMELTER;
 	public static MetaTileEntityBotGasCollector BOT_GAS_COLLECTOR;
 	public static MetaTileEntityGtEssenceSmelter GT_ESSENCE_SMELTER;
+	public static MetaTileEntityBotVacuumFreezer BOT_VACUUM_FREEZER;
  	//原始设备
 	public static MetaTileEntityPrimitiveMudPump PRIMITIVE_MUD_PUMP;
 	public static MetaTileEntityStove PRIMITIVE_STOVE;
@@ -205,7 +206,8 @@ public class PollutionMetaTileEntities {
 	    SMALL_CHEMICAL_PLANT = registerMetaTileEntity(15856, new MetaTileEntitySmallChemicalPlant(gtqtcoreId("small_chemical_plant")));
 	    ESSENCE_SMELTER = registerMetaTileEntity(15857, new MetaTileEntityEssenceSmelter(gtqtcoreId("essence_smelter")));
 		BOT_GAS_COLLECTOR = registerMetaTileEntity(15858, new MetaTileEntityBotGasCollector(gtqtcoreId("bot_gas_collector")));
-		GT_ESSENCE_SMELTER = registerMetaTileEntity(15859, new MetaTileEntityGtEssenceSmelter(gtqtcoreId("GT_ESSENCE_SMELTER")));
+		GT_ESSENCE_SMELTER = registerMetaTileEntity(15859, new MetaTileEntityGtEssenceSmelter(gtqtcoreId("gt_essence_smelter")));
+		BOT_VACUUM_FREEZER = registerMetaTileEntity(15860, new MetaTileEntityBotVacuumFreezer(gtqtcoreId("bot_vacuum_freezer")));
 
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));

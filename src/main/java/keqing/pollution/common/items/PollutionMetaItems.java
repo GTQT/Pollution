@@ -45,7 +45,9 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem PACKAGED_AURA_NODE;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_1;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_2;
-
+	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_3;
+	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_4;
+	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_FINAL;
 
 	public static MetaItem<?>.MetaValueItem BATTERY_HULL_LV ;
 	public static MetaItem<?>.MetaValueItem BATTERY_HULL_MV ;

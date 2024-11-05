@@ -44,7 +44,7 @@ import static vazkii.botania.api.state.BotaniaStateProps.COLOR;
 import static vazkii.botania.api.state.BotaniaStateProps.SUBTILE_ID;
 
 public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl {
-    MetaTileEntityManaPoolHatch MnanaPool=null;
+    MetaTileEntityManaPoolHatch ManaPool=null;
     private int num=0;
     private int fireticks=0;
     private int MAX_TICKS=1600000000;
@@ -57,7 +57,7 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     protected void updateFormedValid() {
         if(!this.isActive())
             setActive(true);
-        if(MnanaPool!=null && !this.getWorld().isRemote && this.isWorkingEnabled())
+        if(ManaPool!=null && !this.getWorld().isRemote && this.isWorkingEnabled())
         {
             if(this.inputInventory!=null && this.inputInventory.getSlots()>0)
             {
@@ -77,14 +77,14 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                     }
                 }
             }
-            if(!MnanaPool.isFull())
+            if(!ManaPool.isFull())
             {
                 //产出最大速率
                 speed = num;
                 speed = Math.min(speed,fireticks);
                 //削减燃烧时间 产出魔力
                 fireticks -= speed;
-                this.MnanaPool.consumeMana((int)(speed*1.5));
+                this.ManaPool.consumeMana((int)(speed*1.5));
             }
         }
     }
@@ -162,10 +162,9 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 ) {
                     if(s instanceof MetaTileEntityManaPoolHatch)
                     {
-                        this.MnanaPool = (MetaTileEntityManaPoolHatch)s;
+                        this.ManaPool = (MetaTileEntityManaPoolHatch)s;
                     }
                 }
-
             }
         }
     }

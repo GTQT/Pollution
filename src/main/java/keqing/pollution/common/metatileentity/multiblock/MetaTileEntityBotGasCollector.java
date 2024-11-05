@@ -44,10 +44,14 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_
 public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl {
 
 	MetaTileEntityManaHatch manaHatch;
+	//配方执行次数
 	int times = 0;
+	//核心等级
 	int beamLevel;
+	//流体检测
 	boolean mansusCheck = false;
 	boolean essenceCheck = false;
+	//列表对应的大气材料
 	Material result;
 	//最终收集速率
 	int finalCollectionSpeed;
@@ -107,7 +111,6 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
 						this.manaHatch = (MetaTileEntityManaHatch)s;
 					}
 				}
-
 			}
 		}
 	}
