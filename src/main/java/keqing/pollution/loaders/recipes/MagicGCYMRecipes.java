@@ -3,6 +3,8 @@ package keqing.pollution.loaders.recipes;
 import com.sun.jna.platform.win32.WinNT;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.MarkerMaterials;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockBoilerCasing;
 import gregtech.common.blocks.BlockTurbineCasing;
@@ -34,6 +36,9 @@ import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.items.ItemsTC;
 import vazkii.botania.common.item.ModItems;
+
+import javax.swing.*;
+import java.awt.*;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
@@ -170,6 +175,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Manganese, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
 				.output(OrePrefix.dust, PollutionMaterials.aertitanium, 9)
+				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
@@ -180,6 +186,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Manganese, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
 				.fluidOutputs(PollutionMaterials.aertitanium.getFluid(9 * 144))
+				.circuitMeta(20)
 				.duration(300)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
@@ -191,6 +198,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Lithium, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
 				.output(OrePrefix.dust, PollutionMaterials.ignissteel, 9)
+				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
@@ -201,6 +209,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Lithium, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
 				.fluidOutputs(PollutionMaterials.ignissteel.getFluid(9 * 144))
+				.circuitMeta(20)
 				.duration(300)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
@@ -212,6 +221,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(Mercury.getFluid(1000))
 				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
 				.output(OrePrefix.dust, PollutionMaterials.aquasilver, 9)
+				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
@@ -222,6 +232,7 @@ public class MagicGCYMRecipes {
 				.fluidInputs(Mercury.getFluid(1000))
 				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
 				.fluidOutputs(PollutionMaterials.aquasilver.getFluid(9 * 144))
+				.circuitMeta(20)
 				.duration(300)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
@@ -233,6 +244,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Carbon, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
 				.output(OrePrefix.dust, PollutionMaterials.terracopper, 9)
+				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
@@ -243,6 +255,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Carbon, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
 				.fluidOutputs(PollutionMaterials.terracopper.getFluid(9 * 144))
+				.circuitMeta(20)
 				.duration(300)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
@@ -254,6 +267,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Gold, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
 				.output(OrePrefix.dust, PollutionMaterials.ordolead, 9)
+				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
@@ -264,6 +278,7 @@ public class MagicGCYMRecipes {
 				.input(OrePrefix.dust, Gold, 1)
 				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
 				.fluidOutputs(PollutionMaterials.ordolead.getFluid(9 * 144))
+				.circuitMeta(20)
 				.duration(300)
 				.blastFurnaceTemp(2700)
 				.EUt(480)
@@ -1957,5 +1972,47 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
 				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
 				MetaTileEntities.CHEMICAL_REACTOR[MV].getStackForm()));
+		//gt版炼金枢纽
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaTileEntities.ESSENCE_SMELTER.getStackForm())
+				.inputs(PollutionMetaTileEntities.MAGIC_CHEMICAL_REACTOR.getStackForm())
+				.input(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 8, 204)
+				.input(BlocksTC.smelterThaumium, 8)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.outputs(PollutionMetaTileEntities.GT_ESSENCE_SMELTER.getStackForm())
+				.circuitMeta(1)
+				.EUt(1920)
+				.duration(1000)
+				.buildAndRegister();
+		//bot集气
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(GTQTMetaTileEntities.GAS_COLLECTOR.getStackForm(16))
+				.input(circuit, MarkerMaterials.Tier.IV, 16)
+				.input(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 4, 206)
+				.input(MetaItems.ELECTRIC_PUMP_IV, 16)
+				.input(plate, ElvenElementium, 32)
+				.input(frameGt, keqinggold, 4)
+				.input(gear, hyperdimensional_silver, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(10000))
+				.outputs(PollutionMetaTileEntities.BOT_GAS_COLLECTOR.getStackForm())
+				.circuitMeta(16)
+				.EUt(30720)
+				.duration(1000)
+				.buildAndRegister();
+		//bot冰箱
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(GTQTMetaTileEntities.VACUUM_FREEZER.getStackForm(16))
+				.input(circuit, MarkerMaterials.Tier.IV, 16)
+				.input(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 4, 206)
+				.input(MetaItems.ELECTRIC_PUMP_IV, 16)
+				.input(plate, Terrasteel, 32)
+				.input(frameGt, hyperdimensional_silver, 4)
+				.input(gear, keqinggold, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(10000))
+				.outputs(PollutionMetaTileEntities.BOT_VACUUM_FREEZER.getStackForm())
+				.circuitMeta(16)
+				.EUt(30720)
+				.duration(1000)
+				.buildAndRegister();
 	}
 }

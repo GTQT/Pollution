@@ -1,45 +1,29 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
-import gregtech.api.capability.IEnergyContainer;
-import gregtech.api.capability.IMultipleTankHandler;
-import gregtech.api.capability.impl.EnergyContainerList;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
+
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.block.blocks.BlockCoolingCoil;
-import keqing.gtqtcore.common.block.blocks.GTQTBlockWireCoil;
 import keqing.gtqtcore.common.block.blocks.GTQTTurbineCasing1;
-import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityCryogenicFreezer;
-import keqing.pollution.api.capability.IManaHatch;
-import keqing.pollution.api.capability.IManaMultiblock;
 import keqing.pollution.api.capability.ipml.POManaMultiblockWithElectricRecipeLogic;
-import keqing.pollution.api.metatileentity.POManaMultiblock;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
-import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -51,11 +35,7 @@ import net.minecraft.util.text.TextFormatting;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import static keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityCryogenicFreezer.coolingCoils;
 
@@ -84,9 +64,9 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 	}
 	public int getCoilTier()
 	{
-		if(temperature==160)return 1;
-		if(temperature==50)return 2;
-		if(temperature==1)return 3;
+		if(temperature == 160) return 1;
+		if(temperature == 50) return 2;
+		if(temperature == 1) return 3;
 		return 0;
 	}
 	@Override
@@ -119,7 +99,7 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 
 		@Override
 		public void setMaxProgress(int maxProgress) {
-			this.maxProgressTime = (int) (maxProgress*(10-2.0*getCoilTier())/10);
+			this.maxProgressTime = (int) (maxProgress * (10 - 2.0 * getCoilTier()) / 10);
 		}
 	}
 

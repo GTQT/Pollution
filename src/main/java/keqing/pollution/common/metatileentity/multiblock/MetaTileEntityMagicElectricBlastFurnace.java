@@ -1,5 +1,6 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
+import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -12,6 +13,7 @@ import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.unification.material.Material;
+import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -34,8 +36,10 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static java.lang.Math.log;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static keqing.pollution.api.unification.PollutionMaterials.infused_fire;
+import static net.minecraft.util.math.MathHelper.ceil;
 
 public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblockController {
 
@@ -65,7 +69,13 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
 		this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) CoilLevel).getIntTier(),
 				0);
-		Temp = 1000 + 900 * this.CoilLevel;
+		Temp = 0;
+		switch (this.CoilLevel){
+			case 1, 2, 3, 4, 5:
+				Temp += 900 + 900 * this.CoilLevel;
+			case 6, 7, 8:
+				Temp += 5400 + 1800 * (this.CoilLevel - 5);
+		}
 	}
 
 

@@ -13,6 +13,7 @@ import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
@@ -187,9 +188,9 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
 	@Override
 	protected BlockPattern createStructurePattern() {
 		return FactoryBlockPattern.start()
-				.aisle("DDD", "AAA", "AAA", "AAA", "AAA", "AAA")
-				.aisle("DDD", "AAA", "ABA", "ABA", "ABA", "AAA")
-				.aisle("DDD", "ASA", "ACA", "ACA", "ACA", "AAA")
+				.aisle("E E", "E E", "DDD", "AAA", "AAA", "AAA", "AAA", "AAA", "AAA")
+				.aisle("   ", "   ", "DDD", "AAA", "ABA", "ABA", "ABA", "AAA", "AAA")
+				.aisle("E E", "E E", "DDD", "ASA", "ACA", "ACA", "ACA", "AAA", "AAA")
 				.where('A',  states(getCasingState()).setMinGlobalLimited(15)
 						.or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1).setPreviewCount(1))
 						.or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
@@ -198,6 +199,8 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
 				.where('B', CP_BEAM_CORE.get())
 				.where('C', states(getCasingState2()))
 				.where('D', states(getCasingState3()))
+				.where('E', states(getCasingState4()))
+				.where(' ', any())
 				.where('S', selfPredicate())
 				.build();
 	}
@@ -210,5 +213,8 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
 	}
 	private static IBlockState getCasingState3() {
 		return PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_2);
+	}
+	private static IBlockState getCasingState4() {
+		return MetaBlocks.FRAMES.get(PollutionMaterials.keqinggold).getBlock(PollutionMaterials.keqinggold);
 	}
 }

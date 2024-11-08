@@ -68,6 +68,7 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 	static final FluidStack ENERGY_STACK = infused_energy.getFluid(1);
 	static final FluidStack MAGIC_STACK = infused_magic.getFluid(1);
 	static final FluidStack CRAFT_STACK = infused_craft.getFluid(1);
+	static final FluidStack FLY_STACK = infused_fly.getFluid(1);
 
 	static {
 		STACK_MAP.put(infused_air, AIR_STACK);
@@ -88,6 +89,7 @@ PORecipeMapMultiblockController extends MultiMapMultiblockController implements 
 		STACK_MAP.put(infused_alchemy, ALCHEMY_STACK);
 		STACK_MAP.put(infused_metal, METAL_STACK);
 		STACK_MAP.put(infused_craft, CRAFT_STACK);
+		STACK_MAP.put(infused_fly, FLY_STACK);
 	}
 
 	//检查有没有+消耗  由consume控制

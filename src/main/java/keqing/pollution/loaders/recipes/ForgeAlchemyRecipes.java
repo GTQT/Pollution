@@ -3,11 +3,13 @@ package keqing.pollution.loaders.recipes;
 import com.cleanroommc.groovyscript.compat.mods.botania.Botania;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.util.Mods;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.item.ItemStack;
+import vazkii.botania.common.item.ModItems;
 
 public class ForgeAlchemyRecipes {
 	public static void init() {
@@ -25,7 +27,7 @@ public class ForgeAlchemyRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.Terrasteel, 64)
 				.input(OrePrefix.dust, PollutionMaterials.hyperdimensional_silver, 64)
 				.input(OrePrefix.dust, PollutionMaterials.keqinggold, 64)
-				.chancedOutput(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getStackForm(), 7500, 0)
+				.chancedOutput(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getStackForm(), 5000, 0)
 				.blastFurnaceTemp(5400)
 				.duration(19980)
 				.EUt(9999)
@@ -301,6 +303,20 @@ public class ForgeAlchemyRecipes {
 				.input(OrePrefix.dust, PollutionMaterials.manasteel, 2)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.fluidOutputs(PollutionMaterials.Terrasteel.getFluid(2304))
+				.circuitMeta(20)
+				.blastFurnaceTemp(4500)
+				.duration(15000)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
+				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.input(OrePrefix.dust, PollutionMaterials.Terrasteel, 2)
+				.input(OrePrefix.dust, PollutionMaterials.manasteel, 2)
+				.input(ModItems.rune, 1, 8)
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.fluidOutputs(PollutionMaterials.ElvenElementium.getFluid(2304))
 				.circuitMeta(20)
 				.blastFurnaceTemp(4500)
 				.duration(15000)

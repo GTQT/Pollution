@@ -25,16 +25,16 @@ public class POManaMultiblockWithElectricRecipeLogic extends MultiblockRecipeLog
 	}
 	@Override
 	public int getParallelLimit() {
-		if(this.getManaHatch().getTier()<4)return 64;
-		else if(this.getManaHatch().getTier()<8)return 64+(this.getManaHatch().getTier()-4)*64;
+		if (this.getManaHatch().getTier() < 4) return 64;
+		else if (this.getManaHatch().getTier() < 8) return 64 + (this.getManaHatch().getTier() - 4) * 64;
 		else return 512;
 	}
 
 	@Override
 	public void updateRecipeProgress() {
 		if ((getManaHatch().getMana() >= 20 * Math.pow(2, getManaHatch().getTier() - 1))) {
-			if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt/8, true)) {
-				this.drawEnergy(this.recipeEUt / 8, false);
+			if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt / getManaHatch().getTier(), true)) {
+				this.drawEnergy(this.recipeEUt / getManaHatch().getTier(), false);
 				getManaHatch().consumeMana((int) (20 * Math.pow(2, getManaHatch().getTier() - 1)));
 
 				if (++this.progressTime > this.maxProgressTime) {
