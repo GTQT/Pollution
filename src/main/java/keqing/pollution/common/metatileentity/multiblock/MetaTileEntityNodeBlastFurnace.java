@@ -80,7 +80,13 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 		this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
 				() -> ((WrappedIntTired) CoilLevel).getIntTier(),
 				0);
-		Temp = 1000 + 900 * this.CoilLevel;
+		Temp = 0;
+		switch (this.CoilLevel){
+			case 1, 2, 3, 4, 5:
+				Temp += 900 + 900 * this.CoilLevel;
+			case 6, 7, 8:
+				Temp += 5400 + 1800 * (this.CoilLevel - 5);
+		}
 
 		List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
 		energyContainer.addAll(this.getAbilities(MultiblockAbility.INPUT_LASER));

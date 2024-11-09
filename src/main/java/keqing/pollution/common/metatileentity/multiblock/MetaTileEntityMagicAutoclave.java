@@ -20,7 +20,7 @@ import keqing.pollution.common.block.metablocks.POMagicBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
-import static keqing.pollution.api.unification.PollutionMaterials.infused_air;
+import static keqing.pollution.api.unification.PollutionMaterials.infused_fly;
 
 public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockController {
 
@@ -53,7 +53,7 @@ public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockControlle
 
 	@Override
 	public Material getMaterial() {
-		return infused_air;
+		return infused_fly;
 	}
 
 	private static IBlockState getCasingState() {

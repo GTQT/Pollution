@@ -27,7 +27,12 @@ import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_CORE;
 import static keqing.pollution.api.unification.PollutionMaterials.infused_craft;
@@ -57,7 +62,7 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
 	}
 
 	@SuppressWarnings("InnerClassMayBeStatic")
-	private class MagicAssemblerRecipeLogic extends MultiblockRecipeLogic {
+	private class MagicAssemblerRecipeLogic extends POMultiblockRecipeLogic {
 
 		public MagicAssemblerRecipeLogic(RecipeMapMultiblockController tileEntity) {
 			super(tileEntity);
@@ -67,7 +72,13 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
 		public void setMaxProgress(int maxProgress) {
 			this.maxProgressTime = (int)(Math.round(maxProgress * (1 - 0.05 * BeamLevel)));
 		}
-		//每级-5%配方最大电压？
+
+	}
+
+	//tooltip
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
+		super.addInformation(stack, world, tooltip, advanced);
+		tooltip.add(I18n.format("pollution.machine.magic_assembler.tooltip.1"));
 	}
 
 	@Override

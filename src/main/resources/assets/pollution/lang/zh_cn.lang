@@ -26,15 +26,15 @@ gregtech.material.infused_motion=动
 gregtech.material.infused_taint=秽
 gregtech.material.infused_dark=暗
 gregtech.material.infused_alien=异
-gregtech.material.infused_fly=翔
+gregtech.material.infused_fly=羽
 gregtech.material.infused_plant=草木
 gregtech.material.infused_mechanics=械
 gregtech.material.infused_trap=缚
 gregtech.material.infused_undead=僵
 gregtech.material.infused_thought=思
 gregtech.material.infused_sense=感
-gregtech.material.infused_animal=兽
-gregtech.material.infused_human=人
+gregtech.material.infused_animal=造化
+gregtech.material.infused_human=物灵
 gregtech.material.infused_greed=贪
 gregtech.material.infused_armor=胄
 
@@ -464,7 +464,8 @@ pollution.machine.magic_green_house.tooltip=作为魔法使，我们只生产温
 pollution.machine.magic_battery.tooltip=§5纵使神曈黯淡，亦可再造鸿蒙§r
 
 pollution.machine.magic_assembler.name=高等应用魔导秩构单元
-pollution.machine.magic_assembler.tooltip=大炮，已组装！ 谁是最大冲击波？
+pollution.machine.magic_assembler.tooltip=大炮，已组装！谁是最大冲击波？
+pollution.machine.magic_assembler.tooltip.1=此机器作为次世代机械原型，根据核心等级获取额外耗时减免，每级5%
 
 pollution.machine.primitive_mud_pump.name=原始泥泵
 pollution.machine.primitive_mud_pump.tooltip=污泥滚滚
@@ -630,6 +631,15 @@ pollution.machine.gt_essence_smelter_euttier=电压等级：%s
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵
+
+#bot基类
+pollution.mana_multiblock_with_electric.tooltip.1=此机器根据魔力仓等级获取并行和功率减免
+pollution.mana_multiblock_with_electric.tooltip.2=1-3级魔力仓64并行，此后每升一次+64，超过8级直接获得512并行
+pollution.mana_multiblock_with_electric.tooltip.3=配方所需功率总是除以魔力仓等级，该等级每提升一次，魔力消耗翻倍
+
+#bot冰箱
+pollution.machine.bot_vacuum_freezer.name=超越秘术深蓝寒冬构阵
+pollution.machine.bot_vacuum_freezer.tooltip=§a面对着充满星光与默示的夜，我第一次向这个世界动人的冷漠敞开了心扉。§r
 
 #
 itemGroup.Pollution=污染

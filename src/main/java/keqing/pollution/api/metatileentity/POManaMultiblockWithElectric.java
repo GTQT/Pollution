@@ -11,7 +11,10 @@ import keqing.gtqtcore.common.block.blocks.BlockCoolingCoil;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.capability.IManaMultiblock;
 import keqing.pollution.api.capability.ipml.POManaMultiblockWithElectricRecipeLogic;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,14 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
 	public IManaHatch getIManaHatch()
 	{
 		return ManaHatch;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+		super.addInformation(stack, player, tooltip, advanced);
+		tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.1"));
+		tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.2"));
+		tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.3"));
 	}
 
 	@Override
