@@ -2,11 +2,20 @@ package keqing.pollution.common.metatileentity.multiblock;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import gregtech.api.GTValues;
+import gregtech.api.capability.GregtechTileCapabilities;
+import gregtech.api.capability.IControllable;
+import gregtech.api.capability.IDistinctBusController;
+import gregtech.api.gui.GuiTextures;
+import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.resources.TextureArea;
+import gregtech.api.gui.widgets.*;
 import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.IProgressBarMultiblock;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -64,10 +73,8 @@ import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.BooleanSupplier;
 
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_GLASS;
@@ -309,10 +316,113 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.6"));
 		tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.7"));
 	}
+	@Override
+	protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
+		ModularUI.Builder builder;
+		label38: {
+			builder = ModularUI.builder(GuiTextures.BACKGROUND, 198, 208);
+			if (this instanceof IProgressBarMultiblock) {
+				IProgressBarMultiblock progressMulti = (IProgressBarMultiblock)this;
+				if (progressMulti.showProgressBar()) {
+					builder.image(4, 4, 190, 109, GuiTextures.DISPLAY);
+					ProgressWidget progressBar;
+					if (progressMulti.getNumProgressBars() == 3) {
+						progressBar = (new ProgressWidget(() -> {
+							return progressMulti.getFillPercentage(0);
+						}, 4, 115, 62, 7, progressMulti.getProgressBarTexture(0), ProgressWidget.MoveType.HORIZONTAL)).setHoverTextConsumer((list) -> {
+							progressMulti.addBarHoverText(list, 0);
+						});
+						builder.widget(progressBar);
+						progressBar = (new ProgressWidget(() -> {
+							return progressMulti.getFillPercentage(1);
+						}, 68, 115, 62, 7, progressMulti.getProgressBarTexture(1), ProgressWidget.MoveType.HORIZONTAL)).setHoverTextConsumer((list) -> {
+							progressMulti.addBarHoverText(list, 1);
+						});
+						builder.widget(progressBar);
+						progressBar = (new ProgressWidget(() -> {
+							return progressMulti.getFillPercentage(2);
+						}, 132, 115, 62, 7, progressMulti.getProgressBarTexture(2), ProgressWidget.MoveType.HORIZONTAL)).setHoverTextConsumer((list) -> {
+							progressMulti.addBarHoverText(list, 2);
+						});
+						builder.widget(progressBar);
+					} else if (progressMulti.getNumProgressBars() == 2) {
+						progressBar = (new ProgressWidget(() -> {
+							return progressMulti.getFillPercentage(0);
+						}, 4, 115, 94, 7, progressMulti.getProgressBarTexture(0), ProgressWidget.MoveType.HORIZONTAL)).setHoverTextConsumer((list) -> {
+							progressMulti.addBarHoverText(list, 0);
+						});
+						builder.widget(progressBar);
+						progressBar = (new ProgressWidget(() -> {
+							return progressMulti.getFillPercentage(1);
+						}, 100, 115, 94, 7, progressMulti.getProgressBarTexture(1), ProgressWidget.MoveType.HORIZONTAL)).setHoverTextConsumer((list) -> {
+							progressMulti.addBarHoverText(list, 1);
+						});
+						builder.widget(progressBar);
+					} else {
+						progressBar = (new ProgressWidget(() -> {
+							return progressMulti.getFillPercentage(0);
+						}, 4, 115, 190, 7, progressMulti.getProgressBarTexture(0), ProgressWidget.MoveType.HORIZONTAL)).setHoverTextConsumer((list) -> {
+							progressMulti.addBarHoverText(list, 0);
+						});
+						builder.widget(progressBar);
+					}
 
+					builder.widget((new IndicatorImageWidget(174, 93, 17, 17, this.getLogo())).setWarningStatus(this.getWarningLogo(), this::addWarningText).setErrorStatus(this.getErrorLogo(), this::addErrorText));
+					break label38;
+				}
+			}
+
+			builder.image(4, 4, 190, 117, GuiTextures.DISPLAY);
+			builder.widget((new IndicatorImageWidget(174, 101, 17, 17, this.getLogo())).setWarningStatus(this.getWarningLogo(), this::addWarningText).setErrorStatus(this.getErrorLogo(), this::addErrorText));
+		}
+
+		builder.label(9, 9, this.getMetaFullName(), 16777215);
+		var scroll = new ScrollableListWidget(0,20,181,92);
+		scroll.addWidget((new AdvancedTextWidget(9, 20, this::addDisplayText, 16777215)).setClickHandler(this::handleDisplayClick));
+		builder.widget(scroll);
+		IControllable controllable = (IControllable)this.getCapability(GregtechTileCapabilities.CAPABILITY_CONTROLLABLE, (EnumFacing)null);
+		TextureArea var10007;
+		BooleanSupplier var10008;
+		if (controllable != null) {
+			var10007 = GuiTextures.BUTTON_POWER;
+			Objects.requireNonNull(controllable);
+			var10008 = controllable::isWorkingEnabled;
+			Objects.requireNonNull(controllable);
+			builder.widget(new ImageCycleButtonWidget(173, 183, 18, 18, var10007, var10008, controllable::setWorkingEnabled));
+			builder.widget(new ImageWidget(173, 201, 18, 6, GuiTextures.BUTTON_POWER_DETAIL));
+		}
+
+		if (this.shouldShowVoidingModeButton()) {
+			builder.widget((new ImageCycleButtonWidget(173, 161, 18, 18, GuiTextures.BUTTON_VOID_MULTIBLOCK, 4, this::getVoidingMode, this::setVoidingMode)).setTooltipHoverString(MultiblockWithDisplayBase::getVoidingModeTooltip));
+		} else {
+			builder.widget((new ImageWidget(173, 161, 18, 18, GuiTextures.BUTTON_VOID_NONE)).setTooltip("gregtech.gui.multiblock_voiding_not_supported"));
+		}
+
+		label30: {
+			if (this instanceof IDistinctBusController) {
+				IDistinctBusController distinct = (IDistinctBusController)this;
+				if (distinct.canBeDistinct()) {
+					var10007 = GuiTextures.BUTTON_DISTINCT_BUSES;
+					Objects.requireNonNull(distinct);
+					var10008 = distinct::isDistinct;
+					Objects.requireNonNull(distinct);
+					builder.widget((new ImageCycleButtonWidget(173, 143, 18, 18, var10007, var10008, distinct::setDistinct)).setTooltipHoverString((i) -> {
+						return "gregtech.multiblock.universal.distinct_" + (i == 0 ? "disabled" : "enabled");
+					}));
+					break label30;
+				}
+			}
+
+			builder.widget((new ImageWidget(173, 143, 18, 18, GuiTextures.BUTTON_NO_DISTINCT_BUSES)).setTooltip("gregtech.multiblock.universal.distinct_not_supported"));
+		}
+
+		builder.widget(this.getFlexButton(173, 125, 18, 18));
+		builder.bindPlayerInventory(entityPlayer.inventory, 125);
+		return builder;
+	}
 	@Override
 	protected void addDisplayText(List<ITextComponent> textList) {
-		super.addDisplayText(textList);
+		//super.addDisplayText(textList);
 		if(getWorld().getPlayerEntityByUUID(uuid)==null){
 			textList.add((new TextComponentTranslation("pollution.machine.player.online")).setStyle((new Style()).setColor(TextFormatting.RED)));
 		}
