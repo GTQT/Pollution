@@ -322,7 +322,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 		if (this.aspectList.getAspects().length > 0) {
 			textList.add(TextComponentUtil.translationWithColor(TextFormatting.GOLD, "======================"));
 			for (var s : this.aspectList.getAspects()) {
-				textList.add((new TextComponentTranslation("pollution.machine.aspect", s.getName(), this.aspectList.getAmount(s))).setStyle((new Style()).setColor(TextFormatting.RED)));
+				textList.add((new TextComponentTranslation("pollution.machine.aspect", s.getLocalizedDescription(), this.aspectList.getAmount(s))).setStyle((new Style()).setColor(TextFormatting.RED)));
 			}
 			textList.add(TextComponentUtil.translationWithColor(TextFormatting.GOLD, "======================"));
 		}
