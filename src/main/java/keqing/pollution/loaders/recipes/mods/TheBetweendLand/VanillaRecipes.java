@@ -165,7 +165,7 @@ public class VanillaRecipes {
         ModHandler.addShapedRecipe("mud_brick_from_clayAndMud", ItemMisc.EnumItemMisc.MUD_BRICK.create(8),
                 "XXX", "SYS", "SSS",
                 'Y', WOODEN_FORM_BRICK.getStackForm(),
-                'X', new ItemStack(Items.CLAY_BALL),
+                'X', "sand",
                 'S', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
     }
@@ -230,6 +230,10 @@ public class VanillaRecipes {
         */
 
         //通用矿辞处理，补全对原版材料的获取
+        ModHandler.addShapedRecipe(true, "PoDirt", new ItemStack(Items.CLAY_BALL),
+                " h", " M",
+                'M', new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+
         ModHandler.addShapedRecipe(true, "PoStone5", new ItemStack(Blocks.GRAVEL),
                 " h", " M",
                 'M', "cobblestone");
@@ -246,11 +250,33 @@ public class VanillaRecipes {
                 "   ","MMM", "   ",
                 'M', ItemMisc.EnumItemMisc.SWAMP_REED_ROPE.create(1));
 
+        //纸
         ModHandler.addShapedRecipe("po_paper_dust", OreDictUnifier.get(OrePrefix.dust, Materials.Paper, 2), "SSS",
                 " m ", 'S',   ItemMisc.EnumItemMisc.DRIED_SWAMP_REED.create(1));
 
+        ModHandler.addShapedRecipe("mud_paper", new ItemStack(Items.PAPER, 2),
+                " r ", "SSS", " B ",
+                'S', OreDictUnifier.get(OrePrefix.dust, Materials.Paper),
+                'B', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+
+        //
+        ModHandler.addShapedRecipe("mud_bu_dirt1", new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                " r ", "SSS", " B ",
+                'S', new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'B', new ItemStack(Items.BUCKET));
+
+        ModHandler.addShapedRecipe("mud_bu_dirt2", new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                " r ", "SSS", " B ",
+                'S', new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'B', new ItemStack(Items.BUCKET));
+
+        ModHandler.addShapedRecipe("mud_bu_dirt3", new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                " r ", "SSS", " B ",
+                'S', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'B', new ItemStack(Items.BUCKET));
+        //粘土砖
         ModHandler.addShapedRecipe("compressed_coke_clay", COMPRESSED_COKE_CLAY.getStackForm(3), "XXX", "SYS", "SSS",
-                'Y', WOODEN_FORM_BRICK.getStackForm(), 'X', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), 'S', "sand");
+                'Y', WOODEN_FORM_BRICK.getStackForm(), 'X', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), 'S', new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
         //原始化反添加沙子变黏土的配方
         GTQTcoreRecipeMaps.PR_MIX.recipeBuilder()
