@@ -418,7 +418,8 @@ pollution.command.weakness=§bYou feel a surge of weakness
 pollution.command.nausea=§6You feel nauseous
 pollution.command.mining=§5You feel exhausted
 pollution.command.blindness=§1You feel dizzy
-
+pollution.command.summon_wither=§aThe dimensional rift has been torn open by an unknown monster
+pollution.command.world_pollution=The world is being polluted!
 #Industrial Infusion
 pollution.machine.industrial_infusion.tooltip.1=Essence consumption is half of normal infusion
 pollution.machine.industrial_infusion.tooltip.2=Duration depends on the amount of essence consumed

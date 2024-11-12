@@ -499,6 +499,9 @@ pollution.command.weakness=§b你感到一阵虚弱
 pollution.command.nausea=§6你感到一阵恶心
 pollution.command.mining=§5你感到浑身疲累
 pollution.command.blindness=§1你感到头晕目眩
+pollution.command.summon_wither=§a维度裂隙已被未知怪物撕开缺口
+pollution.command.world_pollution=§2世界正在被污染！
+
 #工业注魔
 pollution.machine.industrial_infusion.tooltip.1=源质消耗为正常注魔的一半
 pollution.machine.industrial_infusion.tooltip.2=时间长度取决于源质消耗的数量

@@ -110,7 +110,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_FINAL= this.addItem(154, "stone_of_philosopher_final").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
 
 		//实用物品
-		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_TAB);
+		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(Pollution_TAB);
 		//200 电池 外壳注册
 		PollutionMetaItems.BATTERY_HULL_LV = addItem(250, "magic_battery.hull.lv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BATTERY_HULL_MV = addItem(251, "magic_battery.hull.mv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);

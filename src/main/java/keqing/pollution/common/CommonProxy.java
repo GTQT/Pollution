@@ -5,6 +5,7 @@ import gregtech.api.block.VariantItemBlock;
 import gregtech.common.items.MetaItems;
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.loaders.RecipeManger;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,7 +30,7 @@ public class CommonProxy {
 	public static final CreativeTabs Pollution_TAB = new CreativeTabs("Pollution") {
 		@Override
 		public ItemStack createIcon() {
-			return MetaItems.WETWARE_MAINFRAME_UHV.getStackForm();
+			return PollutionMetaItems.STONE_OF_PHILOSOPHER_FINAL.getStackForm();
 		}
 	};
 
