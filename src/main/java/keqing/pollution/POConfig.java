@@ -12,7 +12,7 @@ public class POConfig {
     public static boolean EntityPollutionEvent =true;
 
     @Config.Comment("消声仓污染倍率(0为无污染)")
-    public static float mufflerPollutionMultiplier =0.02f;
+    public static double mufflerPollutionMultiplier =1.0;
 
     @Config.Comment("是否开启消声仓污染特效")
     public static boolean mufflerPollutionShowEffects=true;

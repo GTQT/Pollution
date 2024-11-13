@@ -45,13 +45,12 @@ public class EventLoader {
             int flux = (int) AuraHelper.getFlux(player.world, player.getPosition());
             if (flux < 20) return;
 
-            int randomNum = RANDOM.nextInt(50000);
-
-            applyEffectIfConditionMet(player, flux, randomNum, 20, 250, 375, MobEffects.SLOWNESS, "pollution.command.slowness");
-            applyEffectIfConditionMet(player, flux, randomNum, 40, 150, 250, MobEffects.WEAKNESS, "pollution.command.weakness");
-            applyEffectIfConditionMet(player, flux, randomNum, 60, 75, 150, MobEffects.NAUSEA, "pollution.command.nausea");
-            applyEffectIfConditionMet(player, flux, randomNum, 80, 25, 75, MobEffects.MINING_FATIGUE, "pollution.command.mining");
-            applyEffectIfConditionMet(player, flux, randomNum, 100, 0, 25, MobEffects.BLINDNESS, "pollution.command.blindness");
+            int randomNum = RANDOM.nextInt(100000);
+            applyEffectIfConditionMet(player, flux, randomNum, 20, 150, 250, MobEffects.SLOWNESS, "pollution.command.slowness");
+            applyEffectIfConditionMet(player, flux, randomNum, 40, 70, 150, MobEffects.WEAKNESS, "pollution.command.weakness");
+            applyEffectIfConditionMet(player, flux, randomNum, 60, 30, 70, MobEffects.NAUSEA, "pollution.command.nausea");
+            applyEffectIfConditionMet(player, flux, randomNum, 80, 10, 30, MobEffects.MINING_FATIGUE, "pollution.command.mining");
+            applyEffectIfConditionMet(player, flux, randomNum, 100, 0, 10, MobEffects.BLINDNESS, "pollution.command.blindness");
 
             if (flux > 75) {
                 transformBlocks(player);
@@ -64,9 +63,17 @@ public class EventLoader {
             }
         }
     }
-
+    private static void applyEffectIfConditionMet(EntityPlayer player, int flux, int randomNum, int fluxThreshold, int minRandom, int maxRandom, Potion effect, String messageKey) {
+        if (flux >= fluxThreshold && randomNum >= minRandom && randomNum <= maxRandom) {
+            // 检查玩家是否已经具有该药水效果
+            if (!player.isPotionActive(effect)) {
+                player.sendMessage(new TextComponentTranslation(messageKey));
+                player.addPotionEffect(new PotionEffect(effect, 200, 1));
+            }
+        }
+    }
     private static void summonWitherIfConditionMet(EntityPlayer player) {
-        if (RANDOM.nextInt(10000) < 10) { // 5% 的概率召唤凋零生物
+        if (RANDOM.nextInt(5000) < 2) {
             EntityWither wither = new EntityWither(player.world);
 
             // 生成 X 轴的随机偏移量
@@ -98,15 +105,8 @@ public class EventLoader {
         }
     }
 
-    private static void applyEffectIfConditionMet(EntityPlayer player, int flux, int randomNum, int fluxThreshold, int minRandom, int maxRandom, Potion effect, String messageKey) {
-        if (flux >= fluxThreshold && randomNum >= minRandom && randomNum <= maxRandom) {
-            player.sendMessage(new TextComponentTranslation(messageKey));
-            player.addPotionEffect(new PotionEffect(effect, 200, 1));
-        }
-    }
-
     private static void transformBlocks(EntityPlayer player) {
-        if (RANDOM.nextInt(100) < 10) {
+        if (RANDOM.nextInt(20) < 2) {
             // 随机选择一个方块
             int offsetX = RANDOM.nextInt(17) - 8; // -16 到 16
             int offsetY = RANDOM.nextInt(7) - 3; // -3 到 3
@@ -133,7 +133,7 @@ public class EventLoader {
 
 
     private static void spawnMushrooms(EntityPlayer player) {
-        if (RANDOM.nextInt(100) < 10) { // 5% 的概率生成蘑菇
+        if (RANDOM.nextInt(20) < 2) { // 5% 的概率生成蘑菇
             int offsetX = RANDOM.nextInt(33) - 16; // -16 到 16
             int offsetY = RANDOM.nextInt(11) - 5;
             int offsetZ = RANDOM.nextInt(33) - 16; // -16 到 16

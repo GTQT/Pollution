@@ -159,9 +159,9 @@ public class PollutionMetaTileEntities {
 		MANA_GENERATOR[4] = registerMetaTileEntity(15968, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_ev"), 4));
 		MANA_GENERATOR[5] = registerMetaTileEntity(15969, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_iv"), 5));
 
-		for (int i = 1; i <= 8; i++) {
-			String tierName = GTValues.VN[i].toLowerCase();
-			FLUX_MUFFLERS[i] = registerMetaTileEntity(16000 + i - 1, new MetaTileEntityFluxMuffler(gtqtcoreId("pollution_muffler_hatch." + tierName), i));
+		for (int i = 0; i < 9; i++) {
+			String tierName = GTValues.VN[i+1].toLowerCase();
+			FLUX_MUFFLERS[i] = registerMetaTileEntity(16000+i, new MetaTileEntityFluxMuffler(gtqtcoreId("pollution_muffler_hatch." + tierName), i+1));
 		}
 
 		for (int i = 0; i < VIS_HATCH.length; i++) {
