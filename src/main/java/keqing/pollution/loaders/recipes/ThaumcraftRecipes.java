@@ -609,13 +609,14 @@ public class ThaumcraftRecipes {
 				new ItemStack(Items.NETHER_STAR),
 				6,
 				new AspectList().add(Aspect.DEATH, 128).add(Aspect.UNDEAD, 128).add(Aspect.MAGIC, 32).add(Aspect.AURA, 16),
-				"gemvalonite",
+				"gemValonite",
 				new ItemStack(Blocks.DIAMOND_BLOCK),
 				new ItemStack(Blocks.EMERALD_BLOCK),
 				new ItemStack(Blocks.NETHERRACK),
 				new ItemStack(Blocks.SOUL_SAND),
 				"gemExquisiteAmethyst",
 				"gemExquisiteOpal",
+				new ItemStack(ItemsTC.voidSeed),
 				new ItemStack(ItemsTC.voidSeed),
 				new ItemStack(BlocksTC.crystalEntropy)));
 
