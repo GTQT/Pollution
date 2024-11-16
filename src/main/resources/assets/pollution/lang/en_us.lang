@@ -1,4 +1,73 @@
 #Material Registration
+metaitem.the_world.name=The World(UPRIGHT)
+metaitem.the_world.tooltip=23
+
+metaitem.the_judgement.name=The Judgement(UPRIGHT)
+metaitem.the_judgement.tooltip=22
+
+metaitem.the_sun.name=The Sun(UPRIGHT)
+metaitem.the_sun.tooltip=21
+
+metaitem.the_moon.name=The moon(UPRIGHT)
+metaitem.the_moon.tooltip=20
+
+metaitem.the_star.name=The Star(UPRIGHT)
+metaitem.the_star.tooltip=19
+
+metaitem.the_tower.name=The Tower(UPRIGHT)
+metaitem.the_tower.tooltip=18
+
+metaitem.the_devil.name=The Devil(UPRIGHT)
+metaitem.the_devil.tooltip=17
+
+metaitem.the_temperance.name=The Temperance(UPRIGHT)
+metaitem.the_temperance.tooltip=16
+
+metaitem.the_death.name=The Death(UPRIGHT)
+metaitem.the_death.tooltip=15
+
+metaitem.the_hanged_man.name=The Hanged Man(UPRIGHT)
+metaitem.the_hanged_man.tooltip=14
+
+metaitem.the_justice.name=The Justice(UPRIGHT)
+metaitem.the_justice.tooltip=13
+
+metaitem.the_wheel_of_fortune.name=The Wheel of Fortune(UPRIGHT)
+metaitem.the_wheel_of_fortune.tooltip=12
+
+metaitem.the_hermit.name=The Hermit(UPRIGHT)
+metaitem.the_hermit.tooltip=11
+
+metaitem.the_strength.name=The Strength(UPRIGHT)
+metaitem.the_strength.tooltip=10
+
+metaitem.the_chariot.name=The Chariot(UPRIGHT)
+metaitem.the_chariot.tooltip=9
+
+metaitem.the_lovers.name=The Lovers(UPRIGHT)
+metaitem.the_lovers.tooltip=8
+
+metaitem.the_highophant.name=The Highophant(UPRIGHT)
+metaitem.the_highophant.tooltip=7
+
+metaitem.the_emperor.name=The Emperor(UPRIGHT)
+metaitem.the_emperor.tooltip=6
+
+metaitem.the_empress.name=The Empress(UPRIGHT)
+metaitem.the_empress.tooltip=5
+
+metaitem.the_high_priestess.name=The High Priestess(UPRIGHT)
+metaitem.the_high_priestess.tooltip=4
+
+metaitem.the_magician.name=The Magician(UPRIGHT)
+metaitem.the_magician.tooltip=May you never miss your goal
+
+metaitem.the_fool.name=The Fool(UPRIGHT)
+metaitem.the_fool.tooltip=The beginning of journey
+
+metaitem.test_item.name=papa testing item
+metaitem.test_item.tooltip=this is a desc
+
 gregtech.material.infused_order=Order
 gregtech.material.infused_entropy=Entropy
 gregtech.material.infused_earth=Earth
