@@ -315,7 +315,7 @@ pollution.machine.vis.ev.name=Detonating Vis Generator (§5EV§r)
 pollution.machine.vis.iv.name=Blast Vis Generator (§1IV§r)
 gregtech.universal.tooltip.consume=§6Vis Conversion: Pollution (1:0.1) Ratio: %s Vis Produced per EU: %s EU
 
-pollution.muffler.pollution_tooltip1=§6Generates pollution once per tick based on pollution rate (base pollution is 0.001)
+pollution.muffler.pollution_tooltip1=§6Generates pollution once per tick based on pollution rate (base pollution is 0.05)
 pollution.muffler.pollution_tooltip2=§6Pollution Rate: %s (Actual pollution is base pollution * pollution rate)
 pollution.machine.pollution_muffler_hatch.lv.name=Basic Muffler Hatch (§7LV§r)
 pollution.machine.pollution_muffler_hatch.mv.name=Basic Muffler Hatch (§bMV§r)
@@ -325,6 +325,7 @@ pollution.machine.pollution_muffler_hatch.iv.name=Basic Muffler Hatch (§1IV§r)
 pollution.machine.pollution_muffler_hatch.luv.name=Basic Muffler Hatch (§dLuV§r)
 pollution.machine.pollution_muffler_hatch.zpm.name=Basic Muffler Hatch (§cZPM§r)
 pollution.machine.pollution_muffler_hatch.uv.name=Basic Muffler Hatch (§3UV§r)
+pollution.machine.pollution_muffler_hatch.uhv.name=Basic Muffler Hatch （§4UHV§r）
 
 pollution.machine.vis_hatch.lv.name=Aura Storage Container（§7LV§r）
 pollution.machine.vis_hatch.mv.name=Aura Storage Container（§bMV§r）

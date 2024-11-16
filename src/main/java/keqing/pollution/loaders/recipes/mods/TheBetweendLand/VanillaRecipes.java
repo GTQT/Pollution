@@ -311,6 +311,13 @@ public class VanillaRecipes {
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
+        //硫磺粉碎
+        RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
+                .input(ItemMisc.EnumItemMisc.SULFUR.create(1).getItem())
+                .output(dust,Sulfur)
+                .duration(20)
+                .EUt(7)
+                .buildAndRegister();
         //淤泥后续
         RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
                 .fluidInputs(Mud.getFluid(1000))
