@@ -182,33 +182,22 @@ public class VanillaRecipes {
         OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
         OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
-        //神秘的原石变沙砾 沙砾变沙子
-        /*
-        ModHandler.addShapedRecipe(true, "PoStone1", new ItemStack(Blocks.GRAVEL),
-                " h", " M",
-                'M',new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
+
+        //神秘的原石变沙砾 沙砾变沙子
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                .output(dust, GTQTMaterials.Phyllite)
+                .output(dust, Materials.Stone)
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
-
-        ModHandler.addShapedRecipe(true, "PoStone2", new ItemStack(Blocks.GRAVEL),
-                " h", " M",
-                'M',new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                .output(dust, GTQTMaterials.Gneiss)
+                .output(dust, Materials.Stone)
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
-
-        ModHandler.addShapedRecipe(true, "PoStone3", new ItemStack(Blocks.GRAVEL),
-                " h", " M",
-                'M',new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
@@ -216,18 +205,13 @@ public class VanillaRecipes {
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
-
-        ModHandler.addShapedRecipe(true, "PoStone4", new ItemStack(Blocks.GRAVEL),
-                " h", " M",
-                'M',new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-
+        
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
                 .output(dust, Materials.Stone)
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
-        */
 
         //通用矿辞处理，补全对原版材料的获取
         ModHandler.addShapedRecipe(true, "PoDirt", new ItemStack(Items.CLAY_BALL),
