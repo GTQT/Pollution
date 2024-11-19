@@ -3,10 +3,13 @@ package keqing.pollution.common.metatileentity.single;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import gregtech.api.capability.impl.AbstractRecipeLogic;
+import gregtech.api.capability.impl.RecipeLogicEnergy;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.client.resources.I18n;
@@ -40,6 +43,11 @@ public class MetaTileEntitySolarPlate extends TieredMetaTileEntity {
 		return new MetaTileEntitySolarPlate(metaTileEntityId, getTier(), kind, renderer);
 	}
 
+	protected AbstractRecipeLogic createWorkable(RecipeMap<?> recipeMap) {
+		return new RecipeLogicEnergy(this, recipeMap, () -> {
+			return this.energyContainer;
+		});
+	}
 	protected ModularUI createUI(EntityPlayer entityPlayer) {
 		ModularUI.Builder builder = ModularUI.defaultBuilder();
 		builder.dynamicLabel(7, 30, () -> {

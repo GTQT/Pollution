@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "": { "model": "pollution:block/test_block" }
+  }
+}
+//定义方块的状态和对应的模型。它告诉 Minecraft 在不同状态下使用哪个模型

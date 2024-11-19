@@ -8,6 +8,7 @@ import keqing.gtqtcore.common.items.GTQTMetaItem1;
 import keqing.pollution.common.items.armor.MetaArmor;
 
 public class PollutionMetaItems {
+	public static MetaItem<?>.MetaValueItem LARGE_NODE_GENERATOR;
 	public static MetaItem<?>.MetaValueItem TAROT_THE_WORLD;
 	public static MetaItem<?>.MetaValueItem TAROT_JUDGEMENT;
 	public static MetaItem<?>.MetaValueItem TAROT_THE_SUN;

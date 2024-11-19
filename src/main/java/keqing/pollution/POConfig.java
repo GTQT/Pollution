@@ -2,6 +2,8 @@ package keqing.pollution;
 import net.minecraftforge.common.config.Config;
 @Config(modid = Pollution.MODID)
 public class POConfig {
+    @Config.Comment("咒波促燃发电机单位tick发电消耗咒波")
+    public static float FluxPromotedGeneratorFluxPerTick = 0.005F;
     @Config.Comment("机器污染开关")
     public static boolean enablePollution =true;
 

@@ -3,12 +3,16 @@ package keqing.pollution.common.metatileentity;
 import gregtech.api.GTValues;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
+import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
+import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.util.GTUtility;
+import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
@@ -24,6 +28,7 @@ import keqing.pollution.common.metatileentity.single.*;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
+import static keqing.gtqtcore.api.GTQTValue.gtqtcoreId;
 import static keqing.pollution.client.textures.POTextures.*;
 
 public class PollutionMetaTileEntities {
@@ -74,7 +79,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityLargeTurbine LARGE_MAGIC_TURBINE;
 	public static MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
 	public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
-	public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR =new SimpleGeneratorMetaTileEntity[6];
+	public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR = new SimpleGeneratorMetaTileEntity[6];
 	//高阶机器，植魔系列
 	public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
 	public static MetaTileEntityBotDistillery BOT_DISTILLERY;
@@ -86,9 +91,12 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityBotGasCollector BOT_GAS_COLLECTOR;
 	public static MetaTileEntityGtEssenceSmelter GT_ESSENCE_SMELTER;
 	public static MetaTileEntityBotVacuumFreezer BOT_VACUUM_FREEZER;
- 	//原始设备
+	//原始设备
 	public static MetaTileEntityPrimitiveMudPump PRIMITIVE_MUD_PUMP;
 	public static MetaTileEntityStove PRIMITIVE_STOVE;
+	public static final WorkableTieredMetaTileEntity[] FLUX_PROMOTED_FUEL_CELL = new WorkableTieredMetaTileEntity[5];
+	public static final TieredMetaTileEntity[] MAGIC_ENERGY_ABSORBER = new TieredMetaTileEntity[5];
+	public static final TieredMetaTileEntity[] SMALL_NODE_GENERATOR =new TieredMetaTileEntity[4];
 	public static void initialization() {
 
 		for (int i = 0; i <= 4; i++) {
@@ -160,8 +168,8 @@ public class PollutionMetaTileEntities {
 		MANA_GENERATOR[5] = registerMetaTileEntity(15969, new ManaGeneratorTileEntity(gtqtcoreId("mana_gen_iv"), 5));
 
 		for (int i = 0; i < 9; i++) {
-			String tierName = GTValues.VN[i+1].toLowerCase();
-			FLUX_MUFFLERS[i] = registerMetaTileEntity(16000+i, new MetaTileEntityFluxMuffler(gtqtcoreId("pollution_muffler_hatch." + tierName), i+1));
+			String tierName = GTValues.VN[i + 1].toLowerCase();
+			FLUX_MUFFLERS[i] = registerMetaTileEntity(16000 + i, new MetaTileEntityFluxMuffler(gtqtcoreId("pollution_muffler_hatch." + tierName), i + 1));
 		}
 
 		for (int i = 0; i < VIS_HATCH.length; i++) {
@@ -197,14 +205,14 @@ public class PollutionMetaTileEntities {
 		}
 
 		TEST_MANA = registerMetaTileEntity(15850, new TESTMetaTileEntityLargeAssembler(gtqtcoreId("test")));
-		ENDOFLAME_ARRAY = registerMetaTileEntity(15851,new MetaTileEntityEndoflameArray(gtqtcoreId("endoflame_array")));
+		ENDOFLAME_ARRAY = registerMetaTileEntity(15851, new MetaTileEntityEndoflameArray(gtqtcoreId("endoflame_array")));
 
 		BOT_DISTILLERY = registerMetaTileEntity(15852, new MetaTileEntityBotDistillery(gtqtcoreId("bot_distillery")));
 		Mana_PLATE = registerMetaTileEntity(15853, new MetaTileEntityManaPlate(gtqtcoreId("mana_plate")));
 		MAGIC_ASSEMBLER = registerMetaTileEntity(15854, new MetaTileEntityMagicAssembler(gtqtcoreId("magic_assembler")));
-	    NODE_BLAST_FURNACE = registerMetaTileEntity(15855, new MetaTileEntityNodeBlastFurnace(gtqtcoreId("node_blast_furnace")));
-	    SMALL_CHEMICAL_PLANT = registerMetaTileEntity(15856, new MetaTileEntitySmallChemicalPlant(gtqtcoreId("small_chemical_plant")));
-	    ESSENCE_SMELTER = registerMetaTileEntity(15857, new MetaTileEntityEssenceSmelter(gtqtcoreId("essence_smelter")));
+		NODE_BLAST_FURNACE = registerMetaTileEntity(15855, new MetaTileEntityNodeBlastFurnace(gtqtcoreId("node_blast_furnace")));
+		SMALL_CHEMICAL_PLANT = registerMetaTileEntity(15856, new MetaTileEntitySmallChemicalPlant(gtqtcoreId("small_chemical_plant")));
+		ESSENCE_SMELTER = registerMetaTileEntity(15857, new MetaTileEntityEssenceSmelter(gtqtcoreId("essence_smelter")));
 		BOT_GAS_COLLECTOR = registerMetaTileEntity(15858, new MetaTileEntityBotGasCollector(gtqtcoreId("bot_gas_collector")));
 		GT_ESSENCE_SMELTER = registerMetaTileEntity(15859, new MetaTileEntityGtEssenceSmelter(gtqtcoreId("gt_essence_smelter")));
 		BOT_VACUUM_FREEZER = registerMetaTileEntity(15860, new MetaTileEntityBotVacuumFreezer(gtqtcoreId("bot_vacuum_freezer")));
@@ -212,5 +220,25 @@ public class PollutionMetaTileEntities {
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));
 		PRIMITIVE_STOVE = registerMetaTileEntity(16101, new MetaTileEntityStove(gtqtcoreId("primitive_stove")));
+		//FluxPromotedGenerator
+
+		FLUX_PROMOTED_FUEL_CELL[0] = registerMetaTileEntity(16102, new MetaTileEntityFluxPromotedFuelCell(gtqtcoreId("flux_promoted_fuel_cell.lv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY,1, GTUtility.genericGeneratorTankSizeFunction));
+		FLUX_PROMOTED_FUEL_CELL[1] = registerMetaTileEntity(16103, new MetaTileEntityFluxPromotedFuelCell(gtqtcoreId("flux_promoted_fuel_cell.mv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY,2, GTUtility.genericGeneratorTankSizeFunction));
+		FLUX_PROMOTED_FUEL_CELL[2] = registerMetaTileEntity(16104, new MetaTileEntityFluxPromotedFuelCell(gtqtcoreId("flux_promoted_fuel_cell.hv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY,3, GTUtility.genericGeneratorTankSizeFunction));
+		FLUX_PROMOTED_FUEL_CELL[3] = registerMetaTileEntity(16105, new MetaTileEntityFluxPromotedFuelCell(gtqtcoreId("flux_promoted_fuel_cell.ev"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY,4, GTUtility.genericGeneratorTankSizeFunction));
+		FLUX_PROMOTED_FUEL_CELL[4] = registerMetaTileEntity(16106, new MetaTileEntityFluxPromotedFuelCell(gtqtcoreId("flux_promoted_fuel_cell.iv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY,5, GTUtility.genericGeneratorTankSizeFunction));
+
+		//蛋鸡
+		MAGIC_ENERGY_ABSORBER[0] = registerMetaTileEntity(16107,new MetaTileEntityMagicEnergyAbsorber(gtqtcoreId("pollution_magic_energy_absorber.lv"),1));
+		MAGIC_ENERGY_ABSORBER[1] = registerMetaTileEntity(16108,new MetaTileEntityMagicEnergyAbsorber(gtqtcoreId("pollution_magic_energy_absorber.mv"),2));
+		MAGIC_ENERGY_ABSORBER[2] = registerMetaTileEntity(16109,new MetaTileEntityMagicEnergyAbsorber(gtqtcoreId("pollution_magic_energy_absorber.hv"),3));
+		MAGIC_ENERGY_ABSORBER[3] = registerMetaTileEntity(16110,new MetaTileEntityMagicEnergyAbsorber(gtqtcoreId("pollution_magic_energy_absorber.ev"),4));
+		MAGIC_ENERGY_ABSORBER[4] = registerMetaTileEntity(16111,new MetaTileEntityMagicEnergyAbsorber(gtqtcoreId("pollution_magic_energy_absorber.iv"),5));
+
+		//微缩节点反应堆
+		SMALL_NODE_GENERATOR[0] = registerMetaTileEntity(16112,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.luv"),6));
+		SMALL_NODE_GENERATOR[1] = registerMetaTileEntity(16113,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.zpm"),7));
+		SMALL_NODE_GENERATOR[2] = registerMetaTileEntity(16114,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.uv"),8));
+		SMALL_NODE_GENERATOR[3] = registerMetaTileEntity(16115,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.uhv"),9));
 	}
 }

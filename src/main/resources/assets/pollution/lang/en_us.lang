@@ -302,6 +302,39 @@ metaitem.magic_battery.hull.luv.name=Magic Battery Hull (§dLuV§r)
 metaitem.magic_battery.hull.zpm.name=Magic Battery Hull (§cZPM§r)
 metaitem.magic_battery.hull.uv.name=Magic Battery Hull (§3UV§r)
 #Machines
+#微缩星光节点反应堆
+pollution.machine.pollution_small_node_generator.luv.name=Micro Starlight Pioneer Node Reactor MKI
+pollution.machine.pollution_small_node_generator.luv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
+pollution.machine.pollution_small_node_generator.zpm.name=Micro Starlight Pioneer Node Reactor MKⅡ
+pollution.machine.pollution_small_node_generator.zpm.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
+pollution.machine.pollution_small_node_generator.uv.name=Micro Starlight Pioneer Node Reactor MKⅢ
+pollution.machine.pollution_small_node_generator.uv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
+pollution.machine.pollution_small_node_generator.uhv.name=Micro Starlight Pioneer Node Reactor MKⅣ
+pollution.machine.pollution_small_node_generator.uhv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
+#魔法能源吸收器
+pollution.machine.magic_energy_absorber.lv.name=Weak Magic Energy Absorber
+pollution.machine.magic_energy_absorber.lv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
+pollution.machine.magic_energy_absorber.mv.name=Apprentice Magic Energy Absorber
+pollution.machine.magic_energy_absorber.mv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
+pollution.machine.magic_energy_absorber.hv.name=Magician Magic Energy Absorber
+pollution.machine.magic_energy_absorber.hv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
+pollution.machine.magic_energy_absorber.ev.name=Master Magic Energy Absorber
+pollution.machine.magic_energy_absorber.ev.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
+pollution.machine.magic_energy_absorber.iv.name=Archmage Magic Energy Absorber
+pollution.machine.magic_energy_absorber.iv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
+
+#
+pollution.machine.flux_promoted_fuel_cell.lv.name=Basic Flux Promoted Fuel Cell
+pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.mv.name=Advanced Flux Promoted Fuel Cell
+pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.hv.name=Turbo Flux Promoted Fuel Cell
+pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.ev.name=Pulse Flux Promoted Fuel Cell
+pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.iv.name=Blast Flux Promoted Fuel Cell
+pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+
 pollution.machine.mana_gen_lv.name=Basic Mana Generator
 pollution.machine.mana_gen_mv.name=Advanced Mana Generator
 pollution.machine.mana_gen_hv.name=Turbo Mana Generator

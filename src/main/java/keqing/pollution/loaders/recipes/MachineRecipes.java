@@ -10,8 +10,13 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.blocks.wood.BlockGregPlanks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
+import keqing.pollution.Pollution;
+import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.items.PollutionMetaItem1;
+import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidUtil;
 import thebetweenlands.common.block.terrain.BlockCragrock;
@@ -25,8 +30,8 @@ import static gregtech.loaders.recipe.MetaTileEntityLoader.registerMachineRecipe
 import static keqing.pollution.api.unification.PollutionMaterials.octine;
 import static keqing.pollution.api.unification.PollutionMaterials.syrmorite;
 import static keqing.pollution.common.items.PollutionMetaItems.BLANKCORE;
-import static keqing.pollution.common.metatileentity.PollutionMetaTileEntities.PRIMITIVE_MUD_PUMP;
-import static keqing.pollution.common.metatileentity.PollutionMetaTileEntities.PRIMITIVE_STOVE;
+import static keqing.pollution.common.metatileentity.PollutionMetaTileEntities.*;
+import static net.minecraft.item.Item.getItemFromBlock;
 
 public class MachineRecipes {
 	public static void init() {
@@ -97,21 +102,81 @@ public class MachineRecipes {
 				'A', CONVEYOR,
 				'B', BLANKCORE,
 				'C', EMITTER);
-	}
 
+		registerMachineRecipe(PollutionMetaTileEntities.FLUX_PROMOTED_FUEL_CELL,
+				"PBP", "EHE", "MCM",
+				'H', HULL,
+				'P', PISTON,
+				'B', BLANKCORE,
+				'C', CIRCUIT,
+				'M', MOTOR,
+				'E', EMITTER);
+		registerMachineRecipe(PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER,
+				"CSC", "HBH", "MEM",
+				'H', HULL,
+				'S', SENSOR,
+				'B', BLANKCORE,
+				'C', CIRCUIT,
+				'M', MOTOR,
+				'E', EMITTER
+		);
+		registerMachineRecipe(PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER,
+				"CVC", "FLF", "EHE",
+				'H', HULL,
+				'L', LARGE_NODE_GENERATOR.getStackForm(),
+				'E', MetaItems.EMITTER_LuV,
+				'C', CIRCUIT,
+				'V', VIS_HATCH,
+				'F', FIELD_GENERATOR
+		);
+	}
 	private static void machine() {
-		ModHandler.addShapedRecipe(true, "flux_clear1", PollutionMetaTileEntities.FLUX_CLEARS[1].getStackForm(),
+		ModHandler.addShapedRecipe(true, "flux_clear1", FLUX_CLEARS[1].getStackForm(),
 				"CBC", "FMF", "CBC", 'M', MetaTileEntities.HULL[GTValues.EV].getStackForm(),
 				'B', new UnificationEntry(OrePrefix.rotor, Titanium),
 				'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.EV),
 				'F', MetaItems.ELECTRIC_PUMP_EV);
 
-		ModHandler.addShapedRecipe(true, "flux_clear2", PollutionMetaTileEntities.FLUX_CLEARS[2].getStackForm(),
+		ModHandler.addShapedRecipe(true, "flux_clear2", FLUX_CLEARS[2].getStackForm(),
 				"CBC", "FMF", "CBC", 'M', MetaTileEntities.HULL[GTValues.IV].getStackForm(),
 				'B', new UnificationEntry(OrePrefix.rotor, TungstenSteel),
 				'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.IV),
 				'F', MetaItems.ELECTRIC_PUMP_IV);
-
-
+		ModHandler.addShapedRecipe(true, "SMALL_NODE_GENERATOR_LuV", SMALL_NODE_GENERATOR[0].getStackForm(),
+				"CVC", "FLF", "EHE",
+				'H', MetaTileEntities.HULL[6].getStackForm(),
+				'L', LARGE_NODE_GENERATOR.getStackForm(),
+				'E', MetaItems.EMITTER_LuV,
+				'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.LuV),
+				'V', VIS_HATCH[5].getStackForm(),
+				'F', MetaItems.FIELD_GENERATOR_LuV
+		);
+		ModHandler.addShapedRecipe(true, "SMALL_NODE_GENERATOR_ZPM", SMALL_NODE_GENERATOR[1].getStackForm(),
+				"CVC", "FLF", "EHE",
+				'H', MetaTileEntities.HULL[7].getStackForm(),
+				'L', LARGE_NODE_GENERATOR.getStackForm(),
+				'E', MetaItems.EMITTER_ZPM,
+				'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.ZPM),
+				'V', VIS_HATCH[6].getStackForm(),
+				'F', MetaItems.FIELD_GENERATOR_ZPM
+		);
+		ModHandler.addShapedRecipe(true, "SMALL_NODE_GENERATOR_UV", SMALL_NODE_GENERATOR[2].getStackForm(),
+				"CVC", "FLF", "EHE",
+				'H', MetaTileEntities.HULL[8].getStackForm(),
+				'L', LARGE_NODE_GENERATOR.getStackForm(),
+				'E', MetaItems.EMITTER_UV,
+				'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.UV),
+				'V', VIS_HATCH[7].getStackForm(),
+				'F', MetaItems.FIELD_GENERATOR_UV
+		);
+		ModHandler.addShapedRecipe(true, "SMALL_NODE_GENERATOR_UHV", SMALL_NODE_GENERATOR[3].getStackForm(),
+				"CVC", "FLF", "EHE",
+				'H', MetaTileEntities.HULL[9].getStackForm(),
+				'L', LARGE_NODE_GENERATOR.getStackForm(),
+				'E', MetaItems.EMITTER_UHV,
+				'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.UHV),
+				'V', VIS_HATCH[8].getStackForm(),
+				'F', MetaItems.FIELD_GENERATOR_UHV
+		);
 	}
 }
