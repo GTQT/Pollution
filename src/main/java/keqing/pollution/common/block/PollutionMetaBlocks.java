@@ -45,6 +45,8 @@ public class PollutionMetaBlocks {
 
 		MANA_PLATE = new POManaPlate();
 		MANA_PLATE.setRegistryName("mana_plate");
+
+
 	}
 
 	@SideOnly(Side.CLIENT)

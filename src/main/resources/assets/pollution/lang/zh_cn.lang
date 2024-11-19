@@ -1,4 +1,73 @@
 #材料注册
+metaitem.the_world.name=世界（正位）
+metaitem.the_world.tooltip=愿您寰宇尽握
+
+metaitem.the_judgement.name=审判（正位）
+metaitem.the_judgement.tooltip=愿您明辨是非
+
+metaitem.the_sun.name=太阳（正位）
+metaitem.the_sun.tooltip=愿您启示加身
+
+metaitem.the_moon.name=月亮（正位）
+metaitem.the_moon.tooltip=愿您失而复得
+
+metaitem.the_star.name=星星（正位）
+metaitem.the_star.tooltip=愿您心想事成
+
+metaitem.the_tower.name=塔（正位）
+metaitem.the_tower.tooltip=愿您劫后余生
+
+metaitem.the_devil.name=恶魔（正位）
+metaitem.the_devil.tooltip=愿您多钱善贾
+
+metaitem.the_temperance.name=节制（正位）
+metaitem.the_temperance.tooltip=愿您内心纯洁
+
+metaitem.the_death.name=死亡（正位）
+metaitem.the_death.tooltip=愿您死得其所
+
+metaitem.the_hanged_man.name=倒吊人（正位）
+metaitem.the_hanged_man.tooltip=愿您寻得启示
+
+metaitem.the_justice.name=正义（正位）
+metaitem.the_justice.tooltip=愿您平步青云
+
+metaitem.the_wheel_of_fortune.name=命运之轮（正位）
+metaitem.the_wheel_of_fortune.tooltip=愿您逢凶化吉
+
+metaitem.the_hermit.name=隐者（正位）
+metaitem.the_hermit.tooltip=愿您枕石漱流
+
+metaitem.the_strength.name=力量（正位）
+metaitem.the_strength.tooltip=愿您所向披靡
+
+metaitem.the_chariot.name=战车（正位）
+metaitem.the_chariot.tooltip=愿您无往不利
+
+metaitem.the_lovers.name=恋人（正位）
+metaitem.the_lovers.tooltip=愿您健康繁盛
+
+metaitem.the_highophant.name=主教（正位）
+metaitem.the_highophant.tooltip=愿您桃李成荫
+
+metaitem.the_emperor.name=皇帝（正位）
+metaitem.the_emperor.tooltip=愿您抱头蹲防
+
+metaitem.the_empress.name=皇后（正位）
+metaitem.the_empress.tooltip=愿您足智多谋
+
+metaitem.the_high_priestess.name=女祭司（正位）
+metaitem.the_high_priestess.tooltip=愿您知行合一
+
+metaitem.the_magician.name=魔术师（正位）
+metaitem.the_magician.tooltip=愿您足智多谋
+
+metaitem.the_fool.name=愚者（正位）
+metaitem.the_fool.tooltip=愿您归有所处
+
+metaitem.test_item.name=papa测试物品
+metaitem.test_item.tooltip=这是一个tooltip
+
 gregtech.material.infused_order=序
 gregtech.material.infused_entropy=熵
 gregtech.material.infused_earth=土
@@ -160,6 +229,7 @@ metaitem.wing_quantum.name=魔导量子飞行魂导器
 metaitem.nano_goggles.name=魔导纳米揭示护目镜
 metaitem.quantum_goggles.name=魔导量子揭示护目镜
 #方块
+tile.test_block.name=papa测试方块
 tile.magic_block.void_prism.name=蕴魔虚空棱镜折射外壳
 tile.magic_block.spell_prism.name=蕴魔棱镜折射外壳
 tile.magic_block.spell_prism_cold.name=蕴魔凛冰棱镜折射外壳
@@ -310,6 +380,37 @@ metaitem.magic_battery.hull.luv.name=魔导蓄能器外壳（§dLuV§r）
 metaitem.magic_battery.hull.zpm.name=魔导蓄能器外壳（§cZPM§r）
 metaitem.magic_battery.hull.uv.name=魔导蓄能器外壳（§3UV§r）
 #机器
+pollution.machine.pollution_small_node_generator.luv.name=微缩星光节点反应堆MKI
+pollution.machine.pollution_small_node_generator.luv.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
+pollution.machine.pollution_small_node_generator.zpm.name=微缩星光节点反应堆MKⅡ
+pollution.machine.pollution_small_node_generator.zpm.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
+pollution.machine.pollution_small_node_generator.uv.name=微缩星光节点反应堆MKⅢ
+pollution.machine.pollution_small_node_generator.uv.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
+pollution.machine.pollution_small_node_generator.uhv.name=微缩星光节点反应堆MKⅣ
+pollution.machine.pollution_small_node_generator.uhv.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
+
+pollution.machine.pollution_magic_energy_absorber.lv.name=虚弱魔法能源吸收器
+pollution.machine.pollution_magic_energy_absorber.mv.name=学徒魔法能源吸收器
+pollution.machine.pollution_magic_energy_absorber.hv.name=法师魔法能源吸收器
+pollution.machine.pollution_magic_energy_absorber.ev.name=导师魔法能源吸收器
+pollution.machine.pollution_magic_energy_absorber.iv.name=贤者魔法能源吸收器
+pollution.machine.pollution_magic_energy_absorber.lv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
+pollution.machine.pollution_magic_energy_absorber.mv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
+pollution.machine.pollution_magic_energy_absorber.hv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
+pollution.machine.pollution_magic_energy_absorber.ev.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
+pollution.machine.pollution_magic_energy_absorber.iv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
+
+pollution.machine.flux_promoted_fuel_cell.lv.name=基础咒波促燃发电机
+pollution.machine.flux_promoted_fuel_cell.lv.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
+pollution.machine.flux_promoted_fuel_cell.mv.name=进阶咒波促燃发电机
+pollution.machine.flux_promoted_fuel_cell.mv.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
+pollution.machine.flux_promoted_fuel_cell.hv.name=涡轮咒波促燃发电机
+pollution.machine.flux_promoted_fuel_cell.hv.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
+pollution.machine.flux_promoted_fuel_cell.ev.name=脉冲咒波促燃发电机
+pollution.machine.flux_promoted_fuel_cell.ev.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
+pollution.machine.flux_promoted_fuel_cell.iv.name=爆喷咒波促燃发电机
+pollution.machine.flux_promoted_fuel_cell.iv.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
+
 pollution.machine.mana_gen_lv.name=基础魔力发电机
 pollution.machine.mana_gen_mv.name=进阶魔力发电机
 pollution.machine.mana_gen_hv.name=涡轮魔力发电机
