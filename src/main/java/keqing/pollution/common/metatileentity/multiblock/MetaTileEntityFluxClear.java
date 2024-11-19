@@ -44,7 +44,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     public MetaTileEntityFluxClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier;
-        this.VisTicks = (tier - 3) * 0.2;
+        this.VisTicks = (tier - 3);
         this.energyAmountPer = GTValues.V[tier];
     }
 
@@ -56,24 +56,22 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
 
     @Override
     protected void updateFormedValid() {
-        int aX = this.getPos().getX();
-        int aY = this.getPos().getY();
-        int aZ = this.getPos().getZ();
-        World world = getWorld();
-        if (world == null) {
-            return;
-        }
-        BlockPos pos = new BlockPos(0, 0, 0);
-        for (int x = -tier; x <= tier; x++) {
-            for (int y = -tier; y <= tier; y++) {
-                pos.add(aX + x * 16, aY, aZ + y * 16);
-                if (AuraHelper.getFlux(world, pos) > 0) {
-                    if (!world.isRemote && energyContainer.getEnergyStored() >= energyAmountPer) {
-                        energyContainer.removeEnergy(energyAmountPer);
-                        isWorkingEnabled = true;
-                        AuraHelper.drainFlux(world, pos, (float) VisTicks, false);
-                    } else {
-                        isWorkingEnabled = false;
+        if (!this.getWorld().isRemote&&getOffsetTimer() % 100 == 0) {
+            int aX = this.getPos().getX();
+            int aY = this.getPos().getY();
+            int aZ = this.getPos().getZ();
+
+            for (int x = -tier; x <= tier; x++) {
+                for (int y = -tier; y <= tier; y++) {
+                    BlockPos pos = new BlockPos(aX + x * 16, aY, aZ + y * 16);
+                    if (AuraHelper.getFlux(this.getWorld(), pos) > 0) {
+                        if (energyContainer.getEnergyStored() >= energyAmountPer) {
+                            energyContainer.removeEnergy(energyAmountPer);
+                            isWorkingEnabled = true;
+                            AuraHelper.drainFlux(this.getWorld(), pos, (float) VisTicks, false);
+                        } else {
+                            isWorkingEnabled = false;
+                        }
                     }
                 }
             }
