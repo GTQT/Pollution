@@ -20,7 +20,7 @@ public class PORecipeMaps {
 			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
 			.setSound(GTSoundEvents.FURNACE);
 
-	public static final RecipeMap<PrimitiveRecipeBuilder> STOVE_RECIPES = new RecipeMap<>("stove", 2, 1,
+	public static final RecipeMap<PrimitiveRecipeBuilder> STOVE_RECIPES = new RecipeMap<>("stove", 2, 2,
 			0, 1, new PrimitiveRecipeBuilder(), false)
 			.setSound(GTSoundEvents.FURNACE);
 

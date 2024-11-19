@@ -16,6 +16,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockSteamCasing;
 import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.blocks.wood.BlockGregPlanks;
 import gregtech.common.metatileentities.MetaTileEntities;
 
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -106,10 +107,11 @@ public class MetaTileEntityPrimitiveMudPump extends MultiblockControllerBase imp
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("F*F","F*F","F*F", "XXX", "XXX")
-                .aisle("***","***","*H*", "XXX", "XXX")
-                .aisle("F*F","F*F","F*F", "XSX", "XXX")
+                .aisle("F*F","F*F","F*F", "XXX", "BBB")
+                .aisle("***","***","*H*", "XXX", "BBB")
+                .aisle("F*F","F*F","F*F", "XSX", "BBB")
                 .where('S', selfPredicate())
+                .where('B', states(MetaBlocks.PLANKS.getState(BlockGregPlanks.BlockType.TREATED_PLANK)))
                 .where('X', states(MetaBlocks.STEAM_CASING.getState(BlockSteamCasing.SteamCasingType.PUMP_DECK)))
                 .where('F', frames(Materials.TreatedWood))
                 .where('H',

@@ -7,21 +7,23 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.items.MetaItems;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.CommonProxy;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.items.GTQTMetaItems;
+import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.oredict.OreDictionary;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.blocks.BlocksTC;
+import thaumcraft.api.crafting.InfusionRecipe;
 import thebetweenlands.common.block.terrain.BlockCragrock;
 import thebetweenlands.common.item.misc.ItemMisc;
 import thebetweenlands.common.registries.BlockRegistry;
@@ -32,14 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static gregtech.api.GTValues.*;
-import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.material.Materials.Sulfur;
+import static gregtech.api.unification.material.Materials.Water;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS;
 import static gregtech.common.items.MetaItems.COMPRESSED_COKE_CLAY;
 import static gregtech.common.items.MetaItems.WOODEN_FORM_BRICK;
-import static keqing.gtqtcore.api.unification.ore.GTQTOrePrefix.motor_stick;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.*;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.ZHU_TAN;
 import static keqing.pollution.api.recipes.PORecipeMaps.STOVE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
@@ -48,13 +48,42 @@ public class VanillaRecipes {
         initRecipes();
         removeRecipes();
     }
+
     public static void removeRecipes() {
+        ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:swamp_talisman"));
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(BlocksTC.crystalEarth)
+                .input(BlocksTC.crystalAir)
+                .input(BlocksTC.crystalFire)
+                .input(BlocksTC.crystalWater)
+                .input(BlocksTC.crystalOrder)
+                .input(BlocksTC.crystalTaint)
+                .output(ItemRegistry.SWAMP_TALISMAN)
+                .EUt(30)
+                .duration(300)
+                .buildAndRegister();
+        
+        ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "swamp_talisman"), new InfusionRecipe(
+                "",
+                new ItemStack(ItemRegistry.SWAMP_TALISMAN),
+                2,
+                new AspectList().add(Aspect.ENERGY, 16).add(Aspect.AIR, 16),
+                new ItemStack(ItemRegistry.LIFE_CRYSTAL),
+                new ItemStack(BlocksTC.crystalEarth),
+                new ItemStack(BlocksTC.crystalAir),
+                new ItemStack(BlocksTC.crystalFire),
+                new ItemStack(BlocksTC.crystalEntropy),
+                new ItemStack(BlocksTC.crystalOrder),
+                new ItemStack(BlocksTC.crystalTaint),
+                new ItemStack(BlocksTC.crystalWater)
+        ));
+
         //对箱子等交错原版物品的配方魔改
         //杂草木工作台
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:weedwood_workbench"));
         ModHandler.addShapedRecipe("workbench", new ItemStack(BlockRegistry.WEEDWOOD_WORKBENCH),
                 "AA", "BB",
-                'B',"logWood",
+                'B', "logWood",
                 'A', new ItemStack(Items.FLINT));
 
         //赛摩铜剪刀
@@ -135,27 +164,27 @@ public class VanillaRecipes {
                 MetaBlocks.METAL_CASING.getItemVariant(PRIMITIVE_BRICKS),
                 "BGB", "BCB", "BGB",
                 'G', ItemMisc.EnumItemMisc.MUD_BRICK.create(1),
-                'B',  new ItemStack(BlockRegistry.MUD_BRICKS, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'B', new ItemStack(BlockRegistry.MUD_BRICKS, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
                 'C', FluidUtil.getFilledBucket(Materials.Concrete.getFluid(1000)));
 
         ModHandler.addShapedRecipe("bucket_mud",
                 FluidUtil.getFilledBucket(Mud.getFluid(1000)),
                 " h ", " C ", " B ",
-                'C',  new ItemStack(BlockRegistry.MUD,1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
+                'C', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),
                 'B', Items.BUCKET);
 
         ModHandler.addShapedRecipe("po_bricks",
                 new ItemStack(Blocks.BRICK_BLOCK),
                 "GGG", "GCG", "GGG",
-                'G',  new ItemStack(Items.BRICK),
+                'G', new ItemStack(Items.BRICK),
                 'C', FluidUtil.getFilledBucket(Mud.getFluid(1000)));
 
         //熔炉追加配方
-        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Blocks.SAND));
-        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Blocks.DIRT));
-        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.PEAT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()),new ItemStack(Items.COAL));
-        ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,syrmorite), ItemMisc.EnumItemMisc.SYRMORITE_INGOT.create(1));
-        ModHandler.addSmeltingRecipe(new UnificationEntry(ingot,octine), new ItemStack(ItemRegistry.OCTINE_INGOT));
+        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), new ItemStack(Blocks.SAND));
+        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), new ItemStack(Blocks.DIRT));
+        ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.PEAT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), new ItemStack(Items.COAL));
+        ModHandler.addSmeltingRecipe(new UnificationEntry(ingot, syrmorite), ItemMisc.EnumItemMisc.SYRMORITE_INGOT.create(1));
+        ModHandler.addSmeltingRecipe(new UnificationEntry(ingot, octine), new ItemStack(ItemRegistry.OCTINE_INGOT));
         ModHandler.addSmeltingRecipe(FluidUtil.getFilledBucket(Mud.getFluid(1000)), FluidUtil.getFilledBucket(Water.getFluid(1000)));
         ModHandler.addSmeltingRecipe(ItemMisc.EnumItemMisc.LURKER_SKIN.create(1), new ItemStack(Items.LEATHER));
         ModHandler.addSmeltingRecipe(new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()), new ItemStack(Items.CLAY_BALL));
@@ -169,19 +198,19 @@ public class VanillaRecipes {
                 'S', new ItemStack(BlockRegistry.MUD, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
     }
+
     public static void initRecipes() {
         //补充矿辞
-        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("sand",new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("sand", new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
-        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble",new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
 
         //神秘的原石变沙砾 沙砾变沙子
@@ -205,7 +234,7 @@ public class VanillaRecipes {
                 .duration(100)
                 .EUt(16)
                 .buildAndRegister();
-        
+
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
                 .output(dust, Materials.Stone)
@@ -231,12 +260,12 @@ public class VanillaRecipes {
                 'M', ItemMisc.EnumItemMisc.BETWEENSTONE_PEBBLE.create(1));
 
         ModHandler.addShapedRecipe(true, "PoString", new ItemStack(Items.STRING),
-                "   ","MMM", "   ",
+                "   ", "MMM", "   ",
                 'M', ItemMisc.EnumItemMisc.SWAMP_REED_ROPE.create(1));
 
         //纸
         ModHandler.addShapedRecipe("po_paper_dust", OreDictUnifier.get(OrePrefix.dust, Materials.Paper, 2), "SSS",
-                " m ", 'S',   ItemMisc.EnumItemMisc.DRIED_SWAMP_REED.create(1));
+                " m ", 'S', ItemMisc.EnumItemMisc.DRIED_SWAMP_REED.create(1));
 
         ModHandler.addShapedRecipe("mud_paper", new ItemStack(Items.PAPER, 2),
                 " r ", "SSS", " B ",
@@ -298,7 +327,7 @@ public class VanillaRecipes {
         //硫磺粉碎
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .input(ItemMisc.EnumItemMisc.SULFUR.create(1).getItem())
-                .output(dust,Sulfur)
+                .output(dust, Sulfur)
                 .duration(20)
                 .EUt(7)
                 .buildAndRegister();
@@ -308,7 +337,7 @@ public class VanillaRecipes {
                 .chancedOutput(new ItemStack(Items.CLAY_BALL), 2500, 250)
                 .chancedOutput(new ItemStack(Blocks.SAND), 2500, 250)
                 .chancedOutput(new ItemStack(Blocks.GRAVEL), 2500, 250)
-                .chancedOutput(dust,GTQTMaterials.Limestone, 2500, 250)
+                .chancedOutput(dust, GTQTMaterials.Limestone, 2500, 250)
                 .fluidOutputs(Water.getFluid(1000))
                 .duration(20)
                 .EUt(30)
@@ -331,7 +360,7 @@ public class VanillaRecipes {
                 .buildAndRegister();
 
         RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
-                .fluidInputs( new FluidStack(FluidRegistry.SWAMP_WATER, 1000))
+                .fluidInputs(new FluidStack(FluidRegistry.SWAMP_WATER, 1000))
                 .fluidOutputs(Water.getFluid(1000))
                 .fluidOutputs(Mud.getFluid(1000))
                 .duration(100)
@@ -349,11 +378,11 @@ public class VanillaRecipes {
         FuelStacks.add(GTQTMetaItems.NONG_SUO_TANG_JIAO.getStackForm());
         FuelStacks.add(GTQTMetaItems.ZHU_TAN.getStackForm());
 
-        for(ItemStack fuel:FuelStacks) {
+        for (ItemStack fuel : FuelStacks) {
             STOVE_RECIPES.recipeBuilder()
                     .inputs(fuel)
                     .inputs(new ItemStack(BlockRegistry.SWAMP_DIRT, 16, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                    .output(Blocks.DIRT,16)
+                    .output(Blocks.DIRT, 16)
                     .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
@@ -361,7 +390,7 @@ public class VanillaRecipes {
             STOVE_RECIPES.recipeBuilder()
                     .inputs(fuel)
                     .inputs(new ItemStack(BlockRegistry.SILT, 16, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                    .output(Blocks.SAND,16)
+                    .output(Blocks.SAND, 16)
                     .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
@@ -369,7 +398,7 @@ public class VanillaRecipes {
             STOVE_RECIPES.recipeBuilder()
                     .inputs(fuel)
                     .inputs(new ItemStack(BlockRegistry.MUD, 16, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                    .output(Blocks.CLAY,16)
+                    .output(Blocks.CLAY, 16)
                     .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
