@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import static keqing.gtqtcore.common.items.GTQTMetaItems.BATTERY_NIMH_EMPTY;
 import static keqing.pollution.common.CommonProxy.Pollution_TAB;
+import static keqing.pollution.common.CommonProxy.Pollution_TAROT;
 
 public class PollutionMetaItem1 extends StandardMetaItem {
 
@@ -121,29 +122,31 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.BATTERY_HULL_LuV = addItem(255, "magic_battery.hull.luv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BATTERY_HULL_ZPM = addItem(256, "magic_battery.hull.zpm").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BATTERY_HULL_UV = addItem(257, "magic_battery.hull.uv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TEST_ITEM = this.addItem(258, "test_item").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_FOOL = this.addItem(259, "the_fool").setMaxStackSize(64).setCreativeTabs(Pollution_TAB).addComponents(new Tarots.THE_FOOL());
-		PollutionMetaItems.TAROT_THE_MAGICIAN = this.addItem(260, "the_magician").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_HIGH_PRIESTESS = this.addItem(261, "the_high_priestess").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_EMPRESS = this.addItem(262, "the_empress").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_EMPEROR = this.addItem(263, "the_emperor").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_HIGHOPHANT = this.addItem(264, "the_highophant").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_LOVERS = this.addItem(265, "the_lovers").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_CHARIOT = this.addItem(266, "the_chariot").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_STRENGTH = this.addItem(267, "the_strength").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_HERMIT = this.addItem(268, "the_hermit").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_WHEEL_OF_FORTUNE = this.addItem(269, "the_wheel_of_fortune").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_JUSTICE = this.addItem(270, "the_justice").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_HANGED_MAN = this.addItem(271, "the_hanged_man").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_DEATH = this.addItem(272, "the_death").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_TEMPERANCE = this.addItem(273, "the_temperance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_DEVIL = this.addItem(274, "the_devil").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_TOWER = this.addItem(275, "the_tower").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_STAR = this.addItem(276, "the_star").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_MOON = this.addItem(277, "the_moon").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_SUN = this.addItem(278, "the_sun").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_JUDGEMENT = this.addItem(279, "the_judgement").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.TAROT_THE_WORLD = this.addItem(280, "the_world").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+
+		//塔罗牌
+		PollutionMetaItems.TEST_ITEM = this.addItem(300, "test_item").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_FOOL = this.addItem(301, "the_fool").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT).addComponents(new Tarots.THE_FOOL());
+		PollutionMetaItems.TAROT_THE_MAGICIAN = this.addItem(302, "the_magician").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_HIGH_PRIESTESS = this.addItem(303, "the_high_priestess").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_EMPRESS = this.addItem(304, "the_empress").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_EMPEROR = this.addItem(305, "the_emperor").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_HIGHOPHANT = this.addItem(306, "the_highophant").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_LOVERS = this.addItem(307, "the_lovers").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_CHARIOT = this.addItem(308, "the_chariot").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_STRENGTH = this.addItem(309, "the_strength").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_HERMIT = this.addItem(310, "the_hermit").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_WHEEL_OF_FORTUNE = this.addItem(311, "the_wheel_of_fortune").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_JUSTICE = this.addItem(312, "the_justice").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_HANGED_MAN = this.addItem(313, "the_hanged_man").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_DEATH = this.addItem(314, "the_death").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_TEMPERANCE = this.addItem(315, "the_temperance").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_DEVIL = this.addItem(316, "the_devil").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_TOWER = this.addItem(317, "the_tower").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_STAR = this.addItem(318, "the_star").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_MOON = this.addItem(319, "the_moon").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_SUN = this.addItem(320, "the_sun").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_JUDGEMENT = this.addItem(321, "the_judgement").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.TAROT_THE_WORLD = this.addItem(322, "the_world").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
 	}
 
 }

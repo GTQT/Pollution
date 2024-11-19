@@ -748,6 +748,7 @@ pollution.machine.bot_vacuum_freezer.tooltip=§a面对着充满星光与默示�
 
 #
 itemGroup.Pollution=污染
+itemGroup.Tarot=塔罗牌
 #仓室
 pollution.machine.mana_hatch.lv.name=魔力仓(LV)
 pollution.machine.mana_hatch.mv.name=魔力仓(MV)
