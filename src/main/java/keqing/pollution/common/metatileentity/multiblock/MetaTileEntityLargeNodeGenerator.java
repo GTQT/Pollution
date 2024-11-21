@@ -312,4 +312,5 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
 	protected OrientedOverlayRenderer getFrontOverlay() {
 		return Textures.HPCA_OVERLAY;
 	}
+
 }

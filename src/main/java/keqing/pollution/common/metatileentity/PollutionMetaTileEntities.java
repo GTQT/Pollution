@@ -4,6 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
+import gregtech.api.metatileentity.multiblock.FuelMultiblockController;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
@@ -19,6 +20,7 @@ import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
+import keqing.pollution.common.block.metablocks.POManaPlate;
 import keqing.pollution.common.block.metablocks.POTurbine;
 import keqing.pollution.common.metatileentity.multiblock.*;
 import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityPrimitiveMudPump;
@@ -97,6 +99,8 @@ public class PollutionMetaTileEntities {
 	public static final WorkableTieredMetaTileEntity[] FLUX_PROMOTED_FUEL_CELL = new WorkableTieredMetaTileEntity[5];
 	public static final TieredMetaTileEntity[] MAGIC_ENERGY_ABSORBER = new TieredMetaTileEntity[5];
 	public static final TieredMetaTileEntity[] SMALL_NODE_GENERATOR =new TieredMetaTileEntity[4];
+	public static MetaTileEntityMegaManaTurbine MEGA_MANA_TURBINE;
+	public static MetaTileEntityLargeTurbine LARGE_MANA_TURBINE;
 	public static void initialization() {
 
 		for (int i = 0; i <= 4; i++) {
@@ -240,5 +244,15 @@ public class PollutionMetaTileEntities {
 		SMALL_NODE_GENERATOR[1] = registerMetaTileEntity(16113,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.zpm"),7));
 		SMALL_NODE_GENERATOR[2] = registerMetaTileEntity(16114,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.uv"),8));
 		SMALL_NODE_GENERATOR[3] = registerMetaTileEntity(16115,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.uhv"),9));
+
+		//巨型魔力轮机
+		MEGA_MANA_TURBINE = registerMetaTileEntity(16119, new MetaTileEntityMegaManaTurbine(gtqtcoreId("pollution_mega_mana_turbine"),PORecipeMaps.MANA_TO_EU,10,
+				POTextures.MANA_5, false, Textures.HPCA_OVERLAY));
+		//大型魔力轮机
+		LARGE_MANA_TURBINE = registerMetaTileEntity(16120, new MetaTileEntityLargeTurbine(gtqtcoreId("pollution_large_mana_turbine"),
+				PORecipeMaps.MANA_TO_EU, 5,
+				PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_3),
+				PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
+				POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 	}
 }

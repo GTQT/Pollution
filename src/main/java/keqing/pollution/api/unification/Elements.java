@@ -28,4 +28,5 @@ public class Elements {
 	public static final Element El = add(1, 12, -1, null, "Elven", "El", false);
 	public static final Element St = add(1, 13, -1, null, "Starrymansus", "St", false);
 	public static final Element Sen = add(1, 14, -1, null, "Sentience", "Sen", false);
+	public static final Element Bin = add(1, 15, -1, null, "Binding", "Bin", false);
 }

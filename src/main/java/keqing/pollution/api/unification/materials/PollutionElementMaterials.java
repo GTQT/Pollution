@@ -93,5 +93,12 @@ public class PollutionElementMaterials {
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.element(Elements.Sen)
 				.build();
+		PollutionMaterials.binding_metal = new Material.Builder(getMaterialsId(), gregtechId("binding_metal"))
+				.color(0xDA1D0F)
+				.ingot().fluid()
+				.iconSet(SHINY)
+				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.element(Elements.Bin)
+				.build();
 	}
 }

@@ -22,6 +22,7 @@ public class RecipeManger {
 		MagicChemicalRecipes.init();
 		Botania.init();
 		VanillaRecipes.init();
+		ManaToEuRecipes.init();
 	}
 
 
