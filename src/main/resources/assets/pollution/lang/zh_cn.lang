@@ -521,6 +521,11 @@ pollution.machine.solar_plate_1.6.name=§1水注魔太阳能(1级)§r
 pollution.machine.solar_plate_2.6.name=§1水注魔太阳能(2级)§r
 pollution.machine.solar_plate_3.6.name=§1水注魔太阳能(3级)§r
 #设备多方块
+pollution.machine.pollution_mega_mana_turbine.name=巨型魔力导能器
+pollution.machine.pollution_mega_mana_turbine.tooltip=将洪流般的自然魔力转换为电能/n基础发电64A IV，§e提供催化剂以获得更高的输出水平§r/n§d黑白漫宿——64A LuV/n§d液态超次元秘银和刻金——128A ZPM/n§d液态约束，感知——256A UV/n优先消耗高级催化剂/n§c机器需要持续工作一段时间来达到最高输出效率§r，所需时间为3000s/线圈等级/n该机器支持激光输出
+
+pollution.machine.pollution_large_mana_turbine.name=大型魔力导能器
+pollution.machine.pollution_large_mana_turbine.tooltip=将自然魔力转换为电能
 pollution.machine.tank_test.name=源质离散器
 
 pollution.machine.magic_bender.name=魔导批量辊压机
@@ -587,6 +592,7 @@ pollution.eke.outputC=可最大功率输出%s天%s时%s分%s秒
 pollution.eke.output4=最大功率：%s EU/t 暂停工作
 gregtech.multiblock.battery.EU=存储能量：%s / %s EU
 #配方
+recipemap.mana_to_eu.name=自然魔力转换
 recipemap.magic_blast_smelter.name=锻炉合金
 recipemap.magic_chemical_reactor.name=魔导催化反应
 recipemap.magic_fusion_reactor.name=要素裂解

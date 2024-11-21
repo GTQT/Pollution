@@ -8,8 +8,15 @@ import gregtech.api.recipes.builders.PrimitiveRecipeBuilder;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.pollution.api.recipes.builder.ManaRecipesBuilder;
+import keqing.pollution.client.POSoundEvent;
+import vazkii.botania.api.lexicon.BotaniaTutorialStartEvent;
 
 public class PORecipeMaps {
+	public static final RecipeMap<FuelRecipeBuilder> MANA_TO_EU =new RecipeMap<>("mana_to_eu",2,2,2,
+			2, new FuelRecipeBuilder(),false)
+			.allowEmptyOutput()
+			.setSound(POSoundEvent.MANA_PLUSE);
+
 	public static final RecipeMap<BlastRecipeBuilder> MAGIC_ALLOY_BLAST_RECIPES = new RecipeMap<>("magic_blast_smelter", 9, 0,
 			3, 1, new BlastRecipeBuilder(), false)
 			.setSlotOverlay(false, false, false, GuiTextures.FURNACE_OVERLAY_1)

@@ -127,6 +127,7 @@ public class PollutionMaterials {
 	public static Material hyperdimensional_silver;
 	public static Material dimensional_transforming_agent;
 	public static Material ferrous_chloride;
+	public static Material binding_metal;
 
 	public PollutionMaterials() {
 	}
