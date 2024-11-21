@@ -582,7 +582,7 @@ pollution.machine.node_washer.tooltip.5=The washing process is random, with vary
 pollution.machine.magic_fusion_reactor.name=Explosive Aspect Disintegration Essentia-Infused Magic Soul Matrix
 
 itemGroup.Pollution=Pollution
-
+itemGroup.Tarot=Tarot
 #Chambers
 pollution.machine.mana_hatch.lv.name=Magic Chamber(LV)
 pollution.machine.mana_hatch.mv.name=Magic Chamber(MV)

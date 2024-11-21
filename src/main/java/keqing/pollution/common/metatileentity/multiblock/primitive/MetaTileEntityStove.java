@@ -99,7 +99,7 @@ public class MetaTileEntityStove extends RecipeMapPrimitiveMultiblockController 
                 .widget(new SlotWidget(exportItems, 1, 122, 38, true, false)
                         .setBackgroundTexture(GuiTextures.PRIMITIVE_SLOT, GuiTextures.PRIMITIVE_DUST_OVERLAY))
 
-                .widget(new TankWidget(exportFluids.getTankAt(0), 140, 38, 20, 58)
+                .widget(new TankWidget(exportFluids.getTankAt(0), 140, 18, 20, 58)
                         .setBackgroundTexture(GuiTextures.PRIMITIVE_LARGE_FLUID_TANK)
                         .setOverlayTexture(GuiTextures.PRIMITIVE_LARGE_FLUID_TANK_OVERLAY)
                         .setContainerClicking(true, false))

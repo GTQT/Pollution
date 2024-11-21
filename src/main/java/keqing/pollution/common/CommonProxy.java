@@ -33,7 +33,12 @@ public class CommonProxy {
 			return PollutionMetaItems.STONE_OF_PHILOSOPHER_FINAL.getStackForm();
 		}
 	};
-
+	public static final CreativeTabs Pollution_TAROT = new CreativeTabs("Tarot") {
+		@Override
+		public ItemStack createIcon() {
+			return PollutionMetaItems.TAROT_THE_FOOL.getStackForm();
+		}
+	};
 
 	public void init() {
 		RecipeManger.init();
