@@ -12,6 +12,10 @@ import keqing.pollution.client.POSoundEvent;
 import vazkii.botania.api.lexicon.BotaniaTutorialStartEvent;
 
 public class PORecipeMaps {
+	public static final RecipeMap<FuelRecipeBuilder> DAN_DE_LIFE_ON =new RecipeMap<>("dan_de_life_on",2,2,2,
+			2, new FuelRecipeBuilder(),false)
+			.allowEmptyOutput()
+			.setSound(POSoundEvent.MANA_PLUSE);
 	public static final RecipeMap<FuelRecipeBuilder> MANA_TO_EU =new RecipeMap<>("mana_to_eu",2,2,2,
 			2, new FuelRecipeBuilder(),false)
 			.allowEmptyOutput()
@@ -38,7 +42,7 @@ public class PORecipeMaps {
 	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_CHEMICAL_REACTOR_RECIPES = new RecipeMap<>("magic_chemical_reactor", 3, 3, 5, 4, new SimpleRecipeBuilder(), false)
 			.setSound(GTSoundEvents.CHEMICAL_REACTOR);
 
-	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_ASSEMBLER_RECIPES = new RecipeMap<>("magic_assembler", 9, 1, 1, 0, new SimpleRecipeBuilder(), false)
+	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_ASSEMBLER_RECIPES = new RecipeMap<>("magic_assembler", 9, 1, 3, 0, new SimpleRecipeBuilder(), false)
 			.setSound(GTSoundEvents.ASSEMBLER);
 
 	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_GREENHOUSE_RECIPES = new RecipeMap<>("magic_greenhouse", 4, 4, 1, 1, new SimpleRecipeBuilder(), false)

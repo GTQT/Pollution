@@ -30,6 +30,7 @@ import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -102,7 +103,14 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         return new MetaTileEntityMegaManaTurbine(this.metaTileEntityId, this.recipeMap, this.tier, this.casingRenderer, this.hasMufflerHatch, this.frontOverlay);
 
     }
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        super.writeToNBT(data);
+        return data;
+    }
 
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+    }
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()

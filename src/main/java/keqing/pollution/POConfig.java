@@ -2,6 +2,20 @@ package keqing.pollution;
 import net.minecraftforge.common.config.Config;
 @Config(modid = Pollution.MODID)
 public class POConfig {
+    @Config.Comment("气态魔力废液每mb的EU燃值")
+    public static double EuPerMbKqMagicRub = 256.0;
+    @Config.Comment("气态离散态魔力每mb的EU燃值")
+    public static double EuPerMbKqMagicGas = 256.0;
+    @Config.Comment("气态离散态魔力每mb的EU燃值")
+    public static double EuPerMbKqMagicFas = 512.0;
+    @Config.Comment("气态离散态魔力每mb的EU燃值")
+    public static double EuPerMbKqMagicDas = 1024.0;
+    @Config.Comment("气态离散态魔力每mb的EU燃值")
+    public static double EuPerMbKqMagicAas = 2048.0;
+    @Config.Comment("自然魔力每mb的EU燃值")
+    public static double EuPerMbMagicKq = 8192.0;
+    @Config.Comment("富集自然魔力每mb的EU燃值")
+    public static double EuPerMbRichMagicKq = 32768.0;
     @Config.Comment("咒波促燃发电机单位tick发电消耗咒波")
     public static float FluxPromotedGeneratorFluxPerTick = 0.005F;
     @Config.Comment("机器污染开关")

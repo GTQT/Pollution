@@ -28,6 +28,9 @@ import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.items.ItemsTC;
 import vazkii.botania.api.BotaniaAPI;
+import vazkii.botania.api.state.BotaniaStateProps;
+import vazkii.botania.api.state.enums.StorageVariant;
+import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.material.ItemManaResource;
 
@@ -39,6 +42,7 @@ public class ThaumcraftRecipes {
 		catalyst();
 		misc();
 		solar();
+		tarots();
 
 	}
 
@@ -654,4 +658,7 @@ public class ThaumcraftRecipes {
 				"blockTerrasteel",
 				PollutionMetaTileEntities.ESSENCE_COLLECTOR.getStackForm()));
 	}
+	//塔罗牌注魔合成
+	private static void tarots() {
+}
 }
