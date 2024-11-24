@@ -2,6 +2,7 @@ package keqing.pollution.loaders.recipes;
 
 import com.sun.jna.platform.win32.WinNT;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
+import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Materials;
@@ -23,6 +24,7 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.items.PollutionMetaItems;
+import keqing.pollution.common.items.behaviors.Tarots;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -35,19 +37,27 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.items.ItemsTC;
+import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static gregtech.api.GTValues.*;
+import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
+import static keqing.gtqtcore.api.unification.GCYSMaterials.*;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.Ichorium;
+import static keqing.gtqtcore.api.unification.TJMaterials.Polyetheretherketone;
+import static keqing.gtqtcore.common.items.GTQTMetaItems.*;
+import static keqing.gtqtcore.common.items.GTQTMetaItems.OPTICAL_ASSEMBLY;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
-import static keqing.pollution.common.items.PollutionMetaItems.HOTCORE;
-import static keqing.pollution.common.items.PollutionMetaItems.SEGREGATECORE;
+import static keqing.pollution.common.items.PollutionMetaItems.*;
+import static vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType;
 
 public class MagicGCYMRecipes {
 	public static void init() {
@@ -2014,5 +2024,101 @@ public class MagicGCYMRecipes {
 				.EUt(30720)
 				.duration(1000)
 				.buildAndRegister();
-	}
+		//大型魔力轮机
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER[4].getStackForm(8))
+				.input(circuit, MarkerMaterials.Tier.IV, 8)
+				.input(MetaItems.ELECTRIC_MOTOR_IV, 16)
+				.input(MetaItems.ELECTRIC_PUMP_IV, 16)
+				.input(plate, Terrasteel, 32)
+				.input(gear, keqinggold, 4)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(16000))
+				.fluidInputs(Lubricant.getFluid(16000))
+				.outputs(PollutionMetaTileEntities.LARGE_MANA_TURBINE.getStackForm())
+				.circuitMeta(16)
+				.EUt(30720)
+				.duration(1000)
+				.buildAndRegister();
+
+		//巨型魔力轮机
+		ASSEMBLY_LINE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaTileEntities.LARGE_MANA_TURBINE.getStackForm(64))
+				.input(frameGt,ElvenElementium,64)
+				.input(circuit, MarkerMaterials.Tier.ZPM, 4)
+				.input(circuit, MarkerMaterials.Tier.LuV, 16)
+				.input(circuit, MarkerMaterials.Tier.IV, 64)
+				.input(MetaItems.ELECTRIC_PUMP_LuV, 64)
+				.input(MetaItems.FIELD_GENERATOR_LuV, 16)
+				.input(plateDense, Terrasteel, 32)
+				.input(cableGtHex, keqinggold, 16)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(64000))
+				.fluidInputs(Lubricant.getFluid(64000))
+				.outputs(PollutionMetaTileEntities.MEGA_MANA_TURBINE.getStackForm())
+				.EUt(VA[ZPM])
+				.duration(1600)
+				.scannerResearch(b -> b
+						.researchStack(PollutionMetaTileEntities.LARGE_MANA_TURBINE.getStackForm())
+						.EUt(VA[LuV]))
+				.buildAndRegister();
+		//启命花园
+		ASSEMBLY_LINE_RECIPES.recipeBuilder()
+				.inputs(ItemBlockSpecialFlower.ofType("dandelifeon"))
+				.input(ModBlocks.enchantedSoil,64)
+				.input(ModBlocks.enchantedSoil,64)
+				.input(ModBlocks.enchantedSoil,64)
+				.input(ModBlocks.enchantedSoil,64)
+				.input(frameGt,Terrasteel,64)
+				.input(circuit, MarkerMaterials.Tier.UHV, 16)
+				.input(circuit, MarkerMaterials.Tier.UV, 32)
+				.input(circuit, MarkerMaterials.Tier.ZPM, 64)
+				.input(MetaItems.FIELD_GENERATOR_UV, 64)
+				.input(MetaItems.EMITTER_UV,64)
+				.input(MetaItems.SENSOR_UV,64)
+				.input(plateDense, ElvenElementium, 32)
+				.input(plateDense, Terrasteel, 32)
+				.input(cableGtHex, keqinggold, 16)
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(64000))
+				.fluidInputs(UUMatter.getFluid(128000))
+				.fluidInputs(Orichalcum.getFluid(64000))
+				.fluidInputs(Silver.getPlasma(64000))
+				.outputs(PollutionMetaTileEntities.Muti_Dan_De_Life_On.getStackForm())
+				.EUt(VA[UHV])
+
+				.duration(1600)
+				.buildAndRegister();
+		//蕴魔草地
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(ModItems.overgrowthSeed,64)
+				.inputs(new ItemStack(ModBlocks.altGrass, 128, 4))
+				.input(dust, Terrasteel, 64)
+				.fluidInputs(blackmansus.getFluid(6400))
+				.fluidInputs(whitemansus.getFluid(6400))
+				.outputs(new ItemStack(ModBlocks.enchantedSoil, 128))
+				.EUt(30720)
+				.duration(500)
+				.buildAndRegister();
+		//注魔草地
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(new ItemStack(ModItems.grassSeeds, 64, 7))
+				.input(Blocks.GRASS,128)
+				.input(dust, salismundus, 64)
+				.fluidInputs(blackmansus.getFluid(3200))
+				.fluidInputs(whitemansus.getFluid(3200))
+				.outputs(new ItemStack(ModBlocks.altGrass, 128, 4))
+				.EUt(8192)
+				.duration(500)
+				.buildAndRegister();
+		//增生之种
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(new ItemStack(ModItems.grassSeeds, 4, 7))
+				.input(ModItems.manaResource,4,8)
+				.input(dust, Ichorium, 1)
+				.fluidInputs(blackmansus.getFluid(3200))
+				.fluidInputs(whitemansus.getFluid(3200))
+				.fluidInputs(UUMatter.getFluid(12800))
+				.outputs(new ItemStack(ModItems.overgrowthSeed,4))
+				.EUt(32768)
+				.duration(5000)
+				.buildAndRegister();
+}
 }
