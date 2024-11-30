@@ -49,7 +49,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	@Override
 	public void update() {
 		super.update();
-		if (AuraHelper.getFlux(getWorld(), getPos())> 0) {
+		if (AuraHelper.getFlux(getWorld(), getPos())> 0 && getOffsetTimer() % 200 == 0) {
 			if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer) {
 				energyContainer.removeEnergy(energyAmountPer);
 				isActive = true;

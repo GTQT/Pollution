@@ -33,8 +33,8 @@ public class POConfig {
     @Config.Comment("是否开启消声仓污染特效")
     public static boolean mufflerPollutionShowEffects=true;
 
-    @Config.Comment("污染清理倍率")
-    public static double fluxScrubberMultiplier=0.004;
+    @Config.Comment("污染清理倍率,")
+    public static double fluxScrubberMultiplier=0.2;
 
     @Config.Comment("灵气发电机单位灵气发电量")
     public static float visGeneratorEuPerVis=250.0f;

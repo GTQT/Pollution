@@ -63,13 +63,12 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
 
         if (!getWorld().isRemote) {
             if (getOffsetTimer() % 10 == 0) this.frontFaceFree = checkFrontFaceFree();
+        }
+        if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
+            VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
             if (getOffsetTimer() % 200 == 0&&POConfig.enablePollution) {
                 AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollutionMultiplier*0.05), POConfig.mufflerPollutionShowEffects);
             }
-        }
-
-        if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
-            VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
         }
     }
 
