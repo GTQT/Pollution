@@ -210,29 +210,32 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	@Override
 	public void update() {
 		super.update();
-
-		// 简化逻辑，减少嵌套
-		if (!backA) {
-			if (randomTime < 10) {
-				++randomTime;
+		if(!getWorld().isRemote)
+		{
+			// 简化逻辑，减少嵌套
+			if (!backA) {
+				if (randomTime < 10) {
+					++randomTime;
+				}
+			} else {
+				if (randomTime > -10) {
+					--randomTime;
+				}
 			}
-		} else {
-			if (randomTime > -10) {
-				--randomTime;
+
+			// 处理边界条件
+			if (randomTime == 10) {
+				backA = true;
 			}
+			if (randomTime == -10) {
+				backA = false;
+			}
+
+			// 避免整数溢出
+			int colorValue = 0xFF000000 | (randomTime * 1250 * 50);
+			setFusionRingColor(colorValue);
 		}
 
-		// 处理边界条件
-		if (randomTime == 10) {
-			backA = true;
-		}
-		if (randomTime == -10) {
-			backA = false;
-		}
-
-		// 避免整数溢出
-		int colorValue = 0xFF000000 | (randomTime * 1250 * 50);
-		setFusionRingColor(colorValue);
 	}
 	/**
 	 * 更新设备有效性
@@ -246,47 +249,50 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 			setActive(true);
 		}
 
-		// 获取设备的位置坐标
-		int aX = this.getPos().getX();
-		int aY = this.getPos().getY();
-		int aZ = this.getPos().getZ();
+		if(!getWorld().isRemote && this.isWorkingEnabled())
+		{
+			// 获取设备的位置坐标
+			int aX = this.getPos().getX();
+			int aY = this.getPos().getY();
+			int aZ = this.getPos().getZ();
 
-		// 计算灵气和污染
-		visThisChunk = AuraHelper.getVis(this.getWorld(), new BlockPos(aX, aY, aZ));
-		fluxThisChunk = AuraHelper.getFlux(this.getWorld(), new BlockPos(aX, aY, aZ));
+			// 计算灵气和污染
+			visThisChunk = AuraHelper.getVis(this.getWorld(), new BlockPos(aX, aY, aZ));
+			fluxThisChunk = AuraHelper.getFlux(this.getWorld(), new BlockPos(aX, aY, aZ));
 
-		// 处理输入电压为 0 的情况
-		if (this.energyContainer.getInputVoltage() == 0) {
-			// 根据缓存的能量估算能够工作的电压
-			int estimatedVoltage = (int) (this.energyContainer.getEnergyStored() / 20); // 估算能够工作的电压，使能量至少能够工作 20 tick
-			EUtTier = GTUtility.getTierByVoltage(estimatedVoltage);
-			if (this.energyContainer.getEnergyStored() < VA[EUtTier] * 20L) {
-				return; // 如果能量不足以工作 20 tick，则直接返回
+			// 处理输入电压为 0 的情况
+			if (this.energyContainer.getInputVoltage() == 0) {
+				// 根据缓存的能量估算能够工作的电压
+				int estimatedVoltage = (int) (this.energyContainer.getEnergyStored() / 20); // 估算能够工作的电压，使能量至少能够工作 20 tick
+				EUtTier = GTUtility.getTierByVoltage(estimatedVoltage);
+				if (this.energyContainer.getEnergyStored() < VA[EUtTier] * 20L) {
+					return; // 如果能量不足以工作 20 tick，则直接返回
+				}
+			} else {
+				// 将能源仓的输入电压转化为 GT 的电压等级
+				EUtTier = GTUtility.getTierByVoltage(this.energyContainer.getInputVoltage());
+				// 检查能量是否足够
+				if (this.energyContainer.getEnergyStored() < VA[EUtTier] && this.energyContainer.getInputVoltage() < VA[EUtTier]) {
+					return;
+				}
 			}
-		} else {
-			// 将能源仓的输入电压转化为 GT 的电压等级
-			EUtTier = GTUtility.getTierByVoltage(this.energyContainer.getInputVoltage());
-			// 检查能量是否足够
-			if (this.energyContainer.getEnergyStored() < VA[EUtTier] && this.energyContainer.getInputVoltage() < VA[EUtTier]) {
-				return;
+
+			// 计算最终每tick处理速度
+			finalSpeedPerTick = (int)calculateFinalSpeedPerTick(visThisChunk, fluxThisChunk, EUtTier);
+
+			// 从能源仓中移除能量
+			this.energyContainer.removeEnergy(VA[EUtTier]);
+
+			// 判断输入总线是否为空
+			if (!this.inputInventory.getStackInSlot(0).isEmpty()) {
+				// 处理聚焦模式
+				isFocused = true;
+				handleFocusedMode(finalSpeedPerTick);
+			} else {
+				// 处理正常模式
+				isFocused = false;
+				handleNormalMode(finalSpeedPerTick);
 			}
-		}
-
-		// 计算最终每tick处理速度
-		finalSpeedPerTick = (int)calculateFinalSpeedPerTick(visThisChunk, fluxThisChunk, EUtTier);
-
-		// 从能源仓中移除能量
-		this.energyContainer.removeEnergy(VA[EUtTier]);
-
-		// 判断输入总线是否为空
-		if (!this.inputInventory.getStackInSlot(0).isEmpty()) {
-			// 处理聚焦模式
-			isFocused = true;
-			handleFocusedMode(finalSpeedPerTick);
-		} else {
-			// 处理正常模式
-			isFocused = false;
-			handleNormalMode(finalSpeedPerTick);
 		}
 	}
 
