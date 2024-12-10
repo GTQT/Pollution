@@ -181,7 +181,7 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 		} else {timer = 1;}
 		//冶炼时间完毕：输出源质
 		//把源质自动传出到附近的罐子里面，然后重置所有的数据
-		if (timer == smeltingDuration) {
+		if (timer >= smeltingDuration) {
 			transportEssenceToContainers(tempAspectList);
 			isWorking = false;
 			timer = 0;
