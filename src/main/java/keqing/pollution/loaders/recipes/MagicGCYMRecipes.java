@@ -2120,5 +2120,22 @@ public class MagicGCYMRecipes {
 				.EUt(32768)
 				.duration(5000)
 				.buildAndRegister();
-}
+		//火红莲
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "endoflame_array"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.ENDOFLAME_ARRAY.getStackForm(),
+				6,
+				new AspectList().add(Aspect.PLANT, 250).add(Aspect.FIRE, 128).add(Aspect.MAGIC, 32).add(Aspect.MECHANISM, 16),
+				new ItemStack(HOTCORE.getMetaItem(), 1, 3),
+				"frameGtKeqinggold",
+				new ItemStack(ModBlocks.pylon, 1, 1),
+				ItemBlockSpecialFlower.ofType("endoflame"),
+				PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_4_CASING),
+				"gemValonite",
+				"circuitIv",
+				"circuitIv",
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				MetaTileEntities.LARGE_GAS_TURBINE.getStackForm()));
+	}
 }

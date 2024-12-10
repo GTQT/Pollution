@@ -181,7 +181,7 @@ public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithContro
 		} else {timer = 1;}
 		//冶炼时间完毕：输出源质
 		//把源质传出到输出仓
-		if (timer == smeltingDuration) {
+		if (timer >= smeltingDuration) {
 			transportGtEssenceToInventory(tempAspectList);
 			isWorking = false;
 			timer = 0;
@@ -195,6 +195,7 @@ public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithContro
 			if (temp.aspectToGtFluidList.get(aspect) != null){
 				FluidStack fluid = new FluidStack(temp.aspectToGtFluidList.get(aspect).getFluid(), 144 * aspectList.getAmount(aspect));
 				GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(fluid));
+				aspectList.remove(aspect, aspectList.getAmount(aspect));
 			}
 		}
 	}
