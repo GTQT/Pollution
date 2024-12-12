@@ -7,10 +7,12 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinMetaTileEntity",
-    "MixinMetaTileEntityHolder"
+    "MixinMetaTileEntityHolder",
+    "MixinGuiFirefly",
+    "MixinSwarmOverlayRenderer"
   ],
   "server": [],
   "client":[
-    "MixinGuiFirefly"
+
   ]
 }
