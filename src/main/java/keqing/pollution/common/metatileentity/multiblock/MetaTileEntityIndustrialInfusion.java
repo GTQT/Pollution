@@ -250,6 +250,7 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 						if(tank.getFluidAmount()>0)
 						{
 							final Aspect[] a = new Aspect[1];
+							a[0]=null;
 							POAspectToGtFluidList.aspectToGtFluidList.values().forEach(x->{
 								if(x.getFluid()==tank.getFluid().getFluid())
 								{
@@ -260,10 +261,10 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 								}
 							}
 							);
-						if (this.aspectList.getAmount(a[0]) < 1000) {
-							int max = Math.min(1000 - this.aspectList.getAmount(a[0]), tank.getFluidAmount());
+						if (this.aspectList.getAmount(a[0]) < 1000 && a[0]!=null) {
+							int max = Math.min((1000 - this.aspectList.getAmount(a[0]))*144, tank.getFluidAmount());
 							tank.drain(max,true);
-							this.aspectList.merge(a[0], max + this.aspectList.getAmount(a[0]));
+							this.aspectList.merge(a[0], max/144+max%144 + this.aspectList.getAmount(a[0]));
 						}
 						}
 					}
