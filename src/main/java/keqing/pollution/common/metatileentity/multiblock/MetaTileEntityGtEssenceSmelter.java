@@ -190,10 +190,9 @@ public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithContro
 	}
 
 	private void transportGtEssenceToInventory(AspectList aspectList){
-		POAspectToGtFluidList temp = new POAspectToGtFluidList();
 		for (Aspect aspect: aspectList.getAspects()){
-			if (temp.aspectToGtFluidList.get(aspect) != null){
-				FluidStack fluid = new FluidStack(temp.aspectToGtFluidList.get(aspect).getFluid(), 144 * aspectList.getAmount(aspect));
+			if (POAspectToGtFluidList.aspectToGtFluidList.get(aspect) != null){
+				FluidStack fluid = new FluidStack(POAspectToGtFluidList.aspectToGtFluidList.get(aspect).getFluid(), 144 * aspectList.getAmount(aspect));
 				GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(fluid));
 				aspectList.remove(aspect, aspectList.getAmount(aspect));
 			}

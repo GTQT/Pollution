@@ -35,6 +35,7 @@ import gregtech.client.utils.RenderBufferHelper;
 import gregtech.common.ConfigHolder;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
+import keqing.pollution.api.utils.POAspectToGtFluidList;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -242,6 +243,31 @@ public class MetaTileEntityIndustrialInfusion extends MetaTileEntityBaseWithCont
 				return;
 			if (++tick >= 20) {
 				getAspectFromWorld();
+				if(this.inputFluidInventory.getTanks()>0)
+				{
+					for (int i = 0; i < inputFluidInventory.getTanks(); i++) {
+						var tank = inputFluidInventory.getTankAt(i);
+						if(tank.getFluidAmount()>0)
+						{
+							final Aspect[] a = new Aspect[1];
+							POAspectToGtFluidList.aspectToGtFluidList.values().forEach(x->{
+								if(x.getFluid()==tank.getFluid().getFluid())
+								{
+									if(POAspectToGtFluidList.getKeyByValue(x)!=null)
+									{
+										a[0] = POAspectToGtFluidList.getKeyByValue(x);
+									}
+								}
+							}
+							);
+						if (this.aspectList.getAmount(a[0]) < 1000) {
+							int max = Math.min(1000 - this.aspectList.getAmount(a[0]), tank.getFluidAmount());
+							tank.drain(max,true);
+							this.aspectList.merge(a[0], max + this.aspectList.getAmount(a[0]));
+						}
+						}
+					}
+				}
 				tick = 0;
 			}
 

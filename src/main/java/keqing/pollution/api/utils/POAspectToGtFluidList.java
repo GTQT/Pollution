@@ -6,7 +6,7 @@ import java.util.HashMap;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class POAspectToGtFluidList {
-	public final HashMap<Aspect, Material> aspectToGtFluidList = new HashMap<>(){
+	public static final HashMap<Aspect, Material> aspectToGtFluidList = new HashMap<>(){
 		{
 			put(Aspect.AIR, infused_air);
 			put(Aspect.AURA, infused_aura);
@@ -45,4 +45,12 @@ public class POAspectToGtFluidList {
 			put(Aspect.WATER, infused_water);
 		}
 	};
+	public static Aspect getKeyByValue(Material value) {
+		for (HashMap.Entry<Aspect, Material> entry : aspectToGtFluidList.entrySet()) {
+			if (entry.getValue().equals(value)) {
+				return entry.getKey();
+			}
+		}
+		return null; // 如果没有找到，返回 null
+	}
 }
