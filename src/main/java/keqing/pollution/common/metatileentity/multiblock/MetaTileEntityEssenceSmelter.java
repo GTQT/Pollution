@@ -213,9 +213,10 @@ public class MetaTileEntityEssenceSmelter extends MetaTileEntityBaseWithControl{
 		for (int i = 0; i < list.size(); i++) {
 			if (te instanceof IAspectSource sourceTe) {
 				Aspect as = list.getAspects()[i];
-				if (list.getAmount(as) != sourceTe.addToContainer(as, list.getAmount(as))){
-					list.remove(as, list.getAmount(as));
-				}
+				int as_amount = list.getAmount(as);
+				int left = sourceTe.addToContainer(as, list.getAmount(as));
+				list.remove(as, as_amount-left);
+
 			}
 		}
 	}
