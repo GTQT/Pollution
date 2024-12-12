@@ -224,10 +224,10 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 			}
 
 			// 处理边界条件
-			if (randomTime == 10) {
+			if (randomTime >= 10) {
 				backA = true;
 			}
-			if (randomTime == -10) {
+			if (randomTime <= -10) {
 				backA = false;
 			}
 
@@ -321,7 +321,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	 * @param finalSpeedPerTick 最终每tick处理速度
 	 */
 	private void handleFocusedMode(double finalSpeedPerTick) {
-		if (this.outputFluidInventory == null || this.outputFluidInventory.getTanks() < finalSpeedPerTick) {
+		if (this.outputFluidInventory == null || this.outputFluidInventory.getTanks() ==0) {
 			return;
 		}
 
@@ -345,6 +345,9 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 			case "tile.crystal_perditio":
 				addPollutionMaterial(infused_entropy, finalSpeedPerTick);
 				break;
+			default:
+				handleNormalMode((int)finalSpeedPerTick);
+				break;
 		}
 	}
 
@@ -355,9 +358,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 	 * @param finalSpeedPerTick 最终每tick处理速度
 	 */
 	private void handleNormalMode(int finalSpeedPerTick) {
-		if (this.outputFluidInventory == null || this.outputFluidInventory.getTanks() < finalSpeedPerTick) {
-			return;
-		}
+		if (this.outputFluidInventory != null && this.outputFluidInventory.getTanks() >0) {
 		List<FluidStack> fluids = Arrays.asList(
 				infused_air.getFluid(finalSpeedPerTick),
 				PollutionMaterials.infused_fire.getFluid(finalSpeedPerTick),
@@ -366,8 +367,8 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
 				PollutionMaterials.infused_order.getFluid(finalSpeedPerTick),
 				PollutionMaterials.infused_entropy.getFluid(finalSpeedPerTick)
 		);
-
 		GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, fluids);
+		}
 	}
 
 	/**
