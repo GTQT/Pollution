@@ -73,8 +73,10 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
 		switch (this.CoilLevel){
 			case 1, 2, 3, 4, 5:
 				Temp += 900 + 900 * this.CoilLevel;
+				break;
 			case 6, 7, 8:
 				Temp += 5400 + 1800 * (this.CoilLevel - 5);
+				break;
 		}
 	}
 
