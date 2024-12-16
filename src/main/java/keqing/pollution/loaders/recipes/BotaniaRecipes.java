@@ -52,7 +52,7 @@ public class BotaniaRecipes {
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 8))
                 .input(dust,NetherStar)
                 .fluidInputs(Enzymesac.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"),100,0)
+                .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"),1000,0)
                 .cleanroom(CleanroomType.CLEANROOM)
                 .rate(10)
                 .buildAndRegister();
