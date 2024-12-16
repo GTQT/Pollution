@@ -109,7 +109,7 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockC
 				.aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
 				.aisle("#FSX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
 				.where('S', selfPredicate())
-				.where('X', states(getCasingState1()).setMinGlobalLimited(9))
+				.where('X', states(getCasingState1()).setMinGlobalLimited(9).or(autoAbilities()))
 				.where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
 				.where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
 				.where('C', CP_COIL_CASING.get())
