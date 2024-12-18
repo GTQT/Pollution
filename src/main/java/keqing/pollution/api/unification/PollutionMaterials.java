@@ -43,6 +43,10 @@ public class PollutionMaterials {
 	public static Material infused_human;
 	public static Material infused_greed;
 	public static Material infused_armor;
+	//aspects from Planar Artifice
+	public static Material infused_spatio;
+	public static Material infused_tempus;
+	public static Material infused_tinctura;
 	//mana酱
 	public static Material mana;
 	//材料

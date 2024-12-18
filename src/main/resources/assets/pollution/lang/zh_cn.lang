@@ -106,6 +106,9 @@ gregtech.material.infused_animal=造化
 gregtech.material.infused_human=物灵
 gregtech.material.infused_greed=贪
 gregtech.material.infused_armor=胄
+gregtech.material.infused_spatio=空
+gregtech.material.infused_tempus=时
+gregtech.material.infused_tinctura=艺
 
 gregtech.material.thaumium=神秘
 gregtech.material.syrmorite=赛摩铜
