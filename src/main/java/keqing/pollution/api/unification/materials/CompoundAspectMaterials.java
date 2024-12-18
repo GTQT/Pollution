@@ -206,5 +206,24 @@ public class CompoundAspectMaterials {
 				.ore().gem().fluid()
 				.components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_earth, 1)
 				.build();
+
+		//空间=虚空+熵
+		PollutionMaterials.infused_spatio = new Material.Builder(getMaterialsId(), gregtechId("infused_spatio"))
+				.color(0x4AF755)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_void, 1, PollutionMaterials.infused_entropy, 1)
+				.build();
+		//时间=空间+交换
+		PollutionMaterials.infused_tempus = new Material.Builder(getMaterialsId(), gregtechId("infused_tempus"))
+				.color(0xD6DB43)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_spatio, 1, PollutionMaterials.infused_exchange, 1)
+				.build();
+		//艺术=感觉+交换
+		PollutionMaterials.infused_tinctura = new Material.Builder(getMaterialsId(), gregtechId("infused_tinctura"))
+				.color(0xD6DB43)
+				.ore().gem().fluid()
+				.components(PollutionMaterials.infused_sense, 1, PollutionMaterials.infused_exchange, 1)
+				.build();
 	}
 }

@@ -305,7 +305,46 @@ public class CompoundAspectRecipes {
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
-
+		//亡灵
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(infused_motion.getFluid(1000))
+				.fluidInputs(infused_death.getFluid(1000))
+				.fluidOutputs(infused_undead.getFluid(2000))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		//灵气
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(infused_magic.getFluid(1000))
+				.fluidInputs(infused_air.getFluid(1000))
+				.fluidOutputs(infused_aura.getFluid(2000))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		//空间
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(infused_void.getFluid(1000))
+				.fluidInputs(infused_entropy.getFluid(1000))
+				.fluidOutputs(infused_spatio.getFluid(2000))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		//时间
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(infused_spatio.getFluid(1000))
+				.fluidInputs(infused_exchange.getFluid(1000))
+				.fluidOutputs(infused_tempus.getFluid(2000))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
+		//艺术
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(infused_sense.getFluid(1000))
+				.fluidInputs(infused_exchange.getFluid(1000))
+				.fluidOutputs(infused_tinctura.getFluid(2000))
+				.duration(200)
+				.EUt(30)
+				.buildAndRegister();
 		//核裂变
 		//水晶
 		MAGIC_FUSION_REACTOR.recipeBuilder()
