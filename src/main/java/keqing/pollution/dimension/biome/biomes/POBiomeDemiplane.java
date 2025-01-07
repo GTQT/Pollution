@@ -1,11 +1,10 @@
-package keqing.pollution.dimension.biome;
+package keqing.pollution.dimension.biome.biomes;
 
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenTrees;

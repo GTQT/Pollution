@@ -7,6 +7,8 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 
+import static keqing.pollution.dimension.worldgen.PODimensionType.DEMIPLANE;
+
 public class DimensionDemiplane extends WorldProvider {
 	@Override
 	protected void init() {
@@ -24,7 +26,7 @@ public class DimensionDemiplane extends WorldProvider {
 	public DimensionType getDimensionType() {
 		// 这里你需要返回一个DimensionType实例，它代表了你的维度类型
 		// 可以是一个预先创建好的实例，或者在此处直接创建并返回
-		return DimensionType.register("Demiplane", "_demiplane", 527, DimensionDemiplane.class, false);
+		return DEMIPLANE;
 	}
 
 	@Override
