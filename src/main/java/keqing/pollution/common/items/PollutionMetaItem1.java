@@ -54,7 +54,6 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 
 	public void registerSubItems() {
 		PollutionMetaItems.TEST = this.addItem(1, "test").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-
 		//空白催化核心，需要注魔合成
 		PollutionMetaItems.BLANKCORE = this.addItem(2, "blank_catalyst_core").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		//燃能催化核心，用于高温催化
@@ -113,15 +112,6 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 
 		//实用物品
 		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(Pollution_TAB);
-		//200 电池 外壳注册
-		PollutionMetaItems.BATTERY_HULL_LV = addItem(250, "magic_battery.hull.lv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_MV = addItem(251, "magic_battery.hull.mv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_HV = addItem(252, "magic_battery.hull.hv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_EV = addItem(253, "magic_battery.hull.ev").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_IV = addItem(254, "magic_battery.hull.iv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_LuV = addItem(255, "magic_battery.hull.luv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_ZPM = addItem(256, "magic_battery.hull.zpm").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BATTERY_HULL_UV = addItem(257, "magic_battery.hull.uv").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 
 		//塔罗牌
 		PollutionMetaItems.TEST_ITEM = this.addItem(300, "test_item").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);

@@ -9,7 +9,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
@@ -68,6 +67,8 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
     private final WorldGenSingle worldGenNesting = new WorldGenSingle(BlockRegistry.NESTING_BLOCK_STICKS);
     //洞穴水集群
     private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(BlockRegistry.STAGNANT_WATER);
+    //灵气集群
+    private final WorldGenPhaseLiq worldGenPhaseLiq = new WorldGenPhaseLiq();
 
     public NoiseGeneratorOctaves scaleNoise;
     public NoiseGeneratorOctaves depthNoise;

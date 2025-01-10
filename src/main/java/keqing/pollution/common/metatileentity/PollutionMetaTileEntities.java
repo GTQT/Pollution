@@ -103,6 +103,9 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityMegaManaTurbine MEGA_MANA_TURBINE;
 	public static MetaTileEntityLargeTurbine LARGE_MANA_TURBINE;
 	public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
+
+	//
+	public static MetaTileEntitySourceCharge SOURCE_CHARGE;
 	public static void initialization() {
 
 		for (int i = 0; i <= 4; i++) {
@@ -247,8 +250,7 @@ public class PollutionMetaTileEntities {
 		SMALL_NODE_GENERATOR[2] = registerMetaTileEntity(16114,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.uv"),8));
 		SMALL_NODE_GENERATOR[3] = registerMetaTileEntity(16115,new MetaTileEntitySmallNodeGenerator(gtqtcoreId("pollution_small_node_generator.uhv"),9));
 		//启命英机
-		Muti_Dan_De_Life_On = registerMetaTileEntity(16118, new MetaTileEntityMultiDanDeLifeOn(gtqtcoreId("pollution_multi_dan_de_life_on")
-		));
+		Muti_Dan_De_Life_On = registerMetaTileEntity(16118, new MetaTileEntityMultiDanDeLifeOn(gtqtcoreId("pollution_multi_dan_de_life_on")));
 		//巨型魔力轮机
 		MEGA_MANA_TURBINE = registerMetaTileEntity(16119, new MetaTileEntityMegaManaTurbine(gtqtcoreId("pollution_mega_mana_turbine"),PORecipeMaps.MANA_TO_EU,10,
 				POTextures.MANA_5, false, Textures.HPCA_OVERLAY));
@@ -260,5 +262,6 @@ public class PollutionMetaTileEntities {
 				POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
 
+		SOURCE_CHARGE=registerMetaTileEntity(16150,new MetaTileEntitySourceCharge(gtqtcoreId("source_charge")));
 	}
 }

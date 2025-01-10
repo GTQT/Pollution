@@ -1,10 +1,6 @@
 package keqing.pollution.common.items;
 
-import gregtech.api.GTValues;
-import gregtech.api.items.metaitem.ElectricStats;
 import gregtech.api.items.metaitem.MetaItem;
-import keqing.gtqtcore.common.items.GTQTBattery;
-import keqing.gtqtcore.common.items.GTQTMetaItem1;
 import keqing.pollution.common.items.armor.MetaArmor;
 
 public class PollutionMetaItems {
@@ -90,18 +86,23 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem MAGIC_BATTERY_ZPM ;
 	public static MetaItem<?>.MetaValueItem MAGIC_BATTERY_UV ;
 
+	public static MetaItem<?>.MetaValueItem BAUBLES_WATER_RING ;
+
 	public static PollutionMetaItem1 POLLUTION_META_ITEM;
-	public static POBattery POLLUTION_META_BATTERY;
+	public static PollutionBattery POLLUTION_META_BATTERY;
+	public static PollutionBaubles POLLUTION_BAUBLES;
 	public static void initialization() {
 		POLLUTION_META_ITEM = new PollutionMetaItem1();
-		POLLUTION_META_BATTERY = new POBattery();
+		POLLUTION_META_BATTERY = new PollutionBattery();
+		POLLUTION_BAUBLES= new PollutionBaubles();
 		MetaArmor armor = new MetaArmor();
 		armor.setRegistryName("pollution_armor");
 	}
 
 	public static void initSubItems() {
 		PollutionMetaItem1.registerItems();
-		POBattery.registerItems();
+		PollutionBattery.registerItems();
+		PollutionBaubles.registerItems();
 	}
 
 }
