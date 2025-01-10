@@ -30,7 +30,7 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
 
 	public MetaTileEntityVisProvider(ResourceLocation metaTileEntityId, int tier) {
 		super(metaTileEntityId, tier);
-		this.VisTicks =  tier * POConfig.visProviderMultiplier;
+		this.VisTicks =  tier * POConfig.PollutionSystemSwitch.visProviderMultiplier;
 		this.energyAmountPer = GTValues.VA[tier];
 		this.tier=tier;
 		initializeInventory();

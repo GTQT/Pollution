@@ -1,0 +1,28 @@
+{
+  "forge_marker": 1,
+  "defaults": { "model": "pollution:portal" },
+  "variants": {
+    "inventory": [{ "model": "pollution:miniature/portal" }],
+    "is_one_way": {
+      "true": {
+        "submodel": {
+          "barrier": {
+            "model": "pollution:util/flat",
+            "textures": { "texture": "pollution:blocks/portal_barrier" },
+            "transform": {
+              "translation": [0, 0.84375, 0]
+            }
+          },
+          "barrier2": {
+            "model": "pollution:util/flat",
+            "textures": { "texture": "pollution:blocks/portal_barrier" },
+            "transform": {
+              "translation": [0, 0.71875, 0]
+            }
+          }
+        }
+      },
+      "false": {}
+    }
+  }
+}

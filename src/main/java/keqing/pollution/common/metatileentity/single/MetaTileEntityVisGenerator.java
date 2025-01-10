@@ -51,16 +51,16 @@ public class MetaTileEntityVisGenerator extends TieredMetaTileEntity {
 		if (!getWorld().isRemote) {
 			euRest=energyContainer.getEnergyCapacity()-energyContainer.getEnergyStored();
 			euDesired=Math.min(euRest,energyContainer.getOutputVoltage()*energyContainer.getOutputAmperage());
-			desiredVis=(float) euDesired/ POConfig.visGeneratorEuPerVis;
+			desiredVis=(float) euDesired/ POConfig.PollutionSystemSwitch.visGeneratorEuPerVis;
 			drainedVis= AuraHandler.drainVis(getWorld(),getPos(),desiredVis,false);
-			euGeneration=(long)Math.floor(drainedVis*POConfig.visGeneratorEuPerVis);
+			euGeneration=(long)Math.floor(drainedVis* POConfig.PollutionSystemSwitch.visGeneratorEuPerVis);
 			energyContainer.changeEnergy(euGeneration);
 			if(euGeneration >0)
 			{
 				AuraHelper.polluteAura(getWorld(),getPos(),
-						MathHelper.clamp(drainedVis*POConfig.visGeneratorPollutionMultiplier,
-								POConfig.visGeneratorMinPollution,POConfig.visGeneratorMaxPollution),
-						POConfig.visGeneratorPollutionShowEffects);
+						MathHelper.clamp(drainedVis* POConfig.PollutionSystemSwitch.visGeneratorPollutionMultiplier,
+								POConfig.PollutionSystemSwitch.visGeneratorMinPollution, POConfig.PollutionSystemSwitch.visGeneratorMaxPollution),
+						POConfig.PollutionSystemSwitch.visGeneratorPollutionShowEffects);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class MetaTileEntityVisGenerator extends TieredMetaTileEntity {
 			tooltip.add(1, I18n.format(mainKey));
 		}
 		tooltip.add(I18n.format("gregtech.universal.tooltip.consume",
-				VA[getTier()]/POConfig.visGeneratorEuPerVis,POConfig.visGeneratorEuPerVis));
+				VA[getTier()]/ POConfig.PollutionSystemSwitch.visGeneratorEuPerVis, POConfig.PollutionSystemSwitch.visGeneratorEuPerVis));
 		tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]));
 		tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", this.energyContainer.getEnergyCapacity()));
 	}

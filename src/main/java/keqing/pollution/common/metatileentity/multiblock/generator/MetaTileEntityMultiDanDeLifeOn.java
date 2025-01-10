@@ -2,18 +2,15 @@ package keqing.pollution.common.metatileentity.multiblock.generator;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import gregtech.api.capability.IEnergyContainer;
-import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.capability.impl.MultiblockFuelRecipeLogic;
-import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.*;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.logic.OverclockingLogic;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.util.TextComponentUtil;
@@ -29,7 +26,6 @@ import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.block.blocks.BlockPCBFactoryCasing;
 import keqing.pollution.POConfig;
 import keqing.pollution.api.recipes.PORecipeMaps;
-import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -47,10 +43,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.blocks.BlocksTC;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.*;
 import vazkii.botania.common.block.ModBlocks;
@@ -338,7 +332,7 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
             if(modeIndex==1){
                 EnergyBuffer+=this.energyContainer.getEnergyStored();
                 this.energyContainer.addEnergy(-residualEnergyCapacity);
-                FluidStack ManaOutput= GTQTMaterials.Richmagic.getFluid((int) (1.25*EnergyBuffer / POConfig.EuPerMbRichMagicKq));
+                FluidStack ManaOutput= GTQTMaterials.Richmagic.getFluid((int) (1.25*EnergyBuffer / POConfig.MachineSettingSwitch.EuPerMbRichMagicKq));
                 this.outputFluidInventory.fill(ManaOutput,true);
                 EnergyBuffer=0;
 

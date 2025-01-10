@@ -1,26 +1,35 @@
 package keqing.pollution.common;
 
 import gregtech.api.unification.material.event.MaterialEvent;
+import keqing.pollution.Advancement.AdvancementTriggers;
+import keqing.pollution.POConfig;
 import keqing.pollution.api.unification.PollutionMaterials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import thaumcraft.api.aura.AuraHelper;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static keqing.pollution.POConfig.EntityPollutionEvent;
+import static keqing.pollution.api.utils.POTeleporter.buildPortalIngredient;
+import static keqing.pollution.api.utils.POTeleporter.portalIngredient;
+import static keqing.pollution.common.block.blocks.PollutionBlocksInit.BLOCK_TF_PORTAL;
 
 @Mod.EventBusSubscriber(modid = "pollution")
 public class EventLoader {
@@ -31,13 +40,21 @@ public class EventLoader {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMaterials(MaterialEvent event) {
         PollutionMaterials.register();
+        buildPortalIngredient();
         //在此处注册材料
     }
 
     @SubscribeEvent
-    static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (EntityPollutionEvent && event.getEntity() instanceof EntityPlayer player) {
+    public static void playerTick(TickEvent.PlayerTickEvent event) {
+        EntityPlayer player = event.player;
+        World world = player.world;
 
+        // check for portal creation, at least if it's not disabled
+        if (!world.isRemote && event.phase == TickEvent.Phase.END && player.ticksExisted % (POConfig.WorldSettingSwitch.checkPortalDestination ? 100 : 20) == 0) {
+            checkForPortalCreation(player, world, 32.0F);
+        }
+
+        if (POConfig.PollutionSystemSwitch.EntityPollutionEvent) {
             clientTick++;
             if (clientTick < 200) return;
             clientTick = 0;
@@ -63,6 +80,39 @@ public class EventLoader {
             }
         }
     }
+
+    private static void checkForPortalCreation(EntityPlayer player, World world, float rangeToCheck) {
+        if (world.provider.getDimension() == POConfig.WorldSettingSwitch.originDimension
+                || world.provider.getDimension() == POConfig.WorldSettingSwitch.BTNetherDimensionID
+                || POConfig.WorldSettingSwitch.allowPortalsInOtherDimensions) {
+
+            List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, player.getEntityBoundingBox().grow(rangeToCheck));
+
+            for (EntityItem entityItem : itemList) {
+                if (portalIngredient.apply(entityItem.getItem())) {
+                    BlockPos pos = entityItem.getPosition();
+                    IBlockState state = world.getBlockState(pos);
+                    if (BLOCK_TF_PORTAL.canFormPortal(state)) {
+                        Random rand = new Random();
+                        for (int i = 0; i < 2; i++) {
+                            double vx = rand.nextGaussian() * 0.02D;
+                            double vy = rand.nextGaussian() * 0.02D;
+                            double vz = rand.nextGaussian() * 0.02D;
+
+                            world.spawnParticle(EnumParticleTypes.SPELL, entityItem.posX, entityItem.posY + 0.2, entityItem.posZ, vx, vy, vz);
+                        }
+
+
+                        if (BLOCK_TF_PORTAL.tryToCreatePortal(world, pos, entityItem, player)) {
+                            AdvancementTriggers.FIRST_TO_BTN.trigger((EntityPlayerMP) player);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     private static void applyEffectIfConditionMet(EntityPlayer player, int flux, int randomNum, int fluxThreshold, int minRandom, int maxRandom, Potion effect, String messageKey) {
         if (flux >= fluxThreshold && randomNum >= minRandom && randomNum <= maxRandom) {

@@ -49,7 +49,7 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         this.recoveryChance = Math.max(1, tier * 10);
         this.inventory = new GTItemStackHandler(this, (int) Math.pow(tier + 1, 2));
         this.frontFaceFree = false;
-        this.pollutionMultiplier = (100.0 - (tier-1) * 12.5) / 100.0 * POConfig.mufflerPollutionMultiplier;
+        this.pollutionMultiplier = (100.0 - (tier-1) * 12.5) / 100.0 * POConfig.PollutionSystemSwitch.mufflerPollutionMultiplier;
     }
 
     @Override
@@ -66,8 +66,8 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         }
         if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
             VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
-            if (getOffsetTimer() % 200 == 0&&POConfig.enablePollution) {
-                AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollutionMultiplier*0.05), POConfig.mufflerPollutionShowEffects);
+            if (getOffsetTimer() % 200 == 0&& POConfig.PollutionSystemSwitch.enablePollution) {
+                AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollutionMultiplier*0.05), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
             }
         }
     }

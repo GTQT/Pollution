@@ -16,17 +16,20 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod.EventBusSubscriber(modid = "pollution")
+@Mod.EventBusSubscriber(modid = Pollution.MODID)
 public class PollutionBlocksInit {
 	public static final BlockMagicCircle BLOCK_MAGIC_CIRCLE = new BlockMagicCircle();
 	public static final Item ITEM_BLOCK_MAGIC_CIRCLE = new ItemBlock(BLOCK_MAGIC_CIRCLE).setRegistryName(BLOCK_MAGIC_CIRCLE.getRegistryName().getPath());
+
+	public static final BlockPOPortal BLOCK_TF_PORTAL = new BlockPOPortal();
 
 	@SubscribeEvent
 	public static void registerBlock(RegistryEvent.Register<Block> event) {
 		// 和物品一样，每一个方块都有唯一一个注册名，不能使用大写字母。
 		event.getRegistry().register(BLOCK_MAGIC_CIRCLE);
+		event.getRegistry().register(BLOCK_TF_PORTAL);
 
-		//注册tile entity
+		// 注册tile entity
 		GameRegistry.registerTileEntity(TileEntityMagicCircle.class, new ResourceLocation(Pollution.MODID, "magic_circle"));
 	}
 
@@ -40,8 +43,7 @@ public class PollutionBlocksInit {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onModelReg(ModelRegistryEvent event) {
-		//材质注册
+		// 材质注册
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(BLOCK_MAGIC_CIRCLE), 0, new ModelResourceLocation(BLOCK_MAGIC_CIRCLE.getRegistryName(), "inventory"));
-
 	}
 }

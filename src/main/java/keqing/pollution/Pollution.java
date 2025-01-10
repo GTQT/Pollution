@@ -1,5 +1,6 @@
 package keqing.pollution;
 
+import keqing.pollution.Advancement.AdvancementTriggers;
 import keqing.pollution.api.POAPI;
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.CommonProxy;
@@ -7,7 +8,6 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.blocks.PollutionBlocksInit;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
-import keqing.pollution.dimension.biome.POBiomeHandler;
 import keqing.pollution.dimension.worldgen.PODimensionManager;
 import keqing.pollution.dimension.worldgen.PODimensionType;
 import keqing.pollution.dimension.worldgen.POStructureManager;
@@ -22,12 +22,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
+
 @Mod(
         modid = "pollution",
         name = "Pollution",
         acceptedMinecraftVersions = "[1.12.2,1.13)",
         version = "0.0.1-beta",
         dependencies = "required-after:gregtech@[2.8.5-beta,);" +
+                "required-after:gtqtcore@[0,);" +
                 "required-after:bloodmagic@[0,);" +
                 "required-after:thebetweenlands@[0,);" +
                 "required-after:botania@[0,);"
@@ -63,6 +65,7 @@ public class Pollution {
         proxy.preLoad();
         MinecraftForge.EVENT_BUS.register(new PollutionBlocksInit());
         PollutionMetaTileEntities.initialization();
+        AdvancementTriggers.register();
     }
 
 }

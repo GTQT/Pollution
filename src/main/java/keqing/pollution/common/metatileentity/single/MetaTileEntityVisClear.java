@@ -32,7 +32,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 	public MetaTileEntityVisClear(ResourceLocation metaTileEntityId, int tier) {
 		super(metaTileEntityId, tier);
 		this.tier = tier;
-		this.VisTicks =  tier* POConfig.fluxScrubberMultiplier;
+		this.VisTicks =  tier* POConfig.PollutionSystemSwitch.fluxScrubberMultiplier;
 		this.energyAmountPer = GTValues.VA[tier];
 		initializeInventory();
 	}

@@ -5,23 +5,17 @@ import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.GTValues;
-import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.*;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.LabelWidget;
-import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.ICleanroomProvider;
-import gregtech.api.metatileentity.multiblock.ICleanroomReceiver;
-import gregtech.api.metatileentity.multiblock.ParallelLogicType;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
-import gregtech.api.util.TextFormattingUtil;
 import gregtech.client.renderer.ICubeRenderer;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -29,36 +23,21 @@ import java.util.function.Function;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.client.utils.PipelineUtil;
-import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
-import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.POConfig;
-import keqing.pollution.client.textures.POTextures;
-import mezz.jei.gui.recipes.IRecipeGuiLogic;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.Sys;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.world.aura.AuraHandler;
 import static java.lang.Math.pow;
 import static java.lang.Math.round;
-import static keqing.pollution.POConfig.FluxPromotedGeneratorFluxPerTick;
 
 
 public class MetaTileEntityFluxPromotedFuelCell extends WorkableTieredMetaTileEntity {
@@ -84,7 +63,7 @@ public class MetaTileEntityFluxPromotedFuelCell extends WorkableTieredMetaTileEn
         public void update() {
             super.update();
             if (!getWorld().isRemote) {
-                desiredFlux = (float) (POConfig.FluxPromotedGeneratorFluxPerTick*4 + 0.05*4*(getTier()-1));
+                desiredFlux = (float) (POConfig.PollutionSystemSwitch.FluxPromotedGeneratorFluxPerTick*4 + 0.05*4*(getTier()-1));
                 currentFlux = AuraHandler.getFlux(getWorld(), getPos());
                 FluxCeiling = (float) (60 + 5 * pow(4, getTier()));
                 efficiencyMultiplier = 0;
@@ -187,7 +166,7 @@ public class MetaTileEntityFluxPromotedFuelCell extends WorkableTieredMetaTileEn
                     return "Current Flux: " + (AuraHelper.getFlux(getWorld(), getPos()));
                 }, 2302755);
                 builder.dynamicLabel(7, 70, () -> {
-                    return "Flux per tick: " + POConfig.FluxPromotedGeneratorFluxPerTick * pow(4, getTier()-1);
+                    return "Flux per tick: " + POConfig.PollutionSystemSwitch.FluxPromotedGeneratorFluxPerTick * pow(4, getTier()-1);
                 }, 2302755);
                 return builder.build(this.getHolder(), entityPlayer);
             }

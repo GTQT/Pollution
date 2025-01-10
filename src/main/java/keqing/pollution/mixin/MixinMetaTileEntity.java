@@ -5,11 +5,10 @@ import gregtech.api.metatileentity.IVoidable;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.ISyncedTileEntity;
 import gregtech.common.ConfigHolder;
+import keqing.pollution.POConfig;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import thaumcraft.api.aura.AuraHelper;
-
-import static keqing.pollution.POConfig.ExplosionPollution;
 
 @Mixin(MetaTileEntity.class)
 public abstract class MixinMetaTileEntity implements ISyncedTileEntity, CoverHolder, IVoidable {
@@ -19,7 +18,7 @@ public abstract class MixinMetaTileEntity implements ISyncedTileEntity, CoverHol
 		this.setExploded();
 		this.getWorld().setBlockToAir(this.getPos());
 		this.getWorld().createExplosion((Entity) null, (double) this.getPos().getX() + 0.5, (double) this.getPos().getY() + 0.5, (double) this.getPos().getZ() + 0.5, explosionPower, ConfigHolder.machines.doesExplosionDamagesTerrain);
-		if(ExplosionPollution) {
+		if(POConfig.PollutionSystemSwitch.ExplosionPollution) {
 			AuraHelper.polluteAura(getWorld(), getPos(), 40 * explosionPower, true);
 			AuraHelper.drainVis(getWorld(), getPos(), 10 * explosionPower, false);
 		}
