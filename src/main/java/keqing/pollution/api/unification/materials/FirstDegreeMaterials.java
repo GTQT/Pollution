@@ -273,5 +273,15 @@ public class FirstDegreeMaterials {
 				.color(0x211b14)
 				.build();
 
+		//#TODO 厂妹要做的 1.换颜色 2.加组分
+		BetweenStone= new Material.Builder(getMaterialsId(), gregtechId("betweenstone"))
+				.dust()
+				.color(0x211b14)
+				.build();
+
+		PitStone= new Material.Builder(getMaterialsId(), gregtechId("pitstone"))
+				.dust()
+				.color(0x211b14)
+				.build();
 	}
 }

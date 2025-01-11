@@ -3,6 +3,7 @@ package keqing.pollution.common;
 
 import gregtech.api.block.VariantItemBlock;
 import gregtech.common.items.MetaItems;
+import keqing.pollution.api.unification.ore.POStoneTypes;
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.items.PollutionMetaItems;
@@ -45,7 +46,7 @@ public class CommonProxy {
 	}
 
 	public void preLoad() {
-
+		POStoneTypes.init();
 	}
 
 	@SubscribeEvent

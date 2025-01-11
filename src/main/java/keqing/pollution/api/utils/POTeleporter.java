@@ -20,8 +20,6 @@ import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.oredict.OreDictionary;
-import thebetweenlands.common.registries.BlockRegistry;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -30,6 +28,12 @@ import java.util.function.Predicate;
 import static keqing.pollution.common.block.blocks.PollutionBlocksInit.BLOCK_TF_PORTAL;
 
 public class POTeleporter extends Teleporter {
+
+    public static Ingredient portalIngredient;
+
+    private POTeleporter(WorldServer dest) {
+        super(dest);
+    }
 
     public static POTeleporter getTeleporterForDim(MinecraftServer server, int dim) {
         WorldServer ws = server.getWorld(dim);
@@ -45,8 +49,14 @@ public class POTeleporter extends Teleporter {
         return tp;
     }
 
-    private POTeleporter(WorldServer dest) {
-        super(dest);
+    private static boolean isPortal(IBlockState state) {
+        return state.getBlock() == BLOCK_TF_PORTAL;
+    }
+
+    public static void buildPortalIngredient() {
+        List<ItemStack> stacks = new ArrayList<>();
+        stacks.add(new ItemStack(Items.DIAMOND));
+        portalIngredient = Ingredient.fromStacks(stacks.toArray(new ItemStack[0]));
     }
 
     @Override
@@ -68,7 +78,6 @@ public class POTeleporter extends Teleporter {
         }
 
 
-
         BlockPos safeCoords = findSafeCoords(200, pos, entity, checkProgression);
         if (safeCoords != null) {
             entity.setLocationAndAngles(safeCoords.getX(), entity.posY, safeCoords.getZ(), 90.0F, 0.0F);
@@ -82,7 +91,6 @@ public class POTeleporter extends Teleporter {
         if (safeCoords != null) {
             entity.setLocationAndAngles(safeCoords.getX(), entity.posY, safeCoords.getZ(), 90.0F, 0.0F);
 
-            return;
         }
 
 
@@ -127,7 +135,6 @@ public class POTeleporter extends Teleporter {
     private boolean checkPos(BlockPos pos) {
         return world.getWorldBorder().contains(pos);
     }
-
 
     private boolean checkBiome(BlockPos pos, Entity entity) {
         return POWorld.isBiomeSafeFor(world.getBiome(pos), entity);
@@ -242,11 +249,6 @@ public class POTeleporter extends Teleporter {
         return Math.min(worldHeight, chunkHeight);
     }
 
-    private static boolean isPortal(IBlockState state) {
-        return state.getBlock() == BLOCK_TF_PORTAL;
-    }
-
-    // from the start point, builds a set of all directly adjacent non-portal blocks
     private Set<BlockPos> getBoundaryPositions(BlockPos start) {
         Set<BlockPos> result = new HashSet<>(), checked = new HashSet<>();
         checked.add(start);
@@ -277,7 +279,6 @@ public class POTeleporter extends Teleporter {
         loadSurroundingArea(entity);
 
         BlockPos spot = findPortalCoords(entity, this::isPortalAt);
-        String name = entity.getName();
 
         if (spot != null) {
             cachePortalCoords(entity, spot);
@@ -298,13 +299,8 @@ public class POTeleporter extends Teleporter {
             return true;
         }
 
-        // well I don't think we can actually just return false and fail here
-
-        // adjust the portal height based on what world we're traveling to
         double yFactor = getYFactor();
-        // modified copy of base Teleporter method:
         cachePortalCoords(entity, makePortalAt(world, new BlockPos(entity.posX, (entity.posY * yFactor) - 1.0, entity.posZ)));
-
         return false;
     }
 
@@ -416,8 +412,8 @@ public class POTeleporter extends Teleporter {
         }
 
         // grass all around it
-        IBlockState grass = BlockRegistry.MUD.getDefaultState();
-        //IBlockState grass = Blocks.GRASS.getDefaultState();
+        //IBlockState grass = BlockRegistry.MUD.getDefaultState();
+        IBlockState grass = Blocks.GRASS.getDefaultState();
 
         world.setBlockState(pos.west().north(), grass);
         world.setBlockState(pos.north(), grass);
@@ -436,8 +432,8 @@ public class POTeleporter extends Teleporter {
         world.setBlockState(pos.east(2).south(2), grass);
 
         // dirt under it
-        IBlockState dirt = BlockRegistry.MUD.getDefaultState();
-        //IBlockState dirt = Blocks.DIRT.getDefaultState();
+        //IBlockState dirt = BlockRegistry.MUD.getDefaultState();
+        IBlockState dirt = Blocks.DIRT.getDefaultState();
 
         world.setBlockState(pos.down(), dirt);
         world.setBlockState(pos.east().down(), dirt);
@@ -487,13 +483,5 @@ public class POTeleporter extends Teleporter {
                 Blocks.LEAVES
         };
         return blocks[random.nextInt(blocks.length)].getDefaultState();
-    }
-
-    public static Ingredient portalIngredient;
-
-    public static void buildPortalIngredient() {
-        List<ItemStack> stacks = new ArrayList<>();
-        stacks.add(new ItemStack(Items.DIAMOND));
-        portalIngredient = Ingredient.fromStacks(stacks.toArray(new ItemStack[0]));
     }
 }
