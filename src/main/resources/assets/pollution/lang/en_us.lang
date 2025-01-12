@@ -162,6 +162,11 @@ metaitem.evolution_catalyst_core.tooltip=§5§lMang Changes§r
 
 metaitem.vis_checker.name=Vis Checker
 
+metaitem.filter.i.name=空气过滤器滤芯I
+metaitem.filter.ii.name=空气过滤器滤芯II
+metaitem.filter.iii.name=空气过滤器滤芯III
+metaitem.filter.iv.name=空气过滤器滤芯IV
+metaitem.filter.v.name=空气过滤器滤芯V
 #Equipment
 metaitem.wing_nano.name=Magical Nano-Flight Soul Conductor
 metaitem.wing_quantum.name=Magical Quantum-Flight Soul Conductor

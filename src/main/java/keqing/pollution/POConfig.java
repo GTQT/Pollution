@@ -19,7 +19,6 @@ public class POConfig {
         public boolean allowPortalsInOtherDimensions = false;
         @Config.Comment("如果为假，则返回传送门需要激活物品。")
         public boolean shouldReturnPortalBeUsable = true;
-
         @Config.Comment("确定新传送门是否应预先检查安全性。如果启用，传送门将失败形成，而不是重定向到安全的替代目的地。" +
                 "\n请注意，启用此功能也会降低传送门形成检查的频率。")
         public boolean checkPortalDestination = false;
@@ -37,15 +36,11 @@ public class POConfig {
         @Config.Comment("是否开启消声仓污染特效")
         public boolean mufflerPollutionShowEffects = true;
         @Config.Comment("污染清理倍率,")
-        public double fluxScrubberMultiplier = 0.2;
+        public double fluxScrubberMultiplier = 0.002;
         @Config.Comment("灵气发电机单位灵气发电量")
         public float visGeneratorEuPerVis = 250.0f;
         @Config.Comment("灵气发电机污染倍率默认")
         public float visGeneratorPollutionMultiplier = 0.1f;
-        @Config.Comment("灵气发电机污染倍率最小值")
-        public float visGeneratorMinPollution = 0.0f;
-        @Config.Comment("灵气发电机污染倍率最大值")
-        public float visGeneratorMaxPollution = 1.0f;
         @Config.Comment("灵气发电机污染特效")
         public boolean visGeneratorPollutionShowEffects = true;
         @Config.Comment("灵气发生器灵气生成倍率")

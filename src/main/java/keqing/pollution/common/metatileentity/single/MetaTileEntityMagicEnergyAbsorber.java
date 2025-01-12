@@ -24,6 +24,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.client.utils.PipelineUtil;
 import keqing.pollution.POConfig;
+import keqing.pollution.client.textures.POTextures;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDragonEgg;
 import net.minecraft.block.state.IBlockState;
@@ -154,7 +155,7 @@ public class MetaTileEntityMagicEnergyAbsorber extends TieredMetaTileEntity {
     @Override
     @SideOnly(Side.CLIENT)
     protected SimpleSidedCubeRenderer getBaseRenderer() {
-        return Textures.VOLTAGE_CASINGS[getTier()];
+        return POTextures.MAGIC_VOLTAGE_CASINGS[getTier()];
     }
 
 }

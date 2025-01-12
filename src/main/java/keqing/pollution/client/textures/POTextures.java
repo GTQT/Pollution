@@ -1,15 +1,17 @@
 package keqing.pollution.client.textures;
 
 import codechicken.lib.texture.TextureUtils;
+import gregtech.api.GTValues;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 
 public class POTextures {
 	public static OrientedOverlayRenderer SOLAR_PLATE_I = new OrientedOverlayRenderer("machines/solar_i");
 	public static OrientedOverlayRenderer SOLAR_PLATE_II = new OrientedOverlayRenderer("machines/solar_ii");
 	public static OrientedOverlayRenderer SOLAR_PLATE_III = new OrientedOverlayRenderer("machines/solar_iii");
-
+	public static SimpleSidedCubeRenderer[] MAGIC_VOLTAGE_CASINGS;
 	public static SimpleOverlayRenderer AIR;
 	public static SimpleOverlayRenderer DARK;
 	public static SimpleOverlayRenderer EARTH;
@@ -49,6 +51,13 @@ public class POTextures {
 
 
 	public static void init() {
+		MAGIC_VOLTAGE_CASINGS = new SimpleSidedCubeRenderer[GTValues.V.length];
+
+		for(int i = 0; i < MAGIC_VOLTAGE_CASINGS.length; ++i) {
+			String voltageName = GTValues.VN[i].toLowerCase();
+			MAGIC_VOLTAGE_CASINGS[i] = new SimpleSidedCubeRenderer("casings/magic_voltage/" + voltageName);
+		}
+
 		AIR = new SimpleOverlayRenderer("machines/solars/airside");
 		DARK = new SimpleOverlayRenderer("machines/solars/darkside");
 		EARTH = new SimpleOverlayRenderer("machines/solars/earthside");

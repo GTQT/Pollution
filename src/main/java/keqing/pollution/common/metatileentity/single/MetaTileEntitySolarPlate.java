@@ -96,8 +96,9 @@ public class MetaTileEntitySolarPlate extends TieredMetaTileEntity {
 		}
 		return this.getWorld().getBlockState(this.getPos().add(0, -1, 0)) == Blocks.WATER.getDefaultState();
 	}
-
+	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+		super.addInformation(stack, player, tooltip, advanced);
 		String key = this.metaTileEntityId.getPath().split("\\.")[0];
 		String mainKey = String.format("gregtech.machine.%s.tooltip", key);
 		if (I18n.hasKey(mainKey)) {

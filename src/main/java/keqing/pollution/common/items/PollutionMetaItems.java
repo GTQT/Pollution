@@ -96,6 +96,12 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem MAGIC_BATTERY_ZPM ;
 	public static MetaItem<?>.MetaValueItem MAGIC_BATTERY_UV ;
 
+	public static MetaItem<?>.MetaValueItem FILTER_MKI ;
+	public static MetaItem<?>.MetaValueItem FILTER_MKII ;
+	public static MetaItem<?>.MetaValueItem FILTER_MKIII ;
+	public static MetaItem<?>.MetaValueItem FILTER_MKIV ;
+	public static MetaItem<?>.MetaValueItem FILTER_MKV ;
+
 	public static MetaItem<?>.MetaValueItem BAUBLES_WATER_RING ;
 
 	public static PollutionMetaItem1 POLLUTION_META_ITEM;

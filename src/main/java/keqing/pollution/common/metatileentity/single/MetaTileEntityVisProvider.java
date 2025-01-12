@@ -8,12 +8,16 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import keqing.pollution.POConfig;
+import keqing.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aura.AuraHelper;
 
 import java.util.List;
@@ -55,7 +59,11 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
 		super.renderMetaTileEntity(renderState, translation, pipeline);
 		Textures.HPCA_BRIDGE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
 	}
-
+	@Override
+	@SideOnly(Side.CLIENT)
+	protected SimpleSidedCubeRenderer getBaseRenderer() {
+		return POTextures.MAGIC_VOLTAGE_CASINGS[getTier()];
+	}
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
 		super.addInformation(stack, player, tooltip, advanced);

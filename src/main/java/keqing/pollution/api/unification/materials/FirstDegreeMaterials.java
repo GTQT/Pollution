@@ -299,7 +299,6 @@ public class FirstDegreeMaterials {
 				.color(0x211b14)
 				.build();
 
-		//#TODO 厂妹要做的 1.换颜色 2.加组分
 		BetweenStone= new Material.Builder(getMaterialsId(), gregtechId("betweenstone"))
 				.dust()
 				.color(0x336600)
@@ -311,6 +310,13 @@ public class FirstDegreeMaterials {
 				.dust()
 				.color(0x4F540A)
 				.components(Alunite, 10, Quartzite, 8, Biotite, 6, Water, 3, infused_earth, 2, infused_water, 1)
+				.flags(DECOMPOSITION_BY_CENTRIFUGING)
+				.build();
+
+		CragRock= new Material.Builder(getMaterialsId(), gregtechId("cragrock"))
+				.dust()
+				.color(0x4F540A)
+				.components(SiliconDioxide, 10, Quartzite, 8, Biotite, 6, Water, 3, infused_earth, 2, infused_water, 1)
 				.flags(DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
 	}

@@ -2,6 +2,7 @@ package keqing.pollution.loaders.recipes;
 
 import gregtech.api.GTValues;
 import gregtech.api.recipes.ModHandler;
+import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
@@ -16,6 +17,7 @@ import keqing.pollution.common.items.PollutionMetaItem1;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -23,13 +25,13 @@ import thebetweenlands.common.block.terrain.BlockCragrock;
 import thebetweenlands.common.item.misc.ItemMisc;
 import thebetweenlands.common.registries.BlockRegistry;
 
+import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS;
 import static gregtech.loaders.recipe.CraftingComponent.*;
 import static gregtech.loaders.recipe.MetaTileEntityLoader.registerMachineRecipe;
-import static keqing.pollution.api.unification.PollutionMaterials.octine;
-import static keqing.pollution.api.unification.PollutionMaterials.syrmorite;
-import static keqing.pollution.common.items.PollutionMetaItems.BLANKCORE;
+import static keqing.pollution.api.unification.PollutionMaterials.*;
+import static keqing.pollution.common.items.PollutionMetaItems.*;
 import static keqing.pollution.common.metatileentity.PollutionMetaTileEntities.*;
 import static net.minecraft.item.Item.getItemFromBlock;
 
@@ -38,6 +40,49 @@ public class MachineRecipes {
 		machine();
 		muffler();
 		primitiveMulti();
+		filterRecipes();
+	}
+
+	private static void filterRecipes() {
+		RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
+				.input(Items.PAPER)
+				.fluidInputs(infused_earth.getFluid(1000))
+				.output(FILTER_MKI)
+				.duration(100)
+				.EUt(VA[1])
+				.buildAndRegister();
+
+		RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
+				.input(Items.PAPER)
+				.fluidInputs(infused_water.getFluid(1000))
+				.output(FILTER_MKII)
+				.duration(100)
+				.EUt(VA[2])
+				.buildAndRegister();
+
+		RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
+				.input(Items.PAPER)
+				.fluidInputs(syrmorite.getFluid(1000))
+				.output(FILTER_MKIII)
+				.duration(100)
+				.EUt(VA[3])
+				.buildAndRegister();
+
+		RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
+				.input(Items.PAPER)
+				.fluidInputs(thaumium.getFluid(1000))
+				.output(FILTER_MKIV)
+				.duration(100)
+				.EUt(VA[4])
+				.buildAndRegister();
+
+		RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
+				.input(Items.PAPER)
+				.fluidInputs(octine.getFluid(1000))
+				.output(FILTER_MKV)
+				.duration(100)
+				.EUt(VA[5])
+				.buildAndRegister();
 	}
 
 	private static void primitiveMulti() {

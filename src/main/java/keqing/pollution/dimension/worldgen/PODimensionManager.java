@@ -7,7 +7,6 @@ import net.minecraftforge.common.DimensionManager;
 
 public class PODimensionManager {
 	//这个是维度管理器，拿来注册的
-	public static DimensionType DEMIPLANE;
 	public static int DEMIPLANE_DIM_ID;
 	public static int BTN_DIM_ID;
 	public static void init() {

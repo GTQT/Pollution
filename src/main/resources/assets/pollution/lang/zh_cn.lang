@@ -230,6 +230,12 @@ metaitem.coking_catalyst_core.tooltip=§8§l焦油踽行§r
 metaitem.evolution_catalyst_core.tooltip=§5§l千万变换§r
 
 metaitem.vis_checker.name=污染检测器
+
+metaitem.filter.i.name=空气过滤器滤芯I
+metaitem.filter.ii.name=空气过滤器滤芯II
+metaitem.filter.iii.name=空气过滤器滤芯III
+metaitem.filter.iv.name=空气过滤器滤芯IV
+metaitem.filter.v.name=空气过滤器滤芯V
 #装具
 metaitem.wing_nano.name=魔导纳米飞行魂导器
 metaitem.wing_quantum.name=魔导量子飞行魂导器
@@ -514,7 +520,7 @@ pollution.machine.flux_clear.mv.name=空气过滤机（§bMV§r）
 pollution.machine.flux_clear.hv.name=空气过滤机（§6HV§r）
 pollution.machine.flux_clear.ev.name=大型空气过滤机（§5EV§r）
 pollution.machine.flux_clear.iv.name=大型空气过滤机（§1IV§r）
-pollution.flux_clear.tire=§5结构等级:%s 单次(5s)污染清洁量:%s Vis
+pollution.flux_clear.tire=§5结构等级:%s 单次(tick)污染清洁量:%s Vis
 pollution.flux_clear.amount=§5清理范围半径：%s 区块
 pollution.flux_clear.tire1=%s
 pollution.flux_clear.flux=污染剩余:%s Vis

@@ -45,39 +45,40 @@ import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class VanillaRecipes {
     public static void init() {
+        miscRecipes();
         initRecipes();
         removeRecipes();
     }
 
-    public static void removeRecipes() {
+    private static void miscRecipes() {
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:swamp_talisman"));
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(ItemRegistry.LIFE_CRYSTAL)
                 .input(BlocksTC.crystalEarth)
                 .input(BlocksTC.crystalAir)
                 .input(BlocksTC.crystalFire)
                 .input(BlocksTC.crystalWater)
                 .input(BlocksTC.crystalOrder)
-                .input(BlocksTC.crystalTaint)
                 .output(ItemRegistry.SWAMP_TALISMAN)
                 .EUt(30)
                 .duration(300)
                 .buildAndRegister();
-        
+
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "swamp_talisman"), new InfusionRecipe(
                 "",
                 new ItemStack(ItemRegistry.SWAMP_TALISMAN),
                 2,
-                new AspectList().add(Aspect.ENERGY, 16).add(Aspect.AIR, 16),
+                new AspectList(),
                 new ItemStack(ItemRegistry.LIFE_CRYSTAL),
                 new ItemStack(BlocksTC.crystalEarth),
                 new ItemStack(BlocksTC.crystalAir),
                 new ItemStack(BlocksTC.crystalFire),
-                new ItemStack(BlocksTC.crystalEntropy),
-                new ItemStack(BlocksTC.crystalOrder),
-                new ItemStack(BlocksTC.crystalTaint),
-                new ItemStack(BlocksTC.crystalWater)
+                new ItemStack(BlocksTC.crystalWater),
+                new ItemStack(BlocksTC.crystalOrder)
         ));
+    }
 
+    public static void removeRecipes() {
         //对箱子等交错原版物品的配方魔改
         //杂草木工作台
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:weedwood_workbench"));
@@ -200,69 +201,6 @@ public class VanillaRecipes {
     }
 
     public static void initRecipes() {
-        //补充矿辞
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("sand", new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-
-
-        //神秘的原石变沙砾 沙砾变沙子
-        RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
-                .inputs(new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                .output(dust, Materials.Stone)
-                .duration(100)
-                .EUt(16)
-                .buildAndRegister();
-
-        RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
-                .inputs(new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                .output(dust, Materials.Stone)
-                .duration(100)
-                .EUt(16)
-                .buildAndRegister();
-
-        RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
-                .inputs(new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                .output(dust, GTQTMaterials.Limestone)
-                .duration(100)
-                .EUt(16)
-                .buildAndRegister();
-
-        RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
-                .inputs(new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
-                .output(dust, Materials.Stone)
-                .duration(100)
-                .EUt(16)
-                .buildAndRegister();
-
-        //通用矿辞处理，补全对原版材料的获取
-        ModHandler.addShapedRecipe(true, "PoDirt", new ItemStack(Items.CLAY_BALL),
-                " h", " M",
-                'M', new ItemStack(BlockRegistry.SWAMP_DIRT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-
-        ModHandler.addShapedRecipe(true, "PoStone5", new ItemStack(Blocks.GRAVEL),
-                " h", " M",
-                'M', "cobblestone");
-
-        ModHandler.addShapedRecipe(true, "PoSand", new ItemStack(Blocks.SAND),
-                " h", " M",
-                'M', Blocks.GRAVEL);
-
-        ModHandler.addShapedRecipe(true, "PoFlint", new ItemStack(Items.FLINT),
-                "MM", "MM",
-                'M', ItemMisc.EnumItemMisc.BETWEENSTONE_PEBBLE.create(1));
-
-        ModHandler.addShapedRecipe(true, "PoString", new ItemStack(Items.STRING),
-                "   ", "MMM", "   ",
-                'M', ItemMisc.EnumItemMisc.SWAMP_REED_ROPE.create(1));
-
         //纸
         ModHandler.addShapedRecipe("po_paper_dust", OreDictUnifier.get(OrePrefix.dust, Materials.Paper, 2), "SSS",
                 " m ", 'S', ItemMisc.EnumItemMisc.DRIED_SWAMP_REED.create(1));
@@ -402,8 +340,9 @@ public class VanillaRecipes {
                     .fluidOutputs(Mud.getFluid(2000))
                     .duration(200)
                     .buildAndRegister();
-        }
 
+
+        }
     }
 }
 
