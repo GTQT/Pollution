@@ -1,5 +1,6 @@
 package keqing.pollution.loaders.recipes;
 
+import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
@@ -26,10 +27,15 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.items.ItemsTC;
 
+import java.util.ArrayList;
+
+import static gregicality.multiblocks.api.fluids.GCYMFluidStorageKeys.MOLTEN;
+
 public class MagicChemicalRecipes {
 	public static void init() {
 		chemical();
 		kqt_chain();
+		superconductor_chain();
 	}
 
 	private static void chemical() {
@@ -895,6 +901,68 @@ public class MagicChemicalRecipes {
 				.duration(2000)
 				.blastFurnaceTemp(5400)
 				.EUt(7680)
+				.buildAndRegister();
+	}
+
+	private static void superconductor_chain() {
+
+		//烧lk99
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Materials.Lead, 6)
+				.input(OrePrefix.dust, Materials.Copper, 4)
+				.input(OrePrefix.dust, Materials.Phosphate, 6)
+				.fluidInputs(Materials.Oxygen.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.crude_lk_99.getFluid(MOLTEN, 2448))
+				.blastFurnaceTemp(2700)
+				.circuitMeta(4)
+				.duration(1700)
+				.EUt(480)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Materials.Lead, 6)
+				.input(OrePrefix.dust, Materials.Copper, 4)
+				.input(OrePrefix.dust, Materials.Phosphate, 6)
+				.fluidInputs(Materials.Oxygen.getFluid(1000))
+				.fluidInputs(Materials.Nitrogen.getFluid(17000))
+				.fluidOutputs(PollutionMaterials.crude_lk_99.getFluid(MOLTEN, 2448))
+				.blastFurnaceTemp(2700)
+				.circuitMeta(14)
+				.duration(1120)
+				.EUt(480)
+				.buildAndRegister();
+		//做液体
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.infused_metal.getFluid(1296))
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1296))
+				.input(OrePrefix.dust, PollutionMaterials.crude_lk_99, 4)
+				.input(OrePrefix.dust, PollutionMaterials.syrmorite, 4)
+				.fluidOutputs(PollutionMaterials.magical_superconductive_liquid.getFluid(2000))
+				.circuitMeta(1)
+				.duration(400)
+				.EUt(480)
+				.buildAndRegister();
+		//超导
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(576))
+				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
+				.input(OrePrefix.dust, PollutionMaterials.mansussteel, 4)
+				.input(OrePrefix.dust, PollutionMaterials.thaumium, 4)
+				.fluidOutputs(PollutionMaterials.basic_thaumic_superconductor.getFluid(2304))
+				.circuitMeta(4)
+				.duration(2000)
+				.EUt(480)
+				.blastFurnaceTemp(2700)
+				.buildAndRegister();
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(576))
+				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
+				.input(OrePrefix.dust, PollutionMaterials.keqinggold, 4)
+				.input(OrePrefix.dust, PollutionMaterials.hyperdimensional_silver, 4)
+				.fluidOutputs(PollutionMaterials.advanced_thaumic_superconductor.getFluid(2304))
+				.circuitMeta(4)
+				.duration(2000)
+				.EUt(30720)
+				.blastFurnaceTemp(7200)
 				.buildAndRegister();
 	}
 }

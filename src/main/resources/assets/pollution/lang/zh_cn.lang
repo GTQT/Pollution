@@ -143,6 +143,10 @@ gregtech.material.oil_with_llp=LLP-石油悬浊液
 gregtech.material.super_sticky_tar=超粘稠焦油
 gregtech.material.magic_nitrobenzene=魔力抗爆焦化硝基苯
 gregtech.material.pure_tar=纯化焦油
+gregtech.material.crude_lk_99=LK-99粗胚
+gregtech.material.magical_superconductive_liquid=灌魔超导液
+gregtech.material.basic_thaumic_superconductor=初阶LK-99神秘超导体
+gregtech.material.advanced_thaumic_superconductor=高阶LK-99神秘超导体
 
 gregtech.material.kobemetal=牢大金
 metaitem.ingotKobemetal.tooltip=牢大，想你了
@@ -170,7 +174,7 @@ gregtech.material.sentient_metal=感知
 metaitem.ingotSentientMetal.tooltip=远古之战于深幽地域逸散呢喃，Sentient终将得胜，一如既往。
 gregtech.material.starrymansus=星能漫宿
 gregtech.material.blood_of_avernus=阿弗纳斯之血
-metaitem.ingotBloodOfAvernus.tooltip=§c良田万顷偶蹄裂，地狱之国魔影来 埃尔托瑞尔于今日堕入阿弗纳斯...§r
+metaitem.ingotBloodOfAvernus.tooltip=§c埃尔托瑞尔于今日堕入阿弗纳斯...§r
 gregtech.material.iizunamaru_electrum=光风霁月琥珀金
 metaitem.ingotIizunamaruElectrum.tooltip=星风「虹彩陆离乱舞」
 
@@ -353,6 +357,24 @@ metaitem.glue_slime.tooltip=打不完的胶
 metaitem.rubber_slime.tooltip=擦不完的橡皮
 
 metaitem.packaged_aura_node.name=封装灵气节点
+
+metaitem.core_of_idea.name=理式核心
+metaitem.core_of_idea.tooltip=真理与知识或存大美，而善之理式则犹在其上
+metaitem.bottle_of_phlogistonic_oneness.name=太一燃素瓶
+metaitem.bottle_of_phlogistonic_oneness.tooltip=唯见太一流溢，造化无火自燃
+metaitem.auto_elenchus_device.name=自动反诘装置
+metaitem.auto_elenchus_device.tooltip=我唯一所知之事，乃我一无所知
+metaitem.elucidator_of_four_causes.name=四因阐释器
+metaitem.elucidator_of_four_causes.tooltip=戏拟形式，攫取质料。虚构动力，欺瞒目的。
+metaitem.symptomatic_vis_data_link.name=意志数据链
+metaitem.symptomatic_vis_data_link.tooltip=不能听命于自己者，就要受命于他人
+metaitem.needle_of_mystic_interpellation.name=密契询唤针
+metaitem.needle_of_mystic_interpellation.tooltip=绝对者将谁唤作天使，谁便背对绝对飞离天堂
+metaitem.cogito_AED.name=我思除颤仪
+metaitem.cogito_AED.tooltip=我思必须包含我的一切表象
+metaitem.ball_in_itself.name=自在球
+metaitem.ball_in_itself.tooltip=这里有玫瑰，便在这里起舞罢
+
 metaitem.stone_of_philosopher_1.name=§7贤者之石（黑土）§r
 metaitem.stone_of_philosopher_1.tooltip=§7黑土之仪，拾阶而上§r
 metaitem.stone_of_philosopher_2.name=§f贤者之石（白垩）§r

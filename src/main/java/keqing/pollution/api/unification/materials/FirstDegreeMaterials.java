@@ -9,8 +9,7 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
-import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
-import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.*;
 import static gregtech.api.util.GTUtility.gregtechId;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
@@ -248,6 +247,33 @@ public class FirstDegreeMaterials {
 				.flags(GENERATE_DENSE,GENERATE_FRAME,GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
 
+		//魔法超导线路
+		//LK-99粗胚粉、灌魔超导液、初阶神秘超导体、高阶神秘超导体
+		PollutionMaterials.crude_lk_99 = new Material.Builder(getMaterialsId(), gregtechId("crude_lk_99"))
+				.color(0x808080)
+				.ingot().fluid()
+				.components(Lead, 6, Copper, 4, Phosphate, 6, Oxygen, 1)
+				.flags(DECOMPOSITION_BY_CENTRIFUGING)
+				.iconSet(BRIGHT)
+				.blast(2700)
+				.build();
+		PollutionMaterials.magical_superconductive_liquid = new Material.Builder(getMaterialsId(), gregtechId("magical_superconductive_liquid"))
+				.color(0x9C039C)
+				.fluid()
+				.build();
+		PollutionMaterials.basic_thaumic_superconductor = new Material.Builder(getMaterialsId(), gregtechId("basic_thaumic_superconductor"))
+				.color(0xC6B3C6)
+				.ingot().fluid()
+				.iconSet(BRIGHT)
+				.cableProperties(GTValues.V[4], 8, 0, true)
+				.build();
+		PollutionMaterials.advanced_thaumic_superconductor = new Material.Builder(getMaterialsId(), gregtechId("advanced_thaumic_superconductor"))
+				.color(0xDDFF6E)
+				.ingot().fluid()
+				.iconSet(BRIGHT)
+				.cableProperties(GTValues.V[8], 8, 0, true)
+				.build();
+
 		//高级合金
 		//星辰物质
 		//阿弗纳斯之血、光风霁月琥珀金
@@ -276,12 +302,16 @@ public class FirstDegreeMaterials {
 		//#TODO 厂妹要做的 1.换颜色 2.加组分
 		BetweenStone= new Material.Builder(getMaterialsId(), gregtechId("betweenstone"))
 				.dust()
-				.color(0x211b14)
+				.color(0x336600)
+				.components(SiliconDioxide, 13, Calcite, 7, AluminiumSulfite, 4, Water, 3, Pyrite, 2, infused_earth, 1)
+				.flags(DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
 
 		PitStone= new Material.Builder(getMaterialsId(), gregtechId("pitstone"))
 				.dust()
-				.color(0x211b14)
+				.color(0x4F540A)
+				.components(Alunite, 10, Quartzite, 8, Biotite, 6, Water, 3, infused_earth, 2, infused_water, 1)
+				.flags(DECOMPOSITION_BY_CENTRIFUGING)
 				.build();
 	}
 }
