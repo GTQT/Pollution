@@ -131,11 +131,11 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(Pollution_TAB);
 
 		//过滤器注册（5个）
-		PollutionMetaItems.FILTER_MKI = this.addItem(210, "filter.i").setMaxStackSize(8).addComponents(new FilterBehavior(2400000, 1, PollutionMaterials.infused_earth)).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.FILTER_MKII = this.addItem(211, "filter.ii").setMaxStackSize(8).addComponents(new FilterBehavior(3600000, 2, PollutionMaterials.infused_water)).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.FILTER_MKIII = this.addItem(212, "filter.iii").setMaxStackSize(8).addComponents(new FilterBehavior(4800000, 3, PollutionMaterials.syrmorite)).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.FILTER_MKIV = this.addItem(213, "filter.iv").setMaxStackSize(8).addComponents(new FilterBehavior(6400000, 4, PollutionMaterials.thaumium)).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.FILTER_MKV = this.addItem(214, "filter.v").setMaxStackSize(8).addComponents(new FilterBehavior(7200000, 5, PollutionMaterials.octine)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.FILTER_MKI = this.addItem(210, "filter.i").setMaxStackSize(8).addComponents(new FilterBehavior(240000, 1, PollutionMaterials.infused_earth)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.FILTER_MKII = this.addItem(211, "filter.ii").setMaxStackSize(8).addComponents(new FilterBehavior(360000, 2, PollutionMaterials.infused_water)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.FILTER_MKIII = this.addItem(212, "filter.iii").setMaxStackSize(8).addComponents(new FilterBehavior(480000, 3, PollutionMaterials.syrmorite)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.FILTER_MKIV = this.addItem(213, "filter.iv").setMaxStackSize(8).addComponents(new FilterBehavior(640000, 4, PollutionMaterials.thaumium)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.FILTER_MKV = this.addItem(214, "filter.v").setMaxStackSize(8).addComponents(new FilterBehavior(720000, 5, PollutionMaterials.octine)).setCreativeTabs(Pollution_TAB);
 		
 		//塔罗牌
 		PollutionMetaItems.TEST_ITEM = this.addItem(300, "test_item").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
