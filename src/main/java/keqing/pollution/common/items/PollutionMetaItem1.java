@@ -103,6 +103,23 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		//封装灵气节点
 		PollutionMetaItems.PACKAGED_AURA_NODE = this.addItem(100, "packaged_aura_node").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
 
+		//魔法元件 理式核心=马达
+		//太一燃素瓶=泵
+		//自动反诘装置=活塞
+		//四因阐释器=机械臂
+		//vis症候数据链=传送带
+		//密契询唤针=发射器
+		//我思除颤仪=传感器
+		//自在球=力场发生器
+		PollutionMetaItems.CORE_OF_IDEA = this.addItem(101, "core_of_idea").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BOTTLE_OF_PHLOGISTONIC_ONENESS = this.addItem(102, "bottle_of_phlogistonic_oneness").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.AUTO_ELENCHUS_DEVICE = this.addItem(103, "auto_elenchus_device").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.ELUCIDATOR_OF_FOUR_CAUSES = this.addItem(104, "elucidator_of_four_causes").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK = this.addItem(105, "symptomatic_vis_data_link").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.NEEDLE_OF_MYSTIC_INTERPELLATION = this.addItem(106, "needle_of_mystic_interpellation").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.COGITO_AED = this.addItem(107, "cogito_AED").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BALL_IN_ITSELF = this.addItem(108, "ball_in_itself").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+
 		//贤者之石
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_1 = this.addItem(150, "stone_of_philosopher_1").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_2 = this.addItem(151, "stone_of_philosopher_2").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);

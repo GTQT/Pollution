@@ -62,6 +62,16 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_MAX;
 
 	public static MetaItem<?>.MetaValueItem PACKAGED_AURA_NODE;
+
+	public static MetaItem<?>.MetaValueItem CORE_OF_IDEA;
+	public static MetaItem<?>.MetaValueItem BOTTLE_OF_PHLOGISTONIC_ONENESS;
+	public static MetaItem<?>.MetaValueItem AUTO_ELENCHUS_DEVICE;
+	public static MetaItem<?>.MetaValueItem ELUCIDATOR_OF_FOUR_CAUSES;
+	public static MetaItem<?>.MetaValueItem SYMPTOMATIC_VIS_DATA_LINK;
+	public static MetaItem<?>.MetaValueItem NEEDLE_OF_MYSTIC_INTERPELLATION;
+	public static MetaItem<?>.MetaValueItem COGITO_AED;
+	public static MetaItem<?>.MetaValueItem BALL_IN_ITSELF;
+
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_1;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_2;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_3;

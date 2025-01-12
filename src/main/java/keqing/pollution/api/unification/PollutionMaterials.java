@@ -71,6 +71,11 @@ public class PollutionMaterials {
 	public static Material starrymansus;
 	public static Material blood_of_avernus;
 	public static Material iizunamaru_electrum;
+	//超导线
+	public static Material crude_lk_99;
+	public static Material magical_superconductive_liquid;
+	public static Material basic_thaumic_superconductor;
+	public static Material advanced_thaumic_superconductor;
 	//man what can I say
 	public static Material kobemetal;
 	//催化剂

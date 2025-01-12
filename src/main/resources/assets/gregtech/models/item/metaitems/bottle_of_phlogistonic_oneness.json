@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pollution:items/metaitems/magic.components/bottle_of_phlogistonic_oneness"
+  }
+}
