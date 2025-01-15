@@ -161,6 +161,13 @@ metaitem.coking_catalyst_core.tooltip="§8§lThe Tar Marches§r"
 metaitem.evolution_catalyst_core.tooltip=§5§lMang Changes§r
 
 metaitem.vis_checker.name=Vis Checker
+metaitem.pesticide.empty.name=Empty Pesticide
+metaitem.pesticide.full.name=Pesticide
+metaitem.devay_pill.empty.name=Empty Devay Pill
+metaitem.devay_pill.1.name=Devay Pill (1)
+metaitem.devay_pill.5.name=Devay Pill (5)
+metaitem.devay_pill.10.name=Devay Pill (10)
+metaitem.devay_pill.20.name=Devay Pill (20)
 
 metaitem.filter.i.name=空气过滤器滤芯I
 metaitem.filter.ii.name=空气过滤器滤芯II

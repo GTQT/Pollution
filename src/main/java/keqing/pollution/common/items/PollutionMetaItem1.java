@@ -5,9 +5,7 @@ import gregtech.api.items.metaitem.StandardMetaItem;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 import keqing.pollution.api.unification.PollutionMaterials;
-import keqing.pollution.common.items.behaviors.FilterBehavior;
-import keqing.pollution.common.items.behaviors.Tarots;
-import keqing.pollution.common.items.behaviors.VisCheckerBehavior;
+import keqing.pollution.common.items.behaviors.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -18,9 +16,10 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Objects;
 
-import static gregtech.api.unification.material.Materials.*;
 import static keqing.pollution.common.CommonProxy.Pollution_TAB;
 import static keqing.pollution.common.CommonProxy.Pollution_TAROT;
+import static keqing.pollution.common.items.PollutionMetaItems.DEVAY_PILL_EMPTY;
+import static keqing.pollution.common.items.PollutionMetaItems.PESTICIDE_EMPTY;
 
 public class PollutionMetaItem1 extends StandardMetaItem {
 
@@ -129,6 +128,17 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 
 		//实用物品
 		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(Pollution_TAB);
+
+		//杀虫剂
+		PollutionMetaItems.PESTICIDE_EMPTY = addItem(201, "pesticide.empty").setMaxStackSize(1).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.PESTICIDE= this.addItem(202, "pesticide.full").setMaxStackSize(1).addComponents(new PesticideBehaviour(PESTICIDE_EMPTY.getStackForm(),512)).setCreativeTabs(Pollution_TAB);
+		//理智回复药
+		PollutionMetaItems.DEVAY_PILL_EMPTY = addItem(203, "devay_pill.empty").setMaxStackSize(1).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.DEVAY_PILL_1= this.addItem(204, "devay_pill.1").setMaxStackSize(1).addComponents(new DevayPillBehaviour(5,ItemStack.EMPTY,1)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.DEVAY_PILL_5= this.addItem(205, "devay_pill.5").setMaxStackSize(1).addComponents(new DevayPillBehaviour(5,DEVAY_PILL_EMPTY.getStackForm(),5)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.DEVAY_PILL_10= this.addItem(206, "devay_pill.10").setMaxStackSize(1).addComponents(new DevayPillBehaviour(5,DEVAY_PILL_EMPTY.getStackForm(),10)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.DEVAY_PILL_20= this.addItem(207, "devay_pill.20").setMaxStackSize(1).addComponents(new DevayPillBehaviour(5,DEVAY_PILL_EMPTY.getStackForm(),20)).setCreativeTabs(Pollution_TAB);
+
 
 		//过滤器注册（5个）
 		PollutionMetaItems.FILTER_MKI = this.addItem(210, "filter.i").setMaxStackSize(8).addComponents(new FilterBehavior(240000, 1, PollutionMaterials.infused_earth)).setCreativeTabs(Pollution_TAB);

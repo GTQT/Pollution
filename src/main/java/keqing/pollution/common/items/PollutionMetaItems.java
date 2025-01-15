@@ -28,6 +28,13 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem TAROT_THE_FOOL;
 	public static MetaItem<?>.MetaValueItem TEST_ITEM;
 	public static MetaItem<?>.MetaValueItem VIS_CHECKER;
+	public static MetaItem<?>.MetaValueItem PESTICIDE_EMPTY;
+	public static MetaItem<?>.MetaValueItem PESTICIDE;
+	public static MetaItem<?>.MetaValueItem DEVAY_PILL_EMPTY;
+	public static MetaItem<?>.MetaValueItem DEVAY_PILL_1;
+	public static MetaItem<?>.MetaValueItem DEVAY_PILL_5;
+	public static MetaItem<?>.MetaValueItem DEVAY_PILL_10;
+	public static MetaItem<?>.MetaValueItem DEVAY_PILL_20;
     public static MetaItem<?>.MetaValueItem NANO_GOGGLES;
 	public static MetaItem<?>.MetaValueItem WING_QUANTUM;
 	public static MetaItem<?>.MetaValueItem WING_NANO;
