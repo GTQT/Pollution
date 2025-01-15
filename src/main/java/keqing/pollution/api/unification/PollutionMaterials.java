@@ -141,14 +141,20 @@ public class PollutionMaterials {
 	public static Material ferrous_chloride;
 	public static Material binding_metal;
 
+	//电池线
+	public static Material basic_battery_hull_alloy;
+	public static Material advanced_battery_hull_alloy;
+	public static Material basic_battery_content;
+	public static Material advanced_battery_content;
+
 	public PollutionMaterials() {
 	}
 
 	public static void register() {
 		PollutionElementMaterials.register();
-		FirstDegreeMaterials.register();
-		CatalystMaterials.register();
 		CompoundAspectMaterials.register();
 		KeqingChainMaterials.register();
+		FirstDegreeMaterials.register();
+		CatalystMaterials.register();
 	}
 }

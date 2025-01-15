@@ -4,10 +4,14 @@ import gregtech.api.unification.material.Material;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
 
+import static gregtech.api.unification.material.Materials.Caesium;
+import static gregtech.api.unification.material.Materials.Lithium;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
-import static gregtech.api.unification.material.info.MaterialIconSet.BRIGHT;
-import static gregtech.api.unification.material.info.MaterialIconSet.SHINY;
+import static gregtech.api.unification.material.info.MaterialIconSet.*;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
 import static gregtech.api.util.GTUtility.gregtechId;
+import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class PollutionElementMaterials {
 	private static int startId = 16000;
@@ -100,5 +104,6 @@ public class PollutionElementMaterials {
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.element(Elements.Bin)
 				.build();
+
 	}
 }

@@ -135,6 +135,9 @@ gregtech.material.terrasteel=泰拉钢
 gregtech.material.keqinggold=刻金
 metaitem.ingotKeqinggold.tooltip=§7醉舞纷绮席，清歌绕飞梁。心知不得语，却望玉衡星。§r
 
+gregtech.material.betweenstone=交错石
+gregtech.material.pitstone=麻纹石
+gregtech.material.cragrock=峭壁岩
 gregtech.material.lotus_dust=荷叶
 gregtech.material.ethyl_silicate=硅酸乙酯
 gregtech.material.rough_llp=LLP@SiO2粗胚
@@ -147,6 +150,10 @@ gregtech.material.crude_lk_99=LK-99粗胚
 gregtech.material.magical_superconductive_liquid=灌魔超导液
 gregtech.material.basic_thaumic_superconductor=初阶LK-99神秘超导体
 gregtech.material.advanced_thaumic_superconductor=高阶LK-99神秘超导体
+gregtech.material.basic_battery_hull_alloy=初阶秘术电池合金
+gregtech.material.advanced_battery_hull_alloy=高阶秘术电池合金
+gregtech.material.basic_battery_content=初阶秘术电池内容物
+gregtech.material.advanced_battery_content=高阶秘术电池内容物
 
 gregtech.material.kobemetal=牢大金
 metaitem.ingotKobemetal.tooltip=牢大，想你了

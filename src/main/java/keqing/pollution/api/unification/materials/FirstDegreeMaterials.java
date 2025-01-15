@@ -265,13 +265,51 @@ public class FirstDegreeMaterials {
 				.color(0xC6B3C6)
 				.ingot().fluid()
 				.iconSet(BRIGHT)
+				.flags(GENERATE_DENSE,GENERATE_FRAME,GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
 				.cableProperties(GTValues.V[4], 8, 0, true)
 				.build();
 		PollutionMaterials.advanced_thaumic_superconductor = new Material.Builder(getMaterialsId(), gregtechId("advanced_thaumic_superconductor"))
 				.color(0xDDFF6E)
 				.ingot().fluid()
 				.iconSet(BRIGHT)
+				.flags(GENERATE_DENSE,GENERATE_FRAME,GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
 				.cableProperties(GTValues.V[8], 8, 0, true)
+				.build();
+		//电池相关
+		PollutionMaterials.basic_battery_hull_alloy = new Material.Builder(getMaterialsId(), gregtechId("basic_battery_hull_alloy"))
+				.color(0x877886)
+				.ingot().fluid()
+				.iconSet(METALLIC)
+				.flags(DECOMPOSITION_BY_ELECTROLYZING)
+				.components(mansussteel, 4, ordolead, 1)
+				.flags(GENERATE_DENSE,GENERATE_FRAME,GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
+				.blast(2700, LOW)
+				.build();
+
+		PollutionMaterials.advanced_battery_hull_alloy = new Material.Builder(getMaterialsId(), gregtechId("advanced_battery_hull_alloy"))
+				.color(0xA4D4CD)
+				.ingot().fluid()
+				.iconSet(METALLIC)
+				.flags(DECOMPOSITION_BY_ELECTROLYZING)
+				.components(hyperdimensional_silver, 4, valonite, 1)
+				.flags(GENERATE_DENSE,GENERATE_FRAME,GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
+				.blast(5400, MID)
+				.build();
+
+		PollutionMaterials.basic_battery_content = new Material.Builder(getMaterialsId(), gregtechId("basic_battery_content"))
+				.color(0x687D9F)
+				.dust()
+				.iconSet(DULL)
+				.flags(DECOMPOSITION_BY_ELECTROLYZING)
+				.components(Lithium, 6, thaumium, 2, infused_energy, 1, infused_motion, 1)
+				.build();
+
+		PollutionMaterials.advanced_battery_content = new Material.Builder(getMaterialsId(), gregtechId("advanced_battery_content"))
+				.color(0xFFFFE2)
+				.dust()
+				.iconSet(BRIGHT)
+				.flags(DECOMPOSITION_BY_ELECTROLYZING)
+				.components(Caesium, 6, keqinggold, 2, infused_energy, 1, infused_motion, 1)
 				.build();
 
 		//高级合金
