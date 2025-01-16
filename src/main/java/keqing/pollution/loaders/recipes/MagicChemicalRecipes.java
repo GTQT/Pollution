@@ -1,9 +1,12 @@
 package keqing.pollution.loaders.recipes;
 
 import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
+import gregtech.api.GTValues;
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.items.MetaItems;
 import gregtechfoodoption.item.GTFOMetaItem;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GCYSMaterials;
@@ -19,6 +22,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import scala.Enumeration;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -30,12 +34,15 @@ import thaumcraft.api.items.ItemsTC;
 import java.util.ArrayList;
 
 import static gregicality.multiblocks.api.fluids.GCYMFluidStorageKeys.MOLTEN;
+import static gregtech.api.GTValues.*;
+import static gregtech.api.GTValues.VA;
 
 public class MagicChemicalRecipes {
 	public static void init() {
 		chemical();
 		kqt_chain();
 		superconductor_chain();
+		battery_chain();
 	}
 
 	private static void chemical() {
@@ -963,6 +970,158 @@ public class MagicChemicalRecipes {
 				.duration(2000)
 				.EUt(30720)
 				.blastFurnaceTemp(7200)
+				.buildAndRegister();
+	}
+	private static void battery_chain() {
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, PollutionMaterials.mansussteel, 4)
+				.input(OrePrefix.dust, PollutionMaterials.ordolead, 1)
+				.output(OrePrefix.dust, PollutionMaterials.basic_battery_hull_alloy, 5)
+				.circuitMeta(2)
+				.duration(400)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, PollutionMaterials.hyperdimensional_silver, 4)
+				.input(OrePrefix.dust, PollutionMaterials.valonite, 1)
+				.output(OrePrefix.dust, PollutionMaterials.advanced_battery_hull_alloy, 5)
+				.circuitMeta(2)
+				.duration(400)
+				.EUt(7680)
+				.buildAndRegister();
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Materials.Lithium, 6)
+				.input(OrePrefix.dust, PollutionMaterials.thaumium, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_motion.getFluid(1000))
+				.output(OrePrefix.dust, PollutionMaterials.basic_battery_content, 9)
+				.duration(800)
+				.EUt(120)
+				.buildAndRegister();
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, PollutionMaterials.keqinggold, 6)
+				.input(OrePrefix.dust, Materials.Caesium, 1)
+				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_motion.getFluid(1000))
+				.output(OrePrefix.dust, PollutionMaterials.basic_battery_content, 9)
+				.duration(800)
+				.EUt(7680)
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.basic_battery_hull_alloy, 4)
+				.input(OrePrefix.cableGtSingle, Materials.Tin)
+				.output(PollutionMetaItems.BATTERY_HULL_LV)
+				.duration(100)
+				.EUt(VA[LV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.basic_battery_hull_alloy, 8)
+				.input(OrePrefix.cableGtSingle, Materials.Copper, 2)
+				.output(PollutionMetaItems.BATTERY_HULL_MV)
+				.duration(100)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.basic_battery_hull_alloy, 12)
+				.input(OrePrefix.cableGtSingle, Materials.Gold, 4)
+				.output(PollutionMetaItems.BATTERY_HULL_HV)
+				.duration(100)
+				.EUt(VA[HV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.basic_battery_hull_alloy, 16)
+				.input(OrePrefix.cableGtSingle, Materials.Aluminium, 8)
+				.output(PollutionMetaItems.BATTERY_HULL_EV)
+				.duration(100)
+				.EUt(VA[EV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.advanced_battery_hull_alloy, 4)
+				.input(OrePrefix.plate, PollutionMaterials.basic_thaumic_superconductor)
+				.input(OrePrefix.cableGtSingle, Materials.Platinum)
+				.output(PollutionMetaItems.BATTERY_HULL_IV)
+				.duration(100)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.advanced_battery_hull_alloy, 8)
+				.input(OrePrefix.plate, PollutionMaterials.basic_thaumic_superconductor, 2)
+				.input(OrePrefix.cableGtSingle, Materials.YttriumBariumCuprate, 2)
+				.output(PollutionMetaItems.BATTERY_HULL_LuV)
+				.duration(100)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.advanced_battery_hull_alloy, 12)
+				.input(OrePrefix.plate, PollutionMaterials.advanced_thaumic_superconductor, 4)
+				.input(OrePrefix.cableGtSingle, Materials.Osmiridium, 4)
+				.output(PollutionMetaItems.BATTERY_HULL_ZPM)
+				.duration(100)
+				.EUt(VA[ZPM])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(OrePrefix.plate, PollutionMaterials.advanced_battery_hull_alloy, 16)
+				.input(OrePrefix.plate, PollutionMaterials.advanced_thaumic_superconductor, 8)
+				.input(OrePrefix.cableGtSingle, Materials.Tritanium, 8)
+				.output(PollutionMetaItems.BATTERY_HULL_UV)
+				.duration(100)
+				.EUt(VA[UV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_LV)
+				.input(OrePrefix.dust, PollutionMaterials.basic_battery_content, 2)
+				.output(PollutionMetaItems.MAGIC_BATTERY_LV)
+				.duration(100)
+				.EUt(VA[LV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_MV)
+				.input(OrePrefix.dust, PollutionMaterials.basic_battery_content, 4)
+				.output(PollutionMetaItems.MAGIC_BATTERY_MV)
+				.duration(100)
+				.EUt(VA[LV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_HV)
+				.input(OrePrefix.dust, PollutionMaterials.basic_battery_content, 8)
+				.output(PollutionMetaItems.MAGIC_BATTERY_HV)
+				.duration(100)
+				.EUt(VA[LV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_EV)
+				.input(OrePrefix.dust, PollutionMaterials.basic_battery_content, 16)
+				.output(PollutionMetaItems.MAGIC_BATTERY_EV)
+				.duration(100)
+				.EUt(VA[LV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_IV)
+				.input(OrePrefix.dust, PollutionMaterials.advanced_battery_content, 2)
+				.output(PollutionMetaItems.MAGIC_BATTERY_IV)
+				.duration(100)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_LuV)
+				.input(OrePrefix.dust, PollutionMaterials.advanced_battery_content, 4)
+				.output(PollutionMetaItems.MAGIC_BATTERY_LuV)
+				.duration(100)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_ZPM)
+				.input(OrePrefix.dust, PollutionMaterials.advanced_battery_content, 8)
+				.output(PollutionMetaItems.MAGIC_BATTERY_ZPM)
+				.duration(100)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		RecipeMaps.CANNER_RECIPES.recipeBuilder()
+				.input(PollutionMetaItems.BATTERY_HULL_UV)
+				.input(OrePrefix.dust, PollutionMaterials.advanced_battery_content, 16)
+				.output(PollutionMetaItems.MAGIC_BATTERY_UV)
+				.duration(100)
+				.EUt(VA[IV])
 				.buildAndRegister();
 	}
 }
