@@ -1,6 +1,7 @@
 package keqing.pollution.loaders.recipes.mods.TheBetweendLand;
 
 import gregtech.api.recipes.ModHandler;
+import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.stack.ItemMaterialInfo;
@@ -148,5 +149,25 @@ public class StoneLine {
         ModHandler.addShapedRecipe(true, "PoString", new ItemStack(Items.STRING),
                 "   ", "MMM", "   ",
                 'M', ItemMisc.EnumItemMisc.SWAMP_REED_ROPE.create(1));
+
+        //刷石
+        RecipeMaps.ROCK_BREAKER_RECIPES.recipeBuilder()
+                .notConsumable(new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                .outputs(new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                .EUt(960)
+                .duration(16)
+                .buildAndRegister();
+        RecipeMaps.ROCK_BREAKER_RECIPES.recipeBuilder()
+                .notConsumable(new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                .outputs(new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                .EUt(960)
+                .duration(16)
+                .buildAndRegister();
+        RecipeMaps.ROCK_BREAKER_RECIPES.recipeBuilder()
+                .notConsumable(new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                .outputs(new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))
+                .EUt(960)
+                .duration(16)
+                .buildAndRegister();
     }
 }

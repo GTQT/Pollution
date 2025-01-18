@@ -179,11 +179,19 @@ gregtech.material.advanced_substrate=高阶奇术基底
 
 gregtech.material.sentient_metal=感知
 metaitem.ingotSentientMetal.tooltip=远古之战于深幽地域逸散呢喃，Sentient终将得胜，一如既往。
-gregtech.material.starrymansus=星能漫宿
+gregtech.material.starrymansus=天璇漫宿
 gregtech.material.blood_of_avernus=阿弗纳斯之血
 metaitem.ingotBloodOfAvernus.tooltip=§c埃尔托瑞尔于今日堕入阿弗纳斯...§r
 gregtech.material.iizunamaru_electrum=光风霁月琥珀金
-metaitem.ingotIizunamaruElectrum.tooltip=星风「虹彩陆离乱舞」
+metaitem.ingotIizunamaruElectrum.tooltip=§7星风「虹彩陆离乱舞」§r
+gregtech.material.aetheric_dark_steel=太虚玄钢
+metaitem.ingotAethericDarkSteel.tooltip=§8致虚极，守静笃。万物并作，吾以观复。§r
+
+#污秽线
+gregtech.material.filth=污秽混合物
+gregtech.material.filth_water=极秽之水
+gregtech.material.void_water=虚液
+gregtech.material.void_material=虚空物质
 
 #刻金线
 gregtech.material.sulfo_plumbic_salt=硫铅盐
@@ -617,7 +625,7 @@ pollution.machine.magic_battery.tooltip=§5纵使神曈黯淡，亦可再造鸿�
 
 pollution.machine.magic_assembler.name=高等应用魔导秩构单元
 pollution.machine.magic_assembler.tooltip=大炮，已组装！谁是最大冲击波？
-pollution.machine.magic_assembler.tooltip.1=此机器作为次世代机械原型，根据核心等级获取额外耗时减免，每级5%
+pollution.machine.magic_assembler.tooltip.1=此机器作为次世代机械原型，根据核心等级获取额外耗时减免，每级5%%
 
 pollution.machine.primitive_mud_pump.name=原始泥泵
 pollution.machine.primitive_mud_pump.tooltip=污泥滚滚
@@ -785,6 +793,27 @@ pollution.machine.gt_essence_smelter_infusedcost=当前配方每刻源质消耗�
 pollution.machine.gt_essence_smelter_smeltingduration=本次熔炼时长：%s
 pollution.machine.gt_essence_smelter_timer=熔炼进度：%s
 pollution.machine.gt_essence_smelter_euttier=电压等级：%s
+
+#中控塔
+pollution.machine.central_vis_tower.name=星汐流雏灵蕴中控塔
+pollution.machine.central_vis_tower.tooltip.1=§a虽然名字里有个神字，但却不追求任何信仰；最擅长厄运转嫁游戏，却只将悲伤留给自己。§r
+pollution.machine.central_vis_tower.tooltip.2=维系一片区域内的灵气平衡，同时收集珍贵的高阶漫宿物质
+pollution.machine.central_vis_tower.tooltip.3=每正常消耗魔力工作20秒后，对控制范围内区块进行灵气平衡
+pollution.machine.central_vis_tower.tooltip.4=污染将被清除80%%，灵气将以区块灵气标准补充或消耗差值的80%%
+pollution.machine.central_vis_tower.tooltip.5=被清理的污染按照一定比例生成玄牝漫宿，被收集的灵气则化为素牡漫宿
+pollution.machine.central_vis_tower.tooltip.6=清理污染和生成灵气为机器产生负担，吸收灵气则降低负担
+pollution.machine.central_vis_tower.tooltip.7=中控塔范围内，无需过多处理的平衡区块，可为天璇漫宿的生成提供可能
+pollution.machine.central_vis_tower.tooltip.8=所有范围内区块均为平衡区块，则可生成天璇漫宿
+pollution.machine.central_vis_tower.tooltip.9=升级约束器框架以增大区块管控半径。升级魔力仓等级以提高漫宿收集量，同时魔力消耗每级翻倍
+pollution.machine.central_vis_tower.tooltip.10=管控区块半径=约束器框架等级-1，最低为1（9区块），最高为3（49区块）
+pollution.machine.central_vis_tower.tooltip.11=§c注意！中控塔管控范围内区块不能安置其他中控塔，否则两者都无法工作！§r
+pollution.machine.central_vis_tower_canwork=机器可否工作：%s
+pollution.machine.central_vis_tower_framelevel=约束器等级：%s
+pollution.machine.central_vis_tower_timer=清理进度：%s
+pollution.machine.central_vis_tower_manatier=魔力仓等级：%s
+pollution.machine.central_vis_tower_fluxcleaned=上次咒波清理量：%s
+pollution.machine.central_vis_tower_aurasupplemented=上次供给灵气量：%s
+pollution.machine.central_vis_tower_goodchunkamount=平衡区块数目：%s
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵

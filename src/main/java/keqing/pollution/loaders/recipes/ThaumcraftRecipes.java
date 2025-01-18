@@ -5,6 +5,8 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.blocks.BlockWireCoil;
+import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.items.GTQTMetaItems;
@@ -12,6 +14,7 @@ import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.block.metablocks.POCoilBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
@@ -662,6 +665,64 @@ public class ThaumcraftRecipes {
 				"blockSubstrate",
 				"blockTerrasteel",
 				PollutionMetaTileEntities.ESSENCE_COLLECTOR.getStackForm()));
+
+		//回收线圈
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_1))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.CUPRONICKEL))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_2))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.KANTHAL))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_3))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.NICHROME))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_4))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.RTM_ALLOY))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_5))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.HSS_G))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_6))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.NAQUADAH))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_7))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.TRINIUM))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
+		RecipeMaps.ARC_FURNACE_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.WIRE_COIL.getItemVariant(POCoilBlock.WireCoilType.COIL_LEVEL_8))
+				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(1440))
+				.outputs(MetaBlocks.WIRE_COIL.getItemVariant(BlockWireCoil.CoilType.TRITANIUM))
+				.EUt(120)
+				.duration(600)
+				.buildAndRegister();
 	}
 	//塔罗牌注魔合成
 	private static void tarots() {

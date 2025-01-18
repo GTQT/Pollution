@@ -71,6 +71,12 @@ public class PollutionMaterials {
 	public static Material starrymansus;
 	public static Material blood_of_avernus;
 	public static Material iizunamaru_electrum;
+	public static Material aetheric_dark_steel;
+	//污秽线
+	public static Material filth;
+	public static Material filth_water;
+	public static Material void_water;
+	public static Material void_material;
 	//超导线
 	public static Material crude_lk_99;
 	public static Material magical_superconductive_liquid;

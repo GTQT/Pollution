@@ -1,15 +1,17 @@
 package keqing.pollution.loaders.recipes;
 
-import com.cleanroommc.groovyscript.compat.mods.botania.Botania;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.api.util.Mods;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import vazkii.botania.common.item.ModItems;
+
+import static gregicality.multiblocks.api.fluids.GCYMFluidStorageKeys.MOLTEN;
 
 public class ForgeAlchemyRecipes {
 	public static void init() {
@@ -205,9 +207,9 @@ public class ForgeAlchemyRecipes {
 				.input(OrePrefix.dust, Materials.Copper, 4)
 				.input(OrePrefix.dust, Materials.Lead, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.chancedFluidOutput(PollutionMaterials.aertitanium.getFluid(2304), 3333, 500)
-				.chancedFluidOutput(PollutionMaterials.terracopper.getFluid(2304), 3333, 500)
-				.chancedFluidOutput(PollutionMaterials.ordolead.getFluid(2304), 3333, 500)
+				.chancedFluidOutput(PollutionMaterials.aertitanium.getFluid(MOLTEN, 2304), 3333, 500)
+				.chancedFluidOutput(PollutionMaterials.terracopper.getFluid(MOLTEN,2304), 3333, 500)
+				.chancedFluidOutput(PollutionMaterials.ordolead.getFluid(MOLTEN,2304), 3333, 500)
 				.circuitMeta(20)
 				.blastFurnaceTemp(3600)
 				.duration(2000)
@@ -220,9 +222,9 @@ public class ForgeAlchemyRecipes {
 				.input(OrePrefix.dust, Materials.Silver, 4)
 				.input(OrePrefix.dust, Materials.Aluminium, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.chancedFluidOutput(PollutionMaterials.ignissteel.getFluid(2304), 3333, 500)
-				.chancedFluidOutput(PollutionMaterials.aquasilver.getFluid(2304), 3333, 500)
-				.chancedFluidOutput(PollutionMaterials.perditioaluminium.getFluid(2304), 3333, 500)
+				.chancedFluidOutput(PollutionMaterials.ignissteel.getFluid(MOLTEN,2304), 3333, 500)
+				.chancedFluidOutput(PollutionMaterials.aquasilver.getFluid(MOLTEN,2304), 3333, 500)
+				.chancedFluidOutput(PollutionMaterials.perditioaluminium.getFluid(MOLTEN,2304), 3333, 500)
 				.circuitMeta(20)
 				.blastFurnaceTemp(3600)
 				.duration(2000)
@@ -255,7 +257,7 @@ public class ForgeAlchemyRecipes {
 				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
 				.input(OrePrefix.dust, Materials.StainlessSteel, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.fluidOutputs(PollutionMaterials.mansussteel.getFluid(2304))
+				.fluidOutputs(PollutionMaterials.mansussteel.getFluid(MOLTEN,2304))
 				.circuitMeta(20)
 				.blastFurnaceTemp(3600)
 				.duration(5000)
@@ -331,6 +333,52 @@ public class ForgeAlchemyRecipes {
 				.blastFurnaceTemp(4500)
 				.duration(1000)
 				.EUt(7680)
+				.buildAndRegister();
+		//光风霁月琥珀金
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(1440))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(420))
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(10000))
+				.input(OrePrefix.dust, PollutionMaterials.hyperdimensional_silver, 8)
+				.input(OrePrefix.dust, PollutionMaterials.keqinggold, 8)
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.fluidOutputs(PollutionMaterials.iizunamaru_electrum.getFluid(1152))
+				.circuitMeta(21)
+				.blastFurnaceTemp(7200)
+				.duration(12000)
+				.EUt(30720)
+				.buildAndRegister();
+		//太虚玄钢
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(1440))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(420))
+				.fluidInputs(PollutionMaterials.whitemansus.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(10000))
+				.input(OrePrefix.dust, GTQTMaterials.VoidMetal, 8)
+				.input(OrePrefix.dust, PollutionMaterials.ElvenElementium, 8)
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.fluidOutputs(PollutionMaterials.aetheric_dark_steel.getFluid(1152))
+				.circuitMeta(21)
+				.blastFurnaceTemp(7200)
+				.duration(12000)
+				.EUt(30720)
+				.buildAndRegister();
+		//阿弗纳斯之血
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(1440))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(420))
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(10000))
+				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
+				.input(OrePrefix.dust, GTQTMaterials.VoidMetal, 8)
+				.input(OrePrefix.dust, PollutionMaterials.octine, 8)
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.fluidOutputs(PollutionMaterials.blood_of_avernus.getFluid(1152))
+				.circuitMeta(21)
+				.blastFurnaceTemp(7200)
+				.duration(12000)
+				.EUt(30720)
 				.buildAndRegister();
 	}
 }

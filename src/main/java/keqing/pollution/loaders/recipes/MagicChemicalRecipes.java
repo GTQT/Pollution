@@ -43,6 +43,7 @@ public class MagicChemicalRecipes {
 		kqt_chain();
 		superconductor_chain();
 		battery_chain();
+		filth_chain();
 	}
 
 	private static void chemical() {
@@ -1124,4 +1125,63 @@ public class MagicChemicalRecipes {
 				.EUt(VA[IV])
 				.buildAndRegister();
 	}
+
+	private static void filth_chain() {
+		//魔导催化 污秽
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.input(OrePrefix.dust, Materials.Netherrack, 6)
+				.input(OrePrefix.dust, Materials.Endstone)
+				.input(OrePrefix.dust, PollutionMaterials.BetweenStone)
+				.fluidInputs(PollutionMaterials.infused_taint.getFluid(1000))
+				.output(OrePrefix.dust, PollutionMaterials.filth, 9)
+				.duration(800)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.input(OrePrefix.dust, PollutionMaterials.filth, 9)
+				.fluidInputs(PollutionMaterials.infused_death.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_dark.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.filth_water.getFluid(11000))
+				.duration(800)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.filth_water.getFluid(1000))
+				.fluidOutputs(GTQTMaterials.Magic.getFluid(800))
+				.fluidOutputs(PollutionMaterials.infused_taint.getFluid(100))
+				.fluidOutputs(PollutionMaterials.void_water.getFluid(100))
+				.duration(180)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.void_water.getFluid(1000))
+				.output(OrePrefix.dust, PollutionMaterials.void_material)
+				.fluidOutputs(GTQTMaterials.Richmagic.getFluid(800))
+				.fluidOutputs(PollutionMaterials.infused_taint.getFluid(100))
+				.fluidOutputs(Materials.Water.getFluid(100))
+				.duration(1980)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.fluidInputs(Materials.Iron.getFluid(576))
+				.fluidInputs(PollutionMaterials.infused_void.getFluid(576))
+				.input(ItemsTC.voidSeed, 4)
+				.input(OrePrefix.dust, PollutionMaterials.void_material)
+				.output(OrePrefix.dust, GTQTMaterials.VoidMetal, 4)
+				.duration(2400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_GREENHOUSE_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
+				.fluidInputs(PollutionMaterials.infused_void.getFluid(2304))
+				.input(Items.WHEAT_SEEDS, 64)
+				.input(OrePrefix.dust, PollutionMaterials.void_material)
+				.output(ItemsTC.voidSeed, 4)
+				.duration(2400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+	}
+
 }
