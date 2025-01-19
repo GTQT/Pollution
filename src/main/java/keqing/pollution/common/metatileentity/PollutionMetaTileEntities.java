@@ -4,17 +4,12 @@ import gregtech.api.GTValues;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
-import gregtech.api.metatileentity.multiblock.FuelMultiblockController;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.util.GTUtility;
-import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.client.textures.POTextures;
@@ -31,7 +26,6 @@ import keqing.pollution.common.metatileentity.single.*;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
-import static keqing.gtqtcore.api.GTQTValue.gtqtcoreId;
 import static keqing.pollution.client.textures.POTextures.*;
 
 public class PollutionMetaTileEntities {
@@ -97,12 +91,15 @@ public class PollutionMetaTileEntities {
 	//原始设备
 	public static MetaTileEntityPrimitiveMudPump PRIMITIVE_MUD_PUMP;
 	public static MetaTileEntityStove PRIMITIVE_STOVE;
+
 	public static final WorkableTieredMetaTileEntity[] FLUX_PROMOTED_FUEL_CELL = new WorkableTieredMetaTileEntity[5];
 	public static final TieredMetaTileEntity[] MAGIC_ENERGY_ABSORBER = new TieredMetaTileEntity[5];
 	public static final TieredMetaTileEntity[] SMALL_NODE_GENERATOR =new TieredMetaTileEntity[4];
 	public static MetaTileEntityMegaManaTurbine MEGA_MANA_TURBINE;
 	public static MetaTileEntityLargeTurbine LARGE_MANA_TURBINE;
 	public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
+	public static MetaTileEntityCentralVisTower CENTRAL_VIS_TOWER;
+	public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
 
 	//
 	public static MetaTileEntitySourceCharge SOURCE_CHARGE;
@@ -225,6 +222,8 @@ public class PollutionMetaTileEntities {
 		BOT_GAS_COLLECTOR = registerMetaTileEntity(15858, new MetaTileEntityBotGasCollector(gtqtcoreId("bot_gas_collector")));
 		GT_ESSENCE_SMELTER = registerMetaTileEntity(15859, new MetaTileEntityGtEssenceSmelter(gtqtcoreId("gt_essence_smelter")));
 		BOT_VACUUM_FREEZER = registerMetaTileEntity(15860, new MetaTileEntityBotVacuumFreezer(gtqtcoreId("bot_vacuum_freezer")));
+		CENTRAL_VIS_TOWER = registerMetaTileEntity(15861, new MetaTileEntityCentralVisTower(gtqtcoreId("central_vis_tower")));
+		BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(15862, new MetaTileEntityBotCircuitAssembler(gtqtcoreId("bot_circuit_assembler")));
 
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));
@@ -261,7 +260,8 @@ public class PollutionMetaTileEntities {
 				PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
 				POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
-
 		SOURCE_CHARGE=registerMetaTileEntity(16150,new MetaTileEntitySourceCharge(gtqtcoreId("source_charge")));
+
+
 	}
 }

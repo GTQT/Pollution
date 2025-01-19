@@ -2,6 +2,7 @@ package keqing.pollution.api.unification.materials;
 
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.properties.ToolProperty;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -313,22 +314,31 @@ public class FirstDegreeMaterials {
 				.build();
 
 		//高级合金
-		//星辰物质
-		//阿弗纳斯之血、光风霁月琥珀金
+		//太虚玄钢、阿弗纳斯之血、光风霁月琥珀金
+		PollutionMaterials.aetheric_dark_steel = new Material.Builder(getMaterialsId(), gregtechId("aetheric_dark_steel"))
+	            .color(0x041B4E)
+				.ingot().fluid()
+				.iconSet(SHINY)
+				.flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.blast(7200, HIGH)
+				.build()
+				.setFormula("䷜", true);
 		PollutionMaterials.blood_of_avernus = new Material.Builder(getMaterialsId(), gregtechId("blood_of_avernus"))
 				.color(0x5E0000)
 				.ingot().fluid()
 				.iconSet(BRIGHT)
-				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.blast(7200, HIGH)
 				.build()
 				.setFormula("♆", true);
 		PollutionMaterials.iizunamaru_electrum = new Material.Builder(getMaterialsId(), gregtechId("iizunamaru_electrum"))
 				.color(0xF0FFB2)
 				.ingot().fluid()
 				.iconSet(SHINY)
-				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.blast(7200, HIGH)
 				.build()
-				.setFormula("((Ag50(RnMa)m(AeIgAqTerOrdPe)n)Kqt)Sen4", true);
+				.setFormula("✦✧", true);
 
 		//交错基础材料：
 		//淤泥 Mud
@@ -356,6 +366,28 @@ public class FirstDegreeMaterials {
 				.color(0x4F540A)
 				.components(SiliconDioxide, 10, Quartzite, 8, Biotite, 6, Water, 3, infused_earth, 2, infused_water, 1)
 				.flags(DECOMPOSITION_BY_CENTRIFUGING)
+				.build();
+
+		//污秽之物化工线
+		PollutionMaterials.filth = new Material.Builder(getMaterialsId(), gregtechId("filth"))
+				.color(0x5C0101)
+				.dust()
+				.iconSet(DULL)
+				.components(Netherrack, 6, Endstone, 1, BetweenStone, 1, infused_taint, 1)
+				.build();
+		PollutionMaterials.filth_water = new Material.Builder(getMaterialsId(), gregtechId("filth_water"))
+				.color(0x392323)
+				.fluid()
+				.components(filth, 9, infused_death, 1, infused_dark, 1)
+				.build();
+		PollutionMaterials.void_water = new Material.Builder(getMaterialsId(), gregtechId("void_water"))
+				.color(0x837D7D)
+				.fluid()
+				.build();
+		PollutionMaterials.void_material = new Material.Builder(getMaterialsId(), gregtechId("void_material"))
+				.color(0xC3C3C3)
+				.dust()
+				.iconSet(SHINY)
 				.build();
 	}
 }
