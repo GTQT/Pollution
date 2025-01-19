@@ -823,9 +823,10 @@ pollution.mana_multiblock_with_electric.tooltip.1=此机器根据魔力仓等级
 pollution.mana_multiblock_with_electric.tooltip.2=1-3级魔力仓64并行，此后每升一次+64，超过8级直接获得512并行
 pollution.mana_multiblock_with_electric.tooltip.3=配方所需功率总是除以魔力仓等级，该等级每提升一次，魔力消耗翻倍
 
-#bot冰箱
 pollution.machine.bot_vacuum_freezer.name=超越秘术深蓝寒冬构阵
 pollution.machine.bot_vacuum_freezer.tooltip=§a面对着充满星光与默示的夜，我第一次向这个世界动人的冷漠敞开了心扉。§r
+pollution.machine.bot_circuit_assembler.name=高阶秘术电路装配中心
+pollution.machine.bot_circuit_assembler.tooltip=§a假如殉道者的鲜血将要流淌在台阶上，我们就必须先建造台阶。§r
 
 #
 itemGroup.Pollution=污染

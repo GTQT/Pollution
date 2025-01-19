@@ -99,6 +99,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityLargeTurbine LARGE_MANA_TURBINE;
 	public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
 	public static MetaTileEntityCentralVisTower CENTRAL_VIS_TOWER;
+	public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
 
 	//
 	public static MetaTileEntitySourceCharge SOURCE_CHARGE;
@@ -222,6 +223,7 @@ public class PollutionMetaTileEntities {
 		GT_ESSENCE_SMELTER = registerMetaTileEntity(15859, new MetaTileEntityGtEssenceSmelter(gtqtcoreId("gt_essence_smelter")));
 		BOT_VACUUM_FREEZER = registerMetaTileEntity(15860, new MetaTileEntityBotVacuumFreezer(gtqtcoreId("bot_vacuum_freezer")));
 		CENTRAL_VIS_TOWER = registerMetaTileEntity(15861, new MetaTileEntityCentralVisTower(gtqtcoreId("central_vis_tower")));
+		BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(15862, new MetaTileEntityBotCircuitAssembler(gtqtcoreId("bot_circuit_assembler")));
 
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));
