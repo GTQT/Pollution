@@ -4,7 +4,6 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.EnumValidationResult;
-import keqing.gtqtcore.api.recipes.properties.ELEProperties;
 import keqing.gtqtcore.api.utils.GTQTLog;
 import keqing.pollution.api.recipes.properties.ManaProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
