@@ -25,61 +25,61 @@ import net.minecraft.util.ResourceLocation;
 import static keqing.pollution.api.unification.PollutionMaterials.infused_instrument;
 
 public class MetaTileEntityMagicWireMill extends PORecipeMapMultiblockController {
-	public MetaTileEntityMagicWireMill(ResourceLocation metaTileEntityId) {
-		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.WIREMILL_RECIPES});
-	}
+    public MetaTileEntityMagicWireMill(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.WIREMILL_RECIPES});
+    }
 
-	@Override
-	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-		return new MetaTileEntityMagicWireMill(this.metaTileEntityId);
-	}
+    private static IBlockState getCasingState() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_WATER);
+    }
 
-	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
-				.aisle("XXXXX", "XXGGG", "XXXXX")
-				.aisle("XXXXX", "XACCG", "XXXXX")
-				.aisle("XIXXX", "XSGGG", "XFXXX")
-				.where('S', selfPredicate())
-				.where('X', states(getCasingState()).setMinGlobalLimited(25).or(autoAbilities()))
-				.where('C', states(getCasingState2()))
-				.where('G', states(getCasingState3()))
-				.where('I', abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
-				.where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
-				.where('A', air())
-				.where('#', any())
-				.build();
-	}
+    private static IBlockState getCasingState2() {
+        return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
+    }
 
-	@Override
-	public Material getMaterial() {
-		return infused_instrument;
-	}
+    private static IBlockState getCasingState3() {
+        return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.CAMINATED_GLASS);
+    }
 
-	private static IBlockState getCasingState() {
-		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_WATER);
-	}
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
+        return new MetaTileEntityMagicWireMill(this.metaTileEntityId);
+    }
 
-	private static IBlockState getCasingState2() {
-		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
-	}
+    @Override
+    protected BlockPattern createStructurePattern() {
+        return FactoryBlockPattern.start()
+                .aisle("XXXXX", "XXGGG", "XXXXX")
+                .aisle("XXXXX", "XACCG", "XXXXX")
+                .aisle("XIXXX", "XSGGG", "XFXXX")
+                .where('S', selfPredicate())
+                .where('X', states(getCasingState()).setMinGlobalLimited(25).or(autoAbilities()))
+                .where('C', states(getCasingState2()))
+                .where('G', states(getCasingState3()))
+                .where('I', abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
+                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
+                .where('A', air())
+                .where('#', any())
+                .build();
+    }
 
-	private static IBlockState getCasingState3() {
-		return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.CAMINATED_GLASS);
-	}
+    @Override
+    public Material getMaterial() {
+        return infused_instrument;
+    }
 
-	@Override
-	public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-		return POTextures.SPELL_PRISM_WATER;
-	}
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+        return POTextures.SPELL_PRISM_WATER;
+    }
 
-	@Override
-	protected OrientedOverlayRenderer getFrontOverlay() {
-		return Textures.HPCA_OVERLAY;
-	}
+    @Override
+    protected OrientedOverlayRenderer getFrontOverlay() {
+        return Textures.HPCA_OVERLAY;
+    }
 
-	@Override
-	public boolean canBeDistinct() {
-		return true;
-	}
+    @Override
+    public boolean canBeDistinct() {
+        return true;
+    }
 }

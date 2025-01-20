@@ -7,7 +7,6 @@ import gregtech.api.GTValues;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
-import gregtech.api.gui.widgets.ImageWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
@@ -16,6 +15,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
 import keqing.gtqtcore.api.utils.GTQTDateHelper;
+import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.POConfig;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
@@ -71,19 +71,18 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 229);
-        builder .bindPlayerInventory(entityPlayer.inventory, 146);
-        builder.dynamicLabel(7, 10, () -> "Vis Clear", 0x232323);
-        builder.dynamicLabel(7, 30, () -> "Tier: " + this.getTier(), 0x232323);
-        builder.dynamicLabel(7, 50, () -> "Vis: " + AuraHelper.getFlux(getWorld(), getPos()), 0x232323);
-        builder.widget(new SlotWidget(this.containerInventory, 0, 88 - 9, 70, true, true, true)
-                        .setBackgroundTexture(GuiTextures.SLOT)
-                        .setChangeListener(this::markDirty)
-                        .setTooltipText("请放入过滤器"))
-                .widget(new ImageWidget(88 - 9, 88, 18, 6, GuiTextures.BUTTON_POWER_DETAIL));
-        builder.widget((new AdvancedTextWidget(7, 96, this::addDisplayText, 2302755)).setMaxWidthLimit(181));
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
+        builder.dynamicLabel(28, 12, () -> "污染清洁机 等级：" + tier, 0xFFFFFF);
+        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, false, true)
+                .setBackgroundTexture(GuiTextures.SLOT)
+                .setTooltipText("输入槽位"));
+
+        builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
+        builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
         return builder.build(getHolder(), entityPlayer);
     }
+
 
     @Override
     public void update() {
@@ -135,11 +134,14 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
+        textList.add(new TextComponentString("当前状态: " + (isActive() ? "运行中" : "停止")));
+        textList.add(new TextComponentString("当前污染: " + AuraHelper.getFlux(getWorld(), getPos())));
+        textList.add(new TextComponentString("清理速率: " + VisTicks));
         textList.add(new TextComponentString("已经工作: " + GTQTDateHelper.getTimeFromTicks(workTime)));
         textList.add(new TextComponentString("距离损坏: " + GTQTDateHelper.getTimeFromTicks(TotalTick - workTime)));
         if (isActive())
-            textList.add(new TextComponentString("电极材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
-        if (isActive()) textList.add(new TextComponentString("极型等级: " + getFilterBehavior().getFilterTier()));
+            textList.add(new TextComponentString("过滤器材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
+        if (isActive()) textList.add(new TextComponentString("过滤等级: " + getFilterBehavior().getFilterTier()));
     }
 
     public boolean isActive() {
@@ -149,7 +151,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        Textures.POWER_SUBSTATION_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+        GTQTTextures.LARGE_ROCKET_ENGINE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Override

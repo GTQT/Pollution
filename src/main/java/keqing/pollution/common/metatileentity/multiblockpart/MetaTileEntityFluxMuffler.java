@@ -19,10 +19,12 @@ import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
 import gregtech.client.particle.VanillaParticleEffects;
+import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.utils.TooltipHelper;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.pollution.POConfig;
+import keqing.pollution.client.textures.POTextures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,13 +45,15 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     private final GTItemStackHandler inventory;
     private final double pollutionMultiplier;
     private boolean frontFaceFree;
+    private final int tier;
 
     public MetaTileEntityFluxMuffler(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.recoveryChance = Math.max(1, tier * 10);
         this.inventory = new GTItemStackHandler(this, (int) Math.pow(tier + 1, 2));
         this.frontFaceFree = false;
-        this.pollutionMultiplier = (100.0 - (tier-1) * 12.5) / 100.0 * POConfig.PollutionSystemSwitch.mufflerPollutionMultiplier;
+        this.pollutionMultiplier = (100.0 - (tier - 1) * 12.5) / 100.0 * POConfig.PollutionSystemSwitch.mufflerPollutionMultiplier;
+        this.tier = tier;
     }
 
     @Override
@@ -66,8 +70,8 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         }
         if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
             VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
-            if (getOffsetTimer() % 200 == 0&& POConfig.PollutionSystemSwitch.enablePollution) {
-                AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollutionMultiplier*0.05), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
+            if (getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution) {
+                AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollutionMultiplier * 0.05), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
             }
         }
     }
@@ -176,6 +180,18 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         super.writeToNBT(data);
         data.setTag("RecoveryInventory", inventory.serializeNBT());
         return data;
+    }
+
+    @Override
+    public ICubeRenderer getBaseTexture() {
+        MultiblockControllerBase controller = this.getController();
+        if (controller != null) {
+            return this.hatchTexture = controller.getBaseTexture(this);
+        } else if (this.hatchTexture != null) {
+            return this.hatchTexture != Textures.getInactiveTexture(this.hatchTexture) ? (this.hatchTexture = Textures.getInactiveTexture(this.hatchTexture)) : this.hatchTexture;
+        } else {
+            return POTextures.MAGIC_VOLTAGE_CASINGS[this.tier];
+        }
     }
 
     @Override

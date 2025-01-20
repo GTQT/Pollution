@@ -9,7 +9,6 @@ import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
-import gregtech.api.gui.widgets.ImageWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -27,6 +26,7 @@ import gregtech.common.blocks.BlockMultiblockCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
 import keqing.gtqtcore.api.utils.GTQTDateHelper;
+import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.POConfig;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
 import net.minecraft.block.state.IBlockState;
@@ -38,7 +38,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -129,19 +128,16 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     }
 
     @Override
-    protected ModularUI createUI(EntityPlayer entityPlayer) {
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 239);
-        builder.bindPlayerInventory(entityPlayer.inventory, 156);
-        builder.dynamicLabel(7, 10, () -> "Vis Clear", 0x232323);
-        builder.dynamicLabel(7, 30, () -> "Tier: " + this.tier, 0x232323);
-        builder.dynamicLabel(7, 50, () -> "Vis: " + AuraHelper.getFlux(getWorld(), getPos()), 0x232323);
-        builder.widget(new SlotWidget(this.containerInventory, 0, 88 - 9, 70, true, true, true)
-                        .setBackgroundTexture(GuiTextures.SLOT)
-                        .setChangeListener(this::markDirty)
-                        .setTooltipText("请放入过滤器"))
-                .widget(new ImageWidget(88 - 9, 88, 18, 6, GuiTextures.BUTTON_POWER_DETAIL));
-        builder.widget((new AdvancedTextWidget(7, 96, this::addDisplayText, 2302755)).setMaxWidthLimit(181));
-        return builder.build(getHolder(), entityPlayer);
+    protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
+        builder.dynamicLabel(28, 12, () -> "大型污染清理机 等级："+tier, 0xFFFFFF);
+        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, false, true)
+                .setBackgroundTexture(GuiTextures.SLOT)
+                .setTooltipText("输入槽位"));
+        builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180).setClickHandler(this::handleDisplayClick));
+        builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
+        return builder;
     }
 
     public boolean isItemValid(@Nonnull ItemStack stack) {
@@ -157,12 +153,15 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
-        textList.add(new TextComponentTranslation("pollution.flux_clear.tire", tier, VisTicks));
+        textList.add(new TextComponentString("当前状态: " + (isActive() ? "运行中" : "停止")));
+        textList.add(new TextComponentString("清理半径: " + tier));
+        textList.add(new TextComponentString("当前污染: " + AuraHelper.getFlux(getWorld(), getPos())));
+        textList.add(new TextComponentString("清理速率: " + VisTicks));
         textList.add(new TextComponentString("已经工作: " + GTQTDateHelper.getTimeFromTicks(workTime)));
         textList.add(new TextComponentString("距离损坏: " + GTQTDateHelper.getTimeFromTicks(TotalTick - workTime)));
         if (isActive())
-            textList.add(new TextComponentString("电极材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
-        if (isActive()) textList.add(new TextComponentString("极型等级: " + getFilterBehavior().getFilterTier()));
+            textList.add(new TextComponentString("过滤器材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
+        if (isActive()) textList.add(new TextComponentString("过滤等级: " + getFilterBehavior().getFilterTier()));
     }
 
     @Override
@@ -192,7 +191,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.POWER_SUBSTATION_OVERLAY;
+        return GTQTTextures.LARGE_ROCKET_ENGINE_OVERLAY;
     }
 
     @Override

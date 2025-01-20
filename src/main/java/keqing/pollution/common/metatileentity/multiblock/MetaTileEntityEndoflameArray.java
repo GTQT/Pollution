@@ -22,72 +22,62 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import vazkii.botania.api.item.IFloatingFlower;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
-import vazkii.botania.common.block.subtile.generating.SubTileEndoflame;
-import vazkii.botania.common.block.tile.TileFloatingSpecialFlower;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import static vazkii.botania.api.state.BotaniaStateProps.COLOR;
-import static vazkii.botania.api.state.BotaniaStateProps.SUBTILE_ID;
-
 public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl {
-    MetaTileEntityManaPoolHatch ManaPool=null;
-    private int num=0;
-    private int fireticks=0;
-    private int MAX_TICKS=1600000000;
+    MetaTileEntityManaPoolHatch ManaPool = null;
+    private int num = 0;
+    private int fireticks = 0;
+    private final int MAX_TICKS = 1600000000;
     private int speed = 0;
+
     public MetaTileEntityEndoflameArray(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
     }
 
     @Override
     protected void updateFormedValid() {
-        if(!this.isActive())
+        if (!this.isActive())
             setActive(true);
-        if(ManaPool!=null && !this.getWorld().isRemote && this.isWorkingEnabled())
-        {
-            if(this.inputInventory!=null && this.inputInventory.getSlots()>0)
-            {
-                num=0;
+        if (ManaPool != null && !this.getWorld().isRemote && this.isWorkingEnabled()) {
+            if (this.inputInventory != null && this.inputInventory.getSlots() > 0) {
+                num = 0;
                 for (int i = 0; i < inputInventory.getSlots(); i++) {
-                    if("endoflame".equals(ItemBlockSpecialFlower.getType(inputInventory.getStackInSlot(i))))
-                    {
+                    if ("endoflame".equals(ItemBlockSpecialFlower.getType(inputInventory.getStackInSlot(i)))) {
                         num += inputInventory.getStackInSlot(i).getCount();
                     }
                     ItemStack stack = inputInventory.getStackInSlot(i);
                     int time = TileEntityFurnace.getItemBurnTime(stack);
-                    if(time>0)
-                    {
-                        inputInventory.extractItem(i,1,false);
-                        this.fireticks+=time;
-                        this.fireticks = Math.min(fireticks,MAX_TICKS);
+                    if (time > 0) {
+                        inputInventory.extractItem(i, 1, false);
+                        this.fireticks += time;
+                        this.fireticks = Math.min(fireticks, MAX_TICKS);
                     }
                 }
             }
-            if(!ManaPool.isFull())
-            {
+            if (!ManaPool.isFull()) {
                 //产出最大速率
                 speed = num;
-                speed = Math.min(speed,fireticks);
+                speed = Math.min(speed, fireticks);
                 //削减燃烧时间 产出魔力
                 fireticks -= speed;
-                this.ManaPool.consumeMana((int)(speed*1.5));
+                this.ManaPool.consumeMana((int) (speed * 1.5));
             }
         }
     }
+
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
@@ -114,22 +104,28 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 .where(' ', any())
                 .build();
     }
+
     protected IBlockState getCasingState() {
         return PollutionMetaBlocks.BOT_BLOCK.getState(POBotBlock.BotBlockType.TERRA_4_CASING);
     }
+
     protected IBlockState getCasingState2() {
         return MetaBlocks.FRAMES.get(PollutionMaterials.keqinggold).getBlock(PollutionMaterials.keqinggold);
     }
+
     protected IBlockState getCasingState3() {
         return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.AAMINATED_GLASS);
     }
+
     protected IBlockState getCasingState4() {
         return ModBlocks.pylon.getDefaultState().withProperty(BotaniaStateProps.PYLON_VARIANT, PylonVariant.MANA);
     }
+
     protected IBlockState getCasingState5() {
-	    assert Blocks.DIRT != null;
-	    return Blocks.DIRT.getDefaultState();
+        assert Blocks.DIRT != null;
+        return Blocks.DIRT.getDefaultState();
     }
+
     protected IBlockState getCasingState6() {
         return ModBlocks.floatingFlower.getDefaultState();
     }
@@ -156,13 +152,12 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         for (Map.Entry<String, Object> battery : context.entrySet()) {
-             if(battery.getKey().startsWith("Multi")  ) {
+            if (battery.getKey().startsWith("Multi")) {
                 HashSet set = (HashSet) battery.getValue();
-                for (var s: set
+                for (var s : set
                 ) {
-                    if(s instanceof MetaTileEntityManaPoolHatch)
-                    {
-                        this.ManaPool = (MetaTileEntityManaPoolHatch)s;
+                    if (s instanceof MetaTileEntityManaPoolHatch) {
+                        this.ManaPool = (MetaTileEntityManaPoolHatch) s;
                     }
                 }
             }
@@ -176,9 +171,9 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
-        textList.add(new TextComponentString("火红莲搭载数量:"+num));
-        textList.add(new TextComponentString("每t魔力输出速度:"+speed));
-        textList.add(new TextComponentString("燃料缓存:"+fireticks));
+        textList.add(new TextComponentString("火红莲搭载数量:" + num));
+        textList.add(new TextComponentString("每t魔力输出速度:" + speed));
+        textList.add(new TextComponentString("燃料缓存:" + fireticks));
     }
 
     //tooltip

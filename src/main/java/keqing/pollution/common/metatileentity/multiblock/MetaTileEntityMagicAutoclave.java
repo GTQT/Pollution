@@ -24,63 +24,63 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_fly;
 
 public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockController {
 
-	public MetaTileEntityMagicAutoclave(ResourceLocation metaTileEntityId) {
-		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.AUTOCLAVE_RECIPES});
-	}
+    public MetaTileEntityMagicAutoclave(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.AUTOCLAVE_RECIPES});
+    }
 
-	@Override
-	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-		return new MetaTileEntityMagicAutoclave(this.metaTileEntityId);
-	}
+    private static IBlockState getCasingState() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_AIR);
+    }
 
-	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
-				.aisle("YYY", "YYY", "YYY")
-				.aisle("XXX", "XCX", "XXX")
-				.aisle("XXX", "XCX", "XXX")
-				.aisle("XXX", "XCX", "XXX")
-				.aisle("XXX", "XSX", "XFX")
-				.where('S', selfPredicate())
-				.where('X', states(getCasingState()).setMinGlobalLimited(15).or(autoAbilities()))
-				.where('C', states(getCasingState2()))
-				.where('Y', states(getCasingState3()))
-				.where('A', air())
-				.where('#', any())
-				.where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
-				.build();
-	}
+    private static IBlockState getCasingState2() {
+        return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
+    }
 
-	@Override
-	public Material getMaterial() {
-		return infused_fly;
-	}
+    private static IBlockState getCasingState3() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_WATER);
+    }
 
-	private static IBlockState getCasingState() {
-		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_AIR);
-	}
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
+        return new MetaTileEntityMagicAutoclave(this.metaTileEntityId);
+    }
 
-	private static IBlockState getCasingState2() {
-		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
-	}
+    @Override
+    protected BlockPattern createStructurePattern() {
+        return FactoryBlockPattern.start()
+                .aisle("YYY", "YYY", "YYY")
+                .aisle("XXX", "XCX", "XXX")
+                .aisle("XXX", "XCX", "XXX")
+                .aisle("XXX", "XCX", "XXX")
+                .aisle("XXX", "XSX", "XFX")
+                .where('S', selfPredicate())
+                .where('X', states(getCasingState()).setMinGlobalLimited(15).or(autoAbilities()))
+                .where('C', states(getCasingState2()))
+                .where('Y', states(getCasingState3()))
+                .where('A', air())
+                .where('#', any())
+                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
+                .build();
+    }
 
-	private static IBlockState getCasingState3() {
-		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_WATER);
-	}
+    @Override
+    public Material getMaterial() {
+        return infused_fly;
+    }
 
-	@Override
-	public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-		return POTextures.SPELL_PRISM_AIR;
-	}
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+        return POTextures.SPELL_PRISM_AIR;
+    }
 
-	@Override
-	protected OrientedOverlayRenderer getFrontOverlay() {
-		return Textures.HPCA_OVERLAY;
-	}
+    @Override
+    protected OrientedOverlayRenderer getFrontOverlay() {
+        return Textures.HPCA_OVERLAY;
+    }
 
-	@Override
-	public boolean canBeDistinct() {
-		return true;
-	}
+    @Override
+    public boolean canBeDistinct() {
+        return true;
+    }
 
 }

@@ -3,7 +3,6 @@ package keqing.pollution.common.metatileentity.multiblock;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.multiblocks.api.capability.IParallelMultiblock;
 import gregtech.api.capability.GregtechCapabilities;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.gui.GuiTextures;
@@ -13,7 +12,10 @@ import gregtech.api.gui.widgets.WidgetGroup;
 import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.*;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
+import gregtech.api.metatileentity.multiblock.RecipeMapSteamMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -30,16 +32,12 @@ import gregtech.client.utils.EffectRenderContext;
 import gregtech.client.utils.IBloomEffect;
 import gregtech.client.utils.RenderBufferHelper;
 import gregtech.common.ConfigHolder;
-import keqing.gtqtcore.client.textures.GTQTTextures;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityBaseWithControl;
-import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityPowerSupply;
 import keqing.pollution.api.capability.IManaMultiblock;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POManaPlate;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -62,33 +60,47 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
-
 import java.util.Collections;
 import java.util.List;
 
 import static net.minecraft.util.EnumFacing.Axis.Y;
 
 
-public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl implements IManaMultiblock , IBloomEffect, IFastRenderMetaTileEntity {
+public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl implements IManaMultiblock, IBloomEffect, IFastRenderMetaTileEntity {
+    protected static final int NO_COLOR = 0;
+    int speed = 0;
+    int speedMax = 1;
+    int updatetime;
+    boolean backA;
+    int RadomTime;
+    private int fusionRingColor = NO_COLOR;
+    private boolean registeredBloomRenderTicket;
+
     public MetaTileEntityManaPlate(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
     }
+
+    private static BloomType getBloomType() {
+        ConfigHolder.FusionBloom fusionBloom = ConfigHolder.client.shader.fusionBloom;
+        return BloomType.fromValue(fusionBloom.useShader ? fusionBloom.bloomStyle : -1);
+    }
+
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
         return new MetaTileEntityManaPlate(metaTileEntityId);
     }
+
     @Override
     public List<ITextComponent> getDataInfo() {
         return Collections.emptyList();
     }
 
-    int speed=0;
-    int speedMax=1;
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        speedMax=getTier();
+        speedMax = getTier();
     }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setInteger("speed", this.speed);
@@ -100,6 +112,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
         super.readFromNBT(data);
         this.speed = data.getInteger("speed");
     }
+
     @Override
     @Nonnull
     protected Widget getFlexButton(int x, int y, int width, int height) {
@@ -120,19 +133,16 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
     private void decrementThreshold(Widget.ClickData clickData) {
         this.speed = MathHelper.clamp(speed - 1, 0, speedMax);
     }
-    public int getRapid()
-    {
+
+    public int getRapid() {
         return speed;
     }
-    int updatetime;
-    boolean backA;
-    int RadomTime;
 
     @Override
     public void update() {
         super.update();
-        if(updatetime<10)updatetime++;
-        else updatetime=0;
+        if (updatetime < 10) updatetime++;
+        else updatetime = 0;
 
         if (!backA) if (RadomTime <= 10) RadomTime++;
         if (backA) if (RadomTime >= -10) RadomTime--;
@@ -147,7 +157,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
 
     @Override
     protected void updateFormedValid() {
-        if(speed==0)return;
+        if (speed == 0) return;
         final int xDir = this.getFrontFacing().getOpposite().getXOffset() * 5;
         final int zDir = this.getFrontFacing().getOpposite().getZOffset() * 5;
         for (int x = -5; x <= 5; ++x) {
@@ -155,65 +165,53 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
                 BlockPos poss = this.getPos().add(xDir + x, 0, zDir + y);
                 if (GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0)) instanceof MetaTileEntity) {
 
-                    MetaTileEntity mte = (MetaTileEntity) GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0));
+                    MetaTileEntity mte = GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0));
                     TileEntity te = this.getWorld().getTileEntity(poss.add(0, 1, 0));
 
-                    if(mte.isActive()&&!work())return;
+                    if (mte.isActive() && !work()) return;
                     //多方块
-                    if(mte instanceof MultiblockControllerBase){
-                        var mcb = ((MultiblockControllerBase) mte);
-                        if(mcb.isStructureFormed() && mcb.isValid())
-                        {
-                            final var inenergy =  mcb.getAbilities(MultiblockAbility.INPUT_ENERGY);
-                            if(inenergy.size()>0)
-                            {
+                    if (mte instanceof MultiblockControllerBase mcb) {
+                        if (mcb.isStructureFormed() && mcb.isValid()) {
+                            final var inenergy = mcb.getAbilities(MultiblockAbility.INPUT_ENERGY);
+                            if (inenergy.size() > 0) {
                                 long[] energys = new long[inenergy.size()];
                                 for (int j = 0; j < inenergy.size(); j++) {
                                     energys[j] = inenergy.get(j).getEnergyStored();
                                 }
-                                if(te instanceof ITickable)
-                                {
+                                if (te instanceof ITickable) {
                                     for (int i = 0; i < getRapid(); i++) {
                                         ((ITickable) te).update();
                                         for (int j = 0; j < inenergy.size(); j++) {
-                                            if(inenergy.get(j).getEnergyStored()<energys[j])
-                                                inenergy.get(j).addEnergy(energys[j]-inenergy.get(j).getEnergyStored());
+                                            if (inenergy.get(j).getEnergyStored() < energys[j])
+                                                inenergy.get(j).addEnergy(energys[j] - inenergy.get(j).getEnergyStored());
                                         }
                                     }
                                 }
-                            }else if(mte instanceof RecipeMapSteamMultiblockController)
-                            {
-                                var smte = ((RecipeMapSteamMultiblockController) mte);
+                            } else if (mte instanceof RecipeMapSteamMultiblockController smte) {
                                 final var fin = smte.getSteamFluidTank();
                                 int[] energys = new int[fin.getTanks()];
                                 for (int j = 0; j < fin.getTanks(); j++) {
                                     energys[j] = fin.getTankAt(j).getFluidAmount();
                                 }
-                                if(te instanceof ITickable)
-                                {
+                                if (te instanceof ITickable) {
                                     for (int i = 0; i < getRapid(); i++) {
                                         ((ITickable) te).update();
-                                        for (int j = 0; j < fin.getTanks(); j++)
-                                        {
-                                            if(fin.getTankAt(j).getFluidAmount()<energys[j])
-                                            {
-                                                fin.getTankAt(j).fill(Materials.Steam.getFluid(energys[j]-fin.getTankAt(j).getFluidAmount()),true);
+                                        for (int j = 0; j < fin.getTanks(); j++) {
+                                            if (fin.getTankAt(j).getFluidAmount() < energys[j]) {
+                                                fin.getTankAt(j).fill(Materials.Steam.getFluid(energys[j] - fin.getTankAt(j).getFluidAmount()), true);
                                             }
 
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 for (int i = 0; i < getRapid(); i++) {
                                     ((ITickable) te).update();
                                 }
                                 ((ITickable) te).update();
                             }
                         }
-                    }
-                    else{
+                    } else {
                         long cache = 0;
                         for (EnumFacing facing : EnumFacing.VALUES) {
                             if (mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing) instanceof IEnergyContainer) {
@@ -224,7 +222,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
                         if (te instanceof ITickable tickable) {
                             for (int i = 0; i < getRapid(); i++) {
                                 tickable.update();
-                                addEnergy(this.getWorld(),poss.add(0, 1, 0), cache);
+                                addEnergy(this.getWorld(), poss.add(0, 1, 0), cache);
                             }
                         }
                     }
@@ -232,9 +230,9 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
             }
         }
     }
-    public void addEnergy(World world, BlockPos pos, long cache)
-    {
-        MetaTileEntity mte = (MetaTileEntity) GTUtility.getMetaTileEntity(world, pos);
+
+    public void addEnergy(World world, BlockPos pos, long cache) {
+        MetaTileEntity mte = GTUtility.getMetaTileEntity(world, pos);
         for (EnumFacing facing : EnumFacing.VALUES) {
             if (mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing) instanceof IEnergyContainer) {
                 IEnergyContainer container1 = mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing);
@@ -244,6 +242,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
         }
 
     }
+
     @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
@@ -265,12 +264,13 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
                         .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1)))
                 .build();
     }
+
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("等级: %s |魔力： %s / %s", this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTier(), this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMana(), this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMaxMana()));
-            textList.add(new TextComponentTranslation("加速速率: %s |魔力消耗： %s", speed, Math.pow(2, speed-1)));
+            textList.add(new TextComponentTranslation("加速速率: %s |魔力消耗： %s", speed, Math.pow(2, speed - 1)));
         }
     }
 
@@ -280,30 +280,28 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
     }
 
     @Override
-    public boolean work()
-    {
-        return this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).consumeMana((int) Math.pow(2,speed-1));
+    public boolean work() {
+        return this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).consumeMana((int) Math.pow(2, speed - 1));
     }
 
     private IBlockState getCasingAState() {
         return PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_BASIC);
     }
+
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
         return POTextures.MANA_BASIC;
     }
+
     @Override
     public boolean hasMufflerMechanics() {
         return false;
     }
+
     @Override
     public boolean hasMaintenanceMechanics() {
         return false;
     }
-
-    protected static final int NO_COLOR = 0;
-    private int fusionRingColor = NO_COLOR;
-    private boolean registeredBloomRenderTicket;
 
     @Override
     protected boolean shouldShowVoidingModeButton() {
@@ -314,15 +312,16 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
         return this.fusionRingColor;
     }
 
-    protected boolean hasFusionRingColor() {
-        return true;
-    }
-
     protected void setFusionRingColor(int fusionRingColor) {
         if (this.fusionRingColor != fusionRingColor) {
             this.fusionRingColor = fusionRingColor;
         }
     }
+
+    protected boolean hasFusionRingColor() {
+        return true;
+    }
+
     @Override
     protected ICubeRenderer getFrontOverlay() {
         return Textures.DATA_BANK_OVERLAY;
@@ -344,11 +343,6 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
         }
     }
 
-    private static BloomType getBloomType() {
-        ConfigHolder.FusionBloom fusionBloom = ConfigHolder.client.shader.fusionBloom;
-        return BloomType.fromValue(fusionBloom.useShader ? fusionBloom.bloomStyle : -1);
-    }
-
     @Override
     @SideOnly(Side.CLIENT)
     public void renderBloomEffect(BufferBuilder buffer, EffectRenderContext context) {
@@ -362,26 +356,25 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl imple
         EnumFacing relativeBack = RelativeDirection.BACK.getRelativeFacing(getFrontFacing(), getUpwardsFacing(),
                 isFlipped());
 
-        if(isStructureFormed())
-        {
+        if (isStructureFormed()) {
 
             RenderBufferHelper.renderRing(buffer,
                     getPos().getX() - context.cameraX() + relativeBack.getXOffset() * 5 + 0.5,
-                    getPos().getY() - context.cameraY() + relativeBack.getYOffset() + updatetime*0.1,
+                    getPos().getY() - context.cameraY() + relativeBack.getYOffset() + updatetime * 0.1,
                     getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() * 5 + 0.5,
                     8, 0.1, 10, 20,
                     r, g, b, a, Y);
 
             RenderBufferHelper.renderRing(buffer,
                     getPos().getX() - context.cameraX() + relativeBack.getXOffset() * 5 + 0.5,
-                    getPos().getY() - context.cameraY() + relativeBack.getYOffset() + updatetime*0.1+1,
+                    getPos().getY() - context.cameraY() + relativeBack.getYOffset() + updatetime * 0.1 + 1,
                     getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() * 5 + 0.5,
                     8, 0.1, 10, 20,
                     r, g, b, a, Y);
 
             RenderBufferHelper.renderRing(buffer,
                     getPos().getX() - context.cameraX() + relativeBack.getXOffset() * 5 + 0.5,
-                    getPos().getY() - context.cameraY() + relativeBack.getYOffset() + updatetime*0.1+2,
+                    getPos().getY() - context.cameraY() + relativeBack.getYOffset() + updatetime * 0.1 + 2,
                     getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() * 5 + 0.5,
                     8, 0.1, 10, 20,
                     r, g, b, a, Y);

@@ -25,62 +25,62 @@ import net.minecraft.util.ResourceLocation;
 import static keqing.pollution.api.unification.PollutionMaterials.infused_earth;
 
 public class MetaTileEntityMagicMacerator extends PORecipeMapMultiblockController {
-	public MetaTileEntityMagicMacerator(ResourceLocation metaTileEntityId) {
-		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MACERATOR_RECIPES});
-	}
+    public MetaTileEntityMagicMacerator(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MACERATOR_RECIPES});
+    }
 
-	@Override
-	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-		return new MetaTileEntityMagicMacerator(this.metaTileEntityId);
-	}
+    private static IBlockState getCasingState() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_EARTH);
+    }
 
-	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
-				.aisle("XXXXX", "XXXXX", "XXXXX", "XXXXX")
-				.aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
-				.aisle("XXXXX", "XCCCX", "XCCCX", "XGGGX")
-				.aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
-				.aisle("XXIXX", "XXSXX", "XXFXX", "XXXXX")
-				.where('S', selfPredicate())
-				.where('X', states(getCasingState()).setMinGlobalLimited(55).or(autoAbilities()))
-				.where('C', states(getCasingState2()))
-				.where('G', states(getCasingState3()))
-				.where('I', abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
-				.where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
-				.where('#', air())
-				.build();
-	}
+    private static IBlockState getCasingState2() {
+        return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_0);
+    }
 
-	@Override
-	public Material getMaterial() {
-		return infused_earth;
-	}
+    private static IBlockState getCasingState3() {
+        return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.BAMINATED_GLASS);
+    }
 
-	private static IBlockState getCasingState() {
-		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_EARTH);
-	}
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
+        return new MetaTileEntityMagicMacerator(this.metaTileEntityId);
+    }
 
-	private static IBlockState getCasingState2() {
-		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_0);
-	}
+    @Override
+    protected BlockPattern createStructurePattern() {
+        return FactoryBlockPattern.start()
+                .aisle("XXXXX", "XXXXX", "XXXXX", "XXXXX")
+                .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
+                .aisle("XXXXX", "XCCCX", "XCCCX", "XGGGX")
+                .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
+                .aisle("XXIXX", "XXSXX", "XXFXX", "XXXXX")
+                .where('S', selfPredicate())
+                .where('X', states(getCasingState()).setMinGlobalLimited(55).or(autoAbilities()))
+                .where('C', states(getCasingState2()))
+                .where('G', states(getCasingState3()))
+                .where('I', abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
+                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
+                .where('#', air())
+                .build();
+    }
 
-	private static IBlockState getCasingState3() {
-		return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.BAMINATED_GLASS);
-	}
+    @Override
+    public Material getMaterial() {
+        return infused_earth;
+    }
 
-	@Override
-	public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-		return POTextures.SPELL_PRISM_EARTH;
-	}
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+        return POTextures.SPELL_PRISM_EARTH;
+    }
 
-	@Override
-	protected OrientedOverlayRenderer getFrontOverlay() {
-		return Textures.HPCA_OVERLAY;
-	}
+    @Override
+    protected OrientedOverlayRenderer getFrontOverlay() {
+        return Textures.HPCA_OVERLAY;
+    }
 
-	@Override
-	public boolean canBeDistinct() {
-		return true;
-	}
+    @Override
+    public boolean canBeDistinct() {
+        return true;
+    }
 }

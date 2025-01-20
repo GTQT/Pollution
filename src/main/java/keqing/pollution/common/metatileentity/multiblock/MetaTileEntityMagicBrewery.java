@@ -26,80 +26,78 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_water;
 
 public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController {
 
-	//我是神秘GCYM多方块 看我看我
+    //我是神秘GCYM多方块 看我看我
 
-	//这里是多方块的配方  RecipeMaps.BENDER_RECIPES, RecipeMaps.COMPRESSOR_RECIPES,
-	//                RecipeMaps.FORMING_PRESS_RECIPES, RecipeMaps.FORGE_HAMMER_RECIPES 都是配方喵
-	//你可以只写一种配方 也可以写很多喵
-	public MetaTileEntityMagicBrewery(ResourceLocation metaTileEntityId) {
-		super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
-				RecipeMaps.FLUID_HEATER_RECIPES});
-	}
+    //这里是多方块的配方  RecipeMaps.BENDER_RECIPES, RecipeMaps.COMPRESSOR_RECIPES,
+    //                RecipeMaps.FORMING_PRESS_RECIPES, RecipeMaps.FORGE_HAMMER_RECIPES 都是配方喵
+    //你可以只写一种配方 也可以写很多喵
+    public MetaTileEntityMagicBrewery(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
+                RecipeMaps.FLUID_HEATER_RECIPES});
+    }
 
+    //下边都是设置多方块外形材质的喵
+    private static IBlockState getCasingState() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_COLD);
+    }
 
-	//不要动
-	@Override
-	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-		return new MetaTileEntityMagicBrewery(this.metaTileEntityId);
-	}
+    private static IBlockState getCasingState2() {
+        return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
+    }
 
-	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
-				.aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#####")
-				.aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
-				.aisle("XXXXX", "XCPCX", "XAPAX", "XAPAX", "#XMX#")
-				.aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
-				.aisle("#XXX#", "#FSX#", "#XXX#", "#XXX#", "#####")
-				.where('S', selfPredicate())
-				.where('X', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
-				.where('C', states(getCasingState2()))
-				.where('P', states(getCasingState3()))
-				.where('A', states(getCasingState4()))
-				.where('#', any())
-				.where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-				.where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
-				.build();
-	}
+    private static IBlockState getCasingState3() {
+        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE);
+    }
 
-	//这里是多方块工作需要消耗的 元素
-	@Override
-	public Material getMaterial() {
-		return infused_water;
-	}
+    private static IBlockState getCasingState4() {
+        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
+    }
 
+    //不要动
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
+        return new MetaTileEntityMagicBrewery(this.metaTileEntityId);
+    }
 
-	//下边都是设置多方块外形材质的喵
-	private static IBlockState getCasingState() {
-		return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_COLD);
-	}
+    @Override
+    protected BlockPattern createStructurePattern() {
+        return FactoryBlockPattern.start()
+                .aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#####")
+                .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
+                .aisle("XXXXX", "XCPCX", "XAPAX", "XAPAX", "#XMX#")
+                .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
+                .aisle("#XXX#", "#FSX#", "#XXX#", "#XXX#", "#####")
+                .where('S', selfPredicate())
+                .where('X', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
+                .where('C', states(getCasingState2()))
+                .where('P', states(getCasingState3()))
+                .where('A', states(getCasingState4()))
+                .where('#', any())
+                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
+                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
+                .build();
+    }
 
-	private static IBlockState getCasingState2() {
-		return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_2);
-	}
+    //这里是多方块工作需要消耗的 元素
+    @Override
+    public Material getMaterial() {
+        return infused_water;
+    }
 
-	private static IBlockState getCasingState3() {
-		return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE);
-	}
+    //覆盖层材质 就是给IO渲染的材质
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+        return POTextures.SPELL_PRISM_COLD;
+    }
 
-	private static IBlockState getCasingState4() {
-		return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
-	}
+    //控制器的图形 比如传统的外观 或者聚变电脑的外观等等
+    @Override
+    protected OrientedOverlayRenderer getFrontOverlay() {
+        return Textures.HPCA_OVERLAY;
+    }
 
-	//覆盖层材质 就是给IO渲染的材质
-	@Override
-	public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-		return POTextures.SPELL_PRISM_COLD;
-	}
-
-	//控制器的图形 比如传统的外观 或者聚变电脑的外观等等
-	@Override
-	protected OrientedOverlayRenderer getFrontOverlay() {
-		return Textures.HPCA_OVERLAY;
-	}
-
-	@Override
-	public boolean canBeDistinct() {
-		return true;
-	}
+    @Override
+    public boolean canBeDistinct() {
+        return true;
+    }
 }

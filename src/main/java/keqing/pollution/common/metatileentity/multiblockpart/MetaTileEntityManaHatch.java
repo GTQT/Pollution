@@ -11,11 +11,15 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
+import keqing.pollution.client.textures.POTextures;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -27,13 +31,26 @@ import java.util.List;
 import java.util.Objects;
 
 public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch {
-    int mana=0;
+    int mana = 0;
     int MAX_MANA;
     int tier;
+
     public MetaTileEntityManaHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.tier=tier;
-        this.MAX_MANA= (int) (Math.pow(2,tier)*10000);
+        this.tier = tier;
+        this.MAX_MANA = (int) (Math.pow(2, tier) * 10000);
+    }
+
+    @Override
+    public ICubeRenderer getBaseTexture() {
+        MultiblockControllerBase controller = this.getController();
+        if (controller != null) {
+            return this.hatchTexture = controller.getBaseTexture(this);
+        } else if (this.hatchTexture != null) {
+            return this.hatchTexture != Textures.getInactiveTexture(this.hatchTexture) ? (this.hatchTexture = Textures.getInactiveTexture(this.hatchTexture)) : this.hatchTexture;
+        } else {
+            return POTextures.MAGIC_VOLTAGE_CASINGS[this.tier];
+        }
     }
 
     @Override
@@ -48,8 +65,9 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         builder.widget((new AdvancedTextWidget(7, 70, this::addDisplayText, 2302755)).setMaxWidthLimit(181));
         return builder.build(this.getHolder(), entityPlayer);
     }
+
     protected void addDisplayText(List<ITextComponent> textList) {
-        textList.add(new TextComponentString( "Mana: " + this.mana+" Max: " + this.MAX_MANA));
+        textList.add(new TextComponentString("Mana: " + this.mana + " Max: " + this.MAX_MANA));
     }
 
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
@@ -121,22 +139,21 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
     @Override
     public boolean consumeMana(int amount) {
-        if(mana>amount&&mana-amount>0)
-        {
-            mana-=amount;
+        if (mana > amount && mana - amount > 0) {
+            mana -= amount;
             return true;
         }
         return false;
     }
 
     public boolean isFull() {
-        return mana>=MAX_MANA;
+        return mana >= MAX_MANA;
     }
 
     public void receiveMana(int amount) {
 
-        if(!isFull())mana += amount * getTier();
-        this.mana = Math.min(this.mana,this.getMaxMana());
+        if (!isFull()) mana += amount * getTier();
+        this.mana = Math.min(this.mana, this.getMaxMana());
     }
 
     public MultiblockAbility<IManaHatch> getAbility() {

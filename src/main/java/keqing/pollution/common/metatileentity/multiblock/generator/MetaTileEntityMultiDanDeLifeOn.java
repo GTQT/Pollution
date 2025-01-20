@@ -204,7 +204,7 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
     }
 
     private static IBlockState getCasingBioPcb() {
-        return GTQTMetaBlocks.PCB_FACTORY_CASING.getState(BlockPCBFactoryCasing.PCBFactoryCasingType.BIOLOGICAL_STERILE_MACHINE_CASING);
+        return GTQTMetaBlocks.blockPCBFactoryCasing.getState(BlockPCBFactoryCasing.PCBFactoryCasingType.BIOLOGICAL_STERILE_MACHINE_CASING);
     }
 
     private static IBlockState getCasingManaPlate5() {

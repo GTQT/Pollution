@@ -17,14 +17,9 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
-import keqing.pollution.api.SourceMaterialItem;
-import keqing.pollution.api.utils.PollutionLog;
-import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.items.bauble.ItemBaubleBehavior;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -41,7 +36,6 @@ import javax.annotation.Nullable;
 
 import static gregtech.api.unification.material.Materials.Neutronium;
 import static keqing.pollution.api.utils.infusedFluidStack.STACK_MAP;
-import static keqing.pollution.common.items.PollutionMetaItems.BAUBLES_WATER_RING;
 
 public class MetaTileEntitySourceCharge extends MetaTileEntity {
     private final Material material = Neutronium;
@@ -56,17 +50,19 @@ public class MetaTileEntitySourceCharge extends MetaTileEntity {
         this.initializeInventory();
 
     }
+
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setTag("inventory", this.inventory.serializeNBT());
-        data.setTag("FluidInventory", ((FluidTank)this.fluidInventory).writeToNBT(new NBTTagCompound()));
+        data.setTag("FluidInventory", ((FluidTank) this.fluidInventory).writeToNBT(new NBTTagCompound()));
         return super.writeToNBT(data);
     }
 
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.inventory.deserializeNBT(data.getCompoundTag("inventory"));
-        ((FluidTank)this.fluidInventory).readFromNBT(data.getCompoundTag("FluidInventory"));
+        ((FluidTank) this.fluidInventory).readFromNBT(data.getCompoundTag("FluidInventory"));
     }
+
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntitySourceCharge(this.metaTileEntityId);
     }
@@ -112,9 +108,11 @@ public class MetaTileEntitySourceCharge extends MetaTileEntity {
             }
         }
     }
+
     public boolean isItemValid(@Nonnull ItemStack stack) {
         return ItemBaubleBehavior.getInstanceFor(stack) != null;
     }
+
     @Nullable
     private ItemBaubleBehavior getItemBaubleBehavior() {
         ItemStack stack = inventory.getStackInSlot(0);

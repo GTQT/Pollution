@@ -10,7 +10,9 @@ import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
+import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.Pollution;
+import keqing.pollution.api.metatileentity.POMetaTileEntitySingleTurbine;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -65,12 +67,10 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityMagicAlloyBlastSmelter MAGIC_ALLOY_BLAST;
 	public static MetaTileEntityEssenceCollector ESSENCE_COLLECTOR;
 	public static MetaTileEntityMagicFusionReactor MAGIC_FUSION_REACTOR;
-	public static TESTMetaTileEntityLargeAssembler TEST_MANA;
 	public static MetaTileEntityNodeProducer NODE_PRODUCER;
 	public static MetaTileEntityLargeNodeGenerator LARGE_NODE_GENERATOR;
 	public static MetaTileEntityNodeWasher NODE_WASHER;
 	public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
-	public static MetaTileEntityTankHatch[] TANK_HATCH = new MetaTileEntityTankHatch[1];
 	public static MetaTileEntityManaHatch[] MANA_HATCH = new MetaTileEntityManaHatch[14];
 	public static MetaTileEntityManaPoolHatch[] MANA_POOL_HATCH = new MetaTileEntityManaPoolHatch[14];
 	public static MetaTileEntityLargeTurbine LARGE_MAGIC_TURBINE;
@@ -148,14 +148,14 @@ public class PollutionMetaTileEntities {
 		MAGIC_FUSION_REACTOR = registerMetaTileEntity(15957, new MetaTileEntityMagicFusionReactor(gtqtcoreId("magic_fusion_reactor")));
 
 		MAGIC_TURBINE[0] = registerMetaTileEntity(15958,
-				new MetaTileEntitySingleTurbine(gtqtcoreId("magic_turbine.lv"), PORecipeMaps.MAGIC_TURBINE_FUELS,
-						Textures.POWER_SUBSTATION_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction));
+				new POMetaTileEntitySingleTurbine(gtqtcoreId("magic_turbine.lv"), PORecipeMaps.MAGIC_TURBINE_FUELS,
+						GTQTTextures.ROCKET_ENGINE_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction));
 		MAGIC_TURBINE[1] = registerMetaTileEntity(15959,
-				new MetaTileEntitySingleTurbine(gtqtcoreId("magic_turbine.mv"), PORecipeMaps.MAGIC_TURBINE_FUELS,
-						Textures.POWER_SUBSTATION_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction));
+				new POMetaTileEntitySingleTurbine(gtqtcoreId("magic_turbine.mv"), PORecipeMaps.MAGIC_TURBINE_FUELS,
+						GTQTTextures.ROCKET_ENGINE_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction));
 		MAGIC_TURBINE[2] = registerMetaTileEntity(15960,
-				new MetaTileEntitySingleTurbine(gtqtcoreId("magic_turbine.hv"), PORecipeMaps.MAGIC_TURBINE_FUELS,
-						Textures.POWER_SUBSTATION_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction));
+				new POMetaTileEntitySingleTurbine(gtqtcoreId("magic_turbine.hv"), PORecipeMaps.MAGIC_TURBINE_FUELS,
+						GTQTTextures.ROCKET_ENGINE_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction));
 
 		LARGE_MAGIC_TURBINE = registerMetaTileEntity(15961, new MetaTileEntityLargeTurbine(gtqtcoreId("large_turbine.magic"),
 				PORecipeMaps.MAGIC_TURBINE_FUELS, 4,
@@ -184,12 +184,6 @@ public class PollutionMetaTileEntities {
 					gtqtcoreId(String.format("vis_hatch.%s", GTValues.VN[tier])), tier));
 		}
 
-		for (int i = 0; i < TANK_HATCH.length; i++) {
-			int tier = GTValues.LV + i;
-			TANK_HATCH[i] = registerMetaTileEntity(16040 + i, new MetaTileEntityTankHatch(
-					gtqtcoreId(String.format("tank_hatch.%s", GTValues.VN[tier])), tier));
-		}
-
 		int kind;
 		for (kind = 1; kind <= 6; kind++) {
 			SOLAR_PLATE[kind * 3 - 3] = registerMetaTileEntity(16060 + kind * 3 - 3, new MetaTileEntitySolarPlate(
@@ -210,7 +204,6 @@ public class PollutionMetaTileEntities {
 			MANA_POOL_HATCH[i] = registerMetaTileEntity(15815 + i, new MetaTileEntityManaPoolHatch(gtqtcoreId(String.format("mana_pool_hatch.%s", GTValues.VN[tier])), tier));
 		}
 
-		TEST_MANA = registerMetaTileEntity(15850, new TESTMetaTileEntityLargeAssembler(gtqtcoreId("test")));
 		ENDOFLAME_ARRAY = registerMetaTileEntity(15851, new MetaTileEntityEndoflameArray(gtqtcoreId("endoflame_array")));
 
 		BOT_DISTILLERY = registerMetaTileEntity(15852, new MetaTileEntityBotDistillery(gtqtcoreId("bot_distillery")));
