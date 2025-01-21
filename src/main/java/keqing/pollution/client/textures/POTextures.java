@@ -49,6 +49,11 @@ public class POTextures {
 	public static SimpleOverlayRenderer MANA_4;
 	public static SimpleOverlayRenderer MANA_5;
 
+	public static SimpleOverlayRenderer HYPER_1;
+	public static SimpleOverlayRenderer HYPER_2;
+	public static SimpleOverlayRenderer HYPER_3;
+	public static SimpleOverlayRenderer HYPER_4;
+	public static SimpleOverlayRenderer HYPER_5;
 
 	public static void init() {
 		MAGIC_VOLTAGE_CASINGS = new SimpleSidedCubeRenderer[GTValues.V.length];
@@ -93,6 +98,11 @@ public class POTextures {
 		TERRA_4_CASING = new SimpleOverlayRenderer("botblock/terra_4_casing");
 		TERRA_5_CASING = new SimpleOverlayRenderer("botblock/terra_5_casing");
 		TERRA_6_CASING = new SimpleOverlayRenderer("botblock/terra_6_casing");
+		HYPER_1 = new SimpleOverlayRenderer("hyper/hyper_1");
+		HYPER_2 = new SimpleOverlayRenderer("hyper/hyper_2");
+		HYPER_3 = new SimpleOverlayRenderer("hyper/hyper_3");
+		HYPER_4 = new SimpleOverlayRenderer("hyper/hyper_4");
+		HYPER_5 = new SimpleOverlayRenderer("hyper/hyper_5");
 	}
 
 	public static void register(TextureMap textureMap) {

@@ -1,15 +1,12 @@
 package keqing.pollution.api.recipes;
 
 import gregtech.api.gui.GuiTextures;
+import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.builders.BlastRecipeBuilder;
-import gregtech.api.recipes.builders.FuelRecipeBuilder;
-import gregtech.api.recipes.builders.PrimitiveRecipeBuilder;
-import gregtech.api.recipes.builders.SimpleRecipeBuilder;
+import gregtech.api.recipes.builders.*;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.pollution.api.recipes.builder.ManaRecipesBuilder;
 import keqing.pollution.client.POSoundEvent;
-import vazkii.botania.api.lexicon.BotaniaTutorialStartEvent;
 
 public class PORecipeMaps {
 	public static final RecipeMap<FuelRecipeBuilder> DAN_DE_LIFE_ON =new RecipeMap<>("dan_de_life_on",2,2,2,
@@ -61,6 +58,10 @@ public class PORecipeMaps {
 			.setSlotOverlay(true, true, false, GuiTextures.FURNACE_OVERLAY_2)
 			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
 			.setSound(GTSoundEvents.FURNACE);
+
+	public static final RecipeMap<FusionRecipeBuilder> NODE_MAGIC_FUSION_RECIPES = new RecipeMap<>("node_magic_fusion", 0, 0, 2, 1, new FusionRecipeBuilder(), false)
+			.setProgressBar(GuiTextures.PROGRESS_BAR_FUSION, ProgressWidget.MoveType.HORIZONTAL)
+			.setSound(GTSoundEvents.ARC);
 
 	//////////////////////////////////////////
 	public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMap<>("mana_infusion_recipes", 2, 1, 0, 0, new ManaRecipesBuilder(), false)

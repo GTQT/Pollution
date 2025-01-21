@@ -34,6 +34,21 @@ public class ForgeAlchemyRecipes {
 				.duration(19980)
 				.EUt(9999)
 				.buildAndRegister();
+		//三级贤者之石
+		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(199999))
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(199999))
+				.fluidInputs(PollutionMaterials.sentient_metal.getFluid(99999))
+				.fluidInputs(PollutionMaterials.binding_metal.getFluid(99999))
+				.input(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151)
+				.input(OrePrefix.dust, PollutionMaterials.iizunamaru_electrum, 64)
+				.input(OrePrefix.dust, PollutionMaterials.aetheric_dark_steel, 64)
+				.input(OrePrefix.dust, PollutionMaterials.blood_of_avernus, 64)
+				.chancedOutput(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getStackForm(), 2500, 0)
+				.blastFurnaceTemp(7200)
+				.duration(19980)
+				.EUt(99999)
+				.buildAndRegister();
 		//锻炉炼金术配方 三个一组
 		//铅锡铁 锌镍钴 铜银金
 		//锰钼钕 镓钒铬 锑铍铋
