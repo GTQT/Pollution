@@ -203,7 +203,7 @@ public class FirstDegreeMaterials {
 		//刻金
 		PollutionMaterials.keqinggold = new Material.Builder(getMaterialsId(), gregtechId("Keqinggold"))
 				.color(0xFCF770)
-				.fluid().ingot()
+				.fluid().ingot().plasma()
 				.iconSet(SHINY)
 				.toolStats(new ToolProperty(8, 10, 14400, 8))
 				.rotorStats(12.0F, 3.0F, 2400)

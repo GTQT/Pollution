@@ -26,6 +26,7 @@ public class RecipeManger {
         BiologyLine.init();
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();
+        NodeFusionRecipes.init();
     }
 
 

@@ -100,6 +100,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
 	public static MetaTileEntityCentralVisTower CENTRAL_VIS_TOWER;
 	public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
+	public static MetaTileEntityNodeFusionReactor[] NODE_FUSION_REACTOR = new MetaTileEntityNodeFusionReactor[3];
 
 	//
 	public static MetaTileEntitySourceCharge SOURCE_CHARGE;
@@ -217,6 +218,9 @@ public class PollutionMetaTileEntities {
 		BOT_VACUUM_FREEZER = registerMetaTileEntity(15860, new MetaTileEntityBotVacuumFreezer(gtqtcoreId("bot_vacuum_freezer")));
 		CENTRAL_VIS_TOWER = registerMetaTileEntity(15861, new MetaTileEntityCentralVisTower(gtqtcoreId("central_vis_tower")));
 		BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(15862, new MetaTileEntityBotCircuitAssembler(gtqtcoreId("bot_circuit_assembler")));
+		NODE_FUSION_REACTOR[0] = registerMetaTileEntity(15863, new MetaTileEntityNodeFusionReactor(gtqtcoreId("node_fusion_reactor.luv"), 6));
+		NODE_FUSION_REACTOR[1] = registerMetaTileEntity(15864, new MetaTileEntityNodeFusionReactor(gtqtcoreId("node_fusion_reactor.zpm"), 7));
+		NODE_FUSION_REACTOR[2] = registerMetaTileEntity(15865, new MetaTileEntityNodeFusionReactor(gtqtcoreId("node_fusion_reactor.uv"), 8));
 
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));

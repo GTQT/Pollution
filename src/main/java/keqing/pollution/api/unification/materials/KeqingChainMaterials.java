@@ -182,7 +182,7 @@ public class KeqingChainMaterials {
 				.build();
 		PollutionMaterials.hyperdimensional_silver = new Material.Builder(getMaterialsId(), gregtechId("hyperdimensional_silver"))
 				.color(0xD1FAFF)
-				.ingot().fluid()
+				.ingot().fluid().plasma()
 				.iconSet(SHINY)
 				.flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
 				.blast(5400, BlastProperty.GasTier.MID)

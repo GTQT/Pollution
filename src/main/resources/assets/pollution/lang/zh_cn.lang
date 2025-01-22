@@ -171,14 +171,14 @@ metaitem.ingotTerracopper.tooltip=定坤大地
 metaitem.ingotOrdolead.tooltip=司辰秩序
 metaitem.ingotPerditioaluminium.tooltip=无极混沌
 metaitem.ingotMansussteel.tooltip=§7林地生长于漫宿墙外，但每一个研习诸史的人都知道，漫宿无墙§r
-metaitem.plateMansussteel.tooltip=§7撷漫宿诸梦，倾轧板材§r
-item.material.oreprefix.frameGtMansussteel.tooltip=§7采漫宿散魂，铸构骨架（这条还不能生效，不知道怎么改捏）§r
 metaitem.ingotTerrasteel.tooltip=以大地为名
 gregtech.material.basic_substrate=通用奇术基底
 gregtech.material.advanced_substrate=高阶奇术基底
 
 gregtech.material.sentient_metal=感知
-metaitem.ingotSentientMetal.tooltip=远古之战于深幽地域逸散呢喃，Sentient终将得胜，一如既往。
+metaitem.ingotSentientMetal.tooltip=言辞曾是我们赢得第一场战争的武器。能遣词造句前，我们手无寸铁。
+gregtech.material.binding_metal=约束
+metaitem.ingotBindingMetal.tooltip=终有一日，言辞将终结梦境。我们应当保持沉默，以防止漫宿继续流血。
 gregtech.material.starrymansus=天璇漫宿
 gregtech.material.blood_of_avernus=阿弗纳斯之血
 metaitem.ingotBloodOfAvernus.tooltip=§c埃尔托瑞尔于今日堕入阿弗纳斯...§r
@@ -331,6 +331,17 @@ tile.mana_plate.mana_2.name=从革改性漫宿机械方块
 tile.mana_plate.mana_3.name=枯荣改性漫宿机械方块
 tile.mana_plate.mana_4.name=上善改性漫宿机械方块
 tile.mana_plate.mana_5.name=社稷改性漫宿机械方块
+tile.hyper.hyper_1_casing.name=拂晓骄阳闰识超魔框架
+tile.hyper.hyper_1_casing.tooltip=导致太阳之死的不会是爱，而是妒忌。
+tile.hyper.hyper_2_casing.name=晨曦骄阳闰识超魔框架
+tile.hyper.hyper_2_casing.tooltip=导致太阳之死的不会是妒忌，而是渴求。
+tile.hyper.hyper_3_casing.name=当空骄阳闰识超魔框架
+tile.hyper.hyper_3_casing.tooltip=导致太阳之死的不会是渴求，而是好奇。
+tile.hyper.hyper_4_casing.name=无夜骄阳闰识超魔框架
+tile.hyper.hyper_4_casing.tooltip=置祂于死地的必不是好奇，终究还是爱。
+tile.hyper.hyper_5_casing.name=神光骄阳闰识超魔框架
+tile.hyper.hyper_5_casing.tooltip=很快，第二拂晓将照亮漫宿，新王将代祂重启巡游。
+
 #线圈
 tile.wire_coil.machine_coil_cupronickel.name=一级炽焱凝聚富集符文
 tile.wire_coil.machine_coil_kanthal.name=二级炽焱凝聚富集符文
@@ -662,6 +673,7 @@ recipemap.magic_assembler.name=应用部件组装
 recipemap.magic_greenhouse.name=魔植培育
 recipemap.forge_alchemy.name=锻炉炼金术
 recipemap.stove.name=烧结
+recipemap.node_magic_fusion.name=骄阳漫宿嬗变
 #事件
 pollution.command.slowness=§7你感到行动不便
 pollution.command.weakness=§b你感到一阵虚弱
@@ -703,7 +715,7 @@ pollution.machine.essence_collector_iffocused=聚焦模式：%s
 
 #节点发生仪
 pollution.machine.node_producer.name=参宿魔力节点创生室
-pollution.machine.node_producer.tooltip.1=§5你当敬奉盗灵者Timicasto，祂将天外节点带诸凡间§r
+pollution.machine.node_producer.tooltip.1=§5她已离开故土，拔出眼泪，向更遗忘的南台风涌去。§r
 pollution.machine.node_producer.tooltip.2=通入能量源质，创生封装灵气节点！
 pollution.machine.node_producer.tooltip.3=基础工作电压EV，单次基础创生时长30s，每超频一次都会大幅增加能量源质消耗
 pollution.machine.node_producer.tooltip.4=中途源质断供会立刻终止创生，浪费之前所有创生进度
@@ -821,6 +833,25 @@ pollution.machine.central_vis_tower_manatier=魔力仓等级：%s
 pollution.machine.central_vis_tower_fluxcleaned=上次咒波清理量：%s
 pollution.machine.central_vis_tower_aurasupplemented=上次供给灵气量：%s
 pollution.machine.central_vis_tower_goodchunkamount=平衡区块数目：%s
+
+#节点聚变
+pollution.machine.node_fusion_reactor.luv.name=永恒拂晓骄阳之心
+pollution.machine.node_fusion_reactor.zpm.name=永恒晨曦骄阳之心
+pollution.machine.node_fusion_reactor.uv.name=永恒当空骄阳之心
+pollution.machine.node.fusion.reactor.tooltip.1=§5日出为血，我于此预言骄阳将从血中升起，却既无鲜血的颜色，亦非夜晚的时辰。§r
+pollution.machine.node.fusion.reactor.tooltip.2=对聚变反应堆的神秘学改写！
+pollution.machine.node.fusion.reactor.tooltip.3=拥有16个输入总线可供放置节点，以提供不同的因子
+pollution.machine.node.fusion.reactor.tooltip.4=每个并行因子为核聚变反应提供2x并行，为骄阳漫宿嬗变提供1x并行
+pollution.machine.node.fusion.reactor.tooltip.5=减耗因子略微减少电力消耗，加速因子略微加快机器加工速度
+pollution.machine.node.fusion.reactor.tooltip.6=其余三种因子的大小决定三种漫宿物质的消耗速度
+pollution.machine.node.fusion.reactor.tooltip.7=每个节点各自的独特属性，可提供不同的因子，自行探索如何配置因子
+pollution.machine.node.fusion.reactor.tooltip.8=对于普通核聚变，无需消耗漫宿物质，可无视后三种因子的要求
+pollution.machine.node.fusion.reactor.tooltip.9=对于骄阳漫宿嬗变，需消耗漫宿物质，否则无法工作
+pollution.machine.node.fusion.reactor.tooltip.10=此外，骄阳漫宿嬗变还必须保持机器主方块所处区块处于超稳态，否则亦无法运作
+pollution.machine.node.fusion.reactor.tooltip.11=超稳态意指区块污染极低，灵气值极其接近区块默认标准值
+pollution.machine.node.fusion.reactor.tooltip.12=机器依然有基于升级的配方制作限制，没错，不能跳科技
+pollution.machine.node.fusion.reactor.tooltip.13=和一般的聚变堆不同，机器能源仓等级最低为LuV，但上不封顶
+pollution.machine.node.fusion.reactor.tooltip.14=升级多方块以提高能源仓等级，翻倍并行，并产生更高级的核聚变反应和骄阳漫宿嬗变！
 
 #魔法裂变
 pollution.machine.magic_fusion_reactor.name=爆能要素裂解源质魔法魂导矩阵

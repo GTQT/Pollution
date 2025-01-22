@@ -6,6 +6,7 @@ import gregtech.common.items.MetaItems;
 import keqing.pollution.api.unification.ore.POStoneTypes;
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.block.metablocks.POHyper;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.loaders.RecipeManger;
 import net.minecraft.block.Block;
@@ -67,6 +68,7 @@ public class CommonProxy {
 		registry.register(PollutionMetaBlocks.GLASS);
 		registry.register(PollutionMetaBlocks.BOT_BLOCK);
 		registry.register(PollutionMetaBlocks.MANA_PLATE);
+		registry.register(PollutionMetaBlocks.HYPER);
 	}
 
 	@SubscribeEvent
@@ -87,6 +89,7 @@ public class CommonProxy {
 		registry.register(createItemBlock(PollutionMetaBlocks.GLASS, VariantItemBlock::new));
 		registry.register(createItemBlock(PollutionMetaBlocks.BOT_BLOCK, VariantItemBlock::new));
 		registry.register(createItemBlock(PollutionMetaBlocks.MANA_PLATE, VariantItemBlock::new));
+		registry.register(createItemBlock(PollutionMetaBlocks.HYPER, VariantItemBlock::new));
 	}
 
 	private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {
