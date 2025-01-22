@@ -8,12 +8,14 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
+import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POHyper;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.items.PollutionMetaItems;
+import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.items.ItemsTC;
 
@@ -55,7 +57,7 @@ public class NodeFusionRecipes {
 				.fluidInputs(PollutionMaterials.keqinggold.getFluid(576))
 				.fluidInputs(PollutionMaterials.whitemansus.getFluid(8000))
 				.fluidInputs(PollutionMaterials.blackmansus.getFluid(8000))
-				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING))
+				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING, 4))
 				.EUt(VA[LuV])
 				.duration(400)
 				.buildAndRegister();
@@ -69,10 +71,11 @@ public class NodeFusionRecipes {
 				.input(PollutionMetaItems.AUTO_ELENCHUS_DEVICE, 8)
 				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 4))
 				.input(OrePrefix.plate, Materials.Osmiridium, 32)
-				.input(OrePrefix.frameGt, PollutionMaterials.blood_of_avernus, 64)
+				.input(GTQTMetaItems.NEUTRON, 16)
 				.fluidInputs(PollutionMaterials.aetheric_dark_steel.getFluid(36000))
 				.fluidInputs(PollutionMaterials.keqinggold.getFluid(36000))
 				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
+				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
 				.EUt(VA[ZPM])
 				.duration(40000)
 				.buildAndRegister();

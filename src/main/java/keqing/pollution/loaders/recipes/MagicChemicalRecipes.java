@@ -1,12 +1,8 @@
 package keqing.pollution.loaders.recipes;
 
-import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
-import gregtech.api.GTValues;
-import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.common.items.MetaItems;
 import gregtechfoodoption.item.GTFOMetaItem;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GCYSMaterials;
@@ -19,10 +15,8 @@ import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import scala.Enumeration;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -30,8 +24,6 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.items.ItemsTC;
-
-import java.util.ArrayList;
 
 import static gregicality.multiblocks.api.fluids.GCYMFluidStorageKeys.MOLTEN;
 import static gregtech.api.GTValues.*;
@@ -48,6 +40,24 @@ public class MagicChemicalRecipes {
 
 	private static void chemical() {
 
+		//贤者之石复制
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.input(OrePrefix.block, PollutionMaterials.iizunamaru_electrum)
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(10000))
+				.fluidInputs(PollutionMaterials.whitemansus.getFluid(10000))
+				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
+				.duration(10000)
+				.EUt(7680)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.input(OrePrefix.block, PollutionMaterials.sentient_metal)
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(100000))
+				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.duration(10000)
+				.EUt(122880)
+				.buildAndRegister();
 		//四种催化剂的更简单的配方
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
