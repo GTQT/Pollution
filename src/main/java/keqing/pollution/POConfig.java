@@ -1,5 +1,6 @@
 package keqing.pollution;
 
+import keqing.gtqtcore.GTQTCoreConfig;
 import net.minecraftforge.common.config.Config;
 
 @Config(modid = Pollution.MODID)
@@ -8,7 +9,14 @@ public class POConfig {
     public static WorldSettingSwitch WorldSettingSwitch = new WorldSettingSwitch();
     public static MachineSettingSwitch MachineSettingSwitch = new MachineSettingSwitch();
     public static PollutionSystemSwitch PollutionSystemSwitch = new PollutionSystemSwitch();
+    public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
 
+    public static class OBJRenderSwitch {
+        @Config.Comment({"节点聚变反应堆OBJ模型渲染开启"})
+        @Config.RequiresMcRestart
+        @Config.Name("Enable obj Model Node Fusion Reactor")
+        public boolean EnableObjNodeFusionReactor = true;
+    }
     public static class WorldSettingSwitch {
         @Config.RequiresMcRestart
         @Config.Comment("为交错底世界维度分配的ID号。如果与其他模组冲突，请更改。")

@@ -1,9 +1,13 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
 import gregtech.api.GTValues;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.EnergyContainerHandler;
 import gregtech.api.capability.impl.EnergyContainerList;
+import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -18,36 +22,57 @@ import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.recipeproperties.FusionEUToStartProperty;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
+import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.IRenderSetup;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.client.shader.postprocessing.BloomEffect;
+import gregtech.client.shader.postprocessing.BloomType;
+import gregtech.client.utils.BloomEffectUtil;
+import gregtech.client.utils.EffectRenderContext;
+import gregtech.client.utils.IBloomEffect;
+import gregtech.client.utils.RenderBufferHelper;
+import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import keqing.gtqtcore.GTQTCoreConfig;
+import keqing.pollution.POConfig;
 import keqing.pollution.api.capability.ICleanVis;
 import keqing.pollution.api.capability.ipml.POMultiblockCleanVisRecipeLogic;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
+import keqing.pollution.client.objmodels.ObjModels;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POHyper;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.api.aura.AuraHelper;
 
 import java.util.ArrayList;
@@ -55,7 +80,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockController implements ICleanVis {
+import static net.minecraft.util.EnumFacing.Axis.X;
+import static net.minecraft.util.EnumFacing.Axis.Y;
+
+public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockController implements ICleanVis, IFastRenderMetaTileEntity, IBloomEffect {
 	@SideOnly(Side.CLIENT)
     //计时器
 	private int timer;
@@ -112,6 +140,43 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 		float fluxThisChunk = AuraHelper.getFlux(this.getWorld(), pos);
 		float difference = AuraHelper.getVis(this.getWorld(), pos) - AuraHelper.getAuraBase(this.getWorld(), pos);
 		return fluxThisChunk <= 4.2f && Math.abs(difference) <= 4.2f;
+	}
+	@Override
+	public boolean isGlobalRenderer() {
+		return true;
+	}
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void renderBloomEffect(BufferBuilder buffer, EffectRenderContext context) {
+		if (isStructureFormed() && GTQTCoreConfig.OBJRenderSwitch.EnableObj && POConfig.OBJRenderSwitch.EnableObjNodeFusionReactor) {
+			int color = 0xFFFFFF00;
+			float a = (float) (color >> 24 & 255) / 255.0F;
+			float r = (float) (color >> 16 & 255) / 255.0F;
+			float g = (float) (color >> 8 & 255) / 255.0F;
+			float b = (float) (0) / 255.0F;
+			EnumFacing relativeBack = RelativeDirection.BACK.getRelativeFacing(getFrontFacing(), getUpwardsFacing(),
+					isFlipped());
+			RenderBufferHelper.renderRing(buffer,
+					getPos().getX() - context.cameraX() + relativeBack.getXOffset() * 15 + 0.5,
+					getPos().getY() - context.cameraY() + relativeBack.getYOffset() * 15 + 0.5,
+					getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() * 15 + 0.5,
+					8, 0.3, 10, 20,
+					r, g, b, a, Y);
+
+			RenderBufferHelper.renderRing(buffer,
+					getPos().getX() - context.cameraX() + relativeBack.getXOffset() * 15 + 0.5,
+					getPos().getY() - context.cameraY() + relativeBack.getYOffset() * 15 + 0.5,
+					getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() * 15 + 0.5,
+					8, 0.3, 10, 20,
+					r, g, b, a, X);
+
+			RenderBufferHelper.renderRing(buffer,
+					getPos().getX() - context.cameraX() + relativeBack.getXOffset() * 15 + 0.5,
+					getPos().getY() - context.cameraY() + relativeBack.getYOffset() * 15 + 0.5,
+					getPos().getZ() - context.cameraZ() + relativeBack.getZOffset() * 15 + 0.5,
+					8, 0.3, 10, 20,
+					r, g, b, a, EnumFacing.Axis.Z);
+		}
 	}
 
 	//聚变逻辑：并行、耗电、聚变速度根据节点属性运算，额外附加超净检测
@@ -533,5 +598,96 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 	@Override
 	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
 		return new MetaTileEntityNodeFusionReactor (this.metaTileEntityId, this.tier);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void renderMetaTileEntity(double x, double y, double z, float partialTicks) {
+		IFastRenderMetaTileEntity.super.renderMetaTileEntity(x, y, z, partialTicks);
+
+		if (isStructureFormed() && GTQTCoreConfig.OBJRenderSwitch.EnableObj && POConfig.OBJRenderSwitch.EnableObjNodeFusionReactor) {
+			final int xDir = this.getFrontFacing().getOpposite().getXOffset();
+			final int zDir = this.getFrontFacing().getOpposite().getZOffset();
+			//机器开启才会进行渲染
+			//这是一些opengl的操作,GlStateManager是mc自身封装的一部分方法  前四条详情请看 https://turou.fun/minecraft/legacy-render-tutor/
+			//opengl方法一般需要成对出现，实际上他是一个状态机，改装状态后要还原  一般情况按照我这些去写就OK
+			GlStateManager.pushAttrib(); //保存变换前的位置和角度
+			GlStateManager.pushMatrix();
+			GlStateManager.disableLighting();
+			GlStateManager.disableCull();
+			FMLClientHandler.instance().getClient().getTextureManager().bindTexture(ObjModels.sun_pic); //自带的材质绑定 需要传递一个ResourceLocation
+			GlStateManager.translate(x, y, z);//translate是移动方法 这个移动到xyz是默认的 不要动
+			GlStateManager.translate(xDir * 15 + 0.5, 0.5, zDir * 15 + 0.5);//translate是移动方法 这个移动到xyz是默认的 不要动
+
+
+			float angle = (System.currentTimeMillis() % 3600) / 10.0f; //我写的随时间变化旋转的角度
+			//GlStateManager.rotate(90, 0F, 1F, 0F);//rotate是旋转模型的方法  DNA的初始位置不太对 我旋转了一下   四个参数为：旋转角度，xyz轴，可以控制模型围绕哪个轴旋转
+			GlStateManager.rotate(angle, 0F, 1F, 0F);//我让dna围绕z轴旋转，角度是实时变化的
+
+
+			GlStateManager.scale(0.1, 0.1, 0.1);
+			// ObjModels.Tree_Model.renderAllWithMtl(); //这个是模型加载器的渲染方法  这是带MTL的加载方式
+			ObjModels.sun.renderAll(); //这个是模型加载器的渲染方法  这是不带MTL的加载方式
+			GlStateManager.popMatrix();//读取变换前的位置和角度(恢复原状) 下面都是还原状态机的语句
+			GlStateManager.enableLighting();
+			GlStateManager.popAttrib();
+			GlStateManager.enableCull();
+		}
+
+	}
+
+
+	//渲染模型的位置
+
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		//这个影响模型的可视范围，正常方块都是 1 1 1，长宽高各为1，当这个方块离线玩家视线后，obj模型渲染会停止，所以可以适当放大这个大小能让模型有更多角度的可视
+		return new AxisAlignedBB(getPos().add(-5, -5, -5), getPos().add(5, 5, 5));
+	}
+
+
+	@Override
+	public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+		super.renderMetaTileEntity(renderState, translation, pipeline);
+		this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), true, true);
+		BloomEffectUtil.registerBloomRender(FusionBloomSetup.INSTANCE, getBloomType(), this, this);
+	}
+	private static BloomType getBloomType() {
+		ConfigHolder.FusionBloom fusionBloom = ConfigHolder.client.shader.fusionBloom;
+		return BloomType.fromValue(fusionBloom.useShader ? fusionBloom.bloomStyle : -1);
+	}
+	@SideOnly(Side.CLIENT)
+	private static final class FusionBloomSetup implements IRenderSetup {
+
+		private static final FusionBloomSetup INSTANCE = new FusionBloomSetup();
+
+		float lastBrightnessX;
+		float lastBrightnessY;
+
+		@Override
+		public void preDraw(BufferBuilder buffer) {
+			BloomEffect.strength = (float) ConfigHolder.client.shader.fusionBloom.strength;
+			BloomEffect.baseBrightness = (float) ConfigHolder.client.shader.fusionBloom.baseBrightness;
+			BloomEffect.highBrightnessThreshold = (float) ConfigHolder.client.shader.fusionBloom.highBrightnessThreshold;
+			BloomEffect.lowBrightnessThreshold = (float) ConfigHolder.client.shader.fusionBloom.lowBrightnessThreshold;
+			BloomEffect.step = 1;
+
+			lastBrightnessX = OpenGlHelper.lastBrightnessX;
+			lastBrightnessY = OpenGlHelper.lastBrightnessY;
+			GlStateManager.color(1, 1, 1, 1);
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
+			GlStateManager.disableTexture2D();
+
+			buffer.begin(GL11.GL_QUAD_STRIP, DefaultVertexFormats.POSITION_COLOR);
+		}
+
+		@Override
+		public void postDraw(BufferBuilder buffer) {
+			Tessellator.getInstance().draw();
+
+			GlStateManager.enableTexture2D();
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastBrightnessX, lastBrightnessY);
+		}
 	}
 }
