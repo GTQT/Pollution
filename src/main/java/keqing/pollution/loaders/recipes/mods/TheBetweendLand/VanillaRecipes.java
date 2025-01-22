@@ -9,9 +9,11 @@ import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
+import keqing.gtqtcore.api.unification.ore.GTQTOrePrefix;
 import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
+import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -30,12 +32,12 @@ import thebetweenlands.common.registries.BlockRegistry;
 import thebetweenlands.common.registries.FluidRegistry;
 import thebetweenlands.common.registries.ItemRegistry;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static gregtech.api.GTValues.*;
-import static gregtech.api.unification.material.Materials.Sulfur;
-import static gregtech.api.unification.material.Materials.Water;
+import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.PRIMITIVE_BRICKS;
 import static gregtech.common.items.MetaItems.COMPRESSED_COKE_CLAY;
@@ -76,6 +78,50 @@ public class VanillaRecipes {
                 new ItemStack(BlocksTC.crystalWater),
                 new ItemStack(BlocksTC.crystalOrder)
         ));
+
+        //空杀虫剂
+        ModHandler.addShapedRecipe("pesticide_empty", new ItemStack(PollutionMetaItems.PESTICIDE_EMPTY.getMetaItem(), 1, 201),
+                "hHf", "XRX", "XSX",
+                'H', new UnificationEntry(ring, octine),
+                'S', new UnificationEntry(plate, octine),
+                'R', new UnificationEntry(springSmall, Iron),
+                'X', new UnificationEntry(GTQTOrePrefix.plate_curved, Iron));
+        //杀虫剂
+        ModHandler.addShapedRecipe("pesticide", new ItemStack(PollutionMetaItems.PESTICIDE.getMetaItem(), 1, 202),
+                "CAA", "BB ", "   ",
+                'C', new ItemStack(PollutionMetaItems.PESTICIDE_EMPTY.getMetaItem(), 1, 201),
+                'A', new UnificationEntry(dust, Sulfur),
+                'B', new UnificationEntry(dust, infused_fire));
+        //理智恢复药（1）
+        ModHandler.addShapedRecipe("devay_pill_1", new ItemStack(PollutionMetaItems.DEVAY_PILL_1.getMetaItem(), 1, 204),
+                "AB ", "CD ", "   ",
+                'A', new ItemStack(ItemRegistry.SAP_BALL),
+                'B', new ItemStack(ItemRegistry.NIBBLESTICK),
+                'C', new ItemStack(ItemRegistry.BLACK_HAT_MUSHROOM_ITEM),
+                'D', new ItemStack(ItemRegistry.ITEMS_MISC, 1, 18));
+        //理智恢复药（空）
+        ModHandler.addShapedRecipe("devay_pill_empty", new ItemStack(PollutionMetaItems.DEVAY_PILL_EMPTY.getMetaItem(), 1, 203),
+                "XhX", "X X", "XfX",
+                'X', new UnificationEntry(GTQTOrePrefix.plate_curved, Steel));
+        //剩下三种
+        ModHandler.addShapedRecipe("devay_pill_5", new ItemStack(PollutionMetaItems.DEVAY_PILL_5.getMetaItem(), 1, 205),
+                "EAA", "AAB", "   ",
+                'A', new ItemStack(ItemRegistry.SAP_BALL),
+                'B', new ItemStack(ItemRegistry.ITEMS_MISC, 1, 18),
+                'E', new ItemStack(PollutionMetaItems.DEVAY_PILL_EMPTY.getMetaItem(), 1, 203));
+        ModHandler.addShapedRecipe("devay_pill_10", new ItemStack(PollutionMetaItems.DEVAY_PILL_10.getMetaItem(), 1, 206),
+                "EAA", "AAB", "C  ",
+                'A', new ItemStack(ItemRegistry.SAP_BALL),
+                'B', new ItemStack(ItemRegistry.ITEMS_MISC, 1, 18),
+                'C', new UnificationEntry(dust, infused_water),
+                'E', new ItemStack(PollutionMetaItems.DEVAY_PILL_EMPTY.getMetaItem(), 1, 203));
+        ModHandler.addShapedRecipe("devay_pill_20", new ItemStack(PollutionMetaItems.DEVAY_PILL_20.getMetaItem(), 1, 207),
+                "EAA", "AAB", "CD ",
+                'A', new ItemStack(ItemRegistry.SAP_BALL),
+                'B', new ItemStack(ItemRegistry.ITEMS_MISC, 1, 18),
+                'C', new UnificationEntry(dust, infused_water),
+                'D', new ItemStack(ItemRegistry.PEARLED_PEAR),
+                'E', new ItemStack(PollutionMetaItems.DEVAY_PILL_EMPTY.getMetaItem(), 1, 203));
     }
 
     public static void removeRecipes() {
