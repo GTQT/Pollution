@@ -17,6 +17,8 @@ import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -26,6 +28,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.InfusionRecipe;
+import thaumcraft.api.items.ItemsTC;
 import thebetweenlands.common.block.terrain.BlockCragrock;
 import thebetweenlands.common.item.misc.ItemMisc;
 import thebetweenlands.common.registries.BlockRegistry;
@@ -51,16 +54,41 @@ public class VanillaRecipes {
         initRecipes();
         removeRecipes();
     }
+    public static ItemStack createCrystalEssenceWithAspects(String string) {
+        // 创建ItemStack
+        ItemStack crystalEssence = new ItemStack(ItemsTC.crystalEssence);
 
+        // 创建NBTTagCompound来存储NBT数据
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+
+        // 创建NBTTagList来存储Aspects
+        NBTTagList aspectsTagList = new NBTTagList();
+
+        // 创建一个NBTTagCompound来存储单个Aspect的数据
+        NBTTagCompound aspectTagCompound = new NBTTagCompound();
+        aspectTagCompound.setString("key",string);
+        aspectTagCompound.setInteger("amount", 1);
+
+        // 将Aspect的NBTTagCompound添加到NBTTagList中
+        aspectsTagList.appendTag(aspectTagCompound);
+
+        // 将NBTTagList添加到NBTTagCompound中
+        nbtTagCompound.setTag("Aspects", aspectsTagList);
+
+        // 将NBTTagCompound设置到ItemStack中
+        crystalEssence.setTagCompound(nbtTagCompound);
+
+        return crystalEssence;
+    }
     private static void miscRecipes() {
         ModHandler.removeRecipeByName(new ResourceLocation("thebetweenlands:swamp_talisman"));
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(ItemRegistry.LIFE_CRYSTAL)
-                .input(BlocksTC.crystalEarth)
-                .input(BlocksTC.crystalAir)
-                .input(BlocksTC.crystalFire)
-                .input(BlocksTC.crystalWater)
-                .input(BlocksTC.crystalOrder)
+                .inputs(createCrystalEssenceWithAspects("aer"))
+                .inputs(createCrystalEssenceWithAspects("terra"))
+                .inputs(createCrystalEssenceWithAspects("ignis"))
+                .inputs(createCrystalEssenceWithAspects("aqua"))
+                .inputs(createCrystalEssenceWithAspects("ordo"))
                 .output(ItemRegistry.SWAMP_TALISMAN)
                 .EUt(30)
                 .duration(300)
@@ -72,12 +100,15 @@ public class VanillaRecipes {
                 2,
                 new AspectList(),
                 new ItemStack(ItemRegistry.LIFE_CRYSTAL),
-                new ItemStack(BlocksTC.crystalEarth),
-                new ItemStack(BlocksTC.crystalAir),
-                new ItemStack(BlocksTC.crystalFire),
-                new ItemStack(BlocksTC.crystalWater),
-                new ItemStack(BlocksTC.crystalOrder)
+                createCrystalEssenceWithAspects("aer"),
+                createCrystalEssenceWithAspects("terra"),
+                createCrystalEssenceWithAspects("ignis"),
+                createCrystalEssenceWithAspects("aqua"),
+                createCrystalEssenceWithAspects("ordo")
         ));
+
+
+
 
         //空杀虫剂
         ModHandler.addShapedRecipe("pesticide_empty", new ItemStack(PollutionMetaItems.PESTICIDE_EMPTY.getMetaItem(), 1, 201),

@@ -24,16 +24,16 @@ import static keqing.pollution.api.unification.PollutionMaterials.*;
 public class StoneLine {
     public static void init() {
         //补充矿辞
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.CRAGROCK, 1));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.PITSTONE, 1));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.LIMESTONE, 1));
+        OreDictionary.registerOre("cobblestone", new ItemStack(BlockRegistry.BETWEENSTONE, 1));
         OreDictionary.registerOre("sand", new ItemStack(BlockRegistry.SILT, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
 
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.PITSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.LIMESTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
-        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.BETWEENSTONE, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.CRAGROCK, 1));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.PITSTONE, 1));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.LIMESTONE, 1));
+        OreDictionary.registerOre("stoneCobble", new ItemStack(BlockRegistry.BETWEENSTONE, 1));
 
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(BlockRegistry.CRAGROCK, 1, BlockCragrock.EnumCragrockType.DEFAULT.getMetadata()))

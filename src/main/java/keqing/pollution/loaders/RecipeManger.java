@@ -16,6 +16,7 @@ public class RecipeManger {
         ForgeAlchemyRecipes.init();
         CircuitManager.init();
         ThaumcraftRecipes.init();
+        CrystalLine.init();
         MagicGCYMRecipes.init();
         InfusedManager.init();
         CompoundAspectRecipes.init();
