@@ -27,6 +27,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_crysta
 public class MetaTileEntityMagicSifter extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicSifter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.SIFTER_RECIPES});
+        this.material = infused_crystal;
     }
 
     private static IBlockState getCasingState() {
@@ -72,7 +73,7 @@ public class MetaTileEntityMagicSifter extends PORecipeMapMultiblockController {
 
     @Override
     public Material getMaterial() {
-        return infused_crystal;
+        return material;
     }
 
     @Override

@@ -27,6 +27,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_instru
 public class MetaTileEntityMagicWireMill extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicWireMill(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.WIREMILL_RECIPES});
+        this.material = infused_instrument;
     }
 
     private static IBlockState getCasingState() {
@@ -65,7 +66,7 @@ public class MetaTileEntityMagicWireMill extends PORecipeMapMultiblockController
 
     @Override
     public Material getMaterial() {
-        return infused_instrument;
+        return material;
     }
 
     @Override

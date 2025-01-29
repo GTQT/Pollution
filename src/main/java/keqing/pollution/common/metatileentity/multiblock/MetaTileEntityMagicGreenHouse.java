@@ -28,6 +28,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_water;
 public class MetaTileEntityMagicGreenHouse extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicGreenHouse(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{GREENHOUSE_RECIPES, MAGIC_GREENHOUSE_RECIPES});
+        this.material = infused_water;
     }
 
     private static IBlockState getSecondCasingState() {
@@ -76,7 +77,7 @@ public class MetaTileEntityMagicGreenHouse extends PORecipeMapMultiblockControll
 
     @Override
     public Material getMaterial() {
-        return infused_water;
+        return material;
     }
 
     @Override

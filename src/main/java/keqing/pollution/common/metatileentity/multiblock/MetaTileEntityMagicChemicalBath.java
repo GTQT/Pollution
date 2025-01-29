@@ -37,6 +37,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_water;
 public class MetaTileEntityMagicChemicalBath extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicChemicalBath(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CHEMICAL_BATH_RECIPES, RecipeMaps.ORE_WASHER_RECIPES});
+        this.material=infused_water;
     }
 
     private static IBlockState getCasingState() {
@@ -77,7 +78,7 @@ public class MetaTileEntityMagicChemicalBath extends PORecipeMapMultiblockContro
 
     @Override
     public Material getMaterial() {
-        return infused_water;
+        return material;
     }
 
     @Override

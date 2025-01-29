@@ -30,6 +30,7 @@ public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockCon
 
     public MetaTileEntityMagicChemicalReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CHEMICAL_RECIPES, PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES});
+        this.material= infused_alchemy;
     }
 
     private static IBlockState getCasingState() {
@@ -84,7 +85,7 @@ public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockCon
 
     @Override
     public Material getMaterial() {
-        return infused_alchemy;
+        return material;
     }
 
     @Override

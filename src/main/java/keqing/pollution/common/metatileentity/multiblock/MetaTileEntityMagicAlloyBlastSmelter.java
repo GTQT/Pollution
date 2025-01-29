@@ -46,6 +46,7 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockC
 
     public MetaTileEntityMagicAlloyBlastSmelter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES, GCYMRecipeMaps.ALLOY_BLAST_RECIPES});
+        this.material= infused_fire;
     }
 
     //下边都是设置多方块外形材质的喵
@@ -131,7 +132,7 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockC
     //这里是多方块工作需要消耗的 元素
     @Override
     public Material getMaterial() {
-        return infused_fire;
+        return material;
     }
 
     //覆盖层材质 就是给IO渲染的材质

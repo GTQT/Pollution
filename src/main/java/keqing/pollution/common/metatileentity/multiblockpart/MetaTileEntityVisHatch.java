@@ -23,19 +23,36 @@ import keqing.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import thaumcraft.api.aura.AuraHelper;
 
 import java.util.List;
 
 public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
         implements IMultiblockAbilityPart<IVisHatch>, IVisHatch {
 
-    int tier;
+    private final int tier;
+    private int visStorage;
+    private final int visStorageMax;
 
     public MetaTileEntityVisHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier = tier;
+        this.visStorageMax=1000*tier;
+    }
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        data.setInteger("visStorage", this.visStorage);
+        return super.writeToNBT(data);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.visStorage = data.getInteger("visStorage");
     }
 
     @Override
@@ -56,12 +73,45 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
     }
 
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
-        tooltip.add(I18n.format("等级 %s  容积上限 %s", tier, 1000 * tier));
+        tooltip.add(I18n.format("等级 %s 容积上限 %s", tier, 1000 * tier));
+        tooltip.add(I18n.format("每tick提供 %s 灵气源并消耗 %s 当前区块灵气 ", tier * tier,tier * tier * 0.01));
     }
 
     @Override
     public int getTier() {
         return tier;
+    }
+    @Override
+    public void update() {
+        super.update();
+        if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier), true) > 0) {
+            if (visStorage < visStorageMax) {
+                AuraHelper.drainVis(getWorld(), this.getPos(), (float) (tier * tier * 0.01), false);
+                visStorage += tier * tier;
+            }
+        }
+    }
+
+
+    @Override
+    public int getVisStore() {
+        return visStorage;
+    }
+
+    @Override
+    public int getMaxVisStore() {
+        return visStorageMax;
+    }
+
+    @Override
+    public boolean drainVis(int amount, boolean simulate) {
+        if (visStorage >= amount) {
+            if (!simulate) {
+                visStorage -= amount;
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -69,6 +119,7 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
         ModularUI.Builder builder = ModularUI.defaultBuilder();
         builder.dynamicLabel(7, 30, () -> "Vis Hatch", 0x232323);
         builder.dynamicLabel(7, 50, () -> "Tier: " + this.getTier(), 0x232323);
+        builder.dynamicLabel(7, 70, () -> "Vis: " + visStorage+"/"+visStorageMax, 0x232323);
         return builder.build(getHolder(), entityPlayer);
     }
 

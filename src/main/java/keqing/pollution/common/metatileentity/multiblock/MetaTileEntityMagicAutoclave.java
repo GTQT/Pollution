@@ -26,6 +26,7 @@ public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockControlle
 
     public MetaTileEntityMagicAutoclave(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.AUTOCLAVE_RECIPES});
+        this.material=infused_fly;
     }
 
     private static IBlockState getCasingState() {
@@ -65,7 +66,7 @@ public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockControlle
 
     @Override
     public Material getMaterial() {
-        return infused_fly;
+        return material;
     }
 
     @Override

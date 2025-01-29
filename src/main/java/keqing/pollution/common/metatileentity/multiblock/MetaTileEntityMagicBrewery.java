@@ -26,14 +26,10 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_water;
 
 public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController {
 
-    //我是神秘GCYM多方块 看我看我
-
-    //这里是多方块的配方  RecipeMaps.BENDER_RECIPES, RecipeMaps.COMPRESSOR_RECIPES,
-    //                RecipeMaps.FORMING_PRESS_RECIPES, RecipeMaps.FORGE_HAMMER_RECIPES 都是配方喵
-    //你可以只写一种配方 也可以写很多喵
     public MetaTileEntityMagicBrewery(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
                 RecipeMaps.FLUID_HEATER_RECIPES});
+        this.material=infused_water;
     }
 
     //下边都是设置多方块外形材质的喵
@@ -81,7 +77,7 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
     //这里是多方块工作需要消耗的 元素
     @Override
     public Material getMaterial() {
-        return infused_water;
+        return material;
     }
 
     //覆盖层材质 就是给IO渲染的材质

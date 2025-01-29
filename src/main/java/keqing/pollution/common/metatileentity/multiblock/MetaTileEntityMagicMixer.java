@@ -28,6 +28,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_entrop
 public class MetaTileEntityMagicMixer extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicMixer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MIXER_RECIPES});
+        this.material = infused_entropy;
     }
 
     private static IBlockState getCasingState() {
@@ -78,7 +79,7 @@ public class MetaTileEntityMagicMixer extends PORecipeMapMultiblockController {
 
     @Override
     public Material getMaterial() {
-        return infused_entropy;
+        return material;
     }
 
     @Override
