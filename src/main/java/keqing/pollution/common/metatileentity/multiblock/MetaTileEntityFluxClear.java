@@ -57,6 +57,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     long workTime;
     private IEnergyContainer energyContainer;
     private boolean isWorkingEnabled;
+    int flux;
 
     public MetaTileEntityFluxClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
@@ -101,7 +102,16 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
                 return;
             }
 
-            if (!isItemValid(stack)) return;
+            if (!isItemValid(stack))
+            {
+                workTime = 0;
+                TotalTick = 0;
+                return;
+            }
+
+            workTime = AbstractMaterialPartBehavior.getPartDamage(containerInventory.getStackInSlot(0));
+            TotalTick = behavior.getPartMaxDurability(containerInventory.getStackInSlot(0));
+
             int aX = this.getPos().getX();
             int aY = this.getPos().getY();
             int aZ = this.getPos().getZ();
@@ -109,18 +119,15 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
                 for (int y = -tier; y <= tier; y++) {
                     BlockPos pos = new BlockPos(aX + x * 16, aY, aZ + y * 16);
                     if (AuraHelper.getFlux(this.getWorld(), pos) > 0) {
+                        flux= (int) AuraHelper.getFlux(this.getWorld(), pos);
                         if (energyContainer.getEnergyStored() >= energyAmountPer) {
                             energyContainer.removeEnergy(energyAmountPer);
                             isWorkingEnabled = true;
                             AuraHelper.drainFlux(this.getWorld(), pos, (float) VisTicks, false);
                             behavior.applyDamage(containerInventory.getStackInSlot(0), 1);
-                            workTime = AbstractMaterialPartBehavior.getPartDamage(containerInventory.getStackInSlot(0));
-                            TotalTick = behavior.getPartMaxDurability(containerInventory.getStackInSlot(0));
                         }
                     } else {
                         isWorkingEnabled = false;
-                        workTime = 0;
-                        TotalTick = 0;
                     }
                 }
             }
@@ -131,7 +138,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
         builder.dynamicLabel(28, 12, () -> "大型污染清理机 等级："+tier, 0xFFFFFF);
-        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, false, true)
+        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, true, true)
                 .setBackgroundTexture(GuiTextures.SLOT)
                 .setTooltipText("输入槽位"));
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
@@ -155,10 +162,11 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     protected void addDisplayText(List<ITextComponent> textList) {
         textList.add(new TextComponentString("当前状态: " + (isActive() ? "运行中" : "停止")));
         textList.add(new TextComponentString("清理半径: " + tier));
-        textList.add(new TextComponentString("当前污染: " + AuraHelper.getFlux(getWorld(), getPos())));
+        textList.add(new TextComponentString("当前污染: " + flux));
         textList.add(new TextComponentString("清理速率: " + VisTicks));
         textList.add(new TextComponentString("已经工作: " + GTQTDateHelper.getTimeFromTicks(workTime)));
         textList.add(new TextComponentString("距离损坏: " + GTQTDateHelper.getTimeFromTicks(TotalTick - workTime)));
+        if(!isItemValid(containerInventory.getStackInSlot(0)))return;
         if (isActive())
             textList.add(new TextComponentString("过滤器材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
         if (isActive()) textList.add(new TextComponentString("过滤等级: " + getFilterBehavior().getFilterTier()));

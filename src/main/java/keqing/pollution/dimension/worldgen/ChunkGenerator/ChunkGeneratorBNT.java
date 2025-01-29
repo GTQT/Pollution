@@ -67,6 +67,7 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
     private final WorldGenSingle worldGenNesting = new WorldGenSingle(BlockRegistry.NESTING_BLOCK_STICKS);
     //洞穴水集群
     private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(BlockRegistry.STAGNANT_WATER);
+    private final WorldGenFluidPool worldGenLavaPool = new WorldGenFluidPool(Blocks.LAVA);
     //灵气集群
     private final WorldGenPhaseLiq worldGenPhaseLiq = new WorldGenPhaseLiq();
 
@@ -397,7 +398,7 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), x, z, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.FIRE)) {
             int count = ThreadLocalRandom.current().nextInt(ThreadLocalRandom.current().nextInt(10) + 1) + 1;
             for (int i1 = 0; i1 < count; ++i1) {
-                switch (ThreadLocalRandom.current().nextInt(4)) {
+                switch (ThreadLocalRandom.current().nextInt(5)) {
                     case 0:
                         generateFeature(this.worldGenCaveGrass, blockpos, ThreadLocalRandom.current());
                         break;
@@ -409,6 +410,9 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
                         break;
                     case 3:
                         generateFeature(this.worldGenFluidPool, blockpos, ThreadLocalRandom.current());
+                        break;
+                    case 4:
+                        generateFeature(this.worldGenLavaPool, blockpos, ThreadLocalRandom.current());
                         break;
                 }
             }

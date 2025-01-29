@@ -73,7 +73,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
         builder.dynamicLabel(28, 12, () -> "污染清洁机 等级：" + tier, 0xFFFFFF);
-        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, false, true)
+        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, true, true)
                 .setBackgroundTexture(GuiTextures.SLOT)
                 .setTooltipText("输入槽位"));
 
@@ -104,14 +104,22 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
             return;
         }
 
+        if (!isItemValid(stack))
+        {
+            workTime = 0;
+            TotalTick = 0;
+            return;
+        }
+
+        workTime = AbstractMaterialPartBehavior.getPartDamage(containerInventory.getStackInSlot(0));
+        TotalTick = behavior.getPartMaxDurability(containerInventory.getStackInSlot(0));
+
         if (AuraHelper.getFlux(getWorld(), getPos()) > 0 && isItemValid(stack)) {
             if (energyContainer.getEnergyStored() >= energyAmountPer) {
                 isActive = true;
                 energyContainer.removeEnergy(energyAmountPer);
                 AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, false);
                 behavior.applyDamage(containerInventory.getStackInSlot(0), 1);
-                workTime = AbstractMaterialPartBehavior.getPartDamage(containerInventory.getStackInSlot(0));
-                TotalTick = behavior.getPartMaxDurability(containerInventory.getStackInSlot(0));
             } else {
                 isActive = false;
                 workTime = 0;
@@ -139,6 +147,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
         textList.add(new TextComponentString("清理速率: " + VisTicks));
         textList.add(new TextComponentString("已经工作: " + GTQTDateHelper.getTimeFromTicks(workTime)));
         textList.add(new TextComponentString("距离损坏: " + GTQTDateHelper.getTimeFromTicks(TotalTick - workTime)));
+        if(!isItemValid(containerInventory.getStackInSlot(0)))return;
         if (isActive())
             textList.add(new TextComponentString("过滤器材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
         if (isActive()) textList.add(new TextComponentString("过滤等级: " + getFilterBehavior().getFilterTier()));
