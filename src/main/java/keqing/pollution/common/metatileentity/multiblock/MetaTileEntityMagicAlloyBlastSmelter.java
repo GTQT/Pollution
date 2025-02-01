@@ -129,11 +129,6 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockC
                 .build();
     }
 
-    //这里是多方块工作需要消耗的 元素
-    @Override
-    public Material getMaterial() {
-        return material;
-    }
 
     //覆盖层材质 就是给IO渲染的材质
     @Override

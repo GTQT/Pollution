@@ -44,7 +44,7 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
 
     public MetaTileEntityMagicElectricBlastFurnace(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BLAST_RECIPES, RecipeMaps.ALLOY_SMELTER_RECIPES});
-        this.material= infused_fire;
+        setMaterial(infused_fire);
     }
 
     //下边都是设置多方块外形材质的喵
@@ -80,7 +80,7 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
-        textList.add(new TextComponentTranslation("Temperature: %s", Temp));
+        textList.add(new TextComponentTranslation("线圈温度: %s", Temp));
     }
 
     //工具提示
@@ -118,12 +118,6 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
                 .where('C', CP_COIL_CASING.get())
                 .where('#', air())
                 .build();
-    }
-
-    //这里是多方块工作需要消耗的 元素
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     //覆盖层材质 就是给IO渲染的材质

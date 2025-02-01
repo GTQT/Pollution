@@ -26,7 +26,7 @@ public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockControlle
 
     public MetaTileEntityMagicAutoclave(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.AUTOCLAVE_RECIPES});
-        this.material=infused_fly;
+        setMaterial(infused_fly);
     }
 
     private static IBlockState getCasingState() {
@@ -62,11 +62,6 @@ public class MetaTileEntityMagicAutoclave extends PORecipeMapMultiblockControlle
                 .where('#', any())
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

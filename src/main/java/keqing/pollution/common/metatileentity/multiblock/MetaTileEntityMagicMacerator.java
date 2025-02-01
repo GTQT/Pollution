@@ -27,7 +27,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_earth;
 public class MetaTileEntityMagicMacerator extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicMacerator(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MACERATOR_RECIPES});
-        this.material=infused_earth;
+        setMaterial(infused_earth);
     }
 
     private static IBlockState getCasingState() {
@@ -63,11 +63,6 @@ public class MetaTileEntityMagicMacerator extends PORecipeMapMultiblockControlle
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('#', air())
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

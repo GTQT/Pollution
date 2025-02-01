@@ -30,7 +30,7 @@ public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockCon
 
     public MetaTileEntityMagicChemicalReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CHEMICAL_RECIPES, PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES});
-        this.material= infused_alchemy;
+        setMaterial(infused_alchemy);
     }
 
     private static IBlockState getCasingState() {
@@ -82,12 +82,6 @@ public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockCon
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
     }
-
-    @Override
-    public Material getMaterial() {
-        return material;
-    }
-
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
         return POTextures.SPELL_PRISM_WATER;

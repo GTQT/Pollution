@@ -29,7 +29,7 @@ public class MetaTileEntityMagicBender extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicBender(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BENDER_RECIPES, RecipeMaps.COMPRESSOR_RECIPES,
                 RecipeMaps.FORMING_PRESS_RECIPES, RecipeMaps.FORGE_HAMMER_RECIPES});
-        this.material=infused_metal;
+        setMaterial(infused_metal);
     }
 
     private static IBlockState getCasingState() {
@@ -64,13 +64,6 @@ public class MetaTileEntityMagicBender extends PORecipeMapMultiblockController {
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
     }
-
-    //这里是多方块工作需要消耗的 元素
-    @Override
-    public Material getMaterial() {
-        return material;
-    }
-
     //覆盖层材质 就是给IO渲染的材质
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {

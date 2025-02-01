@@ -29,7 +29,7 @@ public class MetaTileEntityMagicExtruder extends PORecipeMapMultiblockController
 
     public MetaTileEntityMagicExtruder(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.EXTRUDER_RECIPES});
-        this.material=infused_instrument;
+        setMaterial(infused_instrument);
     }
 
     private static IBlockState getCasingState() {
@@ -70,11 +70,6 @@ public class MetaTileEntityMagicExtruder extends PORecipeMapMultiblockController
                 .where('A', states(getCasingState4()))
                 .where('#', any())
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

@@ -27,7 +27,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_weapon
 public class MetaTileEntityMagicCutter extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicCutter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CUTTER_RECIPES});
-        this.material=infused_weapon;
+        setMaterial(infused_weapon);
     }
 
     private static IBlockState getCasingState() {
@@ -66,11 +66,6 @@ public class MetaTileEntityMagicCutter extends PORecipeMapMultiblockController {
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('#', any())
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

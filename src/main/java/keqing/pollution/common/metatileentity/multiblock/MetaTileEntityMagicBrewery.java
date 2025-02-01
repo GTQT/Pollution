@@ -29,7 +29,7 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
     public MetaTileEntityMagicBrewery(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
                 RecipeMaps.FLUID_HEATER_RECIPES});
-        this.material=infused_water;
+        setMaterial(infused_water);
     }
 
     //下边都是设置多方块外形材质的喵
@@ -72,12 +72,6 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
-    }
-
-    //这里是多方块工作需要消耗的 元素
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     //覆盖层材质 就是给IO渲染的材质

@@ -39,7 +39,13 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         this.recipeMapWorkable = new POMultiblockRecipeLogic(this);
     }
 
-    protected abstract Material getMaterial();
+    protected Material getMaterial() {
+        return material;
+    }
+
+    protected void setMaterial(Material material) {
+        this.material = material;
+    }
 
     public boolean drainMaterial(Material material, Boolean consume) {
         IMultipleTankHandler inputTank = getInputFluidInventory();

@@ -45,7 +45,7 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
     public MetaTileEntityMagicAssembler(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.ASSEMBLER_RECIPES, PORecipeMaps.MAGIC_ASSEMBLER_RECIPES});
         this.recipeMapWorkable = new MagicAssemblerRecipeLogic(this);
-        this.material= infused_craft;
+        setMaterial(infused_craft);
     }
 
     private static IBlockState getCasingState() {
@@ -112,11 +112,6 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
                 .where(' ', any())
                 .where('G', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

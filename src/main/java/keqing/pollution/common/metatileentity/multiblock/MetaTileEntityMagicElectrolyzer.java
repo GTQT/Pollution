@@ -26,7 +26,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_order;
 public class MetaTileEntityMagicElectrolyzer extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.ELECTROLYZER_RECIPES});
-        this.material=infused_order;
+        setMaterial(infused_order);
     }
 
     private static IBlockState getCasingState() {
@@ -64,11 +64,6 @@ public class MetaTileEntityMagicElectrolyzer extends PORecipeMapMultiblockContro
                 .where('D', states(getCasingState4()))
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

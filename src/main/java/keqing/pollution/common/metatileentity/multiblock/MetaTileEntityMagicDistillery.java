@@ -40,7 +40,7 @@ public class MetaTileEntityMagicDistillery extends PORecipeMapMultiblockControll
 
     public MetaTileEntityMagicDistillery(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.DISTILLATION_RECIPES, RecipeMaps.DISTILLERY_RECIPES});
-        this.material=infused_water;
+        setMaterial(infused_water);
     }
 
     private static IBlockState getCasingState() {
@@ -103,12 +103,6 @@ public class MetaTileEntityMagicDistillery extends PORecipeMapMultiblockControll
                 .where('T', states(getCasingState4()))
                 .where('#', any())
                 .build();
-    }
-
-    //这里是多方块工作需要消耗的 元素
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

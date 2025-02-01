@@ -26,7 +26,7 @@ public class MetaTileEntityMagicCentrifuge extends PORecipeMapMultiblockControll
 
     public MetaTileEntityMagicCentrifuge(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CENTRIFUGE_RECIPES, RecipeMaps.THERMAL_CENTRIFUGE_RECIPES});
-        this.material=infused_air;
+        setMaterial(infused_air);
     }
 
     private static IBlockState getCasingState() {
@@ -62,11 +62,6 @@ public class MetaTileEntityMagicCentrifuge extends PORecipeMapMultiblockControll
                 .where('H', states(getCasingState3()))
                 .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
-    }
-
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 
     @Override
