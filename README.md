@@ -3,7 +3,7 @@
 
 ### 协议
 
-* Pollution
+* Pollution（包括主线策划，材质，代码内容）
     - Copyright (c) KeQingSoCute520 越人不歌
     - [![License](https://img.shields.io/badge/License-AGPLv3-blue.svg?style=flat-square)](https://github.com/GTQT/Pollution/blob/main/LICENSE)
 
