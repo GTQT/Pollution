@@ -1,6 +1,12 @@
 ## 模组简介
 格雷科技社区版非官方版（GTCEu）的附属模组，同时为整合包 GregTech:QuantumTransition（格雷：量子跃迁）提供神秘时代部分的魔法兼容，由于其内容简单，现将其独立使用。
 
+### 协议
+
+* GTQT 整合包本体
+    - Copyright (c) KeQingSoCute520 越人不歌
+    - [![License](https://img.shields.io/badge/License-AGPLv3-blue.svg?style=flat-square)](https://github.com/GTQT/Pollution/blob/main/LICENSE)
+
 ## 模组目标
 
 基于格雷科技融合神秘时代6和交错次元的世界观，并在此基础上寻求其与植物魔法、血魔法的联动。模组将神秘的咒波和格雷科技的污染建立联系，鼓励玩家管理区块中的灵气，减少污染。格雷多方块机器的消声仓排放污染，污染值的增大不仅影响身体健康，让部分机器效率下降，还会制造出难缠的裂隙。Pollution自带的污染清洗机能帮助你让灵气场恢复稳定；而伴随着对神秘学研究的深入，你会发现将灵气归为己用后，机器增产竟是如此容易！
