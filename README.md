@@ -3,7 +3,7 @@
 
 ### 协议
 
-* GTQT 整合包本体
+* Pollution
     - Copyright (c) KeQingSoCute520 越人不歌
     - [![License](https://img.shields.io/badge/License-AGPLv3-blue.svg?style=flat-square)](https://github.com/GTQT/Pollution/blob/main/LICENSE)
 
