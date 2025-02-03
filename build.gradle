@@ -113,7 +113,8 @@ dependencies {
     implementation rfg.deobf("curse.maven:thaumcraft-223628:2629023")
     implementation rfg.deobf("curse.maven:mixin-booter-419286:4835295")
     implementation rfg.deobf("curse.maven:the-one-probe-245211:2667280")
-    implementation rfg.deobf(files("libs/gtqtcore-1.0.jar"))
+    implementation rfg.deobf(files("libs/gtqtcore-1.7.1.jar"))
+    implementation rfg.deobf(files("libs/supercritical-1.7.1.jar"))
     implementation rfg.deobf("curse.maven:chisel-235279:2915375")
     implementation "curse.maven:ctm-267602:2915363-deobf"
     implementation rfg.deobf(files("libs/Botania r1.10-364.4.jar"))
