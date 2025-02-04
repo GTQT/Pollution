@@ -84,7 +84,7 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
     @Override
     public void update() {
         super.update();
-        if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier), true) > 0) {
+        if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier* 0.01), true) >= (float) (tier * tier * 0.01)) {
             if (visStorage < visStorageMax) {
                 AuraHelper.drainVis(getWorld(), this.getPos(), (float) (tier * tier * 0.01), false);
                 visStorage += tier * tier;
@@ -117,9 +117,9 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.defaultBuilder();
-        builder.dynamicLabel(7, 30, () -> "Vis Hatch", 0x232323);
-        builder.dynamicLabel(7, 50, () -> "Tier: " + this.getTier(), 0x232323);
-        builder.dynamicLabel(7, 70, () -> "Vis: " + visStorage+"/"+visStorageMax, 0x232323);
+        builder.dynamicLabel(7, 30, () -> "灵气仓", 0x232323);
+        builder.dynamicLabel(7, 50, () -> "等级: " + this.getTier(), 0x232323);
+        builder.dynamicLabel(7, 70, () -> "灵气源: " + visStorage+"/"+visStorageMax, 0x232323);
         return builder.build(getHolder(), entityPlayer);
     }
 

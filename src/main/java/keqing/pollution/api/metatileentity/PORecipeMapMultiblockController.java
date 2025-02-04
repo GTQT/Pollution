@@ -139,7 +139,7 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
 
         @Override
         protected double getOverclockingDurationDivisor() {
-            if (this.getMaxVoltage() <= GTValues.V[getUpdateByVis()]) {
+            if (this.getMaxVoltage() <= GTValues.V[tier]) {
                 return 4.0;
             } else {
                 return 2.0;
