@@ -127,6 +127,7 @@ dependencies {
     implementation rfg.deobf(files("libs/Guide-API-1.12-2.1.8-63.jar"))
     implementation rfg.deobf(files("libs/TheBetweenlands-3.9.6-universal.jar"))
     implementation rfg.deobf(files("libs/TheBetweenlands-3.9.6-core.jar"))
+    implementation rfg.deobf(files("libs/ExtraBotany-r1.1-60-beta-hotfix.jar"))
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
         String mixin = modUtils.enableMixins('org.spongepowered:mixin:0.8.3', "mixins.${project.archives_base_name}.refmap.json")

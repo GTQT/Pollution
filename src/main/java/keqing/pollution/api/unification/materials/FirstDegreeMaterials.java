@@ -214,15 +214,18 @@ public class FirstDegreeMaterials {
 				.blast(3600, MID)
 				.build();
 
-		//牢大 想你了
-		PollutionMaterials.kobemetal = new Material.Builder(getMaterialsId(), gregtechId("kobemetal"))
-				.color(0xFFD700)
+		//奥利哈
+		PollutionMaterials.Orichalcos = new Material.Builder(getMaterialsId(), gregtechId("orichalcos"))
+				.color(0xFF00FF)
 				.ingot().fluid()
-				.components(Helium, 1, Lithium, 1, Cobalt, 1, Platinum, 1, Erbium, 1)
-				.iconSet(SHINY)
-				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING)
-				.build()
-				.setFormula("HeLiCoPtEr", true);
+				.components(Iron, 4,Carbon,4,EnderPearl,4, mana, 3)
+				.toolStats(new ToolProperty(8, 6, 5120, 6))
+				.rotorStats(14.0F, 3.0F, 3200)
+				.fluidPipeProperties(8000, 600, true)
+				.cableProperties(GTValues.V[7], 16, 2)
+				.iconSet(METALLIC)
+				.flags(GENERATE_DENSE,GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+				.build();
 
 		//注释
 		//在 Elements 类下注册元素
@@ -389,5 +392,15 @@ public class FirstDegreeMaterials {
 				.dust()
 				.iconSet(SHINY)
 				.build();
+
+		//牢大 想你了
+		PollutionMaterials.kobemetal = new Material.Builder(getMaterialsId(), gregtechId("kobemetal"))
+				.color(0xFFD700)
+				.ingot().fluid()
+				.components(Helium, 1, Lithium, 1, Cobalt, 1, Platinum, 1, Erbium, 1)
+				.iconSet(SHINY)
+				.flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING)
+				.build()
+				.setFormula("HeLiCoPtEr", true);
 	}
 }

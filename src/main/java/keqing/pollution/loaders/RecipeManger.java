@@ -21,13 +21,13 @@ public class RecipeManger {
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();
-        Botania.init();
         VanillaRecipes.init();
         StoneLine.init();
         BiologyLine.init();
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();
         NodeFusionRecipes.init();
+        Botania.init();
     }
 
 

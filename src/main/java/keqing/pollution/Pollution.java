@@ -33,6 +33,7 @@ import java.util.Random;
                 "required-after:gtqtcore@[0,);" +
                 "required-after:bloodmagic@[0,);" +
                 "required-after:thebetweenlands@[0,);" +
+                "required-after:extrabotany@[0,);" +
                 "required-after:botania@[0,);"
 )
 public class Pollution {

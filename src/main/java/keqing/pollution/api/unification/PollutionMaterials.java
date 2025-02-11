@@ -103,6 +103,7 @@ public class PollutionMaterials {
 	public static Material whitemansus;
 	public static Material blackmansus;
 	public static Material Terrasteel;
+	public static Material Orichalcos;
 	public static Material ElvenElementium;
 	public static Material elven;
 	public static Material basic_substrate;
