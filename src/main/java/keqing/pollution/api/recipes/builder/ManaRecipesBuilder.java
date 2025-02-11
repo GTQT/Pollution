@@ -8,9 +8,12 @@ import keqing.gtqtcore.api.utils.GTQTLog;
 import keqing.pollution.api.recipes.properties.ManaProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.annotation.Nonnull;
+
 public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
 
-    public ManaRecipesBuilder() {}
+    public ManaRecipesBuilder() {
+    }
 
     public ManaRecipesBuilder(Recipe recipe, RecipeMap<ManaRecipesBuilder> recipeMap) {
         super(recipe, recipeMap);
@@ -18,6 +21,15 @@ public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
 
     public ManaRecipesBuilder(RecipeBuilder<ManaRecipesBuilder> recipeBuilder) {
         super(recipeBuilder);
+    }
+
+    @Override
+    public boolean applyProperty(@Nonnull String key, Object value) {
+        if (key.equals(ManaProperty.KEY)) {
+            this.TotalMana(((Number) value).intValue());
+            return true;
+        }
+        return super.applyProperty(key, value);
     }
 
     @Override

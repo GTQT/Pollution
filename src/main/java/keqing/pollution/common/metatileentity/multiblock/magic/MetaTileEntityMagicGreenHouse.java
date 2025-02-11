@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -6,11 +6,9 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -63,14 +61,13 @@ public class MetaTileEntityMagicGreenHouse extends PORecipeMapMultiblockControll
                 .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
                 .aisle("CCCCC", "CHHHC", "G###G", "G###G", "CHHHC", "CDDDC")
                 .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
-                .aisle("CCCCC", "CFSCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
+                .aisle("CCCCC", "CCSCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
                 .where('S', selfPredicate())
                 .where('C', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
                 .where('P', states(getSecondCasingState()))
                 .where('D', states(getCasingState4()))
                 .where('H', states(getCasingState5()))
                 .where('G', states(getCasingState3()))
-                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('#', air())
                 .build();
     }

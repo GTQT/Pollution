@@ -1,17 +1,21 @@
 package keqing.pollution.api.metatileentity;
 
-import gregtech.api.GTValues;
 import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.unification.material.Material;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.TextFormattingUtil;
+import keqing.pollution.api.capability.IManaHatch;
+import keqing.pollution.api.capability.IVisHatch;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -20,7 +24,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 
-import static gregtech.api.unification.material.Materials.Lubricant;
 import static keqing.pollution.api.utils.infusedFluidStack.STACK_MAP;
 
 public abstract class PORecipeMapMultiblockController extends MultiMapMultiblockController {
@@ -29,6 +32,14 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     int tier;
     int visStorage;
     int visStorageMax;
+    boolean isVisModule = false;
+    boolean isManaModule = false;
+    int maxParallel;
+
+    double timeReduce;//耗时减免
+    double energyReduce;//耗能减免
+    int OverclockingEnhance;//超频加强
+    int ParallelEnhance;//并行加强
 
     public PORecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         this(metaTileEntityId, new RecipeMap<?>[]{recipeMap});
@@ -60,9 +71,16 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("多方块工作需要源质：%s，请将液态源质输入设备的输入仓内", material.getLocalizedName()));
-        tooltip.add(I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与5mb灵气源"));
+        tooltip.add(I18n.format("========灵气模式========"));
         tooltip.add(I18n.format("需要使用 §c灵气仓§r 为多方块提供灵气支持"));
-        tooltip.add(I18n.format("每100灵气源为多方块带来额外的一并行数量"));
+        tooltip.add(I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与4*仓室等级 mb的灵气源"));
+        tooltip.add(I18n.format("每128灵气源为多方块带来额外的一并行数量"));
+        tooltip.add(I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
+        tooltip.add(I18n.format("========魔力模式========"));
+        tooltip.add(I18n.format("需要使用 §c魔力仓§r 为多方块提供魔力支持"));
+        tooltip.add(I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与Math.pow(2,仓室等级) mb的灵气源"));
+        tooltip.add(I18n.format("每1024灵气源为多方块带来额外的一并行数量"));
+        tooltip.add(I18n.format("在魔力仓内填充升级部件可获得额外的耗时，耗能，超频，并行加强。"));
         tooltip.add(I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
     }
 
@@ -70,12 +88,23 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     public void updateFormedValid() {
         super.updateFormedValid();
         if (!isStructureFormed()) return;
-        this.visStorage = this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).getVisStore();
+        isVisModule=!this.getAbilities(POMultiblockAbility.VIS_HATCH).isEmpty();
+        isManaModule=!this.getAbilities(POMultiblockAbility.MANA_HATCH).isEmpty();
+        if (isVisModule) {
+            this.visStorage = this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).getVisStore();
+        }
+        if (isManaModule) {
+            this.visStorage = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMana();
+            this.energyReduce = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getEnergyReduce();
+            this.timeReduce = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTimeReduce();
+            this.OverclockingEnhance = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getOverclockingEnhance();
+            this.ParallelEnhance = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getParallelEnhance();
+        }
     }
 
     @Override
     public boolean isActive() {
-        return  this.isStructureFormed()
+        return this.isStructureFormed()
                 && this.recipeMapWorkable.isActive()
                 && this.recipeMapWorkable.isWorkingEnabled();
     }
@@ -89,43 +118,95 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     }
 
     public boolean drainVis(int amount, boolean simulate) {
-        return this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).drainVis(amount, simulate);
+        if (isVisModule) return this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).drainVis(amount * 4, simulate);
+        if (isManaModule)
+            return this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).consumeMana((int) Math.pow(2, amount), simulate);
+        return false;
     }
 
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        this.tier = this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).getTier();
-        this.visStorageMax = this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).getMaxVisStore();
+        // 检查 VIS_HATCH 是否存在
+        List<IVisHatch> visHatches = this.getAbilities(POMultiblockAbility.VIS_HATCH);
+        if (visHatches != null && !visHatches.isEmpty()) {
+            IVisHatch visHatch = visHatches.get(0);
+            this.tier = visHatch.getTier();
+            maxParallel = tier * 8;
+            this.visStorageMax = visHatch.getMaxVisStore();
+            isVisModule = true;
+        }
+
+        // 检查 MANA_HATCH 是否存在
+        List<IManaHatch> manaHatches = this.getAbilities(POMultiblockAbility.MANA_HATCH);
+        if (manaHatches != null && !manaHatches.isEmpty()) {
+            IManaHatch manaHatch = manaHatches.get(0);
+            this.tier = manaHatch.getTier();
+            maxParallel = (int) Math.pow(2, tier);
+            this.visStorageMax = manaHatch.getMaxMana();
+            isManaModule = true;
+        }
+    }
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        data.setInteger("tier", this.tier);
+        return super.writeToNBT(data);
     }
 
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.tier = data.getInteger("tier");
+    }
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed())
             textList.add(new TextComponentTranslation("灵气源: %s / %s（总） 灵气等级: %s", visStorage, visStorageMax, tier));
         if (material != null) {
-            textList.add(new TextComponentTranslation("要素需求 : %s | 工作状态: %s", material.getLocalizedName(), drainMaterial(material, false)));
-            if (getInputFluidInventory() != null) {
-                FluidStack fluidStack = getInputFluidInventory().drain(material.getFluid(Integer.MAX_VALUE), false);
-                int i = fluidStack == null ? 0 : fluidStack.amount;
-                textList.add(new TextComponentTranslation("要素储量 : %s", TextFormattingUtil.formatNumbers((i))));
-            }
+            FluidStack fluidStack = getInputFluidInventory().drain(material.getFluid(Integer.MAX_VALUE), false);
+            int i = fluidStack == null ? 0 : fluidStack.amount;
+            if (i == 0)
+                textList.add(new TextComponentTranslation("%s要素未填充", material.getLocalizedName()));
+            if (i != 0)
+                textList.add(new TextComponentTranslation("%s要素储量: %s", material.getLocalizedName(), TextFormattingUtil.formatNumbers((i))));
+        }
+        if (isManaModule) {
+            textList.add(new TextComponentTranslation("超频加强: " + OverclockingEnhance + " 耗时减免: " + timeReduce));
+            textList.add(new TextComponentTranslation("并行加强: " + ParallelEnhance + " 耗能减免: " + energyReduce));
         }
     }
 
     @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        buf.writeInt(this.visStorage);
+    public TraceabilityPredicate autoAbilities() {
+        return this.autoAbilities(true, true, true, true, true, true, true);
     }
 
     @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        this.visStorage = buf.readInt();
-    }
+    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
+        TraceabilityPredicate predicate = super.autoAbilities(checkMaintenance, checkMuffler);
+        if (checkEnergyIn) {
+            predicate = predicate.or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
+        }
 
+        if (checkItemIn && this.recipeMap.getMaxInputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1));
+        }
+
+        if (checkItemOut && this.recipeMap.getMaxOutputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.EXPORT_ITEMS).setPreviewCount(1));
+        }
+
+
+        predicate = predicate.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setPreviewCount(1));
+
+        if (checkFluidOut && this.recipeMap.getMaxFluidOutputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
+        }
+        predicate = predicate.or(abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1));
+        predicate = predicate.or(abilities(POMultiblockAbility.MANA_HATCH).setMaxGlobalLimited(1));
+        return predicate;
+    }
 
     public class POMultiblockRecipeLogic extends MultiblockRecipeLogic {
         public POMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
@@ -133,30 +214,29 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         }
 
         public int getUpdateByVis() {
-            if (visStorage <= 100) return 1;
-            return visStorage / 100;
-        }
-
-        @Override
-        protected double getOverclockingDurationDivisor() {
-            if (this.getMaxVoltage() <= GTValues.V[tier]) {
-                return 4.0;
-            } else {
-                return 2.0;
+            if (isVisModule) {
+                if (visStorage <= 128) return 1;
+                return ParallelEnhance * 10 + visStorage / 128;
             }
+            if (isManaModule) {
+                if (visStorage <= 1024) return 1;
+                return ParallelEnhance * 10 + visStorage / 1024;
+            }
+            return ParallelEnhance * 10;
         }
 
         @Override
         public int getParallelLimit() {
-            return getUpdateByVis();
+            return Math.min(getUpdateByVis(), maxParallel);
         }
 
+        @Override
         protected void updateRecipeProgress() {
             if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-                if (drainVis(5,false) && drainMaterial(material, false)) {
+                if (drainVis(tier, false) && drainMaterial(material, false)) {
                     this.drawEnergy(this.recipeEUt, false);
                     drainMaterial(material, true);
-                    drainVis(5,true);
+                    drainVis(tier, true);
                     if (++this.progressTime > this.maxProgressTime) {
                         this.completeRecipe();
                     }
@@ -167,6 +247,34 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
             } else if (this.recipeEUt > 0) {
                 this.hasNotEnoughEnergy = true;
                 this.decreaseProgress();
+            }
+        }
+
+        @Override
+        public void setMaxProgress(int maxProgress) {
+            super.setMaxProgress((int) (maxProgress * timeReduce));
+        }
+
+        @Override
+        protected boolean drawEnergy(int EUt, boolean simulate) {
+            int recipeEUt = (int) (EUt * energyReduce);
+            long resultEnergy = this.getEnergyStored() - (long) recipeEUt;
+            if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {
+                if (!simulate) {
+                    this.getEnergyContainer().changeEnergy(-recipeEUt);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        protected double getOverclockingDurationDivisor() {
+            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
+                return 4.0;
+            } else {
+                return 2.0;
             }
         }
     }

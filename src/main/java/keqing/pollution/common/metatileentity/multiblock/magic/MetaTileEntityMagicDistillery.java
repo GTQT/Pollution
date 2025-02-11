@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -9,14 +9,12 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.appeng.MetaTileEntityMEOutputHatch;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -81,7 +79,7 @@ public class MetaTileEntityMagicDistillery extends PORecipeMapMultiblockControll
         return FactoryBlockPattern.start(RIGHT, FRONT, DOWN)
                 .aisle("#####", "#ZZZ#", "#ZCZ#", "#ZZZ#", "#####")
                 .aisle("##X##", "#XAX#", "XAPAX", "#XAX#", "##X##").setRepeatable(1, 12)
-                .aisle("#FSY#", "YAAAY", "YATAY", "YAAAY", "#YYY#")
+                .aisle("#YSY#", "YAAAY", "YATAY", "YAAAY", "#YYY#")
                 .aisle("#YYY#", "YYYYY", "YYYYY", "YYYYY", "#YYY#")
                 .where('S', selfPredicate())
                 .where('Y', casingPredicate.or(abilities(MultiblockAbility.IMPORT_ITEMS))
@@ -99,7 +97,6 @@ public class MetaTileEntityMagicDistillery extends PORecipeMapMultiblockControll
                 .where('P', states(getCasingState2()))
                 .where('A', states(getCasingState3()))
                 .where('C', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('T', states(getCasingState4()))
                 .where('#', any())
                 .build();

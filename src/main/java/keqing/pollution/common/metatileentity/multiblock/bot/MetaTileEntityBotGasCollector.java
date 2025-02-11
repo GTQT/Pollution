@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.bot;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -17,6 +17,7 @@ import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.api.metaileentity.MetaTileEntityBaseWithControl;
+import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
@@ -25,10 +26,10 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POBotBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POManaPlate;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -44,7 +45,7 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_
 
 public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl {
 
-    MetaTileEntityManaHatch manaHatch;
+    IManaHatch manaHatch;
     //配方执行次数
     int times = 0;
     //核心等级
@@ -60,6 +61,19 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
     int essenceConsumptionSpeed;
     //魔力消耗速度
     int manaConsumptionSpeed;
+    
+    int tier;
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        data.setInteger("tier", this.tier);
+        return super.writeToNBT(data);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.tier = data.getInteger("tier");
+    }
     //液态源质对应的气体列表
     HashMap<gregtech.api.unification.material.Material, gregtech.api.unification.material.Material> gasMap = new HashMap<>() {
         {
@@ -122,16 +136,10 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
         this.beamLevel = POUtils.getOrDefault(() -> beamLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) beamLevel).getIntTier(),
                 0);
-        for (Map.Entry<String, Object> str : context.entrySet()) {
-            if (str.getKey().startsWith("Multi")) {
-                HashSet set = (HashSet) str.getValue();
-                for (var s : set
-                ) {
-                    if (s instanceof MetaTileEntityManaHatch) {
-                        this.manaHatch = (MetaTileEntityManaHatch) s;
-                    }
-                }
-            }
+
+        if(!this.getAbilities(POMultiblockAbility.MANA_HATCH).isEmpty()) {
+            manaHatch = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0);
+            tier= manaHatch.getTier();
         }
     }
 
@@ -159,8 +167,8 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
         if (!this.isActive()) {
             setActive(true);
         }
-        essenceConsumptionSpeed = (int) ((14 - beamLevel) * 0.5 * (1 - 0.05 * this.manaHatch.getTier()));
-        manaConsumptionSpeed = (int) (4 * Math.pow(2, (Math.max(0, this.manaHatch.getTier() - 2))));
+        essenceConsumptionSpeed = (int) ((14 - beamLevel) * 0.5 * (1 - 0.05 * tier));
+        manaConsumptionSpeed = (int) (4 * Math.pow(2, (Math.max(0, tier - 2))));
         finalCollectionSpeed = manaConsumptionSpeed * 100;
         List<IFluidTank> fluidInputInventory = getAbilities(MultiblockAbility.IMPORT_FLUIDS);
         FluidStack WHITE_MANSUS = PollutionMaterials.whitemansus.getFluid(essenceConsumptionSpeed * 10);
@@ -193,7 +201,8 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
             }
 
             if (essenceCheck && mansusCheck) {
-                if (this.manaHatch.consumeMana(manaConsumptionSpeed)) {
+                if (this.manaHatch.consumeMana(manaConsumptionSpeed,true)) {
+                    this.manaHatch.consumeMana(manaConsumptionSpeed,false);
                     FluidStack fluid = new FluidStack(result.getFluid(), finalCollectionSpeed);
                     GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(fluid));
                     times++;

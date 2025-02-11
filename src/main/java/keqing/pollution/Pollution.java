@@ -11,6 +11,7 @@ import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import keqing.pollution.dimension.worldgen.PODimensionManager;
 import keqing.pollution.dimension.worldgen.PODimensionType;
 import keqing.pollution.dimension.worldgen.POStructureManager;
+import keqing.pollution.integration.POIntegration;
 import keqing.pollution.loaders.loot.GregTechLootTable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -49,6 +50,7 @@ public class Pollution {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        POIntegration.init();
         proxy.init();
         GregTechLootTable.init();
     }

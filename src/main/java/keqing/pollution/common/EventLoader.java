@@ -61,11 +61,11 @@ public class EventLoader {
             clientTick = 0;
 
             int flux = (int) AuraHelper.getFlux(player.world, player.getPosition());
-            if (flux < 20) return;
+            if (flux < 40) return;
 
             int randomNum = RANDOM.nextInt(250);
-            applyEffectIfConditionMet(player, flux, randomNum, 20, 150, 250, MobEffects.SLOWNESS, "pollution.command.slowness");
-            applyEffectIfConditionMet(player, flux, randomNum, 40, 70, 150, MobEffects.WEAKNESS, "pollution.command.weakness");
+            applyEffectIfConditionMet(player, flux, randomNum, 40, 150, 250, MobEffects.SLOWNESS, "pollution.command.slowness");
+            applyEffectIfConditionMet(player, flux, randomNum, 60, 70, 150, MobEffects.WEAKNESS, "pollution.command.weakness");
             applyEffectIfConditionMet(player, flux, randomNum, 60, 30, 70, MobEffects.NAUSEA, "pollution.command.nausea");
             applyEffectIfConditionMet(player, flux, randomNum, 80, 10, 30, MobEffects.MINING_FATIGUE, "pollution.command.mining");
             applyEffectIfConditionMet(player, flux, randomNum, 100, 0, 10, MobEffects.BLINDNESS, "pollution.command.blindness");
@@ -146,7 +146,7 @@ public class EventLoader {
         // 召唤 wither
         player.world.spawnEntity(wither);
         player.sendMessage(new TextComponentTranslation("pollution.command.summon_wither"));
-        AuraHelper.drainFlux(player.world, player.getPosition(), 10, false);
+        AuraHelper.drainFlux(player.world, player.getPosition(), 100, false);
 
     }
 

@@ -67,4 +67,9 @@ public class PORecipeMaps {
 	public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMap<>("mana_infusion_recipes", 2, 1, 0, 0, new ManaRecipesBuilder(), false)
 			.setSound(GTSoundEvents.REPLICATOR);
 
+	public static final RecipeMap<ManaRecipesBuilder> MANA_RUNE_ALTAR_RECIPES = new RecipeMap<>("mana_rune_altar_recipes", 6, 1, 0, 0, new ManaRecipesBuilder(), false)
+			.setSound(GTSoundEvents.REPLICATOR);
+
+	public static final RecipeMap<ManaRecipesBuilder> MANA_PETAL_RECIPES = new RecipeMap<>("mana_petal_recipes", 16, 1, 0, 0, new ManaRecipesBuilder(), false)
+			.setSound(GTSoundEvents.REPLICATOR);
 }

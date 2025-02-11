@@ -6,7 +6,11 @@ import codechicken.lib.vec.Matrix4;
 import gregicality.multiblocks.api.render.GCYMTextures;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
+import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.AdvancedTextWidget;
+import gregtech.api.gui.widgets.SlotWidget;
+import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
@@ -25,8 +29,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemStackHandler;
 import thaumcraft.api.aura.AuraHelper;
 
 import java.util.List;
@@ -35,24 +41,28 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
         implements IMultiblockAbilityPart<IVisHatch>, IVisHatch {
 
     private final int tier;
-    private int visStorage;
     private final int visStorageMax;
+    private final ItemStackHandler containerInventory;
+    private int visStorage;
 
     public MetaTileEntityVisHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier = tier;
-        this.visStorageMax=1000*tier;
+        this.visStorageMax = 1024 * tier;
+        this.containerInventory = new GTItemStackHandler(this, 1);
     }
-    @Override
+
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
-        data.setInteger("visStorage", this.visStorage);
+        data.setTag("ContainerInventory", this.containerInventory.serializeNBT());
+        data.setInteger("visStorage", visStorage);
         return super.writeToNBT(data);
     }
 
-    @Override
+
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.visStorage = data.getInteger("visStorage");
+        this.containerInventory.deserializeNBT(data.getCompoundTag("ContainerInventory"));
+        visStorage = data.getInteger("visStorage");
     }
 
     @Override
@@ -74,20 +84,22 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
 
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("等级 %s 容积上限 %s", tier, 1000 * tier));
-        tooltip.add(I18n.format("每tick提供 %s 灵气源并消耗 %s 当前区块灵气 ", tier * tier,tier * tier * 0.01));
+        tooltip.add(I18n.format("每tick提供 %s 灵气源并消耗 %s 当前区块灵气 ", tier * tier, tier * tier * 0.01));
     }
 
     @Override
     public int getTier() {
         return tier;
     }
+
     @Override
     public void update() {
         super.update();
-        if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier* 0.01), true) >= (float) (tier * tier * 0.01)) {
+        if (AuraHelper.drainVis(getWorld(), getPos(), (float) (tier * tier * 0.01), true) >= (float) (tier * tier * 0.01)) {
             if (visStorage < visStorageMax) {
                 AuraHelper.drainVis(getWorld(), this.getPos(), (float) (tier * tier * 0.01), false);
                 visStorage += tier * tier;
+                visStorage=Math.min(visStorageMax,visStorage);
             }
         }
     }
@@ -114,13 +126,23 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
         return false;
     }
 
+
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
-        ModularUI.Builder builder = ModularUI.defaultBuilder();
-        builder.dynamicLabel(7, 30, () -> "灵气仓", 0x232323);
-        builder.dynamicLabel(7, 50, () -> "等级: " + this.getTier(), 0x232323);
-        builder.dynamicLabel(7, 70, () -> "灵气源: " + visStorage+"/"+visStorageMax, 0x232323);
-        return builder.build(getHolder(), entityPlayer);
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
+        builder.dynamicLabel(28, 12, () -> "灵气仓", 0xFFFFFF);
+        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, true, true)
+                .setBackgroundTexture(GuiTextures.SLOT)
+                .setTooltipText("输入槽位"));
+        builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
+        builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
+        return builder.build(this.getHolder(), entityPlayer);
+    }
+
+    protected void addDisplayText(List<ITextComponent> textList) {
+        textList.add(new TextComponentTranslation("等级: %s", this.getTier()));
+        textList.add(new TextComponentTranslation("灵气源: " + visStorage + "/" + visStorageMax));
     }
 
     @Override

@@ -121,7 +121,7 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
     }
 
     private boolean consumeMana() {
-        return this.manaHatch.consumeMana(manaConsumptionSpeed);
+        return this.manaHatch.consumeMana(manaConsumptionSpeed,false);
     }
 
     private void produceMansus(float fluxCleaned, float auraSupplemented, int goodChunkAmount) {

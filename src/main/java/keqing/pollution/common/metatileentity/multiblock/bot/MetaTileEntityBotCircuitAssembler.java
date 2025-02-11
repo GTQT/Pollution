@@ -1,9 +1,8 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.bot;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -15,9 +14,7 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.pollution.api.capability.ipml.POManaMultiblockWithElectricRecipeLogic;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -25,18 +22,10 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POManaPlate;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 
 import static keqing.gtqtcore.common.block.GTQTMetaBlocks.blockStepperCasing;
 import static keqing.gtqtcore.common.block.blocks.BlockStepperCasing.CasingType.CLEAN_MKV;
@@ -44,12 +33,11 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAME
 
 public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElectric {
 
-    MetaTileEntityManaHatch manaHatch;
     private int frameLevel;
 
     public MetaTileEntityBotCircuitAssembler(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, RecipeMaps.CIRCUIT_ASSEMBLER_RECIPES);
-        this.recipeMapWorkable = new MetaTileEntityBotCircuitAssembler.BotCircuitAssemblerRecipeLogic(this);
+        this.recipeMapWorkable = new BotCircuitAssemblerRecipeLogic(this);
     }
 
     private static IBlockState getCasingState() {
@@ -83,32 +71,20 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
         this.frameLevel = POUtils.getOrDefault(() -> frameLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) frameLevel).getIntTier(),
                 0);
-        for (Map.Entry<String, Object> str : context.entrySet()) {
-            if (str.getKey().startsWith("Multi")) {
-                HashSet set = (HashSet) str.getValue();
-                for (var s : set
-                ) {
-                    if (s instanceof MetaTileEntityManaHatch) {
-                        this.manaHatch = (MetaTileEntityManaHatch) s;
-                    }
-                }
-            }
-        }
+    }
+
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        data.setInteger("frameLevel", this.frameLevel);
+        return super.writeToNBT(data);
+    }
+
+    public void readFromNBT(NBTTagCompound data) {
+        this.frameLevel = data.getInteger("frameLevel");
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntityBotVacuumFreezer(this.metaTileEntityId);
-    }
-
-    @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("魔力仓等级: %s", this.getTier()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-            textList.add(new TextComponentTranslation("魔力仓缓存: %s", this.getMana()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-            textList.add(new TextComponentTranslation("每tick预计消耗: %s", 20 * Math.pow(2, getTier() - 1)).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-        }
     }
 
     @Override
@@ -128,12 +104,7 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
                 .where('A', states(getCasingState()))
                 .where('B', states(getCasingState2()))
                 .where('C', states(getCasingState3()).setMinGlobalLimited(40)
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.EXPORT_ITEMS).setMinGlobalLimited(1).setPreviewCount(1))
-                        .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1)))
+                        .or(autoAbilities()))
                 .where('D', states(getCasingState4()))
                 .where('E', states(getCasingState5()))
                 .where('F', states(getCasingState6()))
@@ -159,11 +130,6 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
     }
 
     @Override
-    public void update() {
-        super.update();
-    }
-
-    @Override
     public SoundEvent getBreakdownSound() {
         return GTSoundEvents.BREAKDOWN_ELECTRICAL;
     }
@@ -181,7 +147,7 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
 
         @Override
         public void setMaxProgress(int maxProgress) {
-            this.maxProgressTime = maxProgress * (10 - frameLevel) / 10;
+            super.setMaxProgress((int) (maxProgress * (10.0 - frameLevel) / 10));
         }
     }
 }

@@ -146,7 +146,12 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.FILTER_MKIII = this.addItem(212, "filter.iii").setMaxStackSize(8).addComponents(new FilterBehavior(480000, 3, PollutionMaterials.syrmorite)).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.FILTER_MKIV = this.addItem(213, "filter.iv").setMaxStackSize(8).addComponents(new FilterBehavior(640000, 4, PollutionMaterials.thaumium)).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.FILTER_MKV = this.addItem(214, "filter.v").setMaxStackSize(8).addComponents(new FilterBehavior(720000, 5, PollutionMaterials.octine)).setCreativeTabs(Pollution_TAB);
-		
+		//模块升级4个
+		PollutionMetaItems.ENERGY_REDUCE = this.addItem(220, "energy_reduce").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.TIME_REDUCE = this.addItem(221, "time_increase").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.OVERCLOCKING_ENHANCE = this.addItem(222, "overclocking_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.PARALLEL_ENHANCE = this.addItem(223, "parallel_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+
 		//塔罗牌
 		PollutionMetaItems.TEST_ITEM = this.addItem(300, "test_item").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
 		PollutionMetaItems.TAROT_THE_FOOL = this.addItem(301, "the_fool").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT).addComponents(new Tarots.THE_FOOL());

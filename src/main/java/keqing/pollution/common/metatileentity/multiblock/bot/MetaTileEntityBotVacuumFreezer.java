@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.bot;
 
 
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -17,7 +17,6 @@ import gregtech.core.sound.GTSoundEvents;
 import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.block.blocks.BlockCoolingCoil;
 import keqing.gtqtcore.common.block.blocks.BlockMultiblockCasing5;
-import keqing.pollution.api.capability.ipml.POManaMultiblockWithElectricRecipeLogic;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -29,6 +28,7 @@ import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POManaPlate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -102,15 +102,21 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
         return 0;
     }
 
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        data.setInteger("temperature", this.temperature);
+        return super.writeToNBT(data);
+    }
+
+    public void readFromNBT(NBTTagCompound data) {
+        this.temperature = data.getInteger("temperature");
+    }
+
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("磁致冷线圈温度: %s K", this.temperature).setStyle((new Style()).setColor(TextFormatting.WHITE)));
             textList.add(new TextComponentTranslation("磁致冷线圈等级: %s K", this.getCoilTier()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-            textList.add(new TextComponentTranslation("魔力仓等级: %s", this.getTier()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-            textList.add(new TextComponentTranslation("魔力仓缓存: %s", this.getMana()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-            textList.add(new TextComponentTranslation("每tick预计消耗: %s", 20 * Math.pow(2, getTier() - 1)).setStyle((new Style()).setColor(TextFormatting.WHITE)));
         }
     }
 
@@ -216,7 +222,7 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
 
         @Override
         public void setMaxProgress(int maxProgress) {
-            this.maxProgressTime = (int) (maxProgress * (10 - 2.0 * getCoilTier()) / 10);
+            super.setMaxProgress((int) (maxProgress * (10 - 2.0 * getCoilTier()) / 10));
         }
     }
 }

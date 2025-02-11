@@ -109,6 +109,11 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem FILTER_MKIV ;
 	public static MetaItem<?>.MetaValueItem FILTER_MKV ;
 
+	public static MetaItem<?>.MetaValueItem ENERGY_REDUCE ;
+	public static MetaItem<?>.MetaValueItem TIME_REDUCE ;
+	public static MetaItem<?>.MetaValueItem OVERCLOCKING_ENHANCE ;
+	public static MetaItem<?>.MetaValueItem PARALLEL_ENHANCE ;
+
 	public static MetaItem<?>.MetaValueItem BAUBLES_WATER_RING ;
 
 	public static PollutionMetaItem1 POLLUTION_META_ITEM;

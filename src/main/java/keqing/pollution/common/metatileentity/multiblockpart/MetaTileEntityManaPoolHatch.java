@@ -174,6 +174,34 @@ public class MetaTileEntityManaPoolHatch extends MetaTileEntityMultiblockPart im
     }
 
     @Override
+    public boolean consumeMana(int amount, boolean simulate) {
+        if (mana > amount) {
+            if(!simulate)mana -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public double getTimeReduce() {
+        return 0;
+    }
+
+    @Override
+    public double getEnergyReduce() {
+        return 0;
+    }
+
+    @Override
+    public int getOverclockingEnhance() {
+        return 0;
+    }
+
+    @Override
+    public int getParallelEnhance() {
+        return 0;
+    }
+
     public boolean consumeMana(int amount) {
         if (!this.isFull() || amount < 0) {
             int amounts = this.getMana() + amount;
@@ -182,8 +210,6 @@ public class MetaTileEntityManaPoolHatch extends MetaTileEntityMultiblockPart im
         }
         return false;
     }
-
-
     public boolean isFull() {
         return mana >= MAX_MANA;
     }

@@ -6,7 +6,6 @@ import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
@@ -20,7 +19,9 @@ import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.block.metablocks.POManaPlate;
 import keqing.pollution.common.block.metablocks.POTurbine;
 import keqing.pollution.common.metatileentity.multiblock.*;
+import keqing.pollution.common.metatileentity.multiblock.bot.*;
 import keqing.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMultiDanDeLifeOn;
+import keqing.pollution.common.metatileentity.multiblock.magic.*;
 import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityPrimitiveMudPump;
 import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityStove;
 import keqing.pollution.common.metatileentity.multiblockpart.*;
@@ -99,6 +100,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityLargeTurbine LARGE_MANA_TURBINE;
 	public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
 	public static MetaTileEntityCentralVisTower CENTRAL_VIS_TOWER;
+	public static MetaTileEntityManaInfusionReactor MANA_INFUSION_REACTOR;
 	public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
 	public static MetaTileEntityNodeFusionReactor[] NODE_FUSION_REACTOR = new MetaTileEntityNodeFusionReactor[3];
 
@@ -221,7 +223,7 @@ public class PollutionMetaTileEntities {
 		NODE_FUSION_REACTOR[0] = registerMetaTileEntity(15863, new MetaTileEntityNodeFusionReactor(gtqtcoreId("node_fusion_reactor.luv"), 6));
 		NODE_FUSION_REACTOR[1] = registerMetaTileEntity(15864, new MetaTileEntityNodeFusionReactor(gtqtcoreId("node_fusion_reactor.zpm"), 7));
 		NODE_FUSION_REACTOR[2] = registerMetaTileEntity(15865, new MetaTileEntityNodeFusionReactor(gtqtcoreId("node_fusion_reactor.uv"), 8));
-
+		MANA_INFUSION_REACTOR = registerMetaTileEntity(15866, new MetaTileEntityManaInfusionReactor(gtqtcoreId("mana_infusion_reactor")));
 		//Primitive
 		PRIMITIVE_MUD_PUMP = registerMetaTileEntity(16100, new MetaTileEntityPrimitiveMudPump(gtqtcoreId("primitive_mud_pump")));
 		PRIMITIVE_STOVE = registerMetaTileEntity(16101, new MetaTileEntityStove(gtqtcoreId("primitive_stove")));

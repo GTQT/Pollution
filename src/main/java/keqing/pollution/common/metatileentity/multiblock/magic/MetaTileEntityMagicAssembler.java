@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -9,14 +9,12 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -96,7 +94,7 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
                 .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
                 .aisle("AAABAAA", "D     D", "D     D", "D     D", "DDB BDD", "AAAAAAA")
                 .aisle("AAABAAA", "D F F D", "D F F D", "D F F D", "DBB BBD", "AAAAAAA")
-                .aisle("SABBBAA", "D     D", "D     D", "D     D", "DB   BD", "GAAAAAA")
+                .aisle("SABBBAA", "D     D", "D     D", "D     D", "DB   BD", "AAAAAAA")
                 .aisle("AAABAAA", "D F F D", "D F F D", "D F F D", "DBB BBD", "AAAAAAA")
                 .aisle("AAABAAA", "D     D", "D     D", "D     D", "DDB BDD", "AAAAAAA")
                 .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
@@ -110,7 +108,6 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
                 .where('E', states(getCasingState5()))
                 .where('F', CP_BEAM_CORE.get())
                 .where(' ', any())
-                .where('G', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
     }
 

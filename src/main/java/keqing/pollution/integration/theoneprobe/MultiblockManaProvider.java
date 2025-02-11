@@ -4,6 +4,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.TextFormattingUtil;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
+import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityVisHatch;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoProvider;
@@ -30,7 +31,6 @@ public class MultiblockManaProvider implements IProbeInfoProvider {
                 if (mte instanceof MetaTileEntityManaHatch) {
                     int Mana = ((MetaTileEntityManaHatch) mte).getMana();
                     int MaxMana = ((MetaTileEntityManaHatch) mte).getMaxMana();
-
                     iProbeInfo.progress(Mana, MaxMana, iProbeInfo.defaultProgressStyle()
                             .suffix(" / " + TextFormattingUtil.formatNumbers(MaxMana) + " Mana")
                             .filledColor(0xFFEEE600)
@@ -38,7 +38,16 @@ public class MultiblockManaProvider implements IProbeInfoProvider {
                             .borderColor(0xFF555555).numberFormat(mcjty.theoneprobe.api.NumberFormat.COMMAS));
 
                 }
+                if (mte instanceof MetaTileEntityVisHatch) {
+                    int Vis = ((MetaTileEntityVisHatch) mte).getVisStore();
+                    int VisMana = ((MetaTileEntityVisHatch) mte).getMaxVisStore();
+                    iProbeInfo.progress(Vis, VisMana, iProbeInfo.defaultProgressStyle()
+                            .suffix(" / " + TextFormattingUtil.formatNumbers(VisMana) + " Vis")
+                            .filledColor(0xFFEEE600)
+                            .alternateFilledColor(0xFFEEE600)
+                            .borderColor(0xFF555555).numberFormat(mcjty.theoneprobe.api.NumberFormat.COMMAS));
 
+                }
             }
         }
         if (!world.isRemote && world.getTileEntity(iProbeHitData.getPos()) instanceof TilePool pool) {

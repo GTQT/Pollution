@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -8,11 +8,9 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -54,13 +52,12 @@ public class MetaTileEntityMagicMacerator extends PORecipeMapMultiblockControlle
                 .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
                 .aisle("XXXXX", "XCCCX", "XCCCX", "XGGGX")
                 .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
-                .aisle("XXIXX", "XXSXX", "XXFXX", "XXXXX")
+                .aisle("XXIXX", "XXSXX", "XXXXX", "XXXXX")
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState()).setMinGlobalLimited(55).or(autoAbilities()))
                 .where('C', states(getCasingState2()))
                 .where('G', states(getCasingState3()))
                 .where('I', abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
-                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('#', air())
                 .build();
     }

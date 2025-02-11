@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -8,11 +8,9 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -62,7 +60,7 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
                 .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
                 .aisle("XXXXX", "XCPCX", "XAPAX", "XAPAX", "#XMX#")
                 .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
-                .aisle("#XXX#", "#FSX#", "#XXX#", "#XXX#", "#####")
+                .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#####")
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
                 .where('C', states(getCasingState2()))
@@ -70,7 +68,6 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
                 .where('A', states(getCasingState4()))
                 .where('#', any())
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .build();
     }
 

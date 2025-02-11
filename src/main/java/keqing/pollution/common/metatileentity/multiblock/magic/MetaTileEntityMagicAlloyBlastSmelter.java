@@ -1,5 +1,6 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
+import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -9,16 +10,14 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
-import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
+import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -37,24 +36,29 @@ import java.util.List;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static keqing.pollution.api.unification.PollutionMaterials.infused_fire;
 
-public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockController {
 
+    //定义两个需要用到的变量
     int CoilLevel;
     int Temp;
 
-    public MetaTileEntityMagicElectricBlastFurnace(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BLAST_RECIPES, RecipeMaps.ALLOY_SMELTER_RECIPES});
-        setMaterial(infused_fire);
+    public MetaTileEntityMagicAlloyBlastSmelter(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, new RecipeMap[]{PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES, GCYMRecipeMaps.ALLOY_BLAST_RECIPES});
+        this.material= infused_fire;
     }
 
     //下边都是设置多方块外形材质的喵
-    private static IBlockState getCasingState() {
+    private static IBlockState getCasingState1() {
         return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT);
+    }
+
+    private static IBlockState getCasingState2() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.ALLOY_BLAST_CASING);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityMagicElectricBlastFurnace(this.metaTileEntityId);
+        return new MetaTileEntityMagicAlloyBlastSmelter(this.metaTileEntityId);
     }
 
     //在成型时读取机器的线圈级别 并且给炉温赋值
@@ -80,7 +84,7 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
-        textList.add(new TextComponentTranslation("线圈温度: %s", Temp));
+        textList.add(new TextComponentTranslation("Temperature: %s", Temp));
     }
 
     //工具提示
@@ -107,18 +111,21 @@ public class MetaTileEntityMagicElectricBlastFurnace extends PORecipeMapMultiblo
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("XXX", "CCC", "CCC", "XXX")
-                .aisle("XXX", "C#C", "C#C", "XMX")
-                .aisle("FSX", "CCC", "CCC", "XXX")
+                .aisle("#XXX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
+                .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
+                .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXMXX")
+                .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
+                .aisle("#XSX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
                 .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(6)
-                        .or(autoAbilities(true, true, true, true, true, true, false)))
+                .where('X', states(getCasingState1()).setMinGlobalLimited(9).or(autoAbilities()))
                 .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('C', CP_COIL_CASING.get())
-                .where('#', air())
+                .where('G', states(getCasingState2()))
+                .where('#', any())
+                .where('A', air())
                 .build();
     }
+
 
     //覆盖层材质 就是给IO渲染的材质
     @Override

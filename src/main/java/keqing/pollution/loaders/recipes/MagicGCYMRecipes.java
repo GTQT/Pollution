@@ -549,6 +549,7 @@ public class MagicGCYMRecipes {
 				"oreCrystalFire",
 				PollutionMetaTileEntities.MAGIC_TURBINE[2].getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
+
 		//魔法炖屎
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_alloy_blast"), new InfusionRecipe(
 				"INFUSION@2",
@@ -566,6 +567,7 @@ public class MagicGCYMRecipes {
 				"oreCrystalEarth",
 				MetaTileEntities.ALLOY_SMELTER[MV].getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
+
 		//工业注魔主方块
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "industrial_infusion"), new InfusionRecipe(
 				"INFUSION@2",

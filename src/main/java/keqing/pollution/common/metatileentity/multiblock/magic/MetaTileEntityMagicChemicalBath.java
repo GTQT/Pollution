@@ -1,4 +1,4 @@
-package keqing.pollution.common.metatileentity.multiblock;
+package keqing.pollution.common.metatileentity.multiblock.magic;
 
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -12,7 +12,6 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.CubeRendererState;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.cclop.ColourOperation;
@@ -20,7 +19,6 @@ import gregtech.client.renderer.cclop.LightMapOperation;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.utils.BloomEffectUtil;
-import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -66,12 +64,11 @@ public class MetaTileEntityMagicChemicalBath extends PORecipeMapMultiblockContro
                 .aisle("XXXXXXX", "XCCCCCX", "XAAAAAX")
                 .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
                 .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
-                .aisle("XXXXXXX", "XXXSXXX", "XXXFXXX")
+                .aisle("XXXXXXX", "XXXSXXX", "XXXXXXX")
                 .where('S', selfPredicate())
                 .where('X', states(getCasingState()).setMinGlobalLimited(65).or(autoAbilities()))
                 .where('C', states(getCasingState2()))
                 .where('D', states(getCasingState3()))
-                .where('F', abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1).setPreviewCount(1))
                 .where('A', air())
                 .build();
     }
