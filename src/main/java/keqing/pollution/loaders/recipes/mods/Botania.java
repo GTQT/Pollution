@@ -5,13 +5,10 @@ import gregtech.api.util.GTUtility;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
 import vazkii.botania.api.recipe.RecipePetals;
 import vazkii.botania.api.recipe.RecipePureDaisy;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
-
-import java.util.Iterator;
 
 import static gregtech.api.GTValues.VA;
 import static keqing.pollution.api.recipes.PORecipeMaps.*;
@@ -28,7 +25,7 @@ public class Botania {
                 builder.input(s);
             } else if (recipe.getInput() instanceof IBlockState s) {
                 builder.input(s.getBlock());
-            } else  if (recipe.getInput() instanceof String s) {
+            } else if (recipe.getInput() instanceof String s) {
                 builder.input(s);
             }
 

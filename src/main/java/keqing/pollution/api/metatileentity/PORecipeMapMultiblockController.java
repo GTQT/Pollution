@@ -82,6 +82,7 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         tooltip.add(I18n.format("每1024灵气源为多方块带来额外的一并行数量"));
         tooltip.add(I18n.format("在魔力仓内填充升级部件可获得额外的耗时，耗能，超频，并行加强。"));
         tooltip.add(I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
+        tooltip.add(I18n.format("注意：如果你同时安装灵气仓与魔力仓，那么机器会优先自动选取二者中较低的数值"));
     }
 
     @Override
@@ -203,8 +204,11 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         if (checkFluidOut && this.recipeMap.getMaxFluidOutputs() > 0) {
             predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
         }
-        predicate = predicate.or(abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1));
-        predicate = predicate.or(abilities(POMultiblockAbility.MANA_HATCH).setMaxGlobalLimited(1));
+        predicate = predicate
+                .or(abilities(POMultiblockAbility.VIS_HATCH))
+                .or(abilities(POMultiblockAbility.MANA_HATCH))
+                .setMaxGlobalLimited(1);
+
         return predicate;
     }
 

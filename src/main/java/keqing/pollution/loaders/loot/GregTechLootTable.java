@@ -55,6 +55,9 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeNormalItem,Tin)), 2, 6, 15);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeLargeItem,Tin)), 1, 5, 10);
 
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Invar)), 2, 6, 10);
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Aluminium)), 1, 4, 10);
+
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Tin)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Copper)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Iron)), 4, 8, 20);
@@ -94,6 +97,9 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeSmallItem,Invar)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeNormalItem,Invar)), 2, 6, 15);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeLargeItem,Invar)), 1, 5, 10);
+
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Invar)), 4, 8, 10);
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Aluminium)), 2, 6, 10);
 
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Copper)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Tin)), 4, 8, 20);
