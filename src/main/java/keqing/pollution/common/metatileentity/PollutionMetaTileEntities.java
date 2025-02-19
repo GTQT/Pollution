@@ -8,6 +8,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import gregtech.common.metatileentities.storage.MetaTileEntityQuantumTank;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.Pollution;
@@ -103,7 +104,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityManaInfusionReactor MANA_INFUSION_REACTOR;
 	public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
 	public static MetaTileEntityNodeFusionReactor[] NODE_FUSION_REACTOR = new MetaTileEntityNodeFusionReactor[3];
-
+	public static final MetaTileEntityQuantumTankTc[] QUANTUM_TANK_TC = new MetaTileEntityQuantumTankTc[9];
 	//
 	public static MetaTileEntitySourceCharge SOURCE_CHARGE;
 	public static void initialization() {
@@ -260,7 +261,20 @@ public class PollutionMetaTileEntities {
 				POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
 		SOURCE_CHARGE=registerMetaTileEntity(16150,new MetaTileEntitySourceCharge(gtqtcoreId("source_charge")));
+		int i;
+		for(i = 0; i < 5; ++i) {
+			var voltageName = GTValues.VN[i + 1].toLowerCase();
+			QUANTUM_TANK_TC[i] = new MetaTileEntityQuantumTankTc(gtqtcoreId("super_tank.tc." + voltageName), i + 1, 4000000 * (int)Math.pow(2.0, i));
+			registerMetaTileEntity(16151 + i, QUANTUM_TANK_TC[i]);
+		}
 
+		int index;
+		for(i = 5; i < QUANTUM_TANK_TC.length; ++i) {
+			var voltageName = GTValues.VN[i].toLowerCase();
+			index = i == 9 ? Integer.MAX_VALUE : 4000000 * (int)Math.pow(2.0, i);
+			QUANTUM_TANK_TC[i] = new MetaTileEntityQuantumTankTc(gtqtcoreId("quantum_tank.tc." + voltageName), i, index);
+			registerMetaTileEntity(16156 + i, QUANTUM_TANK_TC[i]);
+		}
 
 	}
 }
