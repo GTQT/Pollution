@@ -2,12 +2,33 @@ package keqing.pollution.client.textures;
 
 import codechicken.lib.texture.TextureUtils;
 import gregtech.api.GTValues;
+import gregtech.api.gui.resources.TextureArea;
+import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.client.renderer.texture.cube.SidedCubeRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 
 public class POTextures {
+	public static final ICubeRenderer BMCOMPUTER_CASING;
+	public static final ICubeRenderer BMADVANCED_COMPUTER_CASING;
+	public static final SimpleOverlayRenderer BMHPCA_ACTIVE_COOLER_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_ACTIVE_COOLER_ACTIVE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_BRIDGE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_BRIDGE_ACTIVE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_COMPUTATION_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_COMPUTATION_ACTIVE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_ADVANCED_COMPUTATION_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_ADVANCED_COMPUTATION_ACTIVE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_DAMAGED_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_DAMAGED_ACTIVE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_ADVANCED_DAMAGED_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_ADVANCED_DAMAGED_ACTIVE_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_EMPTY_OVERLAY;
+	public static final SimpleOverlayRenderer BMHPCA_HEAT_SINK_OVERLAY;
+	public static final OrientedOverlayRenderer BMHPCA_OVERLAY;
+
 	public static OrientedOverlayRenderer SOLAR_PLATE_I = new OrientedOverlayRenderer("machines/solar_i");
 	public static OrientedOverlayRenderer SOLAR_PLATE_II = new OrientedOverlayRenderer("machines/solar_ii");
 	public static OrientedOverlayRenderer SOLAR_PLATE_III = new OrientedOverlayRenderer("machines/solar_iii");
@@ -55,7 +76,38 @@ public class POTextures {
 	public static SimpleOverlayRenderer HYPER_4;
 	public static SimpleOverlayRenderer HYPER_5;
 
+	public static final TextureArea BMHPCA_COMPONENT_OUTLINE = TextureArea.fullImage("textures/gui/widget/bm_hpca/component_outline.png");
+	public static final TextureArea BMHPCA_ICON_EMPTY_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/empty_component.png");
+	public static final TextureArea BMHPCA_ICON_ADVANCED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/advanced_computation_component.png");
+	public static final TextureArea BMHPCA_ICON_BRIDGE_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/bridge_component.png");
+	public static final TextureArea BMHPCA_ICON_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/computation_component.png");
+	public static final TextureArea BMHPCA_ICON_ACTIVE_COOLER_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/active_cooler_component.png");
+	public static final TextureArea BMHPCA_ICON_HEAT_SINK_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/heat_sink_component.png");
+	public static final TextureArea BMHPCA_ICON_DAMAGED_ADVANCED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/damaged_advanced_computation_component.png");
+	public static final TextureArea BMHPCA_ICON_DAMAGED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/damaged_computation_component.png");
+
+
+	static {
+		BMCOMPUTER_CASING = new SidedCubeRenderer("casings/bm_computer/computer_casing");
+		BMADVANCED_COMPUTER_CASING = new SidedCubeRenderer("casings/bm_computer/advanced_computer_casing");
+		BMHPCA_ACTIVE_COOLER_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/active_cooler");
+		BMHPCA_ACTIVE_COOLER_ACTIVE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/active_cooler_active");
+		BMHPCA_BRIDGE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/bridge");
+		BMHPCA_BRIDGE_ACTIVE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/bridge_active");
+		BMHPCA_COMPUTATION_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/computation");
+		BMHPCA_COMPUTATION_ACTIVE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/computation_active");
+		BMHPCA_ADVANCED_COMPUTATION_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/computation_advanced");
+		BMHPCA_ADVANCED_COMPUTATION_ACTIVE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/computation_advanced_active");
+		BMHPCA_DAMAGED_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/damaged");
+		BMHPCA_DAMAGED_ACTIVE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/damaged_active");
+		BMHPCA_ADVANCED_DAMAGED_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/damaged_advanced");
+		BMHPCA_ADVANCED_DAMAGED_ACTIVE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/damaged_advanced_active");
+		BMHPCA_EMPTY_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/empty");
+		BMHPCA_HEAT_SINK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/bm_hpca/heat_sink");
+		BMHPCA_OVERLAY = new OrientedOverlayRenderer("multiblock/bm_hpca");
+	}
 	public static void init() {
+
 		MAGIC_VOLTAGE_CASINGS = new SimpleSidedCubeRenderer[GTValues.V.length];
 
 		for(int i = 0; i < MAGIC_VOLTAGE_CASINGS.length; ++i) {

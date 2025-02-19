@@ -487,6 +487,22 @@ pollution.machine.mana_gen_hv.name=涡轮魔力发电机
 pollution.machine.mana_gen_ev.name=脉冲魔力发电机
 pollution.machine.mana_gen_iv.name=爆喷魔力发电机
 
+# 血肉计算阵列组件
+pollution.machine.bm_hpca.empty_component.name=血肉计算阵列-虚空腔体
+pollution.machine.bm_hpca.empty_component.tooltip=███数据缺失...检测到血肉脉动信号
+pollution.machine.bm_hpca.super_computation_component.name=血肉计算阵列-腐化核心
+pollution.machine.bm_hpca.super_computation_component.tooltip=血肉的低语在██赫兹频段回响
+pollution.machine.bm_hpca.ultimate_computation_component.name=血肉计算阵列-禁忌终脑
+pollution.machine.bm_hpca.ultimate_computation_component.tooltip=检测到████个███意识体同步率
+pollution.machine.bm_hpca.advance_heat_sink_component.name=血肉计算阵列-猩红脉络
+pollution.machine.bm_hpca.advance_heat_sink_component.tooltip=脉动的血管网络输送着██KJ未知能量
+pollution.machine.bm_hpca.super_cooler_component.name=血肉计算阵列-肿胀冷凝腺
+pollution.machine.bm_hpca.super_cooler_component.tooltip=生物黏液分泌量：██立方米/周期
+pollution.machine.bm_hpca.ultimate_cooler_component.name=血肉计算阵列-深渊胎膜
+pollution.machine.bm_hpca.ultimate_cooler_component.tooltip=警告！检测到█████次元相位折叠
+pollution.machine.bm_hpca.bridge_component.name=血肉计算阵列-联结甬道
+pollution.machine.bm_hpca.bridge_component.tooltip=活体组织构成的███连接腔室（建议佩戴██防护
+
 pollution.machine.vis.lv.name=基础灵气发电机（§7LV§r）
 pollution.machine.vis.mv.name=进阶灵气发电机（§bMV§r）
 pollution.machine.vis.hv.name=涡轮灵气发电机（§6HV§r）
@@ -714,7 +730,6 @@ pollution.machine.essence_collector.tooltip.6=升级线圈小幅提升产出，�
 pollution.machine.essence_collector_coillevel=线圈等级：%s
 pollution.machine.essence_collector_visthischunk=当前区块灵气：%s
 pollution.machine.essence_collector_fluxthischunk=当前区块污染：%s
-pollution.machine.essence_collector_coillevel=线圈等级：%s
 pollution.machine.essence_collector_euttier=电压等级：%s
 pollution.machine.essence_collector_finalspeedpertick=最终每t产能：%s
 pollution.machine.essence_collector_iffocused=聚焦模式：%s

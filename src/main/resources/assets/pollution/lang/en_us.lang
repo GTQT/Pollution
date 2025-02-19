@@ -88,6 +88,27 @@ gregtech.material.infused_magic=Magic
 gregtech.material.infused_alchemy=Alchemy
 gregtech.material.infused_cold=Cold
 gregtech.material.infused_light=Light
+gregtech.material.infused_aura=灵
+gregtech.material.infused_craft=创
+gregtech.material.infused_void=虚
+gregtech.material.infused_motion=动
+gregtech.material.infused_taint=秽
+gregtech.material.infused_dark=暗
+gregtech.material.infused_alien=异
+gregtech.material.infused_fly=羽
+gregtech.material.infused_plant=草木
+gregtech.material.infused_mechanics=械
+gregtech.material.infused_trap=缚
+gregtech.material.infused_undead=僵
+gregtech.material.infused_thought=思
+gregtech.material.infused_sense=感
+gregtech.material.infused_animal=造化
+gregtech.material.infused_human=物灵
+gregtech.material.infused_greed=贪
+gregtech.material.infused_armor=胄
+gregtech.material.infused_spatio=空
+gregtech.material.infused_tempus=时
+gregtech.material.infused_tinctura=艺
 
 gregtech.material.thaumium=Thaumium
 gregtech.material.syrmorite=Syrmorite
@@ -113,7 +134,11 @@ gregtech.material.mansussteel=Mansussteel
 gregtech.material.terrasteel=Terrasteel
 gregtech.material.orichalcos=奥利哈
 gregtech.material.keqinggold=Keqinggold
+metaitem.ingotKeqinggold.tooltip=§7醉舞纷绮席，清歌绕飞梁。心知不得语，却望玉衡星。§r
 
+gregtech.material.betweenstone=交错石
+gregtech.material.pitstone=麻纹石
+gregtech.material.cragrock=峭壁岩
 gregtech.material.lotus_dust=Lotus Dust
 gregtech.material.ethyl_silicate=Ethyl Silicate
 gregtech.material.rough_llp=LLP@SiO2 Rough Draft
@@ -122,6 +147,14 @@ gregtech.material.oil_with_llp=LLP-Oil Suspension
 gregtech.material.super_sticky_tar=Super Sticky Tar
 gregtech.material.magic_nitrobenzene=Magic Explosion-Resistant Coking Nitrobenzene
 gregtech.material.pure_tar=Pure Tar
+gregtech.material.crude_lk_99=LK-99粗胚
+gregtech.material.magical_superconductive_liquid=灌魔超导液
+gregtech.material.basic_thaumic_superconductor=初阶LK-99神秘超导体
+gregtech.material.advanced_thaumic_superconductor=高阶LK-99神秘超导体
+gregtech.material.basic_battery_hull_alloy=初阶秘术电池合金
+gregtech.material.advanced_battery_hull_alloy=高阶秘术电池合金
+gregtech.material.basic_battery_content=初阶秘术电池内容物
+gregtech.material.advanced_battery_content=高阶秘术电池内容物
 
 gregtech.material.kobemetal=Kobemetal
 metaitem.ingotKobemetal.tooltip=Kobemetal, Miss You
@@ -143,7 +176,60 @@ metaitem.ingotMansussteel.tooltip="§7The Forest grows beyond the walls of Mansu
 metaitem.plateMansussteel.tooltip="§7Gathering the dreams of Mansus, pressed into plates§r"
 item.material.oreprefix.frameGtMansussteel.tooltip="§7Harvesting the scattered souls of Mansus, forging the framework (This line is not functional yet, unsure how to change it)§r"
 metaitem.ingotTerrasteel.tooltip=Named in Honor of the Earth
+gregtech.material.basic_substrate=通用奇术基底
+gregtech.material.advanced_substrate=高阶奇术基底
 
+gregtech.material.sentient_metal=感知
+metaitem.ingotSentientMetal.tooltip=言辞曾是我们赢得第一场战争的武器。能遣词造句前，我们手无寸铁。
+gregtech.material.binding_metal=约束
+metaitem.ingotBindingMetal.tooltip=终有一日，言辞将终结梦境。我们应当保持沉默，以防止漫宿继续流血。
+gregtech.material.starrymansus=天璇漫宿
+gregtech.material.blood_of_avernus=阿弗纳斯之血
+metaitem.ingotBloodOfAvernus.tooltip=§c埃尔托瑞尔于今日堕入阿弗纳斯...§r
+gregtech.material.iizunamaru_electrum=光风霁月琥珀金
+metaitem.ingotIizunamaruElectrum.tooltip=§7星风「虹彩陆离乱舞」§r
+gregtech.material.aetheric_dark_steel=太虚玄钢
+metaitem.ingotAethericDarkSteel.tooltip=§8致虚极，守静笃。万物并作，吾以观复。§r
+
+#污秽线
+gregtech.material.filth=污秽混合物
+gregtech.material.filth_water=极秽之水
+gregtech.material.void_water=虚液
+gregtech.material.void_material=虚空物质
+
+#刻金线
+gregtech.material.sulfo_plumbic_salt=硫铅盐
+gregtech.material.magical_sulfo_plumbic_salt=蕴魔硫铅盐
+gregtech.material.alchemical_residue_1=一次炼金残渣
+gregtech.material.alchemical_vapor_1=一次升华蒸汽
+gregtech.material.alchemical_residue_2=二次炼金残渣
+gregtech.material.alchemical_vapor_2=二次升华蒸汽
+gregtech.material.alchemical_residue_3=三次炼金残渣
+gregtech.material.alchemical_vapor_3=三次升华蒸汽
+gregtech.material.alchemical_residue_4=四次炼金残渣
+gregtech.material.alchemical_vapor_4=四次升华蒸汽
+gregtech.material.alchemical_residue_5=五次炼金残渣
+gregtech.material.alchemical_vapor_5=五次升华蒸汽
+gregtech.material.alchemical_residue_6=六次炼金残渣
+gregtech.material.alchemical_vapor_6=六次升华蒸汽
+gregtech.material.magical_tin_solution=神秘锡溶液
+gregtech.material.magical_stannous_sulfate_solution=硫酸亚锡神秘溶液
+gregtech.material.highmana_stannous_sulfate=高魔素硫酸亚锡
+gregtech.material.impure_mercuric_salt_solution=含杂汞盐溶液
+gregtech.material.mercuric_salt_solution=神秘汞盐溶液
+gregtech.material.magic_activated_iron_chloride_solution=魔力激活氯化铁溶液
+gregtech.material.magic_activated_ferrous_chloride_ethanol_solution=魔力激活氯化亚铁甲醇溶液
+gregtech.material.purified_activated_ferrous_chloride_ethanol_solution=除杂激活氯化亚铁甲醇溶液
+gregtech.material.purified_activated_ferrous_chloride=除杂激活氯化亚铁
+gregtech.material.syrmorite_doped_magic_water_solution=赛摩铜掺杂魔水溶液
+gregtech.material.unformed_embryo_magic_water=未成形胚胎魔水
+gregtech.material.embryo_magic_water=胚胎魔水
+gregtech.material.unstable_dimensional_silver=不稳次元银
+gregtech.material.impure_hyperdimensional_silver=超次元含杂秘银流
+gregtech.material.hyperdimensional_silver=超次元秘银
+metaitem.ingotHyperdimensionalSilver.tooltip=§7与我演一场超次元游戏，直到漫宿尽头...§r
+gregtech.material.dimensional_transforming_agent=次元改造剂
+gregtech.material.ferrous_chloride=氯化亚铁
 #Items
 metaitem.blank_catalyst_core.name="§8Blank Catalyst Core§r"
 metaitem.cold_catalyst_core.name="§bIcy Catalyst Core§r"
@@ -186,6 +272,7 @@ metaitem.wing_quantum.name=Magical Quantum-Flight Soul Conductor
 metaitem.nano_goggles.name=Magical Nano-Revealing Goggles
 metaitem.quantum_goggles.name=Magical Quantum-Revealing Goggles
 #Blocks
+tile.test_block.name=papa测试方块
 tile.magic_block.void_prism.name=Enchanted Void Prismatic Refraction Shell
 tile.magic_block.spell_prism.name=Enchanted Prismatic Refraction Shell
 tile.magic_block.spell_prism_cold.name=Enchanted Icy Prismatic Refraction Shell
@@ -239,8 +326,30 @@ tile.fusion_reactor.compose_ii.name=Second-Order Soul Conductor Core
 tile.fusion_reactor.compose_iii.name=Third-Order Soul Conductor Core
 tile.fusion_reactor.compose_iv.name=Fourth-Order Soul Conductor Core
 
-#misc casing
-tile.bot_block.terra_watertight_casing.name=Terra Watertight Mechanical Block
+#misc 外壳
+tile.bot_block.terra_watertight_casing.name=泰拉防水魔械外壳
+tile.bot_block.terra_1_casing.name=静水相位强化魔械外壳
+tile.bot_block.terra_2_casing.name=裂地相位强化魔械外壳
+tile.bot_block.terra_3_casing.name=秩构相位强化魔械外壳
+tile.bot_block.terra_4_casing.name=焚天相位强化魔械外壳
+tile.bot_block.terra_5_casing.name=凌岚相位强化魔械外壳
+tile.bot_block.terra_6_casing.name=无羁相位强化魔械外壳
+tile.mana_plate.mana_basic.name=高阶蕴魔漫宿机械方块
+tile.mana_plate.mana_1.name=三昧改性漫宿机械方块
+tile.mana_plate.mana_2.name=从革改性漫宿机械方块
+tile.mana_plate.mana_3.name=枯荣改性漫宿机械方块
+tile.mana_plate.mana_4.name=上善改性漫宿机械方块
+tile.mana_plate.mana_5.name=社稷改性漫宿机械方块
+tile.hyper.hyper_1_casing.name=拂晓骄阳闰识超魔框架
+tile.hyper.hyper_1_casing.tooltip=导致太阳之死的不会是爱，而是妒忌。
+tile.hyper.hyper_2_casing.name=晨曦骄阳闰识超魔框架
+tile.hyper.hyper_2_casing.tooltip=导致太阳之死的不会是妒忌，而是渴求。
+tile.hyper.hyper_3_casing.name=当空骄阳闰识超魔框架
+tile.hyper.hyper_3_casing.tooltip=导致太阳之死的不会是渴求，而是好奇。
+tile.hyper.hyper_4_casing.name=无夜骄阳闰识超魔框架
+tile.hyper.hyper_4_casing.tooltip=置祂于死地的必不是好奇，终究还是爱。
+tile.hyper.hyper_5_casing.name=神光骄阳闰识超魔框架
+tile.hyper.hyper_5_casing.tooltip=很快，第二拂晓将照亮漫宿，新王将代祂重启巡游。
 
 #Coils
 tile.wire_coil.machine_coil_cupronickel.name=Tier 1 Blazing Flame Condensation Enrichment Rune
@@ -297,10 +406,34 @@ metaitem.glue_slime.tooltip=An endless supply of glue
 metaitem.rubber_slime.tooltip=An endless supply of erasers
 
 metaitem.packaged_aura_node.name=Packaged Aura Node
+
+metaitem.core_of_idea.name=理式核心
+metaitem.core_of_idea.tooltip=真理与知识或存大美，而善之理式则犹在其上
+metaitem.bottle_of_phlogistonic_oneness.name=太一燃素瓶
+metaitem.bottle_of_phlogistonic_oneness.tooltip=唯见太一流溢，造化无火自燃
+metaitem.auto_elenchus_device.name=自动反诘装置
+metaitem.auto_elenchus_device.tooltip=我唯一所知之事，乃我一无所知
+metaitem.elucidator_of_four_causes.name=四因阐释器
+metaitem.elucidator_of_four_causes.tooltip=戏拟形式，攫取质料。虚构动力，欺瞒目的。
+metaitem.symptomatic_vis_data_link.name=意志数据链
+metaitem.symptomatic_vis_data_link.tooltip=不能听命于自己者，就要受命于他人
+metaitem.needle_of_mystic_interpellation.name=密契询唤针
+metaitem.needle_of_mystic_interpellation.tooltip=绝对者将谁唤作天使，谁便背对绝对飞离天堂
+metaitem.cogito_AED.name=我思除颤仪
+metaitem.cogito_AED.tooltip=我思必须包含我的一切表象
+metaitem.ball_in_itself.name=自在球
+metaitem.ball_in_itself.tooltip=这里有玫瑰，便在这里起舞罢
+
 metaitem.stone_of_philosopher_1.name=Philosopher's Stone (Black Soil)
 metaitem.stone_of_philosopher_1.tooltip=Black Soil Ritual, Ascend the Steps
 metaitem.stone_of_philosopher_2.name=Philosopher's Stone (Chalk)
 metaitem.stone_of_philosopher_2.tooltip=Chalk Ritual, Transform the Worn
+metaitem.stone_of_philosopher_3.name=§c贤者之石（赤成）§r
+metaitem.stone_of_philosopher_3.tooltip=§c赤成之仪，鬼斧神工§r
+metaitem.stone_of_philosopher_4.name=§6贤者之石（黄金）§r
+metaitem.stone_of_philosopher_4.tooltip=§6黄金之仪，巅峰造化§r
+metaitem.stone_of_philosopher_final.name=§5§l真·贤者之石§r
+metaitem.stone_of_philosopher_final.tooltip=§5§l圆环之理！§r
 #battery
 metaitem.battery.lv.magic.name=Magic Battery (§7LV§r)
 metaitem.battery.mv.magic.name=Magic Battery (§bMV§r)
@@ -329,6 +462,18 @@ pollution.machine.pollution_small_node_generator.uv.name=Micro Starlight Pioneer
 pollution.machine.pollution_small_node_generator.uv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
 pollution.machine.pollution_small_node_generator.uhv.name=Micro Starlight Pioneer Node Reactor MKⅣ
 pollution.machine.pollution_small_node_generator.uhv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
+
+pollution.machine.pollution_magic_energy_absorber.lv.name=Weak Magic Energy Absorber
+pollution.machine.pollution_magic_energy_absorber.mv.name=Apprentice Magic Energy Absorber
+pollution.machine.pollution_magic_energy_absorber.hv.name=Mage Magic Energy Absorber
+pollution.machine.pollution_magic_energy_absorber.ev.name=Master Magic Energy Absorber
+pollution.machine.pollution_magic_energy_absorber.iv.name=Sage Magic Energy Absorber
+pollution.machine.pollution_magic_energy_absorber.lv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
+pollution.machine.pollution_magic_energy_absorber.mv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
+pollution.machine.pollution_magic_energy_absorber.hv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
+pollution.machine.pollution_magic_energy_absorber.ev.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
+pollution.machine.pollution_magic_energy_absorber.iv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
+
 #魔法能源吸收器
 pollution.machine.magic_energy_absorber.lv.name=Weak Magic Energy Absorber
 pollution.machine.magic_energy_absorber.lv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
@@ -340,18 +485,32 @@ pollution.machine.magic_energy_absorber.ev.name=Master Magic Energy Absorber
 pollution.machine.magic_energy_absorber.ev.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
 pollution.machine.magic_energy_absorber.iv.name=Archmage Magic Energy Absorber
 pollution.machine.magic_energy_absorber.iv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.
-
+# 血肉计算阵列组件
+pollution.machine.bm_hpca.empty_component.name=Flesh Computation Array - Void Chamber
+pollution.machine.bm_hpca.empty_component.tooltip=Data missing... Flesh pulse signal detected.
+pollution.machine.bm_hpca.super_computation_component.name=Flesh Computation Array - Corrupted Core
+pollution.machine.bm_hpca.super_computation_component.tooltip=Whispers of flesh resonate in the Hz frequency band.
+pollution.machine.bm_hpca.ultimate_computation_component.name=Flesh Computation Array - Forbidden Terminal Brain
+pollution.machine.bm_hpca.ultimate_computation_component.tooltip=Warning! Detected synchronization rate of conscious entities.
+pollution.machine.bm_hpca.advance_heat_sink_component.name=Flesh Computation Array - Crimson Vasculature
+pollution.machine.bm_hpca.advance_heat_sink_component.tooltip=Pulsating vascular network delivers unknown energy of KJ.
+pollution.machine.bm_hpca.super_cooler_component.name=Flesh Computation Array - Swollen Condensing Gland
+pollution.machine.bm_hpca.super_cooler_component.tooltip=Biomass secretion volume: m³ per cycle.
+pollution.machine.bm_hpca.ultimate_cooler_component.name=Flesh Computation Array - Abyssal Membrane
+pollution.machine.bm_hpca.ultimate_cooler_component.tooltip=Warning! Detected dimensional phase folding.
+pollution.machine.bm_hpca.bridge_component.name=Flesh Computation Array - Connecting Passage
+pollution.machine.bm_hpca.bridge_component.tooltip=Chamber composed of living tissue (recommended to wear protective gear).
 #
 pollution.machine.flux_promoted_fuel_cell.lv.name=Basic Flux Promoted Fuel Cell
 pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 pollution.machine.flux_promoted_fuel_cell.mv.name=Advanced Flux Promoted Fuel Cell
-pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.mv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 pollution.machine.flux_promoted_fuel_cell.hv.name=Turbo Flux Promoted Fuel Cell
-pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.hv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 pollution.machine.flux_promoted_fuel_cell.ev.name=Pulse Flux Promoted Fuel Cell
-pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.ev.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 pollution.machine.flux_promoted_fuel_cell.iv.name=Blast Flux Promoted Fuel Cell
-pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
+pollution.machine.flux_promoted_fuel_cell.iv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 
 pollution.machine.mana_gen_lv.name=Basic Mana Generator
 pollution.machine.mana_gen_mv.name=Advanced Mana Generator
@@ -430,11 +589,13 @@ pollution.machine.flux_clear.mv.name=Air Purifier (§bMV§r)
 pollution.machine.flux_clear.hv.name=Air Purifier (§6HV§r)
 pollution.machine.flux_clear.ev.name=Large Air Purifier (§5EV§r)
 pollution.machine.flux_clear.iv.name=Large Air Purifier (§1IV§r)
-pollution.flux_clear.tier=§5Tier: %s Pollution Cleansed per Tick: %s Vis
-pollution.flux_clear.amount=§5Cleansing Radius: %s Blocks
-pollution.flux_clear.tier1=%s
-pollution.flux_clear.flux=Remaining Pollution: %s Vis
-pollution.flux_clear.tooltip=§bProfessional Air Purification
+pollution.flux_clear.tire=§5结构等级:%s 单次(tick)污染清洁量:%s Vis
+pollution.flux_clear.amount=§5清理范围半径：%s 区块
+pollution.flux_clear.tire1=%s
+pollution.flux_clear.flux=污染剩余:%s Vis
+pollution.flux_clear.tooltip=§b专业空气清洁
+
+pollution.vis.product=§6每秒污染产生%s Vis
 #Enchanted Solar Panels
 pollution.machine.solar_plate_1.1.name=§eWind Enchanted Solar Panel (Tier 1)§r
 pollution.machine.solar_plate_2.1.name=§eWind Enchanted Solar Panel (Tier 2)§r
@@ -459,8 +620,19 @@ pollution.machine.solar_plate_3.5.name=§dOrder Enchanted Solar Panel (Tier 3)§
 pollution.machine.solar_plate_1.6.name=§1Water Enchanted Solar Panel (Tier 1)§r
 pollution.machine.solar_plate_2.6.name=§1Water Enchanted Solar Panel (Tier 2)§r
 pollution.machine.solar_plate_3.6.name=§1Water Enchanted Solar Panel (Tier 3)§r
+#设备多方块
+pollution.modeChanged.message=切换机器模式
 
-#Multi-Block Machines
+pollution.machine.pollution_multi_dan_de_life_on.name=§l启命花园§r
+pollution.machine.pollution_multi_dan_de_life_on.mode0=输出能量
+pollution.machine.pollution_multi_dan_de_life_on.mode1=输出流体
+pollution.machine.pollution_multi_dan_de_life_on.tooltip=§d从枯荣中获取力量§r/n§c像启命英那样进行康威生命游戏，但棋盘更大，回报也更多/n§e每个死去的细胞都会进行产能，细胞产能量取决于细胞的§d寿命§r/n§e升级符文会增加每个死亡细胞所产生的能量/n花园每秒执行一次游戏，每执行一次游戏需要消耗一份精灵尘/n内部具有额外的能量缓存，来不及输出的能量会被存储在花园内部/n机器具有两种输出模式，使用螺丝刀右键来切换输出模式/n默认情况下花园为能量输出模式，直接输出能量/n流体输出模式可以解放花园用于将自然魔力转换能量的性能用于产能，带来25%%额外能量输出/n§e该机器支持激光输出!
+
+pollution.machine.pollution_mega_mana_turbine.name=巨型魔力导能器
+pollution.machine.pollution_mega_mana_turbine.tooltip=将洪流般的自然魔力转换为电能/n基础发电64A IV，§e提供催化剂以获得更高的输出水平§r/n§d黑白漫宿——64A LuV/n§d液态超次元秘银和刻金——128A ZPM/n§d液态约束，感知——256A UV/n优先消耗高级催化剂/n§c机器需要持续工作一段时间来达到最高输出效率§r，所需时间为3000s/线圈等级/n该机器支持激光输出
+
+pollution.machine.pollution_large_mana_turbine.name=大型魔力导能器
+pollution.machine.pollution_large_mana_turbine.tooltip=将自然魔力转换为电能
 pollution.machine.tank_test.name=Essence Disperser
 
 pollution.machine.magic_bender.name=Arcane Batch Roller
@@ -509,6 +681,7 @@ pollution.machine.magic_battery.tooltip=§5Even if the divine pupils dim, the un
 
 pollution.machine.magic_assembler.name=高等应用魔导秩构单元
 pollution.machine.magic_assembler.tooltip=大炮，已组装！ 谁是最大冲击波？
+pollution.machine.magic_assembler.tooltip.1=此机器作为次世代机械原型，根据核心等级获取额外耗时减免，每级5%%
 
 pollution.machine.primitive_mud_pump.name=原始泥泵
 pollution.machine.primitive_mud_pump.tooltip=污泥滚滚
@@ -528,11 +701,17 @@ pollution.eke.outputC=Can output at max power for %s days %s hours %s minutes %s
 pollution.eke.output4=Max Power: %s EU/t Paused
 gregtech.multiblock.battery.EU=Stored Energy: %s / %s EU
 #Recipes
+recipemap.dan_de_life_on.name=生命游戏
+recipemap.mana_to_eu.name=自然魔力转换
 recipemap.magic_blast_smelter.name=Alloy Smelting Furnace
 recipemap.magic_chemical_reactor.name=Magic Catalytic Reaction
 recipemap.magic_fusion_reactor.name=Essence Disintegration
 recipemap.magic_turbine.name=Primordial Combustion
+recipemap.magic_assembler.name=应用部件组装
+recipemap.magic_greenhouse.name=魔植培育
+recipemap.forge_alchemy.name=锻炉炼金术
 recipemap.stove.name=烧结
+recipemap.node_magic_fusion.name=骄阳漫宿嬗变
 #Events
 pollution.command.slowness=§7You feel encumbered
 pollution.command.weakness=§bYou feel a surge of weakness
@@ -553,6 +732,7 @@ pollution.machine.canoutput=Essence sufficiency: %s
 pollution.machine.output_item=Output item: %s
 pollution.machine.process=Work progress: %s
 pollution.machine.aspect=Essence: %s:%s
+pollution.machine.player.online=绑定玩家未上线！
 
 #Essence Collector
 pollution.machine.essence_collector.name=Six-Color Essence Condenser
@@ -588,6 +768,25 @@ pollution.machine.large_node_generator.tooltip.5=(Unimplemented Feature) Hazardo
 pollution.machine.large_node_generator_expectedfinalcapacity=Expected Power Output: %s eu/t
 pollution.machine.large_node_generator_finalcapacity=Actual Final Power Output: %s eu/t
 
+#节点锻炉
+pollution.machine.node_blast_furnace.name=昕旦司辰节点融毁锻炉
+pollution.machine.node_blast_furnace.tooltip.1=§5铸炉或有悔恨，为置闰而低泣，但对其余作为则乐见其是。此后诸事将成，日光将驱散月光，如同我等从弧月的钟点过渡至昕旦的钟点。§r
+pollution.machine.node_blast_furnace.tooltip.2=强大的神秘学锻炉，实现了炼金术自古以来的梦想！可切换模式
+pollution.machine.node_blast_furnace.tooltip.3=两种模式下，线圈每升级一次均减少5%%配方总耗时。高炉模式下最高256并行
+pollution.machine.node_blast_furnace.tooltip.4=锻炉炼金术模式下，机器最高16并行，且每30s需碾碎一颗输入总线内的封装灵气节点，以维持锻炉的持续运作
+pollution.machine.node_blast_furnace.tooltip.5=每当一个锻炉炼金术配方运行成功，锻炉将向输出仓输出副产的素牡漫宿和玄牝漫宿，灵气节点断供会暂停配方
+pollution.machine.node_blast_furnace.tooltip.6=配方时间越长，消耗掉的封装灵气节点其Ordo和Perditio属性越高，漫宿物质的产能就越高
+pollution.machine.node_blast_furnace.tooltip.7=锻炉炼金术在持续消耗灵气节点的过程中，耗能减免也将逐渐提升，封顶耗能可节省25%%
+pollution.machine.node_blast_furnace.tooltip.8=强大的节点融毁锻炉同时额外支持激光仓！
+pollution.machine.node_blast_furnace_coillevel=线圈等级：%s
+
+#小化工厂
+pollution.machine.small_chemical_plant.name=微缩魔道化工厂
+pollution.machine.small.chemical.plant.tooltip.1=§5♪time stopper♪ 堂堂女仆闪亮登场！§r
+pollution.machine.small.chemical.plant.tooltip.2=更加简练的小型化工厂！
+pollution.machine.small.chemical.plant.tooltip.3=升级线圈，以获得2^线圈等级并行，化工厂配方上限256；流化床配方上限64
+pollution.machine.small.chemical.plant.tooltip.4=也可执行魔导催化配方，此时并行数为4*线圈等级并行
+pollution.machine.small.chemical.plant.tooltip.5=所有模式下，线圈每升级一次均减少5%%配方总耗时
 #Node Washer
 pollution.machine.node_washer.name=Node Rebirth Purification Pool
 pollution.machine.node_washer.tooltip.1=Arcane Bathhouse, but GT-style
@@ -596,8 +795,110 @@ pollution.machine.node_washer.tooltip.3=aer-terra, aqua-ignis, ordo-perditio are
 pollution.machine.node_washer.tooltip.4=Coil and voltage levels determine the expected aspect values after rewashing
 pollution.machine.node_washer.tooltip.5=The washing process is random, with varying durations. Power outages during the process will cause nodes to be lost!
 
+#炼金炉
+pollution.machine.essence_smelter.name=试作型秘源炼金枢纽
+pollution.machine.essence_smelter.tooltip.1=§5凡所存在皆有联系，凡所发生皆有根源，凡所见证皆为神秘。——卡特·萨托莉，末代魔女§r
+pollution.machine.essence_smelter.tooltip.2=工业时代的源质冶炼厂，新神秘学的奠基者
+pollution.machine.essence_smelter.tooltip.3=本机器源质冶炼效率为100%%！不必担心源质浪费！
+pollution.machine.essence_smelter.tooltip.4=此外本机器同时环境友好，不会产生任何污染！
+pollution.machine.essence_smelter.tooltip.5=输入液态焱以作为燃料，通电后每次工作将输入总线内一格物品所含要素冶炼为源质
+pollution.machine.essence_smelter.tooltip.6=如果物品不含任何要素，机器将不会熔炼该物品。小心投料，含要素的物品会§c§l顷刻炼化§r！
+pollution.machine.essence_smelter.tooltip.7=在机器主方块为中心，半径5格的范围内放置源质容器，以接收熔炼而出的源质
+pollution.machine.essence_smelter.tooltip.8=电压等级越高，燃料消耗越低；且每提升一级电压等级，熔炼时长减为1/4
+pollution.machine.essence_smelter.tooltip.9=机器内含源质缓存，源质无浪费，下次熔炼时长=（本次熔炼物品源质+缓存源质）*0.5s
+pollution.machine.essence_smelter.tooltip.10=因此缓存源质越多，机器下一次工作就越慢，请尽快导出所有源质到容器内...
+pollution.machine.essence_smelter_infusedcost=当前配方每刻源质消耗：%s
+pollution.machine.essence_smelter_smeltingduration=本次熔炼时长：%s
+pollution.machine.essence_smelter_timer=熔炼进度：%s
+pollution.machine.essence_smelter_euttier=电压等级：%s
+
+#火红莲阵列
+pollution.machine.endoflame_array.name=火红莲魔力阵列
+pollution.machine.endoflame_array.tooltip.1=§a碳排放量为零的火电厂，怎么可能？§r
+pollution.machine.endoflame_array.tooltip.2=在输入总线内放置若干火红莲，以实现火红莲的并行发魔，如同处理阵列一样
+pollution.machine.endoflame_array.tooltip.3=输入总线输入燃料，熔炉内可用的燃料均可转化为燃料缓存
+pollution.machine.endoflame_array.tooltip.4=放置魔力容器，导出魔力池仓内的魔力缓存。放心，0污染！
+
+#大集气
+pollution.machine.bot_gas_collector.name=次元秘术大气泵机
+pollution.machine.bot_gas_collector.tooltip.1=§a致敬牢神秘使耶·空对维度研究的贡献，天翼3G太快了！§r
+pollution.machine.bot_gas_collector.tooltip.2=安置这台大气泵机，足不出户以消耗要素为代价，抽取各式各样的空气！
+pollution.machine.bot_gas_collector.tooltip.3=机器无需耗电，所以扔掉你准备的能源仓吧
+pollution.machine.bot_gas_collector.tooltip.4=输入素牡漫宿和特定种类流体要素，以抽取对应的空气类型
+pollution.machine.bot_gas_collector.tooltip.5=对应关系为气-主世界，焱-下界，异-末地，魔-火星，秽-交错世界
+pollution.machine.bot_gas_collector.tooltip.6=机器不能同时抽取多种大气，仔细挑选想要的大气吧
+pollution.machine.bot_gas_collector.tooltip.7=素牡漫宿每100轮抽取后才会消耗一次，要素每t都会消耗
+pollution.machine.bot_gas_collector.tooltip.8=提升机器的核心等级，能够略微减少要素的消耗速度
+pollution.machine.bot_gas_collector.tooltip.9=机器消耗魔力，魔力仓等级决定机器的工作效率，并非越高越好
+pollution.machine.bot_gas_collector.tooltip.10=魔力仓等级每高1级，要素消耗-5%%，魔力消耗翻倍，同时大气产能翻倍
+pollution.machine.bot_gas_collector_beamLevel=核心等级：%s
+pollution.machine.bot_gas_collector_essenceConsumptionSpeed=要素消耗速度：%s
+pollution.machine.bot_gas_collector_manaConsumptionSpeed=魔力消耗速度：%s
+pollution.machine.bot_gas_collector_finalCollectionSpeed=最终每t收集大气量：%s
+
+#炼金炉gt版
+pollution.machine.gt_essence_smelter.name=工业特化型秘源炼金枢纽
+pollution.machine.gt_essence_smelter.tooltip.1=§5双兔傍地走，安能辩我是雌雄§r
+pollution.machine.gt_essence_smelter.tooltip.2=机制和它的姐妹基本完全一致，查询试作型相关说明
+pollution.machine.gt_essence_smelter.tooltip.3=区别在于此机器直接产出GT流体版本的源质
+pollution.machine.gt_essence_smelter.tooltip.4=建议加装更多输出仓，以应对奔涌而来的源质！
+pollution.machine.gt_essence_smelter_infusedcost=当前配方每刻源质消耗：%s
+pollution.machine.gt_essence_smelter_smeltingduration=本次熔炼时长：%s
+pollution.machine.gt_essence_smelter_timer=熔炼进度：%s
+pollution.machine.gt_essence_smelter_euttier=电压等级：%s
+
+#中控塔
+pollution.machine.central_vis_tower.name=星汐流雏灵蕴中控塔
+pollution.machine.central_vis_tower.tooltip.1=§a虽然名字里有个神字，但却不追求任何信仰；最擅长厄运转嫁游戏，却只将悲伤留给自己。§r
+pollution.machine.central_vis_tower.tooltip.2=维系一片区域内的灵气平衡，同时收集珍贵的高阶漫宿物质
+pollution.machine.central_vis_tower.tooltip.3=每正常消耗魔力工作20秒后，对控制范围内区块进行灵气平衡
+pollution.machine.central_vis_tower.tooltip.4=污染将被清除80%%，灵气将以区块灵气标准补充或消耗差值的80%%
+pollution.machine.central_vis_tower.tooltip.5=被清理的污染按照一定比例生成玄牝漫宿，被收集的灵气则化为素牡漫宿
+pollution.machine.central_vis_tower.tooltip.6=清理污染和生成灵气为机器产生负担，吸收灵气则降低负担
+pollution.machine.central_vis_tower.tooltip.7=中控塔范围内，无需过多处理的平衡区块，可为天璇漫宿的生成提供可能
+pollution.machine.central_vis_tower.tooltip.8=所有范围内区块均为平衡区块，则可生成天璇漫宿
+pollution.machine.central_vis_tower.tooltip.9=升级约束器框架以增大区块管控半径。升级魔力仓等级以提高漫宿收集量，同时魔力消耗每级翻倍
+pollution.machine.central_vis_tower.tooltip.10=管控区块半径=约束器框架等级-1，最低为1（9区块），最高为3（49区块）
+pollution.machine.central_vis_tower.tooltip.11=§c注意！中控塔管控范围内区块不能安置其他中控塔，否则两者都无法工作！§r
+pollution.machine.central_vis_tower_canwork=机器可否工作：%s
+pollution.machine.central_vis_tower_framelevel=约束器等级：%s
+pollution.machine.central_vis_tower_timer=清理进度：%s
+pollution.machine.central_vis_tower_manatier=魔力仓等级：%s
+pollution.machine.central_vis_tower_fluxcleaned=上次咒波清理量：%s
+pollution.machine.central_vis_tower_aurasupplemented=上次供给灵气量：%s
+pollution.machine.central_vis_tower_goodchunkamount=平衡区块数目：%s
+
+#节点聚变
+pollution.machine.node_fusion_reactor.luv.name=永恒拂晓骄阳之心
+pollution.machine.node_fusion_reactor.zpm.name=永恒晨曦骄阳之心
+pollution.machine.node_fusion_reactor.uv.name=永恒当空骄阳之心
+pollution.machine.node.fusion.reactor.tooltip.1=§5日出为血，我于此预言骄阳将从血中升起，却既无鲜血的颜色，亦非夜晚的时辰。§r
+pollution.machine.node.fusion.reactor.tooltip.2=对聚变反应堆的神秘学改写！
+pollution.machine.node.fusion.reactor.tooltip.3=拥有16个输入总线可供放置节点，以提供不同的因子
+pollution.machine.node.fusion.reactor.tooltip.4=每个并行因子为核聚变反应提供2x并行，为骄阳漫宿嬗变提供1x并行
+pollution.machine.node.fusion.reactor.tooltip.5=减耗因子略微减少电力消耗，加速因子略微加快机器加工速度
+pollution.machine.node.fusion.reactor.tooltip.6=其余三种因子的大小决定三种漫宿物质的消耗速度
+pollution.machine.node.fusion.reactor.tooltip.7=每个节点各自的独特属性，可提供不同的因子，自行探索如何配置因子
+pollution.machine.node.fusion.reactor.tooltip.8=对于普通核聚变，无需消耗漫宿物质，可无视后三种因子的要求
+pollution.machine.node.fusion.reactor.tooltip.9=对于骄阳漫宿嬗变，需消耗漫宿物质，否则无法工作
+pollution.machine.node.fusion.reactor.tooltip.10=此外，骄阳漫宿嬗变还必须保持机器主方块所处区块处于超稳态，否则亦无法运作
+pollution.machine.node.fusion.reactor.tooltip.11=超稳态意指区块污染极低，灵气值极其接近区块默认标准值
+pollution.machine.node.fusion.reactor.tooltip.12=机器依然有基于升级的配方制作限制，没错，不能跳科技
+pollution.machine.node.fusion.reactor.tooltip.13=和一般的聚变堆不同，机器能源仓等级最低为LuV，但上不封顶
+pollution.machine.node.fusion.reactor.tooltip.14=升级多方块以提高能源仓等级，翻倍并行，并产生更高级的核聚变反应和骄阳漫宿嬗变！
+
 #Magic Fusion Reactor
 pollution.machine.magic_fusion_reactor.name=Explosive Aspect Disintegration Essentia-Infused Magic Soul Matrix
+
+#bot基类
+pollution.mana_multiblock_with_electric.tooltip.1=此机器根据魔力仓等级获取并行和功率减免
+pollution.mana_multiblock_with_electric.tooltip.2=1-3级魔力仓64并行，此后每升一次+64，超过8级直接获得512并行
+pollution.mana_multiblock_with_electric.tooltip.3=配方所需功率总是除以魔力仓等级，该等级每提升一次，魔力消耗翻倍
+
+pollution.machine.bot_vacuum_freezer.name=超越秘术深蓝寒冬构阵
+pollution.machine.bot_vacuum_freezer.tooltip=§a面对着充满星光与默示的夜，我第一次向这个世界动人的冷漠敞开了心扉。§r
+pollution.machine.bot_circuit_assembler.name=高阶秘术电路装配中心
+pollution.machine.bot_circuit_assembler.tooltip=§a假如殉道者的鲜血将要流淌在台阶上，我们就必须先建造台阶。§r
 
 itemGroup.Pollution=Pollution
 itemGroup.Tarot=Tarot
@@ -631,3 +932,6 @@ pollution.machine.mana_pool_hatch.uiv.name=魔力池仓（§2UIV§r）
 pollution.machine.mana_pool_hatch.uxv.name=魔力池仓（§eUXV§r）
 pollution.machine.mana_pool_hatch.opv.name=魔力池仓（§9OpV§r）
 pollution.machine.mana_pool_hatch.max.name=魔力池仓（§c§lMAX§r）
+
+pollution.flux_clear.tier=§5Tier: %s Pollution Cleansed per Tick: %s Vis
+pollution.flux_clear.tier1=%spollution.machine.mana_pool_hatch.max.name=魔力池仓(MAX)
