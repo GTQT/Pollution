@@ -121,6 +121,7 @@ public class PollutionMetaTileEntities {
 	public static MetaTileEntityBMHPCACooler BMHPCA_ULTIMATE_COOLER_COMPONENT;
 	public static MetaTileEntityBMHPCABridge BMHPCA_BRIDGE_COMPONENT;
 	public static MetaTileEntityBMHPCA BMHPCA;
+	public static final MetaTileEntityQuantumTankTc[] QUANTUM_TANK_TC = new MetaTileEntityQuantumTankTc[9];
 	public static void initialization() {
 
 		for (int i = 0; i <= 4; i++) {
@@ -292,7 +293,20 @@ public class PollutionMetaTileEntities {
 				POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
 		SOURCE_CHARGE=registerMetaTileEntity(16150,new MetaTileEntitySourceCharge(PollutionID("source_charge")));
+		int i;
+		for(i = 0; i < 5; ++i) {
+			var voltageName = GTValues.VN[i + 1].toLowerCase();
+			QUANTUM_TANK_TC[i] = new MetaTileEntityQuantumTankTc(PollutionID("super_tank.tc." + voltageName), i + 1, 4000000 * (int)Math.pow(2.0, i));
+			registerMetaTileEntity(16151 + i, QUANTUM_TANK_TC[i]);
+		}
 
+		int index;
+		for(i = 5; i < QUANTUM_TANK_TC.length; ++i) {
+			var voltageName = GTValues.VN[i].toLowerCase();
+			index = i == 9 ? Integer.MAX_VALUE : 4000000 * (int)Math.pow(2.0, i);
+			QUANTUM_TANK_TC[i] = new MetaTileEntityQuantumTankTc(PollutionID("quantum_tank.tc." + voltageName), i, index);
+			registerMetaTileEntity(16156 + i, QUANTUM_TANK_TC[i]);
+		}
 
 	}
 }
