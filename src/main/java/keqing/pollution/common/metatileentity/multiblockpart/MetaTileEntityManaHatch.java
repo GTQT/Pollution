@@ -26,6 +26,7 @@ import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,6 +49,21 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     double energyReduce;//耗能减免
     int OverclockingEnhance;//超频加强
     int ParallelEnhance;//并行加强
+
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        for (int i = 0; i < containerInventory.getSlots(); i++) {
+            var pos = getPos();
+            if(!containerInventory.getStackInSlot(i).isEmpty())
+            {
+                getWorld().spawnEntity(new EntityItem(getWorld(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,containerInventory.getStackInSlot(i)));
+                containerInventory.extractItem(i,1,false);
+            }
+
+        }
+    }
+
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("等级 %s 容积上限 %s", tier, (int) (Math.pow(2, tier) * 1024)));
         tooltip.add(I18n.format("请配合植物魔法相关系统使用"));

@@ -121,6 +121,8 @@ public class EventLoader {
             if (!player.isPotionActive(effect)) {
                 player.sendMessage(new TextComponentTranslation(messageKey));
                 player.addPotionEffect(new PotionEffect(effect, 200, 1));
+
+                AuraHelper.drainFlux(player.world, player.getPosition(), 10, false);
             }
         }
     }
@@ -163,13 +165,13 @@ public class EventLoader {
 
             if (RANDOM.nextBoolean()) player.world.setBlockState(pos, Blocks.LAVA.getDefaultState());
             else player.world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            AuraHelper.drainFlux(player.world, player.getPosition(), 1, false);
+            AuraHelper.drainFlux(player.world, player.getPosition(), 25, false);
 
         } else if (state != Blocks.AIR.getDefaultState()) {
 
             if (RANDOM.nextBoolean()) player.world.setBlockState(pos, Blocks.SAND.getDefaultState());
             else player.world.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
-            AuraHelper.drainFlux(player.world, player.getPosition(), 1, false);
+            AuraHelper.drainFlux(player.world, player.getPosition(), 25, false);
         }
     }
 

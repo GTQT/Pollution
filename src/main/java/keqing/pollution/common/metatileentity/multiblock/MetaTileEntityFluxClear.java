@@ -31,6 +31,7 @@ import keqing.pollution.POConfig;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,6 +59,20 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     private IEnergyContainer energyContainer;
     private boolean isWorkingEnabled;
     int flux;
+
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        for (int i = 0; i < containerInventory.getSlots(); i++) {
+            var pos = getPos();
+            if(!containerInventory.getStackInSlot(i).isEmpty())
+            {
+                getWorld().spawnEntity(new EntityItem(getWorld(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,containerInventory.getStackInSlot(i)));
+                containerInventory.extractItem(i,1,false);
+            }
+
+        }
+    }
 
     public MetaTileEntityFluxClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);

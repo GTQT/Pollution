@@ -20,6 +20,7 @@ import keqing.pollution.POConfig;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,6 +46,19 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     long workTime;
     private boolean isActive;
 
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        for (int i = 0; i < containerInventory.getSlots(); i++) {
+            var pos = getPos();
+            if(!containerInventory.getStackInSlot(i).isEmpty())
+            {
+                getWorld().spawnEntity(new EntityItem(getWorld(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,containerInventory.getStackInSlot(i)));
+                containerInventory.extractItem(i,1,false);
+            }
+
+        }
+    }
     public MetaTileEntityVisClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier = tier;
