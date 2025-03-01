@@ -25,7 +25,7 @@ public class MetaArmor extends ArmorMetaItem<ArmorMetaItem<?>.ArmorMetaValueItem
 				new GogglesNano(2, 160_000L * (long) Math.max(1, Math.pow(1, ConfigHolder.tools.voltageTierNightVision - 1)),
 						ConfigHolder.tools.voltageTierNightVision, EntityEquipmentSlot.HEAD));
 
-		PollutionMetaItems.NANO_GOGGLES = addItem(206, "quantum_goggles").setArmorLogic(
+		PollutionMetaItems.QUANTUM_GOGGLES = addItem(206, "quantum_goggles").setArmorLogic(
 				new GogglesQuantum(2, 1_280_000L * (long) Math.max(1, Math.pow(1, ConfigHolder.tools.voltageTierNightVision - 1)),
 						ConfigHolder.tools.voltageTierNightVision, EntityEquipmentSlot.HEAD));
 

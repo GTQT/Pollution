@@ -723,6 +723,72 @@ public class ThaumcraftRecipes {
 				.EUt(120)
 				.duration(600)
 				.buildAndRegister();
+
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_glasses"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaItems.NANO_GOGGLES.getStackForm(),
+				6,
+				new AspectList().add(Aspect.MAGIC, 128).add(Aspect.TOOL, 128).add(Aspect.EARTH, 128).add(Aspect.SENSES, 64),
+				MetaItems.NANO_HELMET.getStackForm(),
+				"circuitHv",
+				"circuitHv",
+				new ItemStack(MetaItems.QUANTUM_EYE.getMetaItem(), 1, 281),
+				new ItemStack(ItemsTC.causalityCollapser),
+				MetaItems.ELECTRIC_MOTOR_HV.getStackForm(),
+				MetaItems.ELECTRIC_MOTOR_HV.getStackForm(),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				"gemValonite"));
+
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_armor"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaItems.WING_NANO.getStackForm(),
+				6,
+				new AspectList().add(Aspect.MAGIC, 128).add(Aspect.TOOL, 128).add(Aspect.EARTH, 128).add(Aspect.SENSES, 64),
+				MetaItems.NANO_CHESTPLATE.getStackForm(),
+				"circuitHv",
+				"circuitHv",
+				new ItemStack(MetaItems.QUANTUM_EYE.getMetaItem(), 1, 281),
+				new ItemStack(ItemsTC.causalityCollapser),
+				MetaItems.ELECTRIC_PISTON_HV.getStackForm(),
+				MetaItems.ELECTRIC_PISTON_HV.getStackForm(),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
+				"gemValonite"));
+
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_glasses2"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaItems.QUANTUM_GOGGLES.getStackForm(),
+				8,
+				new AspectList().add(Aspect.MAGIC, 250).add(Aspect.TOOL, 250).add(Aspect.EARTH, 250).add(Aspect.SENSES, 128),
+				PollutionMetaItems.NANO_GOGGLES.getStackForm(),
+				"circuitIv",
+				"circuitIv",
+				MetaItems.QUANTUM_HELMET.getStackForm(),
+				PollutionMetaItems.CORE_OF_IDEA.getStackForm(),
+				PollutionMetaItems.CORE_OF_IDEA.getStackForm(),
+				MetaItems.ELECTRIC_MOTOR_IV.getStackForm(),
+				MetaItems.ELECTRIC_MOTOR_IV.getStackForm(),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				"gemValonite"));
+
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_armor2"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaItems.WING_QUANTUM.getStackForm(),
+				8,
+				new AspectList().add(Aspect.MAGIC, 250).add(Aspect.TOOL, 250).add(Aspect.EARTH, 250).add(Aspect.SENSES, 128),
+				PollutionMetaItems.WING_NANO.getStackForm(),
+				"circuitIv",
+				"circuitIv",
+				MetaItems.QUANTUM_CHESTPLATE.getStackForm(),
+				PollutionMetaItems.CORE_OF_IDEA.getStackForm(),
+				PollutionMetaItems.CORE_OF_IDEA.getStackForm(),
+				MetaItems.ELECTRIC_PISTON_IV.getStackForm(),
+				MetaItems.ELECTRIC_PISTON_IV.getStackForm(),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
+				"gemValonite"));
 	}
 	//塔罗牌注魔合成
 	private static void tarots() {

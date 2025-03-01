@@ -122,7 +122,7 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
                 .where('D', CP_COIL_CASING.get())
                 .where('E', states(getCasingState4()))
                 .where('X', states(getCasingState5()))
-                .where('A', air())
+                .where('A', any())
                 .build();
     }
 

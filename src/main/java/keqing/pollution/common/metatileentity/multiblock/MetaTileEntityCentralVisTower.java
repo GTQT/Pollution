@@ -131,6 +131,8 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
         //可生产漫宿的区块等于区块数量，即可生成
         if (goodChunkAmount == Math.pow(2 * frameLevel - 1, 2)) {
             GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(STARRY_MANSUS));
+        } else if (frameLevel == 1 && goodChunkAmount == 9) {
+            GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(STARRY_MANSUS));
         }
         if (auraSupplemented <= 0) {
             FluidStack WHITE_MANSUS = PollutionMaterials.whitemansus.getFluid((int) (manaConsumptionSpeed * auraSupplemented * -10));
