@@ -48,7 +48,7 @@ import static net.minecraft.util.math.MathHelper.ceil;
 import static net.minecraft.util.math.MathHelper.sqrt;
 
 public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithControl {
-    private static final int BASIC_CAPACITY = 8192;
+    private static final int BASIC_CAPACITY = 2048;
     //随机数
     private final Random random = Pollution.RANDOM;
     //源质类型
@@ -129,9 +129,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
         float amplifierType = 1.0F;
         if (node.hasTagCompound() && node.getTagCompound().hasKey("NodeType")) {
             amplifierType = switch (node.getTagCompound().getString("NodeType")) {
-                case "Ominous", "Pure" -> 4.0F;
-                case "Concussive" -> 8.0F;
-                case "Voracious" -> 16.0F;
+                case "Ominous", "Pure" -> 2.0F;
+                case "Concussive" -> 4.0F;
+                case "Voracious" -> 8.0F;
                 default -> 1.0F;
             };
         }
@@ -139,7 +139,6 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
         //计算火、秩序、混沌
         //混沌大于20开始线性降低效率
         //火和秩序按照几何平均数计算倍率
-        //TODO: NBT key validation, check whether the compound tag exists and whether it contains the key.
         nodeCapacityMultiplier *= max((1.2f - 0.005f * node.getTagCompound().getInteger("EssenceEntropy")), 0);
         nodeCapacityMultiplier *= (1 + 0.02f * sqrt(node.getTagCompound().getInteger("EssenceFire") * node.getTagCompound().getInteger("EssenceOrder")));
         //处理饕餮到64倍
@@ -231,8 +230,6 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
         if (this.isWorkingEnabled() && (this.outEnergyContainer.getEnergyCapacity() - this.outEnergyContainer.getEnergyStored()) >= finalCapacity) {
             //计算最终发电量并输出
             this.outEnergyContainer.addEnergy(finalCapacity);
-        } else {
-            //TODO: How to deal with energy when sufficient space in output hatch
         }
         essenceCostSpeedMultiplier = 0;
         varience = 0.0F;

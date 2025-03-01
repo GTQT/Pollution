@@ -119,6 +119,7 @@ public class PollutionMetaItems {
 	public static PollutionMetaItem1 POLLUTION_META_ITEM;
 	public static PollutionBattery POLLUTION_META_BATTERY;
 	public static PollutionBaubles POLLUTION_BAUBLES;
+	public static MetaItem<?>.MetaValueItem QUANTUM_GOGGLES;
 	public static void initialization() {
 		POLLUTION_META_ITEM = new PollutionMetaItem1();
 		POLLUTION_META_BATTERY = new PollutionBattery();
