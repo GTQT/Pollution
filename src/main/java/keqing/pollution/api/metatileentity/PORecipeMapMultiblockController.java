@@ -205,9 +205,8 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
             predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
         }
         predicate = predicate
-                .or(abilities(POMultiblockAbility.VIS_HATCH))
-                .or(abilities(POMultiblockAbility.MANA_HATCH))
-                .setMaxGlobalLimited(1);
+                .or(abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1))
+                .or(abilities(POMultiblockAbility.MANA_HATCH).setMaxGlobalLimited(1));
 
         return predicate;
     }
