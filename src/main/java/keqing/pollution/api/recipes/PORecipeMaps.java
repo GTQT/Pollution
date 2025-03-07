@@ -75,4 +75,6 @@ public class PORecipeMaps {
 
 	public static final RecipeMap<ManaRecipesBuilder> PURE_DAISY_RECIPES = new RecipeMap<>("pure_daisy_recipes", 1, 1, 0, 0, new ManaRecipesBuilder(), false)
 			.setSound(GTSoundEvents.REPLICATOR);
+
+	public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMap<>("industrial_infusion_recipes", 16, 1, 16, 0, new SimpleRecipeBuilder(), false);
 }

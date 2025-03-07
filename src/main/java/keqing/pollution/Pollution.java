@@ -2,6 +2,7 @@ package keqing.pollution;
 
 import keqing.pollution.Advancement.AdvancementTriggers;
 import keqing.pollution.api.POAPI;
+import keqing.pollution.api.recipes.builder.IndustrialInfusionBuilder;
 import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.CommonProxy;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,5 +72,9 @@ public class Pollution {
         PollutionMetaTileEntities.initialization();
         AdvancementTriggers.register();
     }
-
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event)
+    {
+        IndustrialInfusionBuilder.init();
+    }
 }
