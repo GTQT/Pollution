@@ -371,7 +371,7 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
 
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("zhenzigtqt.universal.tooltip.aspect_storage_capacity", new Object[]{this.maxAspectCapacity}));
+        tooltip.add(I18n.format("pollution.universal.tooltip.aspect_storage_capacity", new Object[]{this.maxAspectCapacity}));
         NBTTagCompound tag = stack.getTagCompound();
         if (tag != null) {
             NBTTagList nbta = tag.getTagList("Aspects", 10);
@@ -381,14 +381,14 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
                 String key = b.getString("key");
                 Aspect aspect = Aspect.getAspect(key);
                 if (aspect != null) {
-                    tooltip.add(I18n.format("zhenzigtqt.universal.tooltip.aspect_storage", aspect.getLocalizedDescription(), b.getInteger("amount")));
+                    tooltip.add(I18n.format("pollution.universal.tooltip.aspect_storage", aspect.getLocalizedDescription(), b.getInteger("amount")));
                 }
             }
             if (tag.hasKey("AspectFilter"))
             {
                 Aspect aspectFilter = Aspect.getAspect(tag.getString("AspectFilter"));
                 if (aspectFilter != null) {
-                    tooltip.add(I18n.format("zhenzigtqt.universal.tooltip.aspect_locked", aspectFilter.getLocalizedDescription()));
+                    tooltip.add(I18n.format("pollution.universal.tooltip.aspect_locked", aspectFilter.getLocalizedDescription()));
                 }
             }
             if (tag.getBoolean("IsVoiding") || tag.getBoolean("IsPartialVoiding")) {

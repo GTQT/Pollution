@@ -298,13 +298,13 @@ public class PollutionMetaTileEntities {
 		SOURCE_CHARGE=registerMetaTileEntity(16150,new MetaTileEntitySourceCharge(PollutionID("source_charge")));
 
 		ASPECT_TANK[0] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.lv"), 1, 10000));
-		ASPECT_TANK[1] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.mv"), 2, 20000));
-		ASPECT_TANK[2] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.hv"), 3, 40000));
-		ASPECT_TANK[3] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.ev"), 4, 80000));
-		ASPECT_TANK[4] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.iv"), 5, 160000));
-		ASPECT_TANK[5] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.luv"), 6, 320000));
-		ASPECT_TANK[6] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.zpm"), 7, 640000));
-		ASPECT_TANK[7] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.uv"), 8, 1280000));
-		ASPECT_TANK[8] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.hv"), 9, 2560000));
+		ASPECT_TANK[1] = registerMetaTileEntity(16171, new MetaTileEntityAspectTank(PollutionID("aspect_tank.mv"), 2, 20000));
+		ASPECT_TANK[2] = registerMetaTileEntity(16172, new MetaTileEntityAspectTank(PollutionID("aspect_tank.hv"), 3, 40000));
+		ASPECT_TANK[3] = registerMetaTileEntity(16173, new MetaTileEntityAspectTank(PollutionID("aspect_tank.ev"), 4, 80000));
+		ASPECT_TANK[4] = registerMetaTileEntity(16174, new MetaTileEntityAspectTank(PollutionID("aspect_tank.iv"), 5, 160000));
+		ASPECT_TANK[5] = registerMetaTileEntity(16175, new MetaTileEntityAspectTank(PollutionID("aspect_tank.luv"), 6, 320000));
+		ASPECT_TANK[6] = registerMetaTileEntity(16176, new MetaTileEntityAspectTank(PollutionID("aspect_tank.zpm"), 7, 640000));
+		ASPECT_TANK[7] = registerMetaTileEntity(16177, new MetaTileEntityAspectTank(PollutionID("aspect_tank.uv"), 8, 1280000));
+		ASPECT_TANK[8] = registerMetaTileEntity(16178, new MetaTileEntityAspectTank(PollutionID("aspect_tank.uhv"), 9, 2560000));
 	}
 }

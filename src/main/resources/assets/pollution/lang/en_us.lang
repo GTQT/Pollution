@@ -935,3 +935,21 @@ pollution.machine.mana_pool_hatch.max.name=魔力池仓（§c§lMAX§r）
 
 pollution.flux_clear.tier=§5Tier: %s Pollution Cleansed per Tick: %s Vis
 pollution.flux_clear.tier1=%spollution.machine.mana_pool_hatch.max.name=魔力池仓(MAX)
+
+pollution.gui.aspect_amount=Aspect Amount：
+
+pollution.machine.aspect_tank.tooltip=Aspect Tank
+pollution.universal.tooltip.aspect_storage_capacity=§5Max Capacity:§f%,d Ce
+pollution.universal.tooltip.aspect_storage=§9Stored Aspect:§f%2$,d Ce %1$s
+pollution.universal.tooltip.aspect_locked=§f%1$s §cis Locked!
+pollution.machine.aspect_tank.help=可以将§d源质安瓿§r或§b源质罐子§r等能§6储存源质的容器§r放入输入槽来存储源质
+
+pollution.machine.aspect_tank.lv.name=Super Aspect Tank I
+pollution.machine.aspect_tank.mv.name=Super Aspect Tank II
+pollution.machine.aspect_tank.hv.name=Super Aspect Tank III
+pollution.machine.aspect_tank.ev.name=Super Aspect Tank IV
+pollution.machine.aspect_tank.iv.name=Quantum Aspect Tank I
+pollution.machine.aspect_tank.luv.name=Quantum Aspect Tank II
+pollution.machine.aspect_tank.zpm.name=Quantum Aspect Tank III
+pollution.machine.aspect_tank.uv.name=Quantum Aspect Tank IV
+pollution.machine.aspect_tank.uhv.name=Quantum Aspect Tank V

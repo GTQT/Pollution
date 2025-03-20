@@ -8,6 +8,7 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SidedCubeRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
+import keqing.pollution.client.gui.QuantumAspectTank.AspectImage;
 import net.minecraft.client.renderer.texture.TextureMap;
 
 public class POTextures {
@@ -167,5 +168,6 @@ public class POTextures {
 
 	public static void preInit() {
 		TextureUtils.addIconRegister(POTextures::register);
+		AspectImage.create();
 	}
 }

@@ -20,7 +20,7 @@ public class QuantumAspectTankWidget extends WidgetGroup {
         super(new Position(xPos, yPos), new Size(176, 166));
         this.main = main;
         this.te = te;
-        this.imageWidget = new AspectImageWidget(69, 43, 16, 16, null, null).enableColor(true).setTooltip("zhenzigtqt.machine.aspect_tank.help");
+        this.imageWidget = new AspectImageWidget(69, 43, 16, 16, null, null).enableColor(true).setTooltip("pollution.machine.aspect_tank.help");
         this.createUI();
     }
 
@@ -28,7 +28,7 @@ public class QuantumAspectTankWidget extends WidgetGroup {
     {
 
         this.addWidget(new ImageWidget(7, 16, 81, 46, GuiTextures.DISPLAY));
-        this.addWidget(new LabelWidget(11, 20, "zhenzigtqt.gui.aspect_amount", 16777215));
+        this.addWidget(new LabelWidget(11, 20, "pollution.gui.aspect_amount", 16777215));
 
         this.addWidget(imageWidget);
 

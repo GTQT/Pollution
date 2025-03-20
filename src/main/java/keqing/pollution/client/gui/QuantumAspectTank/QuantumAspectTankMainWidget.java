@@ -35,7 +35,7 @@ public class QuantumAspectTankMainWidget  extends AbstractWidgetGroup {
 
     public void createUI()
     {
-        this.addWidget(new ToggleButtonWidget(43, 64, 18, 18, GuiTextures.BUTTON_LOCK, this::isLockGui, this::setLockGui).shouldUseBaseBackground().setTooltipText("zhenzigtqt.gui.changelock"));
+        this.addWidget(new ToggleButtonWidget(43, 64, 18, 18, GuiTextures.BUTTON_LOCK, this::isLockGui, this::setLockGui).shouldUseBaseBackground().setTooltipText("pollution.gui.changelock"));
         this.addWidget(this.te.createOUTPUTui(25, 64));
         this.addWidget(this.te.createVoidUi(7, 64));
     }
