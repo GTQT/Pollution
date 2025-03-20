@@ -86,6 +86,10 @@ public class POTextures {
 	public static final TextureArea BMHPCA_ICON_DAMAGED_ADVANCED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/damaged_advanced_computation_component.png");
 	public static final TextureArea BMHPCA_ICON_DAMAGED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/damaged_computation_component.png");
 
+	public static final SimpleOverlayRenderer QUANTUM_ASPECT_TANK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_q_aspect_tank");
+	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");
+	public static final SimpleOverlayRenderer ASPECT_OUTPUT_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_aspect_out");
+
 
 	static {
 		BMCOMPUTER_CASING = new SidedCubeRenderer("casings/bm_computer/computer_casing");

@@ -1,6 +1,7 @@
 package keqing.pollution.common.metatileentity;
 
 import gregtech.api.GTValues;
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
@@ -31,6 +32,7 @@ import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEnti
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCACooler;
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCAEmpty;
 import keqing.pollution.common.metatileentity.single.*;
+import keqing.pollution.common.metatileentity.storage.MetaTileEntityAspectTank;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
@@ -46,6 +48,8 @@ public class PollutionMetaTileEntities {
 	public static final MetaTileEntityVisProvider[] VIS_PROVIDERS = new MetaTileEntityVisProvider[9];
 	public static final MetaTileEntityVisClear[] VIS_CLEAR = new MetaTileEntityVisClear[4];
 	public static final MetaTileEntityFluxClear[] FLUX_CLEARS = new MetaTileEntityFluxClear[3];
+
+	public static final MetaTileEntity[] ASPECT_TANK = new MetaTileEntity[10];
 
 	public static MetaTileEntityInfusedExchange TANK;
 
@@ -293,5 +297,14 @@ public class PollutionMetaTileEntities {
 
 		SOURCE_CHARGE=registerMetaTileEntity(16150,new MetaTileEntitySourceCharge(PollutionID("source_charge")));
 
+		ASPECT_TANK[0] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.lv"), 1, 10000));
+		ASPECT_TANK[1] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.mv"), 2, 20000));
+		ASPECT_TANK[2] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.hv"), 3, 40000));
+		ASPECT_TANK[3] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.ev"), 4, 80000));
+		ASPECT_TANK[4] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.iv"), 5, 160000));
+		ASPECT_TANK[5] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.luv"), 6, 320000));
+		ASPECT_TANK[6] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.zpm"), 7, 640000));
+		ASPECT_TANK[7] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.uv"), 8, 1280000));
+		ASPECT_TANK[8] = registerMetaTileEntity(16170, new MetaTileEntityAspectTank(PollutionID("aspect_tank.hv"), 9, 2560000));
 	}
 }
