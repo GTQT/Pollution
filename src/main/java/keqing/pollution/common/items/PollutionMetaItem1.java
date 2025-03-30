@@ -152,6 +152,12 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.OVERCLOCKING_ENHANCE = this.addItem(222, "overclocking_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.PARALLEL_ENHANCE = this.addItem(223, "parallel_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 
+		//血魔法电路
+		PollutionMetaItems.BLOOD_CIRCUIT = this.addItem(250, "blood_circuit").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_ADVANCED = this.addItem(251, "blood_circuit_advanced").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_ULTIMATE = this.addItem(252, "blood_circuit_ultimate").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_SUPREME = this.addItem(253, "blood_circuit_supreme").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+
 		//塔罗牌
 		PollutionMetaItems.TEST_ITEM = this.addItem(300, "test_item").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
 		PollutionMetaItems.TAROT_THE_FOOL = this.addItem(301, "the_fool").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT).addComponents(new Tarots.THE_FOOL());

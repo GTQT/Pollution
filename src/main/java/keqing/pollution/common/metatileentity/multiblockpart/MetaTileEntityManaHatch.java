@@ -200,6 +200,10 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setTag("ContainerInventory", this.containerInventory.serializeNBT());
         data.setInteger("mana", this.mana);
+        data.setDouble("timeReduce", this.timeReduce);
+        data.setDouble("energyReduce", this.energyReduce);
+        data.setInteger("ParallelEnhance", this.ParallelEnhance);
+        data.setInteger("OverclockingEnhance", this.OverclockingEnhance);
         return super.writeToNBT(data);
     }
 
@@ -208,6 +212,10 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         super.readFromNBT(data);
         this.containerInventory.deserializeNBT(data.getCompoundTag("ContainerInventory"));
         this.mana = data.getInteger("mana");
+        this.timeReduce=data.getDouble("timeReduce");
+        this.energyReduce=data.getDouble("energyReduce");
+        this.ParallelEnhance=data.getInteger("ParallelEnhance");
+        this.OverclockingEnhance=data.getInteger("OverclockingEnhance");
     }
 
 

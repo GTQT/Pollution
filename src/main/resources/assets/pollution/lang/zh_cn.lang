@@ -264,6 +264,16 @@ metaitem.time_increase.name=魔导加速核心
 metaitem.energy_reduce.name=魔导效能核心
 metaitem.parallel_enhance.name=魔导处理核心
 metaitem.overclocking_enhance.name=魔导超频核心
+
+metaitem.blood_circuit.name=血肉电路板
+metaitem.blood_circuit.tooltip=§c§l███血肉电路板：███████不可名状的低语在其表面流淌§r
+metaitem.blood_circuit_advanced.name=腐化血肉电路板
+metaitem.blood_circuit_advanced.tooltip=§c§l███腐化血肉电路板：███脉动的血管与███未知的意识交织§r
+metaitem.blood_circuit_ultimate.name=深渊血肉电路板
+metaitem.blood_circuit_ultimate.tooltip=§c§l███深渊血肉电路板：███来自███未知维度的███禁忌馈赠§r
+metaitem.blood_circuit_supreme.name=终焉血肉电路板
+metaitem.blood_circuit_supreme.tooltip=§c§l███终焉血肉电路板：███同步率███警告：███████不可直视§r
+
 #装具
 metaitem.wing_nano.name=魔导纳米飞行魂导器
 metaitem.wing_quantum.name=魔导量子飞行魂导器
@@ -488,6 +498,15 @@ pollution.machine.mana_gen_ev.name=脉冲魔力发电机
 pollution.machine.mana_gen_iv.name=爆喷魔力发电机
 
 # 血肉计算阵列组件
+tile.bm_computer_casing.computer_casing.name=血肉计算阵列-混沌外壳
+tile.bm_computer_casing.computer_casing.tooltip=███数据缺失...检测到血肉脉动信号，仿佛某种不可名状的存在正在低语
+tile.bm_computer_casing.computer_heat_vent.name=血肉计算阵列-腐化散热口
+tile.bm_computer_casing.computer_heat_vent.tooltip=███热量从这具活体组织中散发，伴随着███不可名状的脉动
+tile.bm_computer_casing.high_power_casing.name=血肉计算阵列-禁忌能量外壳
+tile.bm_computer_casing.high_power_casing.tooltip=███高能血肉组织，仿佛来自███未知维度的馈赠，███警告：不可直视
+tile.bm_computer_casing.advanced_computer_casing.name=血肉计算阵列-深渊终脑外壳
+tile.bm_computer_casing.advanced_computer_casing.tooltip=███高级血肉组织，███检测到███意识体同步率，███警告：不可触碰
+
 pollution.machine.bm_hpca.empty_component.name=血肉计算阵列-虚空腔体
 pollution.machine.bm_hpca.empty_component.tooltip=███数据缺失...检测到血肉脉动信号
 pollution.machine.bm_hpca.super_computation_component.name=血肉计算阵列-腐化核心

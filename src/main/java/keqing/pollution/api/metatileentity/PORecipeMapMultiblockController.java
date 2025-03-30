@@ -93,6 +93,10 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         isManaModule=!this.getAbilities(POMultiblockAbility.MANA_HATCH).isEmpty();
         if (isVisModule) {
             this.visStorage = this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).getVisStore();
+            energyReduce=1;
+            timeReduce=1;
+            OverclockingEnhance=0;
+            ParallelEnhance=0;
         }
         if (isManaModule) {
             this.visStorage = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMana();
@@ -148,9 +152,19 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
             isManaModule = true;
         }
     }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setInteger("tier", this.tier);
+        data.setInteger("visStorage", this.visStorage);
+        data.setInteger("visStorageMax", this.visStorageMax);
+        data.setBoolean("isVisModule", this.isVisModule);
+        data.setBoolean("isManaModule", this.isManaModule);
+        data.setInteger("maxParallel", this.maxParallel);
+        data.setDouble("timeReduce", this.timeReduce);
+        data.setDouble("energyReduce", this.energyReduce);
+        data.setInteger("ParallelEnhance", this.ParallelEnhance);
+        data.setInteger("OverclockingEnhance", this.OverclockingEnhance);
         return super.writeToNBT(data);
     }
 
@@ -158,6 +172,15 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.tier = data.getInteger("tier");
+        this.visStorage = data.getInteger("visStorage");
+        this.visStorageMax = data.getInteger("visStorageMax");
+        this.isVisModule = data.getBoolean("isVisModule");
+        this.isManaModule = data.getBoolean("isManaModule");
+        this.maxParallel = data.getInteger("maxParallel");
+        this.timeReduce=data.getDouble("timeReduce");
+        this.energyReduce=data.getDouble("energyReduce");
+        this.ParallelEnhance=data.getInteger("ParallelEnhance");
+        this.OverclockingEnhance=data.getInteger("OverclockingEnhance");
     }
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
@@ -235,11 +258,13 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
 
         @Override
         protected void updateRecipeProgress() {
-            if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-                if (drainVis(tier, false) && drainMaterial(material, false)) {
-                    this.drawEnergy(this.recipeEUt, false);
+            if (this.canRecipeProgress && this.drawEnergy((int) (this.recipeEUt* energyReduce), true)) {
+                if (drainVis(tier, true) && drainMaterial(material, false)) {
+
+                    this.drawEnergy((int) (this.recipeEUt* energyReduce), false);
+
                     drainMaterial(material, true);
-                    drainVis(tier, true);
+                    drainVis(tier, false);
                     if (++this.progressTime > this.maxProgressTime) {
                         this.completeRecipe();
                     }
@@ -259,23 +284,18 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         }
 
         @Override
-        protected boolean drawEnergy(int EUt, boolean simulate) {
-            int recipeEUt = (int) (EUt * energyReduce);
-            long resultEnergy = this.getEnergyStored() - (long) recipeEUt;
-            if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {
-                if (!simulate) {
-                    this.getEnergyContainer().changeEnergy(-recipeEUt);
-                }
-                return true;
+        protected double getOverclockingDurationDivisor() {
+            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
+                return 3.0;
             } else {
-                return false;
+                return 2.0;
             }
         }
 
         @Override
-        protected double getOverclockingDurationDivisor() {
+        protected double getOverclockingVoltageMultiplier() {
             if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
-                return 4.0;
+                return 3.0;
             } else {
                 return 2.0;
             }
