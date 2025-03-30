@@ -942,3 +942,21 @@ pollution.machine.mana_pool_hatch.max.name=魔力池仓（§c§lMAX§r）
 
 pollution.flux_clear.tier=§5Tier: %s Pollution Cleansed per Tick: %s Vis
 pollution.flux_clear.tier1=%spollution.machine.mana_pool_hatch.max.name=魔力池仓(MAX)
+
+pollution.gui.aspect_amount=源质总量：
+
+pollution.machine.aspect_tank.tooltip=申必的GT
+pollution.universal.tooltip.aspect_storage_capacity=§5源质容量：§f%,d 魔力水晶碎片
+pollution.universal.tooltip.aspect_storage=§9内含源质：§f%2$,d 魔力水晶碎片 %1$s
+pollution.universal.tooltip.aspect_locked=§f%1$s §c已被锁定！
+pollution.machine.aspect_tank.help=可以将§d源质安瓿§r或§b源质罐子§r等能§6储存源质的容器§r放入输入槽来存储源质
+
+pollution.machine.aspect_tank.lv.name=超级源质缸 I
+pollution.machine.aspect_tank.mv.name=超级源质缸 II
+pollution.machine.aspect_tank.hv.name=超级源质缸 III
+pollution.machine.aspect_tank.ev.name=超级源质缸 IV
+pollution.machine.aspect_tank.iv.name=量子源质缸 I
+pollution.machine.aspect_tank.luv.name=量子源质缸 II
+pollution.machine.aspect_tank.zpm.name=量子源质缸 III
+pollution.machine.aspect_tank.uv.name=量子源质缸 IV
+pollution.machine.aspect_tank.uhv.name=量子源质缸 V
