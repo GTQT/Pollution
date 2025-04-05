@@ -9,10 +9,17 @@
     "MixinMetaTileEntity",
     "MixinMetaTileEntityHolder",
     "MixinGuiFirefly",
-    "MixinSwarmOverlayRenderer"
+    "MixinSwarmOverlayRenderer",
+    "MixinMetaTileEntityMufflerHatchCommon",
+    "MixinMetaTileEntityPrimitiveBlastFurnaceCommon",
+    "MixinMetaTileEntityMetaTileEntityCokeOvenCommon",
+    "MixinSimpleGeneratorMetaTileEntityCommon"
   ],
   "server": [],
   "client":[
-
+    "MixinMetaTileEntityMufflerHatchClient",
+    "MixinMetaTileEntityMetaTileEntityCokeOvenClient",
+    "MixinMetaTileEntityPrimitiveBlastFurnaceClient",
+    "MixinSimpleGeneratorMetaTileEntityClient"
   ]
 }

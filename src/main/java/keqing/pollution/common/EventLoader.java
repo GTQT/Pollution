@@ -55,10 +55,7 @@ public class EventLoader {
             checkForPortalCreation(player, world, 32.0F);
         }
 
-        if (POConfig.PollutionSystemSwitch.EntityPollutionEvent) {
-            clientTick++;
-            if (clientTick < 200) return;
-            clientTick = 0;
+        if (POConfig.PollutionSystemSwitch.EntityPollutionEvent && event.phase == TickEvent.Phase.END) {
 
             int flux = (int) AuraHelper.getFlux(player.world, player.getPosition());
             if (flux < 40) return;

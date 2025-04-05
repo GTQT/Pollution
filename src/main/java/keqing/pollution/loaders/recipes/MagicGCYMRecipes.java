@@ -1,11 +1,8 @@
 package keqing.pollution.loaders.recipes;
 
-import com.sun.jna.platform.win32.WinNT;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
-import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.*;
 import gregtech.common.items.MetaItems;
@@ -14,16 +11,13 @@ import gregtechfoodoption.machines.GTFOTileEntities;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
-import keqing.gtqtcore.loaders.recipes.GTQTRecipes;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.items.PollutionMetaItems;
-import keqing.pollution.common.items.behaviors.Tarots;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -39,19 +33,12 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
-import javax.swing.*;
-import java.awt.*;
-
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static keqing.gtqtcore.api.unification.GCYSMaterials.*;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Ichorium;
-import static keqing.gtqtcore.api.unification.TJMaterials.Polyetheretherketone;
-import static keqing.gtqtcore.api.unification.TJMaterials.Thaumium;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.*;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.OPTICAL_ASSEMBLY;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
@@ -475,7 +462,7 @@ public class MagicGCYMRecipes {
 		//转换矩阵
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "infused_exchange"), new InfusionRecipe(
 				"INFUSION@2",
-				PollutionMetaTileEntities.TANK.getStackForm(),
+				PollutionMetaTileEntities.INFUSED_EXCHANGE.getStackForm(),
 				2,
 				new AspectList().add(Aspect.EXCHANGE, 16).add(Aspect.MOTION, 16).add(Aspect.WATER, 16),
 				GTQTMetaTileEntities.FLUID_EXTRACTOR[MV].getStackForm(),

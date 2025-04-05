@@ -51,9 +51,7 @@ public class PollutionMetaTileEntities {
 
 	public static final MetaTileEntity[] ASPECT_TANK = new MetaTileEntity[10];
 
-	public static MetaTileEntityInfusedExchange TANK;
-
-	public static MetaTileEntityInfusedExchange TANK_TEST;
+	public static MetaTileEntityInfusedExchange INFUSED_EXCHANGE;
 
 	public static MetaTileEntityMagicBender MAGIC_BENDER;
 	public static MetaTileEntityMagicCentrifuge MAGIC_CENTRIFUGE;
@@ -144,7 +142,7 @@ public class PollutionMetaTileEntities {
 
 		FLUX_CLEARS[1] = registerMetaTileEntity(15933, new MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
 		FLUX_CLEARS[2] = registerMetaTileEntity(15934, new MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));
-		TANK = registerMetaTileEntity(15935, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
+		INFUSED_EXCHANGE = registerMetaTileEntity(15935, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
 
 		MAGIC_BENDER = registerMetaTileEntity(15936, new MetaTileEntityMagicBender(PollutionID("magic_bender")));
 		MAGIC_ELECTRIC_BLAST_FURNACE = registerMetaTileEntity(15937, new MetaTileEntityMagicElectricBlastFurnace(PollutionID("magic_electric_blast_furnace")));
@@ -211,6 +209,7 @@ public class PollutionMetaTileEntities {
 				new MetaTileEntityBMHPCABridge(PollutionID("bm_hpca.bridge_component")));
 
 		BMHPCA= registerMetaTileEntity(15990, new MetaTileEntityBMHPCA(PollutionID("bm_hpca")));
+
 
 		for (int i = 0; i < 9; i++) {
 			String tierName = GTValues.VN[i + 1].toLowerCase();

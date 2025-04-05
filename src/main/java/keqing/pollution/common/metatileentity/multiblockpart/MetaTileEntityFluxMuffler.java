@@ -41,7 +41,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
 
     private final int recoveryChance;
     private final GTItemStackHandler inventory;
-    private final double pollutionMultiplier;
     private boolean frontFaceFree;
 
     public MetaTileEntityFluxMuffler(ResourceLocation metaTileEntityId, int tier) {
@@ -49,7 +48,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         this.recoveryChance = Math.max(1, tier * 10);
         this.inventory = new GTItemStackHandler(this, (int) Math.pow(tier + 1, 2));
         this.frontFaceFree = false;
-        this.pollutionMultiplier = (100.0 - (tier - 1) * 12.5) / 100.0 * POConfig.PollutionSystemSwitch.mufflerPollutionMultiplier;
     }
 
     @Override
@@ -66,9 +64,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         }
         if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
             VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
-            if (getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution) {
-                AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollutionMultiplier * 0.05), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
-            }
         }
     }
 
@@ -130,8 +125,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.muffler_hatch.tooltip1"));
         tooltip.add(I18n.format("gregtech.muffler.recovery_tooltip", recoveryChance));
-        tooltip.add(I18n.format("pollution.muffler.pollution_tooltip1"));
-        tooltip.add(I18n.format("pollution.muffler.pollution_tooltip2", pollutionMultiplier));
         tooltip.add(I18n.format("gregtech.universal.enabled"));
         tooltip.add(TooltipHelper.BLINKING_RED + I18n.format("gregtech.machine.muffler_hatch.tooltip2"));
     }

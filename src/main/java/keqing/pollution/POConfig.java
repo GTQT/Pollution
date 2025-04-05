@@ -39,8 +39,8 @@ public class POConfig {
         public boolean ExplosionPollution = true;
         @Config.Comment("玩家污染DEBUFF(包括泥土变沙子，药水效果)")
         public boolean EntityPollutionEvent = true;
-        @Config.Comment("消声仓污染倍率(0为无污染)")
-        public double mufflerPollutionMultiplier = 1.0;
+        @Config.Comment("设备污染倍率(0为无污染)")
+        public float mufflerPollutionMultiplier = 1.0F;
         @Config.Comment("是否开启消声仓污染特效")
         public boolean mufflerPollutionShowEffects = true;
         @Config.Comment("污染清理倍率,")
