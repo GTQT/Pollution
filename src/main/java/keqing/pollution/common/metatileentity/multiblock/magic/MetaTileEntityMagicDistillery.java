@@ -70,23 +70,15 @@ public class MetaTileEntityMagicDistillery extends PORecipeMapMultiblockControll
     @Override
     protected BlockPattern createStructurePattern() {
         TraceabilityPredicate casingPredicate = states(getCasingState()).setMinGlobalLimited(40); // Different
-        // characters use
-        // common constraints
-        TraceabilityPredicate maintenancePredicate = this.hasMaintenanceMechanics() &&
-                ConfigHolder.machines.enableMaintenance ?
-                abilities(MultiblockAbility.MAINTENANCE_HATCH).setMinGlobalLimited(1).setMaxGlobalLimited(1) :
-                casingPredicate;
+
         return FactoryBlockPattern.start(RIGHT, FRONT, DOWN)
                 .aisle("#####", "#ZZZ#", "#ZCZ#", "#ZZZ#", "#####")
                 .aisle("##X##", "#XAX#", "XAPAX", "#XAX#", "##X##").setRepeatable(1, 12)
                 .aisle("#YSY#", "YAAAY", "YATAY", "YAAAY", "#YYY#")
                 .aisle("#YYY#", "YYYYY", "YYYYY", "YYYYY", "#YYY#")
                 .where('S', selfPredicate())
-                .where('Y', casingPredicate.or(abilities(MultiblockAbility.IMPORT_ITEMS))
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(1))
-                        .or(abilities(MultiblockAbility.EXPORT_ITEMS))
-                        .or(maintenancePredicate))
+                .where('Y', casingPredicate
+                        .or(autoAbilities(true, true, true, true, true, false, false)))
                 .where('X', casingPredicate
                         .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
                                 .filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch)
