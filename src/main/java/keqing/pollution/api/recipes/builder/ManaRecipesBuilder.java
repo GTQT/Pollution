@@ -24,12 +24,12 @@ public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
     }
 
     @Override
-    public boolean applyProperty(@Nonnull String key, Object value) {
+    public boolean applyPropertyCT(String key,Object value) {
         if (key.equals(ManaProperty.KEY)) {
             this.TotalMana(((Number) value).intValue());
             return true;
         }
-        return super.applyProperty(key, value);
+        return super.applyPropertyCT(key, value);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
 
     public int getTotalMana() {
         return this.recipePropertyStorage == null ? 0 :
-                this.recipePropertyStorage.getRecipePropertyValue(ManaProperty.getInstance(), 0);
+                this.recipePropertyStorage.get(ManaProperty.getInstance(), 0);
     }
 
     public ManaRecipesBuilder TotalMana(int TotalMana) {

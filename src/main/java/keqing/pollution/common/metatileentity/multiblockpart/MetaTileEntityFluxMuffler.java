@@ -3,6 +3,19 @@ package keqing.pollution.common.metatileentity.multiblockpart;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import com.cleanroommc.modularui.api.drawable.IKey;
+import com.cleanroommc.modularui.api.widget.IWidget;
+import com.cleanroommc.modularui.factory.PosGuiData;
+import com.cleanroommc.modularui.screen.ModularPanel;
+import com.cleanroommc.modularui.value.BoolValue;
+import com.cleanroommc.modularui.value.sync.BooleanSyncValue;
+import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.cleanroommc.modularui.value.sync.SyncHandlers;
+import com.cleanroommc.modularui.widgets.ItemSlot;
+import com.cleanroommc.modularui.widgets.SlotGroupWidget;
+import com.cleanroommc.modularui.widgets.ToggleButton;
+import com.cleanroommc.modularui.widgets.layout.Flow;
+import com.cleanroommc.modularui.widgets.layout.Grid;
 import gregtech.api.GTValues;
 import gregtech.api.capability.IMufflerHatch;
 import gregtech.api.gui.GuiTextures;
@@ -12,15 +25,15 @@ import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
-import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
+import gregtech.api.metatileentity.multiblock.*;
+import gregtech.api.mui.GTGuiTextures;
+import gregtech.api.mui.GTGuis;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
 import gregtech.client.particle.VanillaParticleEffects;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.utils.TooltipHelper;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.pollution.POConfig;
 import net.minecraft.block.state.IBlockState;
@@ -35,24 +48,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aura.AuraHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IMufflerHatch>, ITieredMetaTileEntity, IMufflerHatch {
+public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart implements
+        IMultiblockAbilityPart<IMufflerHatch>, ITieredMetaTileEntity, IMufflerHatch {
 
     private final int recoveryChance;
     private final GTItemStackHandler inventory;
+
     private boolean frontFaceFree;
+    private boolean outputItem;
 
     public MetaTileEntityFluxMuffler(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.recoveryChance = Math.max(1, tier * 10);
+        this.recoveryChance = (int) Math.ceil((tier - 1.0f) / 8 * 100);
         this.inventory = new GTItemStackHandler(this, (int) Math.pow(tier + 1, 2));
         this.frontFaceFree = false;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityFluxMuffler(metaTileEntityId, getTier());
+        return new MetaTileEntityMufflerHatch(metaTileEntityId, getTier());
     }
 
     @Override
@@ -60,11 +77,19 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         super.update();
 
         if (!getWorld().isRemote) {
-            if (getOffsetTimer() % 10 == 0) this.frontFaceFree = checkFrontFaceFree();
+            if (getOffsetTimer() % 10 == 0)
+                this.frontFaceFree = checkFrontFaceFree();
         }
-        if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
+
+        if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller &&
+                controller.isActive()) {
             VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
         }
+    }
+
+    @Override
+    public void clearMachineInventory( List< ItemStack> itemBuffer) {
+        clearInventory(itemBuffer, inventory);
     }
 
     public void recoverItemsTable(List<ItemStack> recoveryItems) {
@@ -86,6 +111,11 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         return frontFaceFree;
     }
 
+    @Override
+    public boolean outputItem() {
+        return outputItem;
+    }
+
     private boolean checkFrontFaceFree() {
         BlockPos frontPos = getPos().offset(getFrontFacing());
         IBlockState blockState = getWorld().getBlockState(frontPos);
@@ -101,18 +131,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         return blockState.getBlock().isAir(blockState, getWorld(), frontPos) || GTUtility.isBlockSnow(blockState);
     }
 
-    /**
-     * @deprecated No longer needed. Multiblock controller sets the particle type.
-     */
-    @Deprecated
-    @SideOnly(Side.CLIENT)
-    public void pollutionParticles() {
-        MultiblockControllerBase controller = getController();
-        if (controller instanceof MultiblockWithDisplayBase displayBase) {
-            VanillaParticleEffects.mufflerEffect(this, displayBase.getMufflerParticle());
-        }
-    }
-
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
@@ -121,7 +139,7 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     }
 
     @Override
-    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack,  World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.muffler_hatch.tooltip1"));
         tooltip.add(I18n.format("gregtech.muffler.recovery_tooltip", recoveryChance));
@@ -130,7 +148,7 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     }
 
     @Override
-    public void addToolUsages(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
+    public void addToolUsages(ItemStack stack,  World world, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("gregtech.tool_action.screwdriver.access_covers"));
         tooltip.add(I18n.format("gregtech.tool_action.wrench.set_facing"));
         super.addToolUsages(stack, world, tooltip, advanced);
@@ -142,32 +160,70 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     }
 
     @Override
-    public void registerAbilities(List<IMufflerHatch> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities( AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
 
     @Override
-    protected ModularUI createUI(EntityPlayer entityPlayer) {
-        int rowSize = (int) Math.sqrt(this.inventory.getSlots());
-        return createUITemplate(entityPlayer, rowSize, rowSize == 10 ? 9 : 0).build(getHolder(), entityPlayer);
+    public boolean usesMui2() {
+        return true;
     }
 
-    private ModularUI.Builder createUITemplate(EntityPlayer player, int rowSize, int xOffset) {
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176 + xOffset * 2, 18 + 18 * rowSize + 94).label(10, 5, getMetaFullName());
+    @Override
+    public ModularPanel buildUI(PosGuiData guiData, PanelSyncManager guiSyncManager) {
+        int rowSize = (int) Math.sqrt(this.inventory.getSlots());
+        int xOffset = rowSize == 10 ? 9 : 0;
 
+        guiSyncManager.registerSlotGroup("item_inv", rowSize);
+
+        List<List<IWidget>> widgets = new ArrayList<>();
         for (int y = 0; y < rowSize; y++) {
+            widgets.add(new ArrayList<>());
             for (int x = 0; x < rowSize; x++) {
                 int index = y * rowSize + x;
-                builder.widget(new SlotWidget(inventory, index, (88 - rowSize * 9 + x * 18) + xOffset, 18 + y * 18, true, false).setBackgroundTexture(GuiTextures.SLOT));
+                widgets.get(y).add(new ItemSlot().slot(SyncHandlers.itemSlot(this.inventory, index)
+                        .slotGroup("item_inv")
+                        .accessibility(false, true)));
             }
         }
-        return builder.bindPlayerInventory(player.inventory, GuiTextures.SLOT, 7 + xOffset, 18 + 18 * rowSize + 12);
+        BooleanSyncValue outputStateValue = new BooleanSyncValue(() -> outputItem, val -> outputItem = val);
+        guiSyncManager.syncValue("output_state", outputStateValue);
+
+        int backgroundWidth=176 + xOffset * 2 +18 +5;
+        int backgroundHeight=18 + 18 * rowSize + 94;
+        // TODO: Change the position of the name when it's standardized.
+        return GTGuis.createPanel(this, backgroundWidth, backgroundHeight)
+                .child(IKey.lang(getMetaFullName()).asWidget().pos(5, 5))
+                .child(SlotGroupWidget.playerInventory().left(7).bottom(7))
+                .child(new Grid()
+                        .top(18).height(rowSize * 18)
+                        .minElementMargin(0, 0)
+                        .minColWidth(18).minRowHeight(18)
+                        .alignX(0.5f)
+                        .matrix(widgets))
+
+                .child(Flow.column()
+                        .pos(backgroundWidth - 7 - 18, backgroundHeight - 18 * 4 - 7 - 5)
+                        .width(18).height(18 * 4 + 5)
+                        .child(GTGuiTextures.getLogo(getUITheme()).asWidget().size(17).top(18 * 3 + 5))
+
+                        .child(new ToggleButton()
+                                .top(0)
+                                .value(new BoolValue.Dynamic(outputStateValue::getBoolValue,
+                                        outputStateValue::setBoolValue))
+                                .overlay(GTGuiTextures.OUT_SLOT_OVERLAY)
+                                .tooltipBuilder(t -> t.setAutoUpdate(true)
+                                        .addLine(outputStateValue.getBoolValue() ?
+                                                IKey.lang("gregtech.gui.output_item.tooltip.enabled") :
+                                                IKey.lang("gregtech.gui.output_item.tooltip.disabled"))))
+                );
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
         data.setTag("RecoveryInventory", inventory.serializeNBT());
+        data.setBoolean("outputItem", outputItem);
         return data;
     }
 
@@ -175,5 +231,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.inventory.deserializeNBT(data.getCompoundTag("RecoveryInventory"));
+        outputItem= data.getBoolean("outputItem");
     }
 }

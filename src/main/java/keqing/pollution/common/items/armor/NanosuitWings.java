@@ -54,7 +54,7 @@ public class NanosuitWings extends Jetpack {
 			drainEnergy(item, energyPerUse * 2);
 		}
 
-		performFlying(player, hoverMode, item);
+		performFlying(player, hoverMode,true, item);
 
 		if (toggleTimer > 0) toggleTimer--;
 

@@ -20,8 +20,9 @@ import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.recipes.recipeproperties.FusionEUToStartProperty;
-import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
+import gregtech.api.recipes.logic.OCParams;
+import gregtech.api.recipes.properties.RecipePropertyStorage;
+import gregtech.api.recipes.properties.impl.FusionEUToStartProperty;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -29,6 +30,7 @@ import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
+import gregtech.common.metatileentities.multi.electric.MetaTileEntityFusionReactor;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.gtqtcore.GTQTCoreConfig;
 import keqing.pollution.POConfig;
@@ -502,28 +504,23 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
             MetaTileEntityNodeFusionReactor.this.heat = compound.getLong("Heat");
         }
 
-        protected double getOverclockingDurationDivisor() {
-            return 2.0;
-        }
-
-        protected double getOverclockingVoltageMultiplier() {
-            return 2.0;
-        }
 
         public long getMaxVoltage() {
             return Math.min(GTValues.V[MetaTileEntityNodeFusionReactor.this.tier], super.getMaxVoltage());
         }
 
         //照抄ceu
-        protected void modifyOverclockPre(int[] values, IRecipePropertyStorage storage) {
-            super.modifyOverclockPre(values, storage);
-            long euToStart = storage.getRecipePropertyValue(FusionEUToStartProperty.getInstance(), 0L);
-            int fusionTier = FusionEUToStartProperty.getFusionTier(euToStart);
-            if (fusionTier != 0) {
-                fusionTier = MetaTileEntityNodeFusionReactor.this.tier - fusionTier;
-            }
+        @Override
+        protected void modifyOverclockPre(@NotNull OCParams ocParams, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPre(ocParams, storage);
 
-            values[2] = Math.min(fusionTier, values[2]);
+            // Limit the number of OCs to the difference in fusion reactor MK.
+            // I.e., a MK2 reactor can overclock a MK1 recipe once, and a
+            // MK3 reactor can overclock a MK2 recipe once, or a MK1 recipe twice.
+            long euToStart = storage.get(FusionEUToStartProperty.getInstance(), 0L);
+            int fusionTier = FusionEUToStartProperty.getFusionTier(euToStart);
+            if (fusionTier != 0) fusionTier = MetaTileEntityNodeFusionReactor.this.tier - fusionTier;
+            ocParams.setOcAmount(Math.min(fusionTier, ocParams.ocAmount()));
         }
 
         //没有照抄的
@@ -542,7 +539,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
         }
 
         @Override
-        protected boolean drawEnergy(int recipeEUt, boolean simulate) {
+        protected boolean drawEnergy(long recipeEUt, boolean simulate) {
             long finalRecipeEUt = (long) (recipeEUt * (1 - Math.min(0.5, 0.01 * overallEnergyAmount)));
             long resultEnergy = this.getEnergyStored() - finalRecipeEUt;
             if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {

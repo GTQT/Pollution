@@ -16,7 +16,6 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.logic.OverclockingLogic;
-import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.util.TextComponentUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.BlockFusionCasing;
@@ -340,11 +339,5 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         public boolean isAllowOverclocking() {
             return false;
         }
-
-        protected int[] runOverclockingLogic(IRecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int duration, int amountOC) {
-            return OverclockingLogic.standardOverclockingLogic(Math.abs(recipeEUt), maxVoltage, duration, amountOC, OverclockingLogic.PERFECT_OVERCLOCK_DURATION_DIVISOR, 4);
-        }
     }
-
-
 }

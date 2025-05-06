@@ -1,8 +1,13 @@
 package keqing.pollution.common;
 
+import gregtech.api.GregTechAPI;
+import gregtech.api.metatileentity.registry.MTEManager;
 import gregtech.api.unification.material.event.MaterialEvent;
+import gregtech.api.unification.material.event.MaterialRegistryEvent;
+import keqing.gtqtcore.GTQTCore;
 import keqing.pollution.Advancement.AdvancementTriggers;
 import keqing.pollution.POConfig;
+import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.boss.EntityWither;
@@ -36,6 +41,16 @@ public class EventLoader {
 
     private static final Random RANDOM = ThreadLocalRandom.current();
     private static long clientTick = 0;
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void registerMTERegistry(MTEManager.MTERegistryEvent event) {
+        GregTechAPI.mteManager.createRegistry(Pollution.MODID);
+    }
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void createMaterialRegistry(MaterialRegistryEvent event) {
+        GregTechAPI.materialManager.createRegistry(Pollution.MODID);
+    }
+
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMaterials(MaterialEvent event) {

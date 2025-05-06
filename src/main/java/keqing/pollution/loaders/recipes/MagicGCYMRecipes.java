@@ -37,13 +37,13 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static keqing.gtqtcore.api.unification.GCYSMaterials.*;
+import static gregtech.api.unification.ore.OrePrefix.ingotHot;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Ichorium;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.Orichalcum;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 import static keqing.pollution.common.items.PollutionMetaItems.*;
-import static vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType;
 
 public class MagicGCYMRecipes {
 	public static void init() {
@@ -166,21 +166,21 @@ public class MagicGCYMRecipes {
 		//这里是六个基础外壳材料的搅拌机配方
 		//风要素-律动钛
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Bauxite, 2)
-				.input(OrePrefix.dust, Aluminium, 1)
-				.input(OrePrefix.dust, Manganese, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
-				.output(OrePrefix.dust, PollutionMaterials.aertitanium, 9)
+				.input(dust, Bauxite, 2)
+				.input(dust, Aluminium, 1)
+				.input(dust, Manganese, 1)
+				.input(dust, PollutionMaterials.infused_air, 5)
+				.output(dust, PollutionMaterials.aertitanium, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Bauxite, 2)
-				.input(OrePrefix.dust, Aluminium, 1)
-				.input(OrePrefix.dust, Manganese, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
+				.input(dust, Bauxite, 2)
+				.input(dust, Aluminium, 1)
+				.input(dust, Manganese, 1)
+				.input(dust, PollutionMaterials.infused_air, 5)
 				.fluidOutputs(PollutionMaterials.aertitanium.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -189,21 +189,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//火要素-残日钢
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Steel, 2)
-				.input(OrePrefix.dust, Magnesium, 1)
-				.input(OrePrefix.dust, Lithium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
-				.output(OrePrefix.dust, PollutionMaterials.ignissteel, 9)
+				.input(dust, Steel, 2)
+				.input(dust, Magnesium, 1)
+				.input(dust, Lithium, 1)
+				.input(dust, PollutionMaterials.infused_fire, 5)
+				.output(dust, PollutionMaterials.ignissteel, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Steel, 2)
-				.input(OrePrefix.dust, Magnesium, 1)
-				.input(OrePrefix.dust, Lithium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
+				.input(dust, Steel, 2)
+				.input(dust, Magnesium, 1)
+				.input(dust, Lithium, 1)
+				.input(dust, PollutionMaterials.infused_fire, 5)
 				.fluidOutputs(PollutionMaterials.ignissteel.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -212,21 +212,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//水要素-捩花银
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Silver, 2)
-				.input(OrePrefix.dust, Tin, 1)
+				.input(dust, Silver, 2)
+				.input(dust, Tin, 1)
 				.fluidInputs(Mercury.getFluid(1000))
-				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
-				.output(OrePrefix.dust, PollutionMaterials.aquasilver, 9)
+				.input(dust, PollutionMaterials.infused_water, 5)
+				.output(dust, PollutionMaterials.aquasilver, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Silver, 2)
-				.input(OrePrefix.dust, Tin, 1)
+				.input(dust, Silver, 2)
+				.input(dust, Tin, 1)
 				.fluidInputs(Mercury.getFluid(1000))
-				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
+				.input(dust, PollutionMaterials.infused_water, 5)
 				.fluidOutputs(PollutionMaterials.aquasilver.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -235,21 +235,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//地要素-定坤铜
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Copper, 2)
-				.input(OrePrefix.dust, Boron, 1)
-				.input(OrePrefix.dust, Carbon, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
-				.output(OrePrefix.dust, PollutionMaterials.terracopper, 9)
+				.input(dust, Copper, 2)
+				.input(dust, Boron, 1)
+				.input(dust, Carbon, 1)
+				.input(dust, PollutionMaterials.infused_earth, 5)
+				.output(dust, PollutionMaterials.terracopper, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Copper, 2)
-				.input(OrePrefix.dust, Boron, 1)
-				.input(OrePrefix.dust, Carbon, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
+				.input(dust, Copper, 2)
+				.input(dust, Boron, 1)
+				.input(dust, Carbon, 1)
+				.input(dust, PollutionMaterials.infused_earth, 5)
 				.fluidOutputs(PollutionMaterials.terracopper.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -258,21 +258,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//秩序要素-司辰铅
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Lead, 2)
-				.input(OrePrefix.dust, Silicon, 1)
-				.input(OrePrefix.dust, Gold, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
-				.output(OrePrefix.dust, PollutionMaterials.ordolead, 9)
+				.input(dust, Lead, 2)
+				.input(dust, Silicon, 1)
+				.input(dust, Gold, 1)
+				.input(dust, PollutionMaterials.infused_order, 5)
+				.output(dust, PollutionMaterials.ordolead, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Lead, 2)
-				.input(OrePrefix.dust, Silicon, 1)
-				.input(OrePrefix.dust, Gold, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
+				.input(dust, Lead, 2)
+				.input(dust, Silicon, 1)
+				.input(dust, Gold, 1)
+				.input(dust, PollutionMaterials.infused_order, 5)
 				.fluidOutputs(PollutionMaterials.ordolead.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -281,20 +281,20 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//混沌要素-无极铝
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Aluminium, 2)
+				.input(dust, Aluminium, 2)
 				.fluidInputs(Fluorine.getFluid(1000))
-				.input(OrePrefix.dust, Thorium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy, 5)
-				.output(OrePrefix.dust, perditioaluminium, 9)
+				.input(dust, Thorium, 1)
+				.input(dust, PollutionMaterials.infused_entropy, 5)
+				.output(dust, perditioaluminium, 9)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Aluminium, 2)
+				.input(dust, Aluminium, 2)
 				.fluidInputs(Fluorine.getFluid(1000))
-				.input(OrePrefix.dust, Thorium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy, 5)
+				.input(dust, Thorium, 1)
+				.input(dust, PollutionMaterials.infused_entropy, 5)
 				.fluidOutputs(PollutionMaterials.perditioaluminium.getFluid(9 * 144))
 				.duration(300)
 				.blastFurnaceTemp(2700)
@@ -358,13 +358,13 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//魔力钢 神秘锭简化配方
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, infused_air, 1)
-				.input(OrePrefix.dust, infused_fire, 1)
-				.input(OrePrefix.dust, infused_water, 1)
-				.input(OrePrefix.dust, infused_earth, 1)
-				.input(OrePrefix.dust, infused_order, 1)
-				.input(OrePrefix.dust, infused_entropy, 1)
-				.input(OrePrefix.dust, Iron, 4)
+				.input(dust, infused_air, 1)
+				.input(dust, infused_fire, 1)
+				.input(dust, infused_water, 1)
+				.input(dust, infused_earth, 1)
+				.input(dust, infused_order, 1)
+				.input(dust, infused_entropy, 1)
+				.input(dust, Iron, 4)
 				.fluidOutputs(manasteel.getFluid(576))
 				.circuitMeta(1)
 				.duration(400)
@@ -372,10 +372,10 @@ public class MagicGCYMRecipes {
 				.EUt(480)
 				.buildAndRegister();
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Iron, 1)
-				.input(OrePrefix.dust, infused_earth, 10)
-				.input(OrePrefix.dust, infused_fire, 5)
-				.input(OrePrefix.dust, infused_air, 5)
+				.input(dust, Iron, 1)
+				.input(dust, infused_earth, 10)
+				.input(dust, infused_fire, 5)
+				.input(dust, infused_air, 5)
 				.fluidOutputs(thaumium.getFluid(3024))
 				.circuitMeta(2)
 				.duration(1200)
@@ -991,24 +991,24 @@ public class MagicGCYMRecipes {
 		//这里是魔力钢、漫宿钢等的配方
 		//不纯魔力搅拌
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_order)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy)
+				.input(dust, PollutionMaterials.infused_order)
+				.input(dust, PollutionMaterials.infused_entropy)
 				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_air)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth)
+				.input(dust, PollutionMaterials.infused_air)
+				.input(dust, PollutionMaterials.infused_earth)
 				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire)
-				.input(OrePrefix.dust, PollutionMaterials.infused_water)
+				.input(dust, PollutionMaterials.infused_fire)
+				.input(dust, PollutionMaterials.infused_water)
 				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
@@ -1016,7 +1016,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//不纯魔力+铁粉 高炉烧制魔力钢锭
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Iron)
+				.input(dust, Iron)
 				.fluidInputs(PollutionMaterials.impuremana.getFluid(144))
 				.output(OrePrefix.ingot, PollutionMaterials.manasteel)
 				.blastFurnaceTemp(1800)
@@ -1025,31 +1025,31 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//世界盐 搅拌机配方
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_air)
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire)
-				.input(OrePrefix.dust, PollutionMaterials.infused_water)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth)
-				.input(OrePrefix.dust, PollutionMaterials.infused_order)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy)
+				.input(dust, PollutionMaterials.infused_air)
+				.input(dust, PollutionMaterials.infused_fire)
+				.input(dust, PollutionMaterials.infused_water)
+				.input(dust, PollutionMaterials.infused_earth)
+				.input(dust, PollutionMaterials.infused_order)
+				.input(dust, PollutionMaterials.infused_entropy)
 				.fluidInputs(Redstone.getFluid(288))
-				.output(OrePrefix.dust, PollutionMaterials.salismundus, 6)
+				.output(dust, PollutionMaterials.salismundus, 6)
 				.duration(600)
 				.EUt(120)
 				.buildAndRegister();
 		//3魔力钢粉+2神秘粉+1世界盐粉=6漫宿钢粉
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.manasteel, 3)
-				.input(OrePrefix.dust, PollutionMaterials.thaumium, 2)
-				.input(OrePrefix.dust, PollutionMaterials.salismundus)
-				.output(OrePrefix.dust, PollutionMaterials.mansussteel, 6)
+				.input(dust, PollutionMaterials.manasteel, 3)
+				.input(dust, PollutionMaterials.thaumium, 2)
+				.input(dust, PollutionMaterials.salismundus)
+				.output(dust, PollutionMaterials.mansussteel, 6)
 				.duration(600)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.manasteel, 3)
-				.input(OrePrefix.dust, PollutionMaterials.thaumium, 2)
+				.input(dust, PollutionMaterials.manasteel, 3)
+				.input(dust, PollutionMaterials.thaumium, 2)
 				.input(ItemsTC.salisMundus)
-				.output(OrePrefix.dust, PollutionMaterials.mansussteel, 6)
+				.output(dust, PollutionMaterials.mansussteel, 6)
 				.duration(600)
 				.EUt(120)
 				.buildAndRegister();

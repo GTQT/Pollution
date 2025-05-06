@@ -9,6 +9,7 @@ import gregtech.api.capability.IHPCAComponentHatch;
 import gregtech.api.capability.IHPCAComputationProvider;
 import gregtech.api.capability.IHPCACoolantProvider;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
@@ -19,8 +20,6 @@ import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.utils.TooltipHelper;
 import gregtech.common.metatileentities.multi.electric.MetaTileEntityHPCA;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import java.util.List;
-
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import net.minecraft.client.resources.I18n;
@@ -32,6 +31,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static keqing.pollution.common.block.metablocks.POComputerCasing.CasingType.ADVANCED_COMPUTER_CASING;
 import static keqing.pollution.common.block.metablocks.POComputerCasing.CasingType.COMPUTER_CASING;
@@ -50,6 +51,11 @@ public abstract class MetaTileEntityBMHPCAComponent extends MetaTileEntityMultib
     }
 
     public abstract SimpleOverlayRenderer getFrontOverlay();
+
+    @Override
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
+    }
 
     public SimpleOverlayRenderer getFrontActiveOverlay() {
         return this.getFrontOverlay();
@@ -108,35 +114,33 @@ public abstract class MetaTileEntityBMHPCAComponent extends MetaTileEntityMultib
 
     public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
         if (this.isBridge()) {
-            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.bridge", new Object[0]));
+            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.bridge"));
         }
 
         int upkeepEUt = this.getUpkeepEUt();
         int maxEUt = this.getMaxEUt();
         if (upkeepEUt != 0 && upkeepEUt != maxEUt) {
-            tooltip.add(I18n.format("gregtech.machine.hpca.component_general.upkeep_eut", new Object[]{upkeepEUt}));
+            tooltip.add(I18n.format("gregtech.machine.hpca.component_general.upkeep_eut", upkeepEUt));
         }
 
         if (maxEUt != 0) {
-            tooltip.add(I18n.format("gregtech.machine.hpca.component_general.max_eut", new Object[]{maxEUt}));
+            tooltip.add(I18n.format("gregtech.machine.hpca.component_general.max_eut", maxEUt));
         }
 
-        if (this instanceof IHPCACoolantProvider) {
-            IHPCACoolantProvider provider = (IHPCACoolantProvider)this;
+        if (this instanceof IHPCACoolantProvider provider) {
             if (provider.isActiveCooler()) {
-                tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_active", new Object[0]));
-                tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_active_coolant", new Object[]{provider.getMaxCoolantPerTick(), I18n.format(Materials.PCBCoolant.getUnlocalizedName(), new Object[0])}));
+                tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_active"));
+                tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_active_coolant", provider.getMaxCoolantPerTick(), I18n.format(Materials.PCBCoolant.getUnlocalizedName())));
             } else {
-                tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_passive", new Object[0]));
+                tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_passive"));
             }
 
-            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_cooling", new Object[]{provider.getCoolingAmount()}));
+            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.cooler_cooling", provider.getCoolingAmount()));
         }
 
-        if (this instanceof IHPCAComputationProvider) {
-            IHPCAComputationProvider provider = (IHPCAComputationProvider)this;
-            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.computation_cwut", new Object[]{provider.getCWUPerTick()}));
-            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.computation_cooling", new Object[]{provider.getCoolingPerTick()}));
+        if (this instanceof IHPCAComputationProvider provider) {
+            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.computation_cwut", provider.getCWUPerTick()));
+            tooltip.add(I18n.format("gregtech.machine.hpca.component_type.computation_cooling", provider.getCoolingPerTick()));
         }
 
         if (this.canBeDamaged()) {

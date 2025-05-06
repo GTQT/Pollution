@@ -1,80 +1,147 @@
 package keqing.pollution.api.recipes;
 
 import gregtech.api.gui.GuiTextures;
-import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.RecipeMapBuilder;
 import gregtech.api.recipes.builders.*;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.pollution.api.recipes.builder.ManaRecipesBuilder;
 import keqing.pollution.client.POSoundEvent;
 
 public class PORecipeMaps {
-	public static final RecipeMap<FuelRecipeBuilder> DAN_DE_LIFE_ON =new RecipeMap<>("dan_de_life_on",2,2,2,
-			2, new FuelRecipeBuilder(),false)
-			.allowEmptyOutput()
-			.setSound(POSoundEvent.MANA_PLUSE);
-	public static final RecipeMap<FuelRecipeBuilder> MANA_TO_EU =new RecipeMap<>("mana_to_eu",2,2,2,
-			2, new FuelRecipeBuilder(),false)
-			.allowEmptyOutput()
-			.setSound(POSoundEvent.MANA_PLUSE);
+    public static final RecipeMap<FuelRecipeBuilder> DAN_DE_LIFE_ON = new RecipeMapBuilder<>("dan_de_life_on", new FuelRecipeBuilder())
+            .itemInputs(2)
+            .itemOutputs(2)
+            .fluidInputs(2)
+            .fluidOutputs(2)
+            .allowEmptyOutputs()
+            .sound(POSoundEvent.MANA_PLUSE)
+            .build();
 
-	public static final RecipeMap<BlastRecipeBuilder> MAGIC_ALLOY_BLAST_RECIPES = new RecipeMap<>("magic_blast_smelter", 9, 0,
-			3, 1, new BlastRecipeBuilder(), false)
-			.setSlotOverlay(false, false, false, GuiTextures.FURNACE_OVERLAY_1)
-			.setSlotOverlay(false, false, true, GuiTextures.FURNACE_OVERLAY_1)
-			.setSlotOverlay(false, true, false, GuiTextures.FURNACE_OVERLAY_2)
-			.setSlotOverlay(false, true, true, GuiTextures.FURNACE_OVERLAY_2)
-			.setSlotOverlay(true, true, false, GuiTextures.FURNACE_OVERLAY_2)
-			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
-			.setSound(GTSoundEvents.FURNACE);
+    public static final RecipeMap<FuelRecipeBuilder> MANA_TO_EU = new RecipeMapBuilder<>("mana_to_eu", new FuelRecipeBuilder())
+            .itemInputs(2)
+            .itemOutputs(2)
+            .fluidInputs(2)
+            .fluidOutputs(2)
+            .allowEmptyOutputs()
+            .sound(POSoundEvent.MANA_PLUSE)
+            .build();
 
-	public static final RecipeMap<PrimitiveRecipeBuilder> STOVE_RECIPES = new RecipeMap<>("stove", 2, 2,
-			0, 1, new PrimitiveRecipeBuilder(), false)
-			.setSound(GTSoundEvents.FURNACE);
 
-	public static final RecipeMap<PrimitiveRecipeBuilder> MAGIC_FUSION_REACTOR = new RecipeMap<>("magic_fusion_reactor", 0, 0,
-			1, 2, new PrimitiveRecipeBuilder(), false)
-			.setSound(GTSoundEvents.CHEMICAL_REACTOR);
+    public static final RecipeMap<BlastRecipeBuilder> MAGIC_ALLOY_BLAST_RECIPES = new RecipeMapBuilder<>("magic_blast_smelter", new BlastRecipeBuilder())
+            .itemInputs(9)
+            .itemOutputs(0)
+            .fluidInputs(3)
+            .fluidOutputs(1)
+            .itemSlotOverlay(GuiTextures.FURNACE_OVERLAY_1, false, false)
+            .itemSlotOverlay(GuiTextures.FURNACE_OVERLAY_1, false, true)
+            .itemSlotOverlay(GuiTextures.FURNACE_OVERLAY_2, true, false)
+            .fluidSlotOverlay(GuiTextures.FURNACE_OVERLAY_2, true, true)
+            .sound(GTSoundEvents.FURNACE)
+            .build();
 
-	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_CHEMICAL_REACTOR_RECIPES = new RecipeMap<>("magic_chemical_reactor", 3, 3, 5, 4, new SimpleRecipeBuilder(), false)
-			.setSound(GTSoundEvents.CHEMICAL_REACTOR);
+    public static final RecipeMap<PrimitiveRecipeBuilder> STOVE_RECIPES = new RecipeMapBuilder<>("stove", new PrimitiveRecipeBuilder())
+            .itemInputs(2)
+            .itemOutputs(1)
+            .sound(GTSoundEvents.FURNACE)
+            .build();
 
-	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_ASSEMBLER_RECIPES = new RecipeMap<>("magic_assembler", 9, 1, 3, 0, new SimpleRecipeBuilder(), false)
-			.setSound(GTSoundEvents.ASSEMBLER);
+    public static final RecipeMap<PrimitiveRecipeBuilder> MAGIC_FUSION_REACTOR = new RecipeMapBuilder<>("magic_fusion_reactor", new PrimitiveRecipeBuilder())
+            .fluidInputs(1)
+            .fluidOutputs(2)
+            .sound(GTSoundEvents.CHEMICAL_REACTOR)
+            .build();
 
-	public static final RecipeMap<SimpleRecipeBuilder> MAGIC_GREENHOUSE_RECIPES = new RecipeMap<>("magic_greenhouse", 4, 4, 1, 1, new SimpleRecipeBuilder(), false)
-			.setSound(GTSoundEvents.REPLICATOR);
+    public static final RecipeMap<SimpleRecipeBuilder> MAGIC_CHEMICAL_REACTOR_RECIPES = new RecipeMapBuilder<>("magic_chemical_reactor", new SimpleRecipeBuilder())
+            .itemInputs(3)
+            .itemOutputs(4)
+            .fluidInputs(5)
+            .fluidOutputs(4)
+            .sound(GTSoundEvents.CHEMICAL_REACTOR)
+            .build();
 
-	public static final RecipeMap<FuelRecipeBuilder> MAGIC_TURBINE_FUELS = new RecipeMap<>("magic_turbine", 0, 0, 1, 1, new FuelRecipeBuilder(), false)
-			.allowEmptyOutput()
-			.setSound(GTSoundEvents.TURBINE);
+    public static final RecipeMap<SimpleRecipeBuilder> MAGIC_ASSEMBLER_RECIPES = new RecipeMapBuilder<>("magic_assembler", new SimpleRecipeBuilder())
+            .itemInputs(9)
+            .itemOutputs(1)
+            .fluidInputs(3)
+            .fluidOutputs(0)
+            .sound(GTSoundEvents.ASSEMBLER)
+            .build();
 
-	public static final RecipeMap<BlastRecipeBuilder> FORGE_ALCHEMY_RECIPES = new RecipeMap<>("forge_alchemy", 9, 3,
-			6, 3, new BlastRecipeBuilder(), false)
-			.setSlotOverlay(false, false, false, GuiTextures.FURNACE_OVERLAY_1)
-			.setSlotOverlay(false, false, true, GuiTextures.FURNACE_OVERLAY_1)
-			.setSlotOverlay(false, true, false, GuiTextures.FURNACE_OVERLAY_2)
-			.setSlotOverlay(false, true, true, GuiTextures.FURNACE_OVERLAY_2)
-			.setSlotOverlay(true, true, false, GuiTextures.FURNACE_OVERLAY_2)
-			.setSlotOverlay(true, true, true, GuiTextures.FURNACE_OVERLAY_2)
-			.setSound(GTSoundEvents.FURNACE);
+    public static final RecipeMap<SimpleRecipeBuilder> MAGIC_GREENHOUSE_RECIPES = new RecipeMapBuilder<>("magic_greenhouse", new SimpleRecipeBuilder())
+            .itemInputs(4)
+            .itemOutputs(1)
+            .fluidInputs(1)
+            .fluidOutputs(1)
+            .sound(GTSoundEvents.REPLICATOR)
+            .build();
 
-	public static final RecipeMap<FusionRecipeBuilder> NODE_MAGIC_FUSION_RECIPES = new RecipeMap<>("node_magic_fusion", 0, 0, 2, 1, new FusionRecipeBuilder(), false)
-			.setProgressBar(GuiTextures.PROGRESS_BAR_FUSION, ProgressWidget.MoveType.HORIZONTAL)
-			.setSound(GTSoundEvents.ARC);
+    public static final RecipeMap<FuelRecipeBuilder> MAGIC_TURBINE_FUELS = new RecipeMapBuilder<>("magic_turbine", new FuelRecipeBuilder())
+            .fluidInputs(1)
+            .fluidOutputs(1)
+            .allowEmptyOutputs()
+            .sound(GTSoundEvents.TURBINE)
+            .build();
 
-	//////////////////////////////////////////
-	public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMap<>("mana_infusion_recipes", 2, 1, 0, 0, new ManaRecipesBuilder(), false)
-			.setSound(GTSoundEvents.REPLICATOR);
 
-	public static final RecipeMap<ManaRecipesBuilder> MANA_RUNE_ALTAR_RECIPES = new RecipeMap<>("mana_rune_altar_recipes", 9, 1, 0, 0, new ManaRecipesBuilder(), false)
-			.setSound(GTSoundEvents.REPLICATOR);
+    public static final RecipeMap<BlastRecipeBuilder> FORGE_ALCHEMY_RECIPES = new RecipeMapBuilder<>("forge_alchemy", new BlastRecipeBuilder())
+            .itemInputs(9)
+            .itemOutputs(3)
+            .fluidInputs(6)
+            .fluidOutputs(3)
+            .itemSlotOverlay(GuiTextures.FURNACE_OVERLAY_1, false, false)
+            .itemSlotOverlay(GuiTextures.FURNACE_OVERLAY_1, false, true)
+            .itemSlotOverlay(GuiTextures.FURNACE_OVERLAY_2, true, false)
+            .fluidSlotOverlay(GuiTextures.FURNACE_OVERLAY_2, true, true)
+            .sound(GTSoundEvents.FURNACE)
+            .build();
 
-	public static final RecipeMap<ManaRecipesBuilder> MANA_PETAL_RECIPES = new RecipeMap<>("mana_petal_recipes", 16, 1, 0, 0, new ManaRecipesBuilder(), false)
-			.setSound(GTSoundEvents.REPLICATOR);
+    public static final RecipeMap<FusionRecipeBuilder> NODE_MAGIC_FUSION_RECIPES = new RecipeMapBuilder<>("node_magic_fusion",
+            new FusionRecipeBuilder())
+            .fluidInputs(2)
+            .fluidOutputs(1)
+            .progressBar(GuiTextures.PROGRESS_BAR_FUSION)
+            .sound(GTSoundEvents.ARC)
+            .build();
 
-	public static final RecipeMap<ManaRecipesBuilder> PURE_DAISY_RECIPES = new RecipeMap<>("pure_daisy_recipes", 1, 1, 0, 0, new ManaRecipesBuilder(), false)
-			.setSound(GTSoundEvents.REPLICATOR);
+    //////////////////////////////////////////
+    public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMapBuilder<>("mana_infusion_recipes", new ManaRecipesBuilder())
+            .itemInputs(2)
+            .itemOutputs(0)
+            .fluidInputs(1)
+            .fluidOutputs(0)
+            .sound(GTSoundEvents.REPLICATOR)
+            .build();
 
-	public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMap<>("industrial_infusion_recipes", 16, 1, 16, 0, new SimpleRecipeBuilder(), false);
+    public static final RecipeMap<ManaRecipesBuilder> MANA_RUNE_ALTAR_RECIPES = new RecipeMapBuilder<>("mana_rune_altar_recipes", new ManaRecipesBuilder())
+            .itemInputs(9)
+            .itemOutputs(0)
+            .fluidInputs(1)
+            .fluidOutputs(0)
+            .sound(GTSoundEvents.REPLICATOR)
+            .build();
+
+    public static final RecipeMap<ManaRecipesBuilder> MANA_PETAL_RECIPES = new RecipeMapBuilder<>("mana_petal_recipes", new ManaRecipesBuilder())
+            .itemInputs(16)
+            .itemOutputs(0)
+            .fluidInputs(1)
+            .fluidOutputs(0)
+            .sound(GTSoundEvents.REPLICATOR)
+            .build();
+
+    public static final RecipeMap<ManaRecipesBuilder> PURE_DAISY_RECIPES = new RecipeMapBuilder<>("pure_daisy_recipes", new ManaRecipesBuilder())
+            .itemInputs(1)
+            .itemOutputs(0)
+            .fluidInputs(1)
+            .fluidOutputs(0)
+            .sound(GTSoundEvents.REPLICATOR)
+            .build();
+
+    public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMapBuilder<>("industrial_infusion_recipes", new SimpleRecipeBuilder())
+            .itemInputs(16)
+            .itemOutputs(1)
+            .fluidInputs(16)
+            .fluidOutputs(0)
+            .build();
+
 }

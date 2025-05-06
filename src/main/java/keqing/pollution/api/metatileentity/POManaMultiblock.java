@@ -140,7 +140,7 @@ public abstract class POManaMultiblock extends MultiMapMultiblockController {
         }
 
         @Override
-        protected boolean drawEnergy(int EUt, boolean simulate) {
+        protected boolean drawEnergy(long EUt, boolean simulate) {
             int recipeEUt = (int) (EUt * energyReduce);
             long resultEnergy = this.getEnergyStored() - (long) recipeEUt;
             if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {
@@ -154,7 +154,16 @@ public abstract class POManaMultiblock extends MultiMapMultiblockController {
         }
 
         @Override
-        protected double getOverclockingDurationDivisor() {
+        protected double getOverclockingDurationFactor() {
+            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
+                return 0.25;
+            } else {
+                return 0.5;
+            }
+        }
+
+        @Override
+        protected double getOverclockingVoltageFactor() {
             if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
                 return 4.0;
             } else {

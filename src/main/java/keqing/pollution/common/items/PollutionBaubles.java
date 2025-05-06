@@ -3,6 +3,7 @@ package keqing.pollution.common.items;
 import baubles.api.BaubleType;
 import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.StandardMetaItem;
+import gregtech.common.creativetab.GTCreativeTabs;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.bauble.ItemWaterRing;
@@ -14,7 +15,7 @@ public class PollutionBaubles extends StandardMetaItem {
 
     public PollutionBaubles() {
         this.setRegistryName("pollution_baubles");
-        setCreativeTab(GregTechAPI.TAB_GREGTECH);
+        setCreativeTab(Pollution_TAB);
     }
     @Override
     public void registerSubItems() {

@@ -25,7 +25,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 
 	public PollutionMetaItem1() {
 		this.setRegistryName("pollution_meta_item_1");
-		setCreativeTab(GregTechAPI.TAB_GREGTECH);
+		setCreativeTab(Pollution_TAB);
 	}
 
 	@Override

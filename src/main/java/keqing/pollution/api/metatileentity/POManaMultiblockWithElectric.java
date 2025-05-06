@@ -134,8 +134,8 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
         }
 
         @Override
-        protected boolean drawEnergy(int EUt, boolean simulate) {
-            int recipeEUt = EUt / tier;
+        protected boolean drawEnergy(long EUt, boolean simulate) {
+            long recipeEUt = EUt / tier;
             long resultEnergy = this.getEnergyStored() - (long) recipeEUt;
             if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {
                 if (!simulate) {
@@ -148,14 +148,22 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
         }
 
         @Override
-        protected double getOverclockingDurationDivisor() {
+        protected double getOverclockingDurationFactor() {
+            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
+                return 0.25;
+            } else {
+                return 0.5;
+            }
+        }
+
+        @Override
+        protected double getOverclockingVoltageFactor() {
             if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
                 return 4.0;
             } else {
                 return 2.0;
             }
         }
-
         @Override
         public void setMaxProgress(int maxProgress) {
             super.setMaxProgress((int) (maxProgress * timeReduce));

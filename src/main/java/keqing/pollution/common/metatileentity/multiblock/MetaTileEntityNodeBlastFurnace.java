@@ -15,7 +15,7 @@ import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.recipes.recipeproperties.TemperatureProperty;
+import gregtech.api.recipes.properties.impl.TemperatureProperty;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -319,7 +319,7 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
         }
 
         @Override
-        protected boolean drawEnergy(int recipeEUt, boolean simulate) {
+        protected boolean drawEnergy(long recipeEUt, boolean simulate) {
             //每100s + 1%减免 上限25%
             long finalRecipeEUt = (long) (recipeEUt * (1 - Math.min(0.25, (double) continuousProgressingTimer / 200000)));
             long resultEnergy = this.getEnergyStored() - finalRecipeEUt;

@@ -344,7 +344,13 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
     }
 
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        Textures.QUANTUM_STORAGE_RENDERER.renderMachine(renderState, translation, (IVertexOperation[])ArrayUtils.add(pipeline, new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(this.getPaintingColorForRendering()))), this);
+        /*
+        Textures.QUANTUM_STORAGE_RENDERER.renderMachine(renderState, translation,
+                ArrayUtils.add(pipeline,
+                        new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()))),
+                this);
+
+         */
         POTextures.QUANTUM_ASPECT_TANK_OVERLAY.renderSided(EnumFacing.UP, renderState, translation, pipeline);
         if (this.outputFacing != null) {
             POTextures.PIPE_ASPECT_OUT_OVERLAY.renderSided(this.outputFacing, renderState, translation, pipeline);
@@ -497,7 +503,7 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
 
     public void writeAspectFilter(Aspect aspect)
     {
-        this.writeCustomData(GregtechDataCodes.UPDATE_LOCKED_STATE, (buf ->
+        this.writeCustomData(GregtechDataCodes.UPDATE_IS_VOIDING, (buf ->
         {
             buf.writeString(aspect != null ? aspect.getTag() : "");
         }));
@@ -524,7 +530,7 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
             {
                 this.scheduleRenderUpdate();
             }
-        }   else if (dataId == GregtechDataCodes.UPDATE_LOCKED_STATE)
+        }   else if (dataId == GregtechDataCodes.UPDATE_IS_VOIDING)
         {
             String aspect = buf.readString(100);
 
