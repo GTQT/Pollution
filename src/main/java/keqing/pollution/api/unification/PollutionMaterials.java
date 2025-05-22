@@ -109,11 +109,6 @@ public class PollutionMaterials {
 	public static Material basic_substrate;
 	public static Material advanced_substrate;
 
-	//交错材料
-	public static Material Mud;
-	public static Material BetweenStone;
-	public static Material PitStone;
-	public static Material CragRock;
 	//刻金线
 	public static Material sulfo_plumbic_salt;
 	public static Material magical_sulfo_plumbic_salt;

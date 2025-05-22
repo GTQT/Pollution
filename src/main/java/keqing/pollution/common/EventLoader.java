@@ -64,11 +64,13 @@ public class EventLoader {
         EntityPlayer player = event.player;
         World world = player.world;
 
-        if(player.isCreative())return;
-        // check for portal creation, at least if it's not disabled
         if (!world.isRemote && event.phase == TickEvent.Phase.END && player.ticksExisted % (POConfig.WorldSettingSwitch.checkPortalDestination ? 100 : 20) == 0) {
             checkForPortalCreation(player, world, 32.0F);
         }
+
+        if(player.isCreative())return;
+        // check for portal creation, at least if it's not disabled
+
 
         if (POConfig.PollutionSystemSwitch.EntityPollutionEvent && event.phase == TickEvent.Phase.END) {
 

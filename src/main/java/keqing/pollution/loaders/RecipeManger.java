@@ -2,9 +2,6 @@ package keqing.pollution.loaders;
 
 import keqing.pollution.loaders.recipes.*;
 import keqing.pollution.loaders.recipes.mods.Botania;
-import keqing.pollution.loaders.recipes.mods.TheBetweendLand.BiologyLine;
-import keqing.pollution.loaders.recipes.mods.TheBetweendLand.StoneLine;
-import keqing.pollution.loaders.recipes.mods.TheBetweendLand.VanillaRecipes;
 
 public class RecipeManger {
     public static void init() {
@@ -21,9 +18,6 @@ public class RecipeManger {
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();
-        VanillaRecipes.init();
-        StoneLine.init();
-        BiologyLine.init();
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();
         NodeFusionRecipes.init();

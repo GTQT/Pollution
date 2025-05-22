@@ -32,7 +32,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.mutable.MutableInt;
-import thebetweenlands.common.registries.BlockRegistry;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -49,7 +48,7 @@ public class BlockPOPortal extends BlockBreakable {
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.8125F, 1.0F);
     private static final AxisAlignedBB AABB_ITEM = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.4F, 1.0F);
 
-    private static final int MIN_PORTAL_SIZE =  4;
+    private static final int MIN_PORTAL_SIZE = 4;
     private static final int MAX_PORTAL_SIZE = 64;
 
     public BlockPOPortal() {
@@ -59,6 +58,92 @@ public class BlockPOPortal extends BlockBreakable {
         this.setSoundType(SoundType.GLASS);
         this.setLightLevel(0.75F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(DISALLOW_RETURN, false));
+    }
+
+    private static void causeLightning(World world, BlockPos pos, boolean fake) {
+        EntityLightningBolt bolt = new EntityLightningBolt(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, fake);
+        world.addWeatherEffect(bolt);
+
+        if (fake) {
+            double range = 3.0D;
+            List<Entity> list = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos).grow(range));
+
+            for (Entity victim : list) {
+                if (!ForgeEventFactory.onEntityStruckByLightning(victim, bolt)) {
+                    victim.onStruckByLightning(bolt);
+                }
+            }
+        }
+    }
+
+    private static boolean recursivelyValidatePortal(World world, BlockPos pos, Map<BlockPos, Boolean> blocksChecked, MutableInt portalSize, IBlockState requiredState) {
+
+        if (portalSize.incrementAndGet() > MAX_PORTAL_SIZE) return false;
+
+        boolean isPoolProbablyEnclosed = true;
+
+        for (int i = 0; i < EnumFacing.HORIZONTALS.length && portalSize.intValue() <= MAX_PORTAL_SIZE; i++) {
+            BlockPos positionCheck = pos.offset(EnumFacing.HORIZONTALS[i]);
+
+            if (!blocksChecked.containsKey(positionCheck)) {
+                IBlockState state = world.getBlockState(positionCheck);
+
+                if (state == requiredState && world.getBlockState(positionCheck.down()).isFullCube()) {
+                    blocksChecked.put(positionCheck, true);
+                    if (isPoolProbablyEnclosed) {
+                        isPoolProbablyEnclosed = recursivelyValidatePortal(world, positionCheck, blocksChecked, portalSize, requiredState);
+                    }
+
+                } else if (isGrassOrDirt(state) && isNatureBlock(world.getBlockState(positionCheck.up())) || state.getBlock() == Blocks.STONE) {
+                    blocksChecked.put(positionCheck, false);
+
+                } else return false;
+            }
+        }
+
+        return isPoolProbablyEnclosed;
+    }
+
+    private static boolean isNatureBlock(IBlockState state) {
+        Material mat = state.getMaterial();
+        return mat == Material.PLANTS || mat == Material.VINE || mat == Material.LEAVES;
+    }
+
+    private static boolean isGrassOrDirt(IBlockState state) {
+        Material mat = state.getMaterial();
+        return state.isFullCube() && (mat == Material.GRASS || mat == Material.GROUND);
+    }
+
+    private static int getDestination(Entity entity) {
+        return entity.dimension != POConfig.WorldSettingSwitch.BTNetherDimensionID
+                ? POConfig.WorldSettingSwitch.BTNetherDimensionID : POConfig.WorldSettingSwitch.originDimension;
+    }
+
+    public static void attemptSendPlayer(Entity entity, boolean forcedEntry) {
+
+        if (entity.isDead || entity.world.isRemote) {
+            return;
+        }
+
+        if (entity.isRiding() || entity.isBeingRidden() || !entity.isNonBoss()) {
+            return;
+        }
+
+        if (!forcedEntry && entity.timeUntilPortal > 0) {
+            return;
+        }
+
+        // set a cooldown before this can run again
+        entity.timeUntilPortal = 10;
+
+        int destination = getDestination(entity);
+
+        entity.changeDimension(destination, POTeleporter.getTeleporterForDim(entity.getServer(), destination));
+
+        if (destination == POConfig.WorldSettingSwitch.BTNetherDimensionID && entity instanceof EntityPlayerMP playerMP) {
+            // set respawn point for TF dimension to near the arrival portal
+            playerMP.setSpawnChunk(new BlockPos(playerMP), true, POConfig.WorldSettingSwitch.BTNetherDimensionID);
+        }
     }
 
     @Override
@@ -136,7 +221,7 @@ public class BlockPOPortal extends BlockBreakable {
 
                 for (Map.Entry<BlockPos, Boolean> checkedPos : blocksChecked.entrySet()) {
                     if (checkedPos.getValue()) {
-                        world.setBlockState(checkedPos.getKey(),BLOCK_TF_PORTAL.getDefaultState(), 2);
+                        world.setBlockState(checkedPos.getKey(), BLOCK_TF_PORTAL.getDefaultState(), 2);
                     }
                 }
 
@@ -149,60 +234,6 @@ public class BlockPOPortal extends BlockBreakable {
 
     public boolean canFormPortal(IBlockState state) {
         return state == Blocks.WATER.getDefaultState() || state.getBlock() == this && state.getValue(DISALLOW_RETURN);
-    }
-
-    private static void causeLightning(World world, BlockPos pos, boolean fake) {
-        EntityLightningBolt bolt = new EntityLightningBolt(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, fake);
-        world.addWeatherEffect(bolt);
-
-        if (fake) {
-            double range = 3.0D;
-            List<Entity> list = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos).grow(range));
-
-            for (Entity victim : list) {
-                if (!ForgeEventFactory.onEntityStruckByLightning(victim, bolt)) {
-                    victim.onStruckByLightning(bolt);
-                }
-            }
-        }
-    }
-
-    private static boolean recursivelyValidatePortal(World world, BlockPos pos, Map<BlockPos, Boolean> blocksChecked, MutableInt portalSize, IBlockState requiredState) {
-
-        if (portalSize.incrementAndGet() > MAX_PORTAL_SIZE) return false;
-
-        boolean isPoolProbablyEnclosed = true;
-
-        for (int i = 0; i < EnumFacing.HORIZONTALS.length && portalSize.intValue() <= MAX_PORTAL_SIZE; i++) {
-            BlockPos positionCheck = pos.offset(EnumFacing.HORIZONTALS[i]);
-
-            if (!blocksChecked.containsKey(positionCheck)) {
-                IBlockState state = world.getBlockState(positionCheck);
-
-                if (state == requiredState && world.getBlockState(positionCheck.down()).isFullCube()) {
-                    blocksChecked.put(positionCheck, true);
-                    if (isPoolProbablyEnclosed) {
-                        isPoolProbablyEnclosed = recursivelyValidatePortal(world, positionCheck, blocksChecked, portalSize, requiredState);
-                    }
-
-                } else if (isGrassOrDirt(state) && isNatureBlock(world.getBlockState(positionCheck.up())) || state.getBlock() == BlockRegistry.BETWEENSTONE) {
-                    blocksChecked.put(positionCheck, false);
-
-                } else return false;
-            }
-        }
-
-        return isPoolProbablyEnclosed;
-    }
-
-    private static boolean isNatureBlock(IBlockState state) {
-        Material mat = state.getMaterial();
-        return mat == Material.PLANTS || mat == Material.VINE || mat == Material.LEAVES;
-    }
-
-    private static boolean isGrassOrDirt(IBlockState state) {
-        Material mat = state.getMaterial();
-        return state.isFullCube() && (mat == Material.GRASS || mat == Material.GROUND);
     }
 
     @Override
@@ -242,39 +273,6 @@ public class BlockPOPortal extends BlockBreakable {
         }
     }
 
-    private static int getDestination(Entity entity) {
-        return entity.dimension != POConfig.WorldSettingSwitch.BTNetherDimensionID
-                ? POConfig.WorldSettingSwitch.BTNetherDimensionID : POConfig.WorldSettingSwitch.originDimension;
-    }
-
-    public static void attemptSendPlayer(Entity entity, boolean forcedEntry) {
-
-        if (entity.isDead || entity.world.isRemote) {
-            return;
-        }
-
-        if (entity.isRiding() || entity.isBeingRidden() || !entity.isNonBoss()) {
-            return;
-        }
-
-        if (!forcedEntry && entity.timeUntilPortal > 0) {
-            return;
-        }
-
-        // set a cooldown before this can run again
-        entity.timeUntilPortal = 10;
-
-        int destination = getDestination(entity);
-
-        entity.changeDimension(destination, POTeleporter.getTeleporterForDim(entity.getServer(), destination));
-
-        if (destination == POConfig.WorldSettingSwitch.BTNetherDimensionID && entity instanceof EntityPlayerMP) {
-            EntityPlayerMP playerMP = (EntityPlayerMP) entity;
-            // set respawn point for TF dimension to near the arrival portal
-            playerMP.setSpawnChunk(new BlockPos(playerMP), true, POConfig.WorldSettingSwitch.BTNetherDimensionID);
-        }
-    }
-
     // Full [VanillaCopy] of BlockPortal.randomDisplayTick
     // TODO Eeeh... Let's look at changing this too alongside a new model.
     @Override
@@ -288,9 +286,9 @@ public class BlockPOPortal extends BlockBreakable {
         }
 
         for (int i = 0; i < 4; ++i) {
-            double xPos = (double) ((float) pos.getX() + rand.nextFloat());
-            double yPos = pos.getY()+1D;
-            double zPos = (double) ((float) pos.getZ() + rand.nextFloat());
+            double xPos = (float) pos.getX() + rand.nextFloat();
+            double yPos = pos.getY() + 1D;
+            double zPos = (float) pos.getZ() + rand.nextFloat();
             double xSpeed = ((double) rand.nextFloat() - 0.5D) * 0.5D;
             double ySpeed = rand.nextFloat();
             double zSpeed = ((double) rand.nextFloat() - 0.5D) * 0.5D;

@@ -11,11 +11,6 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thebetweenlands.client.render.sky.BLRainRenderer;
-import thebetweenlands.client.render.sky.BLSnowRenderer;
-import thebetweenlands.common.registries.BiomeRegistry;
-import thebetweenlands.common.world.event.BLEnvironmentEventRegistry;
-import thebetweenlands.common.world.storage.BetweenlandsWorldStorage;
 
 import static keqing.pollution.dimension.worldgen.PODimensionType.BTM;
 
@@ -24,10 +19,6 @@ public class BetweenLandNether extends WorldProvider {
         //this.biomeProvider = new BiomeProviderBetweenLandNether();// 初始化你维度的生物群系提供器
         this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.BNTNether_BIOME);// 初始化你维度的生物群系提供器
         this.doesWaterVaporize = true;
-    }
-
-    protected BetweenlandsWorldStorage getWorldData() {
-        return BetweenlandsWorldStorage.forWorld(this.world);
     }
 
     @SideOnly(Side.CLIENT)
@@ -74,18 +65,5 @@ public class BetweenLandNether extends WorldProvider {
     @Override
     public boolean canRespawnHere() {
         return true;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public IRenderHandler getWeatherRenderer() {
-        if (this.getEnvironmentEventRegistry().snowfall.isSnowing()) {
-            return BLSnowRenderer.INSTANCE;
-        } else {
-            return this.world.getRainStrength(1.0F) > 0.001F ? BLRainRenderer.INSTANCE : null;
-        }
-    }
-
-    public BLEnvironmentEventRegistry getEnvironmentEventRegistry() {
-        return this.getWorldData().getEnvironmentEventRegistry();
     }
 }

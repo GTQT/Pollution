@@ -11,8 +11,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import thebetweenlands.api.capability.IDecayCapability;
-import thebetweenlands.common.registries.CapabilityRegistry;
 
 import java.util.List;
 
@@ -33,6 +31,7 @@ public class DevayPillBehaviour extends AbstractUsableBehaviour implements IItem
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
 
+        /*
         if (!world.isRemote) {
             IDecayCapability cap = player.getCapability(CapabilityRegistry.CAPABILITY_DECAY, null);
             if (cap != null) {
@@ -42,6 +41,8 @@ public class DevayPillBehaviour extends AbstractUsableBehaviour implements IItem
 
         } else
             world.playSound(null, player.getPosition(), SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
+         */
 
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }

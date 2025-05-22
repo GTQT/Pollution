@@ -136,8 +136,6 @@ dependencies {
     implementation rfg.deobf(files("libs/Botania r1.10-364.4.jar"))
     implementation rfg.deobf(files("libs/BloodMagic-1.12.2-2.4.3-105.jar"))
     implementation rfg.deobf(files("libs/Guide-API-1.12-2.1.8-63.jar"))
-    implementation rfg.deobf(files("libs/TheBetweenlands-3.9.6-universal.jar"))
-    implementation rfg.deobf(files("libs/TheBetweenlands-3.9.6-core.jar"))
     implementation rfg.deobf(files("libs/ExtraBotany-r1.1-60-beta-hotfix.jar"))
     implementation rfg.deobf(files("libs/astralsorcery-1.12.2-1.10.27.jar"))
 

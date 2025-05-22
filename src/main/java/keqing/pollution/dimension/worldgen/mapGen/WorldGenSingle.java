@@ -1,14 +1,14 @@
 package keqing.pollution.dimension.worldgen.mapGen;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import thebetweenlands.common.registries.BlockRegistry;
-import thebetweenlands.common.world.gen.feature.WorldGenCave;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-public class WorldGenSingle extends WorldGenCave {
+public class WorldGenSingle extends WorldGenerator {
 
 
     private final Block block;
@@ -22,7 +22,7 @@ public class WorldGenSingle extends WorldGenCave {
     public boolean generate(World worldIn, Random rand, BlockPos position) {
         for (int i = 0; i < 48; ++i) {
             BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == BlockRegistry.BETWEENSTONE) {
+            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.STONE) {
                 worldIn.setBlockState(blockpos, block.getDefaultState(), 2);
             }
         }

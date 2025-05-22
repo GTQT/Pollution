@@ -1,10 +1,10 @@
 package keqing.pollution.dimension.worldgen.mapGen;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import thebetweenlands.common.registries.BlockRegistry;
 
 import java.util.Random;
 
@@ -16,13 +16,13 @@ public class WorldGenOreStone1 extends WorldGenerator
         {
             return false;
         }
-        else if (worldIn.getBlockState(position.up()).getBlock() != BlockRegistry.BETWEENSTONE)
+        else if (worldIn.getBlockState(position.up()).getBlock() != Blocks.STONE)
         {
             return false;
         }
         else
         {
-            worldIn.setBlockState(position, BlockRegistry.BULB_CAPPED_MUSHROOM_CAP.getDefaultState(), 2);
+            worldIn.setBlockState(position, Blocks.BROWN_MUSHROOM_BLOCK.getDefaultState(), 2);
 
             for (int i = 0; i < 1500; ++i)
             {
@@ -34,7 +34,7 @@ public class WorldGenOreStone1 extends WorldGenerator
 
                     for (EnumFacing enumfacing : EnumFacing.values())
                     {
-                        if (worldIn.getBlockState(blockpos.offset(enumfacing)).getBlock() == BlockRegistry.BULB_CAPPED_MUSHROOM_CAP)
+                        if (worldIn.getBlockState(blockpos.offset(enumfacing)).getBlock() == Blocks.BROWN_MUSHROOM_BLOCK)
                         {
                             ++j;
                         }
@@ -47,7 +47,7 @@ public class WorldGenOreStone1 extends WorldGenerator
 
                     if (j == 1)
                     {
-                        worldIn.setBlockState(blockpos, BlockRegistry.BULB_CAPPED_MUSHROOM_CAP.getDefaultState(), 2);
+                        worldIn.setBlockState(blockpos, Blocks.BROWN_MUSHROOM_BLOCK.getDefaultState(), 2);
                     }
                 }
             }

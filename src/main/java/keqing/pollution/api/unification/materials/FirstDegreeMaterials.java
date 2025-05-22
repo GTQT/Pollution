@@ -342,40 +342,12 @@ public class FirstDegreeMaterials {
                 .build()
                 .setFormula("✦✧", true);
 
-        //交错基础材料：
-        //淤泥 Mud
-        Mud = new Material.Builder(getMaterialsId(), pollutionId("mud"))
-                .liquid()
-                .color(0x211b14)
-                .build();
-
-        BetweenStone = new Material.Builder(getMaterialsId(), pollutionId("betweenstone"))
-                .dust()
-                .color(0x336600)
-                .components(SiliconDioxide, 13, Calcite, 7, AluminiumSulfite, 4, Water, 3, Pyrite, 2, infused_earth, 1)
-                .flags(DECOMPOSITION_BY_CENTRIFUGING)
-                .build();
-
-        PitStone = new Material.Builder(getMaterialsId(), pollutionId("pitstone"))
-                .dust()
-                .color(0x4F540A)
-                .components(Alunite, 10, Quartzite, 8, Biotite, 6, Water, 3, infused_earth, 2, infused_water, 1)
-                .flags(DECOMPOSITION_BY_CENTRIFUGING)
-                .build();
-
-        CragRock = new Material.Builder(getMaterialsId(), pollutionId("cragrock"))
-                .dust()
-                .color(0x4F540A)
-                .components(SiliconDioxide, 10, Quartzite, 8, Biotite, 6, Water, 3, infused_earth, 2, infused_water, 1)
-                .flags(DECOMPOSITION_BY_CENTRIFUGING)
-                .build();
-
         //污秽之物化工线
         PollutionMaterials.filth = new Material.Builder(getMaterialsId(), pollutionId("filth"))
                 .color(0x5C0101)
                 .dust()
                 .iconSet(DULL)
-                .components(Netherrack, 6, Endstone, 1, BetweenStone, 1, infused_taint, 1)
+                .components(Netherrack, 6, Endstone, 1, Stone, 1, infused_taint, 1)
                 .build();
         PollutionMaterials.filth_water = new Material.Builder(getMaterialsId(), pollutionId("filth_water"))
                 .color(0x392323)

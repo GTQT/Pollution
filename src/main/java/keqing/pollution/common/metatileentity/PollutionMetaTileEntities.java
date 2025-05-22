@@ -24,8 +24,6 @@ import keqing.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEnti
 import keqing.pollution.common.metatileentity.multiblock.bot.*;
 import keqing.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMultiDanDeLifeOn;
 import keqing.pollution.common.metatileentity.multiblock.magic.*;
-import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityPrimitiveMudPump;
-import keqing.pollution.common.metatileentity.multiblock.primitive.MetaTileEntityStove;
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCABridge;
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCAComputation;
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCACooler;
@@ -95,9 +93,7 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityBotGasCollector BOT_GAS_COLLECTOR;
     public static MetaTileEntityGtEssenceSmelter GT_ESSENCE_SMELTER;
     public static MetaTileEntityBotVacuumFreezer BOT_VACUUM_FREEZER;
-    //原始设备
-    public static MetaTileEntityPrimitiveMudPump PRIMITIVE_MUD_PUMP;
-    public static MetaTileEntityStove PRIMITIVE_STOVE;
+
     public static MetaTileEntityMegaManaTurbine MEGA_MANA_TURBINE;
     public static MetaTileEntityLargeTurbine LARGE_MANA_TURBINE;
     public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
@@ -293,11 +289,6 @@ public class PollutionMetaTileEntities {
         BMHPCA_BRIDGE_COMPONENT = registerMetaTileEntity(606,
                 new MetaTileEntityBMHPCABridge(PollutionID("bm_hpca.bridge_component")));
         BMHPCA = registerMetaTileEntity(607, new MetaTileEntityBMHPCA(PollutionID("bm_hpca")));
-
-        //Primitive
-        PRIMITIVE_MUD_PUMP = registerMetaTileEntity(700, new MetaTileEntityPrimitiveMudPump(PollutionID("primitive_mud_pump")));
-        PRIMITIVE_STOVE = registerMetaTileEntity(701, new MetaTileEntityStove(PollutionID("primitive_stove")));
-
 
         ASPECT_TANK[0] = registerMetaTileEntity(1000, new MetaTileEntityAspectTank(PollutionID("aspect_tank.lv"), 1, 10000));
         ASPECT_TANK[1] = registerMetaTileEntity(1001, new MetaTileEntityAspectTank(PollutionID("aspect_tank.mv"), 2, 20000));

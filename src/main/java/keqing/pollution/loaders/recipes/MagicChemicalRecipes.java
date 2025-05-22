@@ -1142,7 +1142,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.input(dust, Materials.Netherrack, 6)
 				.input(dust, Materials.Endstone)
-				.input(dust, PollutionMaterials.BetweenStone)
+				.input(dust, Materials.Stone)
 				.fluidInputs(PollutionMaterials.infused_taint.getFluid(1000))
 				.output(dust, PollutionMaterials.filth, 9)
 				.duration(800)

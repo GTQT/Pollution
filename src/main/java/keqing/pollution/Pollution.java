@@ -34,7 +34,6 @@ import java.util.Random;
         dependencies = "required-after:gregtech@[2.8.5-beta,);" +
                 "required-after:gtqtcore@[0,);" +
                 "required-after:bloodmagic@[0,);" +
-                "required-after:thebetweenlands@[0,);" +
                 "required-after:extrabotany@[0,);" +
                 "required-after:botania@[0,);"
 )

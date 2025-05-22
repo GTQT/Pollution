@@ -1,6 +1,7 @@
 package keqing.pollution.dimension.worldgen.ChunkGenerator;
 
 import keqing.pollution.dimension.worldgen.mapGen.*;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,8 +22,6 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkGeneratorEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import thebetweenlands.common.registries.BlockRegistry;
-import thebetweenlands.common.world.gen.feature.WorldGenFluidPool;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -35,13 +34,13 @@ import static keqing.pollution.dimension.worldgen.terraingen.TerrainGen.getModde
 
 public class ChunkGeneratorBNT implements IChunkGenerator {
     protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
-    protected static final IBlockState BTLStone = BlockRegistry.BETWEENSTONE.getDefaultState();
-    protected static final IBlockState BTLPitstone = BlockRegistry.PITSTONE.getDefaultState();
-    protected static final IBlockState BTLCragRock = BlockRegistry.CRAGROCK.getDefaultState();
-    protected static final IBlockState BTLLimestone = BlockRegistry.LIMESTONE.getDefaultState();
-    protected static final IBlockState StagnantWater = BlockRegistry.STAGNANT_WATER.getDefaultState();
-    protected static final IBlockState SwampWater = BlockRegistry.SWAMP_WATER.getDefaultState();
-    protected static final IBlockState BTLBedRock = BlockRegistry.BETWEENLANDS_BEDROCK.getDefaultState();
+    protected static final IBlockState BTLStone = Blocks.STONE.getDefaultState();
+    protected static final IBlockState BTLPitstone = Blocks.COBBLESTONE.getDefaultState();
+    protected static final IBlockState BTLCragRock = Blocks.STONE.getDefaultState();
+    protected static final IBlockState BTLLimestone = Blocks.STONE.getDefaultState();
+    protected static final IBlockState StagnantWater = Blocks.WATER.getDefaultState();
+    protected static final IBlockState SwampWater = Blocks.WATER.getDefaultState();
+    protected static final IBlockState BTLBedRock = Blocks.BEDROCK.getDefaultState();
 
     private final World world;
     private final boolean generateStructures;
@@ -52,24 +51,22 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
     private final WorldGenOreStone1 worldGenOreStone1 = new WorldGenOreStone1();
     private final WorldGenOreStone2 worldGenOreStone2 = new WorldGenOreStone2();
     //矿物集群
-    private final WorldGenerator mudGen = new WorldGenMinable(BlockRegistry.MUD.getDefaultState(), 14, BlockMatcher.forBlock(BlockRegistry.BETWEENSTONE));
-    private final WorldGenerator siltGen = new WorldGenMinable(BlockRegistry.SILT.getDefaultState(), 33, BlockMatcher.forBlock(BlockRegistry.BETWEENSTONE));
+    private final WorldGenerator mudGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), 14, BlockMatcher.forBlock(Blocks.DIRT));
+    private final WorldGenerator siltGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), 33, BlockMatcher.forBlock(Blocks.GRAVEL));
     //流体集群
-    private final WorldGenBNTWater StagnantWaterGen = new WorldGenBNTWater(BlockRegistry.STAGNANT_WATER, true);
-    private final WorldGenBNTWater SwampWaterGen = new WorldGenBNTWater(BlockRegistry.SWAMP_WATER, false);
+    private final WorldGenBNTWater StagnantWaterGen = new WorldGenBNTWater(Blocks.WATER, true);
+    private final WorldGenBNTWater SwampWaterGen = new WorldGenBNTWater(Blocks.WATER, false);
     //小蘑菇集群
-    private final WorldGenMushroom MushroomFeature1 = new WorldGenMushroom(BlockRegistry.BULB_CAPPED_MUSHROOM);
-    private final WorldGenMushroom MushroomFeature2 = new WorldGenMushroom(BlockRegistry.BLACK_HAT_MUSHROOM);
-    private final WorldGenMushroom MushroomFeature3 = new WorldGenMushroom(BlockRegistry.FLAT_HEAD_MUSHROOM);
+    private final WorldGenMushroom MushroomFeature1 = new WorldGenMushroom(Blocks.RED_MUSHROOM);
+    private final WorldGenMushroom MushroomFeature2 = new WorldGenMushroom(Blocks.BROWN_MUSHROOM);
     //洞穴草集群
-    private final WorldGenSingle worldGenCaveGrass = new WorldGenSingle(BlockRegistry.CAVE_GRASS);
+    private final WorldGenSingle worldGenCaveGrass = new WorldGenSingle(Blocks.TALLGRASS);
     //洞穴落叶集群
-    private final WorldGenSingle worldGenNesting = new WorldGenSingle(BlockRegistry.NESTING_BLOCK_STICKS);
+    private final WorldGenSingle worldGenNesting = new WorldGenSingle(Blocks.LEAVES);
     //洞穴水集群
-    private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(BlockRegistry.STAGNANT_WATER);
+    private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(Blocks.WATER);
     private final WorldGenFluidPool worldGenLavaPool = new WorldGenFluidPool(Blocks.LAVA);
-    //灵气集群
-    private final WorldGenPhaseLiq worldGenPhaseLiq = new WorldGenPhaseLiq();
+
 
     public NoiseGeneratorOctaves scaleNoise;
     public NoiseGeneratorOctaves depthNoise;
@@ -219,7 +216,7 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
 
                         iblockstate2.getBlock();
                         if (iblockstate2.getMaterial() != Material.AIR) {
-                            if (iblockstate2.getBlock() == BlockRegistry.BETWEENSTONE) {
+                            if (iblockstate2.getBlock() == Blocks.STONE) {
                                 if (i1 == -1) {
                                     if (l <= 0) {
                                         iblockstate = AIR;
@@ -478,12 +475,11 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
     }
 
     private void generateMushroomFeatures(BlockPos basePos, ThreadLocalRandom random) {
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 2; ++i) {
             if (random.nextBoolean()) {
                 WorldGenerator mushroomGenerator = switch (i) {
                     case 0 -> this.MushroomFeature1;
                     case 1 -> this.MushroomFeature2;
-                    case 2 -> this.MushroomFeature3;
                     default -> null;
                 };
                 generateFeature(mushroomGenerator, basePos, random);
@@ -504,7 +500,7 @@ public class ChunkGeneratorBNT implements IChunkGenerator {
                 return this.mapGenBTNBridge.getSpawnList();
             }
 
-            if (this.mapGenBTNBridge.isPositionInStructure(this.world, pos) && this.world.getBlockState(pos.down()).getBlock() == BlockRegistry.CRAGROCK_BRICKS) {
+            if (this.mapGenBTNBridge.isPositionInStructure(this.world, pos) && this.world.getBlockState(pos.down()).getBlock() == Blocks.STONEBRICK) {
                 return this.mapGenBTNBridge.getSpawnList();
             }
         }
