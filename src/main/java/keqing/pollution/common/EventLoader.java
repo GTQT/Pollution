@@ -40,7 +40,6 @@ import static keqing.pollution.common.block.blocks.PollutionBlocksInit.BLOCK_TF_
 public class EventLoader {
 
     private static final Random RANDOM = ThreadLocalRandom.current();
-    private static long clientTick = 0;
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMTERegistry(MTEManager.MTERegistryEvent event) {
