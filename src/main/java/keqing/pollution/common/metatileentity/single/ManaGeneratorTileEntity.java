@@ -5,11 +5,10 @@ import gregtech.api.capability.impl.EnergyContainerHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -25,16 +24,12 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity {
 
 
     public ManaGeneratorTileEntity(ResourceLocation metaTileEntityId, int tier) {
-        super(metaTileEntityId, new RecipeMap<>("mana_gen_recipes", 0, 0, 0, 0, new SimpleRecipeBuilder(), true), Textures.COMBUSTION_GENERATOR_OVERLAY, tier, (n) -> n + 1);
+        super(metaTileEntityId, PORecipeMaps.MANA_GEN_RECIPES, Textures.COMBUSTION_GENERATOR_OVERLAY, tier, (n) -> n + 1);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
         return new ManaGeneratorTileEntity(metaTileEntityId, getTier());
-    }
-
-    public int manaCostPerTier(int tier) {
-        return tier * 10;
     }
 
     @Override

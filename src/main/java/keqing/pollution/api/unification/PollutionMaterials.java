@@ -82,6 +82,12 @@ public class PollutionMaterials {
 	public static Material magical_superconductive_liquid;
 	public static Material basic_thaumic_superconductor;
 	public static Material advanced_thaumic_superconductor;
+
+	public static Material TetraethylLead;
+	public static Material ChlorineTrifluoride;
+	public static Material hydrazine_sulfate;
+	public static Material SodiumLeadAlloy;
+	public static Material infernal_blaze_propellant;
 	//man what can I say
 	public static Material kobemetal;
 	//催化剂
@@ -96,6 +102,8 @@ public class PollutionMaterials {
 	public static Material super_sticky_tar;
 	public static Material magic_nitrobenzene;
 	public static Material pure_tar;
+
+	public static Material dragon_pulse_fuel;
 
 	public static Material RichAura;
 	public static Material ErichAura;
@@ -154,9 +162,8 @@ public class PollutionMaterials {
 
 	public static void register() {
 		PollutionElementMaterials.register();
-		CompoundAspectMaterials.register();
-		KeqingChainMaterials.register();
 		FirstDegreeMaterials.register();
-		CatalystMaterials.register();
+		SecondDegreeMaterials.register();
+		HigherDegreeMaterials.register();
 	}
 }

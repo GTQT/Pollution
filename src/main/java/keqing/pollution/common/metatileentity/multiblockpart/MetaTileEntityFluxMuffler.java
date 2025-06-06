@@ -18,14 +18,14 @@ import com.cleanroommc.modularui.widgets.layout.Flow;
 import com.cleanroommc.modularui.widgets.layout.Grid;
 import gregtech.api.GTValues;
 import gregtech.api.capability.IMufflerHatch;
-import gregtech.api.gui.GuiTextures;
-import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.api.metatileentity.multiblock.*;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
+import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.mui.GTGuiTextures;
 import gregtech.api.mui.GTGuis;
 import gregtech.api.util.GTTransferUtils;
@@ -38,14 +38,11 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMulti
 import keqing.pollution.POConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aura.AuraHelper;
 
 import java.util.ArrayList;
@@ -53,6 +50,8 @@ import java.util.List;
 
 public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart implements
         IMultiblockAbilityPart<IMufflerHatch>, ITieredMetaTileEntity, IMufflerHatch {
+
+    private final float pollution$pollutionMultiplier = (float) ((100 - (getTier() - 1) * 12.5) / 100 * POConfig.PollutionSystemSwitch.mufflerPollutionMultiplier);
 
     private final int recoveryChance;
     private final GTItemStackHandler inventory;
@@ -75,20 +74,19 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     @Override
     public void update() {
         super.update();
-
-        if (!getWorld().isRemote) {
-            if (getOffsetTimer() % 10 == 0)
-                this.frontFaceFree = checkFrontFaceFree();
-        }
-
-        if (getWorld().isRemote && getController() instanceof MultiblockWithDisplayBase controller &&
-                controller.isActive()) {
-            VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
+        if (getController() == null) return;
+        if (getController() instanceof MultiblockWithDisplayBase controller && controller.isActive()) {
+            if (!getWorld().isRemote) {
+                if (getOffsetTimer() % 10 == 0) this.frontFaceFree = checkFrontFaceFree();
+                if (getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution) {
+                    AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollution$pollutionMultiplier * 0.1), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
+                }
+            } else VanillaParticleEffects.mufflerEffect(this, controller.getMufflerParticle());
         }
     }
 
     @Override
-    public void clearMachineInventory( List< ItemStack> itemBuffer) {
+    public void clearMachineInventory(List<ItemStack> itemBuffer) {
         clearInventory(itemBuffer, inventory);
     }
 
@@ -139,16 +137,18 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     }
 
     @Override
-    public void addInformation(ItemStack stack,  World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.machine.muffler_hatch.tooltip1"));
         tooltip.add(I18n.format("gregtech.muffler.recovery_tooltip", recoveryChance));
+        tooltip.add(I18n.format("pollution.muffler.pollution_tooltip1"));
+        tooltip.add(I18n.format("pollution.muffler.pollution_tooltip2", pollution$pollutionMultiplier));
         tooltip.add(I18n.format("gregtech.universal.enabled"));
         tooltip.add(TooltipHelper.BLINKING_RED + I18n.format("gregtech.machine.muffler_hatch.tooltip2"));
     }
 
     @Override
-    public void addToolUsages(ItemStack stack,  World world, List<String> tooltip, boolean advanced) {
+    public void addToolUsages(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("gregtech.tool_action.screwdriver.access_covers"));
         tooltip.add(I18n.format("gregtech.tool_action.wrench.set_facing"));
         super.addToolUsages(stack, world, tooltip, advanced);
@@ -160,7 +160,7 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     }
 
     @Override
-    public void registerAbilities( AbilityInstances abilityInstances) {
+    public void registerAbilities(AbilityInstances abilityInstances) {
         abilityInstances.add(this);
     }
 
@@ -189,8 +189,8 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
         BooleanSyncValue outputStateValue = new BooleanSyncValue(() -> outputItem, val -> outputItem = val);
         guiSyncManager.syncValue("output_state", outputStateValue);
 
-        int backgroundWidth=176 + xOffset * 2 +18 +5;
-        int backgroundHeight=18 + 18 * rowSize + 94;
+        int backgroundWidth = 176 + xOffset * 2 + 18 + 5;
+        int backgroundHeight = 18 + 18 * rowSize + 94;
         // TODO: Change the position of the name when it's standardized.
         return GTGuis.createPanel(this, backgroundWidth, backgroundHeight)
                 .child(IKey.lang(getMetaFullName()).asWidget().pos(5, 5))
@@ -231,6 +231,6 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMultiblockPart impl
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.inventory.deserializeNBT(data.getCompoundTag("RecoveryInventory"));
-        outputItem= data.getBoolean("outputItem");
+        outputItem = data.getBoolean("outputItem");
     }
 }

@@ -27,6 +27,14 @@ public class PORecipeMaps {
             .sound(POSoundEvent.MANA_PLUSE)
             .build();
 
+    public static final RecipeMap<SimpleRecipeBuilder> MANA_GEN_RECIPES = new RecipeMapBuilder<>("mana_gen_recipes", new SimpleRecipeBuilder())
+            .itemInputs(0)
+            .itemOutputs(0)
+            .fluidInputs(0)
+            .fluidOutputs(0)
+            .allowEmptyOutputs()
+            .sound(POSoundEvent.MANA_PLUSE)
+            .build();
 
     public static final RecipeMap<BlastRecipeBuilder> MAGIC_ALLOY_BLAST_RECIPES = new RecipeMapBuilder<>("magic_blast_smelter", new BlastRecipeBuilder())
             .itemInputs(9)

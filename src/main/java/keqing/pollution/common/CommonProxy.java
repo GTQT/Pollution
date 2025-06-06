@@ -94,10 +94,11 @@ public class CommonProxy {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         PollutionLog.logger.info("Registering recipes...");
+        RecipeManger.init();
     }
 
     public void init() {
-        RecipeManger.init();
+
     }
 
     public void preLoad() {

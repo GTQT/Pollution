@@ -14,10 +14,12 @@ public class RecipeManger {
         CircuitManager.init();
         ThaumcraftRecipes.init();
         CrystalLine.init();
+        MagicFuelRecipes.init();
         MagicGCYMRecipes.init();
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();
+        MufflerHatchRecipes.init();
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();
         NodeFusionRecipes.init();

@@ -388,6 +388,7 @@ public class MagicChemicalRecipes {
 				.duration(400)
 				.EUt(30)
 				.buildAndRegister();
+
 		//HMF——2-甲基呋喃
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
 				.notConsumable(dust, Materials.Palladium)
@@ -398,6 +399,7 @@ public class MagicChemicalRecipes {
 				.duration(400)
 				.EUt(120)
 				.buildAndRegister();
+
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
 				.notConsumable(dust, PollutionMaterials.thaummix)
 				.notConsumable(dust, Materials.SodiumBicarbonate, 8)
@@ -407,17 +409,7 @@ public class MagicChemicalRecipes {
 				.duration(400)
 				.EUt(120)
 				.buildAndRegister();
-		//魔力抗爆焦化硝基苯
-		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-				.fluidInputs(GTQTMaterials.Methylfuran.getFluid(1000))
-				.fluidInputs(Materials.Ethanol.getFluid(1000))
-				.fluidInputs(Materials.Nitrobenzene.getFluid(10000))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1152))
-				.notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
-				.fluidOutputs(PollutionMaterials.magic_nitrobenzene.getFluid(16000))
-				.duration(200)
-				.EUt(480)
-				.buildAndRegister();
+
         //木头焦化不纯魔力
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))

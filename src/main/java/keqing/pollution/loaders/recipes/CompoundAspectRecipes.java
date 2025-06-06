@@ -3,6 +3,7 @@ package keqing.pollution.loaders.recipes;
 import gregtech.api.recipes.RecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 
+import static keqing.gtqtcore.api.unification.GTQTMaterials.SuperCriticalGas;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_FUSION_REACTOR;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_TURBINE_FUELS;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
@@ -20,11 +21,9 @@ public class CompoundAspectRecipes {
 				.EUt(32)
 				.buildAndRegister();
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(magic_nitrobenzene.getFluid(1))
-				.duration(1080)
-				.EUt(32)
-				.buildAndRegister();
+
+
+
 
 		MAGIC_TURBINE_FUELS.recipeBuilder()
 				.fluidInputs(infused_air.getFluid(80))

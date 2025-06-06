@@ -11,7 +11,7 @@ import static keqing.pollution.api.utils.POUtils.pollutionId;
 
 public class PollutionElementMaterials {
     private static int startId = 0;
-    private static final int END_ID = startId + 1000;
+    private static final int END_ID = startId + 100;
 
     private static int getMaterialsId() {
         if (startId < END_ID) {

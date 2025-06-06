@@ -8,14 +8,12 @@
   "mixins": [
     "MixinMetaTileEntity",
     "MixinMetaTileEntityHolder",
-    "MixinMetaTileEntityMufflerHatchCommon",
     "MixinMetaTileEntityPrimitiveBlastFurnaceCommon",
     "MixinMetaTileEntityMetaTileEntityCokeOvenCommon",
     "MixinSimpleGeneratorMetaTileEntityCommon"
   ],
   "server": [],
   "client":[
-    "MixinMetaTileEntityMufflerHatchClient",
     "MixinMetaTileEntityMetaTileEntityCokeOvenClient",
     "MixinMetaTileEntityPrimitiveBlastFurnaceClient",
     "MixinSimpleGeneratorMetaTileEntityClient"

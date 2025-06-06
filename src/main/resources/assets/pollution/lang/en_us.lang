@@ -155,6 +155,12 @@ pollution.material.basic_battery_hull_alloy=Beginner arcane battery alloy
 pollution.material.advanced_battery_hull_alloy=High-level arcane battery alloys
 pollution.material.basic_battery_content=Contents of the Beginner Arcane Battery
 pollution.material.advanced_battery_content=The contents of a high-level arcane battery
+pollution.material.tetraethyl_lead=Tetraethyl lead
+pollution.material.chlorine_trifluoride=Chlorine trifluoride
+pollution.material.hydrazine_sulfate=Hydrazine sulfate
+pollution.material.sodium_lead_alloy=Sodium-lead alloys
+pollution.material.infernal_blaze_propellant=Incendiary Flame Propellant
+pollution.material.dragon_pulse_fuel=Dragon Pulse Star Rail Burner
 
 pollution.material.kobemetal=Kobemetal
 metaitem.ingotKobemetal.tooltip=Kobemetal, Miss You
@@ -518,7 +524,8 @@ pollution.machine.bm_hpca.ultimate_cooler_component.name=Flesh Computation Array
 pollution.machine.bm_hpca.ultimate_cooler_component.tooltip=Warning! Detected dimensional phase folding.
 pollution.machine.bm_hpca.bridge_component.name=Flesh Computation Array - Connecting Passage
 pollution.machine.bm_hpca.bridge_component.tooltip=Chamber composed of living tissue (recommended to wear protective gear).
-#
+pollution.machine.bm_hpca.name=Flesh Computing Array
+
 pollution.machine.flux_promoted_fuel_cell.lv.name=Basic Flux Promoted Fuel Cell
 pollution.machine.flux_promoted_fuel_cell.lv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 pollution.machine.flux_promoted_fuel_cell.mv.name=Advanced Flux Promoted Fuel Cell
@@ -600,6 +607,7 @@ pollution.machine.vis_provider.iv.name=Vis Regenerator (§1IV§r)
 pollution.machine.vis_provider.luv.name=Vis Regenerator (§dLuV§r)
 pollution.machine.vis_provider.zpm.name=Vis Regenerator (§cZPM§r)
 pollution.machine.vis_provider.uv.name=Vis Regenerator (§3UV§r)
+pollution.machine.vis_provider.uhv.name=Vis Regenerator (§4UHV§r)
 pollution.vis.provider=§6Vis Replenishment (per 100 cycles): %s Vis
 
 pollution.machine.flux_clear.lv.name=Air Purifier (§7LV§r)

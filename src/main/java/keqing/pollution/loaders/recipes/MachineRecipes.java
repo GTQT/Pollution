@@ -91,6 +91,26 @@ public class MachineRecipes {
                 'B', SENSOR,
                 'C', ROTOR);
 
+
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.lv");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.mv");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.hv");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.ev");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.iv");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.luv");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.zpm");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.uv");
+        ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.uhv");
+        registerMachineRecipe(PollutionMetaTileEntities.FLUX_MUFFLERS,
+                "HM", "PR",
+                'H', HULL,
+                'M', MOTOR,
+                'P', PIPE_NORMAL,
+                'R', ROTOR);
+
+
+
+
         registerMachineRecipe(PollutionMetaTileEntities.VIS_HATCH,
                 "ABA", "CHC", "ABA",
                 'H', HULL,

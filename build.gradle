@@ -124,7 +124,7 @@ dependencies {
     implementation rfg.deobf(files("libs/Supercritical-1.8.0.jar"))
     implementation rfg.deobf(files("libs/gregtech-1.12.2-2.9.0-MeowmelMuku.jar"))
     implementation rfg.deobf(files("libs/gtsteam-1.8.0.jar"))
-    implementation rfg.deobf(files("libs/GregicalityMultiblocks-1.8.0.jar"))
+    implementation rfg.deobf(files("libs/GregicalityMultiblocks-1.8.0-MeowmelMuku.jar"))
     implementation rfg.deobf(files("libs/gregtechfoodoption-1.12.2-1.8.0.jar"))
     implementation rfg.deobf(files("libs/gtqtcore-1.8.0.jar"))
 
@@ -138,7 +138,7 @@ dependencies {
     implementation rfg.deobf(files("libs/Guide-API-1.12-2.1.8-63.jar"))
     implementation rfg.deobf(files("libs/ExtraBotany-r1.1-60-beta-hotfix.jar"))
     implementation rfg.deobf(files("libs/astralsorcery-1.12.2-1.10.27.jar"))
-
+    implementation rfg.deobf(files("libs/Avaritia-1.12.2-3.3.0.37-universal.jar"))
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
         String mixin = modUtils.enableMixins('org.spongepowered:mixin:0.8.3', "mixins.${project.archives_base_name}.refmap.json")

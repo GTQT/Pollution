@@ -9,18 +9,21 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
-import static gregtech.api.unification.material.properties.BlastProperty.GasTier.*;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
+import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 import static keqing.pollution.api.utils.POUtils.pollutionId;
 
 
 public class FirstDegreeMaterials {
-    private static int startId = 1000;
-    private static final int END_ID = startId + 1000;
+    private static int startId = 100;
+    private static final int END_ID = startId + 900;
 
     public FirstDegreeMaterials() {
     }
 
+    //第一类材料
+    //通常为基本元素组成的化合物，其组分为已注册的单质
     private static int getMaterialsId() {
         if (startId < END_ID) {
             return startId++;
@@ -29,6 +32,214 @@ public class FirstDegreeMaterials {
     }
 
     public static void register() {
+        //水晶=风+地
+        PollutionMaterials.infused_crystal = new Material.Builder(getMaterialsId(), pollutionId("infused_crystal"))
+                .color(0x87CEFA)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_earth, 1)
+                .build();
+        //生命=地+水
+        PollutionMaterials.infused_life = new Material.Builder(getMaterialsId(), pollutionId("infused_life"))
+                .color(0xFF6A6A)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_earth, 1, PollutionMaterials.infused_water, 1)
+                .build();
+        //死亡=水+混沌
+        PollutionMaterials.infused_death = new Material.Builder(getMaterialsId(), pollutionId("infused_death"))
+                .color(0x696969)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_water, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //灵魂=生命+死亡
+        PollutionMaterials.infused_soul = new Material.Builder(getMaterialsId(), pollutionId("infused_soul"))
+                .color(0xCFCFCF)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_life, 1, PollutionMaterials.infused_death, 1)
+                .build();
+        //武器=灵魂+混沌
+        PollutionMaterials.infused_weapon = new Material.Builder(getMaterialsId(), pollutionId("infused_weapon"))
+                .color(0xB22222)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //金属=地+秩序
+        PollutionMaterials.infused_metal = new Material.Builder(getMaterialsId(), pollutionId("infused_metal"))
+                .color(0x9FB6CD)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_earth, 1, PollutionMaterials.infused_order, 1)
+                .build();
+        //能量=秩序+火
+        PollutionMaterials.infused_energy = new Material.Builder(getMaterialsId(), pollutionId("infused_energy"))
+                .color(0xF0FFF0)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_order, 1, PollutionMaterials.infused_fire, 1)
+                .build();
+        //工具=金属+能量
+        PollutionMaterials.infused_instrument = new Material.Builder(getMaterialsId(), pollutionId("infused_instrument"))
+                .color(0x0000CD)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_metal, 1, PollutionMaterials.infused_energy, 1)
+                .build();
+        //交换=秩序+混沌
+        PollutionMaterials.infused_exchange = new Material.Builder(getMaterialsId(), pollutionId("infused_exchange"))
+                .color(0x548B54)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_order, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //魔法=风+能量
+        PollutionMaterials.infused_magic = new Material.Builder(getMaterialsId(), pollutionId("infused_magic"))
+                .color(0x8A2BE2)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_energy, 1)
+                .build();
+        //炼金=魔法+水
+        PollutionMaterials.infused_alchemy = new Material.Builder(getMaterialsId(), pollutionId("infused_alchemy"))
+                .color(0x8FBC8F)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_magic, 1, PollutionMaterials.infused_water, 1)
+                .build();
+        //寒冷=火+混沌
+        PollutionMaterials.infused_cold = new Material.Builder(getMaterialsId(), pollutionId("infused_cold"))
+                .color(0xF0FFFF)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //灵气=魔法+风
+        PollutionMaterials.infused_aura = new Material.Builder(getMaterialsId(), pollutionId("infused_aura"))
+                .color(0xF7AEFF)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_magic, 1, PollutionMaterials.infused_air, 1)
+                .build();
+        //光明=火+风
+        PollutionMaterials.infused_light = new Material.Builder(getMaterialsId(), pollutionId("infused_light"))
+                .color(0xF3FF80)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_air, 1)
+                .build();
+        //合成=交换+工具
+        PollutionMaterials.infused_craft = new Material.Builder(getMaterialsId(), pollutionId("infused_craft"))
+                .color(0x6D26FC)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_exchange, 1, PollutionMaterials.infused_instrument, 1)
+                .build();
+        //虚空=风+混沌
+        PollutionMaterials.infused_void = new Material.Builder(getMaterialsId(), pollutionId("infused_void"))
+                .color(0xACACAC)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //运动=风+秩序
+        PollutionMaterials.infused_motion = new Material.Builder(getMaterialsId(), pollutionId("infused_motion"))
+                .color(0xB3B3B3)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_order, 1)
+                .build();
+        //腐化=混沌+魔法
+        PollutionMaterials.infused_taint = new Material.Builder(getMaterialsId(), pollutionId("infused_taint"))
+                .color(0x7C1280)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_magic, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //黑暗=虚空+光明
+        PollutionMaterials.infused_dark = new Material.Builder(getMaterialsId(), pollutionId("infused_dark"))
+                .color(0x1A1A1A)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_void, 1, PollutionMaterials.infused_light, 1)
+                .build();
+        //异域=虚空+黑暗
+        PollutionMaterials.infused_alien = new Material.Builder(getMaterialsId(), pollutionId("infused_alien"))
+                .color(0xC17EC3)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_void, 1, PollutionMaterials.infused_dark, 1)
+                .build();
+        //飞行=风+运动
+        PollutionMaterials.infused_fly = new Material.Builder(getMaterialsId(), pollutionId("infused_fly"))
+                .color(0xFFFFEC)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_motion, 1)
+                .build();
+        //植物=生命+地
+        PollutionMaterials.infused_plant = new Material.Builder(getMaterialsId(), pollutionId("infused_plant"))
+                .color(0x69FF4B)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_life, 1, PollutionMaterials.infused_earth, 1)
+                .build();
+        //机械=运动+工具
+        PollutionMaterials.infused_mechanics = new Material.Builder(getMaterialsId(), pollutionId("infused_mechanics"))
+                .color(0x727272)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_instrument, 1)
+                .build();
+        //陷阱=运动+混沌
+        PollutionMaterials.infused_trap = new Material.Builder(getMaterialsId(), pollutionId("infused_trap"))
+                .color(0x756060)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //亡灵=运动+死亡
+        PollutionMaterials.infused_undead = new Material.Builder(getMaterialsId(), pollutionId("infused_undead"))
+                .color(0x494244)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_death, 1)
+                .build();
+        //思维=火+灵魂
+        PollutionMaterials.infused_thought = new Material.Builder(getMaterialsId(), pollutionId("infused_thought"))
+                .color(0xFF9999)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_fire, 1, PollutionMaterials.infused_soul, 1)
+                .build();
+        //感知=风+灵魂
+        PollutionMaterials.infused_sense = new Material.Builder(getMaterialsId(), pollutionId("infused_sense"))
+                .color(0x57D3FF)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_soul, 1)
+                .build();
+        //野兽=运动+生命
+        PollutionMaterials.infused_animal = new Material.Builder(getMaterialsId(), pollutionId("infused_animal"))
+                .color(0x994C00)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_motion, 1, PollutionMaterials.infused_life, 1)
+                .build();
+        //人类=灵魂+生命
+        PollutionMaterials.infused_human = new Material.Builder(getMaterialsId(), pollutionId("infused_human"))
+                .color(0xFFD6D1)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_life, 1)
+                .build();
+        //贪婪=灵魂+虚空
+        PollutionMaterials.infused_greed = new Material.Builder(getMaterialsId(), pollutionId("infused_greed"))
+                .color(0xF3F303)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_void, 1)
+                .build();
+        //装备=灵魂+地
+        PollutionMaterials.infused_armor = new Material.Builder(getMaterialsId(), pollutionId("infused_armor"))
+                .color(0x03CBF3)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_earth, 1)
+                .build();
+
+        //空间=虚空+熵
+        PollutionMaterials.infused_spatio = new Material.Builder(getMaterialsId(), pollutionId("infused_spatio"))
+                .color(0x4AF755)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_void, 1, PollutionMaterials.infused_entropy, 1)
+                .build();
+        //时间=空间+交换
+        PollutionMaterials.infused_tempus = new Material.Builder(getMaterialsId(), pollutionId("infused_tempus"))
+                .color(0xD6DB43)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_spatio, 1, PollutionMaterials.infused_exchange, 1)
+                .build();
+        //艺术=感觉+交换
+        PollutionMaterials.infused_tinctura = new Material.Builder(getMaterialsId(), pollutionId("infused_tinctura"))
+                .color(0xD6DB43)
+                .ore().gem().fluid()
+                .components(PollutionMaterials.infused_sense, 1, PollutionMaterials.infused_exchange, 1)
+                .build();
+
+        startId = 200;
+
         PollutionMaterials.thaumium = new Material.Builder(getMaterialsId(), pollutionId("thaumium"))
                 .color(0x483D8B)
                 .ingot().fluid()
@@ -260,10 +471,12 @@ public class FirstDegreeMaterials {
                 .iconSet(BRIGHT)
                 .blast(2700)
                 .build();
+
         PollutionMaterials.magical_superconductive_liquid = new Material.Builder(getMaterialsId(), pollutionId("magical_superconductive_liquid"))
                 .color(0x9C039C)
                 .fluid()
                 .build();
+
         PollutionMaterials.basic_thaumic_superconductor = new Material.Builder(getMaterialsId(), pollutionId("basic_thaumic_superconductor"))
                 .color(0xC6B3C6)
                 .ingot().fluid()
@@ -271,6 +484,7 @@ public class FirstDegreeMaterials {
                 .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
                 .cableProperties(GTValues.V[4], 8, 0, true)
                 .build();
+
         PollutionMaterials.advanced_thaumic_superconductor = new Material.Builder(getMaterialsId(), pollutionId("advanced_thaumic_superconductor"))
                 .color(0xDDFF6E)
                 .ingot().fluid()
@@ -278,100 +492,34 @@ public class FirstDegreeMaterials {
                 .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
                 .cableProperties(GTValues.V[8], 8, 0, true)
                 .build();
-        //电池相关
-        PollutionMaterials.basic_battery_hull_alloy = new Material.Builder(getMaterialsId(), pollutionId("basic_battery_hull_alloy"))
-                .color(0x877886)
-                .ingot().fluid()
-                .iconSet(METALLIC)
-                .flags(DECOMPOSITION_BY_ELECTROLYZING)
-                .components(mansussteel, 4, ordolead, 1)
-                .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
-                .blast(2700, LOW)
-                .build();
 
-        PollutionMaterials.advanced_battery_hull_alloy = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_hull_alloy"))
-                .color(0xA4D4CD)
-                .ingot().fluid()
-                .iconSet(METALLIC)
-                .flags(DECOMPOSITION_BY_ELECTROLYZING)
-                .components(hyperdimensional_silver, 4, valonite, 1)
-                .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
-                .blast(5400, MID)
-                .build();
-
-        PollutionMaterials.basic_battery_content = new Material.Builder(getMaterialsId(), pollutionId("basic_battery_content"))
-                .color(0x687D9F)
-                .dust()
-                .iconSet(DULL)
-                .flags(DECOMPOSITION_BY_ELECTROLYZING)
-                .components(Lithium, 6, thaumium, 2, infused_energy, 1, infused_motion, 1)
-                .build();
-
-        PollutionMaterials.advanced_battery_content = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_content"))
-                .color(0xFFFFE2)
-                .dust()
-                .iconSet(BRIGHT)
-                .flags(DECOMPOSITION_BY_ELECTROLYZING)
-                .components(Caesium, 6, keqinggold, 2, infused_energy, 1, infused_motion, 1)
-                .build();
-
-        //高级合金
-        //太虚玄钢、阿弗纳斯之血、光风霁月琥珀金
-        PollutionMaterials.aetheric_dark_steel = new Material.Builder(getMaterialsId(), pollutionId("aetheric_dark_steel"))
-                .color(0x041B4E)
-                .ingot().fluid()
-                .iconSet(SHINY)
-                .flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-                .blast(7200, HIGH)
-                .build()
-                .setFormula("䷜", true);
-        PollutionMaterials.blood_of_avernus = new Material.Builder(getMaterialsId(), pollutionId("blood_of_avernus"))
-                .color(0x5E0000)
-                .ingot().fluid()
-                .iconSet(BRIGHT)
-                .flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-                .blast(7200, HIGH)
-                .build()
-                .setFormula("♆", true);
-        PollutionMaterials.iizunamaru_electrum = new Material.Builder(getMaterialsId(), pollutionId("iizunamaru_electrum"))
-                .color(0xF0FFB2)
-                .ingot().fluid()
-                .iconSet(SHINY)
-                .flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-                .blast(7200, HIGH)
-                .build()
-                .setFormula("✦✧", true);
-
-        //污秽之物化工线
-        PollutionMaterials.filth = new Material.Builder(getMaterialsId(), pollutionId("filth"))
-                .color(0x5C0101)
-                .dust()
-                .iconSet(DULL)
-                .components(Netherrack, 6, Endstone, 1, Stone, 1, infused_taint, 1)
-                .build();
-        PollutionMaterials.filth_water = new Material.Builder(getMaterialsId(), pollutionId("filth_water"))
-                .color(0x392323)
+        //四乙基铅
+        PollutionMaterials.TetraethylLead = new Material.Builder(getMaterialsId(), pollutionId("tetraethyl_lead"))
+                .color(0xDDFF6E)
                 .fluid()
-                .components(filth, 9, infused_death, 1, infused_dark, 1)
-                .build();
-        PollutionMaterials.void_water = new Material.Builder(getMaterialsId(), pollutionId("void_water"))
-                .color(0x837D7D)
-                .fluid()
-                .build();
-        PollutionMaterials.void_material = new Material.Builder(getMaterialsId(), pollutionId("void_material"))
-                .color(0xC3C3C3)
-                .dust()
-                .iconSet(SHINY)
-                .build();
-
-        //牢大 想你了
-        PollutionMaterials.kobemetal = new Material.Builder(getMaterialsId(), pollutionId("kobemetal"))
-                .color(0xFFD700)
-                .ingot().fluid()
-                .components(Helium, 1, Lithium, 1, Cobalt, 1, Platinum, 1, Erbium, 1)
-                .iconSet(SHINY)
-                .flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING)
                 .build()
-                .setFormula("HeLiCoPtEr", true);
+                .setFormula("Pb(C₂H₅)₄", true);
+
+        //三氟化氯 Chlorine trifluoride
+        PollutionMaterials.ChlorineTrifluoride = new Material.Builder(getMaterialsId(), pollutionId("chlorine_trifluoride"))
+                .color(0xDDFF6E)
+                .fluid()
+                .build()
+                .setFormula("ClF₃", true);
+
+        // 肼硫酸盐 - Hydrazine Sulfate
+        PollutionMaterials.hydrazine_sulfate = new Material.Builder(getMaterialsId(), pollutionId("hydrazine_sulfate"))
+                .fluid()
+                .color(0xFFA500)
+                .iconSet(FLUID)
+                .build()
+                .setFormula("(N₂H₅)₂SO₄", true);
+
+        // 钠铅合金 NaPb
+        PollutionMaterials.SodiumLeadAlloy = new Material.Builder(getMaterialsId(), pollutionId("sodium_lead_alloy"))
+                .fluid()
+                .color(0x9E7B59)
+                .components(Sodium, 1, Lead, 1)
+                .build();
     }
 }
