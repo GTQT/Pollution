@@ -598,6 +598,7 @@ pollution.machine.magic_turbine.lv.name=Essence Turbine (§7LV§r)
 pollution.machine.magic_turbine.mv.name=Essence Turbine (§bMV§r)
 pollution.machine.magic_turbine.hv.name=Essence Turbine (§6HV§r)
 pollution.machine.large_turbine.magic.name=Large Essence Turbine (§5EV§r)
+pollution.machine.mega_turbine.magic.name=Extra Large Essence Turbine（§1IV§r）
 
 pollution.machine.vis_provider.lv.name=Vis Regenerator (§7LV§r)
 pollution.machine.vis_provider.mv.name=Vis Regenerator (§bMV§r)

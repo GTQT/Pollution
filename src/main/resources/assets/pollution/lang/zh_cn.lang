@@ -586,6 +586,7 @@ pollution.machine.magic_turbine.lv.name=源质要素轮机（§7LV§r）
 pollution.machine.magic_turbine.mv.name=源质要素轮机（§bMV§r）
 pollution.machine.magic_turbine.hv.name=源质要素轮机（§6HV§r）
 pollution.machine.large_turbine.magic.name=大型源质要素轮机（§5EV§r）
+pollution.machine.mega_turbine.magic.name=特大源质要素轮机（§1IV§r）
 
 pollution.machine.vis_provider.lv.name=灵气再生机（§7LV§r）
 pollution.machine.vis_provider.mv.name=灵气再生机（§bMV§r）

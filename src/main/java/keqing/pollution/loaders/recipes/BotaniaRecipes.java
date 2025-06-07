@@ -39,7 +39,7 @@ public class BotaniaRecipes {
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 8))
                 .input(dust, NetherStar)
                 .fluidInputs(Enzymesac.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"), 1000, 0)
+                .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
                 .rate(10)
                 .buildAndRegister();
@@ -49,7 +49,7 @@ public class BotaniaRecipes {
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 0))
                 .input(dust, Blaze)
                 .fluidInputs(Enzymesac.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("endoflame"), 100, 0)
+                .chancedOutput(ItemBlockSpecialFlower.ofType("endoflame"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
                 .rate(10)
                 .buildAndRegister();
@@ -59,7 +59,7 @@ public class BotaniaRecipes {
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 0))
                 .input(OrePrefix.dust, PollutionMaterials.llp, 1)
                 .fluidInputs(Enzymesac.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("hydroangeas"), 100, 0)
+                .chancedOutput(ItemBlockSpecialFlower.ofType("hydroangeas"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
                 .rate(10)
                 .buildAndRegister();
