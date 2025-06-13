@@ -21,7 +21,9 @@ public class Botania {
             builder = PURE_DAISY_RECIPES.recipeBuilder()
                     .TotalMana(100);
 
-            if (recipe.getInput() instanceof Block s) {
+            if (recipe.getInput() instanceof ItemStack s) {
+                builder.inputs(s);
+            } else if (recipe.getInput() instanceof Block s) {
                 builder.input(s);
             } else if (recipe.getInput() instanceof IBlockState s) {
                 builder.input(s.getBlock());
@@ -64,8 +66,11 @@ public class Botania {
             for (Object input : recipe.getInputs()) {
                 if (input instanceof ItemStack s) {
                     builder.inputs(s);
-                }
-                if (input instanceof String s) {
+                } else if (input instanceof Block s) {
+                    builder.input(s);
+                } else if (input instanceof IBlockState s) {
+                    builder.input(s.getBlock());
+                } else if (input instanceof String s) {
                     builder.input(s);
                 }
             }

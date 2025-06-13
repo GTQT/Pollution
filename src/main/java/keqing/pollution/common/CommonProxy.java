@@ -6,6 +6,7 @@ import keqing.pollution.api.utils.PollutionLog;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.loaders.RecipeManger;
+import keqing.pollution.loaders.recipes.mods.Botania;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -96,7 +97,11 @@ public class CommonProxy {
         PollutionLog.logger.info("Registering recipes...");
         RecipeManger.init();
     }
+    public void loadComplete() {
+        PollutionLog.logger.info("Registering Botania Recipes...");
+        //保证在加载魔改模组之后
 
+    }
     public void init() {
 
     }

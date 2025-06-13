@@ -115,38 +115,26 @@ public class PORecipeMaps {
     //////////////////////////////////////////
     public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMapBuilder<>("mana_infusion_recipes", new ManaRecipesBuilder())
             .itemInputs(2)
-            .itemOutputs(0)
-            .fluidInputs(1)
-            .fluidOutputs(0)
-            .sound(GTSoundEvents.REPLICATOR)
+            .itemOutputs(1)
             .build();
 
     public static final RecipeMap<ManaRecipesBuilder> MANA_RUNE_ALTAR_RECIPES = new RecipeMapBuilder<>("mana_rune_altar_recipes", new ManaRecipesBuilder())
-            .itemInputs(9)
-            .itemOutputs(0)
-            .fluidInputs(1)
-            .fluidOutputs(0)
-            .sound(GTSoundEvents.REPLICATOR)
+            .itemInputs(10)
+            .itemOutputs(1)
             .build();
 
     public static final RecipeMap<ManaRecipesBuilder> MANA_PETAL_RECIPES = new RecipeMapBuilder<>("mana_petal_recipes", new ManaRecipesBuilder())
             .itemInputs(16)
-            .itemOutputs(0)
-            .fluidInputs(1)
-            .fluidOutputs(0)
-            .sound(GTSoundEvents.REPLICATOR)
+            .itemOutputs(1)
             .build();
 
     public static final RecipeMap<ManaRecipesBuilder> PURE_DAISY_RECIPES = new RecipeMapBuilder<>("pure_daisy_recipes", new ManaRecipesBuilder())
             .itemInputs(1)
-            .itemOutputs(0)
-            .fluidInputs(1)
-            .fluidOutputs(0)
-            .sound(GTSoundEvents.REPLICATOR)
+            .itemOutputs(1)
             .build();
 
     public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMapBuilder<>("industrial_infusion_recipes", new SimpleRecipeBuilder())
-            .itemInputs(16)
+            .itemInputs(48)
             .itemOutputs(1)
             .fluidInputs(16)
             .fluidOutputs(0)

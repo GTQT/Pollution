@@ -14,10 +14,12 @@ import keqing.pollution.dimension.worldgen.PODimensionType;
 import keqing.pollution.dimension.worldgen.POStructureManager;
 import keqing.pollution.integration.POIntegration;
 import keqing.pollution.loaders.loot.GregTechLootTable;
+import keqing.pollution.loaders.recipes.mods.Botania;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
@@ -56,7 +58,10 @@ public class Pollution {
         proxy.init();
         GregTechLootTable.init();
     }
-
+    @Mod.EventHandler
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        proxy.loadComplete();
+    }
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         PollutionLog.init(event.getModLog());
@@ -75,5 +80,6 @@ public class Pollution {
     public void postInit(FMLPostInitializationEvent event)
     {
         IndustrialInfusionBuilder.init();
+        Botania.init();
     }
 }

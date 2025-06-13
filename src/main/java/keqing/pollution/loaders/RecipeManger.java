@@ -23,7 +23,6 @@ public class RecipeManger {
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();
         NodeFusionRecipes.init();
-        Botania.init();
     }
 
 
