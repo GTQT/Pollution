@@ -1,6 +1,7 @@
 package keqing.pollution.loaders.recipes;
 
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtechfoodoption.item.GTFOMetaItem;
@@ -26,7 +27,7 @@ import thaumcraft.api.items.ItemsTC;
 import static gregicality.multiblocks.api.fluids.GCYMFluidStorageKeys.MOLTEN;
 import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
-import static gregtech.api.unification.material.Materials.ZirconiumTetrachloride;
+import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 
@@ -37,6 +38,7 @@ public class MagicChemicalRecipes {
 		superconductor_chain();
 		battery_chain();
 		filth_chain();
+		hachimi_chain();
 	}
 
 	private static void chemical() {
@@ -1187,4 +1189,56 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 	}
 
+	private static void hachimi_chain(){
+	    //叠氮酸
+		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
+				.fluidInputs(Materials.Ammonia.getFluid(1000))
+				.fluidInputs(Materials.HydrochloricAcid.getFluid(1000))
+				.input(dust, SodiumNitrite, 1)
+				.output(dust, Materials.Salt, 1)
+				.fluidOutputs(PollutionMaterials.hydrazoic_acid.getFluid(1000))
+				.fluidOutputs(Materials.Water.getFluid(2000))
+				.duration(100)
+				.EUt(VA[EV])
+				.buildAndRegister();
+		//中和
+		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.hydrazoic_acid.getFluid(1000))
+				.input(dust, SodiumHydroxide, 1)
+				.output(dust, PollutionMaterials.sodium_azide)
+				.fluidOutputs(Materials.Water.getFluid(1000))
+				.duration(40)
+				.EUt(VA[LV])
+				.buildAndRegister();
+		//环戊二烯基钠合成
+		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
+				.input(dust, Materials.Sodium, 2)
+		        .fluidInputs(Cyclopentadiene, 2000)
+				.output(dust, PollutionMaterials.sodium_cyclopentadienide, 2)
+				.fluidOutputs(Hydrogen.getFluid(1000))
+				.duration(400)
+				.EUt(VA[EV])
+				.buildAndRegister();
+        //二氯二茂铪
+		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
+				.input(dust, PollutionMaterials.sodium_cyclopentadienide, 2)
+				.input(dust, HafniumTetrachloride, 1)
+				.output(dust, PollutionMaterials.hafnocene_dichloride, 1)
+				.output(dust, Salt, 2)
+				.duration(400)
+				.EUt(VA[EV])
+				.buildAndRegister();
+		//茂叠铪基醚
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.input(dust, PollutionMaterials.hafnocene_dichloride, 2)
+				.input(dust, PollutionMaterials.sodium_azide, 2)
+				.fluidInputs(Water.getFluid(1000))
+				.output(dust, PollutionMaterials.μ_oxo_bis_hafnocene_azide, 1)
+				.fluidOutputs(HydrochloricAcid.getFluid(2000))
+				.output(dust, Salt, 2)
+				.duration(400)
+				.EUt(VA[EV])
+				.buildAndRegister();
+	}
 }

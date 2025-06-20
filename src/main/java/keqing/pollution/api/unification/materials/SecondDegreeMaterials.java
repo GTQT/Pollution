@@ -357,5 +357,45 @@ public class SecondDegreeMaterials {
                 .build()
                 .setFormula("(BlazingFlame)(N₂H₅)₂SO₄·HNO₃·Al", true);
 
+        //耄耋哈基米线
+        //叠氮酸
+        PollutionMaterials.hydrazoic_acid = new Material.Builder(getMaterialsId(), pollutionId("hydrazoic_acid"))
+                .color(0xFAF0AF)
+                .fluid()
+                .iconSet(DULL)
+                .components(Hydrogen, 1, Nitrogen, 3)
+                .build();
+
+        //叠氮化钠
+        PollutionMaterials.sodium_azide = new Material.Builder(getMaterialsId(), pollutionId("sodium_azide"))
+                .color(0xFAF0AF)
+                .dust()
+                .iconSet(DULL)
+                .components(Sodium, 1, Nitrogen, 3)
+                .build();
+        //环戊二烯基钠
+        PollutionMaterials.sodium_cyclopentadienide = new Material.Builder(getMaterialsId(), pollutionId("sodium_cyclopentadienide"))
+                .color(0xF0BB74)
+                .dust()
+                .iconSet(DULL)
+                .components(Carbon, 5, Hydrogen, 5, Sodium, 1)
+                .build()
+                .setFormula("(C5H5)Na");
+        //二氯二茂铪
+        PollutionMaterials.hafnocene_dichloride = new Material.Builder(getMaterialsId(), pollutionId("hafnocene_dichloride"))
+                .color(0xF0A274)
+                .dust()
+                .iconSet(DULL)
+                .components(Carbon, 10, Hydrogen, 10, Hafnium, 1, Chlorine, 2)
+                .build()
+                .setFormula("(C5H5)2HfCl2");
+        //茂叠铪基醚
+        PollutionMaterials.μ_oxo_bis_hafnocene_azide = new Material.Builder(getMaterialsId(), pollutionId("μ_oxo_bis_hafnocene_azide"))
+                .color(0xFDDD5A)
+                .dust()
+                .iconSet(DULL)
+                .components(Carbon, 20, Hydrogen, 20, Hafnium, 2, Nitrogen, 6, Oxygen, 1)
+                .build()
+                .setFormula("[(Cp)2Hf(N3)2]2(μ-O)");
     }
 }

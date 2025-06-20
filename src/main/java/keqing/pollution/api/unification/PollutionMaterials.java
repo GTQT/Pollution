@@ -156,6 +156,12 @@ public class PollutionMaterials {
 	public static Material advanced_battery_hull_alloy;
 	public static Material basic_battery_content;
 	public static Material advanced_battery_content;
+	//哈基米
+	public static Material hydrazoic_acid;
+	public static Material sodium_azide;
+	public static Material sodium_cyclopentadienide;
+	public static Material hafnocene_dichloride;
+	public static Material μ_oxo_bis_hafnocene_azide;
 
 	public PollutionMaterials() {
 	}
