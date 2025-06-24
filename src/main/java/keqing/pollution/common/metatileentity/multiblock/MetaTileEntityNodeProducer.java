@@ -44,6 +44,10 @@ import static net.minecraft.util.math.MathHelper.abs;
 import static net.minecraft.util.math.MathHelper.ceil;
 
 public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     //随机数
     private final Random random = Pollution.RANDOM;
     //最低输入功率，默认为1920

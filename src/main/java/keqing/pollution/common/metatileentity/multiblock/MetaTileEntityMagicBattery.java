@@ -68,6 +68,10 @@ import static net.minecraft.util.EnumFacing.Axis.X;
 import static net.minecraft.util.EnumFacing.Axis.Y;
 
 public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implements IWorkable, IControllable, IProgressBarMultiblock, IBloomEffect, IFastRenderMetaTileEntity {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     protected static final int NO_COLOR = 0;
     public int process = 0;
     public int maxProcess = 100;
@@ -378,7 +382,7 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
     }
 
     @Override
-    protected boolean shouldShowVoidingModeButton() {
+    public boolean shouldShowVoidingModeButton() {
         return false;
     }
 

@@ -54,6 +54,10 @@ import static keqing.pollution.api.unification.PollutionMaterials.ErichAura;
 import static keqing.pollution.api.unification.PollutionMaterials.RichAura;
 
 public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockController implements IBloomEffect, IFastRenderMetaTileEntity {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     protected static final int NO_COLOR = 0;
     int glass;//不知道
     int coil;//灵气增长倍率
@@ -230,7 +234,7 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
     }
 
     @Override
-    protected boolean shouldShowVoidingModeButton() {
+    public boolean shouldShowVoidingModeButton() {
         return false;
     }
 

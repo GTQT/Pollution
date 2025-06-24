@@ -36,6 +36,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     protected static final int NO_COLOR = 0;
     public Aspect al;
     public String name;
@@ -178,7 +182,7 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
     }
 
     @Override
-    protected boolean shouldShowVoidingModeButton() {
+    public boolean shouldShowVoidingModeButton() {
         return false;
     }
 

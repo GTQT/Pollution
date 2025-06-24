@@ -24,7 +24,7 @@ public abstract class MixinMetaTileEntityMetaTileEntityCokeOvenCommon extends Re
     public void update() {
         super.update();
         if (!getWorld().isRemote) {
-            if (getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution) {
+            if (getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution && recipeMapWorkable.isActive()) {
                 AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollution$pollutionMultiplier * 0.1), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
             }
         }

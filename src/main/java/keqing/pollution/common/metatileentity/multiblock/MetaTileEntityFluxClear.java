@@ -53,6 +53,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     private final double VisTicks;
     private final int tier;
     private final long energyAmountPer;

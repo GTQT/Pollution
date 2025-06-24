@@ -48,6 +48,7 @@ import static net.minecraft.util.math.MathHelper.ceil;
 import static net.minecraft.util.math.MathHelper.sqrt;
 
 public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithControl {
+
     private static final int BASIC_CAPACITY = 2048;
     //随机数
     private final Random random = Pollution.RANDOM;

@@ -41,6 +41,10 @@ import java.util.List;
 
 
 public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     int speed = 0;
     int speedMax = 1;
 
@@ -252,7 +256,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
     }
 
     @Override
-    protected boolean shouldShowVoidingModeButton() {
+    public boolean shouldShowVoidingModeButton() {
         return false;
     }
 

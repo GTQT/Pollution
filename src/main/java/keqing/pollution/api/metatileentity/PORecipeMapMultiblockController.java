@@ -27,7 +27,10 @@ import java.util.List;
 import static keqing.pollution.api.utils.infusedFluidStack.STACK_MAP;
 
 public abstract class PORecipeMapMultiblockController extends MultiMapMultiblockController {
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     protected Material material;
     int tier;
     int visStorage;

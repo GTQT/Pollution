@@ -23,7 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockController{
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     public IManaHatch ManaHatch;
     public int tier;
     double timeReduce;//耗时减免

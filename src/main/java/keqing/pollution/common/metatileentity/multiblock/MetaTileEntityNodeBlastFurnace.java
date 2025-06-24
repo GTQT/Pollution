@@ -49,7 +49,10 @@ import java.util.List;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController {
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     int CoilLevel;
     int Temp;
 

@@ -1,5 +1,6 @@
 package keqing.pollution.common.metatileentity.multiblockpart.BMHPCA;
 
+import com.cleanroommc.modularui.drawable.UITexture;
 import gregtech.api.GTValues;
 import gregtech.api.capability.IHPCACoolantProvider;
 import gregtech.api.gui.GuiTextures;
@@ -8,6 +9,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import keqing.pollution.client.textures.POGuiTextures;
 import keqing.pollution.client.textures.POTextures;
 import net.minecraft.util.ResourceLocation;
 
@@ -36,8 +38,8 @@ public class MetaTileEntityBMHPCACooler extends MetaTileEntityBMHPCAComponent im
         return this.supers||ultimate ? POTextures.BMHPCA_ACTIVE_COOLER_OVERLAY : POTextures.BMHPCA_HEAT_SINK_OVERLAY;
     }
 
-    public TextureArea getComponentIcon() {
-        return this.supers||ultimate ? POTextures.BMHPCA_ICON_ACTIVE_COOLER_COMPONENT : POTextures.BMHPCA_ICON_HEAT_SINK_COMPONENT;
+    public UITexture getComponentIcon() {
+        return this.supers||ultimate ? POGuiTextures.BMHPCA_ICON_ACTIVE_COOLER_COMPONENT : POGuiTextures.BMHPCA_ICON_HEAT_SINK_COMPONENT;
     }
 
     public SimpleOverlayRenderer getFrontActiveOverlay() {

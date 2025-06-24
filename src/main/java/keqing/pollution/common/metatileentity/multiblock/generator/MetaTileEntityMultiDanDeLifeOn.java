@@ -56,6 +56,10 @@ import static java.lang.Math.pow;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     private int XPos;
     private int YPos;
     private int ZPos;

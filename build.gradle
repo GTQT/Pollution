@@ -114,7 +114,6 @@ dependencies {
     implementation rfg.deobf("curse.maven:jei-238222:5101347")
     implementation rfg.deobf("curse.maven:thaumic-jei-285492:2705304")
     implementation rfg.deobf(files("libs/theoneprobe-1.12-1.4.28.jar"))
-    implementation rfg.deobf(files("libs/CraftTweaker2-1.12-4.1.20.703.jar"))
     implementation rfg.deobf("curse.maven:code-chicken-lib-1-8-242818:2779848")
     implementation rfg.deobf("curse.maven:chisel-235279:2915375")
     implementation "curse.maven:ctm-267602:2915363-deobf"

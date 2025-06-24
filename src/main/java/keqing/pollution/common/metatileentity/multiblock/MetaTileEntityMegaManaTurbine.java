@@ -79,6 +79,10 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_
 //懒得写了，能不能写出来都不好说，结构就丢到群里下单，看看有没有群友想做建筑的
 //优先级：写机器>写配方材料
 public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     public final int tier;
     public final ICubeRenderer casingRenderer;
     public final boolean hasMufflerHatch;
@@ -218,7 +222,7 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         return true;
     }
 
-    protected boolean shouldShowVoidingModeButton() {
+    public boolean shouldShowVoidingModeButton() {
         return true;
     }
 

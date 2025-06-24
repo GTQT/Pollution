@@ -77,16 +77,6 @@ public class POTextures {
 	public static SimpleOverlayRenderer HYPER_4;
 	public static SimpleOverlayRenderer HYPER_5;
 
-	public static final TextureArea BMHPCA_COMPONENT_OUTLINE = TextureArea.fullImage("textures/gui/widget/bm_hpca/component_outline.png");
-	public static final TextureArea BMHPCA_ICON_EMPTY_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/empty_component.png");
-	public static final TextureArea BMHPCA_ICON_ADVANCED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/advanced_computation_component.png");
-	public static final TextureArea BMHPCA_ICON_BRIDGE_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/bridge_component.png");
-	public static final TextureArea BMHPCA_ICON_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/computation_component.png");
-	public static final TextureArea BMHPCA_ICON_ACTIVE_COOLER_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/active_cooler_component.png");
-	public static final TextureArea BMHPCA_ICON_HEAT_SINK_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/heat_sink_component.png");
-	public static final TextureArea BMHPCA_ICON_DAMAGED_ADVANCED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/damaged_advanced_computation_component.png");
-	public static final TextureArea BMHPCA_ICON_DAMAGED_COMPUTATION_COMPONENT = TextureArea.fullImage("textures/gui/widget/bm_hpca/damaged_computation_component.png");
-
 	public static final SimpleOverlayRenderer QUANTUM_ASPECT_TANK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_q_aspect_tank");
 	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");
 	public static final SimpleOverlayRenderer ASPECT_OUTPUT_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_aspect_out");

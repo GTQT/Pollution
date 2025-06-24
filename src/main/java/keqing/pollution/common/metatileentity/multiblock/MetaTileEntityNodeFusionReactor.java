@@ -68,6 +68,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockController implements ICleanVis, IFastRenderMetaTileEntity {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     private final int tier;
     //漫宿类型
     private final FluidStack BLACK_MANSUS = PollutionMaterials.blackmansus.getFluid(1);

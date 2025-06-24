@@ -1,5 +1,6 @@
 package keqing.pollution.common.metatileentity.multiblockpart.BMHPCA;
 
+import com.cleanroommc.modularui.drawable.UITexture;
 import gregtech.api.GTValues;
 import gregtech.api.capability.IHPCAComputationProvider;
 import gregtech.api.gui.resources.TextureArea;
@@ -7,6 +8,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 
+import keqing.pollution.client.textures.POGuiTextures;
 import keqing.pollution.client.textures.POTextures;
 import net.minecraft.util.ResourceLocation;
 
@@ -36,11 +38,11 @@ public class MetaTileEntityBMHPCAComputation extends MetaTileEntityBMHPCACompone
         }
     }
 
-    public TextureArea getComponentIcon() {
+    public UITexture getComponentIcon() {
         if (this.isDamaged()) {
-            return this.ultimate ? POTextures.BMHPCA_ICON_DAMAGED_ADVANCED_COMPUTATION_COMPONENT : POTextures.BMHPCA_ICON_DAMAGED_COMPUTATION_COMPONENT;
+            return this.ultimate ? POGuiTextures.BMHPCA_ICON_DAMAGED_ADVANCED_COMPUTATION_COMPONENT : POGuiTextures.BMHPCA_ICON_DAMAGED_COMPUTATION_COMPONENT;
         } else {
-            return this.ultimate ? POTextures.BMHPCA_ICON_ADVANCED_COMPUTATION_COMPONENT : POTextures.BMHPCA_ICON_COMPUTATION_COMPONENT;
+            return this.ultimate ? POGuiTextures.BMHPCA_ICON_ADVANCED_COMPUTATION_COMPONENT : POGuiTextures.BMHPCA_ICON_COMPUTATION_COMPONENT;
         }
     }
 
