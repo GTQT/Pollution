@@ -16,7 +16,7 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.api.metaileentity.MetaTileEntityBaseWithControl;
+import keqing.gtqtcore.api.metatileentity.MetaTileEntityBaseWithControl;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
