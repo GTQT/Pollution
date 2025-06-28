@@ -5,12 +5,15 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.properties.impl.TemperatureProperty;
+import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -29,6 +32,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -82,11 +86,16 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends PORecipeMapMultiblockC
 
     //集成父类的UI信息 添加自己的炉温信息
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        textList.add(new TextComponentTranslation("Temperature: %s", Temp));
-    }
+    public void addHeatCapacity(KeyManager keyManager, UISyncer syncer) {
+        if (isStructureFormed()) {
+            var heatString = KeyUtil.number(TextFormatting.RED,
+                    syncer.syncInt(Temp), "K");
 
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,
+                    "gregtech.multiblock.blast_furnace.max_temperature", heatString));
+        }
+
+    }
     //工具提示
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip,

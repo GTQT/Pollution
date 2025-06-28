@@ -5,11 +5,15 @@ import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
 import gregtech.api.util.TextFormattingUtil;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.capability.IVisHatch;
@@ -19,6 +23,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -27,10 +32,7 @@ import java.util.List;
 import static keqing.pollution.api.utils.infusedFluidStack.STACK_MAP;
 
 public abstract class PORecipeMapMultiblockController extends MultiMapMultiblockController {
-    @Override
-    public boolean usesMui2() {
-        return false;
-    }
+
     protected Material material;
     int tier;
     int visStorage;
@@ -92,14 +94,14 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     public void updateFormedValid() {
         super.updateFormedValid();
         if (!isStructureFormed()) return;
-        isVisModule=!this.getAbilities(POMultiblockAbility.VIS_HATCH).isEmpty();
-        isManaModule=!this.getAbilities(POMultiblockAbility.MANA_HATCH).isEmpty();
+        isVisModule = !this.getAbilities(POMultiblockAbility.VIS_HATCH).isEmpty();
+        isManaModule = !this.getAbilities(POMultiblockAbility.MANA_HATCH).isEmpty();
         if (isVisModule) {
             this.visStorage = this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).getVisStore();
-            energyReduce=1;
-            timeReduce=1;
-            OverclockingEnhance=0;
-            ParallelEnhance=0;
+            energyReduce = 1;
+            timeReduce = 1;
+            OverclockingEnhance = 0;
+            ParallelEnhance = 0;
         }
         if (isManaModule) {
             this.visStorage = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMana();
@@ -124,7 +126,16 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
             textList.add(new TextComponentTranslation("缺少源质输入!!!"));
         }
     }
-
+    @Override
+    protected void configureWarningText(MultiblockUIBuilder builder) {
+        builder.addCustom((keyList, syncer) -> {
+            if (!drainMaterial(material, false)) {
+                keyList.add(KeyUtil.lang(TextFormatting.YELLOW,
+                        "缺少源质输入!!!"));
+            }
+        });
+        super.configureWarningText(builder);
+    }
     public boolean drainVis(int amount, boolean simulate) {
         if (isVisModule) return this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).drainVis(amount * 4, simulate);
         if (isManaModule)
@@ -180,27 +191,44 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         this.isVisModule = data.getBoolean("isVisModule");
         this.isManaModule = data.getBoolean("isManaModule");
         this.maxParallel = data.getInteger("maxParallel");
-        this.timeReduce=data.getDouble("timeReduce");
-        this.energyReduce=data.getDouble("energyReduce");
-        this.ParallelEnhance=data.getInteger("ParallelEnhance");
-        this.OverclockingEnhance=data.getInteger("OverclockingEnhance");
+        this.timeReduce = data.getDouble("timeReduce");
+        this.energyReduce = data.getDouble("energyReduce");
+        this.ParallelEnhance = data.getInteger("ParallelEnhance");
+        this.OverclockingEnhance = data.getInteger("OverclockingEnhance");
     }
+
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addHeatCapacity)
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
+    }
+
+
+    public void addHeatCapacity(KeyManager keyManager, UISyncer syncer) {
+
+    }
+
+    private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
         if (isStructureFormed())
-            textList.add(new TextComponentTranslation("灵气源: %s / %s（总） 灵气等级: %s", visStorage, visStorageMax, tier));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "灵气源: %s / %s（总） 灵气等级: %s", uiSyncer.syncInt(visStorage), uiSyncer.syncInt(visStorageMax), uiSyncer.syncInt(tier)));
         if (material != null) {
             FluidStack fluidStack = getInputFluidInventory().drain(material.getFluid(Integer.MAX_VALUE), false);
             int i = fluidStack == null ? 0 : fluidStack.amount;
             if (i == 0)
-                textList.add(new TextComponentTranslation("%s要素未填充", material.getLocalizedName()));
+                keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"%s要素未填充", uiSyncer.syncString(material.getLocalizedName())));
             if (i != 0)
-                textList.add(new TextComponentTranslation("%s要素储量: %s", material.getLocalizedName(), TextFormattingUtil.formatNumbers((i))));
+                keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"%s要素储量: %s", uiSyncer.syncString(material.getLocalizedName()), TextFormattingUtil.formatNumbers((i))));
         }
         if (isManaModule) {
-            textList.add(new TextComponentTranslation("超频加强: " + OverclockingEnhance + " 耗时减免: " + timeReduce));
-            textList.add(new TextComponentTranslation("并行加强: " + ParallelEnhance + " 耗能减免: " + energyReduce));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "超频加强: " + uiSyncer.syncInt(OverclockingEnhance) + " 耗时减免: " + uiSyncer.syncDouble(timeReduce)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "并行加强: " + uiSyncer.syncInt(ParallelEnhance) + " 耗能减免: " + uiSyncer.syncDouble(energyReduce)));
         }
     }
 
@@ -261,10 +289,10 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
 
         @Override
         protected void updateRecipeProgress() {
-            if (this.canRecipeProgress && this.drawEnergy((int) (this.recipeEUt* energyReduce), true)) {
+            if (this.canRecipeProgress && this.drawEnergy((int) (this.recipeEUt * energyReduce), true)) {
                 if (drainVis(tier, true) && drainMaterial(material, false)) {
 
-                    this.drawEnergy((int) (this.recipeEUt* energyReduce), false);
+                    this.drawEnergy((int) (this.recipeEUt * energyReduce), false);
 
                     drainMaterial(material, true);
                     drainVis(tier, false);
@@ -272,7 +300,7 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
                         this.completeRecipe();
                     }
                 }
-                if (this.hasNotEnoughEnergy && this.getEnergyInputPerSecond() > 19L * (long) this.recipeEUt) {
+                if (this.hasNotEnoughEnergy && this.getEnergyInputPerSecond() > 19L * this.recipeEUt) {
                     this.hasNotEnoughEnergy = false;
                 }
             } else if (this.recipeEUt > 0) {

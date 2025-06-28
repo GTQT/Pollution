@@ -365,7 +365,7 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
                     // Energy Usage
                     String voltageName = syncer
                             .syncString(GTValues.VNF[GTUtility.getTierByVoltage(hpcaHandler.getMaxEUt())]);
-                    manager.add(KeyUtil.lang(TextFormatting.GRAY,
+                    manager.add(KeyUtil.lang(
                             "gregtech.multiblock.hpca.energy",
                             KeyUtil.number(syncer.syncLong(hpcaHandler.cachedEUt)),
                             KeyUtil.number(syncer.syncLong(hpcaHandler.getMaxEUt())),
@@ -391,7 +391,7 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
                                 "gregtech.multiblock.hpca.warning_temperature"));
 
                         // Active cooler overdrive warning
-                        manager.add(KeyUtil.lang(TextFormatting.GRAY,
+                        manager.add(KeyUtil.lang(
                                 "gregtech.multiblock.hpca.warning_temperature_active_cool"));
                     }
 
@@ -807,7 +807,7 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
         public void addInfo(KeyManager manager, UISyncer syncer) {
             // Max Computation
             IKey data = KeyUtil.number(TextFormatting.AQUA, syncer.syncInt(getMaxCWUt()));
-            manager.add(KeyUtil.lang(TextFormatting.GRAY,
+            manager.add(KeyUtil.lang(
                     "gregtech.multiblock.hpca.info_max_computation", data));
 
             int coolingAmt = syncer.syncInt(getMaxCoolingAmount());
@@ -818,11 +818,11 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
             TextFormatting coolingColor = coolingAmt < coolingDemand ? TextFormatting.RED :
                     TextFormatting.GREEN;
             data = KeyUtil.number(coolingColor, coolingDemand);
-            manager.add(KeyUtil.lang(TextFormatting.GRAY,
+            manager.add(KeyUtil.lang(
                     "gregtech.multiblock.hpca.info_max_cooling_demand", data));
 
             data = KeyUtil.number(coolingColor, coolingAmt);
-            manager.add(KeyUtil.lang(TextFormatting.GRAY,
+            manager.add(KeyUtil.lang(
                     "gregtech.multiblock.hpca.info_max_cooling_available", data));
 
             // Coolant Required
@@ -835,7 +835,7 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
                 data = KeyUtil.string(TextFormatting.GREEN, "0");
             }
 
-            manager.add(KeyUtil.lang(TextFormatting.GRAY,
+            manager.add(KeyUtil.lang(
                     "gregtech.multiblock.hpca.info_max_coolant_required", data));
 
             // Bridging
@@ -851,15 +851,15 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
         public void addWarnings(KeyManager keyManager, UISyncer syncer) {
             List<IKey> warnings = new ArrayList<>();
             if (syncer.syncInt(numBridges) > 1) {
-                warnings.add(KeyUtil.lang(TextFormatting.GRAY,
+                warnings.add(KeyUtil.lang(
                         "gregtech.multiblock.hpca.warning_multiple_bridges"));
             }
             if (syncer.syncBoolean(computationProviders.isEmpty())) {
-                warnings.add(KeyUtil.lang(TextFormatting.GRAY,
+                warnings.add(KeyUtil.lang(
                         "gregtech.multiblock.hpca.warning_no_computation"));
             }
             if (syncer.syncBoolean(getMaxCoolingDemand() > getMaxCoolingAmount())) {
-                warnings.add(KeyUtil.lang(TextFormatting.GRAY,
+                warnings.add(KeyUtil.lang(
                         "gregtech.multiblock.hpca.warning_low_cooling"));
             }
             if (!warnings.isEmpty()) {

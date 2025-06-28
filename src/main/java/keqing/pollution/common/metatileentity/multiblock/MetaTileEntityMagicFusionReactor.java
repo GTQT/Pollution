@@ -6,11 +6,13 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.util.GTTransferUtils;
-import gregtech.api.util.RelativeDirection;
+import gregtech.api.util.*;
 import gregtech.api.util.interpolate.Eases;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.IRenderSetup;
@@ -38,6 +40,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -54,10 +57,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.ErichAura;
 import static keqing.pollution.api.unification.PollutionMaterials.RichAura;
 
 public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockController implements IBloomEffect, IFastRenderMetaTileEntity {
-    @Override
-    public boolean usesMui2() {
-        return false;
-    }
+
     protected static final int NO_COLOR = 0;
     int glass;//不知道
     int coil;//灵气增长倍率
@@ -89,7 +89,25 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
         textList.add(new TextComponentTranslation("灵气富集存储：%s / %s Aura", aura, frame * 25000));
         textList.add(new TextComponentTranslation("存储速率: %s 转换速率: %s", coil, compose));
     }
+    @Override
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
+    }
 
+
+    private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
+        if (isStructureFormed()) {
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "灵气富集存储：%s / %s Aura", uiSyncer.syncInt(aura), uiSyncer.syncInt(frame * 25000)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "存储速率: %s 转换速率: %s", uiSyncer.syncInt(coil), uiSyncer.syncInt(compose)));
+        }
+    }
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);

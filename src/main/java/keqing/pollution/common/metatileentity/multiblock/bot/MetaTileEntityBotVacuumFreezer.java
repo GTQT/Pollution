@@ -5,10 +5,13 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -112,14 +115,13 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
     }
 
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
+    public void addHeatCapacity(KeyManager keyManager, UISyncer syncer) {
         if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("磁致冷线圈温度: %s K", this.temperature).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-            textList.add(new TextComponentTranslation("磁致冷线圈等级: %s K", this.getCoilTier()).setStyle((new Style()).setColor(TextFormatting.WHITE)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"磁致冷线圈温度: %s K", syncer.syncInt(temperature)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"磁致冷线圈等级: %s K", syncer.syncInt(getCoilTier())));
         }
-    }
 
+    }
     @Override
     public SoundEvent getBreakdownSound() {
         return GTSoundEvents.BREAKDOWN_ELECTRICAL;

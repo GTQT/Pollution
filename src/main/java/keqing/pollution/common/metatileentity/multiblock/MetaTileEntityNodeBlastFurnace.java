@@ -9,6 +9,9 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -17,6 +20,9 @@ import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.properties.impl.TemperatureProperty;
 import gregtech.api.util.GTTransferUtils;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
+import gregtech.api.util.TextFormattingUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -41,6 +47,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,10 +56,6 @@ import java.util.List;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController {
-    @Override
-    public boolean usesMui2() {
-        return false;
-    }
     int CoilLevel;
     int Temp;
 
@@ -153,15 +156,27 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 
     //集成父类的UI信息 添加自己的炉温信息
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        textList.add(new TextComponentTranslation("线圈温度: %s", Temp));
-        textList.add(new TextComponentTranslation("pollution.machine.node_blast_furnace_coillevel", this.CoilLevel).setStyle((new Style()).setColor(TextFormatting.WHITE)));
-        textList.add(new TextComponentTranslation("炼金术是否可运行: %s", timerSwitch));
-        textList.add(new TextComponentTranslation("炼金术配方耗能减免: %s", Math.min(0.25, (double) continuousProgressingTimer / 200000)));
-        textList.add(new TextComponentTranslation("上一个碾碎节点含Ordo和Perditio要素: %s", essence));
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
     }
 
+    private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
+        if (isStructureFormed())
+            keyManager.add(KeyUtil.lang( TextFormatting.RED,"线圈温度: %s", uiSyncer.syncInt(Temp)));
+        keyManager.add(KeyUtil.lang( TextFormatting.RED,"pollution.machine.node_blast_furnace_coillevel", uiSyncer.syncInt(CoilLevel)));
+        keyManager.add(KeyUtil.lang( TextFormatting.RED,"炼金术是否可运行: %s", uiSyncer.syncBoolean(timerSwitch)));
+        keyManager.add(KeyUtil.lang( TextFormatting.RED,"炼金术配方耗能减免: %s", uiSyncer.syncDouble(Math.min(0.25, (double) continuousProgressingTimer / 200000))));
+        for (Integer integer : essence)
+            keyManager.add(KeyUtil.lang(TextFormatting.RED, "上一个碾碎节点含Ordo和Perditio要素: %s", uiSyncer.syncInt(integer)));
+
+    }
     @Override
     public SoundEvent getBreakdownSound() {
         return GTSoundEvents.BREAKDOWN_ELECTRICAL;

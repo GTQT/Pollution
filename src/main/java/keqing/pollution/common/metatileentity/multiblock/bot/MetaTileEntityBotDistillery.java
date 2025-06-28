@@ -90,18 +90,6 @@ public class MetaTileEntityBotDistillery extends POManaMultiblockWithElectric {
                 .build();
     }
 
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        if (this.isStructureFormed()) {
-            FluidStack stackInTank = this.importFluids.drain(Integer.MAX_VALUE, false);
-            if (stackInTank != null && stackInTank.amount > 0) {
-                TextComponentTranslation fluidName = new TextComponentTranslation(stackInTank.getFluid().getUnlocalizedName(stackInTank));
-                textList.add(new TextComponentTranslation("gregtech.multiblock.distillation_tower.distilling_fluid", fluidName));
-            }
-        }
-
-    }
-
     //设置主方块和功能仓室纹理
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {

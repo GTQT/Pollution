@@ -11,12 +11,18 @@ import gregtech.api.metatileentity.multiblock.FuelMultiblockController;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.logic.OverclockingLogic;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
 import gregtech.api.util.TextComponentUtil;
+import gregtech.api.util.TextFormattingUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
@@ -43,6 +49,7 @@ import vazkii.botania.common.block.ModBlocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cleanroommc.modularui.api.drawable.IKey.AQUA;
 import static com.cleanroommc.modularui.utils.MathUtils.min;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
@@ -79,10 +86,6 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_
 //懒得写了，能不能写出来都不好说，结构就丢到群里下单，看看有没有群友想做建筑的
 //优先级：写机器>写配方材料
 public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
-    @Override
-    public boolean usesMui2() {
-        return false;
-    }
     public final int tier;
     public final ICubeRenderer casingRenderer;
     public final boolean hasMufflerHatch;
@@ -177,9 +180,19 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     }
 
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        textList.add(TextComponentUtil.stringWithColor(TextFormatting.AQUA, "最大输出功率:" + CatalystAllowedMaxCapacity));
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
+    }
+    public void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
+        if (isStructureFormed())
+            keyManager.add(KeyUtil.lang( AQUA,"最大输出功率: %s", uiSyncer.syncLong(CatalystAllowedMaxCapacity)));
     }
 
     @Override

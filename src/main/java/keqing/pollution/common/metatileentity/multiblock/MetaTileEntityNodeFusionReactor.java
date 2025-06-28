@@ -14,6 +14,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
@@ -23,6 +24,8 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.logic.OCParams;
 import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.api.recipes.properties.impl.FusionEUToStartProperty;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -68,10 +71,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockController implements ICleanVis, IFastRenderMetaTileEntity {
-    @Override
-    public boolean usesMui2() {
-        return false;
-    }
+
     private final int tier;
     //漫宿类型
     private final FluidStack BLACK_MANSUS = PollutionMaterials.blackmansus.getFluid(1);
@@ -407,14 +407,21 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
     }
 
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        textList.add(new TextComponentTranslation("区块超稳: %s    漫宿供给: %s", isCleanVis(), isMansusSupplied));
-        textList.add(new TextComponentTranslation("并行因子: %s    减耗因子: %s    加速因子: %s", overallParallelAmount, overallEnergyAmount, overallProgressTimeAmount));
-        textList.add(new TextComponentTranslation("玄牝因子: %s    素牡因子: %s    天璇因子: %s", overallBlackAmount, overallWhiteAmount, overallStarryAmount));
-        textList.add(new TextComponentTranslation("温度缓存: %s", this.heat));
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom((textList, syncer) -> {
+                    textList.add(KeyUtil.lang( "区块超稳: %s    漫宿供给: %s", syncer.syncBoolean(isCleanVis()), syncer.syncBoolean(isMansusSupplied)));
+                    textList.add(KeyUtil.lang( "并行因子: %s    减耗因子: %s    加速因子: %s", syncer.syncInt(overallParallelAmount), syncer.syncInt(overallEnergyAmount), syncer.syncInt(overallProgressTimeAmount)));
+                    textList.add(KeyUtil.lang( "玄牝因子: %s    素牡因子: %s    天璇因子: %s", syncer.syncInt(overallBlackAmount), syncer.syncInt(overallWhiteAmount), syncer.syncInt(overallStarryAmount)));
+                    textList.add(KeyUtil.lang( "温度缓存: %s", syncer.syncLong(heat)));
+                })
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
     }
-
     //tooltip
     public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, world, tooltip, advanced);

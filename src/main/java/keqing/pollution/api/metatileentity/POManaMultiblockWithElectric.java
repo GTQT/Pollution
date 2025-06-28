@@ -7,32 +7,37 @@ import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
 import keqing.pollution.api.capability.IManaHatch;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockController{
-    @Override
-    public boolean usesMui2() {
-        return false;
-    }
+public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockController {
+
     public IManaHatch ManaHatch;
     public int tier;
     double timeReduce;//耗时减免
     double energyReduce;//耗能减免
     int OverclockingEnhance;//超频加强
     int ParallelEnhance;//并行加强
+
+    public POManaMultiblockWithElectric(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+        super(metaTileEntityId, recipeMap);
+        this.recipeMapWorkable = new POManaMultiblockWithElectricRecipeLogic(this);
+    }
 
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setInteger("tier", this.tier);
@@ -42,10 +47,6 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
     public void readFromNBT(NBTTagCompound data) {
         this.tier = data.getInteger("tier");
         super.readFromNBT(data);
-    }
-    public POManaMultiblockWithElectric(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
-        super(metaTileEntityId, recipeMap);
-        this.recipeMapWorkable = new POManaMultiblockWithElectricRecipeLogic(this);
     }
 
     @Override
@@ -58,12 +59,14 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
         energyContainer.addAll(this.getAbilities(MultiblockAbility.INPUT_LASER));
         this.energyContainer = new EnergyContainerList(energyContainer);
     }
+
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         this.ManaHatch = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0);
         tier = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTier();
     }
+
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
@@ -72,15 +75,31 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
         tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.3"));
     }
 
-    @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("灵气源: %s / %s（总） 灵气等级: %s", getMana(), getMaxMana(), tier));
-            textList.add(new TextComponentTranslation("超频加强: " + OverclockingEnhance + " 耗时减免: " + timeReduce));
-            textList.add(new TextComponentTranslation("并行加强: " + ParallelEnhance + " 耗能减免: " + energyReduce));
-        }
 
+    @Override
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addHeatCapacity)
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
+    }
+
+
+    public void addHeatCapacity(KeyManager keyManager, UISyncer syncer) {
+
+    }
+
+    private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
+        if (isStructureFormed()) {
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "灵气源: %s / %s（总） 灵气等级: %s", uiSyncer.syncInt(getMana()), uiSyncer.syncInt(getMaxMana()), uiSyncer.syncInt(tier)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"超频加强: " + uiSyncer.syncInt(OverclockingEnhance) + " 耗时减免: " + uiSyncer.syncDouble(timeReduce)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"并行加强: " + uiSyncer.syncInt(ParallelEnhance) + " 耗能减免: " + uiSyncer.syncDouble(energyReduce)));
+        }
     }
 
     public int getMana() {
@@ -102,6 +121,7 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
             this.ParallelEnhance = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getParallelEnhance();
         }
     }
+
     public boolean drainVis(int amount, boolean simulate) {
         return ManaHatch.consumeMana(amount, simulate);
     }
@@ -139,7 +159,7 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
         @Override
         protected boolean drawEnergy(long EUt, boolean simulate) {
             long recipeEUt = EUt / tier;
-            long resultEnergy = this.getEnergyStored() - (long) recipeEUt;
+            long resultEnergy = this.getEnergyStored() - recipeEUt;
             if (resultEnergy >= 0L && resultEnergy <= this.getEnergyCapacity()) {
                 if (!simulate) {
                     this.getEnergyContainer().changeEnergy(-recipeEUt);
@@ -167,6 +187,7 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
                 return 2.0;
             }
         }
+
         @Override
         public void setMaxProgress(int maxProgress) {
             super.setMaxProgress((int) (maxProgress * timeReduce));
