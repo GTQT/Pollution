@@ -1,69 +1,70 @@
-#Material Registration
-metaitem.the_world.name=The World(UPRIGHT)
-metaitem.the_world.tooltip=23
+# Tarot Items
+metaitem.the_world.name=The World (Upright)
+metaitem.the_world.tooltip=Wish you the universe in your grasp
 
-metaitem.the_judgement.name=The Judgement(UPRIGHT)
-metaitem.the_judgement.tooltip=22
+metaitem.the_judgement.name=Judgement (Upright)
+metaitem.the_judgement.tooltip=Wish you discernment and clarity
 
-metaitem.the_sun.name=The Sun(UPRIGHT)
-metaitem.the_sun.tooltip=21
+metaitem.the_sun.name=The Sun (Upright)
+metaitem.the_sun.tooltip=Wish you enlightenment upon your path
 
-metaitem.the_moon.name=The moon(UPRIGHT)
-metaitem.the_moon.tooltip=20
+metaitem.the_moon.name=The Moon (Upright)
+metaitem.the_moon.tooltip=Wish you lost and found again
 
-metaitem.the_star.name=The Star(UPRIGHT)
-metaitem.the_star.tooltip=19
+metaitem.the_star.name=The Star (Upright)
+metaitem.the_star.tooltip=Wish you wishes come true
 
-metaitem.the_tower.name=The Tower(UPRIGHT)
-metaitem.the_tower.tooltip=18
+metaitem.the_tower.name=The Tower (Upright)
+metaitem.the_tower.tooltip=Wish you survive calamity
 
-metaitem.the_devil.name=The Devil(UPRIGHT)
-metaitem.the_devil.tooltip=17
+metaitem.the_devil.name=The Devil (Upright)
+metaitem.the_devil.tooltip=Wish you wealth and prosperity
 
-metaitem.the_temperance.name=The Temperance(UPRIGHT)
-metaitem.the_temperance.tooltip=16
+metaitem.the_temperance.name=Temperance (Upright)
+metaitem.the_temperance.tooltip=Wish you purity of heart
 
-metaitem.the_death.name=The Death(UPRIGHT)
-metaitem.the_death.tooltip=15
+metaitem.the_death.name=Death (Upright)
+metaitem.the_death.tooltip=Wish you die for a worthy cause
 
-metaitem.the_hanged_man.name=The Hanged Man(UPRIGHT)
-metaitem.the_hanged_man.tooltip=14
+metaitem.the_hanged_man.name=The Hanged Man (Upright)
+metaitem.the_hanged_man.tooltip=Wish you find revelation
 
-metaitem.the_justice.name=The Justice(UPRIGHT)
-metaitem.the_justice.tooltip=13
+metaitem.the_justice.name=Justice (Upright)
+metaitem.the_justice.tooltip=Wish you rise to great heights
 
-metaitem.the_wheel_of_fortune.name=The Wheel of Fortune(UPRIGHT)
-metaitem.the_wheel_of_fortune.tooltip=12
+metaitem.the_wheel_of_fortune.name=The Wheel of Fortune (Upright)
+metaitem.the_wheel_of_fortune.tooltip=Wish you turn misfortune into luck
 
-metaitem.the_hermit.name=The Hermit(UPRIGHT)
-metaitem.the_hermit.tooltip=11
+metaitem.the_hermit.name=The Hermit (Upright)
+metaitem.the_hermit.tooltip=Wish you live in harmony with nature
 
-metaitem.the_strength.name=The Strength(UPRIGHT)
-metaitem.the_strength.tooltip=10
+metaitem.the_strength.name=Strength (Upright)
+metaitem.the_strength.tooltip=Wish you invincible and unstoppable
 
-metaitem.the_chariot.name=The Chariot(UPRIGHT)
-metaitem.the_chariot.tooltip=9
+metaitem.the_chariot.name=The Chariot (Upright)
+metaitem.the_chariot.tooltip=Wish you triumph wherever you go
 
-metaitem.the_lovers.name=The Lovers(UPRIGHT)
-metaitem.the_lovers.tooltip=8
+metaitem.the_lovers.name=The Lovers (Upright)
+metaitem.the_lovers.tooltip=Wish you health and prosperity
 
-metaitem.the_highophant.name=The Highophant(UPRIGHT)
-metaitem.the_highophant.tooltip=7
+metaitem.the_highophant.name=The High Priest (Upright)
+metaitem.the_highophant.tooltip=Wish you students flourish under your guidance
 
-metaitem.the_emperor.name=The Emperor(UPRIGHT)
-metaitem.the_emperor.tooltip=6
+metaitem.the_emperor.name=The Emperor (Upright)
+metaitem.the_emperor.tooltip=Wish you vigilant defense and leadership
 
-metaitem.the_empress.name=The Empress(UPRIGHT)
-metaitem.the_empress.tooltip=5
+metaitem.the_empress.name=The Empress (Upright)
+metaitem.the_empress.tooltip=Wish you wisdom and resourcefulness
 
-metaitem.the_high_priestess.name=The High Priestess(UPRIGHT)
-metaitem.the_high_priestess.tooltip=4
+metaitem.the_high_priestess.name=The High Priestess (Upright)
+metaitem.the_high_priestess.tooltip=Wish you unity of knowledge and action
 
-metaitem.the_magician.name=The Magician(UPRIGHT)
-metaitem.the_magician.tooltip=May you never miss your goal
+metaitem.the_magician.name=The Magician (Upright)
+metaitem.the_magician.tooltip=Wish you wisdom and resourcefulness
 
-metaitem.the_fool.name=The Fool(UPRIGHT)
-metaitem.the_fool.tooltip=The beginning of journey
+metaitem.the_fool.name=The Fool (Upright)
+metaitem.the_fool.tooltip=Wish you a place to return to
+
 
 metaitem.test_item.name=papa testing item
 metaitem.test_item.tooltip=this is a desc
@@ -197,6 +198,12 @@ metaitem.ingotIizunamaruElectrum.tooltip=§7Starwind "Rainbow Land Dance"§r
 pollution.material.aetheric_dark_steel=Too void steel
 metaitem.ingotAethericDarkSteel.tooltip=§8To the extreme, keep quiet. All things work together, and I look at it.§r
 
+pollution.material.flame_coal=Stabilized Flame Coal
+pollution.material.dumb_tin=Tarnish-Mute Tin
+pollution.material.melt_gold=World-Smelt Gold
+pollution.material.authority_lead=Abyss-Suppress Lead
+pollution.material.pyrargyrite=Deep-Red Silver
+pollution.material.molten_silver=Ghost-Crystal Zinc
 # Filth Line
 pollution.material.filth=Filth Mixture
 pollution.material.filth_water=Extremely Filthy Water
@@ -236,6 +243,15 @@ pollution.material.hyperdimensional_silver=Hyperdimensional Silver
 metaitem.ingotHyperdimensionalSilver.tooltip=§7Play a hyperdimensional game with me, until the end of Mansus...§r
 pollution.material.dimensional_transforming_agent=Dimensional Transforming Agent
 pollution.material.ferrous_chloride=Ferrous Chloride
+
+# 哈基米
+pollution.material.hydrazoic_acid=Azidozoic acid
+pollution.material.sodium_azide=sodium azide
+pollution.material.sodium_cyclopentadienide=Sodium cyclopentadienyl
+pollution.material.hafnocene_dichloride=Hafnium dichlorodicyane
+pollution.material.μ_oxo_bis_hafnocene_azide=Maothyfnium hafnium ether
+metaitem.dustΜOxoBisHafnoceneAzide.tooltip=If you can synthesize this, you should ask for hafnium-based zirconium
+
 #Items
 metaitem.blank_catalyst_core.name="§8Blank Catalyst Core§r"
 metaitem.cold_catalyst_core.name="§bIcy Catalyst Core§r"

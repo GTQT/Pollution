@@ -163,6 +163,14 @@ public class PollutionMaterials {
 	public static Material hafnocene_dichloride;
 	public static Material μ_oxo_bis_hafnocene_azide;
 
+	//其他矿物
+	public static Material FlameCoal;
+	public static Material DumbTin;
+	public static Material MeltGold;
+	public static Material AuthorityLead;
+	public static Material Pyrargyrite;
+	public static Material PlutoZinc;
+
 	public PollutionMaterials() {
 	}
 
@@ -171,5 +179,7 @@ public class PollutionMaterials {
 		FirstDegreeMaterials.register();
 		SecondDegreeMaterials.register();
 		HigherDegreeMaterials.register();
+		OreMaterials.register();
+		MaterialFlagAddition.init();
 	}
 }

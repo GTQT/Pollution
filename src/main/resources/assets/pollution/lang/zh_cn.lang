@@ -195,6 +195,12 @@ metaitem.ingotIizunamaruElectrum.tooltip=§7星风「虹彩陆离乱舞」§r
 pollution.material.aetheric_dark_steel=太虚玄钢
 metaitem.ingotAethericDarkSteel.tooltip=§8致虚极，守静笃。万物并作，吾以观复。§r
 
+pollution.material.flame_coal=固焰煤
+pollution.material.dumb_tin=哑泽锡
+pollution.material.melt_gold=铄世金
+pollution.material.authority_lead=镇渊铅
+pollution.material.pyrargyrite=深红银
+pollution.material.molten_silver=冥晶锌
 #污秽线
 pollution.material.filth=污秽混合物
 pollution.material.filth_water=极秽之水
@@ -978,3 +984,15 @@ pollution.machine.aspect_tank.luv.name=量子源质缸 II
 pollution.machine.aspect_tank.zpm.name=量子源质缸 III
 pollution.machine.aspect_tank.uv.name=量子源质缸 IV
 pollution.machine.aspect_tank.uhv.name=量子源质缸 V
+
+##矿脉
+pollution.veins.ore.flame_coal=地下固焰煤矿脉
+pollution.veins.ore.octine=地下炽焰铁矿脉
+pollution.veins.ore.syrmorite=地下赛摩铜矿脉
+pollution.veins.ore.scabyst=地下痂壳晶矿脉
+pollution.veins.ore.valonite=地下法罗钠矿脉
+pollution.veins.ore.pyrargyrite=地下深红银矿脉
+pollution.veins.ore.pluto_zinc=地下锌锑硫化矿脉
+pollution.veins.ore.thaumastic.i=地下蕴魔矿脉I
+pollution.veins.ore.thaumastic.ii=地下蕴魔矿脉II
+pollution.veins.ore.thaumastic.iii=地下蕴魔矿脉III

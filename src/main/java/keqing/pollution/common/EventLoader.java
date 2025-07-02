@@ -2,9 +2,11 @@ package keqing.pollution.common;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.metatileentity.registry.MTEManager;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
 import keqing.gtqtcore.GTQTCore;
+import keqing.gtqtcore.api.utils.GTQTLog;
 import keqing.pollution.Advancement.AdvancementTriggers;
 import keqing.pollution.POConfig;
 import keqing.pollution.Pollution;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static gregtech.api.worldgen.config.OreConfigUtils.getMaterialByName;
 import static keqing.pollution.api.utils.POTeleporter.buildPortalIngredient;
 import static keqing.pollution.api.utils.POTeleporter.portalIngredient;
 import static keqing.pollution.common.block.blocks.PollutionBlocksInit.BLOCK_TF_PORTAL;
@@ -55,7 +58,6 @@ public class EventLoader {
     public static void registerMaterials(MaterialEvent event) {
         PollutionMaterials.register();
         buildPortalIngredient();
-        //在此处注册材料
     }
 
     @SubscribeEvent

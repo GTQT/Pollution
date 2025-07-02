@@ -251,6 +251,7 @@ public class FirstDegreeMaterials {
                 .build()
                 .setFormula("FeTer5(AeIgOrd)5", true);
 
+        //赛摩铜
         PollutionMaterials.syrmorite = new Material.Builder(getMaterialsId(), pollutionId("syrmorite"))
                 .color(0x2414B3)
                 .ingot().fluid().ore()
@@ -264,6 +265,7 @@ public class FirstDegreeMaterials {
                 .build()
                 .setFormula("CuTer5(TerOrd)5", true);
 
+        //炽焰铁
         PollutionMaterials.octine = new Material.Builder(getMaterialsId(), pollutionId("octine"))
                 .color(0xFFAE33)
                 .ingot().fluid().ore()
@@ -277,6 +279,7 @@ public class FirstDegreeMaterials {
                 .build()
                 .setFormula("FeIg5(AeIg)5", true);
 
+        //痂壳晶
         PollutionMaterials.scabyst = new Material.Builder(getMaterialsId(), pollutionId("scabyst"))
                 .color(0x53C58D)
                 .gem().fluid().ore()
@@ -287,6 +290,8 @@ public class FirstDegreeMaterials {
                 .build()
                 .setFormula("((SiO2)4Fe)(IgTerOrd2)5)4", true);
 
+
+        //法罗钠
         PollutionMaterials.valonite = new Material.Builder(getMaterialsId(), pollutionId("valonite"))
                 .color(0xFFCCFF)
                 .gem().fluid().ore()
