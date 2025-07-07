@@ -96,7 +96,7 @@ public class MapGenBTNBridge extends MapGenStructure {
             }
 
             this.updateBoundingBox();
-            this.setRandomHeight(worldIn, random, 48, 70);
+            this.setRandomHeight(worldIn, random, 80, 160);
         }
     }
 }

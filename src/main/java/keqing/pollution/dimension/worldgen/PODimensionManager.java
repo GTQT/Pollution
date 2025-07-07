@@ -1,6 +1,6 @@
 package keqing.pollution.dimension.worldgen;
 
-import keqing.pollution.dimension.dims.BetweenLandNether;
+import keqing.pollution.dimension.dims.UnderWorlds;
 import keqing.pollution.dimension.dims.DimensionDemiplane;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
@@ -15,7 +15,7 @@ public class PODimensionManager {
 		DimensionManager.registerDimension(DEMIPLANE_DIM_ID, DimensionType.register("the_demiplane", "_demiplane", DEMIPLANE_DIM_ID, DimensionDemiplane.class, false));
 
 		BTN_DIM_ID = 41;
-		DimensionManager.registerDimension(BTN_DIM_ID, DimensionType.register("the_btn", "_btn", BTN_DIM_ID, BetweenLandNether.class, false));
+		DimensionManager.registerDimension(BTN_DIM_ID, DimensionType.register("the_btn", "_btn", BTN_DIM_ID, UnderWorlds.class, false));
 
 	}
 }

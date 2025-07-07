@@ -15,7 +15,7 @@ public class POBiomeHandler {
 
 	// 创建一个静态实例
 	public static final Biome DEMIPLANE_BIOME = new POBiomeDemiplane(); // 替换为你的自定义生物群系类
-	public static final Biome BNTNether_BIOME = new POBiomeBNTNether();
+	public static final Biome UnderWorld_BIOME = new POBiomeBNTNether();
 	@SubscribeEvent
 	public static void registerBiomes(RegistryEvent.Register<Biome> event) {
 		IForgeRegistry<Biome> registry = event.getRegistry();
@@ -26,8 +26,8 @@ public class POBiomeHandler {
 		BiomeManager.addSpawnBiome(DEMIPLANE_BIOME);
 
 		// 交错地狱 主维度
-		BNTNether_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.2"));
-		registry.register(BNTNether_BIOME);
-		BiomeManager.addSpawnBiome(BNTNether_BIOME);
+		UnderWorld_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.2"));
+		registry.register(UnderWorld_BIOME);
+		BiomeManager.addSpawnBiome(UnderWorld_BIOME);
 	}
 }

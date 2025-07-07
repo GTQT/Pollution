@@ -242,7 +242,7 @@ public class FirstDegreeMaterials {
 
         PollutionMaterials.thaumium = new Material.Builder(getMaterialsId(), pollutionId("thaumium"))
                 .color(0x483D8B)
-                .ingot().fluid()
+                .ingot().fluid().ore(true)
                 .components(Iron, 1, infused_earth, 5, infused_air, 5, infused_fire, 5, infused_order, 5)
                 .fluidPipeProperties(500, 120, true)
                 .toolStats(new MaterialToolProperty(5, 4, 1024, 3))
@@ -254,7 +254,7 @@ public class FirstDegreeMaterials {
         //赛摩铜
         PollutionMaterials.syrmorite = new Material.Builder(getMaterialsId(), pollutionId("syrmorite"))
                 .color(0x2414B3)
-                .ingot().fluid().ore()
+                .ingot().fluid().ore(true)
                 .components(Copper, 1, infused_earth, 10, infused_order, 5)
                 .toolStats(new MaterialToolProperty(2, 4, 384, 3))
                 .rotorStats(6.0F, 3.0F, 512)
@@ -268,7 +268,7 @@ public class FirstDegreeMaterials {
         //炽焰铁
         PollutionMaterials.octine = new Material.Builder(getMaterialsId(), pollutionId("octine"))
                 .color(0xFFAE33)
-                .ingot().fluid().ore()
+                .ingot().fluid().ore(true)
                 .components(Iron, 1, infused_fire, 10, infused_air, 5)
                 .toolStats(new MaterialToolProperty(2, 4, 256, 3))
                 .rotorStats(6.0F, 3.0F, 512)
@@ -282,7 +282,7 @@ public class FirstDegreeMaterials {
         //痂壳晶
         PollutionMaterials.scabyst = new Material.Builder(getMaterialsId(), pollutionId("scabyst"))
                 .color(0x53C58D)
-                .gem().fluid().ore()
+                .gem().fluid().ore(true)
                 .components(Iron, 1, Silicon, 4, Oxygen, 8, infused_fire, 5, infused_earth, 5, infused_order, 10)
                 .toolStats(new MaterialToolProperty(4, 4, 288, 4))
                 .iconSet(GEM_HORIZONTAL)
@@ -294,7 +294,7 @@ public class FirstDegreeMaterials {
         //法罗钠
         PollutionMaterials.valonite = new Material.Builder(getMaterialsId(), pollutionId("valonite"))
                 .color(0xFFCCFF)
-                .gem().fluid().ore()
+                .gem().fluid().ore(true)
                 .toolStats(new MaterialToolProperty(4, 4, 1024, 4))
                 .iconSet(EMERALD)
                 .flags(GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, DECOMPOSITION_BY_CENTRIFUGING, GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_FRAME, GENERATE_DOUBLE_PLATE, GENERATE_DENSE, GENERATE_FOIL)

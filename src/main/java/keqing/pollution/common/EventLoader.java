@@ -7,7 +7,6 @@ import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
 import keqing.gtqtcore.GTQTCore;
 import keqing.gtqtcore.api.utils.GTQTLog;
-import keqing.pollution.Advancement.AdvancementTriggers;
 import keqing.pollution.POConfig;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -88,12 +87,6 @@ public class EventLoader {
                             double vz = rand.nextGaussian() * 0.02D;
 
                             world.spawnParticle(EnumParticleTypes.SPELL, entityItem.posX, entityItem.posY + 0.2, entityItem.posZ, vx, vy, vz);
-                        }
-
-
-                        if (BLOCK_TF_PORTAL.tryToCreatePortal(world, pos, entityItem, player)) {
-                            AdvancementTriggers.FIRST_TO_BTN.trigger((EntityPlayerMP) player);
-                            return;
                         }
                     }
                 }

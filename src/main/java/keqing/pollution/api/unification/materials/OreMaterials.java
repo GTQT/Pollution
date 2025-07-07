@@ -36,7 +36,7 @@ public class OreMaterials {
     public static void register() {
         //固焰煤 红色
         PollutionMaterials.FlameCoal = new Material.Builder(getMaterialsId(), pollutionId("flame_coal"))
-                .gem(1, 2400).ore(2, 1) // default coal burn time in vanilla
+                .gem(1, 2400).ore(2, 1,true) // default coal burn time in vanilla
                 .color(0xFF6347).iconSet(LIGNITE)
                 .flags(FLAMMABLE, NO_SMELTING, NO_SMASHING, MORTAR_GRINDABLE, EXCLUDE_BLOCK_CRAFTING_BY_HAND_RECIPES,
                         DISABLE_DECOMPOSITION)
@@ -49,7 +49,7 @@ public class OreMaterials {
                 .ingot(1)
                 .liquid(new FluidBuilder().temperature(505))
                 .plasma()
-                .ore()
+                .ore(true)
                 .color(0xDCDCDC)
                 .flags(EXT2_METAL, MORTAR_GRINDABLE, GENERATE_ROTOR, GENERATE_SPRING, GENERATE_SPRING_SMALL,
                         GENERATE_FINE_WIRE, GENERATE_DOUBLE_PLATE)
@@ -63,7 +63,7 @@ public class OreMaterials {
         PollutionMaterials.MeltGold = new Material.Builder(getMaterialsId(), pollutionId("melt_gold"))
                 .ingot()
                 .liquid(new FluidBuilder().temperature(1337))
-                .ore()
+                .ore(true)
                 .color(0xFFE650).iconSet(SHINY)
                 .flags(EXT2_METAL, GENERATE_RING, MORTAR_GRINDABLE, EXCLUDE_BLOCK_CRAFTING_BY_HAND_RECIPES,
                         GENERATE_SPRING, GENERATE_SPRING_SMALL, GENERATE_FINE_WIRE, GENERATE_FOIL,
@@ -78,7 +78,7 @@ public class OreMaterials {
         PollutionMaterials.AuthorityLead = new Material.Builder(getMaterialsId(), pollutionId("authority_lead"))
                 .ingot(1)
                 .liquid(new FluidBuilder().temperature(600))
-                .ore()
+                .ore(true)
                 .color(0x8C648C)
                 .flags(EXT2_METAL, MORTAR_GRINDABLE, GENERATE_ROTOR, GENERATE_SPRING, GENERATE_SPRING_SMALL,
                         GENERATE_FINE_WIRE, GENERATE_DOUBLE_PLATE)

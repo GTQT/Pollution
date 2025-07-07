@@ -996,3 +996,5 @@ pollution.veins.ore.pluto_zinc=地下锌锑硫化矿脉
 pollution.veins.ore.thaumastic.i=地下蕴魔矿脉I
 pollution.veins.ore.thaumastic.ii=地下蕴魔矿脉II
 pollution.veins.ore.thaumastic.iii=地下蕴魔矿脉III
+
+gregtech.veins.fluid.water=水矿藏

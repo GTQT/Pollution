@@ -1,6 +1,5 @@
 package keqing.pollution;
 
-import keqing.pollution.Advancement.AdvancementTriggers;
 import keqing.pollution.api.POAPI;
 import keqing.pollution.api.recipes.builder.IndustrialInfusionBuilder;
 import keqing.pollution.api.utils.PollutionLog;
@@ -74,7 +73,6 @@ public class Pollution {
         proxy.preLoad();
         MinecraftForge.EVENT_BUS.register(new PollutionBlocksInit());
         PollutionMetaTileEntities.initialization();
-        AdvancementTriggers.register();
     }
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)

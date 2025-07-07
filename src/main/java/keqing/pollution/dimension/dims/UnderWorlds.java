@@ -1,29 +1,27 @@
 package keqing.pollution.dimension.dims;
 
-import keqing.pollution.dimension.biome.BiomeProviderBetweenLandNether;
 import keqing.pollution.dimension.biome.POBiomeHandler;
-import keqing.pollution.dimension.worldgen.ChunkGenerator.ChunkGeneratorBNT;
+import keqing.pollution.dimension.worldgen.ChunkGenerator.ChunkGeneratorUnderWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static keqing.pollution.dimension.worldgen.PODimensionType.BTM;
+import static keqing.pollution.dimension.worldgen.PODimensionType.UNDER_WORLD;
 
-public class BetweenLandNether extends WorldProvider {
+public class UnderWorlds extends WorldProvider {
     public void init() {
         //this.biomeProvider = new BiomeProviderBetweenLandNether();// 初始化你维度的生物群系提供器
-        this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.BNTNether_BIOME);// 初始化你维度的生物群系提供器
+        this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.UnderWorld_BIOME);// 初始化你维度的生物群系提供器
         this.doesWaterVaporize = true;
     }
 
     @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float p_76562_1_, float p_76562_2_) {
-        return new Vec3d(0.05D, 0.15D, 0.05D); // 深绿色
+        return new Vec3d(0.1D, 0.1D, 0.1D); // 深绿色
     }
 
     protected void generateLightBrightnessTable() {
@@ -37,7 +35,7 @@ public class BetweenLandNether extends WorldProvider {
 
 
     public IChunkGenerator createChunkGenerator() {
-        return new ChunkGeneratorBNT(this.world, this.world.getWorldInfo().isMapFeaturesEnabled(), this.world.getSeed());
+        return new ChunkGeneratorUnderWorld(this.world, this.world.getWorldInfo().isMapFeaturesEnabled(), this.world.getSeed());
     }
 
     public boolean isSurfaceWorld() {
@@ -59,7 +57,7 @@ public class BetweenLandNether extends WorldProvider {
 
     @Override
     public DimensionType getDimensionType() {
-        return BTM;
+        return UNDER_WORLD;
     }
 
     @Override

@@ -17,5 +17,15 @@ public class MaterialFlagAddition {
         oreProp.setOreByProducts(Silver, Sulfur, Tin);
         oreProp.setWashedIn(SodiumPersulfate);
         oreProp.setDirectSmeltResult(Zinc);
+
+        oreProp = AuthorityLead.getProperty(PropertyKey.ORE);
+        oreProp.setOreByProducts(Silver, Lead, Iron);
+        oreProp.setWashedIn(Water);
+        oreProp.setDirectSmeltResult(Lead);
+
+        oreProp = MeltGold.getProperty(PropertyKey.ORE);
+        oreProp.setOreByProducts(Gold, Silver, Lead);
+        oreProp.setWashedIn(Water);
+        oreProp.setDirectSmeltResult(Gold);
     }
 }
