@@ -53,7 +53,7 @@ public class EventLoader {
     }
 
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
+    @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void registerMaterials(MaterialEvent event) {
         PollutionMaterials.register();
         buildPortalIngredient();

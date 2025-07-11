@@ -106,8 +106,8 @@ public class PORecipeMaps {
 
     public static final RecipeMap<FusionRecipeBuilder> NODE_MAGIC_FUSION_RECIPES = new RecipeMapBuilder<>("node_magic_fusion",
             new FusionRecipeBuilder())
-            .fluidInputs(2)
-            .fluidOutputs(1)
+            .fluidInputs(3)
+            .fluidOutputs(3)
             .progressBar(GuiTextures.PROGRESS_BAR_FUSION)
             .sound(GTSoundEvents.ARC)
             .build();

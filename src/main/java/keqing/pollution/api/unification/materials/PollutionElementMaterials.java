@@ -1,6 +1,7 @@
 package keqing.pollution.api.unification.materials;
 
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.info.MaterialIconSet;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
 
@@ -24,31 +25,37 @@ public class PollutionElementMaterials {
         PollutionMaterials.infused_air = new Material.Builder(getMaterialsId(), pollutionId("infused_air"))
                 .color(0xFEFE7D)
                 .ore().dust().fluid()
+                .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Ae)
                 .build();
         PollutionMaterials.infused_fire = new Material.Builder(getMaterialsId(), pollutionId("infused_fire"))
                 .color(0xFE3C01)
                 .ore().dust().fluid()
+                .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Ig)
                 .build();
         PollutionMaterials.infused_water = new Material.Builder(getMaterialsId(), pollutionId("infused_water"))
                 .color(0x0090FF)
                 .ore().dust().fluid()
+                .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Aq)
                 .build();
         PollutionMaterials.infused_earth = new Material.Builder(getMaterialsId(), pollutionId("infused_earth"))
                 .color(0x00A000)
                 .ore().dust().fluid()
+                .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Ter)
                 .build();
         PollutionMaterials.infused_entropy = new Material.Builder(getMaterialsId(), pollutionId("infused_entropy"))
                 .color(0x43435E)
                 .ore().dust().fluid()
+                .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Pe)
                 .build();
         PollutionMaterials.infused_order = new Material.Builder(getMaterialsId(), pollutionId("infused_order"))
                 .color(0xEECCFF)
                 .ore().dust().fluid()
+                .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Ord)
                 .build();
         PollutionMaterials.mana = new Material.Builder(getMaterialsId(), pollutionId("mana"))

@@ -21,6 +21,12 @@ import thaumcraft.api.items.ItemsTC;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
+import static gregtech.api.recipes.RecipeMaps.MIXER_RECIPES;
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.ore.OrePrefix.dust;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.GadoliniumSiliconGermanium;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.Okin;
+import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class NodeFusionRecipes {
 
@@ -127,6 +133,15 @@ public class NodeFusionRecipes {
 				.fluidOutputs(GTQTMaterials.Richmagic.getFluid(1000))
 				.EUToStart(60000000L)
 				.EUt(VA[EV])
+				.duration(200)
+				.buildAndRegister();
+
+		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(144))
+				.fluidInputs(PollutionMaterials.infused_order.getFluid(144))
+				.fluidOutputs(GTQTMaterials.Okin.getFluid(576))
+				.EUToStart(420000000L)
+				.EUt(VA[UHV])
 				.duration(200)
 				.buildAndRegister();
 	}

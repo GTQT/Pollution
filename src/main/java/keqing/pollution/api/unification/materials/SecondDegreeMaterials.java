@@ -397,5 +397,15 @@ public class SecondDegreeMaterials {
                 .components(Carbon, 20, Hydrogen, 20, Hafnium, 2, Nitrogen, 6, Oxygen, 1)
                 .build()
                 .setFormula("[(Cp)2Hf(N3)2]2(μ-O)");
+
+        //能量水晶
+        PollutionMaterials.energy_crystal = new Material.Builder(getMaterialsId(), pollutionId("energy_crystal"))
+                .color(0xF0A274)
+                .dust()
+                .fluid()
+                .iconSet(DULL)
+                .components(infused_air, 1, infused_fire, 1, infused_water, 1, infused_earth, 1)
+                .build()
+                .setFormula("(Ae)(Fi)(Wa)(Ea)", true);
     }
 }
