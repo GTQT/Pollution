@@ -1,4 +1,4 @@
-package keqing.pollution.mixin;
+package keqing.pollution.mixin.gregtech;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;

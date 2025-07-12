@@ -1,8 +1,8 @@
-package keqing.pollution.mixin;
+package keqing.pollution.mixin.gregtech;
 
 import gregtech.api.metatileentity.multiblock.RecipeMapPrimitiveMultiblockController;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.common.metatileentities.multi.MetaTileEntityPrimitiveBlastFurnace;
+import gregtech.common.metatileentities.multi.MetaTileEntityCokeOven;
 import keqing.pollution.POConfig;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -14,13 +14,13 @@ import org.spongepowered.asm.mixin.Unique;
 import java.util.List;
 
 
-@Mixin(MetaTileEntityPrimitiveBlastFurnace.class)
-public abstract class MixinMetaTileEntityPrimitiveBlastFurnaceClient extends RecipeMapPrimitiveMultiblockController {
+@Mixin(MetaTileEntityCokeOven.class)
+public abstract class MixinMetaTileEntityMetaTileEntityCokeOvenClient extends RecipeMapPrimitiveMultiblockController {
 
     @Unique
     private final float pollution$pollutionMultiplier = POConfig.PollutionSystemSwitch.mufflerPollutionMultiplier;
 
-    public MixinMetaTileEntityPrimitiveBlastFurnaceClient(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+    public MixinMetaTileEntityMetaTileEntityCokeOvenClient(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         super(metaTileEntityId, recipeMap);
     }
 

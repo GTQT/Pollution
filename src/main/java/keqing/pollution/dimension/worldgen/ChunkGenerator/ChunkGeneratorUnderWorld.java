@@ -197,10 +197,10 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
                                 // 噪声值大于0生成石头（覆盖整个高度范围）
                                 if (zInterpolatedValue > 0.0D) {
                                     //如何在水平面以下使用黑色变种石头
-                                    if(currentHeight < waterLevel-5) iblockstate = Kimberlite;
+                                    if(currentHeight < waterLevel - 1) iblockstate = Kimberlite;
                                     else if(currentHeight > waterLevel+5) iblockstate = Stone;
                                     else {
-                                        if (zInterpolatedValue > 0.5D)iblockstate = Stone;
+                                        if (zInterpolatedValue > 0.7D)iblockstate = Stone;
                                         else iblockstate = Kimberlite;
                                     }
                                 }
@@ -312,12 +312,12 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
                                 // 地表特殊覆盖层（保持不变）
                                 if (yPos >= seaLevel - 4 && yPos <= seaLevel + 1) {
                                     if (hasGravel) {
-                                        topBlock = Blocks.GRAVEL.getDefaultState();
-                                        fillerBlock = Blocks.STONE.getDefaultState();
+                                        topBlock = Blocks.STONE.getDefaultState();
+                                        fillerBlock = Blocks.CLAY.getDefaultState();
                                     }
                                     if (hasSlowSand) {
                                         topBlock = Blocks.SAND.getDefaultState();
-                                        fillerBlock = Blocks.SANDSTONE.getDefaultState();
+                                        fillerBlock = Blocks.GRAVEL.getDefaultState();
                                     }
                                 }
 

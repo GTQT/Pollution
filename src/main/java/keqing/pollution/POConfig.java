@@ -10,7 +10,13 @@ public class POConfig {
     public static MachineSettingSwitch MachineSettingSwitch = new MachineSettingSwitch();
     public static PollutionSystemSwitch PollutionSystemSwitch = new PollutionSystemSwitch();
     public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
+    public static AspectsCache AspectsCache = new AspectsCache();
 
+    public static class AspectsCache {
+
+        @Config.Comment("在运行时计算的项目方面的保存间隔（以秒为单位）。如果您不想定期保存，请将其设为 -1，尽管我不建议这样做。")
+        public int saveInterval = 300;
+    }
     public static class OBJRenderSwitch {
         @Config.Comment({"节点聚变反应堆OBJ模型渲染开启"})
         @Config.RequiresMcRestart
