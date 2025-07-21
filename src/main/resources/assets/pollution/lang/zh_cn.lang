@@ -740,6 +740,10 @@ recipemap.magic_greenhouse.name=魔植培育
 recipemap.forge_alchemy.name=锻炉炼金术
 recipemap.stove.name=烧结
 recipemap.node_magic_fusion.name=骄阳漫宿嬗变
+recipemap.mana_infusion_recipes.name=工业植物炼金注魔
+recipemap.mana_petal_recipes.name=工业植物花药制取
+recipemap.pure_daisy_recipes.name=工业植物纯白嬗变
+recipemap.rune_altar_recipes.name=工业植物符文合成
 #事件
 pollution.command.slowness=§7你感到行动不便
 pollution.command.weakness=§b你感到一阵虚弱
@@ -930,6 +934,11 @@ pollution.machine.bot_vacuum_freezer.name=超越秘术深蓝寒冬构阵
 pollution.machine.bot_vacuum_freezer.tooltip=§a面对着充满星光与默示的夜，我第一次向这个世界动人的冷漠敞开了心扉。§r
 pollution.machine.bot_circuit_assembler.name=高阶秘术电路装配中心
 pollution.machine.bot_circuit_assembler.tooltip=§a假如殉道者的鲜血将要流淌在台阶上，我们就必须先建造台阶。§r
+
+pollution.machine.industial_pure_daisy.name=秘学新植白菊之塔
+pollution.machine.mana_petal_apothecary.name=秘学新植花药之杯
+pollution.machine.mana_rune_altar.name=秘学新植符文之台
+pollution.machine.mana_infusion_reactor.name=秘学新植注魔之坛
 
 #
 itemGroup.Pollution=污染
