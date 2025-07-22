@@ -1,434 +1,138 @@
 package keqing.pollution.loaders.recipes;
 
+import com.google.common.collect.ImmutableList;
 import gregtech.api.recipes.RecipeMaps;
-import keqing.pollution.api.unification.PollutionMaterials;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.stack.MaterialStack;
 
-import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_FUSION_REACTOR;
+import static gregtech.api.GTValues.V;
+import static gregtech.api.GTValues.VA;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_TURBINE_FUELS;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class CompoundAspectRecipes {
-	public static void init() {
-		aspect();
-	}
+    public static void init() {
+        aspect();
+    }
 
-	private static void aspect() {
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(ErichAura.getFluid(4))
-				.fluidOutputs(RichAura.getFluid(4))
-				.duration(320)
-				.EUt(32)
-				.buildAndRegister();
+    private static void aspect() {
+        registerGenerator(infused_air);
+        registerGenerator(infused_fire);
+        registerGenerator(infused_water);
+        registerGenerator(infused_earth);
+        registerGenerator(infused_entropy);
+        registerGenerator(infused_order);
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(magic_nitrobenzene.getFluid(1))
-				.duration(1080)
-				.EUt(32)
-				.buildAndRegister();
+        //这里注册所有要用到的复合要素的配方喵
+        //用不到的就不负责喵
+        //群友说要用搅拌机 我就用搅拌机喵
+        // 晶体
+        registerAspect(infused_air, infused_earth, infused_crystal);
+        // 生命
+        registerAspect(infused_earth, infused_water, infused_life);
+        // 死亡
+        registerAspect(infused_water, infused_entropy, infused_death);
+        // 灵魂
+        registerAspect(infused_life, infused_death, infused_soul);
+        // 武器
+        registerAspect(infused_soul, infused_entropy, infused_weapon);
+        // 金属
+        registerAspect(infused_earth, infused_order, infused_metal);
+        // 能量
+        registerAspect(infused_order, infused_fire, infused_energy);
+        // 工具
+        registerAspect(infused_metal, infused_energy, infused_instrument);
+        // 交换
+        registerAspect(infused_order, infused_entropy, infused_exchange);
+        // 魔法
+        registerAspect(infused_air, infused_energy, infused_magic);
+        // 炼金
+        registerAspect(infused_magic, infused_water, infused_alchemy);
+        // 光明
+        registerAspect(infused_fire, infused_air, infused_light);
+        // 创造
+        registerAspect(infused_instrument, infused_exchange, infused_craft);
+        // 虚空
+        registerAspect(infused_entropy, infused_air, infused_void);
+        // 移动
+        registerAspect(infused_order, infused_air, infused_motion);
+        // 腐化
+        registerAspect(infused_entropy, infused_magic, infused_taint);
+        // 黑暗
+        registerAspect(infused_entropy, infused_light, infused_dark);
+        // 异域
+        registerAspect(infused_void, infused_dark, infused_alien);
+        // 飞行
+        registerAspect(infused_air, infused_motion, infused_fly);
+        // 植物
+        registerAspect(infused_earth, infused_life, infused_plant);
+        // 机械
+        registerAspect(infused_motion, infused_instrument, infused_mechanics);
+        // 陷阱
+        registerAspect(infused_entropy, infused_motion, infused_trap);
+        // 亡灵
+        registerAspect(infused_earth, infused_life, infused_plant);
+        // 思维
+        registerAspect(infused_fire, infused_soul, infused_thought);
+        // 感知
+        registerAspect(infused_air, infused_soul, infused_sense);
+        // 野兽
+        registerAspect(infused_motion, infused_life, infused_animal);
+        // 人类
+        registerAspect(infused_life, infused_soul, infused_human);
+        // 贪婪
+        registerAspect(infused_soul, infused_void, infused_greed);
+        // 装备
+        registerAspect(infused_soul, infused_earth, infused_armor);
+        // 寒冷
+        registerAspect(infused_fire, infused_entropy, infused_cold);
+        // 亡灵（再次）
+        registerAspect(infused_motion, infused_death, infused_undead);
+        // 灵气
+        registerAspect(infused_magic, infused_air, infused_aura);
+        //空间
+        registerAspect(infused_void, infused_entropy, infused_spatio);
+        //时间
+        registerAspect(infused_spatio, infused_exchange, infused_tempus);
+        //艺术
+        registerAspect(infused_sense, infused_exchange, infused_tinctura);
+    }
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_air.getFluid(80))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
+    public static void registerAspect(Material input1, Material input2, Material output) {
+        int amount = countAllNestedComponents(output);
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_fire.getFluid(80))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
+        RecipeMaps.MIXER_RECIPES.recipeBuilder()
+                .fluidInputs(input1.getFluid(1000))
+                .fluidInputs(input2.getFluid(1000))
+                .fluidOutputs(output.getFluid(2000))
+                .duration(100*amount)
+                .EUt(VA[amount/4])
+                .buildAndRegister();
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_water.getFluid(80))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
+        registerGenerator(output, 80, 40*amount,amount/3);
+    }
+    public static int countAllNestedComponents(Material material) {
+        return countNestedComponents(material.getMaterialComponents());
+    }
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_earth.getFluid(80))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
+    private static int countNestedComponents(ImmutableList<MaterialStack> components) {
+        int count = 0;
+        for (MaterialStack stack : components) {
+            count += 1;
+            int nestedCount = countNestedComponents(stack.material.getMaterialComponents());
+            count += nestedCount;
+        }
+        return count;
+    }
+    public static void registerGenerator(Material input) {
+        registerGenerator(input, 80, 80, 1);
+    }
 
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_entropy.getFluid(80))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
-
-		MAGIC_TURBINE_FUELS.recipeBuilder()
-				.fluidInputs(infused_order.getFluid(80))
-				.duration(80)
-				.EUt(32)
-				.buildAndRegister();
-
-		//这里注册所有要用到的复合要素的配方喵
-		//用不到的就不负责喵
-		//群友说要用搅拌机 我就用搅拌机喵
-		//水晶
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_air.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_earth.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_crystal.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//生命
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_earth.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_water.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_life.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//死亡
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_water.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_death.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//灵魂
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_life.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_death.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_soul.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//武器
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_soul.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_weapon.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//金属
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_earth.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_order.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_metal.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//能量
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_order.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_fire.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_energy.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//工具
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_metal.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_instrument.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//交换
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_order.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_exchange.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//魔法
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_air.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_magic.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//炼金
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_magic.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_water.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_alchemy.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//光明
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_fire.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_air.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_light.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//创造
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_instrument.getFluid(1000))
-				.fluidInputs(infused_exchange.getFluid(1000))
-				.fluidOutputs(infused_craft.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//虚空
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_entropy.getFluid(1000))
-				.fluidInputs(infused_air.getFluid(1000))
-				.fluidOutputs(infused_void.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//移动
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_order.getFluid(1000))
-				.fluidInputs(infused_air.getFluid(1000))
-				.fluidOutputs(infused_motion.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//腐化
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_entropy.getFluid(1000))
-				.fluidInputs(infused_magic.getFluid(1000))
-				.fluidOutputs(infused_taint.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//黑暗
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_entropy.getFluid(1000))
-				.fluidInputs(infused_light.getFluid(1000))
-				.fluidOutputs(infused_dark.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//异域
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_void.getFluid(1000))
-				.fluidInputs(infused_dark.getFluid(1000))
-				.fluidOutputs(infused_alien.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//飞行
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_air.getFluid(1000))
-				.fluidInputs(infused_motion.getFluid(1000))
-				.fluidOutputs(infused_fly.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//植物
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_earth.getFluid(1000))
-				.fluidInputs(infused_life.getFluid(1000))
-				.fluidOutputs(infused_plant.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//机械
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_motion.getFluid(1000))
-				.fluidInputs(infused_instrument.getFluid(1000))
-				.fluidOutputs(infused_mechanics.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//陷阱
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_entropy.getFluid(1000))
-				.fluidInputs(infused_motion.getFluid(1000))
-				.fluidOutputs(infused_trap.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//亡灵
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_earth.getFluid(1000))
-				.fluidInputs(infused_life.getFluid(1000))
-				.fluidOutputs(infused_plant.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//思维
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_fire.getFluid(1000))
-				.fluidInputs(infused_soul.getFluid(1000))
-				.fluidOutputs(infused_thought.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//感知
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_air.getFluid(1000))
-				.fluidInputs(infused_soul.getFluid(1000))
-				.fluidOutputs(infused_sense.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//野兽
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_motion.getFluid(1000))
-				.fluidInputs(infused_life.getFluid(1000))
-				.fluidOutputs(infused_animal.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//人类
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_life.getFluid(1000))
-				.fluidInputs(infused_soul.getFluid(1000))
-				.fluidOutputs(infused_human.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//贪婪
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_soul.getFluid(1000))
-				.fluidInputs(infused_void.getFluid(1000))
-				.fluidOutputs(infused_greed.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//装备
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_soul.getFluid(1000))
-				.fluidInputs(infused_earth.getFluid(1000))
-				.fluidOutputs(infused_armor.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//寒冷
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_fire.getFluid(1000))
-				.fluidInputs(infused_entropy.getFluid(1000))
-				.fluidOutputs(infused_cold.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//亡灵
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_motion.getFluid(1000))
-				.fluidInputs(infused_death.getFluid(1000))
-				.fluidOutputs(infused_undead.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//灵气
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_magic.getFluid(1000))
-				.fluidInputs(infused_air.getFluid(1000))
-				.fluidOutputs(infused_aura.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//空间
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_void.getFluid(1000))
-				.fluidInputs(infused_entropy.getFluid(1000))
-				.fluidOutputs(infused_spatio.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//时间
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_spatio.getFluid(1000))
-				.fluidInputs(infused_exchange.getFluid(1000))
-				.fluidOutputs(infused_tempus.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//艺术
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(infused_sense.getFluid(1000))
-				.fluidInputs(infused_exchange.getFluid(1000))
-				.fluidOutputs(infused_tinctura.getFluid(2000))
-				.duration(200)
-				.EUt(30)
-				.buildAndRegister();
-		//核裂变
-		//水晶
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_air.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_earth.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_crystal.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//生命
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_earth.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_water.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_life.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//死亡
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_water.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_entropy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_death.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//灵魂
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_life.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_death.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_soul.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//武器
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_soul.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_entropy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_weapon.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//金属
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_earth.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_order.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_metal.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//能量
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_order.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_fire.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//工具
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_metal.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_energy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_instrument.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//交换
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_order.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_entropy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_exchange.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//魔法
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_air.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_energy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_magic.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//炼金
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_magic.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_water.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_alchemy.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-		//光明
-		MAGIC_FUSION_REACTOR.recipeBuilder()
-				.fluidOutputs(PollutionMaterials.infused_fire.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.infused_air.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_light.getFluid(2000))
-				.duration(200)
-				.buildAndRegister();
-	}
+    public static void registerGenerator(Material input, int amount, int duration, int tier) {
+        MAGIC_TURBINE_FUELS.recipeBuilder()
+                .fluidInputs(input.getFluid(amount))
+                .duration(duration)
+                .EUt(V[tier])
+                .buildAndRegister();
+    }
 }

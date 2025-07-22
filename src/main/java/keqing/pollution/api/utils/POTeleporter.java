@@ -410,9 +410,7 @@ public class POTeleporter extends Teleporter {
         } else if (pos.getY() > 128 - 10) {
             pos = new BlockPos(pos.getX(), 128 - 10, pos.getZ());
         }
-
-        // grass all around it
-        //IBlockState grass = BlockRegistry.MUD.getDefaultState();
+        ;
         IBlockState grass = Blocks.GRASS.getDefaultState();
 
         world.setBlockState(pos.west().north(), grass);
@@ -431,8 +429,6 @@ public class POTeleporter extends Teleporter {
         world.setBlockState(pos.east().south(2), grass);
         world.setBlockState(pos.east(2).south(2), grass);
 
-        // dirt under it
-        //IBlockState dirt = BlockRegistry.MUD.getDefaultState();
         IBlockState dirt = Blocks.DIRT.getDefaultState();
 
         world.setBlockState(pos.down(), dirt);

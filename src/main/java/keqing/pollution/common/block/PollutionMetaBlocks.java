@@ -19,6 +19,8 @@ public class PollutionMetaBlocks {
 	public static POGlass GLASS;
 	public static POBotBlock BOT_BLOCK;
 	public static POManaPlate MANA_PLATE;
+	public static POHyper HYPER;
+	public static POComputerCasing COMPUTER_CASING;
 	private PollutionMetaBlocks() {
 	}
 
@@ -46,7 +48,11 @@ public class PollutionMetaBlocks {
 		MANA_PLATE = new POManaPlate();
 		MANA_PLATE.setRegistryName("mana_plate");
 
+        HYPER = new POHyper();
+		HYPER.setRegistryName("hyper");
 
+		COMPUTER_CASING=new POComputerCasing();
+		COMPUTER_CASING.setRegistryName("bm_computer_casing");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -59,6 +65,8 @@ public class PollutionMetaBlocks {
 		registerItemModel(GLASS);
 		registerItemModel(BOT_BLOCK);
 		registerItemModel(MANA_PLATE);
+		registerItemModel(HYPER);
+		registerItemModel(COMPUTER_CASING);
 	}
 
 	@SideOnly(Side.CLIENT)

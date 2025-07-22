@@ -71,11 +71,23 @@ public class PollutionMaterials {
 	public static Material starrymansus;
 	public static Material blood_of_avernus;
 	public static Material iizunamaru_electrum;
+	public static Material aetheric_dark_steel;
+	//污秽线
+	public static Material filth;
+	public static Material filth_water;
+	public static Material void_water;
+	public static Material void_material;
 	//超导线
 	public static Material crude_lk_99;
 	public static Material magical_superconductive_liquid;
 	public static Material basic_thaumic_superconductor;
 	public static Material advanced_thaumic_superconductor;
+
+	public static Material TetraethylLead;
+	public static Material ChlorineTrifluoride;
+	public static Material hydrazine_sulfate;
+	public static Material SodiumLeadAlloy;
+	public static Material infernal_blaze_propellant;
 	//man what can I say
 	public static Material kobemetal;
 	//催化剂
@@ -91,22 +103,20 @@ public class PollutionMaterials {
 	public static Material magic_nitrobenzene;
 	public static Material pure_tar;
 
+	public static Material dragon_pulse_fuel;
+
 	public static Material RichAura;
 	public static Material ErichAura;
 	public static Material sunnarium;
 	public static Material whitemansus;
 	public static Material blackmansus;
 	public static Material Terrasteel;
+	public static Material Orichalcos;
 	public static Material ElvenElementium;
 	public static Material elven;
 	public static Material basic_substrate;
 	public static Material advanced_substrate;
 
-	//交错材料
-	public static Material Mud;
-	public static Material BetweenStone;
-	public static Material PitStone;
-	public static Material CragRock;
 	//刻金线
 	public static Material sulfo_plumbic_salt;
 	public static Material magical_sulfo_plumbic_salt;
@@ -146,15 +156,33 @@ public class PollutionMaterials {
 	public static Material advanced_battery_hull_alloy;
 	public static Material basic_battery_content;
 	public static Material advanced_battery_content;
+	//哈基米
+	public static Material hydrazoic_acid;
+	public static Material sodium_azide;
+	public static Material sodium_cyclopentadienide;
+	public static Material hafnocene_dichloride;
+	public static Material μ_oxo_bis_hafnocene_azide;
+
+	public static Material energy_crystal;
+
+	//其他矿物
+	public static Material FlameCoal;
+	public static Material DumbTin;
+	public static Material MeltGold;
+	public static Material AuthorityLead;
+	public static Material Pyrargyrite;
+	public static Material PlutoZinc;
 
 	public PollutionMaterials() {
 	}
 
 	public static void register() {
 		PollutionElementMaterials.register();
-		CompoundAspectMaterials.register();
-		KeqingChainMaterials.register();
 		FirstDegreeMaterials.register();
-		CatalystMaterials.register();
+		SecondDegreeMaterials.register();
+		HigherDegreeMaterials.register();
+		OreMaterials.register();
+		MaterialPropertyAddition.addMaterialProperties();
+		MaterialFlagAddition.init();
 	}
 }

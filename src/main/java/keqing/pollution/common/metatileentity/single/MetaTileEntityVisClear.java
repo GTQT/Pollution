@@ -7,7 +7,6 @@ import gregtech.api.GTValues;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
-import gregtech.api.gui.widgets.ImageWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
@@ -16,19 +15,24 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
 import keqing.gtqtcore.api.utils.GTQTDateHelper;
+import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.POConfig;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import thaumcraft.api.aura.AuraHelper;
 
@@ -45,6 +49,25 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     long workTime;
     private boolean isActive;
 
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing side) {
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
+                CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.containerInventory) :
+                super.getCapability(capability, side);
+    }
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        for (int i = 0; i < containerInventory.getSlots(); i++) {
+            var pos = getPos();
+            if(!containerInventory.getStackInSlot(i).isEmpty())
+            {
+                getWorld().spawnEntity(new EntityItem(getWorld(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,containerInventory.getStackInSlot(i)));
+                containerInventory.extractItem(i,1,false);
+            }
+
+        }
+    }
     public MetaTileEntityVisClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier = tier;
@@ -71,19 +94,18 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
-        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 229);
-        builder .bindPlayerInventory(entityPlayer.inventory, 146);
-        builder.dynamicLabel(7, 10, () -> "Vis Clear", 0x232323);
-        builder.dynamicLabel(7, 30, () -> "Tier: " + this.getTier(), 0x232323);
-        builder.dynamicLabel(7, 50, () -> "Vis: " + AuraHelper.getFlux(getWorld(), getPos()), 0x232323);
-        builder.widget(new SlotWidget(this.containerInventory, 0, 88 - 9, 70, true, true, true)
-                        .setBackgroundTexture(GuiTextures.SLOT)
-                        .setChangeListener(this::markDirty)
-                        .setTooltipText("请放入过滤器"))
-                .widget(new ImageWidget(88 - 9, 88, 18, 6, GuiTextures.BUTTON_POWER_DETAIL));
-        builder.widget((new AdvancedTextWidget(7, 96, this::addDisplayText, 2302755)).setMaxWidthLimit(181));
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
+        builder.dynamicLabel(28, 12, () -> "污染清洁机 等级：" + tier, 0xFFFFFF);
+        builder.widget(new SlotWidget(containerInventory, 0, 8, 8, true, true)
+                .setBackgroundTexture(GuiTextures.SLOT)
+                .setTooltipText("输入槽位"));
+
+        builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
+        builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
         return builder.build(getHolder(), entityPlayer);
     }
+
 
     @Override
     public void update() {
@@ -105,14 +127,22 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
             return;
         }
 
+        if (!isItemValid(stack))
+        {
+            workTime = 0;
+            TotalTick = 0;
+            return;
+        }
+
+        workTime = AbstractMaterialPartBehavior.getPartDamage(containerInventory.getStackInSlot(0));
+        TotalTick = behavior.getPartMaxDurability(containerInventory.getStackInSlot(0));
+
         if (AuraHelper.getFlux(getWorld(), getPos()) > 0 && isItemValid(stack)) {
             if (energyContainer.getEnergyStored() >= energyAmountPer) {
                 isActive = true;
                 energyContainer.removeEnergy(energyAmountPer);
                 AuraHelper.drainFlux(getWorld(), getPos(), (float) VisTicks, false);
                 behavior.applyDamage(containerInventory.getStackInSlot(0), 1);
-                workTime = AbstractMaterialPartBehavior.getPartDamage(containerInventory.getStackInSlot(0));
-                TotalTick = behavior.getPartMaxDurability(containerInventory.getStackInSlot(0));
             } else {
                 isActive = false;
                 workTime = 0;
@@ -135,11 +165,15 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
+        textList.add(new TextComponentString("当前状态: " + (isActive() ? "运行中" : "停止")));
+        textList.add(new TextComponentString("当前污染: " + AuraHelper.getFlux(getWorld(), getPos())));
+        textList.add(new TextComponentString("清理速率: " + VisTicks));
         textList.add(new TextComponentString("已经工作: " + GTQTDateHelper.getTimeFromTicks(workTime)));
         textList.add(new TextComponentString("距离损坏: " + GTQTDateHelper.getTimeFromTicks(TotalTick - workTime)));
+        if(!isItemValid(containerInventory.getStackInSlot(0)))return;
         if (isActive())
-            textList.add(new TextComponentString("电极材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
-        if (isActive()) textList.add(new TextComponentString("极型等级: " + getFilterBehavior().getFilterTier()));
+            textList.add(new TextComponentString("过滤器材料: " + getFilterBehavior().getMaterial().getLocalizedName()));
+        if (isActive()) textList.add(new TextComponentString("过滤等级: " + getFilterBehavior().getFilterTier()));
     }
 
     public boolean isActive() {
@@ -149,7 +183,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        Textures.POWER_SUBSTATION_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+        GTQTTextures.LARGE_ROCKET_ENGINE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Override

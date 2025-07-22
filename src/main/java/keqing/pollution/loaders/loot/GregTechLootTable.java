@@ -8,6 +8,7 @@ import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.loaders.dungeon.ChestGenHooks;
 import io.netty.channel.AbstractEventLoop;
+import keqing.gtsteam.common.metatileentities.GTSteamMetaTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -55,6 +56,9 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeNormalItem,Tin)), 2, 6, 15);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeLargeItem,Tin)), 1, 5, 10);
 
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Invar)), 2, 6, 10);
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Aluminium)), 1, 4, 10);
+
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Tin)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Copper)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Iron)), 4, 8, 20);
@@ -95,6 +99,9 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeNormalItem,Invar)), 2, 6, 15);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.pipeLargeItem,Invar)), 1, 5, 10);
 
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Invar)), 4, 8, 10);
+            ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.ingot,Aluminium)), 2, 6, 10);
+
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Copper)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Tin)), 4, 8, 20);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.plate,Steel)), 4, 8, 20);
@@ -109,22 +116,29 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.wireGtSingle,Lead)), 2, 6, 15);
             ChestGenHooks.addItem(lootTable, OreDictUnifier.get(new UnificationEntry(OrePrefix.wireGtSingle,Gold)), 1, 5, 10);
 
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.GAS_TURBINE[0].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.STEAM_TURBINE[0].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.COMBUSTION_GENERATOR[0].getStackForm(), 1, 2, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.EXTRACTOR.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.MACERATOR.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.ALLOY_SMELTER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.BENDER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.BREWERY.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.CENTRIFUGE.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.CHEMICAL_BATH.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.COMPRESSOR.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.CUTTER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.ELECTRIC_FURNACE.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.FERMENTER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.FORGE_HAMMER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.LATHE.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.MIXER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.ORE_WASHER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.PACKER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.SIFTER.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.WIREMILL.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.STEAM_TURBINE.getStackForm(), 1, 1, 5);
+            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.COMBUSTION_GENERATOR.getStackForm(), 1, 1, 5);
 
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.EXTRACTOR[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.MACERATOR[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.COMPRESSOR[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.FORGE_HAMMER[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.ELECTRIC_FURNACE[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.ALLOY_SMELTER[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.CHEMICAL_REACTOR[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.WIREMILL[1].getStackForm(), 1, 2, 5);
-            ChestGenHooks.addItem(lootTable, MetaTileEntities.BENDER[1].getStackForm(), 1, 2, 5);
-
-            ChestGenHooks.addItem(lootTable, new ItemStack(Blocks.PISTON), 2, 4, 15);
-            ChestGenHooks.addItem(lootTable, new ItemStack(Blocks.PISTON_EXTENSION), 2, 4, 15);
+            ChestGenHooks.addItem(lootTable, new ItemStack(Blocks.PISTON), 2, 4, 30);
+            ChestGenHooks.addItem(lootTable, new ItemStack(Blocks.PISTON_EXTENSION), 2, 4, 30);
         }
 
     }

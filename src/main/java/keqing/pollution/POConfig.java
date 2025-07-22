@@ -1,5 +1,6 @@
 package keqing.pollution;
 
+import keqing.gtqtcore.GTQTCoreConfig;
 import net.minecraftforge.common.config.Config;
 
 @Config(modid = Pollution.MODID)
@@ -8,14 +9,27 @@ public class POConfig {
     public static WorldSettingSwitch WorldSettingSwitch = new WorldSettingSwitch();
     public static MachineSettingSwitch MachineSettingSwitch = new MachineSettingSwitch();
     public static PollutionSystemSwitch PollutionSystemSwitch = new PollutionSystemSwitch();
+    public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
+    public static AspectsCache AspectsCache = new AspectsCache();
 
+    public static class AspectsCache {
+
+        @Config.Comment("在运行时计算的项目方面的保存间隔（以秒为单位）。如果您不想定期保存，请将其设为 -1，尽管我不建议这样做。")
+        public int saveInterval = 300;
+    }
+    public static class OBJRenderSwitch {
+        @Config.Comment({"节点聚变反应堆OBJ模型渲染开启"})
+        @Config.RequiresMcRestart
+        @Config.Name("Enable obj Model Node Fusion Reactor")
+        public boolean EnableObjNodeFusionReactor = true;
+    }
     public static class WorldSettingSwitch {
         @Config.RequiresMcRestart
         @Config.Comment("为交错底世界维度分配的ID号。如果与其他模组冲突，请更改。")
         public int BTNetherDimensionID = 41;
         @Config.Comment("可以始终前往交错底世界的维度，以及返回的维度。默认为交错次元。")
-        public int originDimension = 20;
-        @Config.Comment("允许在“交错次元”维度之外创建前往交错底世界的传送门。这可能被视为作弊。")
+        public int originDimension = 0;
+        @Config.Comment("允许在“主世界”维度之外创建前往交错底世界的传送门。这可能被视为作弊。")
         public boolean allowPortalsInOtherDimensions = false;
         @Config.Comment("如果为假，则返回传送门需要激活物品。")
         public boolean shouldReturnPortalBeUsable = true;
@@ -31,8 +45,8 @@ public class POConfig {
         public boolean ExplosionPollution = true;
         @Config.Comment("玩家污染DEBUFF(包括泥土变沙子，药水效果)")
         public boolean EntityPollutionEvent = true;
-        @Config.Comment("消声仓污染倍率(0为无污染)")
-        public double mufflerPollutionMultiplier = 1.0;
+        @Config.Comment("设备污染倍率(0为无污染)")
+        public float mufflerPollutionMultiplier = 1.0F;
         @Config.Comment("是否开启消声仓污染特效")
         public boolean mufflerPollutionShowEffects = true;
         @Config.Comment("污染清理倍率,")

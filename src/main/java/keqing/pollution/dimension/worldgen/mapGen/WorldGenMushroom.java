@@ -1,10 +1,10 @@
 package keqing.pollution.dimension.worldgen.mapGen;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import thebetweenlands.common.registries.BlockRegistry;
 
 import java.util.Random;
 
@@ -23,7 +23,7 @@ public class WorldGenMushroom extends WorldGenerator
         {
             BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
 
-            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == BlockRegistry.BETWEENSTONE) {
+            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.STONE) {
                 worldIn.setBlockState(blockpos, this.block.getDefaultState(), 2);
             }
         }

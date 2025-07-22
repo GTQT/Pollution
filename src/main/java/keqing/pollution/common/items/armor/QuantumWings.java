@@ -55,7 +55,7 @@ public class QuantumWings extends Jetpack {
 		}
 
 
-		performFlying(player, hoverMode, item);
+		performFlying(player, hoverMode, true,item);
 
 		if (toggleTimer > 0) toggleTimer--;
 

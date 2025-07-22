@@ -1,30 +1,22 @@
 package keqing.pollution.loaders.recipes;
 
-import com.sun.jna.platform.win32.WinNT;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
-import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.common.blocks.BlockBoilerCasing;
-import gregtech.common.blocks.BlockTurbineCasing;
-import gregtech.common.blocks.BlockWireCoil;
-import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.blocks.*;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtechfoodoption.machines.GTFOTileEntities;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
-import keqing.gtqtcore.loaders.recipes.GTQTRecipes;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.items.PollutionMetaItems;
-import keqing.pollution.common.items.behaviors.Tarots;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -41,23 +33,17 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
-import javax.swing.*;
-import java.awt.*;
-
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static keqing.gtqtcore.api.unification.GCYSMaterials.*;
+import static gregtech.api.unification.ore.OrePrefix.ingotHot;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Ichorium;
-import static keqing.gtqtcore.api.unification.TJMaterials.Polyetheretherketone;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.*;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.OPTICAL_ASSEMBLY;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.Orichalcum;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 import static keqing.pollution.common.items.PollutionMetaItems.*;
-import static vazkii.botania.common.item.block.ItemBlockSpecialFlower.ofType;
 
 public class MagicGCYMRecipes {
 	public static void init() {
@@ -180,21 +166,21 @@ public class MagicGCYMRecipes {
 		//这里是六个基础外壳材料的搅拌机配方
 		//风要素-律动钛
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Bauxite, 2)
-				.input(OrePrefix.dust, Aluminium, 1)
-				.input(OrePrefix.dust, Manganese, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
-				.output(OrePrefix.dust, PollutionMaterials.aertitanium, 9)
+				.input(dust, Bauxite, 2)
+				.input(dust, Aluminium, 1)
+				.input(dust, Manganese, 1)
+				.input(dust, PollutionMaterials.infused_air, 5)
+				.output(dust, PollutionMaterials.aertitanium, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Bauxite, 2)
-				.input(OrePrefix.dust, Aluminium, 1)
-				.input(OrePrefix.dust, Manganese, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_air, 5)
+				.input(dust, Bauxite, 2)
+				.input(dust, Aluminium, 1)
+				.input(dust, Manganese, 1)
+				.input(dust, PollutionMaterials.infused_air, 5)
 				.fluidOutputs(PollutionMaterials.aertitanium.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -203,21 +189,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//火要素-残日钢
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Steel, 2)
-				.input(OrePrefix.dust, Magnesium, 1)
-				.input(OrePrefix.dust, Lithium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
-				.output(OrePrefix.dust, PollutionMaterials.ignissteel, 9)
+				.input(dust, Steel, 2)
+				.input(dust, Magnesium, 1)
+				.input(dust, Lithium, 1)
+				.input(dust, PollutionMaterials.infused_fire, 5)
+				.output(dust, PollutionMaterials.ignissteel, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Steel, 2)
-				.input(OrePrefix.dust, Magnesium, 1)
-				.input(OrePrefix.dust, Lithium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire, 5)
+				.input(dust, Steel, 2)
+				.input(dust, Magnesium, 1)
+				.input(dust, Lithium, 1)
+				.input(dust, PollutionMaterials.infused_fire, 5)
 				.fluidOutputs(PollutionMaterials.ignissteel.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -226,21 +212,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//水要素-捩花银
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Silver, 2)
-				.input(OrePrefix.dust, Tin, 1)
+				.input(dust, Silver, 2)
+				.input(dust, Tin, 1)
 				.fluidInputs(Mercury.getFluid(1000))
-				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
-				.output(OrePrefix.dust, PollutionMaterials.aquasilver, 9)
+				.input(dust, PollutionMaterials.infused_water, 5)
+				.output(dust, PollutionMaterials.aquasilver, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Silver, 2)
-				.input(OrePrefix.dust, Tin, 1)
+				.input(dust, Silver, 2)
+				.input(dust, Tin, 1)
 				.fluidInputs(Mercury.getFluid(1000))
-				.input(OrePrefix.dust, PollutionMaterials.infused_water, 5)
+				.input(dust, PollutionMaterials.infused_water, 5)
 				.fluidOutputs(PollutionMaterials.aquasilver.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -249,21 +235,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//地要素-定坤铜
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Copper, 2)
-				.input(OrePrefix.dust, Boron, 1)
-				.input(OrePrefix.dust, Carbon, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
-				.output(OrePrefix.dust, PollutionMaterials.terracopper, 9)
+				.input(dust, Copper, 2)
+				.input(dust, Boron, 1)
+				.input(dust, Carbon, 1)
+				.input(dust, PollutionMaterials.infused_earth, 5)
+				.output(dust, PollutionMaterials.terracopper, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Copper, 2)
-				.input(OrePrefix.dust, Boron, 1)
-				.input(OrePrefix.dust, Carbon, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth, 5)
+				.input(dust, Copper, 2)
+				.input(dust, Boron, 1)
+				.input(dust, Carbon, 1)
+				.input(dust, PollutionMaterials.infused_earth, 5)
 				.fluidOutputs(PollutionMaterials.terracopper.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -272,21 +258,21 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//秩序要素-司辰铅
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Lead, 2)
-				.input(OrePrefix.dust, Silicon, 1)
-				.input(OrePrefix.dust, Gold, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
-				.output(OrePrefix.dust, PollutionMaterials.ordolead, 9)
+				.input(dust, Lead, 2)
+				.input(dust, Silicon, 1)
+				.input(dust, Gold, 1)
+				.input(dust, PollutionMaterials.infused_order, 5)
+				.output(dust, PollutionMaterials.ordolead, 9)
 				.circuitMeta(20)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Lead, 2)
-				.input(OrePrefix.dust, Silicon, 1)
-				.input(OrePrefix.dust, Gold, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_order, 5)
+				.input(dust, Lead, 2)
+				.input(dust, Silicon, 1)
+				.input(dust, Gold, 1)
+				.input(dust, PollutionMaterials.infused_order, 5)
 				.fluidOutputs(PollutionMaterials.ordolead.getFluid(9 * 144))
 				.circuitMeta(20)
 				.duration(300)
@@ -295,20 +281,20 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//混沌要素-无极铝
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Aluminium, 2)
+				.input(dust, Aluminium, 2)
 				.fluidInputs(Fluorine.getFluid(1000))
-				.input(OrePrefix.dust, Thorium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy, 5)
-				.output(OrePrefix.dust, perditioaluminium, 9)
+				.input(dust, Thorium, 1)
+				.input(dust, PollutionMaterials.infused_entropy, 5)
+				.output(dust, perditioaluminium, 9)
 				.duration(900)
 				.EUt(120)
 				.buildAndRegister();
 
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Aluminium, 2)
+				.input(dust, Aluminium, 2)
 				.fluidInputs(Fluorine.getFluid(1000))
-				.input(OrePrefix.dust, Thorium, 1)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy, 5)
+				.input(dust, Thorium, 1)
+				.input(dust, PollutionMaterials.infused_entropy, 5)
 				.fluidOutputs(PollutionMaterials.perditioaluminium.getFluid(9 * 144))
 				.duration(300)
 				.blastFurnaceTemp(2700)
@@ -372,13 +358,13 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//魔力钢 神秘锭简化配方
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, infused_air, 1)
-				.input(OrePrefix.dust, infused_fire, 1)
-				.input(OrePrefix.dust, infused_water, 1)
-				.input(OrePrefix.dust, infused_earth, 1)
-				.input(OrePrefix.dust, infused_order, 1)
-				.input(OrePrefix.dust, infused_entropy, 1)
-				.input(OrePrefix.dust, Iron, 4)
+				.input(dust, infused_air, 1)
+				.input(dust, infused_fire, 1)
+				.input(dust, infused_water, 1)
+				.input(dust, infused_earth, 1)
+				.input(dust, infused_order, 1)
+				.input(dust, infused_entropy, 1)
+				.input(dust, Iron, 4)
 				.fluidOutputs(manasteel.getFluid(576))
 				.circuitMeta(1)
 				.duration(400)
@@ -386,10 +372,10 @@ public class MagicGCYMRecipes {
 				.EUt(480)
 				.buildAndRegister();
 		MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Iron, 1)
-				.input(OrePrefix.dust, infused_earth, 10)
-				.input(OrePrefix.dust, infused_fire, 5)
-				.input(OrePrefix.dust, infused_air, 5)
+				.input(dust, Iron, 1)
+				.input(dust, infused_earth, 10)
+				.input(dust, infused_fire, 5)
+				.input(dust, infused_air, 5)
 				.fluidOutputs(thaumium.getFluid(3024))
 				.circuitMeta(2)
 				.duration(1200)
@@ -476,7 +462,7 @@ public class MagicGCYMRecipes {
 		//转换矩阵
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "infused_exchange"), new InfusionRecipe(
 				"INFUSION@2",
-				PollutionMetaTileEntities.TANK.getStackForm(),
+				PollutionMetaTileEntities.INFUSED_EXCHANGE.getStackForm(),
 				2,
 				new AspectList().add(Aspect.EXCHANGE, 16).add(Aspect.MOTION, 16).add(Aspect.WATER, 16),
 				GTQTMetaTileEntities.FLUID_EXTRACTOR[MV].getStackForm(),
@@ -550,6 +536,7 @@ public class MagicGCYMRecipes {
 				"oreCrystalFire",
 				PollutionMetaTileEntities.MAGIC_TURBINE[2].getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
+
 		//魔法炖屎
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_alloy_blast"), new InfusionRecipe(
 				"INFUSION@2",
@@ -567,6 +554,7 @@ public class MagicGCYMRecipes {
 				"oreCrystalEarth",
 				MetaTileEntities.ALLOY_SMELTER[MV].getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT)));
+
 		//工业注魔主方块
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "industrial_infusion"), new InfusionRecipe(
 				"INFUSION@2",
@@ -1003,24 +991,24 @@ public class MagicGCYMRecipes {
 		//这里是魔力钢、漫宿钢等的配方
 		//不纯魔力搅拌
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_order)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy)
+				.input(dust, PollutionMaterials.infused_order)
+				.input(dust, PollutionMaterials.infused_entropy)
 				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_air)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth)
+				.input(dust, PollutionMaterials.infused_air)
+				.input(dust, PollutionMaterials.infused_earth)
 				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire)
-				.input(OrePrefix.dust, PollutionMaterials.infused_water)
+				.input(dust, PollutionMaterials.infused_fire)
+				.input(dust, PollutionMaterials.infused_water)
 				.fluidOutputs(PollutionMaterials.impuremana.getFluid(48))
 				.circuitMeta(1)
 				.duration(100)
@@ -1028,7 +1016,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//不纯魔力+铁粉 高炉烧制魔力钢锭
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, Iron)
+				.input(dust, Iron)
 				.fluidInputs(PollutionMaterials.impuremana.getFluid(144))
 				.output(OrePrefix.ingot, PollutionMaterials.manasteel)
 				.blastFurnaceTemp(1800)
@@ -1037,31 +1025,31 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//世界盐 搅拌机配方
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.infused_air)
-				.input(OrePrefix.dust, PollutionMaterials.infused_fire)
-				.input(OrePrefix.dust, PollutionMaterials.infused_water)
-				.input(OrePrefix.dust, PollutionMaterials.infused_earth)
-				.input(OrePrefix.dust, PollutionMaterials.infused_order)
-				.input(OrePrefix.dust, PollutionMaterials.infused_entropy)
+				.input(dust, PollutionMaterials.infused_air)
+				.input(dust, PollutionMaterials.infused_fire)
+				.input(dust, PollutionMaterials.infused_water)
+				.input(dust, PollutionMaterials.infused_earth)
+				.input(dust, PollutionMaterials.infused_order)
+				.input(dust, PollutionMaterials.infused_entropy)
 				.fluidInputs(Redstone.getFluid(288))
-				.output(OrePrefix.dust, PollutionMaterials.salismundus, 6)
+				.output(dust, PollutionMaterials.salismundus, 6)
 				.duration(600)
 				.EUt(120)
 				.buildAndRegister();
 		//3魔力钢粉+2神秘粉+1世界盐粉=6漫宿钢粉
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.manasteel, 3)
-				.input(OrePrefix.dust, PollutionMaterials.thaumium, 2)
-				.input(OrePrefix.dust, PollutionMaterials.salismundus)
-				.output(OrePrefix.dust, PollutionMaterials.mansussteel, 6)
+				.input(dust, PollutionMaterials.manasteel, 3)
+				.input(dust, PollutionMaterials.thaumium, 2)
+				.input(dust, PollutionMaterials.salismundus)
+				.output(dust, PollutionMaterials.mansussteel, 6)
 				.duration(600)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(OrePrefix.dust, PollutionMaterials.manasteel, 3)
-				.input(OrePrefix.dust, PollutionMaterials.thaumium, 2)
+				.input(dust, PollutionMaterials.manasteel, 3)
+				.input(dust, PollutionMaterials.thaumium, 2)
 				.input(ItemsTC.salisMundus)
-				.output(OrePrefix.dust, PollutionMaterials.mansussteel, 6)
+				.output(dust, PollutionMaterials.mansussteel, 6)
 				.duration(600)
 				.EUt(120)
 				.buildAndRegister();
@@ -2137,5 +2125,168 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				MetaTileEntities.LARGE_GAS_TURBINE.getStackForm()));
+
+		//部分TC物品 玻璃 组装机配方
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, Steel, 48)
+				.input(OrePrefix.gem, Quartzite, 12)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.output(ItemsTC.visResonator, 12)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(gem, valonite, 8)
+				.input(plate, thaumium, 48)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.output(ItemsTC.morphicResonator, 8)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(Blocks.GLASS, 2)
+				.input(ItemsTC.morphicResonator)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.LAMINATED_GLASS))
+				.circuitMeta(1)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(Blocks.GLASS, 2)
+				.input(ItemsTC.morphicResonator)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.AAMINATED_GLASS))
+				.circuitMeta(2)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(Blocks.GLASS, 2)
+				.input(ItemsTC.morphicResonator)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.BAMINATED_GLASS))
+				.circuitMeta(3)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(Blocks.GLASS, 2)
+				.input(ItemsTC.morphicResonator)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.CAMINATED_GLASS))
+				.circuitMeta(4)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(Blocks.GLASS, 2)
+				.input(ItemsTC.morphicResonator)
+				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.DAMINATED_GLASS))
+				.circuitMeta(5)
+				.EUt(1920)
+				.duration(100)
+				.buildAndRegister();
+		//高级魔导组件
+		//理式核心
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(stickLong, aetheric_dark_steel, 2)
+				.input(frameGt, aetheric_dark_steel, 1)
+				.input(plate, iizunamaru_electrum, 8)
+				.input(gear, iizunamaru_electrum, 4)
+				.input(ItemsTC.morphicResonator, 16)
+				.input(ItemsTC.visResonator, 16)
+				.input(MetaItems.FIELD_GENERATOR_LuV)
+				.fluidInputs(starrymansus.getFluid(1000))
+				.output(CORE_OF_IDEA)
+				.EUt(30720)
+				.duration(400)
+				.buildAndRegister();
+		//自动反诘装置
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(gear, blood_of_avernus, 6)
+				.input(gearSmall, blood_of_avernus, 4)
+				.input(stickLong, iizunamaru_electrum, 4)
+				.input(stick, aetheric_dark_steel, 4)
+				.input(plate, GTQTMaterials.VoidMetal, 8)
+				.input(CORE_OF_IDEA, 2)
+				.input(MetaItems.ELECTRIC_PISTON_LUV, 2)
+				.input(MetaItems.ROBOT_ARM_LuV)
+				.fluidInputs(starrymansus.getFluid(2000))
+				.fluidInputs(blackmansus.getFluid(8000))
+				.fluidInputs(whitemansus.getFluid(8000))
+				.output(AUTO_ELENCHUS_DEVICE)
+				.EUt(30720)
+				.duration(400)
+				.buildAndRegister();
+		//太一燃素瓶
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(rotor, iizunamaru_electrum, 2)
+				.input(gearSmall, blood_of_avernus, 4)
+				.input(ring, iizunamaru_electrum, 32)
+				.input(screw, aetheric_dark_steel, 12)
+				.input(plate, GTQTMaterials.VoidMetal, 8)
+				.input(CORE_OF_IDEA, 2)
+				.input(ItemsTC.causalityCollapser, 4)
+				.input(MetaItems.ELECTRIC_PUMP_LuV, 2)
+				.fluidInputs(infused_fire.getFluid(64000))
+				.fluidInputs(blackmansus.getFluid(8000))
+				.fluidInputs(whitemansus.getFluid(8000))
+				.output(BOTTLE_OF_PHLOGISTONIC_ONENESS)
+				.EUt(30720)
+				.duration(400)
+				.buildAndRegister();
+		//四因阐释器
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plate, iizunamaru_electrum, 16)
+				.input(plate, blood_of_avernus, 16)
+				.input(plate, aetheric_dark_steel, 16)
+				.input(plate, GTQTMaterials.VoidMetal, 16)
+				.input(ItemsTC.causalityCollapser, 4)
+				.input(MetaItems.ROBOT_ARM_LuV, 2)
+				.input(CORE_OF_IDEA, 2)
+				.input(AUTO_ELENCHUS_DEVICE)
+				.fluidInputs(dimensional_transforming_agent.getFluid(8000))
+				.fluidInputs(blackmansus.getFluid(8000))
+				.fluidInputs(whitemansus.getFluid(8000))
+				.output(ELUCIDATOR_OF_FOUR_CAUSES)
+				.EUt(30720)
+				.duration(400)
+				.buildAndRegister();
+		//中控塔
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaTileEntities.BOT_GAS_COLLECTOR.getStackForm(1))
+				.inputs(PollutionMetaTileEntities.FLUX_CLEARS[2].getStackForm(1))
+				.inputs(MetaTileEntities.CENTRAL_MONITOR.getStackForm(1))
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC, 4))
+				.input(ItemsTC.morphicResonator, 64)
+				.input(frameGt, hyperdimensional_silver, 16)
+				.input(MetaItems.EMITTER_LuV, 8)
+				.input(MetaItems.SENSOR_LuV, 8)
+				.input(MetaItems.FIELD_GENERATOR_LuV, 4)
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(16000))
+				.fluidInputs(blackmansus.getFluid(16000))
+				.fluidInputs(whitemansus.getFluid(16000))
+				.outputs(PollutionMetaTileEntities.CENTRAL_VIS_TOWER.getStackForm(1))
+				.EUt(30720)
+				.duration(4000)
+				.buildAndRegister();
+		//电路组装
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(MetaTileEntities.CIRCUIT_ASSEMBLER[LuV].getStackForm(4))
+				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_5, 4))
+				.input(MetaItems.FIELD_GENERATOR_LuV, 4)
+				.input(AUTO_ELENCHUS_DEVICE, 4)
+				.input(ELUCIDATOR_OF_FOUR_CAUSES, 2)
+				.input(frameGt, blood_of_avernus, 16)
+				.input(plate, ElvenElementium, 16)
+				.fluidInputs(GTQTMaterials.Richmagic.getFluid(16000))
+				.fluidInputs(blackmansus.getFluid(16000))
+				.fluidInputs(whitemansus.getFluid(16000))
+				.outputs(PollutionMetaTileEntities.BOT_CIRCUIT_ASSEMBLER.getStackForm())
+				.EUt(30720)
+				.duration(4000)
+				.buildAndRegister();
 	}
 }

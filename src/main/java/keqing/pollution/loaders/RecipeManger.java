@@ -2,9 +2,6 @@ package keqing.pollution.loaders;
 
 import keqing.pollution.loaders.recipes.*;
 import keqing.pollution.loaders.recipes.mods.Botania;
-import keqing.pollution.loaders.recipes.mods.TheBetweendLand.BiologyLine;
-import keqing.pollution.loaders.recipes.mods.TheBetweendLand.StoneLine;
-import keqing.pollution.loaders.recipes.mods.TheBetweendLand.VanillaRecipes;
 
 public class RecipeManger {
     public static void init() {
@@ -14,19 +11,20 @@ public class RecipeManger {
         BloodAltar.init();
         BloodCircuit.init();
         //MeteorsHelper.init();
+        MaterialsLine.init();
         ForgeAlchemyRecipes.init();
         CircuitManager.init();
         ThaumcraftRecipes.init();
+        CrystalLine.init();
+        MagicFuelRecipes.init();
         MagicGCYMRecipes.init();
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();
-        Botania.init();
-        VanillaRecipes.init();
-        StoneLine.init();
-        BiologyLine.init();
+        MufflerHatchRecipes.init();
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();
+        NodeFusionRecipes.init();
     }
 
 

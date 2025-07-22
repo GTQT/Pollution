@@ -12,7 +12,6 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.logic.OverclockingLogic;
-import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
 import gregtech.api.util.TextComponentUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -57,6 +56,10 @@ import static java.lang.Math.pow;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     private int XPos;
     private int YPos;
     private int ZPos;
@@ -204,7 +207,7 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
     }
 
     private static IBlockState getCasingBioPcb() {
-        return GTQTMetaBlocks.PCB_FACTORY_CASING.getState(BlockPCBFactoryCasing.PCBFactoryCasingType.BIOLOGICAL_STERILE_MACHINE_CASING);
+        return GTQTMetaBlocks.blockPCBFactoryCasing.getState(BlockPCBFactoryCasing.PCBFactoryCasingType.BIOLOGICAL_STERILE_MACHINE_CASING);
     }
 
     private static IBlockState getCasingManaPlate5() {
@@ -473,11 +476,6 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
         @Override
         public boolean isAllowOverclocking() {
             return false;
-        }
-
-        @Override
-        protected int[] runOverclockingLogic(IRecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int duration, int amountOC) {
-            return OverclockingLogic.standardOverclockingLogic(Math.abs(recipeEUt), maxVoltage, duration, amountOC, OverclockingLogic.PERFECT_OVERCLOCK_DURATION_DIVISOR, 4);
         }
     }
 }

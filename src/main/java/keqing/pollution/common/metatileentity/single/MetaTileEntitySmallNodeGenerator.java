@@ -39,7 +39,7 @@ public class MetaTileEntitySmallNodeGenerator extends TieredMetaTileEntity {
     public float overallCapacityMultiplier = 0;
     public float expectedFinalCapacity = 0;
     public float BASIC_CAPACITY = 8192;
-    private ItemStackHandler inventory;
+    private final ItemStackHandler inventory;
 
     public MetaTileEntitySmallNodeGenerator(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
@@ -101,7 +101,8 @@ public class MetaTileEntitySmallNodeGenerator extends TieredMetaTileEntity {
         nodeCapacityMultiplier *= amplifierType;
         return nodeCapacityMultiplier;
     }
-        //保存机器数据
+
+    //保存机器数据
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
@@ -114,6 +115,7 @@ public class MetaTileEntitySmallNodeGenerator extends TieredMetaTileEntity {
         super.readFromNBT(compound);
         inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
     }
+
     @Override
     public boolean isActive() {
         return this.isActive() && isActive;
@@ -151,11 +153,11 @@ public class MetaTileEntitySmallNodeGenerator extends TieredMetaTileEntity {
         String key = this.metaTileEntityId.getPath().split("\\.")[0];
         String mainKey = String.format("gregtech.machine.%s.tooltip", key);
         if (I18n.hasKey(mainKey)) {
-            tooltip.add(1, I18n.format(mainKey, new Object[0]));
+            tooltip.add(1, I18n.format(mainKey));
         }
 
-        tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", new Object[]{this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]}));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", new Object[]{this.energyContainer.getEnergyCapacity()}));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", this.energyContainer.getEnergyCapacity()));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package keqing.pollution.api.utils;
 
+import keqing.gtqtcore.GTQTCore;
+import keqing.pollution.Pollution;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -14,11 +16,9 @@ import static net.minecraft.util.EnumFacing.*;
 
 public class POUtils {
 
-	@Nonnull
-	public static ResourceLocation gtqtId(@Nonnull String path) {
-		return new ResourceLocation("gtqtcore", path);
+	public static ResourceLocation pollutionId(String id) {
+		return new ResourceLocation(Pollution.MODID, id);
 	}
-
 	public static int intValueOfBitSet(BitSet set) {
 		int result = 0;
 		for (int i = 0; i < set.length(); i++) {

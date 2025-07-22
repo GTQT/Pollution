@@ -9,15 +9,20 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.FuelMultiblockController;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.logic.OverclockingLogic;
-import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
-import gregtech.api.unification.material.Materials;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
 import gregtech.api.util.TextComponentUtil;
+import gregtech.api.util.TextFormattingUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
@@ -28,27 +33,26 @@ import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
-import keqing.pollution.common.block.metablocks.*;
+import keqing.pollution.common.block.metablocks.POManaPlate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.LivingWoodVariant;
-import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cleanroommc.modularui.api.drawable.IKey.AQUA;
 import static com.cleanroommc.modularui.utils.MathUtils.min;
-import static java.lang.Math.round;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
+
 //巨型魔力轮机，计划是跑MANA_To_EU的配方，提供少量某些材料可以增大输出上限，持续运作有并行加成，白板工作上限为UV，64A IV发电
 //目前计划是可以提供的材料组合包括黑白漫宿（要求几把气线，上限拉到UHV 1A，对应64A LuV），液态超次元秘银和刻金（要求白垩和持续运作的锻炉，上限拉到UEV 2A，对应128A ZPM）
 //液态约束，感知和生命源质（要求持续运作的狱火熔炉和仪式机，上限拉到UIV 4A，对应256A UV)，之后它就该下岗了?
@@ -96,13 +100,35 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         this.hasMufflerHatch = hasMufflerHatch;
         this.frontOverlay = frontOverlay;
         this.tier = tier;
-        this.recipeMapWorkable=new MegaManaTurbineWorkable(this);
+        this.recipeMapWorkable = new MegaManaTurbineWorkable(this);
     }
+
+    private static IBlockState getInnerFilling() {
+        return ModBlocks.bifrostPerm.getDefaultState();
+    }
+
+    private static IBlockState getCasingFrontFacing() {
+        return PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_5);
+    }
+
+    private static IBlockState getCasingBackFacing() {
+        return MetaBlocks.FUSION_CASING.getState(BlockFusionCasing.CasingType.FUSION_CASING_MK2);
+    }
+
+    private static IBlockState getCasingInner() {
+        return ModBlocks.dreamwood.getDefaultState().withProperty(BotaniaStateProps.LIVINGWOOD_VARIANT, LivingWoodVariant.GLIMMERING);
+    }
+
+    private static IBlockState getCasingFusionCoil() {
+        return MetaBlocks.FUSION_CASING.getState(BlockFusionCasing.CasingType.FUSION_COIL);
+    }
+
     //创建方块实体
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityMegaManaTurbine(this.metaTileEntityId, this.recipeMap, this.tier, this.casingRenderer, this.hasMufflerHatch, this.frontOverlay);
 
     }
+
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
         return data;
@@ -111,23 +137,24 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
     }
+
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("AAAAAAA", "ABBBBBA", "ABCCCBA", "ABCJCBA", "ABCCCBA", "ABBBBBA", "AAAAAAA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA" )
-                .aisle("AAAAAAA", "ABBBBBA", "ABHHHBA", "ABHIHBA", "ABHHHBA", "ABBBBBA", "AAAAAAA" )
+                .aisle("AAAAAAA", "ABBBBBA", "ABCCCBA", "ABCJCBA", "ABCCCBA", "ABBBBBA", "AAAAAAA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
+                .aisle("AAAAAAA", "ABBBBBA", "ABHHHBA", "ABHIHBA", "ABHHHBA", "ABBBBBA", "AAAAAAA")
                 .where('A', states(getCasingState_Frame()))
                 .where('B', states(getOuterFilling()))
                 .where('C', states(getCasingBackFacing()))
@@ -144,7 +171,6 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
                 .build();
     }
 
-
     public IBlockState getOuterFilling() {
         return MetaBlocks.TRANSPARENT_CASING.getState(BlockGlassCasing.CasingType.FUSION_GLASS);
     }
@@ -152,27 +178,21 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     public IBlockState getCasingState_Frame() {
         return PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_3);
     }
-    private static IBlockState getInnerFilling() {
-        return ModBlocks.bifrostPerm.getDefaultState();
-    }
-
-    private static IBlockState getCasingFrontFacing() {
-        return PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_5);
-    }
-    private static IBlockState getCasingBackFacing() {
-        return MetaBlocks.FUSION_CASING.getState(BlockFusionCasing.CasingType.FUSION_CASING_MK2);
-    }
-    private static IBlockState getCasingInner() {
-        return ModBlocks.dreamwood.getDefaultState().withProperty(BotaniaStateProps.LIVINGWOOD_VARIANT, LivingWoodVariant.GLIMMERING);
-    }
-    private static IBlockState getCasingFusionCoil() {
-        return MetaBlocks.FUSION_CASING.getState(BlockFusionCasing.CasingType.FUSION_COIL);
-    }
 
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
-        textList.add(TextComponentUtil.stringWithColor(TextFormatting.AQUA, "最大输出功率:" + CatalystAllowedMaxCapacity));
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
+    }
+    public void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
+        if (isStructureFormed())
+            keyManager.add(KeyUtil.lang( AQUA,"最大输出功率: %s", uiSyncer.syncLong(CatalystAllowedMaxCapacity)));
     }
 
     @Override
@@ -194,6 +214,7 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     protected @NotNull ICubeRenderer getFrontOverlay() {
         return this.frontOverlay;
     }
+
     //确定机器等级
     public int getTier() {
         return this.tier;
@@ -204,6 +225,7 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         super.updateFormedValid();
 
     }
+
     //控制是否销毁输出
     public boolean canVoidRecipeItemOutputs() {
         return true;
@@ -212,7 +234,8 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     public boolean canVoidRecipeFluidOutputs() {
         return true;
     }
-    protected boolean shouldShowVoidingModeButton() {
+
+    public boolean shouldShowVoidingModeButton() {
         return true;
     }
 
@@ -224,19 +247,20 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         energyContainer.addAll(this.getAbilities(MultiblockAbility.OUTPUT_LASER));
         this.energyContainer = new EnergyContainerList(energyContainer);
     }
+
     protected class MegaManaTurbineWorkable extends MultiblockFuelRecipeLogic {
-        public static final FluidStack BlackManSusStack=PollutionMaterials.blackmansus.getFluid(32);
-        public static final FluidStack WhiteManSusStack=PollutionMaterials.whitemansus.getFluid(32);
-        public static final FluidStack KeQinGoldStack=PollutionMaterials.keqinggold.getFluid(32);
-        public static final FluidStack ChaoCiYuanYinStack=PollutionMaterials.hyperdimensional_silver.getFluid(32);
-        public static final FluidStack GanZhiStack=PollutionMaterials.sentient_metal.getFluid(32);
-        public static final FluidStack YueShuStack=PollutionMaterials.binding_metal.getFluid(32);
+        public static final FluidStack BlackManSusStack = PollutionMaterials.blackmansus.getFluid(32);
+        public static final FluidStack WhiteManSusStack = PollutionMaterials.whitemansus.getFluid(32);
+        public static final FluidStack KeQinGoldStack = PollutionMaterials.keqinggold.getFluid(32);
+        public static final FluidStack ChaoCiYuanYinStack = PollutionMaterials.hyperdimensional_silver.getFluid(32);
+        public static final FluidStack GanZhiStack = PollutionMaterials.sentient_metal.getFluid(32);
+        public static final FluidStack YueShuStack = PollutionMaterials.binding_metal.getFluid(32);
+        private final MetaTileEntityMegaManaTurbine megaManaTurbine;
 
         public MegaManaTurbineWorkable(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
-            this.megaManaTurbine = (MetaTileEntityMegaManaTurbine)tileEntity;
+            this.megaManaTurbine = (MetaTileEntityMegaManaTurbine) tileEntity;
         }
-        private final MetaTileEntityMegaManaTurbine megaManaTurbine;
 
         //判断催化剂等级，优先用高级催化剂
         protected int CatalystLevel() {
@@ -258,32 +282,35 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
                 return 0;
             }
         }
-        //催化剂对应最大电压水平
-        public long CatalystAllowedMaxCapacity(){
 
-            switch (CatalystLevel()){
+        //催化剂对应最大电压水平
+        public long CatalystAllowedMaxCapacity() {
+
+            switch (CatalystLevel()) {
                 case 0 -> CatalystAllowedMaxCapacity = GTValues.V[8];
-                case 1 ->CatalystAllowedMaxCapacity =  GTValues.V[9];
-                case 2 ->CatalystAllowedMaxCapacity =  2*GTValues.V[10];
-                case 3 ->CatalystAllowedMaxCapacity =  GTValues.V[12];
-                default -> CatalystAllowedMaxCapacity =0;
+                case 1 -> CatalystAllowedMaxCapacity = GTValues.V[9];
+                case 2 -> CatalystAllowedMaxCapacity = 2 * GTValues.V[10];
+                case 3 -> CatalystAllowedMaxCapacity = GTValues.V[12];
+                default -> CatalystAllowedMaxCapacity = 0;
             }
             return CatalystAllowedMaxCapacity;
         }
+
         //消耗催化剂
         protected void drainCatalyst() {
             if (this.totalContinuousRunningTime % 100L == 0L) {
-                if (CatalystLevel()==1)
-                this.megaManaTurbine.getInputFluidInventory().drain(BlackManSusStack, true);
+                if (CatalystLevel() == 1)
+                    this.megaManaTurbine.getInputFluidInventory().drain(BlackManSusStack, true);
                 this.megaManaTurbine.getInputFluidInventory().drain(WhiteManSusStack, true);
-            } else if (CatalystLevel()==2) {
+            } else if (CatalystLevel() == 2) {
                 this.megaManaTurbine.getInputFluidInventory().drain(KeQinGoldStack, true);
                 this.megaManaTurbine.getInputFluidInventory().drain(ChaoCiYuanYinStack, true);
-            } else if (CatalystLevel()==3) {
+            } else if (CatalystLevel() == 3) {
                 this.megaManaTurbine.getInputFluidInventory().drain(GanZhiStack, true);
                 this.megaManaTurbine.getInputFluidInventory().drain(WhiteManSusStack, true);
             }
         }
+
         @Override
         protected void updateRecipeProgress() {
             if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
@@ -294,20 +321,23 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
                 }
             }
         }
+
         @Override
         public long getMaxVoltage() {
             return min((int) CatalystAllowedMaxCapacity(), (int) super.getMaxVoltage());
         }
+
         @Override
         protected long getMaxParallelVoltage() {
             return this.getMaxVoltage();
         }
+
         //持续工作一段时间后达到输出最大值，所需时间取决于线圈等级
         public int parallelLimit() {
 
             int runningTime = (int) this.totalContinuousRunningTime;
-            if (runningTime <= 60000/(float)this.megaManaTurbine.CoilLevel) {
-                parallel = 1 + Math.round((runningTime / (60000/(float)this.megaManaTurbine.CoilLevel) * (32768 - 1)));
+            if (runningTime <= 60000 / (float) this.megaManaTurbine.CoilLevel) {
+                parallel = 1 + Math.round((runningTime / (60000 / (float) this.megaManaTurbine.CoilLevel) * (32768 - 1)));
             } else {
                 parallel = 32768;
             }
@@ -318,14 +348,13 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         public int getParallelLimit() {
             return parallelLimit();
         }
-        public long getMaximumOverclockVoltage(){return getMaxVoltage();}
+
+        public long getMaximumOverclockVoltage() {
+            return getMaxVoltage();
+        }
+
         public boolean isAllowOverclocking() {
             return false;
         }
-        protected  int[] runOverclockingLogic( IRecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int duration, int amountOC) {
-            return OverclockingLogic.standardOverclockingLogic(Math.abs(recipeEUt), maxVoltage, duration, amountOC, OverclockingLogic.PERFECT_OVERCLOCK_DURATION_DIVISOR, 4);
-        }
     }
-
-
 }

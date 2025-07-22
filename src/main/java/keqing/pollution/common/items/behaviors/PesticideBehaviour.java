@@ -4,16 +4,11 @@ import gregtech.api.items.metaitem.stats.IItemDurabilityManager;
 import gregtech.common.items.behaviors.AbstractUsableBehaviour;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import thebetweenlands.api.capability.IRotSmellCapability;
-import thebetweenlands.client.render.particle.BLParticles;
-import thebetweenlands.common.registries.AdvancementCriterionRegistry;
-import thebetweenlands.common.registries.CapabilityRegistry;
 
 import java.util.List;
 
@@ -27,7 +22,7 @@ public class PesticideBehaviour extends AbstractUsableBehaviour implements IItem
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-
+/*
         if (!world.isRemote) {
             IRotSmellCapability cap = player.getCapability(CapabilityRegistry.CAPABILITY_ROT_SMELL, null);
             if (cap != null) {
@@ -44,6 +39,8 @@ public class PesticideBehaviour extends AbstractUsableBehaviour implements IItem
         if (world.isRemote)
             for (int count = 0; count <= 5; ++count)
                 BLParticles.FANCY_BUBBLE.spawn(world, player.posX + (world.rand.nextDouble() - 0.5D), player.posY + 1D + world.rand.nextDouble(), player.posZ + (world.rand.nextDouble() - 0.5D));
+     */
+
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 

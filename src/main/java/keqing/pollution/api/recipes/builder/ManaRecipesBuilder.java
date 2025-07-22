@@ -4,14 +4,16 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.EnumValidationResult;
-import keqing.gtqtcore.api.recipes.properties.ELEProperties;
 import keqing.gtqtcore.api.utils.GTQTLog;
 import keqing.pollution.api.recipes.properties.ManaProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.annotation.Nonnull;
+
 public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
 
-    public ManaRecipesBuilder() {}
+    public ManaRecipesBuilder() {
+    }
 
     public ManaRecipesBuilder(Recipe recipe, RecipeMap<ManaRecipesBuilder> recipeMap) {
         super(recipe, recipeMap);
@@ -22,13 +24,22 @@ public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
     }
 
     @Override
+    public boolean applyPropertyCT(String key,Object value) {
+        if (key.equals(ManaProperty.KEY)) {
+            this.TotalMana(((Number) value).intValue());
+            return true;
+        }
+        return super.applyPropertyCT(key, value);
+    }
+
+    @Override
     public ManaRecipesBuilder copy() {
         return new ManaRecipesBuilder(this);
     }
 
     public int getTotalMana() {
         return this.recipePropertyStorage == null ? 0 :
-                this.recipePropertyStorage.getRecipePropertyValue(ManaProperty.getInstance(), 0);
+                this.recipePropertyStorage.get(ManaProperty.getInstance(), 0);
     }
 
     public ManaRecipesBuilder TotalMana(int TotalMana) {

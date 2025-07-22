@@ -109,6 +109,16 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem FILTER_MKIV ;
 	public static MetaItem<?>.MetaValueItem FILTER_MKV ;
 
+	public static MetaItem<?>.MetaValueItem ENERGY_REDUCE ;
+	public static MetaItem<?>.MetaValueItem TIME_REDUCE ;
+	public static MetaItem<?>.MetaValueItem OVERCLOCKING_ENHANCE ;
+	public static MetaItem<?>.MetaValueItem PARALLEL_ENHANCE ;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT ;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_ADVANCED ;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_ULTIMATE ;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_SUPREME ;
+
+
 	public static MetaItem<?>.MetaValueItem BAUBLES_WATER_RING ;
 
 	public static MetaItem<?>.MetaValueItem BLOOD_PRIMITIVE_MEAT_BALL;
@@ -136,6 +146,7 @@ public class PollutionMetaItems {
 	public static PollutionMetaItem1 POLLUTION_META_ITEM;
 	public static PollutionBattery POLLUTION_META_BATTERY;
 	public static PollutionBaubles POLLUTION_BAUBLES;
+	public static MetaItem<?>.MetaValueItem QUANTUM_GOGGLES;
 	public static void initialization() {
 		POLLUTION_META_ITEM = new PollutionMetaItem1();
 		POLLUTION_META_BATTERY = new PollutionBattery();
