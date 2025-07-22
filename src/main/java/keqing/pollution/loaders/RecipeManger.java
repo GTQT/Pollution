@@ -12,6 +12,7 @@ public class RecipeManger {
         MachineRecipes.init();
         AERecipes.init();
         BloodAltar.init();
+        BloodCircuit.init();
         //MeteorsHelper.init();
         ForgeAlchemyRecipes.init();
         CircuitManager.init();

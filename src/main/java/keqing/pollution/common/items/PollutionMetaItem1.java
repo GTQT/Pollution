@@ -171,6 +171,21 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.TAROT_THE_SUN = this.addItem(320, "the_sun").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
 		PollutionMetaItems.TAROT_JUDGEMENT = this.addItem(321, "the_judgement").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
 		PollutionMetaItems.TAROT_THE_WORLD = this.addItem(322, "the_world").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
+
+		//血魔法系列电路板
+		PollutionMetaItems.BLOOD_CIRCUIT_MV  = this.addItem(402, "blood_circuit.mv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_HV  = this.addItem(403, "blood_circuit.hv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.HV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_EV  = this.addItem(404, "blood_circuit.ev") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.EV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_IV  = this.addItem(405, "blood_circuit.iv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.IV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_LuV = this.addItem(406, "blood_circuit.luv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.LuV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_ZPM = this.addItem(407, "blood_circuit.zpm").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.ZPM).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UV  = this.addItem(408, "blood_circuit.uv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UHV = this.addItem(409, "blood_circuit.uhv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UHV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UEV = this.addItem(400, "blood_circuit.uev").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UIV = this.addItem(401, "blood_circuit.uiv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UXV = this.addItem(402, "blood_circuit.uxv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_OpV = this.addItem(403, "blood_circuit.opv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV).setCreativeTabs(Pollution_TAB);
+
 	}
 
 }
