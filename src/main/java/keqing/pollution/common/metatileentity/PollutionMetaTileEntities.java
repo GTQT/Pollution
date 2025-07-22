@@ -121,6 +121,10 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityBMHPCABridge BMHPCA_BRIDGE_COMPONENT;
     public static MetaTileEntityBMHPCA BMHPCA;
 
+    public static MetaTileEntityManaPetalApothecary MANA_PETAL_APOTHECARY;
+    public static MetaTileEntityManaRuneAltar MANA_RUNE_ALTAR;
+    public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
+
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
     }
@@ -265,7 +269,9 @@ public class PollutionMetaTileEntities {
         NODE_PRODUCER = registerMetaTileEntity(342, new MetaTileEntityNodeProducer(PollutionID("node_producer")));
         LARGE_NODE_GENERATOR = registerMetaTileEntity(343, new MetaTileEntityLargeNodeGenerator(PollutionID("large_node_generator")));
         NODE_WASHER = registerMetaTileEntity(344, new MetaTileEntityNodeWasher(PollutionID("node_washer")));
-
+        INDUSTRIAL_PURE_DAISY = registerMetaTileEntity(345, new MetaTileEntityIndustrialPureDaisy(PollutionID("industial_pure_daisy")));
+        MANA_PETAL_APOTHECARY = registerMetaTileEntity(346, new MetaTileEntityManaPetalApothecary(PollutionID("mana_petal_apothecary")));
+        MANA_RUNE_ALTAR = registerMetaTileEntity(347, new MetaTileEntityManaRuneAltar(PollutionID("mana_rune_altar")));
 
         //仓口
         for (int i = 0; i < VIS_HATCH.length; i++) {

@@ -77,6 +77,8 @@ public class POTextures {
 	public static SimpleOverlayRenderer HYPER_4;
 	public static SimpleOverlayRenderer HYPER_5;
 
+	public static SimpleOverlayRenderer Livingrock_0;
+
 	public static final SimpleOverlayRenderer QUANTUM_ASPECT_TANK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_q_aspect_tank");
 	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");
 	public static final SimpleOverlayRenderer ASPECT_OUTPUT_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_aspect_out");
@@ -150,6 +152,8 @@ public class POTextures {
 		HYPER_3 = new SimpleOverlayRenderer("hyper/hyper_3");
 		HYPER_4 = new SimpleOverlayRenderer("hyper/hyper_4");
 		HYPER_5 = new SimpleOverlayRenderer("hyper/hyper_5");
+
+		Livingrock_0 = new SimpleOverlayRenderer("botblock/livingrock0");
 	}
 
 	public static void register(TextureMap textureMap) {
