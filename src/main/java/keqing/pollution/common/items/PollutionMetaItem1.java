@@ -184,18 +184,28 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.TAROT_THE_WORLD = this.addItem(322, "the_world").setMaxStackSize(64).setCreativeTabs(Pollution_TAROT);
 
 		//血魔法系列电路板
-		PollutionMetaItems.BLOOD_CIRCUIT_MV  = this.addItem(402, "blood_circuit.mv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MV) .setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_HV  = this.addItem(403, "blood_circuit.hv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.HV) .setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_EV  = this.addItem(404, "blood_circuit.ev") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.EV) .setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_IV  = this.addItem(405, "blood_circuit.iv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.IV) .setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_LuV = this.addItem(406, "blood_circuit.luv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.LuV).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_ZPM = this.addItem(407, "blood_circuit.zpm").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.ZPM).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_UV  = this.addItem(408, "blood_circuit.uv") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UV) .setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_UHV = this.addItem(409, "blood_circuit.uhv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UHV).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_UEV = this.addItem(400, "blood_circuit.uev").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_UIV = this.addItem(401, "blood_circuit.uiv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_UXV = this.addItem(402, "blood_circuit.uxv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.BLOOD_CIRCUIT_OpV = this.addItem(403, "blood_circuit.opv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_MV  = this.addItem(402, "blood_circuit.0") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_HV  = this.addItem(403, "blood_circuit.1") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.HV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_EV  = this.addItem(404, "blood_circuit.2") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.EV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_IV  = this.addItem(405, "blood_circuit.3") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.IV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_LuV = this.addItem(406, "blood_circuit.4") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.LuV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_ZPM = this.addItem(407, "blood_circuit.5") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.ZPM).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UV  = this.addItem(408, "blood_circuit.6") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UV) .setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UHV = this.addItem(409, "blood_circuit.7") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UHV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UEV = this.addItem(410, "blood_circuit.8") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UIV = this.addItem(411, "blood_circuit.9") .setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_UXV = this.addItem(412, "blood_circuit.10").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_OpV = this.addItem(413, "blood_circuit.11").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_CIRCUIT_MAX = this.addItem(414, "blood_circuit.12").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MAX).setCreativeTabs(Pollution_TAB);
+
+
+		PollutionMetaItems.BLOOD_PRIMITIVE_MEAT       = this.addItem(430, "primitive_meat").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_RATS_BRAIN           = this.addItem(431, "rat_brain").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_MITOCHONDRION_POWER  = this.addItem(432, "mitochondrion_power").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_ENDORPHINS_STABILIZER= this.addItem(433, "endorphins_stabilizer").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_FREEZE_COOLER        = this.addItem(434, "freeze_cooler").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_LYSOSOME_STABILIZER  = this.addItem(435, "lysosome_stabilizer").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_IPS_HUMAN_BRAIN      = this.addItem(436, "ips_human_brain").setCreativeTabs(Pollution_TAB);
 
 	}
 

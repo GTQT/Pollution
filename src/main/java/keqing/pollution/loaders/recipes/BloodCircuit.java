@@ -24,11 +24,10 @@ import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 public class BloodCircuit {
     public static void init() {
         BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 8))
+                .inputs(new ItemStack(Blocks.RED_MUSHROOM_BLOCK, 1, 8))
                 .input(dust,NetherStar)
                 .fluidInputs(Enzymesac.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"),1000,0)
-                .cleanroom(CleanroomType.CLEANROOM)
+                .output(ItemBlockSpecialFlower.ofType("puredaisy").getItem(), 1)
                 .rate(10)
                 .buildAndRegister();
 
