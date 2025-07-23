@@ -298,6 +298,53 @@ metaitem.blood_circuit_ultimate.name=Abyssal Flesh Circuit Board
 metaitem.blood_circuit_ultimate.tooltip=§c§lAbyssal Flesh Circuit Board: A forbidden gift from an unknown dimension§r
 metaitem.blood_circuit_supreme.name=Terminal Flesh Circuit Board
 metaitem.blood_circuit_supreme.tooltip=§c§lTerminal Flesh Circuit Board: Synchronization rate warning: Do not look directly§r
+
+
+metaitem.blood_circuit.0.name=血肉电路(MV)
+metaitem.blood_circuit.0.tooltip=§c§l
+metaitem.blood_circuit.1.name=血肉电路(HV)
+metaitem.blood_circuit.1.tooltip=§c§l
+metaitem.blood_circuit.2.name=血肉电路(EV)
+metaitem.blood_circuit.2.tooltip=§c§l
+metaitem.blood_circuit.3.name=血肉电路(IV)
+metaitem.blood_circuit.3.tooltip=§c§l
+metaitem.blood_circuit.4.name=血肉电路(LuV)
+metaitem.blood_circuit.4.tooltip=§c§l
+metaitem.blood_circuit.5.name=血肉电路(ZPM)
+metaitem.blood_circuit.5.tooltip=§c§l
+metaitem.blood_circuit.6.name=血肉电路(UV)
+metaitem.blood_circuit.6.tooltip=§c§l
+metaitem.blood_circuit.7.name=血肉电路(UHV)
+metaitem.blood_circuit.7.tooltip=§c§l
+metaitem.blood_circuit.8.name=血肉电路(UEV)
+metaitem.blood_circuit.8.tooltip=§c§l
+metaitem.blood_circuit.9.name=血肉电路(UIV)
+metaitem.blood_circuit.9.tooltip=§c§l
+metaitem.blood_circuit.10.name=血肉电路(UXV)
+metaitem.blood_circuit.10.tooltip=§c§l
+metaitem.blood_circuit.11.name=血肉电路(OpV)
+metaitem.blood_circuit.11.tooltip=§c§l
+metaitem.blood_circuit.12.name=血肉电路(MAX)
+metaitem.blood_circuit.12.tooltip=§c§l
+
+
+metaitem.primitive_meat.name=原始血肉团
+metaitem.primitive_meat.tooltip=§c§l
+metaitem.rat_brain.name=鼠脑
+metaitem.rat_brain.tooltip=§c§l
+metaitem.mitochondrion_power.name=线粒能源体
+metaitem.mitochondrion_power.tooltip=§c§l
+metaitem.endorphins_stabilizer.name=内啡肽稳定器
+metaitem.endorphins_stabilizer.tooltip=§c§l
+metaitem.freeze_cooler.name=寒冰冷冻器
+metaitem.freeze_cooler.tooltip=§c§l
+metaitem.lysosome_stabilizer.name=自噬稳定器
+metaitem.lysosome_stabilizer.tooltip=§c§l
+metaitem.ips_human_brain.name=iPS重建人脑
+metaitem.ips_human_brain.tooltip=§c§l
+metaitem.blood_port.name=血肉接口
+metaitem.blood_port.tooltip=§c§l
+
 #Equipment
 metaitem.wing_nano.name=Magical Nano-Flight Soul Conductor
 metaitem.wing_quantum.name=Magical Quantum-Flight Soul Conductor

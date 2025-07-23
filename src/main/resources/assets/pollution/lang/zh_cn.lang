@@ -328,7 +328,7 @@ metaitem.primitive_meat.name=原始血肉团
 metaitem.primitive_meat.tooltip=§c§l
 metaitem.rat_brain.name=鼠脑
 metaitem.rat_brain.tooltip=§c§l
-metaitem.mitochondrion_power.name=线粒能源体
+metaitem.mitochondrion_power.name=线粒能源块
 metaitem.mitochondrion_power.tooltip=§c§l
 metaitem.endorphins_stabilizer.name=内啡肽稳定器
 metaitem.endorphins_stabilizer.tooltip=§c§l
@@ -338,6 +338,8 @@ metaitem.lysosome_stabilizer.name=自噬稳定器
 metaitem.lysosome_stabilizer.tooltip=§c§l
 metaitem.ips_human_brain.name=iPS重建人脑
 metaitem.ips_human_brain.tooltip=§c§l
+metaitem.blood_port.name=血肉接口
+metaitem.blood_port.tooltip=§c§l
 
 #装具
 metaitem.wing_nano.name=魔导纳米飞行魂导器

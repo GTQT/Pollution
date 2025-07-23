@@ -206,6 +206,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.BLOOD_FREEZE_COOLER        = this.addItem(434, "freeze_cooler").setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BLOOD_LYSOSOME_STABILIZER  = this.addItem(435, "lysosome_stabilizer").setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BLOOD_IPS_HUMAN_BRAIN      = this.addItem(436, "ips_human_brain").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLOOD_PORT                 = this.addItem(437, "blood_port").setCreativeTabs(Pollution_TAB);
 
 	}
 

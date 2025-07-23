@@ -129,6 +129,7 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem BLOOD_FREEZE_COOLER;
 	public static MetaItem<?>.MetaValueItem BLOOD_LYSOSOME_STABILIZER;
 	public static MetaItem<?>.MetaValueItem BLOOD_IPS_HUMAN_BRAIN;
+	public static MetaItem<?>.MetaValueItem BLOOD_PORT;
 
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_MV;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_HV;
