@@ -1,6 +1,7 @@
 package keqing.pollution.common.items;
 
 import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.util.Mods;
 import keqing.pollution.common.items.armor.MetaArmor;
 
 public class PollutionMetaItems {
@@ -120,6 +121,29 @@ public class PollutionMetaItems {
 
 
 	public static MetaItem<?>.MetaValueItem BAUBLES_WATER_RING ;
+
+	public static MetaItem<?>.MetaValueItem BLOOD_PRIMITIVE_MEAT;
+	public static MetaItem<?>.MetaValueItem BLOOD_RATS_BRAIN;
+	public static MetaItem<?>.MetaValueItem BLOOD_MITOCHONDRION_POWER;
+	public static MetaItem<?>.MetaValueItem BLOOD_ENDORPHINS_STABILIZER;
+	public static MetaItem<?>.MetaValueItem BLOOD_FREEZE_COOLER;
+	public static MetaItem<?>.MetaValueItem BLOOD_LYSOSOME_STABILIZER;
+	public static MetaItem<?>.MetaValueItem BLOOD_IPS_HUMAN_BRAIN;
+	public static MetaItem<?>.MetaValueItem BLOOD_PORT;
+
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_MV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_HV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_EV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_IV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_LuV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_ZPM;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_UV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_UHV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_UEV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_UIV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_UXV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_OpV;
+	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_MAX;
 
 	public static PollutionMetaItem1 POLLUTION_META_ITEM;
 	public static PollutionBattery POLLUTION_META_BATTERY;

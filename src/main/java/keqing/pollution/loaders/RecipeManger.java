@@ -9,6 +9,7 @@ public class RecipeManger {
         MachineRecipes.init();
         AERecipes.init();
         BloodAltar.init();
+        BloodCircuit.init();
         //MeteorsHelper.init();
         MaterialsLine.init();
         ForgeAlchemyRecipes.init();
