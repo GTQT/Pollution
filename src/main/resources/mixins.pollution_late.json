@@ -14,9 +14,7 @@
     "gregtech.MixinSimpleGeneratorMetaTileEntityCommon",
     "thaumcraft.CommonInternalsMixin",
     "thaumcraft.ConfigAspectsMixin",
-    "thaumcraft.ThaumcraftApiHelperMixin",
-    "thaumcraft.ThaumcraftApiMixin",
-    "thaumcraft.ThaumcraftCraftingManagerMixin"
+    "thaumcraft.ThaumcraftApiHelperMixin"
   ],
   "server": [],
   "client": [

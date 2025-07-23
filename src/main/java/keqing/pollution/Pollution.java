@@ -66,47 +66,6 @@ public class Pollution {
             serverSide = "keqing.pollution.common.CommonProxy"
     )
     public static CommonProxy proxy;
-    public static AspectEventProxy PROXY_INSTANCE = new AspectEventProxy();
-    public static volatile boolean persistentAspectsCache = true;
-    public static Thread aspectsThread;
-    public static HashMap<Integer, AspectList> lateObjectTags;
-    private static long nextSave = -1L;
-
-    @SubscribeEvent
-    public static void tick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) return;
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        if (server == null) return;
-        long now = System.currentTimeMillis();
-        if (nextSave > 0 && nextSave < now) {
-            nextSave = now + (AspectsCache.saveInterval * 1000L);
-            if (lateObjectTags.isEmpty()) {
-                LOGGER.info(Pollution.NAME + " found 0 new item aspects to save.");
-                return;
-            }
-            LOGGER.info(Pollution.NAME + " found " + lateObjectTags.size() + " new item aspects to save.");
-            File aspectsCache = new File((File) Launch.blackboard.get("CachesFolderFile"), "pollution/aspects_cache.bin");
-            if (aspectsCache.isFile() && aspectsCache.exists() && aspectsCache.length() > 0L) {
-                new Thread(() -> {
-                    try {
-                        Stopwatch stopwatch = Stopwatch.createStarted();
-                        FileOutputStream fileOutputStream = new FileOutputStream(aspectsCache);
-                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                        Int2ObjectMap<Object2IntMap<String>> objectTags = new Int2ObjectOpenHashMap<>();
-                        lateObjectTags.forEach((k, v) -> objectTags.put(k, v.aspects.entrySet().stream().collect(Object2IntArrayMap::new, (m, av) -> m.put(av.getKey().getTag(), av.getValue()), Map::putAll)));
-                        objectOutputStream.writeObject(objectTags);
-                        fileOutputStream.close();
-                        objectOutputStream.close();
-                        Pollution.LOGGER.info("Aspects serialization complete! Taken {}.", stopwatch.stop());
-                        Pollution.lateObjectTags.clear();
-                    } catch (IOException e) {
-                        Pollution.LOGGER.error("Aspects serialization failed!");
-                        e.printStackTrace();
-                    }
-                }, "pollution/AspectThread").start();
-            }
-        }
-    }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -140,11 +99,5 @@ public class Pollution {
         Botania.init();
     }
 
-    @Mod.EventHandler
-    public void onServerStarted(FMLServerStartedEvent event) {
-        if (POConfig.AspectsCache.saveInterval > 0) {
-            nextSave = System.currentTimeMillis() + (AspectsCache.saveInterval * 1000L);
-        }
-    }
 
 }

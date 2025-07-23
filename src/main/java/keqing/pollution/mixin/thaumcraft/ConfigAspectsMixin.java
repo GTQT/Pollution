@@ -7,28 +7,23 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import keqing.pollution.Pollution;
-import keqing.pollution.api.utils.DummyAspectEventProxy;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectEventProxy;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.AspectRegistryEvent;
 import thaumcraft.api.internal.CommonInternals;
 import thaumcraft.common.config.ConfigAspects;
 
 import java.io.*;
-import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static keqing.pollution.Pollution.aspectsThread;
-import static keqing.pollution.Pollution.persistentAspectsCache;
 
 @Mixin(value = ConfigAspects.class, remap = false)
 public abstract class ConfigAspectsMixin {
@@ -51,7 +46,15 @@ public abstract class ConfigAspectsMixin {
     public static void postInit() {
         File pollutionFolder = new File((File) Launch.blackboard.get("CachesFolderFile"), "pollution");
         pollutionFolder.mkdirs();
+
+        // 添加目录权限检查
+        if (!pollutionFolder.canWrite()) {
+            Pollution.LOGGER.error("缓存目录不可写: {}", pollutionFolder.getAbsolutePath());
+            throw new RuntimeException("无法写入缓存目录");
+        }
+
         File aspectsCache = new File(pollutionFolder, "aspects_cache.bin");
+        CommonInternals.objectTags.clear();
 
         // 添加详细的缓存状态日志
         Pollution.LOGGER.info("检查缓存文件: {}", aspectsCache.getAbsolutePath());
@@ -90,10 +93,12 @@ public abstract class ConfigAspectsMixin {
                         loadSuccess.set(true);
                     }
                 } catch (InvalidClassException e) {
-                    Pollution.LOGGER.error("缓存版本不兼容: {}", e.getMessage());
+                    // 记录完整异常堆栈
+                    Pollution.LOGGER.error("缓存版本不兼容", e);
                     Pollution.LOGGER.error("正在生成新缓存替代...");
                 } catch (ClassNotFoundException | IOException e) {
-                    Pollution.LOGGER.error("缓存读取失败: {}", e.getMessage());
+                    // 记录完整异常堆栈
+                    Pollution.LOGGER.error("缓存读取失败", e);
                 } finally {
                     latch.countDown();
                 }
@@ -108,6 +113,7 @@ public abstract class ConfigAspectsMixin {
                 }
             } catch (InterruptedException e) {
                 Pollution.LOGGER.error("缓存加载被中断");
+                Thread.currentThread().interrupt();
             }
 
             cacheValid = loadSuccess.get();
@@ -119,24 +125,15 @@ public abstract class ConfigAspectsMixin {
             Pollution.LOGGER.info("缓存无效，创建新缓存");
 
             Stopwatch stopwatch = Stopwatch.createStarted();
-            CommonInternals.objectTags.clear();
 
             registerItemAspects();
-            registerEntityAspects();
-
-            AspectRegistryEvent are = new AspectRegistryEvent();
-            are.register = Pollution.PROXY_INSTANCE;
-            MinecraftForge.EVENT_BUS.post(are);
-
-            Pollution.LOGGER.info("Aspects注册完成! 耗时: {}", stopwatch.stop());
-
             // 写入新缓存
+            File tempFile;
             try {
                 stopwatch.reset().start();
 
                 // 使用临时文件确保原子写入
-                File tempFile = File.createTempFile("pollution-cache", ".tmp", pollutionFolder);
-                tempFile.deleteOnExit();
+                tempFile = File.createTempFile("pollution-cache", ".tmp", pollutionFolder);
 
                 try (FileOutputStream fos = new FileOutputStream(tempFile);
                      ObjectOutputStream oos = new ObjectOutputStream(fos)) {
@@ -161,17 +158,12 @@ public abstract class ConfigAspectsMixin {
             }
         }
 
-        // 补充实体注册（无论是否使用缓存都需要）
-        if (cacheValid) {
-            Pollution.LOGGER.info("补充注册实体aspects...");
-            registerEntityAspects();
-
-            // 发送虚拟注册事件
-            AspectRegistryEvent are = new AspectRegistryEvent();
-            Pollution.PROXY_INSTANCE = new DummyAspectEventProxy();
-            are.register = Pollution.PROXY_INSTANCE;
-            MinecraftForge.EVENT_BUS.post(are);
-        }
+        Pollution.LOGGER.info("注册实体aspects...");
+        registerEntityAspects();
+        // 发送虚拟注册事件
+        AspectRegistryEvent are = new AspectRegistryEvent();
+        are.register = new AspectEventProxy();
+        MinecraftForge.EVENT_BUS.post(are);
 
         // 清理线程资源
         if (loadThread != null && loadThread.isAlive()) {
@@ -186,5 +178,4 @@ public abstract class ConfigAspectsMixin {
             }
         }
     }
-
 }
