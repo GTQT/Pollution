@@ -789,6 +789,7 @@ recipemap.mana_infusion_recipes.name=工业植物炼金注魔
 recipemap.mana_petal_recipes.name=工业植物花药制取
 recipemap.pure_daisy_recipes.name=工业植物纯白嬗变
 recipemap.rune_altar_recipes.name=工业植物符文合成
+recipemap.industrial_infusion_recipes.name=工业注魔
 #事件
 pollution.command.slowness=§7你感到行动不便
 pollution.command.weakness=§b你感到一阵虚弱
@@ -799,13 +800,9 @@ pollution.command.summon_wither=§a维度裂隙已被未知怪物撕开缺口
 pollution.command.world_pollution=§2世界正在被污染！
 
 #工业注魔
-pollution.machine.industrial_infusion.tooltip.1=源质消耗为正常注魔的一半
-pollution.machine.industrial_infusion.tooltip.2=时间长度取决于源质消耗的数量
-pollution.machine.industrial_infusion.tooltip.3=默认耗电2000eu/t 需要ev电压
-pollution.machine.industrial_infusion.tooltip.4=以主方块为中心，吸收长为15的正方体中的源质,每次吸收需要128eu电量
-pollution.machine.industrial_infusion.tooltip.5=注魔中心物品需要放置到第一个输入仓的第一个位置
-pollution.machine.industrial_infusion.tooltip.6=其他物品需要单独放置，不能堆叠，位置随意，你是否能完成自动化呢?
-pollution.machine.industrial_infusion.tooltip.7=shift+右键主方块绑定玩家信息到机器
+pollution.machine.industrial_infusion.tooltip.1=玻璃升级一次耗时减少5%%
+pollution.machine.industrial_infusion.tooltip.2=线圈升级一次并行翻倍
+
 pollution.machine.canoutput=源质是否满足:%s
 pollution.machine.output_item=输出物品:%s
 pollution.machine.process=工作进度:%s

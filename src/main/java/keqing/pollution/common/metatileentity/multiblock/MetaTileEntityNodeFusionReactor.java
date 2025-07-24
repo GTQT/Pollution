@@ -546,7 +546,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 
         @Override
         public void setMaxProgress(int maxProgress) {
-            this.maxProgressTime = (int) (maxProgress * (1 - 0.02 * overallProgressTimeAmount));
+            super.setMaxProgress((int) (maxProgress * (1 - 0.02 * overallProgressTimeAmount)));
         }
 
         @Override

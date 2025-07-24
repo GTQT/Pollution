@@ -56,7 +56,6 @@ public class EventLoader {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void registerMaterials(MaterialEvent event) {
         PollutionMaterials.register();
-        buildPortalIngredient();
     }
 
     @SubscribeEvent
@@ -85,9 +84,9 @@ public class EventLoader {
                             double vx = rand.nextGaussian() * 0.02D;
                             double vy = rand.nextGaussian() * 0.02D;
                             double vz = rand.nextGaussian() * 0.02D;
-
                             world.spawnParticle(EnumParticleTypes.SPELL, entityItem.posX, entityItem.posY + 0.2, entityItem.posZ, vx, vy, vz);
                         }
+                        BLOCK_TF_PORTAL.tryToCreatePortal(world, pos, entityItem, player);
                     }
                 }
             }

@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Random;
 
 import static keqing.pollution.POConfig.AspectsCache;
+import static keqing.pollution.api.utils.POTeleporter.buildPortalIngredient;
 
 
 @Mod(
@@ -91,6 +92,7 @@ public class Pollution {
         proxy.preLoad();
         MinecraftForge.EVENT_BUS.register(new PollutionBlocksInit());
         PollutionMetaTileEntities.initialization();
+        buildPortalIngredient();
     }
 
     @Mod.EventHandler

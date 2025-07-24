@@ -804,6 +804,11 @@ recipemap.magic_greenhouse.name=Demon Plant Cultivation
 recipemap.forge_alchemy.name=Alchemy in the forge
 recipemap.stove.name=Sinter
 recipemap.node_magic_fusion.name=The sun is scorching
+recipemap.mana_infusion_recipes.name=工业植物炼金注魔
+recipemap.mana_petal_recipes.name=工业植物花药制取
+recipemap.pure_daisy_recipes.name=工业植物纯白嬗变
+recipemap.rune_altar_recipes.name=工业植物符文合成
+recipemap.industrial_infusion_recipes.name=工业注魔
 #Events
 pollution.command.slowness=§7You feel encumbered
 pollution.command.weakness=§bYou feel a surge of weakness
@@ -813,13 +818,8 @@ pollution.command.blindness=§1You feel dizzy
 pollution.command.summon_wither=§aThe dimensional rift has been torn open by an unknown monster
 pollution.command.world_pollution=The world is being polluted!
 #Industrial Infusion
-pollution.machine.industrial_infusion.tooltip.1=Essence consumption is half of normal infusion
-pollution.machine.industrial_infusion.tooltip.2=Duration depends on the amount of essence consumed
-pollution.machine.industrial_infusion.tooltip.3=Defaults to 2000eu/T power consumption, requires EV voltage
-pollution.machine.industrial_infusion.tooltip.4=Absorbs essence within a 15x15x15 cube centered on the main block, each absorption costs 128eu
-pollution.machine.industrial_infusion.tooltip.5=The infusion center item must be placed in the first slot of the first input inventory
-pollution.machine.industrial_infusion.tooltip.6=Other items must be placed separately, cannot be stacked, position is arbitrary. Can you automate it?
-pollution.machine.industrial_infusion.tooltip.7=Shift+right-click the main block to bind player information to the machine
+pollution.machine.industrial_infusion.tooltip.1=Reduced the time it takes to upgrade a glass by 5%%
+pollution.machine.industrial_infusion.tooltip.2=The coil upgrade doubles in parallel at a time
 pollution.machine.canoutput=Essence sufficiency: %s
 pollution.machine.output_item=Output item: %s
 pollution.machine.process=Work progress: %s
@@ -993,6 +993,11 @@ pollution.machine.bot_vacuum_freezer.tooltip=§aFaced with a night filled with s
 
 pollution.machine.bot_circuit_assembler.name=Advanced Arcane Circuit Assembly Center
 pollution.machine.bot_circuit_assembler.tooltip=§aIf the blood of martyrs is to flow on the steps, we must build the steps first.§r
+
+pollution.machine.industial_pure_daisy.name=秘学新植白菊之塔
+pollution.machine.mana_petal_apothecary.name=秘学新植花药之杯
+pollution.machine.mana_rune_altar.name=秘学新植符文之台
+pollution.machine.mana_infusion_reactor.name=秘学新植注魔之坛
 
 itemGroup.Pollution=Pollution
 itemGroup.Tarot=Tarot
