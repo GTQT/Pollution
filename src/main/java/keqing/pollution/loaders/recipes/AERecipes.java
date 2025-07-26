@@ -209,7 +209,7 @@ public class AERecipes {
 				"DAD",
 				'A', "plateThaumium",
 				'B', "dustFluix",
-				'C', "circuitMv",
+				'C', "circuitLv",
 				'D', "plateNetherQuartz"));
 		//奥术工作台成型核心
 		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "forming"),  new ShapedArcaneRecipe(
@@ -223,7 +223,7 @@ public class AERecipes {
 				"DAD",
 				'A', "plateThaumium",
 				'B', "dustFluix",
-				'C', "circuitMv",
+				'C', "circuitLv",
 				'D', "plateCertusQuartz"));
 
 		//注魔me输入输出总线
@@ -482,7 +482,7 @@ public class AERecipes {
 						"plateMansussteel",
 						"plateMansussteel",
 						"circuitHv",
-						item("gregtech:machine", 1561)
+						item("gregtech:mte", 2031)
 				)
 		);
 
@@ -500,7 +500,7 @@ public class AERecipes {
 						"workbench",
 						item("appliedenergistics2:quartz_vibrant_glass"),
 						item("appliedenergistics2:quartz_vibrant_glass"),
-						item("gregtech:machine", 111),
+						item("gregtech:mte", 111),
 						"circuitHv",
 						item("appliedenergistics2:material", 43),
 						item("appliedenergistics2:material", 44)
