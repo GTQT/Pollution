@@ -194,6 +194,10 @@ pollution.material.iizunamaru_electrum=光风霁月琥珀金
 metaitem.ingotIizunamaruElectrum.tooltip=§7星风「虹彩陆离乱舞」§r
 pollution.material.aetheric_dark_steel=太虚玄钢
 metaitem.ingotAethericDarkSteel.tooltip=§8致虚极，守静笃。万物并作，吾以观复。§r
+pollution.material.existing_nexus=缘生
+metaitem.ingotExistingNexus.tooltip=江水流春去欲尽
+pollution.material.fading_nexus=缘灭
+metaitem.ingotFadingNexus.tooltip=江潭落月复西斜
 
 pollution.material.flame_coal=固焰煤
 pollution.material.dumb_tin=哑泽锡
@@ -507,6 +511,13 @@ metaitem.stone_of_philosopher_4.name=§6贤者之石（黄金）§r
 metaitem.stone_of_philosopher_4.tooltip=§6黄金之仪，巅峰造化§r
 metaitem.stone_of_philosopher_final.name=§5§l真·贤者之石§r
 metaitem.stone_of_philosopher_final.tooltip=§5§l圆环之理！§r
+
+metaitem.white_rune.name=素牡符文
+metaitem.white_rune.tooltip=淡白思绪
+metaitem.black_rune.name=玄牝符文
+metaitem.black_rune.tooltip=午夜言语
+metaitem.starry_rune.name=天璇符文
+metaitem.starry_rune.tooltip=星光幽微
 
 #电池
 metaitem.battery.lv.magic.name=魔导蓄能器（§7LV§r）

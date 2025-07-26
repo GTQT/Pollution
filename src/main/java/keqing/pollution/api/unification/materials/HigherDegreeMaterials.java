@@ -57,7 +57,7 @@ public class HigherDegreeMaterials {
                 .setFormula("♆", true);
 
         PollutionMaterials.iizunamaru_electrum = new Material.Builder(getMaterialsId(), pollutionId("iizunamaru_electrum"))
-                .color(0xF0FFB2)
+                .color(0xF2FF2C)
                 .ingot().fluid()
                 .iconSet(SHINY)
                 .flags(GENERATE_BOLT_SCREW, GENERATE_RING, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)

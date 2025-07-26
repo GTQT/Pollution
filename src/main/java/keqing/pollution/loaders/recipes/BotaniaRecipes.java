@@ -4,13 +4,17 @@ import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
+import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import static gregtech.api.GTValues.*;
@@ -28,9 +32,55 @@ public class BotaniaRecipes {
     public static void init() {
         remove();
         flower();
+        rune();
         manahatch();
     }
 
+    private static void rune() {
+        //三种符文
+        PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
+                .inputs(new ItemStack(ModItems.rune, 1, 1))
+                .inputs(new ItemStack(ModItems.rune, 1, 5))
+                .inputs(new ItemStack(ModItems.rune, 1, 9))
+                .inputs(new ItemStack(ModItems.rune, 1, 10))
+                .input(OrePrefix.block, PollutionMaterials.aetheric_dark_steel)
+                .input(OrePrefix.block, PollutionMaterials.hyperdimensional_silver)
+                .input(PollutionMetaItems.CORE_OF_IDEA)
+                .input(OrePrefix.frameGt, PollutionMaterials.Terrasteel)
+                .output(PollutionMetaItems.WHITE_RUNE)
+                .TotalMana(100000)
+                .EUt(7680)
+                .duration(100)
+                .buildAndRegister();
+        PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
+                .inputs(new ItemStack(ModItems.rune, 1, 2))
+                .inputs(new ItemStack(ModItems.rune, 1, 6))
+                .inputs(new ItemStack(ModItems.rune, 1, 9))
+                .inputs(new ItemStack(ModItems.rune, 1, 10))
+                .input(OrePrefix.block, PollutionMaterials.blood_of_avernus)
+                .input(OrePrefix.block, VoidMetal)
+                .input(PollutionMetaItems.CORE_OF_IDEA)
+                .input(OrePrefix.frameGt, PollutionMaterials.Terrasteel)
+                .output(PollutionMetaItems.BLACK_RUNE)
+                .TotalMana(100000)
+                .EUt(7680)
+                .duration(100)
+                .buildAndRegister();
+        PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
+                .inputs(new ItemStack(ModItems.rune, 1, 4))
+                .inputs(new ItemStack(ModItems.rune, 1, 8))
+                .inputs(new ItemStack(ModItems.rune, 1, 9))
+                .inputs(new ItemStack(ModItems.rune, 1, 10))
+                .input(OrePrefix.block, PollutionMaterials.iizunamaru_electrum)
+                .input(OrePrefix.block, PollutionMaterials.keqinggold)
+                .input(PollutionMetaItems.CORE_OF_IDEA)
+                .input(OrePrefix.frameGt, PollutionMaterials.Terrasteel)
+                .output(PollutionMetaItems.STARRY_RUNE)
+                .TotalMana(100000)
+                .EUt(7680)
+                .duration(100)
+                .buildAndRegister();
+    }
     //"puredaisy", "manastar", "endoflame", "hydroangeas", "thermalily", "arcanerose", "munchdew", "entropinnyum", "kekimurus", "gourmaryllis", "narslimmus", "spectrolus", "rafflowsia", "shulk_me_not", "dandelifeon", "jadedAmaranthus", "bellethorn", "dreadthorn", "heiseiDream", "tigerseye", "marimorphosis", "orechid", "orechidIgnem", "fallenKanade", "exoflame", "agricarnation", "hopperhock", "rannuncarpus", "tangleberrie", "jiyuulia", "hyacidus", "medumone", "pollidisiac", "clayconia", "loonium", "daffomill", "vinculotus", "spectranthemum", "bubbell", "solegnolia", "bergamute"
     private static void flower() {
 

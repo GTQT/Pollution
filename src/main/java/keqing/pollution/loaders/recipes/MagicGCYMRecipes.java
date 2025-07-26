@@ -2254,6 +2254,22 @@ public class MagicGCYMRecipes {
 				.EUt(30720)
 				.duration(400)
 				.buildAndRegister();
+		//意志数据链
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(plateDouble, iizunamaru_electrum, 16)
+				.input(plateDouble, GTQTMaterials.VoidMetal, 16)
+				.input(stickLong, aetheric_dark_steel, 8)
+				.input(MetaItems.SENSOR_ZPM, 1)
+				.input(MetaItems.EMITTER_ZPM, 1)
+				.input(CORE_OF_IDEA, 2)
+				.input(BOTTLE_OF_PHLOGISTONIC_ONENESS, 1)
+				.fluidInputs(dimensional_transforming_agent.getFluid(8000))
+				.fluidInputs(sentient_metal, 1440)
+				.fluidInputs(binding_metal, 1440)
+				.output(SYMPTOMATIC_VIS_DATA_LINK)
+				.EUt(122880)
+				.duration(400)
+				.buildAndRegister();
 		//中控塔
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.inputs(PollutionMetaTileEntities.BOT_GAS_COLLECTOR.getStackForm(1))
@@ -2288,5 +2304,67 @@ public class MagicGCYMRecipes {
 				.EUt(30720)
 				.duration(4000)
 				.buildAndRegister();
+
+		//bot 四个机器
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "pure_daisy"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.INDUSTRIAL_PURE_DAISY.getStackForm(),
+				6,
+				new AspectList().add(Aspect.PLANT, 128).add(Aspect.MAGIC, 32).add(Aspect.MECHANISM, 32),
+				ItemBlockSpecialFlower.ofType("puredaisy"),
+				"plateManasteel",
+				"plateManasteel",
+				"plateMansussteel",
+				"plateMansussteel",
+				"circuitEv",
+				"circuitEv",
+				new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
+				new ItemStack(ItemsTC.visResonator),
+				new ItemStack(ItemsTC.morphicResonator)));
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "mana_infusion"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.MANA_INFUSION_REACTOR.getStackForm(),
+				6,
+				new AspectList().add(Aspect.PLANT, 128).add(Aspect.MAGIC, 32).add(Aspect.ALCHEMY, 128),
+				ModBlocks.alchemyCatalyst,
+				"plateManasteel",
+				"plateManasteel",
+				"plateMansussteel",
+				"plateMansussteel",
+				"circuitEv",
+				"circuitEv",
+				new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
+				new ItemStack(ItemsTC.visResonator),
+				new ItemStack(ItemsTC.morphicResonator)));
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "mana_rune_altar"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.MANA_RUNE_ALTAR.getStackForm(),
+				6,
+				new AspectList().add(Aspect.PLANT, 128).add(Aspect.MAGIC, 64).add(Aspect.CRAFT, 32),
+				ModBlocks.runeAltar,
+				"plateManasteel",
+				"plateManasteel",
+				"plateMansussteel",
+				"plateMansussteel",
+				"circuitEv",
+				"circuitEv",
+				new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
+				new ItemStack(ItemsTC.visResonator),
+				new ItemStack(ItemsTC.morphicResonator)));
+		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "mana_petal"), new InfusionRecipe(
+				"INFUSION@2",
+				PollutionMetaTileEntities.MANA_PETAL_APOTHECARY.getStackForm(),
+				6,
+				new AspectList().add(Aspect.PLANT, 128).add(Aspect.MAGIC, 32).add(Aspect.AURA, 32),
+				ModBlocks.altar,
+				"plateManasteel",
+				"plateManasteel",
+				"plateMansussteel",
+				"plateMansussteel",
+				"circuitEv",
+				"circuitEv",
+				new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
+				new ItemStack(ItemsTC.visResonator),
+				new ItemStack(ItemsTC.morphicResonator)));
 	}
 }

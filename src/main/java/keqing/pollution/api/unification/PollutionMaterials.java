@@ -150,6 +150,8 @@ public class PollutionMaterials {
 	public static Material dimensional_transforming_agent;
 	public static Material ferrous_chloride;
 	public static Material binding_metal;
+	public static Material existing_nexus;
+	public static Material fading_nexus;
 
 	//电池线
 	public static Material basic_battery_hull_alloy;

@@ -779,6 +779,28 @@ public class ThaumcraftRecipes {
                 new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
                 new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
                 "gemValonite"));
+
+        //创造肥皂
+        ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "flux_soap"), new InfusionRecipe(
+                "INFUSION@2",
+                new ItemStack(ItemsTC.creativeFluxSponge),
+                12,
+                new AspectList().add(Aspect.MAGIC, 250).add(Aspect.AURA, 250).add(Aspect.ORDER, 250).add(Aspect.WATER, 250).add(Aspect.VOID, 250).add(Aspect.LIFE, 250).add(Aspect.FLUX, 250).add(Aspect.PROTECT, 250),
+                PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getStackForm(),
+                "circuitZpm",
+                "circuitZpm",
+                PollutionMetaItems.CORE_OF_IDEA.getStackForm(),
+                PollutionMetaItems.CORE_OF_IDEA.getStackForm(),
+                PollutionMetaItems.AUTO_ELENCHUS_DEVICE.getStackForm(),
+                PollutionMetaItems.BOTTLE_OF_PHLOGISTONIC_ONENESS.getStackForm(),
+                MetaItems.FIELD_GENERATOR_LuV.getStackForm(),
+                MetaItems.FIELD_GENERATOR_LuV.getStackForm(),
+                PollutionMetaItems.BLACK_RUNE.getStackForm(),
+                PollutionMetaItems.WHITE_RUNE.getStackForm(),
+                PollutionMetaItems.STARRY_RUNE.getStackForm(),
+                new ItemStack(ItemsTC.causalityCollapser),
+                new ItemStack(Items.NETHER_STAR),
+                "gemValonite"));
     }
 
     //塔罗牌注魔合成
