@@ -107,6 +107,20 @@ public class PollutionElementMaterials {
                 .flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
                 .element(Elements.Bin)
                 .build();
+        PollutionMaterials.existing_nexus = new Material.Builder(getMaterialsId(), pollutionId("existing_nexus"))
+                .color(0xC0C0C0)
+                .ingot().fluid()
+                .iconSet(BRIGHT)
+                .flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+                .element(Elements.Exn)
+                .build();
+        PollutionMaterials.fading_nexus = new Material.Builder(getMaterialsId(), pollutionId("fading_nexus"))
+                .color(0x404040)
+                .ingot().fluid()
+                .iconSet(SHINY)
+                .flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
+                .element(Elements.Fan)
+                .build();
 
     }
 }

@@ -186,17 +186,21 @@ metaitem.ingotTerrasteel.tooltip=Named in Honor of the Earth
 pollution.material.basic_substrate=通用奇术基底
 pollution.material.advanced_substrate=高阶奇术基底
 
-pollution.material.sentient_metal=Perception
+pollution.material.sentient_metal=Sentient Metal
 metaitem.ingotSentientMetal.tooltip=Words were our weapon in winning the first war. Before we can choose words and make sentences, we are defenseless.
-pollution.material.binding_metal=bindings
+pollution.material.binding_metal=Binding Metal
 metaitem.ingotBindingMetal.tooltip=One day, words will end dreams. We should remain silent to prevent continued bloodshed.
-pollution.material.starrymansus=Tianxuan wanders
-pollution.material.blood_of_avernus=Blood of Aphnanas
-metaitem.ingotBloodOfAvernus.tooltip=§cEltorell fell into Aphernas today...§r
-pollution.material.iizunamaru_electrum=Light wind and moon amber gold
+pollution.material.starrymansus=Tianxuan Mansus
+pollution.material.blood_of_avernus=Blood of Avernus
+metaitem.ingotBloodOfAvernus.tooltip=§cEltorell fell into Avernus now...§r
+pollution.material.iizunamaru_electrum=Iizunamaru Electrum
 metaitem.ingotIizunamaruElectrum.tooltip=§7Starwind "Rainbow Land Dance"§r
-pollution.material.aetheric_dark_steel=Too void steel
+pollution.material.aetheric_dark_steel=Aetheric Dark Steel
 metaitem.ingotAethericDarkSteel.tooltip=§8To the extreme, keep quiet. All things work together, and I look at it.§r
+pollution.material.existing_nexus=Existing Nexus
+metaitem.ingotExistingNexus.tooltip=江水流春去欲尽
+pollution.material.fading_nexus=Fading Nexus
+metaitem.ingotFadingNexus.tooltip=江潭落月复西斜
 
 pollution.material.flame_coal=Stabilized Flame Coal
 pollution.material.dumb_tin=Tarnish-Mute Tin
@@ -513,6 +517,14 @@ metaitem.stone_of_philosopher_4.name=§6Philosopher's Stone (Golden)§r
 metaitem.stone_of_philosopher_4.tooltip=§6The Golden Ritual, the pinnacle of transmutation§r
 metaitem.stone_of_philosopher_final.name=§5§lTrue Philosopher's Stone§r
 metaitem.stone_of_philosopher_final.tooltip=§5§lThe Principle of the Circle!§r
+
+metaitem.white_rune.name=White Rune
+metaitem.white_rune.tooltip=Pure Thoughts
+metaitem.black_rune.name=Black Rune
+metaitem.black_rune.tooltip=Midnight Whispers
+metaitem.starry_rune.name=Starry Rune
+metaitem.starry_rune.tooltip=Faint Starlight
+
 #battery
 metaitem.battery.lv.magic.name=Magic Battery (§7LV§r)
 metaitem.battery.mv.magic.name=Magic Battery (§bMV§r)

@@ -1,5 +1,8 @@
 package keqing.pollution.loaders.recipes;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.client.render.entity.SentientSpecterRenderFactory;
+import WayofTime.bloodmagic.util.Constants;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
@@ -24,8 +27,7 @@ import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.MIXER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.GadoliniumSiliconGermanium;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.Okin;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class NodeFusionRecipes {
@@ -54,9 +56,9 @@ public class NodeFusionRecipes {
 		//方块 MK1
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1))
-				.input(PollutionMetaItems.CORE_OF_IDEA, 4)
+				.input(PollutionMetaItems.CORE_OF_IDEA, 2)
 				.input(ItemsTC.morphicResonator, 32)
-				.input(MetaItems.ELECTRIC_MOTOR_LuV, 2)
+				.input(MetaItems.ELECTRIC_MOTOR_LuV, 1)
 				.input(OrePrefix.screw, PollutionMaterials.blood_of_avernus, 8)
 				.input(OrePrefix.frameGt, PollutionMaterials.aetheric_dark_steel, 4)
 				.input(OrePrefix.frameGt, PollutionMaterials.iizunamaru_electrum, 4)
@@ -67,14 +69,43 @@ public class NodeFusionRecipes {
 				.EUt(VA[LuV])
 				.duration(400)
 				.buildAndRegister();
-		//魔法聚变 MK1
+		//方块 mk2 mk3
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING, 1))
+				.input(PollutionMetaItems.ELUCIDATOR_OF_FOUR_CAUSES, 1)
+				.input(PollutionMetaItems.STARRY_RUNE, 2)
+				.input(MetaItems.ELECTRIC_MOTOR_ZPM, 1)
+				.input(OrePrefix.screw, Duranium, 4)
+				.input(OrePrefix.frameGt, Europium, 2)
+				.fluidInputs(binding_metal.getFluid(576))
+				.fluidInputs(sentient_metal.getFluid(576))
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(2000))
+				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_2_CASING, 1))
+				.EUt(VA[ZPM])
+				.duration(400)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_2_CASING, 1))
+				.input(PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK, 1)
+				.input(PollutionMetaItems.STARRY_RUNE, 4)
+				.input(MetaItems.ELECTRIC_MOTOR_UV, 1)
+				.input(OrePrefix.screw, Americium, 4)
+				.input(OrePrefix.frameGt, Darmstadtium, 2)
+				.fluidInputs(existing_nexus.getFluid(576))
+				.fluidInputs(fading_nexus.getFluid(576))
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(4000))
+				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_3_CASING, 1))
+				.EUt(VA[UV])
+				.duration(400)
+				.buildAndRegister();
+		//魔法聚变 MK1-MK3
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(MetaTileEntities.FUSION_REACTOR[0], 16)
-				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING, 32))
+				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING, 8))
 				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1, 16))
-				.input(PollutionMetaItems.BOTTLE_OF_PHLOGISTONIC_ONENESS, 16)
-				.input(PollutionMetaItems.ELUCIDATOR_OF_FOUR_CAUSES, 8)
-				.input(PollutionMetaItems.AUTO_ELENCHUS_DEVICE, 8)
+				.input(PollutionMetaItems.BOTTLE_OF_PHLOGISTONIC_ONENESS, 8)
+				.input(PollutionMetaItems.ELUCIDATOR_OF_FOUR_CAUSES, 4)
+				.input(PollutionMetaItems.AUTO_ELENCHUS_DEVICE, 4)
 				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 4))
 				.input(OrePrefix.plate, Materials.Osmiridium, 32)
 				.input(GTQTMetaItems.NEUTRON, 16)
@@ -83,6 +114,36 @@ public class NodeFusionRecipes {
 				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
 				.EUt(VA[ZPM])
+				.duration(40000)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
+				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_2_CASING, 8))
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1, 32))
+				.input(PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK,4)
+				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 8))
+				.input(OrePrefix.plate, Duranium, 32)
+				.inputs(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getStackForm())
+				.fluidInputs(binding_metal.getFluid(36000))
+				.fluidInputs(sentient_metal.getFluid(36000))
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
+				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[1].getStackForm())
+				.EUt(VA[UV])
+				.duration(40000)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.inputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[1].getStackForm())
+				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_3_CASING, 8))
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1, 64))
+				.input(PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK,8)
+				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 16))
+				.input(OrePrefix.plate, Darmstadtium, 32)
+				.inputs(PollutionMetaItems.STONE_OF_PHILOSOPHER_4.getStackForm())
+				.fluidInputs(existing_nexus.getFluid(36000))
+				.fluidInputs(fading_nexus.getFluid(36000))
+				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
+				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[2].getStackForm())
+				.EUt(VA[UHV])
 				.duration(40000)
 				.buildAndRegister();
 	}
@@ -134,6 +195,47 @@ public class NodeFusionRecipes {
 				.EUToStart(60000000L)
 				.EUt(VA[EV])
 				.duration(200)
+				.buildAndRegister();
+        //生命源质聚变
+		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+				.fluidInputs(infused_life.getFluid(1000))
+				.fluidInputs(Richmagic.getFluid(1000))
+				.fluidOutputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
+				.EUToStart(140000000L)
+				.EUt(VA[LuV])
+				.duration(64)
+				.buildAndRegister();
+		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
+				.fluidInputs(Terrasteel.getFluid(288))
+				.fluidOutputs(existing_nexus.getFluid(144))
+				.EUToStart(200000000L)
+				.EUt(VA[ZPM])
+				.duration(200)
+				.buildAndRegister();
+		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
+				.fluidInputs(VoidMetal.getFluid(288))
+				.fluidOutputs(fading_nexus.getFluid(144))
+				.EUToStart(200000000L)
+				.EUt(VA[ZPM])
+				.duration(200)
+				.buildAndRegister();
+		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+				.fluidInputs(infused_instrument.getFluid(144))
+				.fluidInputs(Titanium.getFluid(144))
+				.fluidOutputs(Tritanium.getFluid(288))
+				.EUToStart(400000000L)
+				.EUt(VA[ZPM])
+				.duration(40)
+				.buildAndRegister();
+		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+				.fluidInputs(Naquadria.getFluid(144))
+				.fluidInputs(infused_energy.getFluid(1000))
+				.fluidOutputs(Neutronium.getFluid(144))
+				.EUToStart(400000000L)
+				.EUt(VA[ZPM])
+				.duration(60)
 				.buildAndRegister();
 
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()

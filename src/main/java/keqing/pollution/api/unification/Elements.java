@@ -29,4 +29,6 @@ public class Elements {
 	public static final Element St = add(1, 13, -1, null, "Starrymansus", "St", false);
 	public static final Element Sen = add(1, 14, -1, null, "Sentience", "Sen", false);
 	public static final Element Bin = add(1, 15, -1, null, "Binding", "Bin", false);
+	public static final Element Exn = add(1, 16, -1, null, "ExistingNexus", "Exn", false);
+	public static final Element Fan = add(1, 17, -1, null, "FadingNexus", "Fan", false);
 }

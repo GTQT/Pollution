@@ -125,10 +125,13 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_3 = this.addItem(152, "stone_of_philosopher_3").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_4 = this.addItem(153, "stone_of_philosopher_4").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.STONE_OF_PHILOSOPHER_FINAL= this.addItem(154, "stone_of_philosopher_final").setMaxStackSize(1).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+        //新符文
+		PollutionMetaItems.WHITE_RUNE = this.addItem(155, "white_rune").setMaxStackSize(64).setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLACK_RUNE = this.addItem(156, "black_rune").setMaxStackSize(64).setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.STARRY_RUNE = this.addItem(157, "starry_rune").setMaxStackSize(64).setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
 
 		//实用物品
 		PollutionMetaItems.VIS_CHECKER = this.addItem(200, "vis_checker").setMaxStackSize(1).addComponents(new VisCheckerBehavior()).setCreativeTabs(Pollution_TAB);
-
 		//杀虫剂
 		PollutionMetaItems.PESTICIDE_EMPTY = addItem(201, "pesticide.empty").setMaxStackSize(1).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.PESTICIDE= this.addItem(202, "pesticide.full").setMaxStackSize(1).addComponents(new PesticideBehaviour(PESTICIDE_EMPTY.getStackForm(),512)).setCreativeTabs(Pollution_TAB);

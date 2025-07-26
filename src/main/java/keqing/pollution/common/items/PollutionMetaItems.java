@@ -86,6 +86,10 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_4;
 	public static MetaItem<?>.MetaValueItem STONE_OF_PHILOSOPHER_FINAL;
 
+	public static MetaItem<?>.MetaValueItem WHITE_RUNE;
+	public static MetaItem<?>.MetaValueItem BLACK_RUNE;
+	public static MetaItem<?>.MetaValueItem STARRY_RUNE;
+
 	public static MetaItem<?>.MetaValueItem BATTERY_HULL_LV ;
 	public static MetaItem<?>.MetaValueItem BATTERY_HULL_MV ;
 	public static MetaItem<?>.MetaValueItem BATTERY_HULL_HV ;
