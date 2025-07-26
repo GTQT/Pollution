@@ -4,6 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconSet;
 import gregtech.api.unification.material.properties.MaterialToolProperty;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
 
@@ -408,7 +409,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.manasteel = new Material.Builder(getMaterialsId(), pollutionId("manasteel"))
                 .color(0x1E90FF)
                 .ingot().fluid().ore()
-                .components(Iron, 4, mana, 1)
+                .components(Iron, 4, GTQTMaterials.Magic, 1)
                 .toolStats(new MaterialToolProperty(6, 6, 2048, 5))
                 .rotorStats(8.0F, 3.0F, 1024)
                 .fluidPipeProperties(2400, 160, true)
@@ -420,7 +421,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.salismundus = new Material.Builder(getMaterialsId(), pollutionId("salismundus"))
                 .color(0xEE82EE)
                 .dust()
-                .components(Redstone, 2, mana, 1)
+                .components(Redstone, 2, GTQTMaterials.Magic, 1)
                 .iconSet(SHINY)
                 .build();
 
@@ -441,7 +442,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.Terrasteel = new Material.Builder(getMaterialsId(), pollutionId("terrasteel"))
                 .color(0x58FF0B)
                 .ingot().fluid()
-                .components(Iron, 4, Carbon, 4, EnderPearl, 4, mana, 3)
+                .components(Iron, 4, Carbon, 4, EnderPearl, 4, GTQTMaterials.Magic, 3)
                 .toolStats(new MaterialToolProperty(8, 6, 5120, 6))
                 .rotorStats(10.0F, 3.0F, 1440)
                 .fluidPipeProperties(3400, 200, true)
@@ -468,7 +469,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.Orichalcos = new Material.Builder(getMaterialsId(), pollutionId("orichalcos"))
                 .color(0xFF00FF)
                 .ingot().fluid()
-                .components(Iron, 4, Carbon, 4, EnderPearl, 4, mana, 3)
+                .components(Iron, 4, Carbon, 4, EnderPearl, 4, GTQTMaterials.Magic, 3)
                 .toolStats(new MaterialToolProperty(8, 6, 5120, 6))
                 .rotorStats(14.0F, 3.0F, 3200)
                 .fluidPipeProperties(8000, 600, true)

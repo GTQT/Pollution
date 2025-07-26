@@ -254,9 +254,9 @@ pollution.material.sodium_azide=sodium azide
 pollution.material.sodium_cyclopentadienide=Sodium cyclopentadienyl
 pollution.material.hafnocene_dichloride=Hafnium dichlorodicyane
 pollution.material.μ_oxo_bis_hafnocene_azide=Maothyfnium hafnium ether
-metaitem.dustΜOxoBisHafnoceneAzide.tooltip=If you can synthesize this, you should ask for hafnium-based zirconium
 
 pollution.material.energy_crystal=Energy Crystals
+pollution.material.starmetal_alloy=Starmetal Alloy
 #Items
 metaitem.blank_catalyst_core.name="§8Blank Catalyst Core§r"
 metaitem.cold_catalyst_core.name="§bIcy Catalyst Core§r"

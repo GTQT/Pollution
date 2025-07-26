@@ -188,7 +188,8 @@ public class NodeFusionRecipes {
 				.EUt(VA[IV])
 				.duration(200)
 				.buildAndRegister();
-		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+
+		RecipeMaps.FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.infused_magic.getFluid(144))
 				.fluidInputs(Materials.Water.getFluid(1000))
 				.fluidOutputs(GTQTMaterials.Richmagic.getFluid(1000))
@@ -238,7 +239,7 @@ public class NodeFusionRecipes {
 				.duration(60)
 				.buildAndRegister();
 
-		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
+		RecipeMaps.FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(144))
 				.fluidInputs(PollutionMaterials.infused_order.getFluid(144))
 				.fluidOutputs(GTQTMaterials.Okin.getFluid(576))

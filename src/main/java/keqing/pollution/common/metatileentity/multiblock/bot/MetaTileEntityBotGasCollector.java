@@ -81,7 +81,7 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
             put(PollutionMaterials.infused_fire, Materials.NetherAir);
             put(PollutionMaterials.infused_alien, Materials.EnderAir);
             put(PollutionMaterials.infused_magic, GTQTMaterials.MarsAir);
-            put(PollutionMaterials.infused_taint, GTQTMaterials.BetAir);
+            put(PollutionMaterials.infused_taint, GTQTMaterials.UnderAir);
         }
     };
 

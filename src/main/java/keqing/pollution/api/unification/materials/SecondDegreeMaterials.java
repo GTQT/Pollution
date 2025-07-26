@@ -396,7 +396,8 @@ public class SecondDegreeMaterials {
                 .iconSet(DULL)
                 .components(Carbon, 20, Hydrogen, 20, Hafnium, 2, Nitrogen, 6, Oxygen, 1)
                 .build()
-                .setFormula("[(Cp)2Hf(N3)2]2(μ-O)");
+                .setFormula("[(Cp)2Hf(N3)2]2(μ-O)")
+                .setTooltips("能合成这个的家里要请铪基锆了");
 
         //能量水晶
         PollutionMaterials.energy_crystal = new Material.Builder(getMaterialsId(), pollutionId("energy_crystal"))
@@ -407,5 +408,13 @@ public class SecondDegreeMaterials {
                 .components(infused_air, 1, infused_fire, 1, infused_water, 1, infused_earth, 1)
                 .build()
                 .setFormula("(Ae)(Fi)(Wa)(Ea)", true);
+
+        //StarmetalAlloy
+        PollutionMaterials.starmetal_alloy = new Material.Builder(getMaterialsId(), pollutionId("starmetal_alloy"))
+                .color(0xF0A274)
+                .ingot().fluid()
+                .iconSet(METALLIC)
+                .blast(5400, MID)
+                .build();
     }
 }

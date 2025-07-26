@@ -47,8 +47,7 @@ public class PollutionMaterials {
 	public static Material infused_spatio;
 	public static Material infused_tempus;
 	public static Material infused_tinctura;
-	//mana酱
-	public static Material mana;
+
 	//材料
 	public static Material thaumium;
 	public static Material syrmorite;
@@ -166,6 +165,7 @@ public class PollutionMaterials {
 	public static Material μ_oxo_bis_hafnocene_azide;
 
 	public static Material energy_crystal;
+	public static Material starmetal_alloy;
 
 	//其他矿物
 	public static Material FlameCoal;
