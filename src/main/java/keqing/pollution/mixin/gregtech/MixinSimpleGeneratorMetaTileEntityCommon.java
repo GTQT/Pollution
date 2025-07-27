@@ -26,7 +26,7 @@ public abstract class MixinSimpleGeneratorMetaTileEntityCommon extends WorkableT
     public void update() {
         super.update();
         if (!getWorld().isRemote) {
-            if (getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution && isActive()) {
+            if (this.workable.isActive()&&getOffsetTimer() % 200 == 0 && POConfig.PollutionSystemSwitch.enablePollution && isActive()) {
                 AuraHelper.polluteAura(getWorld(), getPos(), (float) (pollution$pollutionMultiplier * 0.1), POConfig.PollutionSystemSwitch.mufflerPollutionShowEffects);
             }
         }

@@ -134,9 +134,9 @@ public class PORecipeMaps {
             .build();
 
     public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMapBuilder<>("industrial_infusion_recipes", new SimpleRecipeBuilder())
-            .itemInputs(48)
+            .itemInputs(16)
             .itemOutputs(1)
-            .fluidInputs(16)
+            .fluidInputs(8)
             .fluidOutputs(0)
             .build();
 

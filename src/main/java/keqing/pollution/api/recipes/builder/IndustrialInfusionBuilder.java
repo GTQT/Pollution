@@ -4,10 +4,14 @@ import keqing.pollution.api.utils.POAspectToGtFluidList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.crafting.InfusionRecipe;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import static keqing.pollution.api.recipes.PORecipeMaps.INDUSTRIAL_INFUSION_RECIPES;
 
@@ -24,6 +28,7 @@ public class IndustrialInfusionBuilder {
                 InfusionRecipe read = (InfusionRecipe)recipe;
                 if(read.recipeOutput instanceof ItemStack)
                 {
+
                     var list = read.getRecipeInput().getMatchingStacks();
                     var listin = read.getComponents();
                     var out = ((ItemStack) read.recipeOutput).copy();
@@ -43,9 +48,25 @@ public class IndustrialInfusionBuilder {
                             .fluidInputs(fluids)
                             .duration(during)
                             .EUt(120);
+
+
+
                     for (var iii:listin)
                     {
-                        brec.inputs(iii.getMatchingStacks());
+                        ItemStack[] itemStacks = iii.getMatchingStacks().clone();
+
+                        if(itemStacks.length == 0)continue;
+                        if (itemStacks.length == 1){
+                            brec.inputs(itemStacks[0]);
+                        }
+                        else {
+                            int[] ids = OreDictionary.getOreIDs(iii.getMatchingStacks()[0]);
+                            if (ids.length > 0) {
+                                brec.input(OreDictionary.getOreName(ids[0]));
+                            }
+                            else brec.inputs(itemStacks[0]);
+                        }
+
                     }
                     brec.buildAndRegister();
                 }
