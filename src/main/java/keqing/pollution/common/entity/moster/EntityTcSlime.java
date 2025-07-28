@@ -1,6 +1,7 @@
 package keqing.pollution.common.entity.moster;
 
 import keqing.pollution.dimension.biome.POBiomeHandler;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
@@ -68,7 +69,8 @@ public class EntityTcSlime extends EntitySlime {
 
                 if (biome == POBiomeHandler.UnderWorld_BIOME  && this.rand.nextFloat() < 0.5F && this.rand.nextFloat() < this.world.getCurrentMoonPhaseFactor() && this.world.getLightFromNeighbors(new BlockPos(this)) <= this.rand.nextInt(8))
                 {
-                    return super.getCanSpawnHere();
+                    IBlockState iblockstate = this.world.getBlockState((new BlockPos(this)).down());
+                    return iblockstate.canEntitySpawn(this);
                 }
             }
 

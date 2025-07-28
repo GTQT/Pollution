@@ -1,5 +1,6 @@
 package keqing.pollution.common.entity.moster;
 
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
@@ -15,5 +16,10 @@ public class EntitySlimeignis extends  EntityTcSlime{
     @Nullable
     protected ResourceLocation getLootTable() {
         return this.getSlimeSize() == 1 ? EntityTcSlime.LOOT_TABLE_IGNIS : LootTableList.EMPTY;
+    }
+    @Override
+    protected EntitySlime createInstance()
+    {
+        return new EntitySlimeignis(this.world);
     }
 }

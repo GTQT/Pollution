@@ -1,6 +1,6 @@
 package keqing.pollution.dimension.biome.biomes;
 
-import keqing.pollution.common.entity.moster.EntityTcSlime;
+import keqing.pollution.common.entity.moster.*;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeHellDecorator;
@@ -20,6 +20,11 @@ public class POBiomeBNTNether extends Biome {
 
     private void addSpawnEntries() {
         this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityZombie.class, 4, 1, 1));
-        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityTcSlime.class, 2, 1, 2));
+        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeAer.class, 2, 1, 2));
+        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeignis.class, 2, 1, 2));
+        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeAqua.class, 2, 1, 2));
+        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeTerra.class, 2, 1, 2));
+        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeOrdo.class, 2, 1, 2));
+        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimePerditio.class, 2, 1, 2));
     }
 }

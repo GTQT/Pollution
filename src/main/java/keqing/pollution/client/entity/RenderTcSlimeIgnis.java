@@ -4,9 +4,11 @@ import keqing.pollution.common.entity.moster.EntityTcSlime;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
+import static keqing.pollution.Pollution.MODID;
+
 public class RenderTcSlimeIgnis extends RenderTcSlime{
 
-    private static final ResourceLocation SLIME_TEXTURES = new ResourceLocation("textures/entity/slime/slime_ignis.png");
+    private static final ResourceLocation SLIME_TEXTURES = new ResourceLocation(MODID,"textures/entity/slime/slime_ignis.png");
 
     public RenderTcSlimeIgnis(RenderManager manager) {
         super(manager);
