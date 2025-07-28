@@ -57,6 +57,7 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 for (int i = 0; i < inputInventory.getSlots(); i++) {
                     if ("endoflame".equals(ItemBlockSpecialFlower.getType(inputInventory.getStackInSlot(i)))) {
                         num += inputInventory.getStackInSlot(i).getCount();
+
                     }
                     ItemStack stack = inputInventory.getStackInSlot(i);
                     int time = TileEntityFurnace.getItemBurnTime(stack);
