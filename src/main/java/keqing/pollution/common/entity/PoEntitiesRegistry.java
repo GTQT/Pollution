@@ -14,17 +14,17 @@ import static keqing.pollution.Pollution.MODID;
 public class PoEntitiesRegistry {
     public static void init() {
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_aer"), EntitySlimeAer.class,"Aer Slime",1, Pollution.instance,64,3,true);
-        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_aer"),0x48e06e, 0x199038);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_aer"),0xe6d55c, 0x199038);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_ignis"), EntitySlimeignis.class,"Ignis Slime",2, Pollution.instance,64,3,true);
-        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ignis"),0x48e06e, 0x199038);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ignis"),0xde402b, 0x199038);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_aqua"), EntitySlimeAqua.class,"Aqua Slime",3, Pollution.instance,64,3,true);
-        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_aqua"),0x48e06e, 0x199038);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_aqua"),0x40e1d9, 0x199038);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_terra"), EntitySlimeTerra.class,"Terra Slime",4, Pollution.instance,64,3,true);
         EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_terra"),0x48e06e, 0x199038);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_ordo"), EntitySlimeOrdo.class,"Ordo Slime",5, Pollution.instance,64,3,true);
-        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ordo"),0x48e06e, 0x199038);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ordo"),0xe1bff5, 0x199038);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_perditio"), EntitySlimePerditio.class,"Perditio Slime",6, Pollution.instance,64,3,true);
-        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_perditio"),0x48e06e, 0x199038);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_perditio"),0x000103, 0x199038);
     }
     @SideOnly(Side.CLIENT)
     public static void initRenderers() {

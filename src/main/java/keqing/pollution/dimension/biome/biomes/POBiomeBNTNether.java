@@ -19,7 +19,6 @@ public class POBiomeBNTNether extends Biome {
     }
 
     private void addSpawnEntries() {
-        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityZombie.class, 4, 1, 1));
         this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeAer.class, 2, 1, 2));
         this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeignis.class, 2, 1, 2));
         this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySlimeAqua.class, 2, 1, 2));
