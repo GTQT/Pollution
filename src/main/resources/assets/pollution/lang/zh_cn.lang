@@ -182,6 +182,7 @@ metaitem.ingotMansussteel.tooltip=§7林地生长于漫宿墙外，但每一个�
 metaitem.ingotTerrasteel.tooltip=以大地为名
 pollution.material.basic_substrate=通用奇术基底
 pollution.material.advanced_substrate=高阶奇术基底
+pollution.material.hyper_substrate=玄想奇术基底
 
 pollution.material.sentient_metal=感知
 metaitem.ingotSentientMetal.tooltip=言辞曾是我们赢得第一场战争的武器。能遣词造句前，我们手无寸铁。

@@ -61,6 +61,14 @@ public class MagicChemicalRecipes {
 				.duration(10000)
 				.EUt(122880)
 				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_4.getMetaItem(), 1, 153))
+				.input(OrePrefix.block, PollutionMaterials.existing_nexus)
+				.fluidInputs(Ichorium.getFluid(100000))
+				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.duration(10000)
+				.EUt(1966080)
+				.buildAndRegister();
 		//四种催化剂的更简单的配方
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
@@ -112,7 +120,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
-				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(14400))
 				.chancedFluidOutput(Materials.Polyethylene.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Materials.Epoxy.getFluid(14400), 2500, 500)
@@ -125,12 +133,23 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
-				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(14400))
 				.chancedFluidOutput(Materials.Polybenzimidazole.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(GTQTMaterials.Zylon.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Polyetheretherketone.getFluid(14400), 2500, 500)
+				.duration(600)
+				.EUt(122880)
+				.buildAndRegister();
+
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(14400))
 				.chancedFluidOutput(Kevlar.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(KaptonE.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(KaptonK.getFluid(14400), 2500, 500)
 				.duration(600)
 				.EUt(122880)
 				.buildAndRegister();

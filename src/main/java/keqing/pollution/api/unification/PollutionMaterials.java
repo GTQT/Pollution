@@ -115,6 +115,7 @@ public class PollutionMaterials {
 	public static Material elven;
 	public static Material basic_substrate;
 	public static Material advanced_substrate;
+	public static Material hyper_substrate;
 
 	//刻金线
 	public static Material sulfo_plumbic_salt;
