@@ -187,6 +187,13 @@ pollution.material.basic_substrate=通用奇术基底
 pollution.material.advanced_substrate=高阶奇术基底
 pollution.material.hyper_substrate=玄想奇术基底
 
+pollution.material.purified_blood=Purified blood
+pollution.material.infused_purified_blood=Infused purified blood
+pollution.material.arcane_gelid_fluid=Arcane gelid fluid
+pollution.material.cryogenic_synthetic_blood=Cryogenic synthetic blood
+pollution.material.arcane_computational_substrate=Arcane computational substrate
+pollution.material.synthetic_computational_blood=Synthetic computational blood
+
 pollution.material.sentient_metal=Sentient Metal
 metaitem.ingotSentientMetal.tooltip=Words were our weapon in winning the first war. Before we can choose words and make sentences, we are defenseless.
 pollution.material.binding_metal=Binding Metal
