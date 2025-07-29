@@ -562,5 +562,37 @@ public class FirstDegreeMaterials {
                 .color(0x9E7B59)
                 .components(Sodium, 1, Lead, 1)
                 .build();
+
+        //血魔法 血线
+        //除杂血
+        PollutionMaterials.purified_blood = new Material.Builder(getMaterialsId(), pollutionId("purified_blood"))
+                .fluid()
+                .color(0xFF6B6B)
+                .build();
+        //注魔除杂血
+        PollutionMaterials.infused_purified_blood = new Material.Builder(getMaterialsId(), pollutionId("infused_purified_blood"))
+                .fluid()
+                .color(0xFF6B6B)
+                .build();
+        //奇术凛冰液
+        PollutionMaterials.arcane_gelid_fluid = new Material.Builder(getMaterialsId(), pollutionId("arcane_gelid_fluid"))
+                .fluid()
+                .color(0x66FFFF)
+                .build();
+        //极寒人造血
+        PollutionMaterials.cryogenic_synthetic_blood = new Material.Builder(getMaterialsId(), pollutionId("cryogenic_synthetic_blood"))
+                .fluid()
+                .color(0x003366)
+                .build();
+        //秘学运算液基底
+        PollutionMaterials.arcane_computational_substrate = new Material.Builder(getMaterialsId(), pollutionId("arcane_computational_substrate"))
+                .fluid()
+                .color(0x4B0082)
+                .build();
+        //运算人造血
+        PollutionMaterials.synthetic_computational_blood = new Material.Builder(getMaterialsId(), pollutionId("synthetic_computational_blood"))
+                .fluid()
+                .color(0x8A2BE2)
+                .build();
     }
 }
