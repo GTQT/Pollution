@@ -1078,3 +1078,11 @@ pollution.veins.ore.thaumastic.ii=地下蕴魔矿脉II
 pollution.veins.ore.thaumastic.iii=地下蕴魔矿脉III
 
 gregtech.veins.fluid.water=水矿藏
+
+##实体
+entity.Aer Slime.name=风结晶史莱姆
+entity.Ignis Slime.name=火结晶史莱姆
+entity.Aqua Slime.name=水结晶史莱姆
+entity.Terra Slime.name=地结晶史莱姆
+entity.Ordo Slime.name=秩序结晶史莱姆
+entity.Perditio Slime.name=混沌结晶史莱姆

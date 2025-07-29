@@ -7,6 +7,7 @@ import gregtech.api.recipes.builders.*;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.pollution.api.recipes.builder.ManaRecipesBuilder;
 import keqing.pollution.client.POSoundEvent;
+import net.minecraft.init.SoundEvents;
 
 public class PORecipeMaps {
     public static final RecipeMap<FuelRecipeBuilder> DAN_DE_LIFE_ON = new RecipeMapBuilder<>("dan_de_life_on", new FuelRecipeBuilder())
@@ -134,10 +135,17 @@ public class PORecipeMaps {
             .build();
 
     public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMapBuilder<>("industrial_infusion_recipes", new SimpleRecipeBuilder())
-            .itemInputs(16)
+            .itemInputs(25)
             .itemOutputs(1)
             .fluidInputs(8)
             .fluidOutputs(0)
+            .build();
+
+    public static final RecipeMap<SimpleRecipeBuilder> MAGIC_METEORS_RECIPES = new RecipeMapBuilder<>("magic_meteors_recipes", new SimpleRecipeBuilder())
+            .itemInputs(1)
+            .itemOutputs(25)
+            .fluidInputs(1)
+            .sound(SoundEvents.ENTITY_GENERIC_EXPLODE)
             .build();
 
 }

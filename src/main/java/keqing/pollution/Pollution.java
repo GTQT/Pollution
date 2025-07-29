@@ -19,6 +19,7 @@ import keqing.pollution.dimension.worldgen.PODimensionType;
 import keqing.pollution.dimension.worldgen.POStructureManager;
 import keqing.pollution.integration.POIntegration;
 import keqing.pollution.loaders.loot.GregTechLootTable;
+import keqing.pollution.loaders.recipes.MeteorsHelper;
 import keqing.pollution.loaders.recipes.mods.Botania;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.server.MinecraftServer;
@@ -108,6 +109,7 @@ public class Pollution {
     public void postInit(FMLPostInitializationEvent event) {
         IndustrialInfusionBuilder.init();
         Botania.init();
+        MeteorsHelper.init();
     }
 
 
