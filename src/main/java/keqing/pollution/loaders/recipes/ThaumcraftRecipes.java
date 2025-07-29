@@ -479,7 +479,7 @@ public class ThaumcraftRecipes {
                 .fluidOutputs(PollutionMaterials.basic_substrate.getFluid(1440))
                 .blastFurnaceTemp(2700)
                 .circuitMeta(20)
-                .duration(600)
+                .duration(1200)
                 .EUt(480)
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -490,7 +490,7 @@ public class ThaumcraftRecipes {
                 .fluidOutputs(PollutionMaterials.basic_substrate.getFluid(5760))
                 .blastFurnaceTemp(2700)
                 .circuitMeta(20)
-                .duration(600)
+                .duration(1200)
                 .EUt(480)
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
@@ -514,6 +514,28 @@ public class ThaumcraftRecipes {
                 .circuitMeta(20)
                 .duration(1200)
                 .EUt(1920)
+                .buildAndRegister();
+        PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+                .input(OrePrefix.dust, PollutionMaterials.valonite, 3)
+                .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+                .input(OrePrefix.dust, Bismuth, 4)
+                .fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+                .fluidOutputs(PollutionMaterials.hyper_substrate.getFluid(1440))
+                .blastFurnaceTemp(3600)
+                .circuitMeta(20)
+                .duration(2400)
+                .EUt(30720)
+                .buildAndRegister();
+        PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+                .input(OrePrefix.dust, PollutionMaterials.valonite, 3)
+                .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+                .input(OrePrefix.dust, PollutionMaterials.syrmorite, 4)
+                .fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+                .fluidOutputs(PollutionMaterials.hyper_substrate.getFluid(5760))
+                .blastFurnaceTemp(3600)
+                .circuitMeta(20)
+                .duration(2400)
+                .EUt(30720)
                 .buildAndRegister();
 
     }

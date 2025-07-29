@@ -102,7 +102,12 @@ public class SecondDegreeMaterials {
 
         PollutionMaterials.advanced_substrate = new Material.Builder(getMaterialsId(), pollutionId("advanced_substrate"))
                 .color(0xD4FFF0)
-                .fluid()
+                .fluid().ingot()
+                .build();
+
+        PollutionMaterials.hyper_substrate = new Material.Builder(getMaterialsId(), pollutionId("hyper_substrate"))
+                .color(0x8B87FF)
+                .fluid().ingot()
                 .build();
 
         PollutionMaterials.sulfo_plumbic_salt = new Material.Builder(getMaterialsId(), pollutionId("sulfo_plumbic_salt"))

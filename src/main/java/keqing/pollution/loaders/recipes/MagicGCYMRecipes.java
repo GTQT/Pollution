@@ -2366,5 +2366,47 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
 				new ItemStack(ItemsTC.visResonator),
 				new ItemStack(ItemsTC.morphicResonator)));
+
+		//四个升级
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(ENERGY_REDUCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(TIME_REDUCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(PARALLEL_ENHANCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(OVERCLOCKING_ENHANCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
 	}
 }

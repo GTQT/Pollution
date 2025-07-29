@@ -185,6 +185,7 @@ item.material.oreprefix.frameGtMansussteel.tooltip="§7Harvesting the scattered 
 metaitem.ingotTerrasteel.tooltip=Named in Honor of the Earth
 pollution.material.basic_substrate=通用奇术基底
 pollution.material.advanced_substrate=高阶奇术基底
+pollution.material.hyper_substrate=玄想奇术基底
 
 pollution.material.sentient_metal=Sentient Metal
 metaitem.ingotSentientMetal.tooltip=Words were our weapon in winning the first war. Before we can choose words and make sentences, we are defenseless.

@@ -106,7 +106,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		//太一燃素瓶=泵
 		//自动反诘装置=活塞
 		//四因阐释器=机械臂
-		//vis症候数据链=传送带
+		//意志数据链=传送带
 		//密契询唤针=发射器
 		//我思除颤仪=传感器
 		//自在球=力场发生器
