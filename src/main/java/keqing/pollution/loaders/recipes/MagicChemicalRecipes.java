@@ -1,5 +1,6 @@
 package keqing.pollution.loaders.recipes;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
@@ -16,6 +17,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -39,6 +41,7 @@ public class MagicChemicalRecipes {
 		battery_chain();
 		filth_chain();
 		hachimi_chain();
+		blood_chain();
 	}
 
 	private static void chemical() {
@@ -60,6 +63,14 @@ public class MagicChemicalRecipes {
 				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
 				.duration(10000)
 				.EUt(122880)
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_4.getMetaItem(), 1, 153))
+				.input(OrePrefix.block, PollutionMaterials.existing_nexus)
+				.fluidInputs(Ichorium.getFluid(100000))
+				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.duration(10000)
+				.EUt(1966080)
 				.buildAndRegister();
 		//四种催化剂的更简单的配方
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
@@ -112,7 +123,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
-				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(14400))
 				.chancedFluidOutput(Materials.Polyethylene.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Materials.Epoxy.getFluid(14400), 2500, 500)
@@ -125,12 +136,23 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
-				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(14400))
 				.chancedFluidOutput(Materials.Polybenzimidazole.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(GTQTMaterials.Zylon.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Polyetheretherketone.getFluid(14400), 2500, 500)
+				.duration(600)
+				.EUt(122880)
+				.buildAndRegister();
+
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
+				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(14400))
 				.chancedFluidOutput(Kevlar.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(KaptonE.getFluid(14400), 2500, 500)
+				.chancedFluidOutput(KaptonK.getFluid(14400), 2500, 500)
 				.duration(600)
 				.EUt(122880)
 				.buildAndRegister();
@@ -1239,6 +1261,63 @@ public class MagicChemicalRecipes {
 				.output(dust, Salt, 2)
 				.duration(400)
 				.EUt(VA[EV])
+				.buildAndRegister();
+	}
+
+	private static void blood_chain() {
+		//除杂血 离心
+		RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
+				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
+				.fluidOutputs(PollutionMaterials.purified_blood.getFluid(1000))
+				.duration(400)
+				.EUt(VA[EV])
+				.buildAndRegister();
+		//注魔除杂血 魔导反应
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.input(dust, PollutionMaterials.infused_magic, 2)
+				.notConsumable(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getStackForm())
+				.fluidInputs(PollutionMaterials.purified_blood.getFluid(1000))
+				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
+				.fluidOutputs(PollutionMaterials.infused_purified_blood.getFluid(3000))
+				.duration(600)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		//奇术凛冰液 搅拌机
+		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
+				.fluidInputs(GTQTMaterials.GelidCryotheum.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_cold.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.arcane_gelid_fluid.getFluid(3000))
+				.duration(200)
+				.EUt(VA[EV])
+				.buildAndRegister();
+		//极寒人造血 魔导反应
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getStackForm())
+				.fluidInputs(PollutionMaterials.arcane_gelid_fluid.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_purified_blood.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.cryogenic_synthetic_blood.getFluid(2000))
+				.duration(800)
+				.EUt(VA[ZPM])
+				.buildAndRegister();
+		//秘学运算液基底 魔法炖屎
+		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_thought.getFluid(1000))
+				.input(PollutionMetaItems.BLOOD_IPS_HUMAN_BRAIN)
+				.fluidOutputs(PollutionMaterials.arcane_computational_substrate.getFluid(2000))
+				.duration(1000)
+				.blastFurnaceTemp(6300)
+				.EUt(VA[IV])
+				.buildAndRegister();
+		//运算人造血 魔导反应
+		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+				.notConsumable(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getStackForm())
+				.fluidInputs(PollutionMaterials.arcane_computational_substrate.getFluid(1000))
+				.fluidInputs(PollutionMaterials.infused_purified_blood.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.synthetic_computational_blood.getFluid(2000))
+				.duration(800)
+				.EUt(VA[ZPM])
 				.buildAndRegister();
 	}
 }

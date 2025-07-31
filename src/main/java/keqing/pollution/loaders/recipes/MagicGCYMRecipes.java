@@ -1,5 +1,6 @@
 package keqing.pollution.loaders.recipes;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.MarkerMaterials;
@@ -21,6 +22,7 @@ import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -38,8 +40,7 @@ import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.ingotHot;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.Ichorium;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.Orichalcum;
+import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
@@ -2366,5 +2367,195 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_EV.getMetaItem(), 1, 205),
 				new ItemStack(ItemsTC.visResonator),
 				new ItemStack(ItemsTC.morphicResonator)));
+
+		//四个升级
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(ENERGY_REDUCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(TIME_REDUCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(PARALLEL_ENHANCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3).getItem())
+				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, scabyst, 4)
+				.output(OVERCLOCKING_ENHANCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+
+		//血魔法 HPCA相关
+		//casing
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, blood_of_avernus, 1)
+				.input(MetaItems.ELECTRIC_MOTOR_IV, 2)
+				.input(rotor, iizunamaru_electrum, 2)
+				.input(BLOOD_CIRCUIT_IV)
+				.input(plate, binding_metal, 16)
+				.input(wireGtSingle, IVSuperconductor, 16)
+				.fluidInputs(cryogenic_synthetic_blood.getFluid(1000))
+				.outputs(PollutionMetaBlocks.COMPUTER_CASING.getItemVariant(POComputerCasing.CasingType.COMPUTER_HEAT_VENT, 2))
+				.duration(400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, blood_of_avernus, 1)
+				.input(plate, blood_of_avernus, 6)
+				.input(BLOOD_CIRCUIT_LuV)
+				.input(wireFine, iizunamaru_electrum, 32)
+				.input(wireFine, aetheric_dark_steel, 32)
+				.input(wireGtSingle, LuVSuperconductor, 16)
+				.fluidInputs(synthetic_computational_blood.getFluid(1000))
+				.outputs(PollutionMetaBlocks.COMPUTER_CASING.getItemVariant(POComputerCasing.CasingType.COMPUTER_CASING, 2))
+				.duration(400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, blood_of_avernus, 1)
+				.input(plate, blood_of_avernus, 6)
+				.input(BLOOD_CIRCUIT_ZPM)
+				.input(wireFine, sentient_metal, 32)
+				.input(wireFine, binding_metal, 32)
+				.input(wireGtSingle, ZPMSuperconductor, 16)
+				.fluidInputs(synthetic_computational_blood.getFluid(2000))
+				.outputs(PollutionMetaBlocks.COMPUTER_CASING.getItemVariant(POComputerCasing.CasingType.ADVANCED_COMPUTER_CASING, 2))
+				.duration(400)
+				.EUt(VA[ZPM])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, blood_of_avernus, 1)
+				.input(plate, blood_of_avernus, 6)
+				.input(BLOOD_CIRCUIT_UV)
+				.input(wireFine, existing_nexus, 32)
+				.input(wireFine, fading_nexus, 32)
+				.input(wireGtSingle, UVSuperconductor, 16)
+				.fluidInputs(synthetic_computational_blood.getFluid(4000))
+				.outputs(PollutionMetaBlocks.COMPUTER_CASING.getItemVariant(POComputerCasing.CasingType.HIGH_POWER_CASING, 2))
+				.duration(400)
+				.EUt(VA[UV])
+				.buildAndRegister();
+		//空白HPCA方块
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, blood_of_avernus, 1)
+				.input(plate, blood_of_avernus, 6)
+				.input(screw, VoidMetal, 8)
+				.input(BLOOD_CIRCUIT_IV)
+				.input(MetaItems.TOOL_DATA_STICK)
+				.fluidInputs(synthetic_computational_blood.getFluid(1000))
+				.output(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.duration(400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+        //HPCA 计算部分
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(BLOOD_CIRCUIT_LuV, 2)
+				.input(wireFine, Europium, 64)
+				.input(MetaItems.FIELD_GENERATOR_LuV)
+				.input(CORE_OF_IDEA)
+				.fluidInputs(synthetic_computational_blood.getFluid(1000))
+				.output(PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT)
+				.duration(400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(BLOOD_CIRCUIT_UV, 2)
+				.input(wireFine, Americium, 64)
+				.input(MetaItems.FIELD_GENERATOR_UV)
+				.input(CORE_OF_IDEA)
+				.fluidInputs(synthetic_computational_blood.getFluid(2000))
+				.output(PollutionMetaTileEntities.BMHPCA_ADVANCED_COMPUTATION_COMPONENT)
+				.duration(400)
+				.EUt(VA[UV])
+				.buildAndRegister();
+		//HPCA 网络桥接
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(wireFine, Europium, 64)
+				.input(MetaItems.SENSOR_LuV)
+				.input(MetaItems.EMITTER_LuV)
+				.input(SYMPTOMATIC_VIS_DATA_LINK)
+				.fluidInputs(synthetic_computational_blood.getFluid(2000))
+				.output(PollutionMetaTileEntities.BMHPCA_BRIDGE_COMPONENT)
+				.duration(400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		//HPCA 冷却
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(stickLong, iizunamaru_electrum, 8)
+				.input(rotor, Duranium, 4)
+				.input(MetaItems.ELECTRIC_MOTOR_LuV)
+				.input(ELUCIDATOR_OF_FOUR_CAUSES)
+				.fluidInputs(cryogenic_synthetic_blood.getFluid(1000))
+				.output(PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT)
+				.duration(400)
+				.EUt(VA[LuV])
+				.buildAndRegister();
+		// SUPER 冷却组件
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(stickLong, binding_metal, 8)
+				.input(rotor, Tritanium, 4)
+				.input(MetaItems.ELECTRIC_MOTOR_ZPM)
+				.input(ELUCIDATOR_OF_FOUR_CAUSES)
+				.fluidInputs(cryogenic_synthetic_blood.getFluid(2000))
+				.output(PollutionMetaTileEntities.BMHPCA_SUPER_COOLER_COMPONENT)
+				.duration(400)
+				.EUt(VA[ZPM])
+				.buildAndRegister();
+        // ULTIMATE 冷却组件
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(stickLong, fading_nexus, 8)
+				.input(rotor, Adamantium, 4)
+				.input(MetaItems.ELECTRIC_MOTOR_UV)
+				.input(ELUCIDATOR_OF_FOUR_CAUSES)
+				.fluidInputs(cryogenic_synthetic_blood.getFluid(4000))
+				.output(PollutionMetaTileEntities.BMHPCA_ULTIMATE_COOLER_COMPONENT)
+				.duration(400)
+				.EUt(VA[UV])
+				.buildAndRegister();
+		//hpca 主机
+		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+				.input(PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT)
+				.input(plateDouble, sentient_metal, 8)
+				.input(MetaItems.FIELD_GENERATOR_LuV, 2)
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_4))
+				.input(BLOOD_CIRCUIT_LuV, 4)
+				.input(AUTO_ELENCHUS_DEVICE, 2)
+				.input(CORE_OF_IDEA, 4)
+				.fluidInputs(synthetic_computational_blood.getFluid(4000))
+				.output(PollutionMetaTileEntities.BMHPCA)
+				.duration(4000)
+				.EUt(VA[LuV])
+				.buildAndRegister();
 	}
 }

@@ -115,6 +115,15 @@ public class PollutionMaterials {
 	public static Material elven;
 	public static Material basic_substrate;
 	public static Material advanced_substrate;
+	public static Material hyper_substrate;
+
+	//血线
+	public static Material purified_blood;
+	public static Material infused_purified_blood;
+	public static Material arcane_gelid_fluid;
+	public static Material cryogenic_synthetic_blood;
+	public static Material arcane_computational_substrate;
+	public static Material synthetic_computational_blood;
 
 	//刻金线
 	public static Material sulfo_plumbic_salt;
