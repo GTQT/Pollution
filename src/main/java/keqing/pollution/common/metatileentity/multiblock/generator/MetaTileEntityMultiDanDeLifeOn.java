@@ -414,6 +414,19 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
                             startZ = ZPos - 15;
                             break;
                     }
+                    //fix "breeding" edge, remove cell block next to the game area
+                    for (int x = -4; x < 35; x++) {
+                        for (int z = -4; z < 35; z++) {
+                            if(z>=0&&z<31 && x>=0&&x<31)continue;
+                            int cellX = startX + x;
+                            int cellZ = startZ + z;
+                            if(this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos).equals(ModBlocks.cellBlock))
+                                this.metaTileEntity.getWorld().setBlockState(
+                                    this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
+                                    Blocks.AIR.getDefaultState()
+                                );
+                        }
+                    }
                     for (int x = 0; x < 31; x++) {
                         for (int z = 0; z < 31; z++) {
                             int cellX = startX + x;
