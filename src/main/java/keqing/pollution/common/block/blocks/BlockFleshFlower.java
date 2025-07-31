@@ -318,13 +318,13 @@ public class BlockFleshFlower extends Block
 
         boolean grewBranch = false;
 
-        if (depth < 6)  //允许更深层分支
+        if (depth < 8)  //允许更深层分支
         {
-            int branchCount = rand.nextInt(6) + 3;  //更多分支
+            int branchCount = rand.nextInt(10) + 3;  //更多分支
 
             if (depth == 0)
             {
-                branchCount += 2;
+                branchCount += 1;
             }
 
             for (int k = 0; k < branchCount; ++k)

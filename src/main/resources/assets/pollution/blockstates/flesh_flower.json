@@ -5,6 +5,8 @@
         "age=2": { "model": "pollution:flesh_flower" },
         "age=3": { "model": "pollution:flesh_flower" },
         "age=4": { "model": "pollution:flesh_flower" },
-        "age=5": { "model": "pollution:flesh_flower_dead" }
+        "age=5": { "model": "pollution:flesh_flower" },
+        "age=6": { "model": "pollution:flesh_flower" },
+        "age=7": { "model": "pollution:flesh_flower_dead" }
     }
 }

@@ -1,5 +1,6 @@
 package keqing.pollution.common.block.blocks;
 
+import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.common.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -12,9 +13,11 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -26,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.blocks.BlocksTC;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -39,7 +43,7 @@ public class BlockFleshPlant extends Block
     public static final PropertyBool WEST = PropertyBool.create("west");
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool DOWN = PropertyBool.create("down");
-
+    private Random RandomNum= new Random();
     protected BlockFleshPlant()
     {
         super(Material.PLANTS, MapColor.RED);
@@ -139,16 +143,29 @@ public class BlockFleshPlant extends Block
         }
     }
 
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        super.breakBlock(worldIn, pos, state);
+        List<ItemStack> list = new ArrayList<>();
+        list.add(new ItemStack(Items.ROTTEN_FLESH,RandomNum.nextInt(3)));
+        list.add(POUtils.getItemStack("<gregtech:meta_dust:1616>",(long)RandomNum.nextInt(3)));
+
+        for (var item : list)
+        {
+            worldIn.spawnEntity( new EntityItem(worldIn, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, item));
+        }
+
+    }
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Items.CHORUS_FRUIT;
+        return Items.AIR;
     }
 
 
     public int quantityDropped(Random random)
     {
-        return random.nextInt(2);
+        return 0;
     }
 
 
