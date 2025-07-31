@@ -215,7 +215,7 @@ pollution.material.dumb_tin=Tarnish-Mute Tin
 pollution.material.melt_gold=World-Smelt Gold
 pollution.material.authority_lead=Abyss-Suppress Lead
 pollution.material.pyrargyrite=Deep-Red Silver
-pollution.material.molten_silver=Ghost-Crystal Zinc
+pollution.material.pluto_zinc=Ghost-Crystal Zinc
 # Filth Line
 pollution.material.filth=Filth Mixture
 pollution.material.filth_water=Extremely Filthy Water
