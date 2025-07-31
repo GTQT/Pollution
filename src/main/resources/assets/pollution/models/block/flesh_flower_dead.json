@@ -1,0 +1,8 @@
+{
+    "parent": "block/flesh_flower",
+    "textures": {
+        "texture": "pollution:blocks/flesh_flower_dead",
+        "bottom": "pollution:blocks/flesh_plant",
+        "particle": "pollution:blocks/flesh_flower_dead"
+    }
+}
