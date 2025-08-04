@@ -12,6 +12,7 @@
     "gregtech.MixinMetaTileEntityMetaTileEntityCokeOvenCommon",
     "gregtech.MixinMetaTileEntityPrimitiveBlastFurnaceCommon",
     "gregtech.MixinSimpleGeneratorMetaTileEntityCommon",
+    "gtsteam.MixinMetaTileEntityIndustrialPrimitiveBlastFurnaceCommon",
     "thaumcraft.CommonInternalsMixin",
     "thaumcraft.ConfigAspectsMixin",
     "thaumcraft.ThaumcraftApiHelperMixin"
@@ -20,6 +21,7 @@
   "client": [
     "gregtech.MixinMetaTileEntityMetaTileEntityCokeOvenClient",
     "gregtech.MixinMetaTileEntityPrimitiveBlastFurnaceClient",
-    "gregtech.MixinSimpleGeneratorMetaTileEntityClient"
+    "gregtech.MixinSimpleGeneratorMetaTileEntityClient",
+    "gtsteam.MixinMetaTileEntityIndustrialPrimitiveBlastFurnaceClient"
   ]
 }
