@@ -4,4 +4,3 @@
     "all": "pollution:blocks/test_block"
   }
 }
-//定义方块的模型和贴图。它告诉 Minecraft 如何渲染方块

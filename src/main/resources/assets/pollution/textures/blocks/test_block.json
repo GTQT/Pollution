@@ -1,6 +1,3 @@
-
 {
   "parent": "pollution:block/test_block"
 }
-
-//定义物品栏中方块的模型。它告诉 Minecraft 如何在物品栏中渲染方块
