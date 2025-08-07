@@ -29,29 +29,29 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.FMLLog;
 import thaumcraft.api.aura.AuraHelper;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAME;
 
 public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl {
+    public static HashMap<ChunkPos, BlockPos> CentralTowerCoveredChunks = new HashMap<>();
     private final int cleaningPeriod = 400;
     MetaTileEntityManaHatch manaHatch;
     private int timer = 0;
-    private final boolean canWork = true;
+    private boolean canWork = true;
     private int frameLevel;
 
     private int manaConsumptionSpeed;
@@ -162,6 +162,9 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
             int tier = Math.max(1, frameLevel - 1);
             for (int x = -tier; x <= tier; x++) {
                 for (int z = -tier; z <= tier; z++) {
+                    BlockPos chunkBindedPos = CentralTowerCoveredChunks.get(new ChunkPos(x, z));
+                    if(chunkBindedPos != null && !chunkBindedPos.equals(this.getPos()))canWork = false;
+                    if(!canWork)return;
                     BlockPos pos = new BlockPos(aX + x * 16, aY, aZ + z * 16);
                     float visThisChunk = AuraHelper.getVis(this.getWorld(), pos);
                     float fluxThisChunk = AuraHelper.getFlux(this.getWorld(), pos);
@@ -183,14 +186,23 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
                             AuraHelper.addVis(this.getWorld(), pos, -0.8f * difference);
                         }
                     }
+                    CentralTowerCoveredChunks.put(new ChunkPos(x,z), this.getPos());
                 }
             }
             produceMansus(fluxCleaned, auraSupplemented, goodChunkAmount);
             timer = 0;
         }
     }
+    public void invalidateStructure() {
+        super.invalidateStructure();
+        int tier = Math.max(1, frameLevel - 1);
+        for (int x = -tier; x <= tier; x++) for (int z = -tier; z <= tier; z++) {
+            BlockPos chunkBindedPos = CentralTowerCoveredChunks.get(new ChunkPos(x, z));
+            if(chunkBindedPos != null && chunkBindedPos.equals(this.getPos()))CentralTowerCoveredChunks.remove(new ChunkPos(x,z));
+        }
+    }
 
-    @Override
+        @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("AB           BA", "C             C", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "       D       ", "       E       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
