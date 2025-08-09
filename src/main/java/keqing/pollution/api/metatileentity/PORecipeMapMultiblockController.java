@@ -21,8 +21,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -65,9 +63,6 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
 
     public boolean drainMaterial(Material material, Boolean consume) {
         IMultipleTankHandler inputTank = getInputFluidInventory();
-
-        if (material == null) return true;
-
         FluidStack stack = STACK_MAP.get(material);
         return stack.isFluidStackIdentical(inputTank.drain(stack, consume));
     }
@@ -120,22 +115,16 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     }
 
     @Override
-    protected void addErrorText(List<ITextComponent> textList) {
-        super.addErrorText(textList);
-        if (!drainMaterial(material, false)) {
-            textList.add(new TextComponentTranslation("缺少源质输入!!!"));
-        }
-    }
-    @Override
     protected void configureWarningText(MultiblockUIBuilder builder) {
         builder.addCustom((keyList, syncer) -> {
-            if (!drainMaterial(material, false)) {
+            if (!syncer.syncBoolean(drainMaterial(material, false))) {
                 keyList.add(KeyUtil.lang(TextFormatting.YELLOW,
                         "缺少源质输入!!!"));
             }
         });
         super.configureWarningText(builder);
     }
+
     public boolean drainVis(int amount, boolean simulate) {
         if (isVisModule) return this.getAbilities(POMultiblockAbility.VIS_HATCH).get(0).drainVis(amount * 4, simulate);
         if (isManaModule)
@@ -218,13 +207,13 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
     private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
         if (isStructureFormed())
             keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "灵气源: %s / %s（总） 灵气等级: %s", uiSyncer.syncInt(visStorage), uiSyncer.syncInt(visStorageMax), uiSyncer.syncInt(tier)));
-        if (material != null) {
+        if (getInputFluidInventory() != null && material != null) {
             FluidStack fluidStack = getInputFluidInventory().drain(material.getFluid(Integer.MAX_VALUE), false);
-            int i = fluidStack == null ? 0 : fluidStack.amount;
+            int i = uiSyncer.syncInt(fluidStack == null ? 0 : fluidStack.amount);
             if (i == 0)
-                keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"%s要素未填充", uiSyncer.syncString(material.getLocalizedName())));
+                keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "%s要素未填充", uiSyncer.syncString(material.getLocalizedName())));
             if (i != 0)
-                keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"%s要素储量: %s", uiSyncer.syncString(material.getLocalizedName()), TextFormattingUtil.formatNumbers((i))));
+                keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "%s要素储量: %s", uiSyncer.syncString(material.getLocalizedName()), TextFormattingUtil.formatNumbers((i))));
         }
         if (isManaModule) {
             keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "超频加强: " + uiSyncer.syncInt(OverclockingEnhance) + " 耗时减免: " + uiSyncer.syncDouble(timeReduce)));
@@ -320,15 +309,6 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
                 return 0.33;
             } else {
                 return 0.5;
-            }
-        }
-
-        @Override
-        protected double getOverclockingVoltageFactor() {
-            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
-                return 3.0;
-            } else {
-                return 2.0;
             }
         }
     }

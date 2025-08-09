@@ -3,18 +3,21 @@ package keqing.pollution.api.metatileentity;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.KeyUtil;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.recipes.properties.ManaProperty;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -100,12 +103,28 @@ public abstract class POManaMultiblock extends MultiMapMultiblockController {
     }
 
     @Override
-    protected void addDisplayText(List<ITextComponent> textList) {
-        super.addDisplayText(textList);
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
+                .addEnergyUsageLine(this.getEnergyContainer())
+                .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
+                .addCustom(this::addHeatCapacity)
+                .addCustom(this::addCustomText)
+                .addParallelsLine(recipeMapWorkable.getParallelLimit())
+                .addWorkingStatusLine()
+                .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())
+                .addRecipeOutputLine(recipeMapWorkable);
+    }
+
+
+    public void addHeatCapacity(KeyManager keyManager, UISyncer syncer) {
+
+    }
+
+    private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
         if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("灵气源: %s / %s（总） 灵气等级: %s", visStorage, visStorageMax, tier));
-            textList.add(new TextComponentTranslation("超频加强: " + OverclockingEnhance + " 耗时减免: " + timeReduce));
-            textList.add(new TextComponentTranslation("并行加强: " + ParallelEnhance + " 耗能减免: " + energyReduce));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "灵气源: %s / %s（总） 灵气等级: %s", uiSyncer.syncInt(visStorage), uiSyncer.syncInt(visStorageMax), uiSyncer.syncInt(tier)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "超频加强: " + uiSyncer.syncInt(OverclockingEnhance) + " 耗时减免: " + uiSyncer.syncDouble(timeReduce)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "并行加强: " + uiSyncer.syncInt(ParallelEnhance) + " 耗能减免: " + uiSyncer.syncDouble(energyReduce)));
         }
     }
 
@@ -159,15 +178,6 @@ public abstract class POManaMultiblock extends MultiMapMultiblockController {
                 return 0.25;
             } else {
                 return 0.5;
-            }
-        }
-
-        @Override
-        protected double getOverclockingVoltageFactor() {
-            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
-                return 4.0;
-            } else {
-                return 2.0;
             }
         }
 

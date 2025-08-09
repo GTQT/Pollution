@@ -8,9 +8,7 @@ import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
-import gregtech.common.metatileentities.electric.MetaTileEntitySingleTurbine;
 import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.client.textures.POTextures;
 import net.minecraft.util.EnumFacing;
@@ -42,6 +40,7 @@ public class POMetaTileEntitySingleTurbine extends SimpleGeneratorMetaTileEntity
         }
 
     }
+
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);

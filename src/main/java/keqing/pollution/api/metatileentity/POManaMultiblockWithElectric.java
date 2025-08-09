@@ -97,8 +97,8 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
     private void addCustomText(KeyManager keyManager, UISyncer uiSyncer) {
         if (isStructureFormed()) {
             keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "灵气源: %s / %s（总） 灵气等级: %s", uiSyncer.syncInt(getMana()), uiSyncer.syncInt(getMaxMana()), uiSyncer.syncInt(tier)));
-            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"超频加强: " + uiSyncer.syncInt(OverclockingEnhance) + " 耗时减免: " + uiSyncer.syncDouble(timeReduce)));
-            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"并行加强: " + uiSyncer.syncInt(ParallelEnhance) + " 耗能减免: " + uiSyncer.syncDouble(energyReduce)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "超频加强: " + uiSyncer.syncInt(OverclockingEnhance) + " 耗时减免: " + uiSyncer.syncDouble(timeReduce)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "并行加强: " + uiSyncer.syncInt(ParallelEnhance) + " 耗能减免: " + uiSyncer.syncDouble(energyReduce)));
         }
     }
 
@@ -176,15 +176,6 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
                 return 0.25;
             } else {
                 return 0.5;
-            }
-        }
-
-        @Override
-        protected double getOverclockingVoltageFactor() {
-            if (GTUtility.getTierByVoltage(this.getMaxVoltage()) <= tier + OverclockingEnhance) {
-                return 4.0;
-            } else {
-                return 2.0;
             }
         }
 
