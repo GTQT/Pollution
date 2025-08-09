@@ -70,6 +70,7 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(TextFormatting.GREEN + I18n.format("-电动魔力支持："));
         tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.1"));
         tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.2"));
         tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.3"));

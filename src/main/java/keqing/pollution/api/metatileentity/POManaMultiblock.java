@@ -131,11 +131,17 @@ public abstract class POManaMultiblock extends MultiMapMultiblockController {
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("需要使用 §c魔力仓§r 为多方块提供魔力支持"));
-        tooltip.add(I18n.format("并行不叠算魔力消耗（只消耗当前配方单次的量）"));
-        tooltip.add(I18n.format("升级灵气源为多方块带来额外的一并行数量"));
-        tooltip.add(I18n.format("在魔力仓内填充升级部件可获得额外的耗时，耗能，超频，并行加强。"));
-        tooltip.add(I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
+        tooltip.add(TextFormatting.GREEN + I18n.format("-魔力支持："));
+        tooltip.add(TextFormatting.GREEN +I18n.format("需要使用 §c魔力仓§r 为多方块提供魔力支持"));
+        tooltip.add(TextFormatting.GREEN +I18n.format("并行不叠算魔力消耗（只消耗当前配方单次的量"));
+        tooltip.add(TextFormatting.GREEN +I18n.format("升级魔力仓为多方块带来额外的并行数量"));
+        tooltip.add(TextFormatting.GREEN +I18n.format("在魔力仓内填充升级部件可获得额外的耗时，耗能，超频，并行加强。"));
+        tooltip.add(TextFormatting.GREEN +I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
+    }
+
+    @Override
+    public boolean isBatchAllowed() {
+        return false;
     }
 
     public class POManaMultiblockRecipeLogic extends MultiblockRecipeLogic {
