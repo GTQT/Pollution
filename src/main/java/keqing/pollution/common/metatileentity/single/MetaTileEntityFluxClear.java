@@ -11,7 +11,6 @@ import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
 import keqing.gtqtcore.api.utils.GTQTDateHelper;
@@ -40,7 +39,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MetaTileEntityVisClear extends TieredMetaTileEntity {
+public class MetaTileEntityFluxClear extends TieredMetaTileEntity {
     private final double VisTicks;
     private final long energyAmountPer;
     private final ItemStackHandler containerInventory;
@@ -68,7 +67,7 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
 
         }
     }
-    public MetaTileEntityVisClear(ResourceLocation metaTileEntityId, int tier) {
+    public MetaTileEntityFluxClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier = tier;
         this.VisTicks = tier * POConfig.PollutionSystemSwitch.fluxScrubberMultiplier;
@@ -78,8 +77,8 @@ public class MetaTileEntityVisClear extends TieredMetaTileEntity {
     }
 
     @Override
-    public MetaTileEntityVisClear createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityVisClear(metaTileEntityId, getTier());
+    public MetaTileEntityFluxClear createMetaTileEntity(IGregTechTileEntity tileEntity) {
+        return new MetaTileEntityFluxClear(metaTileEntityId, getTier());
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound data) {

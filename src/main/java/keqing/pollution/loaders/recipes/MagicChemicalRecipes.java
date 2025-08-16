@@ -342,6 +342,8 @@ public class MagicChemicalRecipes {
 				.duration(120)
 				.EUt(120)
 				.buildAndRegister();
+
+
 		//纯化焦油+粘液球 搅拌
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(Items.SLIME_BALL, 4)
@@ -350,6 +352,7 @@ public class MagicChemicalRecipes {
 				.duration(200)
 				.EUt(120)
 				.buildAndRegister();
+
 		//超粘稠焦油 魔导催化反应 焦油史莱姆
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.super_sticky_tar.getFluid(4000))

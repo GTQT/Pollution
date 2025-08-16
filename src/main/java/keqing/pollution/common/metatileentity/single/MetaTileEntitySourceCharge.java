@@ -48,7 +48,6 @@ public class MetaTileEntitySourceCharge extends MetaTileEntity {
         this.fluidFilter = Neutronium.getProperty(PropertyKey.FLUID_PIPE);
         this.inventory = new GTItemStackHandler(this, 1);
         this.initializeInventory();
-
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound data) {

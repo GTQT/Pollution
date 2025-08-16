@@ -11,7 +11,6 @@ import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityL
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.client.textures.GTQTTextures;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.metatileentities.multi.generators.MetaTileEntityMegaTurbine;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.metatileentity.POMetaTileEntitySingleTurbine;
@@ -35,14 +34,11 @@ import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaH
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityVisHatch;
 import keqing.pollution.common.metatileentity.single.*;
+import keqing.pollution.common.metatileentity.single.MetaTileEntityFluxClear;
 import keqing.pollution.common.metatileentity.storage.MetaTileEntityAspectTank;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
-import static keqing.gtqtcore.api.GTQTValue.gtqtcoreId;
-import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.FUEL_CELL;
-import static keqing.gtqtcore.common.block.blocks.BlockMultiblockCasing3.CasingType.NITINOL_GEARBOX;
-import static keqing.gtqtcore.common.block.blocks.BlockMultiblockCasing3.CasingType.NITINOL_MACHINE_CASING;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_TURBINE_FUELS;
 import static keqing.pollution.client.textures.POTextures.*;
 
@@ -50,8 +46,8 @@ public class PollutionMetaTileEntities {
     public static final MetaTileEntityMultiblockPart[] FLUX_MUFFLERS = new MetaTileEntityMultiblockPart[9];
     public static final TieredMetaTileEntity[] AURA_GENERATORS = new TieredMetaTileEntity[6];
     public static final MetaTileEntityVisProvider[] VIS_PROVIDERS = new MetaTileEntityVisProvider[9];
-    public static final MetaTileEntityVisClear[] VIS_CLEAR = new MetaTileEntityVisClear[4];
-    public static final MetaTileEntityFluxClear[] FLUX_CLEARS = new MetaTileEntityFluxClear[3];
+    public static final MetaTileEntityFluxClear[] VIS_CLEAR = new MetaTileEntityFluxClear[4];
+    public static final keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear[] FLUX_CLEARS = new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear[3];
     public static final MetaTileEntity[] ASPECT_TANK = new MetaTileEntity[10];
     public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
     public static final WorkableTieredMetaTileEntity[] FLUX_PROMOTED_FUEL_CELL = new WorkableTieredMetaTileEntity[5];
@@ -214,7 +210,7 @@ public class PollutionMetaTileEntities {
 
         for (int i = 0; i < VIS_CLEAR.length; i++) {
             String tierName = GTValues.VN[i + 1].toLowerCase();
-            VIS_CLEAR[i] = registerMetaTileEntity(210 + i - 1, new MetaTileEntityVisClear(PollutionID("flux_clear." + tierName), i + 1));
+            VIS_CLEAR[i] = registerMetaTileEntity(210 + i - 1, new MetaTileEntityFluxClear(PollutionID("flux_clear." + tierName), i + 1));
         }
 
         for (int i = 0; i < FLUX_MUFFLERS.length; i++) {
@@ -223,8 +219,8 @@ public class PollutionMetaTileEntities {
         }
 
         //多方块
-        FLUX_CLEARS[1] = registerMetaTileEntity(300, new MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
-        FLUX_CLEARS[2] = registerMetaTileEntity(301, new MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));
+        FLUX_CLEARS[1] = registerMetaTileEntity(300, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
+        FLUX_CLEARS[2] = registerMetaTileEntity(301, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));
 
         INFUSED_EXCHANGE = registerMetaTileEntity(302, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
         MAGIC_BENDER = registerMetaTileEntity(303, new MetaTileEntityMagicBender(PollutionID("magic_bender")));

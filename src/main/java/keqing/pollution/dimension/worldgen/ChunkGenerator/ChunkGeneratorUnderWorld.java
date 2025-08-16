@@ -1,9 +1,12 @@
 package keqing.pollution.dimension.worldgen.ChunkGenerator;
 
+import gregtech.api.fluids.store.FluidStorageKeys;
+import gregtech.api.unification.material.Materials;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.blocks.StoneVariantBlock;
 import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock;
+import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.dimension.worldgen.mapGen.*;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockStone;
@@ -83,6 +86,8 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     //洞穴水集群
     private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(Blocks.WATER);
     private final WorldGenFluidPool worldGenLavaPool = new WorldGenFluidPool(Blocks.LAVA);
+    private final WorldGenFluidPool worldGenTarPool = new WorldGenFluidPool(PollutionMaterials.pure_tar.getFluid(FluidStorageKeys.LIQUID).getBlock());
+
     public NoiseGeneratorOctaves scaleNoise;
     public NoiseGeneratorOctaves depthNoise;
     double[] pnr;
@@ -502,7 +507,7 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.FIRE)) {
             int featureCount = ThreadLocalRandom.current().nextInt(ThreadLocalRandom.current().nextInt(10) + 1) + 1;
             for (int loopIndex = 0; loopIndex < featureCount; ++loopIndex) {
-                switch (ThreadLocalRandom.current().nextInt(6)) {
+                switch (ThreadLocalRandom.current().nextInt(7)) {
                     case 0:
                         generateFeature(this.worldGenCaveGrass, chunkOrigin, ThreadLocalRandom.current());
                         break;
@@ -517,6 +522,9 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
                         break;
                     case 4:
                         generateFeature(this.worldGenLavaPool, chunkOrigin, ThreadLocalRandom.current());
+                        break;
+                    case 5:
+                        generateFeature(this.worldGenTarPool, chunkOrigin, ThreadLocalRandom.current());
                         break;
                     default:
                         generateFeature(this.garden, chunkOrigin, ThreadLocalRandom.current());

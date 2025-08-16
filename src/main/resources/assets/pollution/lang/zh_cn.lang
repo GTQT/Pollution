@@ -1068,7 +1068,10 @@ pollution.veins.ore.thaumastic.i=地下蕴魔矿脉I
 pollution.veins.ore.thaumastic.ii=地下蕴魔矿脉II
 pollution.veins.ore.thaumastic.iii=地下蕴魔矿脉III
 
+pollution.veins.ore.pure_tar=地下煤焦油球
+
 gregtech.veins.fluid.water=水矿藏
+gregtech.veins.fluid.pure_tar=地下煤焦油矿藏
 
 ##实体
 entity.Aer Slime.name=风结晶史莱姆

@@ -132,6 +132,9 @@ dependencies {
 
     implementation rfg.deobf("curse.maven:baubles-227083:2518667")
     implementation rfg.deobf("curse.maven:thaumcraft-223628:2629023")
+
+    implementation rfg.deobf("curse.maven:thaumic-energistics-extended-life-849094:6321322")
+
     implementation rfg.deobf(files("libs/Botania r1.10-364.4.jar"))
     implementation rfg.deobf(files("libs/BloodMagic-1.12.2-2.4.3-105.jar"))
     implementation rfg.deobf(files("libs/Guide-API-1.12-2.1.8-63.jar"))

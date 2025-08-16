@@ -20,6 +20,7 @@ public class RecipeManger {
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();
+        TarChain.init();
         MufflerHatchRecipes.init();
         ManaToEuRecipes.init();
         DandelifeonRecipe.init();

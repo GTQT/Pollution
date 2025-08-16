@@ -32,7 +32,6 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
         this.VisTicks = tier * POConfig.PollutionSystemSwitch.visProviderMultiplier;
         this.energyAmountPer = GTValues.VA[tier];
         this.tier = tier;
-        initializeInventory();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
     @Override
     public void update() {
         super.update();
-        if (!getWorld().isRemote && energyContainer.getEnergyStored() >= energyAmountPer && AuraHelper.getVis(getWorld(), getPos()) < 200) {
+        if (!getWorld().isRemote &&getOffsetTimer()%10==0&& energyContainer.getEnergyStored() >= energyAmountPer && AuraHelper.getVis(getWorld(), getPos()) < 400) {
             energyContainer.removeEnergy(energyAmountPer);
             AuraHelper.addVis(getWorld(), getPos(), (float) (VisTicks) * 10 * tier);
         }
