@@ -70,7 +70,7 @@ public class MetaTileEntityFluxClear extends TieredMetaTileEntity {
     public MetaTileEntityFluxClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.tier = tier;
-        this.VisTicks = tier * POConfig.PollutionSystemSwitch.fluxScrubberMultiplier;
+        this.VisTicks =  Math.pow(2,tier-1) * POConfig.PollutionSystemSwitch.fluxScrubberMultiplier;
         this.energyAmountPer = GTValues.VA[tier];
         this.containerInventory = new GTItemStackHandler(this, 1);
         initializeInventory();

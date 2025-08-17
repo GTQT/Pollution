@@ -91,7 +91,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     public MetaTileEntityFluxClear(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId);
         this.tier = tier;
-        this.VisTicks = tier * 5 * POConfig.PollutionSystemSwitch.fluxScrubberMultiplier;
+        this.VisTicks =  Math.pow(4,tier-1) * POConfig.PollutionSystemSwitch.fluxScrubberMultiplier;
         this.energyAmountPer = GTValues.V[tier];
         this.containerInventory = new GTItemStackHandler(this, 1);
     }

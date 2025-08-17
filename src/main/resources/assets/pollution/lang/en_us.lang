@@ -1081,9 +1081,13 @@ pollution.veins.ore.scabyst=地下痂壳晶矿脉
 pollution.veins.ore.valonite=地下法罗钠矿脉
 pollution.veins.ore.pyrargyrite=地下深红银矿脉
 pollution.veins.ore.pluto_zinc=地下锌锑硫化矿脉
-pollution.veins.ore.thaumastic.i=地下蕴魔矿脉I
-pollution.veins.ore.thaumastic.ii=地下蕴魔矿脉II
-pollution.veins.ore.thaumastic.iii=地下蕴魔矿脉III
+
+pollution.veins.ore.thaumastic.order=地下秩序元素蕴魔矿脉
+pollution.veins.ore.thaumastic.entropy=地下混沌元素蕴魔矿脉
+pollution.veins.ore.thaumastic.earth=地下土元素蕴魔矿脉
+pollution.veins.ore.thaumastic.air=地下气元素蕴魔矿脉
+pollution.veins.ore.thaumastic.fire=地下火元素蕴魔矿
+pollution.veins.ore.thaumastic.water=地下水元素蕴魔矿脉
 
 pollution.veins.ore.pure_tar=地下煤焦油球
 
