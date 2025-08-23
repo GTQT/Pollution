@@ -95,11 +95,9 @@ public class SecondDegreeMaterials {
                 .build();
 
         PollutionMaterials.pure_tar = new Material.Builder(getMaterialsId(), pollutionId("pure_tar"))
-                .color(0x4F4F4F)
                 .liquid(new FluidBuilder()
-                        .block()
-                        .customStill()
-                )
+                        .block())
+                .color(0x4F4F4F)
                 .build();
 
         //通用奇术基底，高阶奇术基底，用于锻炉

@@ -210,9 +210,9 @@ public class CircuitManager {
                 new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
                 new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
 
-                new ItemStack(OPTICAL_CAPACITOR.getMetaItem(), 1, 900),
-                new ItemStack(OPTICAL_TRANSISTOR.getMetaItem(),1, 903),
-                new ItemStack(OPTICAL_DIODE.getMetaItem(),1, 901)
+                new ItemStack(GOOWARE_SMD_CAPACITOR.getMetaItem(), 1, 900),
+                new ItemStack(GOOWARE_SMD_TRANSISTOR.getMetaItem(),1, 903),
+                new ItemStack(GOOWARE_SMD_DIODE.getMetaItem(),1, 901)
         ));
 
         //UEV
@@ -228,9 +228,9 @@ public class CircuitManager {
                 new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
                 new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
 
-                new ItemStack(SPINTRONIC_CAPACITOR.getMetaItem(), 1, 905),
-                new ItemStack(SPINTRONIC_TRANSISTOR.getMetaItem(),1, 908),
-                new ItemStack(SPINTRONIC_DIODE.getMetaItem(),1, 906)
+                new ItemStack(OPTICAL_SMD_CAPACITOR.getMetaItem(), 1, 905),
+                new ItemStack(OPTICAL_SMD_TRANSISTOR.getMetaItem(),1, 908),
+                new ItemStack(OPTICAL_SMD_DIODE.getMetaItem(),1, 906)
         ));
 
         //UIV
@@ -246,9 +246,9 @@ public class CircuitManager {
                 new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
                 new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
 
-                new ItemStack(COSMIC_CAPACITOR.getMetaItem(), 1, 910),
-                new ItemStack(COSMIC_TRANSISTOR.getMetaItem(),1, 913),
-                new ItemStack(COSMIC_DIODE.getMetaItem(),1, 911)
+                new ItemStack(SPINTRONIC_SMD_CAPACITOR.getMetaItem(), 1, 910),
+                new ItemStack(SPINTRONIC_SMD_TRANSISTOR.getMetaItem(),1, 913),
+                new ItemStack(SPINTRONIC_SMD_DIODE.getMetaItem(),1, 911)
         ));
 
         //UXV
@@ -264,9 +264,9 @@ public class CircuitManager {
                 new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
                 new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
 
-                new ItemStack(SUPRACAUSAL_CAPACITOR.getMetaItem(), 1, 915),
-                new ItemStack(SUPRACAUSAL_TRANSISTOR.getMetaItem(),1, 918),
-                new ItemStack(SUPRACAUSAL_DIODE.getMetaItem(),1, 916)
+                new ItemStack(COSMIC_SMD_CAPACITOR.getMetaItem(), 1, 915),
+                new ItemStack(COSMIC_SMD_TRANSISTOR.getMetaItem(),1, 918),
+                new ItemStack(COSMIC_SMD_DIODE.getMetaItem(),1, 916)
         ));
 
         //OpV
@@ -282,9 +282,9 @@ public class CircuitManager {
                 new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
                 new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
 
-                new ItemStack(SUPRACAUSAL_CAPACITOR.getMetaItem(), 1, 915),
-                new ItemStack(SUPRACAUSAL_TRANSISTOR.getMetaItem(),1, 918),
-                new ItemStack(SUPRACAUSAL_DIODE.getMetaItem(),1, 916)
+                new ItemStack(SUPRACAUSAL_SMD_CAPACITOR.getMetaItem(), 1, 915),
+                new ItemStack(SUPRACAUSAL_SMD_TRANSISTOR.getMetaItem(),1, 918),
+                new ItemStack(SUPRACAUSAL_SMD_DIODE.getMetaItem(),1, 916)
         ));
 
         //MAX
@@ -300,9 +300,9 @@ public class CircuitManager {
                 new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
                 new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
 
-                new ItemStack(SUPRACAUSAL_CAPACITOR.getMetaItem(), 1, 915),
-                new ItemStack(SUPRACAUSAL_TRANSISTOR.getMetaItem(),1, 918),
-                new ItemStack(SUPRACAUSAL_DIODE.getMetaItem(),1, 916)
+                new ItemStack(SUPRACAUSAL_SMD_CAPACITOR.getMetaItem(), 1, 915),
+                new ItemStack(SUPRACAUSAL_SMD_TRANSISTOR.getMetaItem(),1, 918),
+                new ItemStack(SUPRACAUSAL_SMD_DIODE.getMetaItem(),1, 916)
         ));
     }
 

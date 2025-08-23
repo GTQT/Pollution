@@ -14,9 +14,7 @@ import static keqing.pollution.dimension.worldgen.PODimensionType.UNDER_WORLD;
 
 public class UnderWorlds extends WorldProvider {
     public void init() {
-        //this.biomeProvider = new BiomeProviderBetweenLandNether();// 初始化你维度的生物群系提供器
         this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.UnderWorld_BIOME);// 初始化你维度的生物群系提供器
-        this.doesWaterVaporize = true;
     }
 
     @SideOnly(Side.CLIENT)

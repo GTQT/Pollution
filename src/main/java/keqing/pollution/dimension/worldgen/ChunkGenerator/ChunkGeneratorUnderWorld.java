@@ -1,16 +1,12 @@
 package keqing.pollution.dimension.worldgen.ChunkGenerator;
 
 import gregtech.api.fluids.store.FluidStorageKeys;
-import gregtech.api.unification.material.Materials;
-import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.blocks.StoneVariantBlock;
 import keqing.gtqtcore.common.block.GTQTMetaBlocks;
 import keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.dimension.worldgen.mapGen.*;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockStone;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.entity.EnumCreatureType;
@@ -44,11 +40,7 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
     protected static final IBlockState Stone = Blocks.STONE.getDefaultState();
     protected static final IBlockState SwampWater = Blocks.WATER.getDefaultState();
-    private static IBlockState gtStoneState(GTQTStoneVariantBlock.StoneType stoneType) {
-        return GTQTMetaBlocks.GTQT_STONE_BLOCKS.get(GTQTStoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
-    }
     private static final IBlockState Kimberlite = gtStoneState(GTQTStoneVariantBlock.StoneType.KIMBERLITE);
-
     private static final IBlockState Gabbro = gtStoneState(GTQTStoneVariantBlock.StoneType.GABBRO);
     private static final IBlockState Limestone = gtStoneState(GTQTStoneVariantBlock.StoneType.LIMESTONE);
     private static final IBlockState Phyllite = gtStoneState(GTQTStoneVariantBlock.StoneType.PHYLLITE);
@@ -57,7 +49,6 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     private static final IBlockState Gneiss = gtStoneState(GTQTStoneVariantBlock.StoneType.GNEISS);
     private static final IBlockState Shale = gtStoneState(GTQTStoneVariantBlock.StoneType.SHALE);
     private static final IBlockState Slate = gtStoneState(GTQTStoneVariantBlock.StoneType.SLATE);
-
     private static final IBlockState Andesite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
     private static final IBlockState Diorite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE);
     private static final IBlockState Granite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE);
@@ -87,7 +78,8 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(Blocks.WATER);
     private final WorldGenFluidPool worldGenLavaPool = new WorldGenFluidPool(Blocks.LAVA);
     private final WorldGenFluidPool worldGenTarPool = new WorldGenFluidPool(PollutionMaterials.pure_tar.getFluid(FluidStorageKeys.LIQUID).getBlock());
-
+    // 新增字段
+    private final MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     public NoiseGeneratorOctaves scaleNoise;
     public NoiseGeneratorOctaves depthNoise;
     double[] pnr;
@@ -95,14 +87,9 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     double[] br;
     double[] noiseData4;
     double[] dr;
-    // 新增字段
-    private final MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     /**
      * Holds the noise used to determine whether slowsand can be generated at a location
      */
-    private double[] slowsandNoise = new double[256];
-    private double[] gravelNoise = new double[256];
-    private double[] depthBuffer = new double[256];
     private double[] buffer;
     private NoiseGeneratorOctaves lperlinNoise1;
     private NoiseGeneratorOctaves lperlinNoise2;
@@ -147,73 +134,71 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
         this.mapGenCavesBTN = getModdedMapGen(mapGenCavesBTN, BTN_CAVE);
     }
 
-    public void prepareHeights(int chunkX, int chunkZ, ChunkPrimer primer) {
-        int xSections = 4;
-        // 使用完整海平面高度（通常为63）
-        int waterLevel = this.world.getSeaLevel();
-        int noiseResolutionX = 5;
-        // 调整为17个采样点（覆盖256格高度）
-        int noiseResolutionY = 17;
-        int noiseResolutionZ = 5;
+    private static IBlockState gtStoneState(GTQTStoneVariantBlock.StoneType stoneType) {
+        return GTQTMetaBlocks.GTQT_STONE_BLOCKS.get(GTQTStoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
+    }
 
-        // 获取高度数据（Y轴采样点增加到17）
+    public void prepareHeights(int chunkX, int chunkZ, ChunkPrimer primer) {
+        int waterLevel = this.world.getSeaLevel();
+
+        // 获取高度数据（使用优化后的噪声）
         this.buffer = this.getHeights(this.buffer, chunkX * 4, 0, chunkZ * 4, 5, 17, 5);
 
         for (int xIndex = 0; xIndex < 4; ++xIndex) {
             for (int zIndex = 0; zIndex < 4; ++zIndex) {
-                // 扩展Y循环范围：0-15（覆盖256格高度）
                 for (int yIndex = 0; yIndex < 16; ++yIndex) {
-                    double interpolationFactorY = 0.125D;
-                    // 注意：Y轴采样点现在是17个（索引0-16）
+                    // 关键修复1：修正垂直插值步长
+                    double interpolationFactorY = 0.0625D; // 1/16 (原0.125D)
+
                     double cornerNoiseValue1 = this.buffer[((xIndex) * 5 + zIndex) * 17 + yIndex];
                     double cornerNoiseValue2 = this.buffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex];
                     double cornerNoiseValue3 = this.buffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex];
                     double cornerNoiseValue4 = this.buffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex];
 
-                    double deltaY1 = (this.buffer[((xIndex) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoiseValue1) * 0.125D;
-                    double deltaY2 = (this.buffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoiseValue2) * 0.125D;
-                    double deltaY3 = (this.buffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoiseValue3) * 0.125D;
-                    double deltaY4 = (this.buffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoiseValue4) * 0.125D;
+                    // 关键修复2：使用正确的插值步长
+                    double deltaY1 = (this.buffer[((xIndex) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoiseValue1) * interpolationFactorY;
+                    double deltaY2 = (this.buffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoiseValue2) * interpolationFactorY;
+                    double deltaY3 = (this.buffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoiseValue3) * interpolationFactorY;
+                    double deltaY4 = (this.buffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoiseValue4) * interpolationFactorY;
 
-                    // 扩展子高度循环：0-15（每个yIndex处理16格高度）
                     for (int subYIndex = 0; subYIndex < 16; ++subYIndex) {
-                        double interpolationFactorX = 0.25D;
                         double xInterpolatedValue1 = cornerNoiseValue1;
                         double xInterpolatedValue2 = cornerNoiseValue2;
                         double xDeltaValue1 = (cornerNoiseValue3 - cornerNoiseValue1) * 0.25D;
                         double xDeltaValue2 = (cornerNoiseValue4 - cornerNoiseValue2) * 0.25D;
 
                         for (int subXIndex = 0; subXIndex < 4; ++subXIndex) {
-                            double interpolationFactorZ = 0.25D;
                             double zInterpolatedValue = xInterpolatedValue1;
                             double zDeltaValue = (xInterpolatedValue2 - xInterpolatedValue1) * 0.25D;
 
                             for (int subZIndex = 0; subZIndex < 4; ++subZIndex) {
                                 IBlockState iblockstate = null;
-
-                                // 计算当前实际高度（0-255范围）
                                 int currentHeight = subYIndex + yIndex * 16;
 
-                                // 水面以下生成水（使用完整海平面）
-                                if (currentHeight < waterLevel) {
-                                    iblockstate = SwampWater;
-                                }
-
-                                // 噪声值大于0生成石头（覆盖整个高度范围）
-                                if (zInterpolatedValue > 0.0D) {
-                                    //如何在水平面以下使用黑色变种石头
-                                    if(currentHeight < waterLevel - 1) iblockstate = Kimberlite;
-                                    else if(currentHeight > waterLevel+5) iblockstate = Stone;
-                                    else {
-                                        if (zInterpolatedValue > 0.7D)iblockstate = Stone;
-                                        else iblockstate = Kimberlite;
+                                // 关键优化3：逻辑顺序调整
+                                if (zInterpolatedValue > -0.2D) { // 增加负值缓冲
+                                    if (currentHeight < waterLevel - 1) {
+                                        iblockstate = Kimberlite;
+                                    } else if (currentHeight > waterLevel + 5) {
+                                        iblockstate = Stone;
+                                    } else {
+                                        iblockstate = (zInterpolatedValue > 0.6D) ? Stone : Kimberlite; // 调整阈值
                                     }
                                 }
 
+                                // 仅在非石头区域生成水
+                                if (iblockstate == null && currentHeight < waterLevel) {
+                                    iblockstate = SwampWater;
+                                }
+
                                 int finalX = subXIndex + xIndex * 4;
-                                int finalY = currentHeight; // 直接使用计算出的高度
+                                int finalY = currentHeight;
                                 int finalZ = subZIndex + zIndex * 4;
-                                primer.setBlockState(finalX, finalY, finalZ, iblockstate);
+
+                                if (iblockstate != null) {
+                                    primer.setBlockState(finalX, finalY, finalZ, iblockstate);
+                                }
+
                                 zInterpolatedValue += zDeltaValue;
                             }
 
@@ -231,34 +216,9 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
         }
     }
 
-
     public void buildSurfaces(int chunkX, int chunkZ, ChunkPrimer primer) {
         if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, chunkX, chunkZ, primer, this.world))
             return;
-
-        final int seaLevel = this.world.getSeaLevel();
-        final double noiseScale = 0.03125D;
-
-        // 预计算噪声数据（保持不变）
-        this.slowsandNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(
-                this.slowsandNoise, chunkX * 16, chunkZ * 16, 0, 16, 16, 1, noiseScale, noiseScale, 1.0D
-        );
-        this.gravelNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(
-                this.gravelNoise, chunkX * 16, 109, chunkZ * 16, 16, 1, 16, noiseScale, 1.0D, noiseScale
-        );
-        this.depthBuffer = this.BTLStoneExculsivityNoiseGen.generateNoiseOctaves(
-                this.depthBuffer, chunkX * 16, chunkZ * 16, 0, 16, 16, 1, 0.0625D, 0.0625D, 0.0625D
-        );
-
-        // 为每个位置预计算随机值（保持不变）
-        double[] randSlowSand = new double[256];
-        double[] randGravel = new double[256];
-        double[] randDepth = new double[256];
-        for (int i = 0; i < 256; i++) {
-            randSlowSand[i] = this.rand.nextDouble() * 0.2D;
-            randGravel[i] = this.rand.nextDouble() * 0.2D;
-            randDepth[i] = this.rand.nextDouble() * 0.25D;
-        }
 
         // 生成10个随机高度位置（0-255）及其配置
         int[] variantHeights = new int[10];
@@ -266,12 +226,12 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
         IBlockState[] variantBlocks = new IBlockState[10];
 
         for (int i = 0; i < 10; i++) {
-            // 随机高度（0-255）
-            variantHeights[i] = this.rand.nextInt(256);
-            // 随机层数（2-3层）
-            variantLayers[i] = 2 + this.rand.nextInt(2);
+            // 随机高度（60-250）
+            variantHeights[i] = this.rand.nextInt(190) + 60;
+            // 随机层数（3-5层）
+            variantLayers[i] = 3 + this.rand.nextInt(2);
             // 随机选择石头变种
-            int variant = this.rand.nextInt(11);
+            int variant = this.rand.nextInt(10);
             variantBlocks[i] = switch (variant) {
                 case 0 -> Andesite;
                 case 1 -> Diorite;
@@ -283,68 +243,14 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
                 case 7 -> Gneiss;
                 case 8 -> Slate;
                 case 9 -> Soapstone;
-                case 10 -> Shale;
-                default -> Blocks.STONE.getDefaultState();
+                default -> Shale;
             };
         }
 
         for (int localX = 0; localX < 16; ++localX) {
             for (int localZ = 0; localZ < 16; ++localZ) {
-                final int index = localX + localZ * 16;
 
-                boolean hasSlowSand = this.slowsandNoise[index] + randSlowSand[index] > 0.0D;
-                boolean hasGravel = this.gravelNoise[index] + randGravel[index] > 0.0D;
-                int stoneLayerDepth = (int) (this.depthBuffer[index] / 3.0D + 3.0D + randDepth[index]);
-                int currentStoneLayer = -1;
-
-                IBlockState topBlock = Blocks.STONE.getDefaultState();
-                IBlockState fillerBlock = Blocks.STONE.getDefaultState();
-
-                for (int yPos = 255; yPos >= 0; --yPos) {
-                    // 基岩层处理（保持不变）
-                    if (yPos <= 4 || yPos >= 248) {
-                        primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
-                        continue;
-                    }
-
-                    IBlockState currentBlock = primer.getBlockState(localZ, yPos, localX);
-
-                    if (currentBlock.getMaterial() != Material.AIR) {
-                        if (currentBlock.getBlock() == Blocks.STONE) {
-                            if (currentStoneLayer == -1) {
-                                currentStoneLayer = stoneLayerDepth;
-
-                                // 地表特殊覆盖层（保持不变）
-                                if (yPos >= seaLevel - 4 && yPos <= seaLevel + 1) {
-                                    if (hasGravel) {
-                                        topBlock = Blocks.STONE.getDefaultState();
-                                        fillerBlock = Blocks.CLAY.getDefaultState();
-                                    }
-                                    if (hasSlowSand) {
-                                        topBlock = Blocks.SAND.getDefaultState();
-                                        fillerBlock = Blocks.GRAVEL.getDefaultState();
-                                    }
-                                }
-
-                                // 水下处理（保持不变）
-                                if (yPos < seaLevel && (topBlock.getMaterial() == Material.AIR || topBlock == Blocks.STONE.getDefaultState())) {
-                                    topBlock = Blocks.WATER.getDefaultState();
-                                }
-
-                                // 设置顶层方块
-                                primer.setBlockState(localZ, yPos, localX,
-                                        (yPos >= seaLevel - 1) ? topBlock : fillerBlock);
-                            } else if (currentStoneLayer > 0) {
-                                --currentStoneLayer;
-                                primer.setBlockState(localZ, yPos, localX, fillerBlock);
-                            }
-                        }
-                    } else {
-                        currentStoneLayer = -1;
-                    }
-                }
-
-                // 应用岩石变种层（新逻辑）
+                // 应用岩石变种层
                 for (int i = 0; i < 10; i++) {
                     int startY = variantHeights[i];
                     int layers = variantLayers[i];
@@ -352,7 +258,14 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
 
                     for (int layer = 0; layer < layers; layer++) {
                         int yPos = startY + layer;
-                        if (yPos > 250) continue; // 确保不超出上限
+                        if (yPos > 254) {
+                            primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
+                            continue;
+                        } else if (yPos <= 60) {
+                            if (yPos < 2) primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
+                            continue;
+                        }
+
 
                         // 仅替换石头方块（不影响基岩/沙子/沙砾等）
                         if (primer.getBlockState(localZ, yPos, localX).getBlock() == Blocks.STONE) {
