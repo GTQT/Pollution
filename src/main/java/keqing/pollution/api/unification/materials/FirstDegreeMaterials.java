@@ -3,11 +3,13 @@ package keqing.pollution.api.unification.materials;
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconSet;
+import gregtech.api.unification.material.properties.BlastProperty;
 import gregtech.api.unification.material.properties.MaterialToolProperty;
 import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
 
+import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
@@ -435,7 +437,10 @@ public class FirstDegreeMaterials {
                 .cableProperties(GTValues.V[4], 16, 4)
                 .iconSet(METALLIC)
                 .flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
-                .blast(2700, LOW)
+                .blast(b -> b
+                        .temp(2700, BlastProperty.GasTier.LOW)
+                        .blastStats(VA[HV], 1300)
+                        .vacuumStats(VA[MV]))
                 .build();
 
         //泰拉钢

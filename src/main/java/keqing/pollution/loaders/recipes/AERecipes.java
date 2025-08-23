@@ -132,61 +132,6 @@ public class AERecipes {
 	}
 
 	private static void common() {
-        //石英纤维
-		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-				.input(Blocks.GLASS_PANE, 6)
-				.input(OrePrefix.dust, NetherQuartz, 3)
-				.outputs(GTUtility.copy(4, siliconFiber))
-				.duration(100)
-				.EUt(16)
-				.buildAndRegister();
-
-		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-				.input(Blocks.GLASS_PANE, 6)
-				.input(OrePrefix.dust, CertusQuartz, 3)
-				.outputs(GTUtility.copy(8, siliconFiber))
-				.duration(100)
-				.EUt(16)
-				.buildAndRegister();
-
-		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-				.input(Blocks.GLASS_PANE, 6)
-				.input(OrePrefix.dust, NetherQuartz, 3)
-				.input(OrePrefix.wireFine, BorosilicateGlass, 8)
-				.circuitMeta(1)
-				.outputs(GTUtility.copy(8, siliconFiber))
-				.duration(100)
-				.EUt(16)
-				.buildAndRegister();
-
-		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-				.input(Blocks.GLASS_PANE, 6)
-				.input(OrePrefix.dust, CertusQuartz, 3)
-				.input(OrePrefix.wireFine, BorosilicateGlass, 8)
-				.circuitMeta(1)
-				.outputs(GTUtility.copy(16, siliconFiber))
-				.duration(100)
-				.EUt(16)
-				.buildAndRegister();
-
-		//石英玻璃
-        RecipeMaps.BLAST_RECIPES.recipeBuilder()
-				.input(Blocks.GLASS, 4)
-				.input(OrePrefix.dust, CertusQuartz, 1)
-				.outputs(GTUtility.copy(8, quartzGlass))
-				.duration(100)
-				.blastFurnaceTemp(1800)
-				.EUt(120)
-				.buildAndRegister();
-		RecipeMaps.BLAST_RECIPES.recipeBuilder()
-				.input(Blocks.GLASS, 4)
-				.input(OrePrefix.dust, NetherQuartz, 1)
-				.outputs(GTUtility.copy(8, quartzGlass))
-				.duration(100)
-				.blastFurnaceTemp(1800)
-				.EUt(120)
-				.buildAndRegister();
-
         //聚能石英玻璃
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.inputs(GTUtility.copy(1, quartzGlass))
@@ -238,9 +183,10 @@ public class AERecipes {
 				"plateThaumium",
 				MetaItems.CONVEYOR_MODULE_MV.getStackForm(),
 				MetaItems.ITEM_FILTER.getStackForm()));
+
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "me_output"), new InfusionRecipe(
 				"INFUSION@2",
-				GTUtility.copy(1, inputBus),
+				GTUtility.copy(1, outputBus),
 				4,
 				new AspectList().add(Aspect.FIRE, 16).add(Aspect.ORDER, 16),
 				GTUtility.copy(1, forming),
