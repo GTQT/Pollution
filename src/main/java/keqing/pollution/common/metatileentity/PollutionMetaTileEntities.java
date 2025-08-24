@@ -219,8 +219,8 @@ public class PollutionMetaTileEntities {
         }
 
         //多方块
-        FLUX_CLEARS[1] = registerMetaTileEntity(300, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
-        FLUX_CLEARS[2] = registerMetaTileEntity(301, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));
+        FLUX_CLEARS[0] = registerMetaTileEntity(300, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
+        FLUX_CLEARS[1] = registerMetaTileEntity(301, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));
 
         INFUSED_EXCHANGE = registerMetaTileEntity(302, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
         MAGIC_BENDER = registerMetaTileEntity(303, new MetaTileEntityMagicBender(PollutionID("magic_bender")));

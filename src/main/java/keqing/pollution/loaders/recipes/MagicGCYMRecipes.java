@@ -2274,7 +2274,7 @@ public class MagicGCYMRecipes {
 		//中控塔
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.inputs(PollutionMetaTileEntities.BOT_GAS_COLLECTOR.getStackForm(1))
-				.inputs(PollutionMetaTileEntities.FLUX_CLEARS[2].getStackForm(1))
+				.inputs(PollutionMetaTileEntities.FLUX_CLEARS[1].getStackForm(1))
 				.inputs(MetaTileEntities.CENTRAL_MONITOR.getStackForm(1))
 				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC, 4))
 				.input(ItemsTC.morphicResonator, 64)

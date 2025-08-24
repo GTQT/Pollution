@@ -147,13 +147,13 @@ public class MachineRecipes {
     }
 
     private static void machine() {
-        ModHandler.addShapedRecipe(true, "flux_clear1", FLUX_CLEARS[1].getStackForm(),
+        ModHandler.addShapedRecipe(true, "flux_clear1", FLUX_CLEARS[0].getStackForm(),
                 "CBC", "FMF", "CBC", 'M', MetaTileEntities.HULL[GTValues.EV].getStackForm(),
                 'B', new UnificationEntry(OrePrefix.rotor, Titanium),
                 'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.EV),
                 'F', MetaItems.ELECTRIC_PUMP_EV);
 
-        ModHandler.addShapedRecipe(true, "flux_clear2", FLUX_CLEARS[2].getStackForm(),
+        ModHandler.addShapedRecipe(true, "flux_clear2", FLUX_CLEARS[1].getStackForm(),
                 "CBC", "FMF", "CBC", 'M', MetaTileEntities.HULL[GTValues.IV].getStackForm(),
                 'B', new UnificationEntry(OrePrefix.rotor, TungstenSteel),
                 'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.IV),
