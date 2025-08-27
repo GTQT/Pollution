@@ -246,9 +246,20 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
                 default -> Shale;
             };
         }
-
         for (int localX = 0; localX < 16; ++localX) {
             for (int localZ = 0; localZ < 16; ++localZ) {
+                for (int yPos = 255; yPos >= 0; --yPos) {
+                    // 基岩层处理（保持不变）
+                    if (yPos == 1 || yPos == 254) {
+                        primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
+                    }
+                }
+            }
+        }
+        for (int localX = 0; localX < 16; ++localX) {
+            for (int localZ = 0; localZ < 16; ++localZ) {
+                primer.setBlockState(localZ, 254, localX, Blocks.BEDROCK.getDefaultState());
+                primer.setBlockState(localZ, 1, localX, Blocks.BEDROCK.getDefaultState());
 
                 // 应用岩石变种层
                 for (int i = 0; i < 10; i++) {
@@ -258,14 +269,8 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
 
                     for (int layer = 0; layer < layers; layer++) {
                         int yPos = startY + layer;
-                        if (yPos > 254) {
-                            primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
-                            continue;
-                        } else if (yPos <= 60) {
-                            if (yPos < 2) primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
-                            continue;
-                        }
-
+                        if (yPos > 250) continue; // 确保不超出上限
+                        if (yPos < 60) continue; // 确保不超出上限
 
                         // 仅替换石头方块（不影响基岩/沙子/沙砾等）
                         if (primer.getBlockState(localZ, yPos, localX).getBlock() == Blocks.STONE) {
