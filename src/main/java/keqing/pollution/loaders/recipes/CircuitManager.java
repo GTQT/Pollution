@@ -49,260 +49,259 @@ public class CircuitManager {
         //ULV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_ULV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_ULV.getMetaItem(), 1, 50),
+                MAGIC_CIRCUIT_ULV.getStackForm(),
                 2,
                 new AspectList().add(Aspect.MECHANISM, 1).add(Aspect.MAGIC, 1).add(Aspect.DESIRE, 1),
-                new ItemStack(VACUUM_TUBE.getMetaItem(), 1, 516),
-                new ItemStack(CAPACITOR.getMetaItem(), 1, 520),
-                new ItemStack(TRANSISTOR.getMetaItem(),1, 518),
-                new ItemStack(DIODE.getMetaItem(),1, 521)
+                VACUUM_TUBE.getStackForm(),
+                CAPACITOR.getStackForm(),
+                TRANSISTOR.getStackForm(),
+                DIODE.getStackForm()
         ));
 
         //LV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_LV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_LV.getMetaItem(), 1, 51),
+                MAGIC_CIRCUIT_LV.getStackForm(),
                 2,
                 new AspectList().add(Aspect.MECHANISM, 2).add(Aspect.MAGIC, 2).add(Aspect.DESIRE, 2),
-                new ItemStack(MAGIC_CIRCUIT_ULV.getMetaItem(), 1, 50),
-                new ItemStack(VACUUM_TUBE.getMetaItem(), 1, 516),
-                new ItemStack(CAPACITOR.getMetaItem(), 1, 520),
-                new ItemStack(TRANSISTOR.getMetaItem(),1, 518),
-                new ItemStack(DIODE.getMetaItem(),1, 521)
+                MAGIC_CIRCUIT_ULV.getStackForm(),
+                CAPACITOR.getStackForm(),
+                TRANSISTOR.getStackForm(),
+                DIODE.getStackForm()
         ));
 
         //MV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_MV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_MV.getMetaItem(), 1, 52),
+                MAGIC_CIRCUIT_MV.getStackForm(),
                 2,
                 new AspectList().add(Aspect.MECHANISM, 4).add(Aspect.MAGIC,4 ).add(Aspect.DESIRE, 4),
-                new ItemStack(MAGIC_CIRCUIT_LV.getMetaItem(), 1, 51),
+                MAGIC_CIRCUIT_LV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_ULV.getMetaItem(), 1, 50),
-                new ItemStack(MAGIC_CIRCUIT_ULV.getMetaItem(), 1, 50),
-                new ItemStack(MAGIC_CIRCUIT_ULV.getMetaItem(), 1, 50),
-                new ItemStack(MAGIC_CIRCUIT_ULV.getMetaItem(), 1, 50),
+                MAGIC_CIRCUIT_ULV.getStackForm(),
+                MAGIC_CIRCUIT_ULV.getStackForm(),
+                MAGIC_CIRCUIT_ULV.getStackForm(),
+                MAGIC_CIRCUIT_ULV.getStackForm(),
 
-                new ItemStack(CAPACITOR.getMetaItem(), 1, 520),
-                new ItemStack(TRANSISTOR.getMetaItem(),1, 518),
-                new ItemStack(DIODE.getMetaItem(),1, 521)
+                CAPACITOR.getStackForm(),
+                TRANSISTOR.getStackForm(),
+                DIODE.getStackForm()
         ));
 
         //HV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_HV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_HV.getMetaItem(), 1, 53),
+                MAGIC_CIRCUIT_HV.getStackForm(),
                 2,
                 new AspectList().add(Aspect.MECHANISM, 8).add(Aspect.MAGIC,8).add(Aspect.DESIRE, 8),
-                new ItemStack(MAGIC_CIRCUIT_MV.getMetaItem(), 1, 52),
+                MAGIC_CIRCUIT_MV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_LV.getMetaItem(), 1, 51),
-                new ItemStack(MAGIC_CIRCUIT_LV.getMetaItem(), 1, 51),
-                new ItemStack(MAGIC_CIRCUIT_LV.getMetaItem(), 1, 51),
-                new ItemStack(MAGIC_CIRCUIT_LV.getMetaItem(), 1, 51),
+                MAGIC_CIRCUIT_LV.getStackForm(),
+                MAGIC_CIRCUIT_LV.getStackForm(),
+                MAGIC_CIRCUIT_LV.getStackForm(),
+                MAGIC_CIRCUIT_LV.getStackForm(),
 
-                new ItemStack(CAPACITOR.getMetaItem(), 1, 520),
-                new ItemStack(TRANSISTOR.getMetaItem(),1, 518),
-                new ItemStack(DIODE.getMetaItem(),1, 521)
+                CAPACITOR.getStackForm(),
+                TRANSISTOR.getStackForm(),
+                DIODE.getStackForm()
         ));
 
         //EV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_EV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_EV.getMetaItem(), 1, 54),
+                MAGIC_CIRCUIT_EV.getStackForm(),
                 4,
                 new AspectList().add(Aspect.MECHANISM, 16).add(Aspect.MAGIC,16).add(Aspect.DESIRE, 16),
-                new ItemStack(MAGIC_CIRCUIT_HV.getMetaItem(), 1, 53),
+                MAGIC_CIRCUIT_HV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_MV.getMetaItem(), 1, 52),
-                new ItemStack(MAGIC_CIRCUIT_MV.getMetaItem(), 1, 52),
-                new ItemStack(MAGIC_CIRCUIT_MV.getMetaItem(), 1, 52),
-                new ItemStack(MAGIC_CIRCUIT_MV.getMetaItem(), 1, 52),
+                MAGIC_CIRCUIT_MV.getStackForm(),
+                MAGIC_CIRCUIT_MV.getStackForm(),
+                MAGIC_CIRCUIT_MV.getStackForm(),
+                MAGIC_CIRCUIT_MV.getStackForm(),
 
-                new ItemStack(SMD_CAPACITOR.getMetaItem(), 1, 525),
-                new ItemStack(SMD_TRANSISTOR.getMetaItem(),1, 523),
-                new ItemStack(SMD_DIODE.getMetaItem(),1, 526)
+                SMD_CAPACITOR.getStackForm(),
+                SMD_TRANSISTOR.getStackForm(),
+                SMD_DIODE.getStackForm()
         ));
 
         //IV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_IV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_IV.getMetaItem(), 1, 55),
+                MAGIC_CIRCUIT_IV.getStackForm(),
                 4,
                 new AspectList().add(Aspect.MECHANISM, 16).add(Aspect.MAGIC,16).add(Aspect.DESIRE, 16),
-                new ItemStack(MAGIC_CIRCUIT_EV.getMetaItem(), 1, 54),
+                MAGIC_CIRCUIT_EV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_HV.getMetaItem(), 1, 53),
-                new ItemStack(MAGIC_CIRCUIT_HV.getMetaItem(), 1, 53),
-                new ItemStack(MAGIC_CIRCUIT_HV.getMetaItem(), 1, 53),
-                new ItemStack(MAGIC_CIRCUIT_HV.getMetaItem(), 1, 53),
+                MAGIC_CIRCUIT_HV.getStackForm(),
+                MAGIC_CIRCUIT_HV.getStackForm(),
+                MAGIC_CIRCUIT_HV.getStackForm(),
+                MAGIC_CIRCUIT_HV.getStackForm(),
 
-                new ItemStack(SMD_CAPACITOR.getMetaItem(), 1, 525),
-                new ItemStack(SMD_TRANSISTOR.getMetaItem(),1, 523),
-                new ItemStack(SMD_DIODE.getMetaItem(),1, 526)
+                SMD_CAPACITOR.getStackForm(),
+                SMD_TRANSISTOR.getStackForm(),
+                SMD_DIODE.getStackForm()
         ));
 
         //LuV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_LuV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_LuV.getMetaItem(), 1, 56),
+                MAGIC_CIRCUIT_LuV.getStackForm(),
                 4,
                 new AspectList().add(Aspect.MECHANISM, 32).add(Aspect.MAGIC,32).add(Aspect.DESIRE, 32),
-                new ItemStack(MAGIC_CIRCUIT_IV.getMetaItem(), 1, 55),
+                MAGIC_CIRCUIT_IV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_EV.getMetaItem(), 1, 54),
-                new ItemStack(MAGIC_CIRCUIT_EV.getMetaItem(), 1, 54),
-                new ItemStack(MAGIC_CIRCUIT_EV.getMetaItem(), 1, 54),
-                new ItemStack(MAGIC_CIRCUIT_EV.getMetaItem(), 1, 54),
+                MAGIC_CIRCUIT_EV.getStackForm(),
+                MAGIC_CIRCUIT_EV.getStackForm(),
+                MAGIC_CIRCUIT_EV.getStackForm(),
+                MAGIC_CIRCUIT_EV.getStackForm(),
 
-                new ItemStack(ADVANCED_SMD_CAPACITOR.getMetaItem(), 1, 530),
-                new ItemStack(ADVANCED_SMD_TRANSISTOR.getMetaItem(),1, 528),
-                new ItemStack(ADVANCED_SMD_DIODE.getMetaItem(),1, 531)
+                ADVANCED_SMD_CAPACITOR.getStackForm(),
+                ADVANCED_SMD_TRANSISTOR.getStackForm(),
+                ADVANCED_SMD_DIODE.getStackForm()
         ));
 
         //ZPM
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_ZPM.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
+                MAGIC_CIRCUIT_ZPM.getStackForm(),
                 4,
                 new AspectList().add(Aspect.MECHANISM, 32).add(Aspect.MAGIC,32).add(Aspect.DESIRE, 32),
-                new ItemStack(MAGIC_CIRCUIT_LuV.getMetaItem(), 1, 56),
+                MAGIC_CIRCUIT_LuV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_IV.getMetaItem(), 1, 55),
-                new ItemStack(MAGIC_CIRCUIT_IV.getMetaItem(), 1, 55),
-                new ItemStack(MAGIC_CIRCUIT_IV.getMetaItem(), 1, 55),
-                new ItemStack(MAGIC_CIRCUIT_IV.getMetaItem(), 1, 55),
+                MAGIC_CIRCUIT_IV.getStackForm(),
+                MAGIC_CIRCUIT_IV.getStackForm(),
+                MAGIC_CIRCUIT_IV.getStackForm(),
+                MAGIC_CIRCUIT_IV.getStackForm(),
 
-                new ItemStack(ADVANCED_SMD_CAPACITOR.getMetaItem(), 1, 530),
-                new ItemStack(ADVANCED_SMD_TRANSISTOR.getMetaItem(),1, 528),
-                new ItemStack(ADVANCED_SMD_DIODE.getMetaItem(),1, 531)
+                ADVANCED_SMD_CAPACITOR.getStackForm(),
+                ADVANCED_SMD_TRANSISTOR.getStackForm(),
+                ADVANCED_SMD_DIODE.getStackForm()
         ));
 
         //UV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
+                MAGIC_CIRCUIT_UV.getStackForm(),
                 6,
                 new AspectList().add(Aspect.MECHANISM, 32).add(Aspect.MAGIC,32).add(Aspect.DESIRE, 32),
-                new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
+                MAGIC_CIRCUIT_ZPM.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_LuV.getMetaItem(), 1, 56),
-                new ItemStack(MAGIC_CIRCUIT_LuV.getMetaItem(), 1, 56),
-                new ItemStack(MAGIC_CIRCUIT_LuV.getMetaItem(), 1, 56),
-                new ItemStack(MAGIC_CIRCUIT_LuV.getMetaItem(), 1, 56),
+                MAGIC_CIRCUIT_LuV.getStackForm(),
+                MAGIC_CIRCUIT_LuV.getStackForm(),
+                MAGIC_CIRCUIT_LuV.getStackForm(),
+                MAGIC_CIRCUIT_LuV.getStackForm(),
 
-                new ItemStack(ADVANCED_SMD_CAPACITOR.getMetaItem(), 1, 530),
-                new ItemStack(ADVANCED_SMD_TRANSISTOR.getMetaItem(),1, 528),
-                new ItemStack(ADVANCED_SMD_DIODE.getMetaItem(),1, 531)
+                ADVANCED_SMD_CAPACITOR.getStackForm(),
+                ADVANCED_SMD_TRANSISTOR.getStackForm(),
+                ADVANCED_SMD_DIODE.getStackForm()
         ));
 
         //UHV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UHV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
+                MAGIC_CIRCUIT_UHV.getStackForm(),
                 6,
                 new AspectList().add(Aspect.MECHANISM, 96).add(Aspect.MAGIC,96).add(Aspect.DESIRE, 96),
-                new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
+                MAGIC_CIRCUIT_UV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
-                new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
-                new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
-                new ItemStack(MAGIC_CIRCUIT_ZPM.getMetaItem(), 1, 57),
+                MAGIC_CIRCUIT_ZPM.getStackForm(),
+                MAGIC_CIRCUIT_ZPM.getStackForm(),
+                MAGIC_CIRCUIT_ZPM.getStackForm(),
+                MAGIC_CIRCUIT_ZPM.getStackForm(),
 
-                new ItemStack(GOOWARE_SMD_CAPACITOR.getMetaItem(), 1, 900),
-                new ItemStack(GOOWARE_SMD_TRANSISTOR.getMetaItem(),1, 903),
-                new ItemStack(GOOWARE_SMD_DIODE.getMetaItem(),1, 901)
+                GOOWARE_SMD_CAPACITOR.getStackForm(),
+                GOOWARE_SMD_TRANSISTOR.getStackForm(),
+                GOOWARE_SMD_DIODE.getStackForm()
         ));
 
         //UEV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UEV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
+                MAGIC_CIRCUIT_UEV.getStackForm(),
                 6,
                 new AspectList().add(Aspect.MECHANISM, 96).add(Aspect.MAGIC,96).add(Aspect.DESIRE, 96),
-                new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
+                MAGIC_CIRCUIT_UHV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
-                new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
-                new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
-                new ItemStack(MAGIC_CIRCUIT_UV.getMetaItem(), 1, 58),
+                MAGIC_CIRCUIT_UV.getStackForm(),
+                MAGIC_CIRCUIT_UV.getStackForm(),
+                MAGIC_CIRCUIT_UV.getStackForm(),
+                MAGIC_CIRCUIT_UV.getStackForm(),
 
-                new ItemStack(OPTICAL_SMD_CAPACITOR.getMetaItem(), 1, 905),
-                new ItemStack(OPTICAL_SMD_TRANSISTOR.getMetaItem(),1, 908),
-                new ItemStack(OPTICAL_SMD_DIODE.getMetaItem(),1, 906)
+                OPTICAL_SMD_CAPACITOR.getStackForm(),
+                OPTICAL_SMD_TRANSISTOR.getStackForm(),
+                OPTICAL_SMD_DIODE.getStackForm()
         ));
 
         //UIV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UIV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
+                MAGIC_CIRCUIT_UIV.getStackForm(),
                 6,
                 new AspectList().add(Aspect.MECHANISM, 128).add(Aspect.MAGIC,128).add(Aspect.DESIRE, 128),
-                new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
+                MAGIC_CIRCUIT_UEV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
-                new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
-                new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
-                new ItemStack(MAGIC_CIRCUIT_UHV.getMetaItem(), 1, 59),
+                MAGIC_CIRCUIT_UHV.getStackForm(),
+                MAGIC_CIRCUIT_UHV.getStackForm(),
+                MAGIC_CIRCUIT_UHV.getStackForm(),
+                MAGIC_CIRCUIT_UHV.getStackForm(),
 
-                new ItemStack(SPINTRONIC_SMD_CAPACITOR.getMetaItem(), 1, 910),
-                new ItemStack(SPINTRONIC_SMD_TRANSISTOR.getMetaItem(),1, 913),
-                new ItemStack(SPINTRONIC_SMD_DIODE.getMetaItem(),1, 911)
+                SPINTRONIC_SMD_CAPACITOR.getStackForm(),
+                SPINTRONIC_SMD_TRANSISTOR.getStackForm(),
+                SPINTRONIC_SMD_DIODE.getStackForm()
         ));
 
         //UXV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UXV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
+                MAGIC_CIRCUIT_UXV.getStackForm(),
                 8,
                 new AspectList().add(Aspect.MECHANISM, 128).add(Aspect.MAGIC,128).add(Aspect.DESIRE, 128),
-                new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
+                MAGIC_CIRCUIT_UIV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
-                new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
-                new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
-                new ItemStack(MAGIC_CIRCUIT_UEV.getMetaItem(), 1, 60),
+                MAGIC_CIRCUIT_UEV.getStackForm(),
+                MAGIC_CIRCUIT_UEV.getStackForm(),
+                MAGIC_CIRCUIT_UEV.getStackForm(),
+                MAGIC_CIRCUIT_UEV.getStackForm(),
 
-                new ItemStack(COSMIC_SMD_CAPACITOR.getMetaItem(), 1, 915),
-                new ItemStack(COSMIC_SMD_TRANSISTOR.getMetaItem(),1, 918),
-                new ItemStack(COSMIC_SMD_DIODE.getMetaItem(),1, 916)
+                COSMIC_SMD_CAPACITOR.getStackForm(),
+                COSMIC_SMD_TRANSISTOR.getStackForm(),
+                COSMIC_SMD_DIODE.getStackForm()
         ));
 
         //OpV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_OpV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_OpV.getMetaItem(), 1, 63),
+                MAGIC_CIRCUIT_OpV.getStackForm(),
                 8,
                 new AspectList().add(Aspect.MECHANISM, 128).add(Aspect.MAGIC,128).add(Aspect.DESIRE, 128),
-                new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
+                MAGIC_CIRCUIT_UXV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
-                new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
-                new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
-                new ItemStack(MAGIC_CIRCUIT_UIV.getMetaItem(), 1, 61),
+                MAGIC_CIRCUIT_UIV.getStackForm(),
+                MAGIC_CIRCUIT_UIV.getStackForm(),
+                MAGIC_CIRCUIT_UIV.getStackForm(),
+                MAGIC_CIRCUIT_UIV.getStackForm(),
 
-                new ItemStack(SUPRACAUSAL_SMD_CAPACITOR.getMetaItem(), 1, 915),
-                new ItemStack(SUPRACAUSAL_SMD_TRANSISTOR.getMetaItem(),1, 918),
-                new ItemStack(SUPRACAUSAL_SMD_DIODE.getMetaItem(),1, 916)
+                SUPRACAUSAL_SMD_CAPACITOR.getStackForm(),
+                SUPRACAUSAL_SMD_TRANSISTOR.getStackForm(),
+                SUPRACAUSAL_SMD_DIODE.getStackForm()
         ));
 
         //MAX
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_MAX.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
-                new ItemStack(MAGIC_CIRCUIT_MAX.getMetaItem(), 1, 64),
+                MAGIC_CIRCUIT_MAX.getStackForm(),
                 8,
                 new AspectList().add(Aspect.MECHANISM, 128).add(Aspect.MAGIC,128).add(Aspect.DESIRE, 128),
-                new ItemStack(MAGIC_CIRCUIT_OpV.getMetaItem(), 1, 63),
+                MAGIC_CIRCUIT_OpV.getStackForm(),
 
-                new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
-                new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
-                new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
-                new ItemStack(MAGIC_CIRCUIT_UXV.getMetaItem(), 1, 62),
+                MAGIC_CIRCUIT_UXV.getStackForm(),
+                MAGIC_CIRCUIT_UXV.getStackForm(),
+                MAGIC_CIRCUIT_UXV.getStackForm(),
+                MAGIC_CIRCUIT_UXV.getStackForm(),
 
-                new ItemStack(SUPRACAUSAL_SMD_CAPACITOR.getMetaItem(), 1, 915),
-                new ItemStack(SUPRACAUSAL_SMD_TRANSISTOR.getMetaItem(),1, 918),
-                new ItemStack(SUPRACAUSAL_SMD_DIODE.getMetaItem(),1, 916)
+                SUPRACAUSAL_SMD_CAPACITOR.getStackForm(),
+                SUPRACAUSAL_SMD_TRANSISTOR.getStackForm(),
+                SUPRACAUSAL_SMD_DIODE.getStackForm()
         ));
     }
 

@@ -84,7 +84,7 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
-        return new MetaTileEntityBotVacuumFreezer(this.metaTileEntityId);
+        return new MetaTileEntityBotCircuitAssembler(this.metaTileEntityId);
     }
 
     @Override

@@ -959,7 +959,7 @@ public class AERecipes {
 
 //256k+流体组件
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
-				.input(MetaItems.INTEGRATED_CIRCUIT)
+                .input(MetaItems.POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.IV, 4)
 				.inputs(GTUtility.copy(16, calculationProcessor))
 				.fluidInputs(GTQTMaterials.Magic.getFluid(1600))

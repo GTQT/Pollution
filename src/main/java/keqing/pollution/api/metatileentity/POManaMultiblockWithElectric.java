@@ -11,6 +11,7 @@ import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.KeyUtil;
@@ -52,17 +53,20 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        this.ManaHatch = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0);
-        tier = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTier();
+        List<IManaHatch> manaHatches = this.getAbilities(POMultiblockAbility.MANA_HATCH);
+        if (manaHatches != null && !manaHatches.isEmpty()) {
+            this.ManaHatch = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0);
+            tier = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTier();
+        }
     }
 
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(TextFormatting.GREEN + I18n.format("-电动魔力支持："));
-        tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.1"));
-        tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.2"));
-        tooltip.add(I18n.format("pollution.mana_multiblock_with_electric.tooltip.3"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("pollution.mana_multiblock_with_electric.tooltip.1"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("pollution.mana_multiblock_with_electric.tooltip.2"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("pollution.mana_multiblock_with_electric.tooltip.3"));
     }
 
 
@@ -110,6 +114,44 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
             this.OverclockingEnhance = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getOverclockingEnhance();
             this.ParallelEnhance = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getParallelEnhance();
         }
+    }
+
+    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
+        TraceabilityPredicate predicate = super.autoAbilities(checkMaintenance, checkMuffler);
+        predicate = predicate.or(abilities(POMultiblockAbility.MANA_HATCH)).setExactLimit(1);
+        if (checkEnergyIn) {
+            predicate = predicate.or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
+        }
+
+        if (checkEnergyIn) {
+            predicate = predicate.or(abilities(MultiblockAbility.INPUT_LASER).setMinGlobalLimited(1).setMaxGlobalLimited(1).setPreviewCount(1));
+        }
+
+        if (checkItemIn && this.recipeMap.getMaxInputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1));
+        }
+
+        if (checkItemOut && this.recipeMap.getMaxOutputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.EXPORT_ITEMS).setPreviewCount(1));
+        }
+
+        if (checkFluidIn && this.recipeMap.getMaxFluidInputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setPreviewCount(1));
+        }
+
+        if (checkFluidOut && this.recipeMap.getMaxFluidOutputs() > 0) {
+            predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
+        }
+
+        if ((checkItemIn || checkFluidIn) && (this.recipeMap.getMaxInputs() > 0 || this.recipeMap.getMaxFluidInputs() > 0)) {
+            predicate = predicate.or(abilities(MultiblockAbility.DUAL_IMPORT).setPreviewCount(1));
+        }
+
+        if ((checkItemOut || checkFluidOut) && (this.recipeMap.getMaxOutputs() > 0 || this.recipeMap.getMaxFluidOutputs() > 0)) {
+            predicate = predicate.or(abilities(MultiblockAbility.DUAL_EXPORT).setPreviewCount(1));
+        }
+
+        return predicate;
     }
 
     public boolean drainVis(int amount, boolean simulate) {

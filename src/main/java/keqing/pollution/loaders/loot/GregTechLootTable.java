@@ -96,10 +96,10 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, new ItemStack(Blocks.PISTON), 2, 4, 15);
             ChestGenHooks.addItem(lootTable, new ItemStack(Blocks.PISTON_EXTENSION), 2, 4, 15);
 
-            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_COPPER.getStackForm(), 1, 8, 20);
-            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_CUPRONICKEL.getStackForm(), 1, 6, 15);
-            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_SILVER.getStackForm(), 1, 4, 10);
-            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_GOLD.getStackForm(), 1, 2, 5);
+            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_COPPER.getStackForm(), 1, 8, 40);
+            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_CUPRONICKEL.getStackForm(), 1, 6, 30);
+            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_SILVER.getStackForm(), 1, 4, 20);
+            ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_GOLD.getStackForm(), 1, 2, 10);
 
             ChestGenHooks.addItem(lootTable, GTSMetaitems.ELECTRIC_MOTOR_ULV.getStackForm(), 1, 4, 20);
             ChestGenHooks.addItem(lootTable, GTSMetaitems.ELECTRIC_PISTON_ULV.getStackForm(), 1, 4, 20);

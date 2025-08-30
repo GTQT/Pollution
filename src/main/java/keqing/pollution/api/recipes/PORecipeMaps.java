@@ -79,7 +79,7 @@ public class PORecipeMaps {
 
     public static final RecipeMap<SimpleRecipeBuilder> MAGIC_GREENHOUSE_RECIPES = new RecipeMapBuilder<>("magic_greenhouse", new SimpleRecipeBuilder())
             .itemInputs(4)
-            .itemOutputs(1)
+            .itemOutputs(4)
             .fluidInputs(1)
             .fluidOutputs(1)
             .sound(GTSoundEvents.REPLICATOR)

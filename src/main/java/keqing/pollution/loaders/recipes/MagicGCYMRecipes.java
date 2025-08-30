@@ -675,6 +675,7 @@ public class MagicGCYMRecipes {
 				.circuitMeta(1)
 				.EUt(120)
 				.buildAndRegister();
+
 		MAGIC_GREENHOUSE_RECIPES.recipeBuilder()
 				.input(BlocksTC.saplingGreatwood)
 				.input(MetaItems.FERTILIZER.getMetaItem(), 1, 1001)
@@ -686,6 +687,7 @@ public class MagicGCYMRecipes {
 				.circuitMeta(2)
 				.EUt(120)
 				.buildAndRegister();
+
 		MAGIC_GREENHOUSE_RECIPES.recipeBuilder()
 				.input(BlocksTC.saplingSilverwood)
 				.fluidInputs(infused_earth.getFluid(288))
@@ -695,6 +697,7 @@ public class MagicGCYMRecipes {
 				.circuitMeta(1)
 				.EUt(480)
 				.buildAndRegister();
+
 		MAGIC_GREENHOUSE_RECIPES.recipeBuilder()
 				.input(BlocksTC.saplingSilverwood)
 				.input(MetaItems.FERTILIZER.getMetaItem(), 1, 1001)

@@ -93,10 +93,10 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
     public void update() {
         super.update();
         if (getOffsetTimer() % 20 == 0) {
-            if (AuraHelper.getVis(getWorld(), getPos()) >= (float) (tier * tier * 0.2)) {
+            if (AuraHelper.getVis(getWorld(), getPos()) >= (float) (tier * tier * 0.05)) {
                 if (visStorage < visStorageMax) {
-                    AuraHelper.drainVis(getWorld(), this.getPos(), (float) (tier * tier * 0.2), false);
-                    visStorage += tier * tier * 20;
+                    AuraHelper.drainVis(getWorld(), this.getPos(), (float) (tier * tier * 0.05), false);
+                    visStorage += tier * tier * 100;
                     visStorage = Math.min(visStorageMax, visStorage);
                 }
             }

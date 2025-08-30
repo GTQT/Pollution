@@ -75,17 +75,17 @@ public abstract class PORecipeMapMultiblockController extends MultiMapMultiblock
         tooltip.add(TextFormatting.GRAY + I18n.format("多方块工作需要源质：%s，请将液态源质输入设备的输入仓内", material.getLocalizedName()));
 
         tooltip.add(TextFormatting.GREEN + I18n.format("-灵气支持："));
-        tooltip.add(TextFormatting.GREEN +I18n.format("需要使用 §c灵气仓§r 为多方块提供灵气支持"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与4*仓室等级 mb的灵气源"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("每128灵气源为多方块带来额外的一并行数量"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("需要使用 §c灵气仓§r 为多方块提供灵气支持"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与4*仓室等级 mb的灵气源"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("每128灵气源为多方块带来额外的一并行数量"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
 
         tooltip.add(TextFormatting.GREEN + I18n.format("-魔力支持："));
-        tooltip.add(TextFormatting.GREEN +I18n.format("需要使用 §c魔力仓§r 为多方块提供魔力支持"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与Math.pow(2,仓室等级) mb的灵气源"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("每1024灵气源为多方块带来额外的一并行数量"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("在魔力仓内填充升级部件可获得额外的耗时，耗能，超频，并行加强。"));
-        tooltip.add(TextFormatting.GREEN +I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("需要使用 §c魔力仓§r 为多方块提供魔力支持"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("多方块工作每tick需要消耗1mb的对应流体要素与Math.pow(2,仓室等级) mb的灵气源"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("每1024灵气源为多方块带来额外的一并行数量"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("在魔力仓内填充升级部件可获得额外的耗时，耗能，超频，并行加强。"));
+        tooltip.add(TextFormatting.GRAY +I18n.format("当灵气等级对应电压时大于等于配方电压等级时，获得§b无损超频§7。"));
 
         tooltip.add(TextFormatting.RED +I18n.format("注意：如果你同时安装灵气仓与魔力仓，那么机器会优先自动选取二者中较低的数值"));
     }

@@ -250,7 +250,7 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
             for (int localZ = 0; localZ < 16; ++localZ) {
                 for (int yPos = 255; yPos >= 0; --yPos) {
                     // 基岩层处理（保持不变）
-                    if (yPos == 1 || yPos == 254) {
+                    if (yPos <= 1 || yPos >= 254) {
                         primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
                     }
                 }
