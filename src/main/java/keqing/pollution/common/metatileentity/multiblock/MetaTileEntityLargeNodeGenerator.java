@@ -55,8 +55,6 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
     //源质类型
     private final FluidStack INFUSED_ORDER = PollutionMaterials.infused_order.getFluid(1);
     private final FluidStack INFUSED_AURA = PollutionMaterials.infused_aura.getFluid(1);
-    //计数器0
-    private int tickCount = 0;
     //线圈等级
     private int coilLevel;
     //发电方差（风）
@@ -208,8 +206,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
             }
         }
         //处理消耗源质问题和节点特性问题，每秒一次
-        tickCount++;
-        if (tickCount % 20 == 0) {
+        if (getOffsetTimer() % 20 == 0) {
             int essenceCost = ceil(200 * essenceCostSpeedMultiplier);
             if (INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false))) {
                 this.inputFluidInventory.drain(PollutionMaterials.infused_aura.getFluid(essenceCost), true);
@@ -224,7 +221,6 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
                     doSpecialNodeBehaviors(this.inputInventory.getStackInSlot(i), i);
                 }
             }
-            tickCount = 0;
         }
         //动力仓输出电，溢出式发电
         finalCapacity = (int) (expectedFinalCapacity * (1 + random.nextDouble() * varience / this.getInputInventory().getSlots()));

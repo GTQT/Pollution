@@ -216,4 +216,9 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
             super.setMaxProgress((int) (maxProgress * timeReduce));
         }
     }
+
+    @Override
+    public boolean canBeDistinct() {
+        return true;
+    }
 }

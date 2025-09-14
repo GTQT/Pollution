@@ -1,5 +1,9 @@
 package keqing.pollution.common.metatileentity.multiblock;
 
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.capability.impl.EnergyContainerList;
+import gregtech.api.capability.impl.FluidTankList;
+import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -34,6 +38,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -126,6 +131,17 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
                 0);
     }
 
+    protected void initializeAbilities() {
+        this.inputInventory = new ItemHandlerList(this.getAbilities(MultiblockAbility.IMPORT_ITEMS));
+        this.inputFluidInventory = new FluidTankList(this.allowSameFluidFillForOutputs(), this.getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.outputInventory = new ItemHandlerList(this.getAbilities(MultiblockAbility.EXPORT_ITEMS));
+        this.outputFluidInventory = new FluidTankList(this.allowSameFluidFillForOutputs(), this.getAbilities(MultiblockAbility.EXPORT_FLUIDS));
+        List<IEnergyContainer> inputEnergy = new ArrayList(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
+        inputEnergy.addAll(this.getAbilities(MultiblockAbility.INPUT_LASER));
+        this.energyContainer = new EnergyContainerList(inputEnergy);
+        this.outEnergyContainer = new EnergyContainerList(this.getAbilities(MultiblockAbility.OUTPUT_ENERGY));
+    }
+
     public ItemStack getRandomAuraNode() {
         ItemStack auraNode = new ItemStack(PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem(), 1, 100);
         NBTTagCompound nodeTagCompound = new NBTTagCompound();
@@ -188,14 +204,13 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
         //每个tick都消耗一份流体，如果中途不足，立刻停止配方，计数器也随之恢复
         if (this.isWorkingEnabled() && INFUSED_ENERGY.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ENERGY, false))) {
             if (this.energyContainer.getInputVoltage() > EUt && this.energyContainer.getEnergyStored() >= this.energyContainer.getInputVoltage()) {
-                tickCount++;
                 if (fluidInputInventory.get(0).getFluidAmount() >= infusedCost && !isOutputFull()) {
                     this.energyContainer.removeEnergy(this.energyContainer.getInputVoltage());
                     this.inputFluidInventory.drain(INFUSED_ENERGY, true);
                 } else {
                     timer = 0; //重置进度
                 }
-                if (tickCount % 20 == 0) { // 每20个tick（1秒）执行一次
+                if (getOffsetTimer() % 20 == 0) {
                     timer++;
                     if (timer >= Duration) { // 每duration秒执行一次
                         timer = 0; // 重置计时器

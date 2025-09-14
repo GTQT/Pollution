@@ -77,9 +77,6 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
     private final FluidStack BLACK_MANSUS = PollutionMaterials.blackmansus.getFluid(1);
     private final FluidStack WHITE_MANSUS = PollutionMaterials.whitemansus.getFluid(1);
     private final FluidStack STARRY_MANSUS = PollutionMaterials.starrymansus.getFluid(1);
-    @SideOnly(Side.CLIENT)
-    //计时器
-    private int timer;
     //机器节点因子相关
     private int overallParallelAmount = 1;
     private int overallProgressTimeAmount = 0;
@@ -149,10 +146,10 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
             }
         }
         super.updateFormedValid();
-        timer++;
+
         List<Integer> nodeInfo;
         //每秒检测一次nodeInfo，不然太卡了
-        if (timer >= 20) {
+        if (getOffsetTimer() % 20 == 0) {
             nodeInfo = readNodeInfo();
             overallParallelAmount = nodeInfo.get(0);
             overallEnergyAmount = nodeInfo.get(1);
@@ -177,7 +174,6 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
                     isMansusSupplied = true;
                 }
             }
-            timer = 0;
         }
     }
 
