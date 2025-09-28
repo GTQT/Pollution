@@ -1,10 +1,16 @@
 package keqing.pollution.common.metatileentity.multiblockpart;
 
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import gregtech.api.capability.GregtechTileCapabilities;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregicality.multiblocks.api.render.GCYMTextures;
 import gregtech.api.capability.GregtechTileCapabilities;
+import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
@@ -16,6 +22,7 @@ import gregtech.api.metatileentity.multiblock.*;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.capability.IManaHatch;
@@ -32,13 +39,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
+
+import net.minecraftforge.fluids.FluidTank;
 
 import java.util.List;
 import java.util.Objects;
 
 public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch {
     private final ItemStackHandler containerInventory;
+
+    private int basic_magicFluidTank = 64000; //
+    private FluidTank magicFluidTank = new FluidTank(basic_magicFluidTank); //
+    private int basic_fluidToManaRate = 40; // 每tick转换10单位液体为10 mana
+    private boolean hasFluidUpgrade = false;
+
     int mana = 0;
     int MAX_MANA;
     int tier;
@@ -46,6 +62,8 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     double energyReduce;//耗能减免
     int OverclockingEnhance;//超频加强
     int ParallelEnhance;//并行加强
+
+
 
     @Override
     public void onRemoval() {
@@ -138,7 +156,29 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         textList.add(new TextComponentTranslation("并行加强: " + ParallelEnhance));
         textList.add(new TextComponentTranslation("耗时减免: " + timeReduce));
         textList.add(new TextComponentTranslation("耗能减免: " + energyReduce));
+
+        if (hasFluidUpgrade) {
+            textList.add(new TextComponentTranslation("GT魔力: " + magicFluidTank.getFluidAmount() + '/'
+                                                        + basic_magicFluidTank));
+        }
     }
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(createImportFluidHandler());
+        }
+        return super.getCapability(capability, facing);
+    }
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            return true;
+        }
+        return super.hasCapability(capability, facing);
+    }
+    protected FluidTankList createImportFluidHandler() {
+        if( hasFluidUpgrade ) return new FluidTankList(true, this.magicFluidTank);
+        else return new FluidTankList(true);
+    }
+
     @Override
     public void update() {
         super.update();
@@ -146,8 +186,10 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         int time_increase=0;
         int overclocking_enhance=0;
         int parallel_enhance=0;
+        boolean has_TransformEnhance=false;
         for (int i = 1; i < 9; i++) {
             if (!containerInventory.getStackInSlot(i).isEmpty()) {
+
                 ItemStack item = containerInventory.getStackInSlot(i);
                 if(item.getItem() == PollutionMetaItems.POLLUTION_META_ITEM)
                 {
@@ -156,9 +198,19 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
                         case 221:{time_increase+=1;break;}
                         case 222:{overclocking_enhance+=1;break;}
                         case 223:{parallel_enhance+=1;break;}
+                        case 224:{has_TransformEnhance=true;break;}
                     }
                 }
             }
+        }
+        hasFluidUpgrade=has_TransformEnhance;//
+        if (hasFluidUpgrade
+                && !isFull()
+                && magicFluidTank.getFluidAmount() >= basic_fluidToManaRate*this.getTier()
+            )
+        {
+            magicFluidTank.drain(basic_fluidToManaRate*this.getTier(), true);
+            receiveMana(basic_fluidToManaRate*this.getTier()*144);
         }
         timeReduce=1-time_increase*0.1;
         energyReduce=1-energy_reduce*0.1;
@@ -201,6 +253,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         data.setDouble("energyReduce", this.energyReduce);
         data.setInteger("ParallelEnhance", this.ParallelEnhance);
         data.setInteger("OverclockingEnhance", this.OverclockingEnhance);
+        data.setTag("MagicFluidTank", magicFluidTank.writeToNBT(new NBTTagCompound()));
         return super.writeToNBT(data);
     }
 
@@ -213,6 +266,9 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
         this.energyReduce=data.getDouble("energyReduce");
         this.ParallelEnhance=data.getInteger("ParallelEnhance");
         this.OverclockingEnhance=data.getInteger("OverclockingEnhance");
+        if (data.hasKey("MagicFluidTank")) {
+            this.magicFluidTank.readFromNBT(data.getCompoundTag("MagicFluidTank"));
+        }
     }
 
 

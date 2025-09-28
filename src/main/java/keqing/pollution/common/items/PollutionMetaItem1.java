@@ -153,6 +153,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.TIME_REDUCE = this.addItem(221, "time_increase").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.OVERCLOCKING_ENHANCE = this.addItem(222, "overclocking_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.PARALLEL_ENHANCE = this.addItem(223, "parallel_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+        PollutionMetaItems.TRANSFORM_ENHANCE = this.addItem(224, "transform_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 
 		//血魔法电路
 		PollutionMetaItems.BLOOD_CIRCUIT = this.addItem(250, "blood_circuit").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);

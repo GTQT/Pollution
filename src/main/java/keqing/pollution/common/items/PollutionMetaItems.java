@@ -118,6 +118,7 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem TIME_REDUCE ;
 	public static MetaItem<?>.MetaValueItem OVERCLOCKING_ENHANCE ;
 	public static MetaItem<?>.MetaValueItem PARALLEL_ENHANCE ;
+    public static MetaItem<?>.MetaValueItem TRANSFORM_ENHANCE ;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT ;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_ADVANCED ;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_ULTIMATE ;
