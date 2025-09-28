@@ -1,10 +1,5 @@
 package keqing.pollution;
 
-import com.google.common.base.Stopwatch;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import keqing.pollution.api.POAPI;
 import keqing.pollution.api.recipes.builder.IndustrialInfusionBuilder;
 import keqing.pollution.api.utils.PollutionLog;
@@ -21,30 +16,20 @@ import keqing.pollution.integration.POIntegration;
 import keqing.pollution.loaders.loot.GregTechLootTable;
 import keqing.pollution.loaders.recipes.MeteorsHelper;
 import keqing.pollution.loaders.recipes.mods.Botania;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectEventProxy;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.internal.CommonInternals;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-import static keqing.pollution.POConfig.AspectsCache;
 import static keqing.pollution.api.utils.POTeleporter.buildPortalIngredient;
 
 
@@ -100,11 +85,13 @@ public class Pollution {
         buildPortalIngredient();
         PoEntitiesRegistry.init();
     }
+
     @Mod.EventHandler
     @SideOnly(Side.CLIENT)
     public void ClientpreInit(FMLPreInitializationEvent event) {
         PoEntitiesRegistry.initRenderers();
     }
+
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         IndustrialInfusionBuilder.init();
