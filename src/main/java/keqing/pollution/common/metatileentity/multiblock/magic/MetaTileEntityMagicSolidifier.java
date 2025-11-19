@@ -25,7 +25,7 @@ import static keqing.pollution.api.unification.PollutionMaterials.infused_exchan
 
 public class MetaTileEntityMagicSolidifier extends PORecipeMapMultiblockController {
     public MetaTileEntityMagicSolidifier(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.FLUID_SOLIDFICATION_RECIPES, RecipeMaps.EXTRACTOR_RECIPES, RecipeMaps.CANNER_RECIPES, GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES});
+        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.FLUID_SOLIDFICATION_RECIPES, RecipeMaps.EXTRACTOR_RECIPES, RecipeMaps.CANNER_RECIPES});
         setMaterial(infused_exchange);
     }
 

@@ -37,9 +37,11 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
+import static gregtech.api.recipes.RecipeMaps.EXTRACTOR_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.ingotHot;
+import static gregtech.common.metatileentities.MetaTileEntities.EXTRACTOR;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
@@ -53,37 +55,37 @@ public class MagicGCYMRecipes {
 
 	private static void materials() {
 		//六要素的流体提取机配方
-		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+		EXTRACTOR_RECIPES.recipeBuilder()
 				.input(dust, infused_air, 1)
 				.fluidOutputs(infused_air.getFluid(144))
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+		EXTRACTOR_RECIPES.recipeBuilder()
 				.input(dust, infused_fire, 1)
 				.fluidOutputs(infused_fire.getFluid(144))
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+		EXTRACTOR_RECIPES.recipeBuilder()
 				.input(dust, infused_water, 1)
 				.fluidOutputs(infused_water.getFluid(144))
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+		EXTRACTOR_RECIPES.recipeBuilder()
 				.input(dust, infused_earth, 1)
 				.fluidOutputs(infused_earth.getFluid(144))
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+		EXTRACTOR_RECIPES.recipeBuilder()
 				.input(dust, infused_order, 1)
 				.fluidOutputs(infused_order.getFluid(144))
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.FLUID_EXTRACTOR_RECIPES.recipeBuilder()
+		EXTRACTOR_RECIPES.recipeBuilder()
 				.input(dust, infused_entropy, 1)
 				.fluidOutputs(infused_entropy.getFluid(144))
 				.duration(200)
@@ -466,7 +468,7 @@ public class MagicGCYMRecipes {
 				PollutionMetaTileEntities.INFUSED_EXCHANGE.getStackForm(),
 				2,
 				new AspectList().add(Aspect.EXCHANGE, 16).add(Aspect.MOTION, 16).add(Aspect.WATER, 16),
-				GTQTMetaTileEntities.FLUID_EXTRACTOR[MV].getStackForm(),
+                EXTRACTOR[MV].getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -845,7 +847,7 @@ public class MagicGCYMRecipes {
 				"oreCrystalEntropy",
 				MetaTileEntities.FLUID_SOLIDIFIER[MV].getStackForm(),
 				MetaTileEntities.CANNER[MV].getStackForm(),
-				MetaTileEntities.EXTRACTOR[MV].getStackForm(),
+				EXTRACTOR[MV].getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_VOID),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_ORDER)));
 		//轧线
