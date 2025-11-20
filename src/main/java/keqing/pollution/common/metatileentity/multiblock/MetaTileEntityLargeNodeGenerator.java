@@ -156,7 +156,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
             //凶险：缓慢提高区块污染，工作一段时间后不加源质有概率直接消失
             case "Ominous":
                 AuraHelper.polluteAura(getWorld(), getPos(), 0.1f, true);
-                if (random.nextDouble() <= basicRemovePossibility && !INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false))) {
+                if (random.nextDouble() <= basicRemovePossibility                                                          //概率执行
+                    && !INFUSED_AURA.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_AURA, false)) )//不含灵气源质
+                {
                     this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
                 }
                 //纯净：缓慢降低区块污染
@@ -164,12 +166,15 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
                 AuraHelper.drainFlux(getWorld(), getPos(), 0.1f, true);
                 //震荡：工作时大概率直接消失
             case "Concussive":
-                if (random.nextDouble() <= basicRemovePossibility * 10) {
+                if (random.nextDouble() <= basicRemovePossibility * 10)
+                {
                     this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
                 }
                 //饕餮：工作时不通源质有大概率直接消失，持续提供源质时发电提升至64x
             case "Voracious":
-                if (random.nextDouble() <= basicRemovePossibility * 10 && !INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false))) {
+                if (random.nextDouble() <= basicRemovePossibility * 10
+                        && !INFUSED_ORDER.isFluidStackIdentical(this.inputFluidInventory.drain(INFUSED_ORDER, false)))
+                {
                     this.inputInventory.extractItem(slotNumber, this.inputInventory.getStackInSlot(slotNumber).getCount(), false);
                 }
                 //64x在上面办好了
@@ -215,10 +220,14 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
                 this.inputFluidInventory.drain(PollutionMaterials.infused_order.getFluid(essenceCost), true);
             }
             for (var i = 0; i < this.getInputInventory().getSlots(); ++i) {
-                if (!this.inputInventory.getStackInSlot(i).isEmpty()
-                        && this.inputInventory.getStackInSlot(i).getItem() != PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem()
-                        && this.inputInventory.getStackInSlot(i).getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue) {
-                    doSpecialNodeBehaviors(this.inputInventory.getStackInSlot(i), i);
+                if (!this.inputInventory.getStackInSlot(i).isEmpty())
+                {
+                    ItemStack stack = this.inputInventory.getStackInSlot(i);
+                    if( stack.getItem() == PollutionMetaItems.PACKAGED_AURA_NODE.getMetaItem()
+                        && stack.getMetadata() == PollutionMetaItems.PACKAGED_AURA_NODE.metaValue)
+                    {
+                        doSpecialNodeBehaviors(this.inputInventory.getStackInSlot(i), i);
+                    }
                 }
             }
         }
