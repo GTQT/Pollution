@@ -18,11 +18,11 @@ import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import static gregtech.api.GTValues.*;
+import static gregtech.api.recipes.RecipeMaps.CANNER_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.MACERATOR_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES;
-import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.FLUID_CANNER_RECIPES;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 import static net.minecraft.init.Blocks.RED_FLOWER;
 import static vazkii.botania.common.block.ModBlocks.mushroom;
@@ -115,7 +115,7 @@ public class BotaniaRecipes {
                 .buildAndRegister();
 
         //瓶装末地空气
-        FLUID_CANNER_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+        CANNER_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .fluidInputs(LiquidEnderAir.getFluid(1000))
                 .input(Items.GLASS_BOTTLE)
                 .outputs(new ItemStack(manaResource, 1, 15))
