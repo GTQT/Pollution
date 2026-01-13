@@ -3,6 +3,7 @@ package keqing.pollution.common.entity;
 import keqing.pollution.Pollution;
 import keqing.pollution.client.entity.*;
 import keqing.pollution.common.entity.moster.*;
+import keqing.pollution.common.entity.shoot.EntityBasalzBolt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -25,6 +26,15 @@ public class PoEntitiesRegistry {
         EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ordo"),0xe1bff5, 0x199038);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_perditio"), EntitySlimePerditio.class,"Perditio Slime",6, Pollution.instance,64,3,true);
         EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_perditio"),0x000103, 0x199038);
+        //发射子弹
+        EntityRegistry.registerModEntity(new ResourceLocation("pollution:basalz_bolt"), EntityBasalzBolt.class, "pollution.basalz_bolt", 7, Pollution.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation("pollution:blitz_bolt"), EntityBasalzBolt.class, "pollution.blitz_bolt", 8, Pollution.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation("pollution:blizz_bolt"), EntityBasalzBolt.class, "pollution.blizz_bolt", 9, Pollution.instance, 64, 1, true);
+
+
+        EntityBasalz.initialize(10);
+        EntityBlitz.initialize(11);
+        EntityBlizz.initialize(12);
     }
     @SideOnly(Side.CLIENT)
     public static void initRenderers() {
@@ -34,5 +44,8 @@ public class PoEntitiesRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntitySlimeTerra.class,new EntityRenderFactory<>(RenderTcSlimeTerra.class));
         RenderingRegistry.registerEntityRenderingHandler(EntitySlimeOrdo.class,new EntityRenderFactory<>(RenderTcSlimeOrdo.class));
         RenderingRegistry.registerEntityRenderingHandler(EntitySlimePerditio.class,new EntityRenderFactory<>(RenderTcSlimePerditio.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBasalz.class, RenderEntityBasalz::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityBlitz.class,  RenderEntityBlitz::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityBlizz.class, RenderEntityBlizz::new);
     }
 }

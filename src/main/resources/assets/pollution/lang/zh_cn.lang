@@ -1084,6 +1084,12 @@ entity.Aqua Slime.name=水结晶史莱姆
 entity.Terra Slime.name=地结晶史莱姆
 entity.Ordo Slime.name=秩序结晶史莱姆
 entity.Perditio Slime.name=混沌结晶史莱姆
+entity.Basalz.name=岩石人
+entity.Blitz.name=狂风人
+entity.Blizz.name=暴雪人
+entity.pollution.basalz_bolt.name=岩石人蛋蛋
+entity.pollution.blitz_bolt.name=狂风人蛋蛋
+entity.blizz_bolt.basalz_bolt.name=暴雪人蛋蛋
 
 tile.fleshFlower.name=血肉之花
 tile.fleshPlant.name=血肉植株
