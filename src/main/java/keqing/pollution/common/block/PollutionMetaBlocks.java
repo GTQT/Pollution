@@ -1,6 +1,7 @@
 package keqing.pollution.common.block;
 
 import gregtech.common.blocks.MetaBlocks;
+import keqing.pollution.common.block.blocks.*;
 import keqing.pollution.common.block.metablocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -21,6 +22,7 @@ public class PollutionMetaBlocks {
 	public static POManaPlate MANA_PLATE;
 	public static POHyper HYPER;
 	public static POComputerCasing COMPUTER_CASING;
+
 	private PollutionMetaBlocks() {
 	}
 

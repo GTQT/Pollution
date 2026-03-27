@@ -1,0 +1,4 @@
+{
+  "parent": "item/generated",
+  "textures": { "layer0": "fleshtree:items/heart_fruit" }
+}

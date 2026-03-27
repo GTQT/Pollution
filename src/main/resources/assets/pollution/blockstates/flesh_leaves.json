@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "check_decay=false,decayable=false": { "model": "pollution:flesh_leaves" },
+    "check_decay=false,decayable=true":  { "model": "pollution:flesh_leaves" },
+    "check_decay=true,decayable=false":  { "model": "pollution:flesh_leaves" },
+    "check_decay=true,decayable=true":   { "model": "pollution:flesh_leaves" }
+  }
+}

@@ -1093,3 +1093,9 @@ entity.blizz_bolt.basalz_bolt.name=暴雪人蛋蛋
 
 tile.fleshFlower.name=血肉之花
 tile.fleshPlant.name=血肉植株
+tile.pollution.flesh_block.name=血肉块
+tile.pollution.flesh_leaves.name=血肉树叶
+tile.pollution.flesh_heart.name=心脏核心
+tile.pollution.heart_fruit.name=心鸣果
+tile.pollution.flesh_sapling.name=血肉树苗
+item.pollution.heart_fruit.name=心鸣果

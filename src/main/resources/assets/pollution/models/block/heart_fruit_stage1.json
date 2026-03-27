@@ -1,0 +1,4 @@
+{
+  "parent": "block/cross",
+  "textures": { "cross": "pollution:blocks/heart_fruit_stage1" }
+}

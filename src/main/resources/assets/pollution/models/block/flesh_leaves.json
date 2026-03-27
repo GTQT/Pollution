@@ -1,0 +1,4 @@
+{
+  "parent": "block/leaves",
+  "textures": { "all": "pollution:blocks/flesh_leaves" }
+}

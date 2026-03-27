@@ -60,7 +60,6 @@ public class CommonProxy {
         registry.register(PollutionMetaBlocks.MANA_PLATE);
         registry.register(PollutionMetaBlocks.HYPER);
         registry.register(PollutionMetaBlocks.COMPUTER_CASING);
-
     }
 
     @SubscribeEvent
