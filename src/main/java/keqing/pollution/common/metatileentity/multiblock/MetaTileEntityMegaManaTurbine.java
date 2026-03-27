@@ -27,7 +27,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
@@ -211,7 +210,7 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     }
 
     @SideOnly(Side.CLIENT)
-    protected @NotNull ICubeRenderer getFrontOverlay() {
+    protected  ICubeRenderer getFrontOverlay() {
         return this.frontOverlay;
     }
 

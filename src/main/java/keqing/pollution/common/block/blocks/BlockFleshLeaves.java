@@ -85,9 +85,9 @@ public class BlockFleshLeaves extends BlockLeaves {
         return false;
     }
 
-    @SideOnly(Side.CLIENT)
+
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 

@@ -28,7 +28,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -364,7 +363,7 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
         }
 
         @Override
-        public boolean checkRecipe(@NotNull Recipe recipe) {
+        public boolean checkRecipe( Recipe recipe) {
             if (!timerSwitch && this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
                 return false;
             } else if (timerSwitch && this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {

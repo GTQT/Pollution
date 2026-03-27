@@ -105,7 +105,7 @@ dependencies {
     }
 
     //前置
-    api("com.cleanroommc:groovyscript:1.2.0-hotfix1") { transitive = false }
+    //api("com.cleanroommc:groovyscript:1.4.1") { transitive = false }
     api("com.cleanroommc:modularui:2.5.0-rc4") { transitive = false }
     implementation rfg.deobf("curse.maven:code-chicken-lib-1-8-242818:2779848")
     implementation rfg.deobf(files("libs/!mixinbooter-8.9.jar"))

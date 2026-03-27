@@ -33,8 +33,6 @@ import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
-import gregtech.common.metatileentities.multi.electric.MetaTileEntityFusionReactor;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.gtqtcore.GTQTCoreConfig;
 import keqing.pollution.POConfig;
 import keqing.pollution.api.capability.ICleanVis;
@@ -111,7 +109,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
         this.inputEnergyContainer = new EnergyContainerList(energyContainer);
         long euCapacity = this.calculateEnergyStorageFactor(energyContainer.size());
         this.energyContainer = new EnergyContainerHandler(this, euCapacity, GTValues.V[this.tier], 0L, 0L, 0L) {
-            public @NotNull String getName() {
+            public  String getName() {
                 return "EnergyContainerInternal";
             }
         };
@@ -499,14 +497,14 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
             super(tileEntity);
         }
 
-        public @NotNull NBTTagCompound serializeNBT() {
+        public  NBTTagCompound serializeNBT() {
             NBTTagCompound tag = super.serializeNBT();
             tag.setLong("Heat", MetaTileEntityNodeFusionReactor.this.heat);
             return tag;
         }
 
         //照抄ceu
-        public void deserializeNBT(@NotNull NBTTagCompound compound) {
+        public void deserializeNBT( NBTTagCompound compound) {
             super.deserializeNBT(compound);
             MetaTileEntityNodeFusionReactor.this.heat = compound.getLong("Heat");
         }
@@ -518,7 +516,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 
         //照抄ceu
         @Override
-        protected void modifyOverclockPre(@NotNull OCParams ocParams, @NotNull RecipePropertyStorage storage) {
+        protected void modifyOverclockPre( OCParams ocParams,  RecipePropertyStorage storage) {
             super.modifyOverclockPre(ocParams, storage);
 
             // Limit the number of OCs to the difference in fusion reactor MK.
@@ -573,7 +571,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 
         //照抄ceu的热能逻辑，分两种配方
         @Override
-        public boolean checkRecipe(@NotNull Recipe recipe) {
+        public boolean checkRecipe( Recipe recipe) {
             if (this.getRecipeMap() == PORecipeMaps.NODE_MAGIC_FUSION_RECIPES) {
                 //检测超稳和漫宿供应
                 if (isCleanVis() && isMansusSupplied) {

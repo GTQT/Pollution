@@ -7,7 +7,6 @@ import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
@@ -45,7 +44,7 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player,  List<String> tooltip, boolean advanced) {
         tooltip.add(1, I18n.format("花花草草的力量！"));
         tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", this.energyContainer.getEnergyCapacity()));

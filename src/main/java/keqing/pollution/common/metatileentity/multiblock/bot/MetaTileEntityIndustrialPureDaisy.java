@@ -9,7 +9,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import keqing.pollution.api.metatileentity.POManaMultiblock;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.client.textures.POTextures;
@@ -95,7 +94,7 @@ public class MetaTileEntityIndustrialPureDaisy extends POManaMultiblock {
 	}
 
 	@SideOnly(Side.CLIENT)
-	protected @NotNull ICubeRenderer getFrontOverlay() {
+	protected  ICubeRenderer getFrontOverlay() {
 		return Textures.HPCA_OVERLAY;
 	}
 }
