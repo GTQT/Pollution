@@ -37,6 +37,7 @@ public class BlockFleshFlower extends Block
 
     protected BlockFleshFlower()
     {
+
         super(Material.PLANTS, MapColor.RED);
         this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0));
         this.setCreativeTab(CommonProxy.Pollution_TAB);

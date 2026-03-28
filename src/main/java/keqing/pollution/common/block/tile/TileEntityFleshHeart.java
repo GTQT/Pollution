@@ -55,14 +55,15 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         heartbeatTimer++;
         if (heartbeatTimer >= getHeartbeatInterval()) {
             heartbeatTimer = 0;
-            playHeartbeat();
+            if(getWorld().isRemote)
+                playHeartbeat();
         }
 
         // === 生长逻辑 ===
         if (level >= MAX_LEVEL) return; // 已满级不再生长
 
         growthTimer++;
-        if (growthTimer >= GROWTH_INTERVAL) {
+        if (growthTimer >= GROWTH_INTERVAL * (this.level*1.25)) {
             growthTimer = 0;
             growOnce();
         }
@@ -82,12 +83,6 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         if (success) {
             level = newLevel;
             markDirty();
-
-            // 生长时发出更响亮的声音
-            world.playSound(null, pos,
-                    net.minecraft.init.SoundEvents.BLOCK_SLIME_PLACE,
-                    SoundCategory.BLOCKS, 1.0F, 0.5F);
-
             // 同步到客户端
             IBlockState state = world.getBlockState(pos);
             world.notifyBlockUpdate(pos, state, state, 3);
@@ -103,10 +98,6 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         world.playSound(null, pos,
                 net.minecraft.init.SoundEvents.BLOCK_NOTE_BASEDRUM,
                 SoundCategory.BLOCKS, volume, 0.5F);
-
-        // 安排第二声（约0.3秒后）
-        // 由于TileEntity不能直接schedule，用内部标记处理
-        // 简化：只播放一声，在randomTick中偶尔播放双击
     }
 
     // === 等级和位置访问 ===

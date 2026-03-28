@@ -10,6 +10,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -40,7 +41,10 @@ public class BlockFleshSapling extends Block implements IGrowable {
         setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
         setTickRandomly(true);
     }
-
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
     @Override
     public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
         if (worldIn.isRemote) return;

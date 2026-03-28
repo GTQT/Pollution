@@ -64,6 +64,7 @@ public class BlockFleshHeart extends Block implements ITileEntityProvider {
                 playerIn.sendMessage(new TextComponentString(msg));
             }
         }
+
         return true;
     }
 

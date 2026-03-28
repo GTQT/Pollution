@@ -12,10 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -55,6 +52,11 @@ public class BlockHeartFruit extends Block {
     }
 
     @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
     public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
         if (worldIn.isRemote) return;
 
@@ -73,22 +75,11 @@ public class BlockHeartFruit extends Block {
             worldIn.setBlockState(pos, state.withProperty(AGE, age + 1));
         }
 
-        // 成熟时发出心跳声
-        if (age == 3 && random.nextInt(3) == 0) {
-            worldIn.playSound(null, pos,
-                    net.minecraft.init.SoundEvents.BLOCK_NOTE_BASEDRUM,
-                    SoundCategory.BLOCKS,
-                    0.15F,  // 音量很低，微弱心跳
-                    0.5F);  // 低沉的音调
-            // 短暂延迟后第二声（模拟"咚-咚"心跳）
-            // 由于tick限制，通过schedule实现
-            worldIn.scheduleUpdate(pos, this, 8); // 约0.4秒后
-        }
     }
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
-        if (!worldIn.isRemote && state.getValue(AGE) == 3) {
+        if (worldIn.isRemote && state.getValue(AGE) == 3) {
             worldIn.playSound(null, pos,
                     net.minecraft.init.SoundEvents.BLOCK_NOTE_BASEDRUM,
                     SoundCategory.BLOCKS,

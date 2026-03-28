@@ -18,8 +18,8 @@ public class ItemHeartFruit extends ItemFood {
 
     public ItemHeartFruit() {
         super(6, 1.2F, false); // 6点饥饿值, 1.2饱和度
-        setTranslationKey(Pollution.MODID + ".heart_fruit");
-        setRegistryName(Pollution.MODID, "heart_fruit");
+        setTranslationKey(Pollution.MODID + ".heart_fruit_i");
+        setRegistryName(Pollution.MODID, "heart_fruit_i");
         setCreativeTab(CreativeTabs.FOOD);
         setAlwaysEdible(); // 随时可食用
     }

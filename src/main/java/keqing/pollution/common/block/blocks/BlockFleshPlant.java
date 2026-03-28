@@ -193,7 +193,6 @@ public class BlockFleshPlant extends Block
             worldIn.scheduleUpdate(pos, this, 1);
         }
     }
-
     public boolean canSurviveAt(World wordIn, BlockPos pos)
     {
         boolean flag = wordIn.isAirBlock(pos.up());

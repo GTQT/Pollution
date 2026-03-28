@@ -1,7 +1,9 @@
 package keqing.pollution.api.utils;
 
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import keqing.pollution.common.block.blocks.BlockFleshLeaves;
 import keqing.pollution.common.block.blocks.PollutionBlocksInit;
+import keqing.pollution.common.block.tile.TileEntityFleshHeart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -52,7 +54,7 @@ public class FleshTreeGrowth {
 
         IBlockState flesh = PollutionBlocksInit.FLESH_BLOCK.getDefaultState();
         IBlockState leaves = PollutionBlocksInit.FLESH_LEAVES.getDefaultState();
-
+        ((BlockFleshLeaves)leaves.getBlock()).heart=(TileEntityFleshHeart) world.getTileEntity(heartPos);
         // 计算当前等级的参数
         int trunkRadius = getTrunkRadius(newLevel);
         int trunkHeight = getTrunkHeight(newLevel);
