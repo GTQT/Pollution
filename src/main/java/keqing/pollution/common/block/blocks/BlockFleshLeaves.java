@@ -1,9 +1,12 @@
 package keqing.pollution.common.block.blocks;
 
 
+import gregtech.api.util.GTTransferUtils;
+import gregtech.api.util.GTUtility;
 import keqing.pollution.Pollution;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.tile.TileEntityFleshHeart;
+import keqing.pollution.common.items.PollutionItemsInit;
 import keqing.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
@@ -48,48 +51,48 @@ public class BlockFleshLeaves extends BlockLeaves {
     @Override
     public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
         if (worldIn.isRemote) return;
-
+        if(this.heart==null)
+            return;
+        if(worldIn.getTileEntity(this.heart.getPos())==null)
+        {
+            this.heart=null;
+            return;
+        }
         BlockPos below = pos.down();
         // 只在下方是空气时才进行操作
         if (!worldIn.isAirBlock(below)) return;
-
         // 1% 概率在下方生长心鸣果（未成熟）
         if (random.nextInt(100) == 0 && this.heart!=null && this.heart.getLevel()==10) {
-            if(worldIn.getTileEntity(this.heart.getPos())==null)
-            {
-                this.heart=null;
-                return;
-            }
             IBlockState fruitState = PollutionBlocksInit.HEARTFRUIT.getDefaultState()
                     .withProperty(BlockHeartFruit.AGE, 0);
             worldIn.setBlockState(below, fruitState);
             return;
         }
-
         // 5% 概率掉落腐肉
         if (random.nextInt(20) == 0 && this.heart!=null && this.heart.getLevel()>=5) {
-            if(worldIn.getTileEntity(this.heart.getPos())==null)
+            if(heart.getLinkedItemHandler()!=null)
             {
-                this.heart=null;
-                return;
+                GTTransferUtils.insertItem(heart.getLinkedItemHandler(), new ItemStack(Items.ROTTEN_FLESH),false);
+            }else
+            {
+                EntityItem entityItem = new EntityItem(worldIn,
+                        below.getX() + 0.5, below.getY() + 0.5, below.getZ() + 0.5,
+                        new ItemStack(Items.ROTTEN_FLESH));
+                worldIn.spawnEntity(entityItem);
             }
-            EntityItem entityItem = new EntityItem(worldIn,
-                    below.getX() + 0.5, below.getY() + 0.5, below.getZ() + 0.5,
-                    new ItemStack(Items.ROTTEN_FLESH));
-            worldIn.spawnEntity(entityItem);
         }
-
         // 5% 概率掉落原始血肉团
         if (random.nextInt(20) == 0 && this.heart!=null && this.heart.getLevel()>=8) {
-            if(worldIn.getTileEntity(this.heart.getPos())==null)
+            if(heart.getLinkedItemHandler()!=null)
             {
-                this.heart=null;
-                return;
+                GTTransferUtils.insertItem(heart.getLinkedItemHandler(), PollutionMetaItems.BLOOD_PRIMITIVE_MEAT.getStackForm(),false);
+            }else
+            {
+                EntityItem entityItem = new EntityItem(worldIn,
+                        below.getX() + 0.5, below.getY() + 0.5, below.getZ() + 0.5,
+                        PollutionMetaItems.BLOOD_PRIMITIVE_MEAT.getStackForm());
+                worldIn.spawnEntity(entityItem);
             }
-            EntityItem entityItem = new EntityItem(worldIn,
-                    below.getX() + 0.5, below.getY() + 0.5, below.getZ() + 0.5,
-                    PollutionMetaItems.BLOOD_PRIMITIVE_MEAT.getStackForm());
-            worldIn.spawnEntity(entityItem);
         }
     }
 

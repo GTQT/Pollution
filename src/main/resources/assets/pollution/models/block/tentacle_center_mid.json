@@ -1,0 +1,29 @@
+{
+  "textures": {
+    "t": "pollution:blocks/tentacle_mid",
+    "particle": "pollution:blocks/tentacle_mid"
+  },
+  "elements": [
+    {
+      "name": "core_square",
+      "from": [5, 5, 5],
+      "to": [11, 11, 11],
+      "faces": {
+        "north": {"texture": "#t"}, "south": {"texture": "#t"},
+        "east":  {"texture": "#t"}, "west":  {"texture": "#t"},
+        "up":    {"texture": "#t"}, "down":  {"texture": "#t"}
+      }
+    },
+    {
+      "name": "core_bevel_1",
+      "from": [5.5, 5.5, 4.5],
+      "to": [10.5, 10.5, 11.5],
+      "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "north": {"texture": "#t"}, "south": {"texture": "#t"},
+        "east":  {"texture": "#t"}, "west":  {"texture": "#t"},
+        "up":    {"texture": "#t"}, "down":  {"texture": "#t"}
+      }
+    }
+  ]
+}

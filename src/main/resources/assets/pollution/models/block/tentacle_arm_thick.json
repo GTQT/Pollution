@@ -1,0 +1,55 @@
+{
+  "textures": {
+    "t": "pollution:blocks/tentacle_thick"
+  },
+  "elements": [
+    {
+      "name": "arm_root",
+      "from": [4, 4, 2],
+      "to": [12, 12, 4],
+      "faces": {
+        "east": {"texture": "#t"}, "west": {"texture": "#t"},
+        "up":   {"texture": "#t"}, "down": {"texture": "#t"}
+      }
+    },
+    {
+      "name": "arm_root_bevel",
+      "from": [4.5, 4.5, 2],
+      "to": [11.5, 11.5, 4],
+      "rotation": {"origin": [8, 8, 3], "axis": "z", "angle": 45, "rescale": true},
+      "faces": {
+        "east": {"texture": "#t"}, "west": {"texture": "#t"},
+        "up":   {"texture": "#t"}, "down": {"texture": "#t"}
+      }
+    },
+    {
+      "name": "arm_mid",
+      "from": [5, 5, 1],
+      "to": [11, 11, 2],
+      "faces": {
+        "east": {"texture": "#t"}, "west": {"texture": "#t"},
+        "up":   {"texture": "#t"}, "down": {"texture": "#t"}
+      }
+    },
+    {
+      "name": "arm_mid_bevel",
+      "from": [5.5, 5.5, 1],
+      "to": [10.5, 10.5, 2],
+      "rotation": {"origin": [8, 8, 1.5], "axis": "z", "angle": 45, "rescale": true},
+      "faces": {
+        "east": {"texture": "#t"}, "west": {"texture": "#t"},
+        "up":   {"texture": "#t"}, "down": {"texture": "#t"}
+      }
+    },
+    {
+      "name": "arm_tip",
+      "from": [5.5, 5.5, 0],
+      "to": [10.5, 10.5, 1],
+      "faces": {
+        "north": {"texture": "#t"},
+        "east":  {"texture": "#t"}, "west": {"texture": "#t"},
+        "up":    {"texture": "#t"}, "down": {"texture": "#t"}
+      }
+    }
+  ]
+}

@@ -34,12 +34,16 @@ public class PollutionBlocksInit {
 	public static final BlockFleshHeart FLESH_HEART = new BlockFleshHeart();
 	public static final BlockHeartFruit HEARTFRUIT = new BlockHeartFruit();
 	public static final BlockFleshSapling FLESH_SAPLING = new BlockFleshSapling();
+	public static final BlockEldritchEye ELDRITCH_EYE = new BlockEldritchEye();
+	public static final BlockTentacle TENTACLE = new BlockTentacle();
 	public static final Block[] BLOCKS = {
 			FLESH_BLOCK,
 			FLESH_LEAVES,
 			FLESH_HEART,
 			HEARTFRUIT,
-			FLESH_SAPLING
+			FLESH_SAPLING,
+			ELDRITCH_EYE,
+			TENTACLE
 	};
 	@SubscribeEvent
 	public static void registerBlock(RegistryEvent.Register<Block> event) {

@@ -1,0 +1,22 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "side": "pollution:blocks/tentacle_thick",
+    "end": "pollution:blocks/tentacle_thick",
+    "particle": "pollution:blocks/tentacle_thick"
+  },
+  "elements": [
+    {
+      "from": [2, 0, 2],
+      "to": [14, 16, 14],
+      "faces": {
+        "north": {"texture": "#side"},
+        "south": {"texture": "#side"},
+        "east":  {"texture": "#side"},
+        "west":  {"texture": "#side"},
+        "up":    {"texture": "#end"},
+        "down":  {"texture": "#end"}
+      }
+    }
+  ]
+}

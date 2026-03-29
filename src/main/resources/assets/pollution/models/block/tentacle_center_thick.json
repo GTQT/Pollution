@@ -1,0 +1,27 @@
+{
+  "textures": {
+    "t": "pollution:blocks/tentacle_thick",
+    "particle": "pollution:blocks/tentacle_thick"
+  },
+  "elements": [
+    {
+      "from": [4, 4, 4],
+      "to": [12, 12, 12],
+      "faces": {
+        "north": {"texture": "#t"}, "south": {"texture": "#t"},
+        "east":  {"texture": "#t"}, "west":  {"texture": "#t"},
+        "up":    {"texture": "#t"}, "down":  {"texture": "#t"}
+      }
+    },
+    {
+      "from": [4.5, 4.5, 3.5],
+      "to": [11.5, 11.5, 12.5],
+      "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "north": {"texture": "#t"}, "south": {"texture": "#t"},
+        "east":  {"texture": "#t"}, "west":  {"texture": "#t"},
+        "up":    {"texture": "#t"}, "down":  {"texture": "#t"}
+      }
+    }
+  ]
+}

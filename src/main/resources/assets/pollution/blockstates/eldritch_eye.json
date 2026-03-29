@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": { "model": "pollution:eldritch_eye" },
+  "variants": {
+    "facing": {
+      "north": {},
+      "south": {"y":180},
+      "east":  {"y":90},
+      "west":  {"y":270},
+      "up":    {"x":-90},
+      "down":  {"x":90}
+    },
+    "open": {
+      "true":  { "model": "pollution:eldritch_eye_open" },
+      "false": { "model": "pollution:eldritch_eye_closed" }
+    }
+  }
+}

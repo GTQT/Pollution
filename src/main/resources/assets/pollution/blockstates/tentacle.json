@@ -1,0 +1,91 @@
+{
+  "multipart": [
+    {
+      "comment": "中心柱 - 细",
+      "when": { "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_center_thin" }
+    },
+    {
+      "comment": "中心柱 - 中",
+      "when": { "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_center_mid" }
+    },
+    {
+      "comment": "中心柱 - 粗",
+      "when": { "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_center_thick" }
+    },
+    {
+      "when": { "north": "true", "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_arm_thin", "uvlock": true }
+    },
+    {
+      "when": { "south": "true", "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_arm_thin", "y": 180, "uvlock": true }
+    },
+    {
+      "when": { "east": "true", "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_arm_thin", "y": 90, "uvlock": true }
+    },
+    {
+      "when": { "west": "true", "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_arm_thin", "y": 270, "uvlock": true }
+    },
+    {
+      "when": { "up": "true", "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_arm_thin", "x": 270, "uvlock": true }
+    },
+    {
+      "when": { "down": "true", "thickness": "0" },
+      "apply": { "model": "pollution:tentacle_arm_thin", "x": 90, "uvlock": true }
+    },
+    {
+      "when": { "north": "true", "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_arm_mid", "uvlock": true }
+    },
+    {
+      "when": { "south": "true", "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_arm_mid", "y": 180, "uvlock": true }
+    },
+    {
+      "when": { "east": "true", "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_arm_mid", "y": 90, "uvlock": true }
+    },
+    {
+      "when": { "west": "true", "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_arm_mid", "y": 270, "uvlock": true }
+    },
+    {
+      "when": { "up": "true", "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_arm_mid", "x": 270, "uvlock": true }
+    },
+    {
+      "when": { "down": "true", "thickness": "1" },
+      "apply": { "model": "pollution:tentacle_arm_mid", "x": 90, "uvlock": true }
+    },
+    {
+      "when": { "north": "true", "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_arm_thick", "uvlock": true }
+    },
+    {
+      "when": { "south": "true", "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_arm_thick", "y": 180, "uvlock": true }
+    },
+    {
+      "when": { "east": "true", "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_arm_thick", "y": 90, "uvlock": true }
+    },
+    {
+      "when": { "west": "true", "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_arm_thick", "y": 270, "uvlock": true }
+    },
+    {
+      "when": { "up": "true", "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_arm_thick", "x": 270, "uvlock": true }
+    },
+    {
+      "when": { "down": "true", "thickness": "2" },
+      "apply": { "model": "pollution:tentacle_arm_thick", "x": 90, "uvlock": true }
+    }
+  ]
+}
