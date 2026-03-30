@@ -1,5 +1,5 @@
 {
-  "package": "keqing.pollution.mixin",
+  "package": "meowmel.pollution.mixin",
   "required": true,
   "refmap": "${mixin_refmap}",
   "target": "@env(DEFAULT)",

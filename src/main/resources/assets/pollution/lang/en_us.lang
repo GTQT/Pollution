@@ -554,25 +554,17 @@ metaitem.magic_battery.hull.uv.name=Magic Battery Hull (§3UV§r)
 #Machines
 #微缩星光节点反应堆
 pollution.machine.pollution_small_node_generator.luv.name=Micro Starlight Pioneer Node Reactor MKI
-pollution.machine.pollution_small_node_generator.luv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
 pollution.machine.pollution_small_node_generator.zpm.name=Micro Starlight Pioneer Node Reactor MKⅡ
-pollution.machine.pollution_small_node_generator.zpm.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
 pollution.machine.pollution_small_node_generator.uv.name=Micro Starlight Pioneer Node Reactor MKⅢ
-pollution.machine.pollution_small_node_generator.uv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
 pollution.machine.pollution_small_node_generator.uhv.name=Micro Starlight Pioneer Node Reactor MKⅣ
-pollution.machine.pollution_small_node_generator.uhv.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
+pollution.machine.pollution_small_node_generator.tooltip=It is more portable than the multi one, but with limited output/ n generating capacity depends on node properties and machine tier, for details see "Starlight Pioneer node reactor" tooltip / n output capacity depends on the voltage level, the machine output 1A current / n the machine will not explode due to environmental factors
 
 pollution.machine.pollution_magic_energy_absorber.lv.name=Weak Magic Energy Absorber
 pollution.machine.pollution_magic_energy_absorber.mv.name=Apprentice Magic Energy Absorber
 pollution.machine.pollution_magic_energy_absorber.hv.name=Mage Magic Energy Absorber
 pollution.machine.pollution_magic_energy_absorber.ev.name=Master Magic Energy Absorber
 pollution.machine.pollution_magic_energy_absorber.iv.name=Sage Magic Energy Absorber
-pollution.machine.pollution_magic_energy_absorber.lv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
-pollution.machine.pollution_magic_energy_absorber.mv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
-pollution.machine.pollution_magic_energy_absorber.hv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
-pollution.machine.pollution_magic_energy_absorber.ev.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
-pollution.machine.pollution_magic_energy_absorber.iv.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
-
+pollution.machine.pollution_magic_energy_absorber.tooltip=Absorbs energy from the atmosphere via a block on top, charging speed depends on the type of block/nDragon Egg, Magic Crystal — HV, Gaia Crystal — EV, Guardian's Head — IV/nThe block output voltage equals the machine tier, and this machine will not explode due to environmental factors.
 #魔法能源吸收器
 pollution.machine.magic_energy_absorber.lv.name=Weak Magic Energy Absorber
 pollution.machine.magic_energy_absorber.lv.tooltip=/nAbsorbs energy from the atmosphere by the top block/nThe power output depends on the block type on top/Dragon Egg, Magic Crystal —— HV, Gaia Crystal —— EV, Gaia Guardian Head —— IV/nOutput voltage level equals to the machine level/nThis machine will not explore due to environment.

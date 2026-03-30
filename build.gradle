@@ -104,6 +104,9 @@ dependencies {
         implementation 'zone.rong:mixinbooter:7.1'
     }
 
+    compileOnlyApi 'org.jetbrains:annotations:24.1.0'
+    annotationProcessor 'org.jetbrains:annotations:24.1.0'
+
     //Lombook
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")

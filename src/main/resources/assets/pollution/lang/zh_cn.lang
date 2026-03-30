@@ -547,24 +547,17 @@ metaitem.magic_battery.hull.zpm.name=魔导蓄能器外壳（§cZPM§r）
 metaitem.magic_battery.hull.uv.name=魔导蓄能器外壳（§3UV§r）
 #机器
 pollution.machine.pollution_small_node_generator.luv.name=微缩星光节点反应堆MKI
-pollution.machine.pollution_small_node_generator.luv.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
 pollution.machine.pollution_small_node_generator.zpm.name=微缩星光节点反应堆MKⅡ
-pollution.machine.pollution_small_node_generator.zpm.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
 pollution.machine.pollution_small_node_generator.uv.name=微缩星光节点反应堆MKⅢ
-pollution.machine.pollution_small_node_generator.uv.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
 pollution.machine.pollution_small_node_generator.uhv.name=微缩星光节点反应堆MKⅣ
-pollution.machine.pollution_small_node_generator.uhv.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
+pollution.machine.pollution_small_node_generator.tooltip=集成的星光先驱节点反应堆，更加便携，但输出上限有限/n产能功率取决于内部节点属性，符文等级与机器电压等级相同，详情参见“星光先驱节点反应堆”的tooltip/n输出功率取决于电压等级，该机器输出1A电流/n该机器不会因为环境因素爆炸
 
 pollution.machine.pollution_magic_energy_absorber.lv.name=虚弱魔法能源吸收器
 pollution.machine.pollution_magic_energy_absorber.mv.name=学徒魔法能源吸收器
 pollution.machine.pollution_magic_energy_absorber.hv.name=法师魔法能源吸收器
 pollution.machine.pollution_magic_energy_absorber.ev.name=导师魔法能源吸收器
 pollution.machine.pollution_magic_energy_absorber.iv.name=贤者魔法能源吸收器
-pollution.machine.pollution_magic_energy_absorber.lv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
-pollution.machine.pollution_magic_energy_absorber.mv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
-pollution.machine.pollution_magic_energy_absorber.hv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
-pollution.machine.pollution_magic_energy_absorber.ev.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
-pollution.machine.pollution_magic_energy_absorber.iv.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
+pollution.machine.pollution_magic_energy_absorber.tooltip=籍由顶部的方块从大气中吸收能量，充能速度取决于方块类型/n龙蛋，魔力水晶——HV, 盖亚水晶——EV, 盖亚守护者的头——IV/n方块输出电压等于机器等级，该机器不会因为环境因素爆炸。
 
 pollution.machine.flux_promoted_fuel_cell.lv.name=基础咒波促燃发电机
 pollution.machine.flux_promoted_fuel_cell.lv.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
@@ -676,7 +669,7 @@ pollution.machine.vis_provider.luv.name=灵气再生机（§dLuV§r）
 pollution.machine.vis_provider.zpm.name=灵气再生机（§cZPM§r）
 pollution.machine.vis_provider.uv.name=灵气再生机（§3UV§r）
 pollution.machine.vis_provider.uhv.name=灵气再生机（§4UHV§r）
-pollution.vis.provider=§6灵气补充量(每百次):%s Vis
+pollution.vis.provider=§6灵气补充量:%s Vis/tick
 
 pollution.machine.flux_clear.lv.name=空气过滤机（§7LV§r）
 pollution.machine.flux_clear.mv.name=空气过滤机（§bMV§r）

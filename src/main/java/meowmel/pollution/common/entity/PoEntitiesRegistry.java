@@ -1,0 +1,53 @@
+package meowmel.pollution.common.entity;
+
+import meowmel.pollution.Pollution;
+import meowmel.pollution.client.entity.*;
+import meowmel.pollution.common.entity.moster.*;
+import meowmel.pollution.client.entity.*;
+import meowmel.pollution.common.entity.moster.*;
+import meowmel.pollution.common.entity.shoot.EntityBasalzBolt;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import static meowmel.pollution.Pollution.MODID;
+
+public class PoEntitiesRegistry {
+    public static void init() {
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_aer"), EntitySlimeAer.class,"Aer Slime",1, Pollution.instance,64,3,true);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_aer"),0xe6d55c, 0x199038);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_ignis"), EntitySlimeignis.class,"Ignis Slime",2, Pollution.instance,64,3,true);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ignis"),0xde402b, 0x199038);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_aqua"), EntitySlimeAqua.class,"Aqua Slime",3, Pollution.instance,64,3,true);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_aqua"),0x40e1d9, 0x199038);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_terra"), EntitySlimeTerra.class,"Terra Slime",4, Pollution.instance,64,3,true);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_terra"),0x48e06e, 0x199038);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_ordo"), EntitySlimeOrdo.class,"Ordo Slime",5, Pollution.instance,64,3,true);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_ordo"),0xe1bff5, 0x199038);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tc_slime_perditio"), EntitySlimePerditio.class,"Perditio Slime",6, Pollution.instance,64,3,true);
+        EntityRegistry.registerEgg(new ResourceLocation(MODID, "tc_slime_perditio"),0x000103, 0x199038);
+        //发射子弹
+        EntityRegistry.registerModEntity(new ResourceLocation("pollution:basalz_bolt"), EntityBasalzBolt.class, "pollution.basalz_bolt", 7, Pollution.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation("pollution:blitz_bolt"), EntityBasalzBolt.class, "pollution.blitz_bolt", 8, Pollution.instance, 64, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation("pollution:blizz_bolt"), EntityBasalzBolt.class, "pollution.blizz_bolt", 9, Pollution.instance, 64, 1, true);
+
+
+        EntityBasalz.initialize(10);
+        EntityBlitz.initialize(11);
+        EntityBlizz.initialize(12);
+    }
+    @SideOnly(Side.CLIENT)
+    public static void initRenderers() {
+        RenderingRegistry.registerEntityRenderingHandler(EntitySlimeAer.class,new EntityRenderFactory<>(RenderTcSlimeAer.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySlimeignis.class,new EntityRenderFactory<>(RenderTcSlimeIgnis.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySlimeAqua.class,new EntityRenderFactory<>(RenderTcSlimeAqua.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySlimeTerra.class,new EntityRenderFactory<>(RenderTcSlimeTerra.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySlimeOrdo.class,new EntityRenderFactory<>(RenderTcSlimeOrdo.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySlimePerditio.class,new EntityRenderFactory<>(RenderTcSlimePerditio.class));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBasalz.class, RenderEntityBasalz::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityBlitz.class,  RenderEntityBlitz::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityBlizz.class, RenderEntityBlizz::new);
+    }
+}

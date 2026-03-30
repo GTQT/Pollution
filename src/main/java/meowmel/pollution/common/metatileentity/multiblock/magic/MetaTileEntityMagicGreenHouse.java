@@ -1,0 +1,92 @@
+package meowmel.pollution.common.metatileentity.multiblock.magic;
+
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.pattern.BlockPattern;
+import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.recipes.RecipeMap;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+import meowmel.pollution.client.textures.POTextures;
+import meowmel.pollution.common.block.PollutionMetaBlocks;
+import meowmel.pollution.common.block.metablocks.POGlass;
+import meowmel.pollution.common.block.metablocks.POMBeamCore;
+import meowmel.pollution.common.block.metablocks.POMagicBlock;
+import meowmel.pollution.common.block.metablocks.POTurbine;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+
+import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
+import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
+
+public class MetaTileEntityMagicGreenHouse extends PORecipeMapMultiblockController {
+    public MetaTileEntityMagicGreenHouse(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, new RecipeMap[]
+                {
+                        //GREENHOUSE_RECIPES,
+                        MAGIC_GREENHOUSE_RECIPES});
+
+        setMaterial(InfusedWater);
+    }
+
+    private static IBlockState getSecondCasingState() {
+        return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_3);
+    }
+
+    private static IBlockState getCasingState() {
+        return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_WATER);
+    }
+
+    private static IBlockState getCasingState4() {
+        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE);
+    }
+
+    private static IBlockState getCasingState5() {
+        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
+    }
+
+    private static IBlockState getCasingState3() {
+        return PollutionMetaBlocks.GLASS.getState(POGlass.MagicBlockType.CAMINATED_GLASS);
+    }
+
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
+        return new MetaTileEntityMagicGreenHouse(this.metaTileEntityId);
+    }
+
+    @Override
+    protected BlockPattern createStructurePattern() {
+        return FactoryBlockPattern.start()
+                .aisle("CCCCC", "CCCCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
+                .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
+                .aisle("CCCCC", "CHHHC", "G###G", "G###G", "CHHHC", "CDDDC")
+                .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
+                .aisle("CCCCC", "CCSCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
+                .where('S', selfPredicate())
+                .where('C', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
+                .where('P', states(getSecondCasingState()))
+                .where('D', states(getCasingState4()))
+                .where('H', states(getCasingState5()))
+                .where('G', states(getCasingState3()))
+                .where('#', air())
+                .build();
+    }
+
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+        return POTextures.SPELL_PRISM_WATER;
+    }
+
+    @Override
+    protected OrientedOverlayRenderer getFrontOverlay() {
+        return Textures.HPCA_OVERLAY;
+    }
+
+    @Override
+    public boolean canBeDistinct() {
+        return true;
+    }
+}

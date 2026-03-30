@@ -1,0 +1,99 @@
+package meowmel.pollution.loaders.recipes;
+
+import gregtech.api.GTValues;
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
+import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.api.unification.ore.GTQTOrePrefix;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import thaumcraft.api.blocks.BlocksTC;
+import thaumcraft.api.items.ItemsTC;
+
+import static gregtech.api.GTValues.*;
+
+public class CrystalLine {
+    public static void init() {
+        infused("aer", BlocksTC.crystalAir, PollutionMaterials.InfusedAir);
+        infused("terra", BlocksTC.crystalEarth, PollutionMaterials.InfusedEarth);
+        infused("aqua", BlocksTC.crystalWater, PollutionMaterials.InfusedWater);
+        infused("ignis", BlocksTC.crystalFire, PollutionMaterials.InfusedFire);
+        infused("ordo", BlocksTC.crystalOrder, PollutionMaterials.InfusedOrder);
+        infused("perditio", BlocksTC.crystalEntropy, PollutionMaterials.InfusedEntropy);
+    }
+    public static void infused(String sting, Block block, Material material) {
+        RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder()
+                .input(ItemsTC.salisMundus)
+                .inputs(createCrystalEssenceWithAspects(sting))
+                .output(block)
+                .duration(200)
+                .EUt(30)
+                .buildAndRegister();
+
+        RecipeMaps.EXTRACTOR_RECIPES.recipeBuilder()
+                .fluidOutputs(material.getFluid(36))
+                .inputs(createCrystalEssenceWithAspects(sting))
+                .duration(200)
+                .EUt(30)
+                .buildAndRegister();
+
+        GTQTRecipeMaps.CRYSTALLIZER_RECIPES.recipeBuilder()
+                .blastFurnaceTemp(2700)
+                .EUt(VA[GTValues.EV])
+                .input(GTQTOrePrefix.seedCrystal, material)
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .output(GTQTOrePrefix.boule, material)
+                .duration(12000)
+                .buildAndRegister();
+
+        // Cut boules into one exquisite gem
+        RecipeMaps.CUTTER_RECIPES.recipeBuilder()
+                .input(GTQTOrePrefix.boule, material)
+                .output(OrePrefix.gemExquisite, material)
+                .output(GTQTOrePrefix.seedCrystal, material)
+                .duration(200)
+                .EUt(VA[MV])
+                .buildAndRegister();
+
+        // Create Seed Crystals in an autoclave
+        RecipeMaps.AUTOCLAVE_RECIPES.recipeBuilder().
+                input(OrePrefix.gemExquisite, material)
+                .fluidInputs(Materials.DistilledWater.getFluid(8000))
+                .output(GTQTOrePrefix.seedCrystal, material)
+                .duration(400)
+                .EUt(VA[HV])
+                .buildAndRegister();
+    }
+    public static ItemStack createCrystalEssenceWithAspects(String string) {
+        // 创建ItemStack
+        ItemStack crystalEssence = new ItemStack(ItemsTC.crystalEssence);
+
+        // 创建NBTTagCompound来存储NBT数据
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+
+        // 创建NBTTagList来存储Aspects
+        NBTTagList aspectsTagList = new NBTTagList();
+
+        // 创建一个NBTTagCompound来存储单个Aspect的数据
+        NBTTagCompound aspectTagCompound = new NBTTagCompound();
+        aspectTagCompound.setString("key",string);
+        aspectTagCompound.setInteger("amount", 1);
+
+        // 将Aspect的NBTTagCompound添加到NBTTagList中
+        aspectsTagList.appendTag(aspectTagCompound);
+
+        // 将NBTTagList添加到NBTTagCompound中
+        nbtTagCompound.setTag("Aspects", aspectsTagList);
+
+        // 将NBTTagCompound设置到ItemStack中
+        crystalEssence.setTagCompound(nbtTagCompound);
+
+        return crystalEssence;
+    }
+}
