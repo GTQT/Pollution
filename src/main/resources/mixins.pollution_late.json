@@ -9,19 +9,10 @@
     "extraBotany.PersistentVariableHandlerMixin",
     "gregtech.MixinMetaTileEntity",
     "gregtech.MixinMetaTileEntityHolder",
-    "gregtech.MixinMetaTileEntityMetaTileEntityCokeOvenCommon",
-    "gregtech.MixinMetaTileEntityPrimitiveBlastFurnaceCommon",
-    "gregtech.MixinSimpleGeneratorMetaTileEntityCommon",
-    "gtsteam.MixinMetaTileEntityIndustrialPrimitiveBlastFurnaceCommon",
     "thaumcraft.CommonInternalsMixin",
     "thaumcraft.ConfigAspectsMixin",
     "thaumcraft.ThaumcraftApiHelperMixin"
   ],
   "server": [],
-  "client": [
-    "gregtech.MixinMetaTileEntityMetaTileEntityCokeOvenClient",
-    "gregtech.MixinMetaTileEntityPrimitiveBlastFurnaceClient",
-    "gregtech.MixinSimpleGeneratorMetaTileEntityClient",
-    "gtsteam.MixinMetaTileEntityIndustrialPrimitiveBlastFurnaceClient"
-  ]
+  "client": []
 }

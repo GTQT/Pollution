@@ -10,8 +10,6 @@ import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -19,6 +17,7 @@ import keqing.pollution.common.block.metablocks.POHyper;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.items.ItemsTC;
 
@@ -26,8 +25,7 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.recipes.RecipeMaps.MIXER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.dust;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
+
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
 public class NodeFusionRecipes {
@@ -98,6 +96,7 @@ public class NodeFusionRecipes {
 				.EUt(VA[UV])
 				.duration(400)
 				.buildAndRegister();
+        /*
 		//魔法聚变 MK1-MK3
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(MetaTileEntities.FUSION_REACTOR[0], 16)
@@ -116,6 +115,8 @@ public class NodeFusionRecipes {
 				.EUt(VA[ZPM])
 				.duration(40000)
 				.buildAndRegister();
+
+         */
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.inputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
 				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_2_CASING, 8))
@@ -164,6 +165,7 @@ public class NodeFusionRecipes {
 				.EUt(VA[LuV])
 				.duration(400)
 				.buildAndRegister();
+        /*
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
 				.fluidInputs(Materials.Silver.getFluid(144))
@@ -247,5 +249,6 @@ public class NodeFusionRecipes {
 				.EUt(VA[UHV])
 				.duration(200)
 				.buildAndRegister();
+        */
 	}
 }

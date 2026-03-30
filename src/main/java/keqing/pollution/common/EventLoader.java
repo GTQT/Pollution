@@ -5,8 +5,7 @@ import gregtech.api.metatileentity.registry.MTEManager;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
-import keqing.gtqtcore.GTQTCore;
-import keqing.gtqtcore.api.utils.GTQTLog;
+
 import keqing.pollution.POConfig;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;

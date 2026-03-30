@@ -24,7 +24,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
+
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.client.textures.POTextures;

@@ -3,6 +3,7 @@ package keqing.pollution.common.metatileentity.multiblock.bot;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
@@ -14,9 +15,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.api.metatileentity.MetaTileEntityBaseWithControl;
 import keqing.pollution.api.capability.IManaHatch;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -26,6 +24,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POBotBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POManaPlate;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -80,8 +79,8 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
             put(PollutionMaterials.infused_air, Materials.Air);
             put(PollutionMaterials.infused_fire, Materials.NetherAir);
             put(PollutionMaterials.infused_alien, Materials.EnderAir);
-            put(PollutionMaterials.infused_magic, GTQTMaterials.MarsAir);
-            put(PollutionMaterials.infused_taint, GTQTMaterials.UnderAir);
+            //put(PollutionMaterials.infused_magic, GTQTMaterials.MarsAir);
+            //put(PollutionMaterials.infused_taint, GTQTMaterials.UnderAir);
         }
     };
 

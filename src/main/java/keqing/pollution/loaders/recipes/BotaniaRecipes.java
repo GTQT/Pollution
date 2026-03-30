@@ -4,8 +4,6 @@ import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.PollutionMetaItems;
@@ -22,20 +20,22 @@ import static gregtech.api.recipes.RecipeMaps.CANNER_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.MACERATOR_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
 import static net.minecraft.init.Blocks.RED_FLOWER;
 import static vazkii.botania.common.block.ModBlocks.mushroom;
 import static vazkii.botania.common.item.ModItems.*;
 
 public class BotaniaRecipes {
     public static void init() {
+        /*
         remove();
         flower();
         rune();
         manahatch();
-    }
 
+         */
+    }
+/*
     private static void rune() {
         //三种符文
         PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
@@ -450,4 +450,6 @@ public class BotaniaRecipes {
                 .EUt(VA[OpV])
                 .buildAndRegister();
     }
+
+ */
 }

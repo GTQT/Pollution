@@ -1,6 +1,5 @@
 package keqing.pollution;
 
-import keqing.gtqtcore.GTQTCoreConfig;
 import net.minecraftforge.common.config.Config;
 
 @Config(modid = Pollution.MODID)

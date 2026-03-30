@@ -1,8 +1,7 @@
 package keqing.pollution.common.block.tile;
 
 
-import gregtech.api.unification.material.Materials;
-import gregtechfoodoption.GTFOMaterialHandler;
+
 import keqing.pollution.api.utils.FleshTreeGrowth;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +20,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
+
+import static gregtech.api.unification.material.Materials.Water;
 
 /**
  * 血肉之树心脏核心 TileEntity
@@ -100,7 +101,8 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         if (fluidTimer < getFluidInterval()) return;
         fluidTimer = 0;
         // 要输出的流体: 水 (可改为自定义流体如 "血液")
-        FluidStack toFill = GTFOMaterialHandler.Blood.getFluid(getFluidAmount());
+       // FluidStack toFill = GTFOMaterialHandler.Blood.getFluid(getFluidAmount());
+        FluidStack toFill = Water.getFluid(getFluidAmount());
         // 扫描6个方向
         for (EnumFacing facing : EnumFacing.values()) {
             BlockPos neighborPos = pos.offset(facing);
@@ -117,7 +119,8 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
             int accepted = handler.fill(toFill, false);
             if (accepted > 0) {
                 // 实际填充
-                handler.fill(GTFOMaterialHandler.Blood.getFluid(accepted), true);
+               // handler.fill(GTFOMaterialHandler.Blood.getFluid(accepted), true);
+                handler.fill(Water.getFluid(accepted), true);
             }
         }
     }

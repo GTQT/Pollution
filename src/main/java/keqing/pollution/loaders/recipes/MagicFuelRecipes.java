@@ -1,28 +1,17 @@
 package keqing.pollution.loaders.recipes;
 
-import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.pollution.api.recipes.PORecipeMaps;
-import keqing.pollution.api.unification.PollutionMaterials;
-import keqing.pollution.common.items.PollutionMetaItems;
-import net.minecraft.item.ItemStack;
-
-import static gregtech.api.GTValues.*;
-import static gregtech.api.unification.material.Materials.*;
-import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.ROCKET_RECIPES;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.OverheatedGas;
-import static keqing.pollution.api.unification.PollutionMaterials.*;
-
 public class MagicFuelRecipes {
     public static void init() {
+        /*
         CombustionGenerator();
         RocketEngine();
+
+         */
     }
 
+    /*
     private static void RocketEngine() {
+        /*
         //焚天烈焰推进剂 烈焰之炽焰+ 肼硫酸盐 + 硝酸 + 铝粉
         RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
                 .fluidInputs(Hydrazine.getFluid(2000))         // N₂H₄（肼）
@@ -119,4 +108,6 @@ public class MagicFuelRecipes {
                 .EUt(512)
                 .buildAndRegister();
     }
+
+         */
 }

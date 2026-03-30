@@ -6,9 +6,10 @@ import gregtech.api.recipes.builders.BlastRecipeBuilder;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
-import keqing.gtqtcore.api.unification.ore.GTQTOrePrefix;
 import keqing.pollution.api.unification.PollutionMaterials;
+import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.api.unification.ore.GTQTOrePrefix;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +18,6 @@ import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.ItemsTC;
 
 import static gregtech.api.GTValues.*;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.Magic;
 
 public class CrystalLine {
     public static void init() {
@@ -44,11 +44,11 @@ public class CrystalLine {
                 .EUt(30)
                 .buildAndRegister();
 
-        GTQTcoreRecipeMaps.CRYSTALLIZER_RECIPES.recipeBuilder()
+        GTQTRecipeMaps.CRYSTALLIZER_RECIPES.recipeBuilder()
                 .blastFurnaceTemp(2700)
                 .EUt(VA[GTValues.EV])
                 .input(GTQTOrePrefix.seedCrystal, material)
-                .fluidInputs(Magic.getFluid(1000))
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
                 .output(GTQTOrePrefix.boule, material)
                 .duration(12000)
                 .buildAndRegister();

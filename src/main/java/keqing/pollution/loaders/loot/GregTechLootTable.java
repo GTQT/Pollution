@@ -7,8 +7,6 @@ import gregtech.common.ConfigHolder;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.loaders.dungeon.ChestGenHooks;
-import keqing.gtsteam.common.item.GTSMetaitems;
-import keqing.gtsteam.common.metatileentities.GTSteamMetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -100,36 +98,6 @@ public class GregTechLootTable {
             ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_CUPRONICKEL.getStackForm(), 1, 6, 30);
             ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_SILVER.getStackForm(), 1, 4, 20);
             ChestGenHooks.addItem(lootTable, MetaItems.CREDIT_GOLD.getStackForm(), 1, 2, 10);
-
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.ELECTRIC_MOTOR_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.ELECTRIC_PISTON_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.ELECTRIC_PUMP_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.CONVEYOR_MODULE_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.ROBOT_ARM_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.EMITTER_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.SENSOR_ULV.getStackForm(), 1, 4, 20);
-            ChestGenHooks.addItem(lootTable, GTSMetaitems.FIELD_GENERATOR_ULV.getStackForm(), 1, 4, 20);
-
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.EXTRACTOR.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.MACERATOR.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.ALLOY_SMELTER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.BENDER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.BREWERY.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.CENTRIFUGE.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.CHEMICAL_BATH.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.COMPRESSOR.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.CUTTER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.ELECTRIC_FURNACE.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.FERMENTER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.FORGE_HAMMER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.LATHE.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.MIXER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.ORE_WASHER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.PACKER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.SIFTER.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.WIREMILL.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.STEAM_TURBINE.getStackForm(), 1, 1, 5);
-            ChestGenHooks.addItem(lootTable, GTSteamMetaTileEntities.COMBUSTION_GENERATOR.getStackForm(), 1, 1, 5);
         }
 
     }

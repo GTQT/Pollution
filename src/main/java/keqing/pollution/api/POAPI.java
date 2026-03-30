@@ -2,11 +2,11 @@ package keqing.pollution.api;
 
 import gregtech.common.blocks.MetaBlocks;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import keqing.gtqtcore.api.blocks.IBlockTier;
-import keqing.gtqtcore.api.blocks.ITired;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
+
 import keqing.pollution.api.predicate.TiredTraceabilityPredicate;
 import keqing.pollution.common.block.PollutionMetaBlocks;
+import meowmel.gtqtcore.api.blocks.impl.IBlockTier;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 
 import static keqing.pollution.common.block.PollutionMetaBlocks.WIRE_COIL;

@@ -18,12 +18,13 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.core.sound.GTSoundEvents;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
+
 import keqing.pollution.api.metatileentity.PORecipeMapMultiblockController;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;

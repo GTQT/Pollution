@@ -27,12 +27,13 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
+
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POManaPlate;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;

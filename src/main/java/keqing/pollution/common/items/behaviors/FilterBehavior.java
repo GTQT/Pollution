@@ -5,7 +5,7 @@ import gregtech.api.items.metaitem.stats.IItemDurabilityManager;
 import gregtech.api.items.metaitem.stats.IItemMaxStackSizeProvider;
 import gregtech.api.unification.material.Material;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
-import keqing.gtqtcore.api.utils.GTQTDateHelper;
+import gtqt.api.util.GTQTDateHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 

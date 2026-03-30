@@ -1,9 +1,7 @@
 package keqing.pollution.api.unification.materials;
 
 import gregtech.api.fluids.FluidBuilder;
-import gregtech.api.unification.Elements;
 import gregtech.api.unification.material.Material;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.unification.PollutionMaterials;
 
 import static gregtech.api.GTValues.*;
@@ -13,8 +11,6 @@ import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialFlags.DISABLE_DECOMPOSITION;
 import static gregtech.api.unification.material.info.MaterialIconSet.LIGNITE;
 import static gregtech.api.unification.material.info.MaterialIconSet.SHINY;
-import static gregtech.api.util.GTUtility.gregtechId;
-import static keqing.gtqtcore.api.GTQTValue.gtqtcoreId;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 import static keqing.pollution.api.utils.POUtils.pollutionId;
 

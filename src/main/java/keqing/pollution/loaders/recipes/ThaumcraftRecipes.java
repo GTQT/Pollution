@@ -7,8 +7,6 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -17,6 +15,7 @@ import keqing.pollution.common.block.metablocks.POCoilBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -38,11 +37,11 @@ public class ThaumcraftRecipes {
     public static void init() {
         catalyst();
         misc();
-        solar();
+        //solar();
         tarots();
 
     }
-
+/*
     private static void solar() {
         //阳光化合物制作
         PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
@@ -53,6 +52,7 @@ public class ThaumcraftRecipes {
                 .duration(200)
                 .EUt(480)
                 .buildAndRegister();
+
         //太阳能试写，一级（风-混沌-地-火-秩序-水）
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "air_solar_1"), new InfusionRecipe(
                 "",
@@ -351,6 +351,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.LAMINATED_GLASS),
                 "cableGtSingleGold"));
     }
+    */
 
     private static void catalyst() {
         //活性催化粗胚，搅拌机
@@ -493,11 +494,12 @@ public class ThaumcraftRecipes {
                 .duration(1200)
                 .EUt(480)
                 .buildAndRegister();
+        /*
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
                 .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
                 .input(OrePrefix.dust, Bismuth, 4)
-                .fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(1440))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
@@ -508,7 +510,7 @@ public class ThaumcraftRecipes {
                 .input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
                 .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
                 .input(OrePrefix.dust, PollutionMaterials.syrmorite, 4)
-                .fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(5760))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
@@ -538,6 +540,8 @@ public class ThaumcraftRecipes {
                 .EUt(30720)
                 .buildAndRegister();
 
+
+         */
     }
 
     private static void misc() {
@@ -595,7 +599,7 @@ public class ThaumcraftRecipes {
         RecipeMaps.BLAST_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust, PollutionMaterials.thaummix, 2)
                 .circuitMeta(1)
-                .output(OrePrefix.dust, PollutionMaterials.thaumium, 1)
+                .output(OrePrefix.dust, GTQTMaterials.Thaumium, 1)
                 .output(OrePrefix.dust, Redstone, 1)
                 .output(OrePrefix.dust, Copper, 1)
                 .duration(400)
@@ -651,9 +655,10 @@ public class ThaumcraftRecipes {
                 .duration(10)
                 .EUt(2)
                 .buildAndRegister();
+
         RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .input(ItemsTC.ingots)
-                .output(OrePrefix.dust, PollutionMaterials.thaumium)
+                .output(OrePrefix.dust, GTQTMaterials.Thaumium)
                 .duration(10)
                 .EUt(2)
                 .buildAndRegister();

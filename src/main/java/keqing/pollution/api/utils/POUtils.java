@@ -1,6 +1,5 @@
 package keqing.pollution.api.utils;
 
-import keqing.gtqtcore.GTQTCore;
 import keqing.pollution.Pollution;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

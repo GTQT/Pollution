@@ -11,8 +11,8 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.unification.PollutionMaterials;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -73,6 +73,7 @@ public class MeteorsHelper {
                 Materials.GarnetSand, 100,
                 Materials.Asbestos, 100
         );
+        /*
         registerMeteor(
                 OreDictUnifier.get(gem,Diamond),
                 15,
@@ -107,6 +108,8 @@ public class MeteorsHelper {
                 Materials.Trona, 100,
                 GTQTMaterials.Cryolite, 100
         );
+
+         */
         registerMeteor(
                 MetaItems.EMITTER_MV.getStackForm(),
                 12,
@@ -126,7 +129,7 @@ public class MeteorsHelper {
                 16,
                 2,
                 480000,
-                PollutionMaterials.thaumium, 100,
+                GTQTMaterials.Thaumium, 100,
                 PollutionMaterials.syrmorite, 100,
                 PollutionMaterials.octine, 100,
                 PollutionMaterials.scabyst, 100,

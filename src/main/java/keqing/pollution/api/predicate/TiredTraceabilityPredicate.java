@@ -1,16 +1,7 @@
 package keqing.pollution.api.predicate;
 
-import gregtech.api.block.VariantActiveBlock;
-import gregtech.api.pattern.BlockWorldState;
-import gregtech.api.pattern.PatternStringError;
-import gregtech.api.pattern.TraceabilityPredicate;
-import gregtech.api.util.BlockInfo;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import keqing.gtqtcore.api.blocks.ITired;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.gtqtcore.api.pattern.TierTraceabilityPredicate;
-import keqing.pollution.common.block.PollutionMetaBlocks;
-import net.minecraft.block.state.IBlockState;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
+import meowmel.gtqtcore.api.pattern.TierTraceabilityPredicate;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;

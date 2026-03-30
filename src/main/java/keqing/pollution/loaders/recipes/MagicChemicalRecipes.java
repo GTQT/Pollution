@@ -5,9 +5,6 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtechfoodoption.item.GTFOMetaItem;
-import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -31,10 +28,10 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 
 public class MagicChemicalRecipes {
 	public static void init() {
+        /*
 		chemical();
 		kqt_chain();
 		superconductor_chain();
@@ -42,10 +39,12 @@ public class MagicChemicalRecipes {
 		filth_chain();
 		hachimi_chain();
 		blood_chain();
+
+         */
 	}
-
+/*
 	private static void chemical() {
-
+/*
 		//贤者之石复制
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
@@ -113,7 +112,7 @@ public class MagicChemicalRecipes {
 				.inputs(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(999))
 				.fluidInputs(PollutionMaterials.blackmansus.getFluid(9999))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(99999))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(99999))
 				.outputs(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
 				.duration(19980)
 				.EUt(9999)
@@ -160,7 +159,7 @@ public class MagicChemicalRecipes {
 		//魔力蒸馏
 		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.impuremana.getFluid(1000))
-				.fluidOutputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidOutputs(GTQTMaterials.Mana.getFluid(500))
 				.fluidOutputs(Materials.Water.getFluid(500))
 				.duration(400)
 				.EUt(7680)
@@ -923,7 +922,7 @@ public class MagicChemicalRecipes {
 		//六次升华蒸汽+魔力+黑漫宿+白漫宿 大化反 次元改造剂
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.alchemical_vapor_6.getFluid(890))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.fluidInputs(PollutionMaterials.blackmansus.getFluid(5))
 				.fluidInputs(PollutionMaterials.whitemansus.getFluid(5))
 				.fluidOutputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
@@ -984,7 +983,7 @@ public class MagicChemicalRecipes {
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(576))
 				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
 				.input(dust, PollutionMaterials.mansussteel, 4)
-				.input(dust, PollutionMaterials.thaumium, 4)
+				.input(dust, GTQTMaterials.Thaumium, 4)
 				.fluidOutputs(PollutionMaterials.basic_thaumic_superconductor.getFluid(2304))
 				.circuitMeta(4)
 				.duration(2000)
@@ -1022,7 +1021,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(dust, Materials.Lithium, 6)
-				.input(dust, PollutionMaterials.thaumium, 1)
+				.input(dust, GTQTMaterials.Thaumium, 1)
 				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
 				.fluidInputs(PollutionMaterials.infused_motion.getFluid(1000))
 				.output(dust, PollutionMaterials.basic_battery_content, 9)
@@ -1178,7 +1177,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.filth_water.getFluid(1000))
-				.fluidOutputs(GTQTMaterials.Magic.getFluid(800))
+				.fluidOutputs(GTQTMaterials.Mana.getFluid(800))
 				.fluidOutputs(PollutionMaterials.infused_taint.getFluid(100))
 				.fluidOutputs(PollutionMaterials.void_water.getFluid(100))
 				.duration(180)
@@ -1323,4 +1322,6 @@ public class MagicChemicalRecipes {
 				.EUt(VA[ZPM])
 				.buildAndRegister();
 	}
+
+ */
 }

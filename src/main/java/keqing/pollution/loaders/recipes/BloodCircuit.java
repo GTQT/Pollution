@@ -7,9 +7,6 @@ import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.items.GTQTMetaItem1;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import net.minecraft.init.Blocks;
@@ -24,14 +21,12 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.items.MetaItems.*;
-import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES;
-import static keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps.COMPONENT_ASSEMBLER_RECIPES;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 import static keqing.pollution.common.items.PollutionMetaItems.*;
 import static keqing.pollution.common.metatileentity.PollutionMetaTileEntities.MAGIC_ASSEMBLER;
 
 public class BloodCircuit {
     public static void init() {
+        /*
         addBloodAltarEx(MAGIC_CIRCUIT_ULV.getStackForm(1),BLOOD_PORT.getStackForm(1), 3);
 
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
@@ -257,6 +252,8 @@ public class BloodCircuit {
                 .inputs(GameRegistry.makeItemStack("bloodmagic:component",26,1,null))
                 .output(BLOOD_CIRCUIT_MAX)
                 .buildAndRegister();
+
+         */
     }
 
     public static void addBloodAltarEx(ItemStack material1, ItemStack material2, int tier)

@@ -22,10 +22,9 @@ import gregtech.client.shader.postprocessing.BloomEffect;
 import gregtech.client.shader.postprocessing.BloomType;
 import gregtech.client.utils.*;
 import gregtech.common.ConfigHolder;
-import keqing.gtqtcore.api.GTQTValue;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -55,6 +54,8 @@ import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.*;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_FUSION_REACTOR;
 import static keqing.pollution.api.unification.PollutionMaterials.ErichAura;
 import static keqing.pollution.api.unification.PollutionMaterials.RichAura;
+import static meowmel.gtqtcore.api.GTQTValues.REQUIRE_DATA_UPDATE;
+import static meowmel.gtqtcore.api.GTQTValues.UPDATE_TIER;
 
 public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockController implements IBloomEffect, IFastRenderMetaTileEntity {
 
@@ -189,7 +190,7 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
         this.compose = POUtils.getOrDefault(() -> compose instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) compose).getIntTier(),
                 1);
-        this.writeCustomData(GTQTValue.UPDATE_TIER, buf -> buf.writeInt(this.frame));
+        this.writeCustomData(UPDATE_TIER, buf -> buf.writeInt(this.frame));
     }
 
     @Override
@@ -233,11 +234,11 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
     @Override
     public void receiveCustomData(int dataId, PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
-        if (dataId == GTQTValue.UPDATE_TIER) {
+        if (dataId == UPDATE_TIER) {
             this.frame = buf.readInt();
         }
-        if (dataId == GTQTValue.REQUIRE_DATA_UPDATE) {
-            this.writeCustomData(GTQTValue.UPDATE_TIER, buf1 -> buf1.writeInt(this.frame));
+        if (dataId == REQUIRE_DATA_UPDATE) {
+            this.writeCustomData(UPDATE_TIER, buf1 -> buf1.writeInt(this.frame));
         }
     }
 

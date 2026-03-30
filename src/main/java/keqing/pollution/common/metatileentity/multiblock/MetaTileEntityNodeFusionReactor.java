@@ -33,7 +33,6 @@ import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
-import keqing.gtqtcore.GTQTCoreConfig;
 import keqing.pollution.POConfig;
 import keqing.pollution.api.capability.ICleanVis;
 import keqing.pollution.api.capability.ipml.POMultiblockCleanVisRecipeLogic;
@@ -445,7 +444,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
     public void renderMetaTileEntity(double x, double y, double z, float partialTicks) {
         IFastRenderMetaTileEntity.super.renderMetaTileEntity(x, y, z, partialTicks);
 
-        if (isStructureFormed() && GTQTCoreConfig.OBJRenderSwitch.EnableObj && POConfig.OBJRenderSwitch.EnableObjNodeFusionReactor) {
+        if (isStructureFormed() &&  POConfig.OBJRenderSwitch.EnableObjNodeFusionReactor) {
             final int xDir = this.getFrontFacing().getOpposite().getXOffset();
             final int zDir = this.getFrontFacing().getOpposite().getZOffset();
             //机器开启才会进行渲染

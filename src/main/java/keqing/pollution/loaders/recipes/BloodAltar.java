@@ -1,6 +1,5 @@
 package keqing.pollution.loaders.recipes;
 
-
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
@@ -10,9 +9,6 @@ import thaumcraft.api.items.ItemsTC;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.Californium252;
-import static supercritical.api.unification.material.SCMaterials.Curium247;
-import static supercritical.api.unification.material.SCMaterials.Plutonium242;
 
 public class BloodAltar {
     public static void init() {
@@ -44,11 +40,14 @@ public class BloodAltar {
         addBloodAltar(Polonium, Radium, 5);
         addBloodAltar(Radium, Thorium, 5);
         addBloodAltar(Thorium, Uranium238, 5);
+        /*
         addBloodAltar(Uranium238, Plutonium242, 5);
         addBloodAltar(Plutonium242, Curium247, 5);
         addBloodAltar(Curium247, Californium252, 5);
         //BloodMagicAPI.INSTANCE.getRecipeRegistrar().addBloodAltar(Ingredient.fromStacks(OreDictUnifier.get(dust, Iron, 1)),OreDictUnifier.get(dust, Copper, 1),1,1,1,1);
         addBloodAltar(Curium247, Californium252, 5);
+
+         */
 
 
         addBloodAltarEx(OreDictUnifier.get(dust, Gold, 1), new ItemStack(ItemsTC.quicksilver), 2);

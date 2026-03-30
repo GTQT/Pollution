@@ -4,6 +4,7 @@ import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
@@ -21,8 +22,6 @@ import gregtech.client.shader.postprocessing.BloomEffect;
 import gregtech.client.shader.postprocessing.BloomType;
 import gregtech.client.utils.*;
 import gregtech.common.ConfigHolder;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.gtqtcore.api.metatileentity.MetaTileEntityBaseWithControl;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
@@ -31,6 +30,7 @@ import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
 import keqing.pollution.common.block.metablocks.POTurbine;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -62,7 +62,7 @@ import static gregtech.api.GTValues.VA;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
 
-public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithControl{
+public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithControl {
     //最低输入功率，默认为30
     //输出单种流体的类型,只在聚焦时
     //当前区块灵气、污染

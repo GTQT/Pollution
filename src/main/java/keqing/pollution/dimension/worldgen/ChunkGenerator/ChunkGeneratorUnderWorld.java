@@ -1,12 +1,13 @@
 package keqing.pollution.dimension.worldgen.ChunkGenerator;
 
 import gregtech.api.fluids.store.FluidStorageKeys;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
-import keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.dimension.worldgen.mapGen.*;
+import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
+import meowmel.gtqtcore.common.blocks.StoneVariantBlock;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.entity.EnumCreatureType;
@@ -40,15 +41,16 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
     protected static final IBlockState Stone = Blocks.STONE.getDefaultState();
     protected static final IBlockState SwampWater = Blocks.WATER.getDefaultState();
-    private static final IBlockState Kimberlite = gtStoneState(GTQTStoneVariantBlock.StoneType.KIMBERLITE);
-    private static final IBlockState Gabbro = gtStoneState(GTQTStoneVariantBlock.StoneType.GABBRO);
-    private static final IBlockState Limestone = gtStoneState(GTQTStoneVariantBlock.StoneType.LIMESTONE);
-    private static final IBlockState Phyllite = gtStoneState(GTQTStoneVariantBlock.StoneType.PHYLLITE);
-    private static final IBlockState Quartzite = gtStoneState(GTQTStoneVariantBlock.StoneType.QUARTZITE);
-    private static final IBlockState Soapstone = gtStoneState(GTQTStoneVariantBlock.StoneType.SOAPSTONE);
-    private static final IBlockState Gneiss = gtStoneState(GTQTStoneVariantBlock.StoneType.GNEISS);
-    private static final IBlockState Shale = gtStoneState(GTQTStoneVariantBlock.StoneType.SHALE);
-    private static final IBlockState Slate = gtStoneState(GTQTStoneVariantBlock.StoneType.SLATE);
+
+    private static final IBlockState Limestone = gtStoneState(StoneVariantBlock.StoneType.LIMESTONE);
+    private static final IBlockState komatiite = gtStoneState(StoneVariantBlock.StoneType.KOMATIITE);
+    private static final IBlockState GSchist = gtStoneState(StoneVariantBlock.StoneType.GREEN_SCHIST);
+    private static final IBlockState BSchist = gtStoneState(StoneVariantBlock.StoneType.BLUE_SCHIST);
+    private static final IBlockState Kimberlite = gtStoneState(StoneVariantBlock.StoneType.KIMBERLITE);
+    private static final IBlockState Quartzite = gtStoneState(StoneVariantBlock.StoneType.QUARTZITE);
+    private static final IBlockState Slate = gtStoneState(StoneVariantBlock.StoneType.SLATE);
+    private static final IBlockState Shale = gtStoneState(StoneVariantBlock.StoneType.SHALE);
+
     private static final IBlockState Andesite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
     private static final IBlockState Diorite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE);
     private static final IBlockState Granite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE);
@@ -134,8 +136,8 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
         this.mapGenCavesBTN = getModdedMapGen(mapGenCavesBTN, BTN_CAVE);
     }
 
-    private static IBlockState gtStoneState(GTQTStoneVariantBlock.StoneType stoneType) {
-        return GTQTMetaBlocks.GTQT_STONE_BLOCKS.get(GTQTStoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
+    private static IBlockState gtStoneState(StoneVariantBlock.StoneType stoneType) {
+        return GTQTMetaBlocks.STONE_BLOCKS.get(StoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
     }
 
     public void prepareHeights(int chunkX, int chunkZ, ChunkPrimer primer) {
@@ -231,18 +233,17 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
             // 随机层数（3-5层）
             variantLayers[i] = 3 + this.rand.nextInt(2);
             // 随机选择石头变种
-            int variant = this.rand.nextInt(10);
+            int variant = this.rand.nextInt(9);
             variantBlocks[i] = switch (variant) {
                 case 0 -> Andesite;
                 case 1 -> Diorite;
                 case 2 -> Granite;
-                case 3 -> Gabbro;
+                case 3 -> komatiite;
                 case 4 -> Limestone;
                 case 5 -> Quartzite;
-                case 6 -> Phyllite;
-                case 7 -> Gneiss;
-                case 8 -> Slate;
-                case 9 -> Soapstone;
+                case 6 -> GSchist;
+                case 7 -> Slate;
+                case 8 -> BSchist;
                 default -> Shale;
             };
         }

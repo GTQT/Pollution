@@ -10,10 +10,10 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.common.blocks.BlockCleanroomCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
@@ -22,13 +22,12 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POManaPlate;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
-import static keqing.gtqtcore.common.block.GTQTMetaBlocks.blockStepperCasing;
-import static keqing.gtqtcore.common.block.blocks.BlockStepperCasing.CasingType.CLEAN_MKV;
 import static keqing.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAME;
 
 public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElectric {
@@ -53,7 +52,7 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
     }
 
     private static IBlockState getCasingState4() {
-        return blockStepperCasing.getState(CLEAN_MKV);
+        return MetaBlocks.CLEANROOM_CASING.getState(BlockCleanroomCasing.CasingType.FILTER_CASING);
     }
 
     private static IBlockState getCasingState5() {

@@ -2,9 +2,9 @@ package keqing.pollution.api.unification.materials;
 
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconSet;
-import keqing.gtqtcore.api.unification.material.info.GTQTMaterialFlags;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
+import meowmel.gtqtcore.api.unification.material.info.GTQTMaterialFlags;
 
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.BRIGHT;
@@ -33,7 +33,7 @@ public class PollutionElementMaterials {
         PollutionMaterials.infused_fire = new Material.Builder(getMaterialsId(), pollutionId("infused_fire"))
                 .color(0xFE3C01)
                 .ore().dust().fluid().gem()
-                .flags(CRYSTALLIZABLE,GTQTMaterialFlags.GENERATE_BOULE)
+                .flags(CRYSTALLIZABLE, GTQTMaterialFlags.GENERATE_BOULE)
                 .iconSet(MaterialIconSet.SHINY)
                 .element(Elements.Ig)
                 .build();

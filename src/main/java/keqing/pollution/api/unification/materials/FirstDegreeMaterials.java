@@ -1,15 +1,13 @@
 package keqing.pollution.api.unification.materials;
 
-
-
 import gregtech.api.GTValues;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconSet;
 import gregtech.api.unification.material.properties.BlastProperty;
 import gregtech.api.unification.material.properties.MaterialToolProperty;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.unification.Elements;
 import keqing.pollution.api.unification.PollutionMaterials;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
@@ -46,6 +44,7 @@ public class FirstDegreeMaterials {
                 .components(PollutionMaterials.infused_air, 1, PollutionMaterials.infused_earth, 1)
                 .build()
                 .setTooltips("Vitreus");
+
         //生命=地+水
         PollutionMaterials.infused_life = new Material.Builder(getMaterialsId(), pollutionId("infused_life"))
                 .color(0xFF6A6A)
@@ -54,6 +53,7 @@ public class FirstDegreeMaterials {
                 .components(PollutionMaterials.infused_earth, 1, PollutionMaterials.infused_water, 1)
                 .build()
                 .setTooltips("Victus");
+
         //死亡=水+混沌
         PollutionMaterials.infused_death = new Material.Builder(getMaterialsId(), pollutionId("infused_death"))
                 .color(0x696969)
@@ -62,6 +62,7 @@ public class FirstDegreeMaterials {
                 .components(PollutionMaterials.infused_water, 1, PollutionMaterials.infused_entropy, 1)
                 .build()
                 .setTooltips("Mortuus");
+
         //灵魂=生命+死亡
         PollutionMaterials.infused_soul = new Material.Builder(getMaterialsId(), pollutionId("infused_soul"))
                 .color(0xCFCFCF)
@@ -70,6 +71,7 @@ public class FirstDegreeMaterials {
                 .components(PollutionMaterials.infused_life, 1, PollutionMaterials.infused_death, 1)
                 .build()
                 .setTooltips("Spiritus");
+
         //武器=灵魂+混沌
         PollutionMaterials.infused_weapon = new Material.Builder(getMaterialsId(), pollutionId("infused_weapon"))
                 .color(0xB22222)
@@ -78,6 +80,7 @@ public class FirstDegreeMaterials {
                 .components(PollutionMaterials.infused_soul, 1, PollutionMaterials.infused_entropy, 1)
                 .build()
                 .setTooltips("Aversio");
+
         //金属=地+秩序
         PollutionMaterials.infused_metal = new Material.Builder(getMaterialsId(), pollutionId("infused_metal"))
                 .color(0x9FB6CD)
@@ -314,7 +317,8 @@ public class FirstDegreeMaterials {
 
         startId = 200;
 
-        PollutionMaterials.thaumium = new Material.Builder(getMaterialsId(), pollutionId("thaumium"))
+        /*
+        GTQTMaterials.Thaumium = new Material.Builder(getMaterialsId(), pollutionId("thaumium"))
                 .color(0x483D8B)
                 .ingot().fluid().ore(true)
                 .components(Iron, 1, infused_earth, 5, infused_air, 5, infused_fire, 5, infused_order, 5)
@@ -324,6 +328,8 @@ public class FirstDegreeMaterials {
                 .flags(GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
                 .build()
                 .setFormula("FeTer5(AeIgOrd)5", true);
+
+         */
 
         //赛摩铜
         PollutionMaterials.syrmorite = new Material.Builder(getMaterialsId(), pollutionId("syrmorite"))
@@ -447,7 +453,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.manasteel = new Material.Builder(getMaterialsId(), pollutionId("manasteel"))
                 .color(0x1E90FF)
                 .ingot().fluid().ore()
-                .components(Iron, 4, GTQTMaterials.Magic, 1)
+                .components(Iron, 4, GTQTMaterials.Mana, 1)
                 .toolStats(new MaterialToolProperty(6, 6, 2048, 5))
                 .rotorStats(8.0F, 3.0F, 1024)
                 .fluidPipeProperties(2400, 160, true)
@@ -459,14 +465,14 @@ public class FirstDegreeMaterials {
         PollutionMaterials.salismundus = new Material.Builder(getMaterialsId(), pollutionId("salismundus"))
                 .color(0xEE82EE)
                 .dust()
-                .components(Redstone, 2, GTQTMaterials.Magic, 1)
+                .components(Redstone, 2, GTQTMaterials.Mana, 1)
                 .iconSet(SHINY)
                 .build();
 
         PollutionMaterials.mansussteel = new Material.Builder(getMaterialsId(), pollutionId("mansussteel"))
                 .color(0xE6E6FA)
                 .ingot().fluid()
-                .components(manasteel, 3, thaumium, 2, salismundus, 1)
+                .components(manasteel, 3, GTQTMaterials.Thaumium, 2, salismundus, 1)
                 .toolStats(new MaterialToolProperty(6, 6, 2048, 5))
                 .rotorStats(10.0F, 3.0F, 1440)
                 .fluidPipeProperties(2800, 140, true)
@@ -483,7 +489,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.Terrasteel = new Material.Builder(getMaterialsId(), pollutionId("terrasteel"))
                 .color(0x58FF0B)
                 .ingot().fluid()
-                .components(Iron, 4, Carbon, 4, EnderPearl, 4, GTQTMaterials.Magic, 3)
+                .components(Iron, 4, Carbon, 4, EnderPearl, 4, GTQTMaterials.Mana, 3)
                 .toolStats(new MaterialToolProperty(8, 6, 5120, 6))
                 .rotorStats(10.0F, 3.0F, 1440)
                 .fluidPipeProperties(3400, 200, true)
@@ -510,7 +516,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.Orichalcos = new Material.Builder(getMaterialsId(), pollutionId("orichalcos"))
                 .color(0xFF00FF)
                 .ingot().fluid()
-                .components(Iron, 4, Carbon, 4, EnderPearl, 4, GTQTMaterials.Magic, 3)
+                .components(Iron, 4, Carbon, 4, EnderPearl, 4, GTQTMaterials.Mana, 3)
                 .toolStats(new MaterialToolProperty(8, 6, 5120, 6))
                 .rotorStats(14.0F, 3.0F, 3200)
                 .fluidPipeProperties(8000, 600, true)

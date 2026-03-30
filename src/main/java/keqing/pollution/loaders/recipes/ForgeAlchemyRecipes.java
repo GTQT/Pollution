@@ -3,10 +3,10 @@ package keqing.pollution.loaders.recipes;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.PollutionMetaItems;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import vazkii.botania.common.item.ModItems;
@@ -23,7 +23,7 @@ public class ForgeAlchemyRecipes {
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.blackmansus.getFluid(99999))
 				.fluidInputs(PollutionMaterials.whitemansus.getFluid(99999))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(99999))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(99999))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(9999))
 				.input(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150)
 				.input(OrePrefix.dust, PollutionMaterials.Terrasteel, 64)
@@ -37,7 +37,7 @@ public class ForgeAlchemyRecipes {
 		//三级贤者之石
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.starrymansus.getFluid(199999))
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(199999))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(199999))
 				.fluidInputs(PollutionMaterials.sentient_metal.getFluid(99999))
 				.fluidInputs(PollutionMaterials.binding_metal.getFluid(99999))
 				.input(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151)
@@ -52,7 +52,7 @@ public class ForgeAlchemyRecipes {
 		//四级贤者之石
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.starrymansus.getFluid(999999))
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(999999))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(999999))
 				.fluidInputs(PollutionMaterials.existing_nexus.getFluid(99999))
 				.fluidInputs(PollutionMaterials.fading_nexus.getFluid(99999))
 				.input(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152)
@@ -71,7 +71,7 @@ public class ForgeAlchemyRecipes {
 		//铂钯钌 铑铱锇 铈铕钐
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Lead.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Tin.getFluid(2304), 3333, 500)
@@ -83,7 +83,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Zinc.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Nickel.getFluid(2304), 3333, 500)
@@ -95,7 +95,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Copper.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Silver.getFluid(2304), 3333, 500)
@@ -107,7 +107,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Manganese.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Molybdenum.getFluid(2304), 3333, 500)
@@ -119,7 +119,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Gallium.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Vanadium.getFluid(2304), 3333, 500)
@@ -131,7 +131,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Antimony.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Beryllium.getFluid(2304), 3333, 500)
@@ -143,7 +143,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Aluminium.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Titanium.getFluid(2304), 3333, 500)
@@ -155,7 +155,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Niobium.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Tantalum.getFluid(2304), 3333, 500)
@@ -167,7 +167,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(Materials.Thorium.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Uranium238.getFluid(2304), 3333, 500)
@@ -179,7 +179,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.chancedFluidOutput(PollutionMaterials.syrmorite.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(PollutionMaterials.octine.getFluid(2304), 3333, 500)
@@ -191,7 +191,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.chancedFluidOutput(Materials.Platinum.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Palladium.getFluid(2304), 3333, 500)
@@ -203,7 +203,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.chancedFluidOutput(Materials.Rhodium.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Iridium.getFluid(2304), 3333, 500)
@@ -215,7 +215,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.chancedFluidOutput(Materials.Cerium.getFluid(2304), 3333, 500)
 				.chancedFluidOutput(Materials.Europium.getFluid(2304), 3333, 500)
@@ -232,7 +232,7 @@ public class ForgeAlchemyRecipes {
 		//超级：源质钢 虚空 感知 阿弗纳斯之血 光风霁月琥珀金
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.input(OrePrefix.dust, Materials.Titanium, 4)
 				.input(OrePrefix.dust, Materials.Copper, 4)
 				.input(OrePrefix.dust, Materials.Lead, 4)
@@ -247,7 +247,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.input(OrePrefix.dust, Materials.Steel, 4)
 				.input(OrePrefix.dust, Materials.Silver, 4)
 				.input(OrePrefix.dust, Materials.Aluminium, 4)
@@ -262,7 +262,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.input(OrePrefix.dust, Materials.Iron, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.fluidOutputs(PollutionMaterials.manasteel.getFluid(2304))
@@ -273,10 +273,10 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.input(OrePrefix.dust, Materials.Steel, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.fluidOutputs(PollutionMaterials.thaumium.getFluid(2304))
+				.fluidOutputs(GTQTMaterials.Thaumium.getFluid(2304))
 				.circuitMeta(21)
 				.blastFurnaceTemp(3600)
 				.duration(3000)
@@ -284,7 +284,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(144))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.input(OrePrefix.dust, Materials.StainlessSteel, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.fluidOutputs(PollutionMaterials.mansussteel.getFluid(MOLTEN,2304))
@@ -295,7 +295,7 @@ public class ForgeAlchemyRecipes {
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Water.getFluid(16000))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.input(OrePrefix.dust, PollutionMaterials.salismundus, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.fluidOutputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
@@ -306,7 +306,7 @@ public class ForgeAlchemyRecipes {
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.input(OrePrefix.dust, Materials.Silver, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.fluidOutputs(PollutionMaterials.hyperdimensional_silver.getFluid(2304))
@@ -318,7 +318,7 @@ public class ForgeAlchemyRecipes {
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.input(OrePrefix.dust, Materials.Gold, 4)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.fluidOutputs(PollutionMaterials.keqinggold.getFluid(2304))
@@ -330,7 +330,7 @@ public class ForgeAlchemyRecipes {
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.input(OrePrefix.dust, PollutionMaterials.mansussteel, 2)
 				.input(OrePrefix.dust, PollutionMaterials.manasteel, 2)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
@@ -343,7 +343,7 @@ public class ForgeAlchemyRecipes {
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(144))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(4000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(4000))
 				.input(OrePrefix.dust, PollutionMaterials.Terrasteel, 2)
 				.input(OrePrefix.dust, PollutionMaterials.manasteel, 2)
 				.input(ModItems.rune, 1, 8)
@@ -369,7 +369,7 @@ public class ForgeAlchemyRecipes {
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(1440))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(420))
 				.fluidInputs(PollutionMaterials.starrymansus.getFluid(1000))
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(10000))
 				.input(OrePrefix.dust, PollutionMaterials.hyperdimensional_silver, 8)
 				.input(OrePrefix.dust, PollutionMaterials.keqinggold, 8)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
@@ -384,7 +384,7 @@ public class ForgeAlchemyRecipes {
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(1440))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(420))
 				.fluidInputs(PollutionMaterials.whitemansus.getFluid(10000))
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(10000))
 				.input(OrePrefix.dust, GTQTMaterials.VoidMetal, 8)
 				.input(OrePrefix.dust, PollutionMaterials.ElvenElementium, 8)
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
@@ -399,7 +399,7 @@ public class ForgeAlchemyRecipes {
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(1440))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(420))
 				.fluidInputs(PollutionMaterials.blackmansus.getFluid(10000))
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(10000))
 				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
 				.input(OrePrefix.dust, GTQTMaterials.VoidMetal, 8)
 				.input(OrePrefix.dust, PollutionMaterials.octine, 8)

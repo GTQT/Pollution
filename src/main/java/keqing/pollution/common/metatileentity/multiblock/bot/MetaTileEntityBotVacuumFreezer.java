@@ -17,9 +17,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
-import keqing.gtqtcore.common.block.blocks.BlockCoolingCoil;
-import keqing.gtqtcore.common.block.blocks.BlockMultiblockCasing5;
 import keqing.pollution.api.metatileentity.POManaMultiblockWithElectric;
 import keqing.pollution.api.metatileentity.POMultiblockAbility;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -29,6 +26,10 @@ import keqing.pollution.common.block.metablocks.POBotBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POManaPlate;
+import meowmel.gtqtcore.api.predicate.TiredTraceabilityPredicate;
+import meowmel.gtqtcore.common.blocks.BlockCoolingCoil;
+import meowmel.gtqtcore.common.blocks.BlockMachineCasing;
+import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,8 +44,6 @@ import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
 
 import java.util.List;
-
-import static keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.MetaTileEntityCryogenicFreezer.coolingCoils;
 
 public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric {
 
@@ -64,7 +63,7 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
     }
 
     private static IBlockState getCasingState3() {
-        return GTQTMetaBlocks.blockMultiblockCasing5.getState(BlockMultiblockCasing5.TurbineCasingType.ADVANCED_COLD_CASING);
+        return GTQTMetaBlocks.MACHINE_CASING.getState(BlockMachineCasing.MachineCasingType.CRYOGENIC_CASING);
     }
 
     private static IBlockState getCasingState4() {
@@ -92,9 +91,9 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
         super.formStructure(context);
         Object type = context.get("CoolingCoilType");
         if (type instanceof BlockCoolingCoil.CoolingCoilType) {
-            this.temperature = ((BlockCoolingCoil.CoolingCoilType) type).coilTemperature;
+            this.temperature = ((BlockCoolingCoil.CoolingCoilType) type).getCoilTemperature();
         } else {
-            this.temperature = BlockCoolingCoil.CoolingCoilType.MANGANESE_IRON_ARSENIC_PHOSPHIDE.coilTemperature;
+            this.temperature = BlockCoolingCoil.CoolingCoilType.MANGANESE_IRON_ARSENIC_PHOSPHIDE.getCoilTemperature();
         }
     }
 
@@ -169,7 +168,7 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
                 .where('E', states(getCasingState5()))
                 .where('G', states(getCasingState6()))
                 .where('F', states(getCasingState7()))
-                .where('H', coolingCoils())
+                .where('H', TiredTraceabilityPredicate.CP_COOLING_COIL.get())
                 .where('I', states(getCasingState8()))
                 .where('J', states(getCasingState9()))
                 .where('K', states(getCasingState10()))

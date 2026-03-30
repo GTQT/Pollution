@@ -25,10 +25,10 @@ import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockMultiblockCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
-import keqing.gtqtcore.api.utils.GTQTDateHelper;
-import keqing.gtqtcore.client.textures.GTQTTextures;
+import gtqt.api.util.GTQTDateHelper;
 import keqing.pollution.POConfig;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
+import meowmel.gtqtcore.client.textures.GTQTTextures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
@@ -228,7 +228,7 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     @Nonnull
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return GTQTTextures.LARGE_ROCKET_ENGINE_OVERLAY;
+        return GTQTTextures.ROCKET_ENGINE_OVERLAY;
     }
 
     @Override

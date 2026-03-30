@@ -9,8 +9,8 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
-import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.pollution.client.textures.POTextures;
+import meowmel.gtqtcore.client.textures.GTQTTextures;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,7 +20,7 @@ import java.util.function.Function;
 
 public class POMetaTileEntitySingleTurbine extends SimpleGeneratorMetaTileEntity {
     public POMetaTileEntitySingleTurbine(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, ICubeRenderer renderer, int tier, Function<Integer, Integer> tankScalingFunction) {
-        super(metaTileEntityId, recipeMap, renderer, tier, tankScalingFunction);
+        super(metaTileEntityId, recipeMap, renderer, tier, tankScalingFunction,1);
     }
 
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {

@@ -21,8 +21,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POUtils;
@@ -31,6 +29,8 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POBotBlock;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
+import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -53,9 +53,10 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
         super(metaTileEntityId, new RecipeMap[]{
                 RecipeMaps.CHEMICAL_RECIPES,
                 RecipeMaps.LARGE_CHEMICAL_RECIPES,
-                GTQTcoreRecipeMaps.CHEMICAL_PLANT,
+                GTQTRecipeMaps.CHEMICAL_PLANT_RECIPES,
                 PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES,
-                GTQTcoreRecipeMaps.FERMENTATION_TANK_RECIPES});
+                //GTQTRecipeMaps.FERMENTATION_TANK_RECIPES
+        });
         this.recipeMapWorkable = new SmallChemicalPlantRecipeLogic(this);
     }
 
@@ -161,10 +162,11 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
 
         @Override
         public int getParallelLimit() {
-            if (this.getRecipeMap() == GTQTcoreRecipeMaps.CHEMICAL_PLANT) {
+            if (this.getRecipeMap() == GTQTRecipeMaps.CHEMICAL_PLANT_RECIPES) {
                 return (int) Math.max(256, Math.pow(4, CoilLevel));
-            } else if (this.getRecipeMap() == GTQTcoreRecipeMaps.FERMENTATION_TANK_RECIPES) {
-                return (int) Math.max(64, Math.pow(4, CoilLevel));
+           // } else
+           //     if (this.getRecipeMap() == GTQTcoreRecipeMaps.FERMENTATION_TANK_RECIPES) {
+           //     return (int) Math.max(64, Math.pow(4, CoilLevel));
             } else {
                 return Math.max(64, 4 * CoilLevel);
             }

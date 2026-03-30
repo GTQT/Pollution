@@ -1,17 +1,12 @@
 package keqing.pollution.loaders.recipes;
 
 import WayofTime.bloodmagic.block.BlockLifeEssence;
-import gregicality.multiblocks.common.metatileentities.GCYMMetaTileEntities;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.*;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import gregtechfoodoption.machines.GTFOTileEntities;
-import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -19,6 +14,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
 import keqing.pollution.common.items.PollutionMetaItems;
 import keqing.pollution.common.metatileentity.PollutionMetaTileEntities;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +38,6 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.api.unification.ore.OrePrefix.ingotHot;
 import static gregtech.common.metatileentities.MetaTileEntities.EXTRACTOR;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
 import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static keqing.pollution.api.unification.PollutionMaterials.*;
@@ -379,7 +374,7 @@ public class MagicGCYMRecipes {
 				.input(dust, infused_earth, 10)
 				.input(dust, infused_fire, 5)
 				.input(dust, infused_air, 5)
-				.fluidOutputs(thaumium.getFluid(3024))
+				.fluidOutputs(GTQTMaterials.Thaumium.getFluid(3024))
 				.circuitMeta(2)
 				.duration(1200)
 				.blastFurnaceTemp(2700)
@@ -653,6 +648,7 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 1, 204),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM),
 				PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_4)));
+        /*
 		//温室
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_greenhouse"), new InfusionRecipe(
 				"INFUSION@2",
@@ -667,6 +663,8 @@ public class MagicGCYMRecipes {
 				"circuitHv",
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_WATER),
 				PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3)));
+
+         */
 		//温室刻晴要的几个配方
 		MAGIC_GREENHOUSE_RECIPES.recipeBuilder()
 				.input(BlocksTC.saplingGreatwood)
@@ -727,6 +725,7 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_MV.getMetaItem(), 1, 203),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_VOID),
 				PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_4)));
+        /*
 		//这里是主方块的注魔配方
 		//配方暂定造价：主注魔材料催化剂，次要材料mv电路板*4+对应要素的水晶+mv级别的对应小机器一台+一个对应外壳+法罗钠晶体一个
 		//蒸馏二合一
@@ -745,6 +744,8 @@ public class MagicGCYMRecipes {
 				"oreCrystalWater",
 				GTQTMetaTileEntities.DISTILLATION_TOWER.getStackForm(),
 				PollutionMetaBlocks.MAGIC_BLOCK.getItemVariant(POMagicBlock.MagicBlockType.SPELL_PRISM_COLD)));
+
+         */
 		//酿造三合一
 		ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "magic_brewery"), new InfusionRecipe(
 				"INFUSION@2",
@@ -1045,7 +1046,7 @@ public class MagicGCYMRecipes {
 		//3魔力钢粉+2神秘粉+1世界盐粉=6漫宿钢粉
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.manasteel, 3)
-				.input(dust, PollutionMaterials.thaumium, 2)
+				.input(dust, GTQTMaterials.Thaumium, 2)
 				.input(dust, PollutionMaterials.salismundus)
 				.output(dust, PollutionMaterials.mansussteel, 6)
 				.duration(600)
@@ -1053,7 +1054,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.manasteel, 3)
-				.input(dust, PollutionMaterials.thaumium, 2)
+				.input(dust, GTQTMaterials.Thaumium, 2)
 				.input(ItemsTC.salisMundus)
 				.output(dust, PollutionMaterials.mansussteel, 6)
 				.duration(600)
@@ -1743,7 +1744,7 @@ public class MagicGCYMRecipes {
 				.EUt(1920)
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-				.input(plate, thaumium, 2)
+				.input(plate, GTQTMaterials.Thaumium, 2)
 				.input(plate, hyperdimensional_silver, 4)
 				.input(frameGt, mansussteel,1)
 				.circuitMeta(16)
@@ -1775,7 +1776,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
 				.input(plate, Terrasteel, 3)
 				.input(frameGt, keqinggold)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_1_CASING, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1786,7 +1787,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
 				.input(plate, Terrasteel, 3)
 				.input(frameGt, keqinggold)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_2_CASING, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1797,7 +1798,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
 				.input(plate, Terrasteel, 3)
 				.input(frameGt, keqinggold)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_3_CASING, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1808,7 +1809,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
 				.input(plate, Terrasteel, 3)
 				.input(frameGt, keqinggold)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_4_CASING, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1819,7 +1820,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
 				.input(plate, Terrasteel, 3)
 				.input(frameGt, keqinggold)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_5_CASING, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1830,7 +1831,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_WATERTIGHT_CASING))
 				.input(plate, Terrasteel, 3)
 				.input(frameGt, keqinggold)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.BOT_BLOCK.getItemVariant(POBotBlock.BotBlockType.TERRA_6_CASING, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1842,7 +1843,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
 				.input(plate, ElvenElementium, 3)
 				.input(ModItems.rune, 1, 1)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_1, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1853,7 +1854,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
 				.input(plate, ElvenElementium, 3)
 				.input(ModItems.rune, 1, 3)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_2, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1864,7 +1865,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
 				.input(plate, ElvenElementium, 3)
 				.input(ModItems.rune, 1, 2)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_3, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1875,7 +1876,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
 				.input(plate, ElvenElementium, 3)
 				.input(ModItems.rune, 1, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_4, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1886,7 +1887,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_BASIC))
 				.input(plate, ElvenElementium, 3)
 				.input(ModItems.rune, 1, 6)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaBlocks.MANA_PLATE.getItemVariant(POManaPlate.ManaBlockType.MANA_5, 2))
 				.circuitMeta(6)
 				.duration(400)
@@ -1906,6 +1907,8 @@ public class MagicGCYMRecipes {
 				.duration(10000)
 				.EUt(7680)
 				.buildAndRegister();
+
+        /*
 		//小化工厂
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(MetaTileEntities.CHEMICAL_REACTOR[IV], 4)
@@ -1925,7 +1928,7 @@ public class MagicGCYMRecipes {
 				.input(MetaTileEntities.HULL[IV], 4)
 				.input(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206)
 				.input(frameGt, mansussteel, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[0].getStackForm(4))
 				.duration(800)
 				.EUt(7680)
@@ -1934,7 +1937,7 @@ public class MagicGCYMRecipes {
 				.input(MetaTileEntities.HULL[LuV], 4)
 				.input(MetaItems.FIELD_GENERATOR_LuV.getMetaItem(), 1, 207)
 				.input(frameGt, mansussteel, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[1].getStackForm(4))
 				.duration(800)
 				.EUt(30720)
@@ -1943,7 +1946,7 @@ public class MagicGCYMRecipes {
 				.input(MetaTileEntities.HULL[ZPM], 4)
 				.input(MetaItems.FIELD_GENERATOR_ZPM.getMetaItem(), 1, 208)
 				.input(frameGt, mansussteel, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[2].getStackForm(4))
 				.duration(800)
 				.EUt(122880)
@@ -1952,7 +1955,7 @@ public class MagicGCYMRecipes {
 				.input(MetaTileEntities.HULL[UV], 4)
 				.input(MetaItems.FIELD_GENERATOR_UV.getMetaItem(), 1, 209)
 				.input(frameGt, mansussteel, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(GCYMMetaTileEntities.PARALLEL_HATCH[3].getStackForm(4))
 				.duration(800)
 				.EUt(491520)
@@ -1982,7 +1985,7 @@ public class MagicGCYMRecipes {
 				.inputs(PollutionMetaTileEntities.MAGIC_CHEMICAL_REACTOR.getStackForm())
 				.input(MetaItems.FIELD_GENERATOR_HV.getMetaItem(), 8, 204)
 				.input(BlocksTC.smelterThaumium, 8)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.outputs(PollutionMetaTileEntities.GT_ESSENCE_SMELTER.getStackForm())
 				.circuitMeta(1)
 				.EUt(1920)
@@ -1997,7 +2000,7 @@ public class MagicGCYMRecipes {
 				.input(plate, ElvenElementium, 32)
 				.input(frameGt, keqinggold, 4)
 				.input(gear, hyperdimensional_silver, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.BOT_GAS_COLLECTOR.getStackForm())
 				.circuitMeta(16)
 				.EUt(30720)
@@ -2012,7 +2015,7 @@ public class MagicGCYMRecipes {
 				.input(plate, Terrasteel, 32)
 				.input(frameGt, hyperdimensional_silver, 4)
 				.input(gear, keqinggold, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(10000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.BOT_VACUUM_FREEZER.getStackForm())
 				.circuitMeta(16)
 				.EUt(30720)
@@ -2026,7 +2029,7 @@ public class MagicGCYMRecipes {
 				.input(MetaItems.ELECTRIC_PUMP_IV, 16)
 				.input(plate, Terrasteel, 32)
 				.input(gear, keqinggold, 4)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(16000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(16000))
 				.fluidInputs(Lubricant.getFluid(16000))
 				.outputs(PollutionMetaTileEntities.LARGE_MANA_TURBINE.getStackForm())
 				.circuitMeta(16)
@@ -2045,7 +2048,7 @@ public class MagicGCYMRecipes {
 				.input(MetaItems.FIELD_GENERATOR_LuV, 16)
 				.input(plateDense, Terrasteel, 32)
 				.input(cableGtHex, keqinggold, 16)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(64000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(64000))
 				.fluidInputs(Lubricant.getFluid(64000))
 				.outputs(PollutionMetaTileEntities.MEGA_MANA_TURBINE.getStackForm())
 				.EUt(VA[ZPM])
@@ -2136,7 +2139,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(plate, Steel, 48)
 				.input(OrePrefix.gem, Quartzite, 12)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.output(ItemsTC.visResonator, 12)
 				.EUt(1920)
 				.duration(100)
@@ -2144,7 +2147,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(gem, valonite, 8)
 				.input(plate, thaumium, 48)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1000))
 				.output(ItemsTC.morphicResonator, 8)
 				.EUt(1920)
 				.duration(100)
@@ -2152,7 +2155,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(Blocks.GLASS, 2)
 				.input(ItemsTC.morphicResonator)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(500))
 				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.LAMINATED_GLASS))
 				.circuitMeta(1)
 				.EUt(1920)
@@ -2161,7 +2164,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(Blocks.GLASS, 2)
 				.input(ItemsTC.morphicResonator)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(500))
 				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.AAMINATED_GLASS))
 				.circuitMeta(2)
 				.EUt(1920)
@@ -2170,7 +2173,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(Blocks.GLASS, 2)
 				.input(ItemsTC.morphicResonator)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(500))
 				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.BAMINATED_GLASS))
 				.circuitMeta(3)
 				.EUt(1920)
@@ -2179,7 +2182,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(Blocks.GLASS, 2)
 				.input(ItemsTC.morphicResonator)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(500))
 				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.CAMINATED_GLASS))
 				.circuitMeta(4)
 				.EUt(1920)
@@ -2188,7 +2191,7 @@ public class MagicGCYMRecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(Blocks.GLASS, 2)
 				.input(ItemsTC.morphicResonator)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(500))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(500))
 				.outputs(PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.DAMINATED_GLASS))
 				.circuitMeta(5)
 				.EUt(1920)
@@ -2562,5 +2565,7 @@ public class MagicGCYMRecipes {
 				.duration(4000)
 				.EUt(VA[LuV])
 				.buildAndRegister();
+
+         */
 	}
 }

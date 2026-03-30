@@ -13,11 +13,11 @@ import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
-import keqing.gtqtcore.api.utils.GTQTDateHelper;
-import keqing.gtqtcore.client.textures.GTQTTextures;
+import gtqt.api.util.GTQTDateHelper;
 import keqing.pollution.POConfig;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.items.behaviors.FilterBehavior;
+import meowmel.gtqtcore.client.textures.GTQTTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -182,7 +182,7 @@ public class MetaTileEntityFluxClear extends TieredMetaTileEntity {
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        GTQTTextures.LARGE_ROCKET_ENGINE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+        GTQTTextures.ROCKET_ENGINE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Override

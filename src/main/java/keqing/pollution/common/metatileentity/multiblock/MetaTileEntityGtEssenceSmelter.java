@@ -3,6 +3,7 @@ package keqing.pollution.common.metatileentity.multiblock;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
@@ -12,7 +13,6 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
-import keqing.gtqtcore.api.metatileentity.MetaTileEntityBaseWithControl;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.api.utils.POAspectToGtFluidList;
 import keqing.pollution.client.textures.POTextures;
@@ -20,6 +20,7 @@ import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.POGlass;
 import keqing.pollution.common.block.metablocks.POMBeamCore;
 import keqing.pollution.common.block.metablocks.POMagicBlock;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -107,7 +108,7 @@ public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithContro
     }
 
     protected IBlockState getCasingState3() {
-        return MetaBlocks.FRAMES.get(PollutionMaterials.thaumium).getBlock(PollutionMaterials.thaumium);
+        return MetaBlocks.FRAMES.get(GTQTMaterials.Thaumium).getBlock(GTQTMaterials.Thaumium);
     }
 
     protected IBlockState getCasingState4() {

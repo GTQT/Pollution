@@ -6,8 +6,6 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.GTUtility;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.items.GTQTMetaItems;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.unification.PollutionMaterials;
@@ -17,6 +15,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static keqing.pollution.api.utils.ae2Index.*;
 import static keqing.pollution.api.utils.ae2Index.fluidCell4k;
 
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +33,7 @@ public class AERecipes {
 		common();  //注册控制器啊 驱动器啊 合成存储器之类的方块
 		iohatch();//注册接口啊 样板总线 面板之类的非实体方块
 		disk();//注册硬盘
-		magic_assembler();
+		//magic_assembler();
 
 	}
 
@@ -132,6 +131,7 @@ public class AERecipes {
 	}
 
 	private static void common() {
+        /*
         //聚能石英玻璃
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.inputs(GTUtility.copy(1, quartzGlass))
@@ -690,7 +690,7 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.keqinggold)
 				.inputs(GTUtility.copy(1, forming))
 				.inputs(GTUtility.copy(1, breaking))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(16, meInterface))
 				.duration(160)
 				.circuitMeta(20)
@@ -702,7 +702,7 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver)
 				.inputs(GTUtility.copy(1, forming))
 				.inputs(GTUtility.copy(1, breaking))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(16, meFluidInterface))
 				.duration(160)
 				.circuitMeta(20)
@@ -713,7 +713,7 @@ public class AERecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(OrePrefix.plate, CertusQuartz, 6)
 				.input(OrePrefix.dust, GTQTMaterials.Fluix)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(16, breaking))
 				.duration(160)
 				.circuitMeta(1)
@@ -723,7 +723,7 @@ public class AERecipes {
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(OrePrefix.plate, NetherQuartz, 6)
 				.input(OrePrefix.dust, GTQTMaterials.Fluix)
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(16, forming))
 				.duration(160)
 				.circuitMeta(1)
@@ -764,7 +764,7 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.keqinggold)
 				.inputs(GTUtility.copy(2, forming))
 				.inputs(GTUtility.copy(2, breaking))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(4, molecularAssembler))
 				.circuitMeta(21)
 				.duration(400)
@@ -776,7 +776,7 @@ public class AERecipes {
 				.inputs(GTUtility.copy(2, meGlassCable))
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver)
 				.inputs(GTUtility.copy(engineeringProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(16, p2p))
 				.circuitMeta(21)
 				.duration(100)
@@ -825,7 +825,7 @@ public class AERecipes {
 				.input(MetaItems.CENTRAL_PROCESSING_UNIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.LV, 4)
 				.inputs(GTUtility.copy(1, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(4, cell1k))
 				.duration(320)
 				.circuitMeta(22)
@@ -836,7 +836,7 @@ public class AERecipes {
 				.input(MetaItems.RANDOM_ACCESS_MEMORY)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.MV, 4)
 				.inputs(GTUtility.copy(2, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(200))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(200))
 				.outputs(GTUtility.copy(4, cell4k))
 				.duration(320)
 				.circuitMeta(22)
@@ -847,7 +847,7 @@ public class AERecipes {
 				.input(MetaItems.ULTRA_LOW_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.HV, 4)
 				.inputs(GTUtility.copy(4, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(400))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(400))
 				.outputs(GTUtility.copy(4, cell16k))
 				.duration(320)
 				.circuitMeta(22)
@@ -858,7 +858,7 @@ public class AERecipes {
 				.input(MetaItems.LOW_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
 				.inputs(GTUtility.copy(8, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(800))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(800))
 				.outputs(GTUtility.copy(4, cell64k))
 				.duration(320)
 				.circuitMeta(22)
@@ -870,7 +870,7 @@ public class AERecipes {
 				.input(MetaItems.POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.IV, 4)
 				.inputs(GTUtility.copy(16, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1600))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1600))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 19, 4, null))
 				.duration(320)
 				.circuitMeta(22)
@@ -881,7 +881,7 @@ public class AERecipes {
 				.input(MetaItems.HIGH_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.LuV, 4)
 				.inputs(GTUtility.copy(32, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(3200))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(3200))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 20, 4, null))
 				.duration(320)
 				.circuitMeta(22)
@@ -892,7 +892,7 @@ public class AERecipes {
 				.input(MetaItems.ULTRA_HIGH_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.ZPM, 4)
 				.inputs(GTUtility.copy(64, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(6400))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(6400))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 21, 4, null))
 				.duration(320)
 				.circuitMeta(22)
@@ -904,7 +904,7 @@ public class AERecipes {
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.UV, 4)
 				.inputs(GTUtility.copy(64, logicProcessor))
 				.inputs(GTUtility.copy(64, logicProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(12800))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(12800))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 22, 4, null))
 				.duration(320)
 				.circuitMeta(22)
@@ -917,7 +917,7 @@ public class AERecipes {
 				.input(MetaItems.CENTRAL_PROCESSING_UNIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.LV, 4)
 				.inputs(GTUtility.copy(1, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(4, fluidCell1k))
 				.duration(320)
 				.circuitMeta(23)
@@ -928,7 +928,7 @@ public class AERecipes {
 				.input(MetaItems.RANDOM_ACCESS_MEMORY)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.MV, 4)
 				.inputs(GTUtility.copy(2, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(200))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(200))
 				.outputs(GTUtility.copy(4, fluidCell4k))
 				.duration(320)
 				.circuitMeta(23)
@@ -939,7 +939,7 @@ public class AERecipes {
 				.input(MetaItems.ULTRA_LOW_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.HV, 4)
 				.inputs(GTUtility.copy(4, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(400))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(400))
 				.outputs(GTUtility.copy(4, fluidCell16k))
 				.duration(320)
 				.circuitMeta(23)
@@ -950,7 +950,7 @@ public class AERecipes {
 				.input(MetaItems.LOW_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
 				.inputs(GTUtility.copy(8, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(800))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(800))
 				.outputs(GTUtility.copy(4, fluidCell64k))
 				.duration(320)
 				.circuitMeta(23)
@@ -962,7 +962,7 @@ public class AERecipes {
                 .input(MetaItems.POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.IV, 4)
 				.inputs(GTUtility.copy(16, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(1600))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(1600))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 24, 4, null))
 				.duration(320)
 				.circuitMeta(23)
@@ -973,7 +973,7 @@ public class AERecipes {
 				.input(MetaItems.HIGH_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.LuV, 4)
 				.inputs(GTUtility.copy(32, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(3200))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(3200))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 25, 4, null))
 				.duration(320)
 				.circuitMeta(23)
@@ -984,7 +984,7 @@ public class AERecipes {
 				.input(MetaItems.ULTRA_HIGH_POWER_INTEGRATED_CIRCUIT)
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.ZPM, 4)
 				.inputs(GTUtility.copy(64, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(6400))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(6400))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 26, 4, null))
 				.duration(320)
 				.circuitMeta(23)
@@ -996,7 +996,7 @@ public class AERecipes {
 				.input(OrePrefix.circuit, MarkerMaterials.Tier.UV, 4)
 				.inputs(GTUtility.copy(64, calculationProcessor))
 				.inputs(GTUtility.copy(64, calculationProcessor))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(12800))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(12800))
 				.outputs(GameRegistry.makeItemStack("nae2:material", 27, 4, null))
 				.duration(320)
 				.circuitMeta(23)
@@ -1009,7 +1009,7 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.keqinggold)
 				.inputs(GTUtility.copy(1, meInterface))
 				.inputs(GTUtility.copy(1, breaking))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(8, inputBus))
 				.duration(160)
 				.circuitMeta(18)
@@ -1021,7 +1021,7 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver)
 				.inputs(GTUtility.copy(1, meInterface))
 				.inputs(GTUtility.copy(1, forming))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(8, outputBus))
 				.duration(160)
 				.circuitMeta(19)
@@ -1033,7 +1033,7 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.keqinggold)
 				.inputs(GTUtility.copy(1, meFluidInterface))
 				.inputs(GTUtility.copy(1, breaking))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(8, fluidInputBus))
 				.duration(160)
 				.circuitMeta(18)
@@ -1045,11 +1045,13 @@ public class AERecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver)
 				.inputs(GTUtility.copy(1, meFluidInterface))
 				.inputs(GTUtility.copy(1, forming))
-				.fluidInputs(GTQTMaterials.Magic.getFluid(100))
+				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
 				.outputs(GTUtility.copy(8, fluidOutputBus))
 				.duration(160)
 				.circuitMeta(19)
 				.EUt(480)
 				.buildAndRegister();
+
+         */
 	}
 }

@@ -143,13 +143,6 @@ public abstract class POManaMultiblockWithElectric extends RecipeMapMultiblockCo
             predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
         }
 
-        if ((checkItemIn || checkFluidIn) && (this.recipeMap.getMaxInputs() > 0 || this.recipeMap.getMaxFluidInputs() > 0)) {
-            predicate = predicate.or(abilities(MultiblockAbility.DUAL_IMPORT).setPreviewCount(1));
-        }
-
-        if ((checkItemOut || checkFluidOut) && (this.recipeMap.getMaxOutputs() > 0 || this.recipeMap.getMaxFluidOutputs() > 0)) {
-            predicate = predicate.or(abilities(MultiblockAbility.DUAL_EXPORT).setPreviewCount(1));
-        }
 
         return predicate;
     }

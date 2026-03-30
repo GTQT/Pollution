@@ -49,7 +49,6 @@ public class PollutionMaterials {
 	public static Material infused_tinctura;
 
 	//材料
-	public static Material thaumium;
 	public static Material syrmorite;
 	public static Material octine;
 	public static Material scabyst;

@@ -4,8 +4,8 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.EnumValidationResult;
-import keqing.gtqtcore.api.utils.GTQTLog;
 import keqing.pollution.api.recipes.properties.ManaProperty;
+import meowmel.gtqtcore.GTQTCore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
@@ -44,7 +44,7 @@ public class ManaRecipesBuilder extends RecipeBuilder<ManaRecipesBuilder> {
 
     public ManaRecipesBuilder TotalMana(int TotalMana) {
         if (TotalMana < 0) {
-            GTQTLog.logger.error("Total Mana cannot be less than or equal to 0", new IllegalArgumentException());
+            GTQTCore.LOGGER.error("Total Mana cannot be less than or equal to 0", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
         }
 

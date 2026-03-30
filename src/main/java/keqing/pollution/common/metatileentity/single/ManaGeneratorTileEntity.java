@@ -23,7 +23,7 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity {
 
 
     public ManaGeneratorTileEntity(ResourceLocation metaTileEntityId, int tier) {
-        super(metaTileEntityId, PORecipeMaps.MANA_GEN_RECIPES, Textures.COMBUSTION_GENERATOR_OVERLAY, tier, (n) -> n + 1);
+        super(metaTileEntityId, PORecipeMaps.MANA_GEN_RECIPES, Textures.COMBUSTION_GENERATOR_OVERLAY, tier, (n) -> n + 1,1.0);
     }
 
     @Override

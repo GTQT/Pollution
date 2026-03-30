@@ -6,6 +6,7 @@ import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.items.behaviors.*;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -146,7 +147,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.FILTER_MKI = this.addItem(210, "filter.i").setMaxStackSize(8).addComponents(new FilterBehavior(240000, 1, PollutionMaterials.infused_earth)).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.FILTER_MKII = this.addItem(211, "filter.ii").setMaxStackSize(8).addComponents(new FilterBehavior(360000, 2, PollutionMaterials.infused_water)).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.FILTER_MKIII = this.addItem(212, "filter.iii").setMaxStackSize(8).addComponents(new FilterBehavior(480000, 3, PollutionMaterials.syrmorite)).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.FILTER_MKIV = this.addItem(213, "filter.iv").setMaxStackSize(8).addComponents(new FilterBehavior(640000, 4, PollutionMaterials.thaumium)).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.FILTER_MKIV = this.addItem(213, "filter.iv").setMaxStackSize(8).addComponents(new FilterBehavior(640000, 4, GTQTMaterials.Thaumium)).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.FILTER_MKV = this.addItem(214, "filter.v").setMaxStackSize(8).addComponents(new FilterBehavior(720000, 5, PollutionMaterials.octine)).setCreativeTabs(Pollution_TAB);
 		//模块升级4个
 		PollutionMetaItems.ENERGY_REDUCE = this.addItem(220, "energy_reduce").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);

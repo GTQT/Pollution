@@ -8,8 +8,7 @@ import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import gregtechfoodoption.machines.GTFOTileEntities;
-import keqing.gtqtcore.common.metatileentities.GTQTMetaTileEntities;
+
 import keqing.pollution.Pollution;
 import keqing.pollution.api.unification.PollutionMaterials;
 import keqing.pollution.common.block.PollutionMetaBlocks;
@@ -33,10 +32,7 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
 import static gregtech.api.unification.ore.OrePrefix.ingotHot;
 import static gregtech.common.items.MetaItems.*;
-import static keqing.gtqtcore.common.items.GTQTMetaItems.*;
-import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES;
-import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
-import static keqing.pollution.api.unification.PollutionMaterials.*;
+
 import static keqing.pollution.common.items.PollutionMetaItems.*;
 
 public class CircuitManager {
@@ -196,6 +192,7 @@ public class CircuitManager {
                 ADVANCED_SMD_DIODE.getStackForm()
         ));
 
+        /*
         //UHV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UHV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
@@ -303,6 +300,8 @@ public class CircuitManager {
                 SUPRACAUSAL_SMD_TRANSISTOR.getStackForm(),
                 SUPRACAUSAL_SMD_DIODE.getStackForm()
         ));
+
+         */
     }
 
 }

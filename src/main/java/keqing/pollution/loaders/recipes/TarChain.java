@@ -8,8 +8,6 @@ import static gregtech.api.recipes.RecipeMaps.CRACKING_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.Materials.Redstone;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
-import static keqing.gtqtcore.api.unification.GTQTMaterials.SeverelySteamCrackedCoalOil;
 
 public class TarChain {
     static void lightlyCrack(Material raw, Material hydroCracked, Material steamCracked) {
@@ -56,9 +54,10 @@ public class TarChain {
                 .EUt(120)
                 .buildAndRegister();
 
+        /*
         lightlyCrack(PollutionMaterials.pure_tar, LightlyHydroCrackedCoalOil, LightlySteamCrackedCoalOil);
         severelyCrack(PollutionMaterials.pure_tar, SeverelyHydroCrackedCoalOil, SeverelySteamCrackedCoalOil);
-
+*/
 
     }
 }

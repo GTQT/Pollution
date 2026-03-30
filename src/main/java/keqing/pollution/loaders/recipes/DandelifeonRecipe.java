@@ -1,6 +1,5 @@
 package keqing.pollution.loaders.recipes;
 
-import keqing.gtqtcore.api.unification.GTQTMaterials;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockFloatingSpecialFlower;

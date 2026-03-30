@@ -9,9 +9,6 @@ import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
-import keqing.gtqtcore.client.textures.GTQTTextures;
-import keqing.gtqtcore.common.metatileentities.multi.generators.MetaTileEntityMegaTurbine;
 import keqing.pollution.Pollution;
 import keqing.pollution.api.metatileentity.POMetaTileEntitySingleTurbine;
 import keqing.pollution.api.recipes.PORecipeMaps;
@@ -29,13 +26,14 @@ import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEnti
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCAComputation;
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCACooler;
 import keqing.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCAEmpty;
-import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityFluxMuffler;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
 import keqing.pollution.common.metatileentity.multiblockpart.MetaTileEntityVisHatch;
 import keqing.pollution.common.metatileentity.single.*;
 import keqing.pollution.common.metatileentity.single.MetaTileEntityFluxClear;
 import keqing.pollution.common.metatileentity.storage.MetaTileEntityAspectTank;
+import meowmel.gtqtcore.client.textures.GTQTTextures;
+import meowmel.gtqtcore.common.metatileentities.multi.electric.generator.MetaTileEntityMegaTurbine;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
@@ -43,7 +41,7 @@ import static keqing.pollution.api.recipes.PORecipeMaps.MAGIC_TURBINE_FUELS;
 import static keqing.pollution.client.textures.POTextures.*;
 
 public class PollutionMetaTileEntities {
-    public static final MetaTileEntityMultiblockPart[] FLUX_MUFFLERS = new MetaTileEntityMultiblockPart[9];
+   // public static final MetaTileEntityMultiblockPart[] FLUX_MUFFLERS = new MetaTileEntityMultiblockPart[9];
     public static final TieredMetaTileEntity[] AURA_GENERATORS = new TieredMetaTileEntity[6];
     public static final MetaTileEntityVisProvider[] VIS_PROVIDERS = new MetaTileEntityVisProvider[9];
     public static final MetaTileEntityFluxClear[] VIS_CLEAR = new MetaTileEntityFluxClear[4];
@@ -149,12 +147,13 @@ public class PollutionMetaTileEntities {
         MANA_GENERATOR[5] = registerMetaTileEntity(19, new ManaGeneratorTileEntity(PollutionID("mana_gen_iv"), 5));
 
         //FluxPromotedGenerator
+        /*
         FLUX_PROMOTED_FUEL_CELL[0] = registerMetaTileEntity(20, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.lv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction));
         FLUX_PROMOTED_FUEL_CELL[1] = registerMetaTileEntity(21, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.mv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction));
         FLUX_PROMOTED_FUEL_CELL[2] = registerMetaTileEntity(22, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.hv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction));
         FLUX_PROMOTED_FUEL_CELL[3] = registerMetaTileEntity(23, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.ev"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 4, GTUtility.genericGeneratorTankSizeFunction));
         FLUX_PROMOTED_FUEL_CELL[4] = registerMetaTileEntity(24, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.iv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 5, GTUtility.genericGeneratorTankSizeFunction));
-
+*/
         //蛋鸡
         MAGIC_ENERGY_ABSORBER[0] = registerMetaTileEntity(25, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.lv"), 1));
         MAGIC_ENERGY_ABSORBER[1] = registerMetaTileEntity(26, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.mv"), 2));
@@ -212,12 +211,12 @@ public class PollutionMetaTileEntities {
             String tierName = GTValues.VN[i + 1].toLowerCase();
             VIS_CLEAR[i] = registerMetaTileEntity(210 + i - 1, new MetaTileEntityFluxClear(PollutionID("flux_clear." + tierName), i + 1));
         }
-
+/*
         for (int i = 0; i < FLUX_MUFFLERS.length; i++) {
             String tierName = GTValues.VN[i + 1].toLowerCase();
             FLUX_MUFFLERS[i] = registerMetaTileEntity(220 + i, new MetaTileEntityFluxMuffler(PollutionID("pollution_muffler_hatch." + tierName), i + 1));
         }
-
+*/
         //多方块
         FLUX_CLEARS[0] = registerMetaTileEntity(300, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
         FLUX_CLEARS[1] = registerMetaTileEntity(301, new keqing.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));

@@ -19,16 +19,14 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
-import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
-import keqing.gtqtcore.api.unification.GTQTMaterials;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
-import keqing.gtqtcore.common.block.blocks.BlockPCBFactoryCasing;
 import keqing.pollution.POConfig;
 import keqing.pollution.api.recipes.PORecipeMaps;
 import keqing.pollution.api.utils.POUtils;
 import keqing.pollution.client.textures.POTextures;
 import keqing.pollution.common.block.PollutionMetaBlocks;
 import keqing.pollution.common.block.metablocks.*;
+import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -207,7 +205,8 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
     }
 
     private static IBlockState getCasingBioPcb() {
-        return GTQTMetaBlocks.blockPCBFactoryCasing.getState(BlockPCBFactoryCasing.PCBFactoryCasingType.BIOLOGICAL_STERILE_MACHINE_CASING);
+        //return GTQTMetaBlocks.blockPCBFactoryCasing.getState(BlockPCBFactoryCasing.PCBFactoryCasingType.BIOLOGICAL_STERILE_MACHINE_CASING);
+        return MetaBlocks.FUSION_CASING.getState(BlockFusionCasing.CasingType.FUSION_CASING_MK3);
     }
 
     private static IBlockState getCasingManaPlate5() {
@@ -335,7 +334,7 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
             if(modeIndex==1){
                 EnergyBuffer+=this.energyContainer.getEnergyStored();
                 this.energyContainer.addEnergy(-residualEnergyCapacity);
-                FluidStack ManaOutput= GTQTMaterials.Richmagic.getFluid((int) (1.25*EnergyBuffer / POConfig.MachineSettingSwitch.EuPerMbRichMagicKq));
+                FluidStack ManaOutput= GTQTMaterials.Mana.getFluid((int) (1.25*EnergyBuffer / POConfig.MachineSettingSwitch.EuPerMbRichMagicKq));
                 this.outputFluidInventory.fill(ManaOutput,true);
                 EnergyBuffer=0;
 

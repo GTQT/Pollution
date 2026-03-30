@@ -5,6 +5,7 @@ import gregtech.api.fluids.attribute.FluidAttributes;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.BlastProperty;
 import keqing.pollution.api.unification.PollutionMaterials;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
@@ -340,7 +341,7 @@ public class SecondDegreeMaterials {
                 .dust()
                 .iconSet(DULL)
                 .flags(DECOMPOSITION_BY_ELECTROLYZING)
-                .components(Lithium, 6, thaumium, 2, infused_energy, 1, infused_motion, 1)
+                .components(Lithium, 6, GTQTMaterials.Thaumium, 2, infused_energy, 1, infused_motion, 1)
                 .build();
 
         PollutionMaterials.advanced_battery_content = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_content"))
