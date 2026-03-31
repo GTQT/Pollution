@@ -6,20 +6,17 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
+import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.recipes.PORecipeMaps;
-import meowmel.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity {
+public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity implements IManaHatch {
 
     public ManaGeneratorTileEntity(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, PORecipeMaps.MANA_GEN_RECIPES, Textures.COMBUSTION_GENERATOR_OVERLAY, tier, (n) -> n + 1,1.0);
@@ -41,10 +38,6 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity {
         tooltip.add(1, I18n.format("花花草草的力量！"));
         tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", this.energyContainer.getEnergyCapacity()));
-        if (this.recipeMap.getMaxFluidInputs() > 0 || this.recipeMap.getMaxFluidOutputs() > 0) {
-            tooltip.add(I18n.format("gregtech.universal.tooltip.fluid_storage_capacity", this.getTankScalingFunction().apply(this.getTier())));
-        }
-
     }
 
     @Override
@@ -55,9 +48,29 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity {
         tooltip.add(I18n.format("gregtech.tool_action.soft_mallet.reset"));
     }
 
-    public void reciveMana(int mana) {
-        if (energyContainer.getEnergyStored() <= energyContainer.getEnergyCapacity()) {
-            energyContainer.addEnergy((long) mana * (getTier() + 1));
+    @Override
+    public long getMaxMana() {
+        return energyContainer.getEnergyCapacity();
+    }
+
+    @Override
+    public long getMana() {
+        return energyContainer.getEnergyStored();
+    }
+
+    @Override
+    public boolean isFull() {
+        return getMana() >= getMaxMana();
+    }
+
+    public void receiveMana(int mana) {
+        if (!isFull()) {
+            energyContainer.addEnergy(mana);
         }
+    }
+
+    @Override
+    public boolean consumeMana(int amount, boolean simulate) {
+        return false;
     }
 }

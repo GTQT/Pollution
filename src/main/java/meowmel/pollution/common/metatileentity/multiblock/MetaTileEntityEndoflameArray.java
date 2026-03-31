@@ -17,7 +17,7 @@ import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POBotBlock;
 import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
-import meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaPoolHatch;
+import meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl {
-    MetaTileEntityManaPoolHatch ManaPool = null;
+    MetaTileEntityManaHatch ManaPool = null;
     private int num = 0;
     private int fireticks = 0;
     private final int MAX_TICKS = 1600000000;
@@ -74,7 +74,7 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 speed = Math.min(speed, fireticks);
                 //削减燃烧时间 产出魔力
                 fireticks -= speed;
-                this.ManaPool.consumeMana((int) (speed * 1.5));
+                //this.ManaPool.consumeMana((int) (speed * 1.5));
             }
         }
     }
@@ -157,8 +157,8 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 HashSet set = (HashSet) battery.getValue();
                 for (var s : set
                 ) {
-                    if (s instanceof MetaTileEntityManaPoolHatch) {
-                        this.ManaPool = (MetaTileEntityManaPoolHatch) s;
+                    if (s instanceof MetaTileEntityManaHatch) {
+                        this.ManaPool = (MetaTileEntityManaHatch) s;
                     }
                 }
             }

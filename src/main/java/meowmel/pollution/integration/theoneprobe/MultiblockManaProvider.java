@@ -3,7 +3,7 @@ package meowmel.pollution.integration.theoneprobe;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.util.TextFormattingUtil;
-import meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
+import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityVisHatch;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -28,9 +28,9 @@ public class MultiblockManaProvider implements IProbeInfoProvider {
             TileEntity te = world.getTileEntity(iProbeHitData.getPos());
             if (te instanceof IGregTechTileEntity igtte) {
                 MetaTileEntity mte = igtte.getMetaTileEntity();
-                if (mte instanceof MetaTileEntityManaHatch) {
-                    int Mana = ((MetaTileEntityManaHatch) mte).getMana();
-                    int MaxMana = ((MetaTileEntityManaHatch) mte).getMaxMana();
+                if (mte instanceof IManaHatch manaHatch) {
+                    long Mana = manaHatch.getMana();
+                    long MaxMana = manaHatch.getMaxMana();
                     iProbeInfo.progress(Mana, MaxMana, iProbeInfo.defaultProgressStyle()
                             .suffix(" / " + TextFormattingUtil.formatNumbers(MaxMana) + " Mana")
                             .filledColor(0xFFEEE600)

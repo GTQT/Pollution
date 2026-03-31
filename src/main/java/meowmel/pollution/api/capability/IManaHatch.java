@@ -1,14 +1,15 @@
 package meowmel.pollution.api.capability;
 
 public interface IManaHatch {
-    int getMaxMana();
-    int getMana();
+    long getMaxMana();
+
+    long getMana();
+
+    boolean isFull();
+
     int getTier();
-    boolean consumeMana(int amount,boolean simulate);
 
-    double getTimeReduce();
-    double getEnergyReduce();
-    int getOverclockingEnhance();
-    int getParallelEnhance();
+    void receiveMana(int mana);
 
+    boolean consumeMana(int amount, boolean simulate);
 }

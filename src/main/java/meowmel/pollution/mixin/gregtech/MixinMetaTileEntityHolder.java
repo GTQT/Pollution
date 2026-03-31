@@ -3,24 +3,17 @@ package meowmel.pollution.mixin.gregtech;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.metatileentity.TickableTileEntityBase;
-import meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
-import meowmel.pollution.common.metatileentity.single.ManaGeneratorTileEntity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
+import meowmel.pollution.api.capability.IManaHatch;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import vazkii.botania.api.internal.IManaBurst;
 import vazkii.botania.api.mana.IManaCollector;
 import vazkii.botania.api.mana.ManaNetworkEvent;
 
 @Mixin(MetaTileEntityHolder.class)
-public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase implements IManaCollector{
-    private static final String TAG_MANA = "mana";
-    private int mana = 0;
+public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase implements IManaCollector {
+    @Shadow(remap = false)
+    MetaTileEntity metaTileEntity;
 
     @Override
     public void invalidate() {
@@ -40,36 +33,10 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
         super.onLoad();
     }
 
-    @Shadow(remap = false)
-    private MetaTileEntity metaTileEntity;
-
-    public String getName(){
-        return "";
-    }
-
-    private static final int MAX_MANA = 50000;
-
-    @Override
-    public boolean isFull() {
-        return mana >= MAX_MANA;
-    }
-    @Inject(method = "writeToNBT",at = @At("HEAD"))
-    public void onWriteToNBT(NBTTagCompound data, CallbackInfoReturnable<NBTTagCompound> compoundCallbackInfoReturnable) {
-        data.setInteger(TAG_MANA, mana);
-    }
-
-    @Inject(method = "readFromNBT",at = @At("HEAD"))
-    public void onReadFromNBT(NBTTagCompound data, CallbackInfo callbackInfo) {
-        mana = data.getInteger(TAG_MANA);
-    }
-
     @Override
     public void recieveMana(int mana) {
-        if(metaTileEntity instanceof ManaGeneratorTileEntity simpleGeneratorMetaTileEntity) {
-            simpleGeneratorMetaTileEntity.reciveMana(mana);
-        }
-        if(metaTileEntity instanceof MetaTileEntityManaHatch MetaTileEntityMultiblockPart) {
-            MetaTileEntityMultiblockPart.receiveMana(mana);
+        if (metaTileEntity instanceof IManaHatch manaHatch) {
+            manaHatch.receiveMana(mana);
         }
     }
 
@@ -78,25 +45,6 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
         return true;
     }
 
-    @Override
-    public int getCurrentMana() {
-        return mana;
-    }
-    @Shadow(remap = false)
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-
-    }
-    @Shadow(remap = false)
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-
-    }
-    @Shadow(remap = false)
-    @Override
-    public void receiveCustomData(int discriminator, PacketBuffer buffer) {
-
-    }
     @Override
     public void onClientDisplayTick() {
 
@@ -108,7 +56,26 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
     }
 
     @Override
+    public boolean isFull() {
+        if (metaTileEntity instanceof IManaHatch manaHatch) {
+            return manaHatch.isFull();
+        }
+        return true;
+    }
+
+    @Override
+    public int getCurrentMana() {
+        if (metaTileEntity instanceof IManaHatch manaHatch) {
+            return Math.toIntExact(manaHatch.getMana());
+        }
+        return 0;
+    }
+
+    @Override
     public int getMaxMana() {
-        return MAX_MANA;
+        if (metaTileEntity instanceof IManaHatch manaHatch) {
+            return Math.toIntExact(manaHatch.getMaxMana());
+        }
+        return 0;
     }
 }
