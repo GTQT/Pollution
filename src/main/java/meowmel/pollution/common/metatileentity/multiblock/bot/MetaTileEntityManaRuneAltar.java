@@ -9,7 +9,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import meowmel.pollution.api.metatileentity.POManaMultiblock;
+import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -27,7 +27,7 @@ import vazkii.botania.common.block.ModBlocks;
 
 import static meowmel.pollution.api.recipes.PORecipeMaps.MANA_RUNE_ALTAR_RECIPES;
 
-public class MetaTileEntityManaRuneAltar extends POManaMultiblock {
+public class MetaTileEntityManaRuneAltar extends ManaMultiblockController {
 
 	public MetaTileEntityManaRuneAltar(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, MANA_RUNE_ALTAR_RECIPES);

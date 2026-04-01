@@ -6,10 +6,12 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
@@ -18,18 +20,18 @@ import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POTurbine;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPES;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
 
-public class MetaTileEntityMagicGreenHouse extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicGreenHouse extends MagicRecipeMapMultiblockController {
     public MetaTileEntityMagicGreenHouse(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]
                 {
                         //GREENHOUSE_RECIPES,
                         MAGIC_GREENHOUSE_RECIPES});
 
-        setMaterial(InfusedWater);
     }
 
     private static IBlockState getSecondCasingState() {
@@ -81,12 +83,17 @@ public class MetaTileEntityMagicGreenHouse extends PORecipeMapMultiblockControll
     }
 
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
     @Override
     public boolean canBeDistinct() {
         return true;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return InfusedWater;
     }
 }

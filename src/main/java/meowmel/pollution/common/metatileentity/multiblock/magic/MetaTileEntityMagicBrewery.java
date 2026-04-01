@@ -8,10 +8,12 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
@@ -19,18 +21,17 @@ import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POTurbine;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
 
-public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicBrewery extends MagicRecipeMapMultiblockController {
 
     public MetaTileEntityMagicBrewery(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
                 RecipeMaps.FLUID_HEATER_RECIPES});
-        setMaterial(InfusedWater);
     }
 
-    //下边都是设置多方块外形材质的喵
     private static IBlockState getCasingState() {
         return PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_COLD);
     }
@@ -47,14 +48,13 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
         return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
     }
 
-    //不要动
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity metaTileEntityHolder) {
         return new MetaTileEntityMagicBrewery(this.metaTileEntityId);
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected @NotNull BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#####")
                 .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
@@ -71,20 +71,23 @@ public class MetaTileEntityMagicBrewery extends PORecipeMapMultiblockController 
                 .build();
     }
 
-    //覆盖层材质 就是给IO渲染的材质
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
         return POTextures.SPELL_PRISM_COLD;
     }
 
-    //控制器的图形 比如传统的外观 或者聚变电脑的外观等等
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
     @Override
     public boolean canBeDistinct() {
         return true;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return InfusedWater;
     }
 }

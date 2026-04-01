@@ -5,7 +5,6 @@ import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMapBuilder;
 import gregtech.api.recipes.builders.*;
 import gregtech.core.sound.GTSoundEvents;
-import meowmel.pollution.api.recipes.builder.ManaRecipesBuilder;
 import meowmel.pollution.client.POSoundEvent;
 import net.minecraft.init.SoundEvents;
 
@@ -114,22 +113,22 @@ public class PORecipeMaps {
             .build();
 
     //////////////////////////////////////////
-    public static final RecipeMap<ManaRecipesBuilder> MANA_INFUSION_RECIPES = new RecipeMapBuilder<>("mana_infusion_recipes", new ManaRecipesBuilder())
+    public static final RecipeMap<SimpleRecipeBuilder> MANA_INFUSION_RECIPES = new RecipeMapBuilder<>("mana_infusion_recipes", new SimpleRecipeBuilder())
             .itemInputs(2)
             .itemOutputs(1)
             .build();
 
-    public static final RecipeMap<ManaRecipesBuilder> MANA_RUNE_ALTAR_RECIPES = new RecipeMapBuilder<>("mana_rune_altar_recipes", new ManaRecipesBuilder())
+    public static final RecipeMap<SimpleRecipeBuilder> MANA_RUNE_ALTAR_RECIPES = new RecipeMapBuilder<>("mana_rune_altar_recipes", new SimpleRecipeBuilder())
             .itemInputs(10)
             .itemOutputs(1)
             .build();
 
-    public static final RecipeMap<ManaRecipesBuilder> MANA_PETAL_RECIPES = new RecipeMapBuilder<>("mana_petal_recipes", new ManaRecipesBuilder())
+    public static final RecipeMap<SimpleRecipeBuilder> MANA_PETAL_RECIPES = new RecipeMapBuilder<>("mana_petal_recipes", new SimpleRecipeBuilder())
             .itemInputs(16)
             .itemOutputs(1)
             .build();
 
-    public static final RecipeMap<ManaRecipesBuilder> PURE_DAISY_RECIPES = new RecipeMapBuilder<>("pure_daisy_recipes", new ManaRecipesBuilder())
+    public static final RecipeMap<SimpleRecipeBuilder> PURE_DAISY_RECIPES = new RecipeMapBuilder<>("pure_daisy_recipes", new SimpleRecipeBuilder())
             .itemInputs(1)
             .itemOutputs(1)
             .build();

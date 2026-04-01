@@ -1,6 +1,5 @@
 package meowmel.pollution.common.metatileentity.multiblock.bot;
 
-
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -10,13 +9,20 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.logic.OCResult;
+import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import meowmel.pollution.api.metatileentity.POManaMultiblockWithElectric;
+import meowmel.gtqtcore.api.predicate.TiredTraceabilityPredicate;
+import meowmel.gtqtcore.common.blocks.BlockCoolingCoil;
+import meowmel.gtqtcore.common.blocks.BlockMachineCasing;
+import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
+import meowmel.pollution.api.capability.ipml.ManaMultiblockRecipeLogic;
+import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -24,21 +30,18 @@ import meowmel.pollution.common.block.metablocks.POBotBlock;
 import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
-import meowmel.gtqtcore.api.predicate.TiredTraceabilityPredicate;
-import meowmel.gtqtcore.common.blocks.BlockCoolingCoil;
-import meowmel.gtqtcore.common.blocks.BlockMachineCasing;
-import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
 
-public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric {
+public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
 
     int temperature;
 
@@ -107,13 +110,14 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
     }
 
     @Override
-    public void addHeatCapacity(KeyManager keyManager, UISyncer syncer) {
+    public void addCustomCapacity(KeyManager keyManager, UISyncer syncer) {
         if (isStructureFormed()) {
-            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"磁致冷线圈温度: %s K", syncer.syncInt(temperature)));
-            keyManager.add(KeyUtil.lang(TextFormatting.GRAY,"磁致冷线圈等级: %s K", syncer.syncInt(getCoilTier())));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "磁致冷线圈温度: %s K", syncer.syncInt(temperature)));
+            keyManager.add(KeyUtil.lang(TextFormatting.GRAY, "磁致冷线圈等级: %s K", syncer.syncInt(getCoilTier())));
         }
 
     }
+
     @Override
     public SoundEvent getBreakdownSound() {
         return GTSoundEvents.BREAKDOWN_ELECTRICAL;
@@ -201,15 +205,17 @@ public class MetaTileEntityBotVacuumFreezer extends POManaMultiblockWithElectric
         return Textures.HPCA_OVERLAY;
     }
 
-    protected class BotVacuumFreezerRecipeLogic extends POManaMultiblockWithElectricRecipeLogic {
+    protected class BotVacuumFreezerRecipeLogic extends ManaMultiblockRecipeLogic {
 
-        public BotVacuumFreezerRecipeLogic(POManaMultiblockWithElectric tileEntity) {
+        public BotVacuumFreezerRecipeLogic(ManaMultiblockController tileEntity) {
             super(tileEntity);
         }
 
         @Override
-        public void setMaxProgress(int maxProgress) {
-            super.setMaxProgress((int) (maxProgress * (10 - 2.0 * getCoilTier()) / 10));
+        protected void modifyOverclockPost(@NotNull OCResult ocResult, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPost(ocResult, storage);
+
+            ocResult.setDuration(Math.round((float) (ocResult.duration() * (10 - 2.0 * getCoilTier()) / 10)));
         }
     }
 }

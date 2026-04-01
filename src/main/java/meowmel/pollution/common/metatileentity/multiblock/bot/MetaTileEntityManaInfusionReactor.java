@@ -8,7 +8,7 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.core.sound.GTSoundEvents;
-import meowmel.pollution.api.metatileentity.POManaMultiblock;
+import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
@@ -27,11 +27,10 @@ import vazkii.botania.common.block.ModBlocks;
 
 import static meowmel.pollution.api.recipes.PORecipeMaps.MANA_INFUSION_RECIPES;
 
-public class MetaTileEntityManaInfusionReactor extends POManaMultiblock {
+public class MetaTileEntityManaInfusionReactor extends ManaMultiblockController {
 
     public MetaTileEntityManaInfusionReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, MANA_INFUSION_RECIPES);
-        this.recipeMapWorkable = new POManaMultiblockRecipeLogic(this);
     }
 
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {

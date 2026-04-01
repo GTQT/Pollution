@@ -3,10 +3,13 @@ package meowmel.pollution.api.metatileentity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.capability.IVisHatch;
+import net.minecraftforge.fluids.IFluidTank;
 
 @SuppressWarnings("InstantiationOfUtilityClass")
 public final class POMultiblockAbility {
     public static final MultiblockAbility<IVisHatch> VIS_HATCH = new MultiblockAbility<>("vis_hatch", IVisHatch.class);
+
+    public static final MultiblockAbility<IFluidTank> INFUSED_FLUID_HATCH = new MultiblockAbility<>("infused_fluid_hatch", IFluidTank.class);
 
     // 输入魔力
     public static final MultiblockAbility<IManaHatch> MANA_HATCH = new MultiblockAbility<>("mana_hatch", IManaHatch.class);

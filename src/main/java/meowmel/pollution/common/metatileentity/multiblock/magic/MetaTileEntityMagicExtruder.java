@@ -7,10 +7,12 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
@@ -19,14 +21,14 @@ import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POTurbine;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedInstrument;
 
-public class MetaTileEntityMagicExtruder extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicExtruder extends MagicRecipeMapMultiblockController {
 
     public MetaTileEntityMagicExtruder(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.EXTRUDER_RECIPES});
-        setMaterial(InfusedInstrument);
     }
 
     private static IBlockState getCasingState() {
@@ -73,7 +75,7 @@ public class MetaTileEntityMagicExtruder extends PORecipeMapMultiblockController
     }
 
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
@@ -82,4 +84,8 @@ public class MetaTileEntityMagicExtruder extends PORecipeMapMultiblockController
         return true;
     }
 
+    @Override
+    public Material getMaterial() {
+        return InfusedInstrument;
+    }
 }

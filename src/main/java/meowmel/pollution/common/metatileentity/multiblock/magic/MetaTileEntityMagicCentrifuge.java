@@ -7,10 +7,11 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
@@ -20,11 +21,10 @@ import net.minecraft.util.ResourceLocation;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedAir;
 
-public class MetaTileEntityMagicCentrifuge extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicCentrifuge extends MagicRecipeMapMultiblockController {
 
     public MetaTileEntityMagicCentrifuge(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CENTRIFUGE_RECIPES, RecipeMaps.THERMAL_CENTRIFUGE_RECIPES});
-        setMaterial(InfusedAir);
     }
 
     private static IBlockState getCasingState() {
@@ -76,4 +76,8 @@ public class MetaTileEntityMagicCentrifuge extends PORecipeMapMultiblockControll
         return true;
     }
 
+    @Override
+    public Material getMaterial() {
+        return InfusedAir;
+    }
 }

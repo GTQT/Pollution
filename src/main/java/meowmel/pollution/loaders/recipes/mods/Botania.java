@@ -19,7 +19,7 @@ public class Botania {
         for (RecipePureDaisy recipe : pureDaisyRecipes) {
             RecipeBuilder<?> builder;
             builder = PURE_DAISY_RECIPES.recipeBuilder()
-                    .TotalMana(100);
+                    .EUt(100);
 
             if (recipe.getInput() instanceof ItemStack s) {
                 builder.inputs(s);
@@ -33,14 +33,13 @@ public class Botania {
 
             builder.output(recipe.getOutputState().getBlock());
             builder.duration(200);
-            builder.EUt(VA[3]);
             builder.buildAndRegister();
         }
         for (RecipePetals recipe : petalRecipes) {
             ItemStack output = recipe.getOutput();
             RecipeBuilder<?> builder;
             builder = MANA_PETAL_RECIPES.recipeBuilder()
-                    .TotalMana(100);
+                    .EUt(100);
             for (Object input : recipe.getInputs()) {
                 if (input instanceof ItemStack s) {
                     builder.inputs(s);
@@ -51,7 +50,6 @@ public class Botania {
             }
             builder.outputs(output);
             builder.duration(200);
-            builder.EUt(VA[3]);
             builder.buildAndRegister();
 
         }
@@ -61,7 +59,7 @@ public class Botania {
 
             RecipeBuilder<?> builder;
             builder = MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
-                    .TotalMana(mana);
+                    .EUt(mana);
 
             for (Object input : recipe.getInputs()) {
                 if (input instanceof ItemStack s) {
@@ -76,7 +74,6 @@ public class Botania {
             }
             builder.outputs(output);
             builder.duration(200 * GTUtility.getTierByVoltage(mana));
-            builder.EUt(VA[GTUtility.getTierByVoltage(mana)]);
             builder.buildAndRegister();
         }
         for (RecipeManaInfusion recipe : manaInfusionRecipes) {
@@ -85,7 +82,7 @@ public class Botania {
 
             RecipeBuilder<?> builder;
             builder = MANA_INFUSION_RECIPES.recipeBuilder()
-                    .TotalMana(mana);
+                    .EUt(mana);
 
             if (recipe.getCatalyst() != null)
                 builder.notConsumable(new ItemStack(recipe.getCatalyst().getBlock()));
@@ -97,7 +94,6 @@ public class Botania {
 
             builder.outputs(output);
             builder.duration(200 * GTUtility.getTierByVoltage(mana));
-            builder.EUt(VA[GTUtility.getTierByVoltage(mana)]);
             builder.buildAndRegister();
         }
     }

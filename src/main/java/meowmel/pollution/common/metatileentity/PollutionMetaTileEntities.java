@@ -10,7 +10,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import meowmel.pollution.Pollution;
-import meowmel.pollution.api.metatileentity.POMetaTileEntitySingleTurbine;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -141,14 +140,14 @@ public class PollutionMetaTileEntities {
         }
 
         MAGIC_TURBINE[0] = registerMetaTileEntity(10,
-                new POMetaTileEntitySingleTurbine(PollutionID("magic_turbine.lv"), MAGIC_TURBINE_FUELS,
-                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction));
+                new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine.lv"), MAGIC_TURBINE_FUELS,
+                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction,1));
         MAGIC_TURBINE[1] = registerMetaTileEntity(11,
-                new POMetaTileEntitySingleTurbine(PollutionID("magic_turbine.mv"), MAGIC_TURBINE_FUELS,
-                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction));
+                new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine.mv"), MAGIC_TURBINE_FUELS,
+                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction,1));
         MAGIC_TURBINE[2] = registerMetaTileEntity(12,
-                new POMetaTileEntitySingleTurbine(PollutionID("magic_turbine.hv"), MAGIC_TURBINE_FUELS,
-                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction));
+                new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine.hv"), MAGIC_TURBINE_FUELS,
+                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction,1));
 
         MANA_GENERATOR[1] = registerMetaTileEntity(15, new ManaGeneratorTileEntity(PollutionID("mana_gen_lv"), 1));
         MANA_GENERATOR[2] = registerMetaTileEntity(16, new ManaGeneratorTileEntity(PollutionID("mana_gen_mv"), 2));

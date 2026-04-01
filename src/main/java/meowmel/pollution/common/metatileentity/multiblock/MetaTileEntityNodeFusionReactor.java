@@ -22,6 +22,7 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.logic.OCParams;
+import gregtech.api.recipes.logic.OCResult;
 import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.api.recipes.properties.impl.FusionEUToStartProperty;
 import gregtech.api.util.GTUtility;
@@ -58,6 +59,7 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.aura.AuraHelper;
 
 import java.util.ArrayList;
@@ -536,8 +538,10 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
         }
 
         @Override
-        public void setMaxProgress(int maxProgress) {
-            super.setMaxProgress((int) (maxProgress * (1 - 0.02 * overallProgressTimeAmount)));
+        protected void modifyOverclockPost(@NotNull OCResult ocResult, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPost(ocResult, storage);
+
+            ocResult.setDuration(Math.round((float) (ocResult.duration() * (1 - 0.02 * overallProgressTimeAmount))));
         }
 
         @Override

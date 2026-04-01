@@ -9,12 +9,18 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.logic.OCResult;
+import gregtech.api.recipes.properties.RecipePropertyStorage;
+import gregtech.api.unification.material.Material;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+
+import gregtech.common.metatileentities.multi.electric.MetaTileEntityCrackingUnit;
+import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
@@ -29,13 +35,14 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_CORE;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedCraft;
 
-public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockController {
 
     //BEAM方块等级
     int BeamLevel;
@@ -43,7 +50,6 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
     public MetaTileEntityMagicAssembler(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.ASSEMBLER_RECIPES, PORecipeMaps.MAGIC_ASSEMBLER_RECIPES});
         this.recipeMapWorkable = new MagicAssemblerRecipeLogic(this);
-        setMaterial(InfusedCraft);
     }
 
     private static IBlockState getCasingState() {
@@ -78,6 +84,11 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
         this.BeamLevel = POUtils.getOrDefault(() -> BeamLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) BeamLevel).getIntTier(),
                 0);
+    }
+
+    @Override
+    public Material getMaterial() {
+        return InfusedCraft;
     }
 
     //tooltip
@@ -117,7 +128,7 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
     }
 
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
@@ -127,16 +138,18 @@ public class MetaTileEntityMagicAssembler extends PORecipeMapMultiblockControlle
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")
-    private class MagicAssemblerRecipeLogic extends POMultiblockRecipeLogic {
+    private class MagicAssemblerRecipeLogic extends MagicMultiblockRecipeLogic {
 
-        public MagicAssemblerRecipeLogic(RecipeMapMultiblockController tileEntity) {
+        public MagicAssemblerRecipeLogic(MagicRecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
-        //每级-5%最大配方时长
-        public void setMaxProgress(int maxProgress) {
-            this.maxProgressTime = (int) (Math.round(maxProgress * (1 - 0.05 * BeamLevel)));
-        }
 
+        @Override
+        protected void modifyOverclockPost(@NotNull OCResult ocResult, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPost(ocResult, storage);
+
+            ocResult.setDuration((int) Math.round(ocResult.duration() * (1 - 0.05 * BeamLevel)));
+        }
     }
 }

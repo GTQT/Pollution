@@ -7,10 +7,12 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
@@ -18,13 +20,14 @@ import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedCrystal;
 
-public class MetaTileEntityMagicSifter extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicSifter extends MagicRecipeMapMultiblockController {
+
     public MetaTileEntityMagicSifter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.SIFTER_RECIPES});
-        setMaterial(InfusedCrystal);
     }
 
     private static IBlockState getCasingState() {
@@ -49,7 +52,7 @@ public class MetaTileEntityMagicSifter extends PORecipeMapMultiblockController {
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected @NotNull BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("#X#X#", "#X#X#", "#YYY#", "#YYY#", "#YYY#")
                 .aisle("XXXXX", "X#X#X", "YCCCY", "YCCCY", "YEEEY")
@@ -72,12 +75,17 @@ public class MetaTileEntityMagicSifter extends PORecipeMapMultiblockController {
     }
 
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
     @Override
     public boolean canBeDistinct() {
         return true;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return InfusedCrystal;
     }
 }

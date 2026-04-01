@@ -7,10 +7,12 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
@@ -22,10 +24,9 @@ import net.minecraft.util.ResourceLocation;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedEntropy;
 
-public class MetaTileEntityMagicMixer extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicMixer extends MagicRecipeMapMultiblockController {
     public MetaTileEntityMagicMixer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MIXER_RECIPES});
-        setMaterial(InfusedEntropy);
     }
 
     private static IBlockState getCasingState() {
@@ -80,5 +81,10 @@ public class MetaTileEntityMagicMixer extends PORecipeMapMultiblockController {
     @Override
     public boolean canBeDistinct() {
         return true;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return InfusedEntropy;
     }
 }

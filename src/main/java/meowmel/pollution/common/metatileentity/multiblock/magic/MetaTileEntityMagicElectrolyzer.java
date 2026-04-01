@@ -7,10 +7,11 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
@@ -21,10 +22,10 @@ import net.minecraft.util.ResourceLocation;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedOrder;
 
-public class MetaTileEntityMagicElectrolyzer extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicElectrolyzer extends MagicRecipeMapMultiblockController {
+
     public MetaTileEntityMagicElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.ELECTROLYZER_RECIPES});
-        setMaterial(InfusedOrder);
     }
 
     private static IBlockState getCasingState() {
@@ -76,5 +77,10 @@ public class MetaTileEntityMagicElectrolyzer extends PORecipeMapMultiblockContro
     @Override
     public boolean canBeDistinct() {
         return true;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return InfusedOrder;
     }
 }

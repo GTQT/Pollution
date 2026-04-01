@@ -7,6 +7,8 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.logic.OCResult;
+import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -14,7 +16,8 @@ import gregtech.common.blocks.BlockCleanroomCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import meowmel.pollution.api.metatileentity.POManaMultiblockWithElectric;
+import meowmel.pollution.api.capability.ipml.ManaMultiblockRecipeLogic;
+import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
 import meowmel.pollution.client.textures.POTextures;
@@ -27,10 +30,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import org.jetbrains.annotations.NotNull;
 
 import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAME;
 
-public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElectric {
+public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController {
 
     private int frameLevel;
 
@@ -134,19 +138,21 @@ public class MetaTileEntityBotCircuitAssembler extends POManaMultiblockWithElect
     }
 
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
-    protected class BotCircuitAssemblerRecipeLogic extends POManaMultiblockWithElectricRecipeLogic {
+    protected class BotCircuitAssemblerRecipeLogic extends ManaMultiblockRecipeLogic {
 
-        public BotCircuitAssemblerRecipeLogic(POManaMultiblockWithElectric tileEntity) {
+        public BotCircuitAssemblerRecipeLogic(ManaMultiblockController tileEntity) {
             super(tileEntity);
         }
 
         @Override
-        public void setMaxProgress(int maxProgress) {
-            super.setMaxProgress((int) (maxProgress * (10.0 - frameLevel) / 10));
+        protected void modifyOverclockPost(@NotNull OCResult ocResult, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPost(ocResult, storage);
+
+            ocResult.setDuration(Math.round((float) (ocResult.duration() * (10.0 - frameLevel) / 10)));
         }
     }
 }

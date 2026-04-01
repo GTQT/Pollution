@@ -98,7 +98,12 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     }
 
     @Override
-    public boolean consumeMana(int amount, boolean simulate) {
+    public int getAmp() {
+        return amp;
+    }
+
+    @Override
+    public boolean consumeMana(long amount, boolean simulate) {
         return manaContainer.drainMana(amount, simulate);
     }
 

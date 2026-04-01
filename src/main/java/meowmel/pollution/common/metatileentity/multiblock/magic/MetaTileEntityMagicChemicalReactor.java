@@ -7,12 +7,14 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.BlockBoilerCasing;
 import gregtech.common.blocks.MetaBlocks;
-import meowmel.pollution.api.metatileentity.PORecipeMapMultiblockController;
+
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -21,14 +23,14 @@ import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedAlchemy;
 
-public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockController {
+public class MetaTileEntityMagicChemicalReactor extends MagicRecipeMapMultiblockController {
 
     public MetaTileEntityMagicChemicalReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CHEMICAL_RECIPES, PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES});
-        setMaterial(InfusedAlchemy);
     }
 
     private static IBlockState getCasingState() {
@@ -85,7 +87,7 @@ public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockCon
     }
 
     @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
+    protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
     }
 
@@ -94,4 +96,8 @@ public class MetaTileEntityMagicChemicalReactor extends PORecipeMapMultiblockCon
         return true;
     }
 
+    @Override
+    public Material getMaterial() {
+        return InfusedAlchemy;
+    }
 }

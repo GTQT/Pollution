@@ -59,6 +59,11 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity imple
     }
 
     @Override
+    public int getAmp(){
+        return 1;
+    }
+
+    @Override
     public boolean isFull() {
         return getMana() >= getMaxMana();
     }
@@ -70,7 +75,7 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity imple
     }
 
     @Override
-    public boolean consumeMana(int amount, boolean simulate) {
+    public boolean consumeMana(long amount, boolean simulate) {
         return false;
     }
 }
