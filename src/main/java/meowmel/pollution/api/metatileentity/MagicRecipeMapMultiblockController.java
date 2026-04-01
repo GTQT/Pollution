@@ -1,6 +1,8 @@
 package meowmel.pollution.api.metatileentity;
 
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
@@ -8,19 +10,26 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.util.KeyUtil;
 import meowmel.pollution.api.capability.IVisHatch;
 import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockController {
 
     protected IVisHatch visHatch;
     protected IFluidTank infusedFluidTank;
+
+    public MagicRecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
+        this(metaTileEntityId, new RecipeMap<?>[]{recipeMap});
+        this.recipeMapWorkable = new MagicMultiblockRecipeLogic(this);
+    }
+
 
     public MagicRecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?>[] recipeMaps) {
         super(metaTileEntityId, recipeMaps);
@@ -35,6 +44,10 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
                 manager.add(KeyUtil.lang(TextFormatting.RED,
                         "要素不符合"));
             }
+            if(syncer.syncBoolean(visHatch == null)){
+                manager.add(KeyUtil.lang(TextFormatting.RED,
+                        "未安装灵气仓"));
+            }
         });
     }
 
@@ -42,7 +55,6 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
         if (infusedFluidTank == null) return false;
         return infusedFluidTank.getFluid().getFluid() == getMaterial().getFluid();
     }
-
 
     @Override
     protected void formStructure(PatternMatchContext context) {
@@ -62,8 +74,17 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
     public void invalidateStructure() {
         super.invalidateStructure();
         visHatch = null;
-        manaHatchList = new ArrayList<>();
         infusedFluidTank = null;
+    }
+
+    public void addCustomCapacity(KeyManager keyManager, UISyncer syncer) {
+        if (isStructureFormed()) {
+            int infusedAmount = syncer.syncInt(infusedFluidTank.getFluidAmount());
+            keyManager.add(KeyUtil.string(TextFormatting.GRAY, "源质仓储量：" + getMaterial().getLocalizedName() + " " + infusedAmount + "L"));
+
+            int visStore = syncer.syncInt(getVisStore());
+            keyManager.add(KeyUtil.string(TextFormatting.GRAY, "灵气仓储量：" + visStore + "vis"));
+        }
     }
 
     public int getVisCapacity() {
@@ -93,15 +114,21 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
     }
 
     @Override
-    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
-    }
-
-    @Override
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(checkEnergyIn, checkMaintenance, checkItemIn, checkItemOut, checkFluidIn, checkFluidOut, checkMuffler);
         predicate = predicate.or(abilities(POMultiblockAbility.VIS_HATCH).setMaxGlobalLimited(1));
+        predicate = predicate.or(abilities(POMultiblockAbility.INFUSED_FLUID_HATCH).setExactLimit(1));
         return predicate;
     }
 
+    @Override
+    public void addInformation(ItemStack stack, World player, @NotNull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(TextFormatting.GREEN + I18n.format("-灵气仓支持："));
+        tooltip.add(TextFormatting.GRAY + I18n.format("允许安装灵气仓开启超频模式许可"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("每个配方会消耗灵气仓1vis来开启超频（并行不叠算）"));
+        tooltip.add(TextFormatting.GREEN + I18n.format("-塔罗牌支持："));
+        tooltip.add(TextFormatting.GRAY + I18n.format("允许安装塔罗牌仓开启特殊配方机制"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("详细信息见塔罗牌介绍"));
+    }
 }

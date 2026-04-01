@@ -1,5 +1,6 @@
 package meowmel.pollution.common.metatileentity.multiblock.bot;
 
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -21,7 +22,6 @@ import meowmel.gtqtcore.api.predicate.TiredTraceabilityPredicate;
 import meowmel.gtqtcore.common.blocks.BlockCoolingCoil;
 import meowmel.gtqtcore.common.blocks.BlockMachineCasing;
 import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
-import meowmel.pollution.api.capability.ipml.ManaMultiblockRecipeLogic;
 import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.client.textures.POTextures;
@@ -205,7 +205,7 @@ public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
         return Textures.HPCA_OVERLAY;
     }
 
-    protected class BotVacuumFreezerRecipeLogic extends ManaMultiblockRecipeLogic {
+    protected class BotVacuumFreezerRecipeLogic extends MultiblockRecipeLogic {
 
         public BotVacuumFreezerRecipeLogic(ManaMultiblockController tileEntity) {
             super(tileEntity);

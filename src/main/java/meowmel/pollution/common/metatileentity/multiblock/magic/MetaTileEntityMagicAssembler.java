@@ -92,7 +92,7 @@ public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockContro
     }
 
     //tooltip
-    public void addInformation(ItemStack stack, World world, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World world, @NotNull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.magic_assembler.tooltip.1"));
     }

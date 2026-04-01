@@ -100,6 +100,7 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends MagicRecipeMapMultiblo
 
     @Override
     public void addCustomCapacity(KeyManager keyManager, UISyncer syncer) {
+        super.addCustomCapacity(keyManager, syncer);
         if (isStructureFormed()) {
             var heatString = KeyUtil.number(TextFormatting.RED,
                     syncer.syncInt(blastFurnaceTemperature), "K");

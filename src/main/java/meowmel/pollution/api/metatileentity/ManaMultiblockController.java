@@ -1,34 +1,50 @@
 package meowmel.pollution.api.metatileentity;
 
-import gregtech.api.GTValues;
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.capability.impl.EnergyContainerList;
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.pattern.TraceabilityPredicate;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
-import meowmel.pollution.api.capability.IManaHatch;
-import meowmel.pollution.api.capability.ipml.ManaMultiblockRecipeLogic;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ManaMultiblockController extends MultiMapMultiblockController {
 
-    protected List<IManaHatch> manaHatchList;
+public abstract class ManaMultiblockController extends MultiMapMultiblockController {
 
     public ManaMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         this(metaTileEntityId, new RecipeMap<?>[]{recipeMap});
-        this.recipeMapWorkable = new ManaMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new MultiblockRecipeLogic(this);
     }
 
     public ManaMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?>[] recipeMaps) {
         super(metaTileEntityId, recipeMaps);
-        this.recipeMapWorkable = new ManaMultiblockRecipeLogic(this);
+        this.recipeMapWorkable = new MultiblockRecipeLogic(this);
+    }
+
+    @Override
+    protected void initializeAbilities() {
+        super.initializeAbilities();
+        if (onlyManaEnergy()) {
+            List<IEnergyContainer> inputEnergy = new ArrayList<>(this.getAbilities(POMultiblockAbility.MANA_HATCH));
+            this.energyContainer = new EnergyContainerList(inputEnergy);
+        } else {
+            List<IEnergyContainer> inputEnergy = new ArrayList<>(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
+            inputEnergy.addAll(this.getAbilities(POMultiblockAbility.MANA_HATCH));
+            this.energyContainer = new EnergyContainerList(inputEnergy);
+        }
     }
 
     @Override
@@ -40,7 +56,15 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
     public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
         TraceabilityPredicate predicate = super.autoAbilities(checkMaintenance, checkMuffler);
         if (checkEnergyIn) {
-            predicate = predicate.or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
+            if (onlyManaEnergy()) {
+                predicate = predicate
+                        .or(abilities(POMultiblockAbility.MANA_HATCH)
+                                .setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
+            } else {
+                predicate = predicate
+                        .or(abilities(POMultiblockAbility.MANA_HATCH).or(abilities(MultiblockAbility.INPUT_ENERGY))
+                                .setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
+            }
         }
 
         if (checkItemIn && this.recipeMap.getMaxInputs() > 0) {
@@ -58,25 +82,7 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
             predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
         }
 
-        predicate = predicate.or(abilities(POMultiblockAbility.MANA_HATCH).setMaxGlobalLimited(1));
         return predicate;
-    }
-
-
-    public boolean drainVis(int amount, boolean simulate) {
-        return this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).consumeMana(amount, simulate);
-    }
-
-    @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        manaHatchList = this.getAbilities(POMultiblockAbility.MANA_HATCH);
-    }
-
-    @Override
-    public void invalidateStructure() {
-        super.invalidateStructure();
-        manaHatchList = new ArrayList<>();
     }
 
     @Override
@@ -95,39 +101,19 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
 
     }
 
-    public long getManaCapacity() {
-        return manaHatchList.stream().mapToLong(IManaHatch::getMaxMana).sum();
-    }
-
-    public long getManaStore() {
-        return manaHatchList.stream().mapToLong(IManaHatch::getMana).sum();
-    }
-
-    public int getMaxManaHatchTier() {
-        return manaHatchList.stream().mapToInt(IManaHatch::getTier).max().orElse(0);
-    }
-
-    public long getMaximumOverclockMana() {
-        long maxWorkMana = 0;
-        for (IManaHatch manaHatch : manaHatchList) {
-            maxWorkMana += GTValues.V[manaHatch.getTier()] * manaHatch.getAmp();
+    @Override
+    public void addInformation(ItemStack stack, World player, @NotNull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(TextFormatting.GREEN + I18n.format("-魔力能源仓支持："));
+        if (onlyManaEnergy()) {
+            tooltip.add(TextFormatting.GRAY + I18n.format("只允许额外使用魔力能源仓作为能量输入接口"));
+        } else {
+            tooltip.add(TextFormatting.GRAY + I18n.format("允许额外使用魔力能源仓作为能量输入接口"));
         }
-        return maxWorkMana;
+        tooltip.add(TextFormatting.GRAY + I18n.format("耗能，双仓升压等计算同普通能源仓"));
     }
 
-    public boolean consumeMana(long mana, boolean simulate) {
-        if (simulate) {
-            return getManaStore() >= mana;
-        }
-        long manaConsumed = 0;
-        for (IManaHatch manaHatch : manaHatchList) {
-            long manaToConsume = Math.min(manaHatch.getMaxMana() - manaHatch.getMana(), mana - manaConsumed);
-            manaHatch.consumeMana(manaToConsume, true);
-            manaConsumed += manaToConsume;
-            if (manaConsumed >= mana) {
-                return true;
-            }
-        }
+    public boolean onlyManaEnergy() {
         return false;
     }
 }

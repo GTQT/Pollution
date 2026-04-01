@@ -5,13 +5,9 @@ public interface IManaHatch {
 
     long getMana();
 
-    int getAmp();
-
     boolean isFull();
 
     int getTier();
 
-    void receiveMana(int mana);
-
-    boolean consumeMana(long amount, boolean simulate);
+    void receiveMana(long mana);
 }

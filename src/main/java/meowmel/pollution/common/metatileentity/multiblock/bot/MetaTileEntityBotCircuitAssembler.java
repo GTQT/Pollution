@@ -1,5 +1,6 @@
 package meowmel.pollution.common.metatileentity.multiblock.bot;
 
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -16,7 +17,6 @@ import gregtech.common.blocks.BlockCleanroomCasing;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import meowmel.pollution.api.capability.ipml.ManaMultiblockRecipeLogic;
 import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
@@ -142,7 +142,7 @@ public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController 
         return Textures.HPCA_OVERLAY;
     }
 
-    protected class BotCircuitAssemblerRecipeLogic extends ManaMultiblockRecipeLogic {
+    protected class BotCircuitAssemblerRecipeLogic extends MultiblockRecipeLogic {
 
         public BotCircuitAssemblerRecipeLogic(ManaMultiblockController tileEntity) {
             super(tileEntity);

@@ -1,5 +1,6 @@
 package meowmel.pollution.api.metatileentity;
 
+import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.capability.IVisHatch;
@@ -12,9 +13,9 @@ public final class POMultiblockAbility {
     public static final MultiblockAbility<IFluidTank> INFUSED_FLUID_HATCH = new MultiblockAbility<>("infused_fluid_hatch", IFluidTank.class);
 
     // 输入魔力
-    public static final MultiblockAbility<IManaHatch> MANA_HATCH = new MultiblockAbility<>("mana_hatch", IManaHatch.class);
+    public static final MultiblockAbility<IEnergyContainer> MANA_HATCH = new MultiblockAbility<>("mana_hatch", IEnergyContainer.class);
     // 输出魔力
-    public static final MultiblockAbility<IManaHatch> MANA_POOL_HATCH = new MultiblockAbility<>("mana_pool_hatch", IManaHatch.class);
+    public static final MultiblockAbility<IEnergyContainer> MANA_POOL_HATCH = new MultiblockAbility<>("mana_pool_hatch", IEnergyContainer.class);
 
     private POMultiblockAbility() {
     }
