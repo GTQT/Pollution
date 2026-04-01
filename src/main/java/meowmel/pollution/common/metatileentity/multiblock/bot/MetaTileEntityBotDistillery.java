@@ -86,7 +86,7 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2))//必须设定最大最小
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(1).setMaxGlobalLimited(1))//必须设定最大最小
                         .or(abilities(MultiblockAbility.EXPORT_ITEMS).setExactLimit(1))//必须设定最大最小
-                        .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1))//必须要的仓 限定1及可
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).setExactLimit(1))//必须要的仓 限定1及可
                         .or(abilities(GCYMMultiblockAbility.PARALLEL_HATCH).setExactLimit(1))//必须要的仓 限定1及可
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1)))//必须要的仓 限定1及可
                 .where('Y', states(getCasingState2()))

@@ -31,7 +31,6 @@ public class MetaTileEntityManaPetalApothecary extends ManaMultiblockController 
 
 	public MetaTileEntityManaPetalApothecary(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, MANA_PETAL_RECIPES);
-		this.recipeMapWorkable = new POManaMultiblockRecipeLogic(this);
 	}
 
 	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {

@@ -15,7 +15,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
-import meowmel.pollution.api.capability.IManaHatch;
+import meowmel.pollution.api.capability.ipml.ManaHandlerList;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
@@ -44,7 +44,6 @@ import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM
 
 public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl {
 
-    IManaHatch manaHatch;
     //配方执行次数
     int times = 0;
     //核心等级
@@ -128,6 +127,25 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
         tooltip.add(I18n.format("pollution.machine.bot_gas_collector.tooltip.10"));
     }
 
+    ManaHandlerList manaHandler;
+
+    @Override
+    protected void initializeAbilities() {
+        super.initializeAbilities();
+        manaHandler = new ManaHandlerList(getAbilities(POMultiblockAbility.MANA_INPUT_POOL));
+    }
+
+    @Override
+    protected void resetTileAbilities() {
+        super.resetTileAbilities();
+        manaHandler = new ManaHandlerList(new ArrayList<>());
+    }
+
+
+    private boolean consumeMana(long amount,boolean simulate) {
+        return this.manaHandler.consumeMana(amount,simulate);
+    }
+
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
@@ -135,11 +153,6 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
         this.beamLevel = POUtils.getOrDefault(() -> beamLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) beamLevel).getIntTier(),
                 0);
-
-        if(!this.getAbilities(POMultiblockAbility.MANA_HATCH).isEmpty()) {
-            manaHatch = this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0);
-            tier= manaHatch.getTier();
-        }
     }
 
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
@@ -200,8 +213,8 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
             }
 
             if (essenceCheck && mansusCheck) {
-                if (this.manaHatch.consumeMana(manaConsumptionSpeed,true)) {
-                    this.manaHatch.consumeMana(manaConsumptionSpeed,false);
+                if (this.manaHandler.consumeMana(manaConsumptionSpeed,true)) {
+                    this.manaHandler.consumeMana(manaConsumptionSpeed,false);
                     FluidStack fluid = new FluidStack(result.getFluid(), finalCollectionSpeed);
                     GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(fluid));
                     times++;
@@ -221,7 +234,7 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
                 .aisle("   ", "   ", "DDD", "AAA", "ABA", "ABA", "ABA", "AAA", "AAA")
                 .aisle("E E", "E E", "DDD", "ASA", "ACA", "ACA", "ACA", "AAA", "AAA")
                 .where('A', states(getCasingState()).setMinGlobalLimited(15)
-                        .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1).setPreviewCount(1))
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).setExactLimit(1).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(2).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1)))

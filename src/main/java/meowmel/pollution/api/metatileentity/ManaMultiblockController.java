@@ -38,11 +38,11 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
     protected void initializeAbilities() {
         super.initializeAbilities();
         if (onlyManaEnergy()) {
-            List<IEnergyContainer> inputEnergy = new ArrayList<>(this.getAbilities(POMultiblockAbility.MANA_HATCH));
+            List<IEnergyContainer> inputEnergy = new ArrayList<>(this.getAbilities(POMultiblockAbility.MANA_INPUT_HATCH));
             this.energyContainer = new EnergyContainerList(inputEnergy);
         } else {
             List<IEnergyContainer> inputEnergy = new ArrayList<>(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
-            inputEnergy.addAll(this.getAbilities(POMultiblockAbility.MANA_HATCH));
+            inputEnergy.addAll(this.getAbilities(POMultiblockAbility.MANA_INPUT_HATCH));
             this.energyContainer = new EnergyContainerList(inputEnergy);
         }
     }
@@ -58,11 +58,11 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
         if (checkEnergyIn) {
             if (onlyManaEnergy()) {
                 predicate = predicate
-                        .or(abilities(POMultiblockAbility.MANA_HATCH)
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH)
                                 .setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
             } else {
                 predicate = predicate
-                        .or(abilities(POMultiblockAbility.MANA_HATCH).or(abilities(MultiblockAbility.INPUT_ENERGY))
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).or(abilities(MultiblockAbility.INPUT_ENERGY))
                                 .setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
             }
         }

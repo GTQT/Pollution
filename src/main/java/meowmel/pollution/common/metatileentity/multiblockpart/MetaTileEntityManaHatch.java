@@ -96,8 +96,8 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
     @Override
     public MultiblockAbility<IEnergyContainer> getAbility() {
-        if (isExportHatch) return POMultiblockAbility.MANA_POOL_HATCH;
-        return POMultiblockAbility.MANA_HATCH;
+        if (isExportHatch) return POMultiblockAbility.MANA_OUTPUT_HATCH;
+        return POMultiblockAbility.MANA_INPUT_HATCH;
     }
 
     @Override
@@ -116,6 +116,12 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
 
     public void receiveMana(long amount) {
         if (!isFull()) energyContainer.addEnergy(amount);
+    }
+
+    @Override
+    public boolean consumeMana(long amount, boolean simulate) {
+        if(simulate) return energyContainer.getEnergyStored() >= amount;
+        return energyContainer.removeEnergy(amount) > 0;
     }
 
     @Override

@@ -12,9 +12,9 @@ import gregtech.api.metatileentity.multiblock.*;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
+import meowmel.pollution.api.capability.ipml.ManaHandlerList;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -32,6 +32,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -106,72 +107,31 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
     @Override
     protected void updateFormedValid() {
         if (speed == 0) return;
-        final int xDir = this.getFrontFacing().getOpposite().getXOffset() * 5;
-        final int zDir = this.getFrontFacing().getOpposite().getZOffset() * 5;
-        for (int x = -5; x <= 5; ++x) {
-            for (int y = -5; y <= 5; ++y) {
-                BlockPos poss = this.getPos().add(xDir + x, 0, zDir + y);
-                if (GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0)) instanceof MetaTileEntity) {
+        if (work(true)) {
+            final int xDir = this.getFrontFacing().getOpposite().getXOffset() * 5;
+            final int zDir = this.getFrontFacing().getOpposite().getZOffset() * 5;
+            for (int x = -5; x <= 5; ++x) {
+                for (int y = -5; y <= 5; ++y) {
+                    BlockPos poss = this.getPos().add(xDir + x, 0, zDir + y);
+                    if (GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0)) instanceof MetaTileEntity) {
 
-                    MetaTileEntity mte = GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0));
-                    TileEntity te = this.getWorld().getTileEntity(poss.add(0, 1, 0));
+                        MetaTileEntity mte = GTUtility.getMetaTileEntity(this.getWorld(), poss.add(0, 1, 0));
+                        TileEntity te = this.getWorld().getTileEntity(poss.add(0, 1, 0));
 
-                    if (mte.isActive() && !work()) return;
-                    //多方块
-                    if (mte instanceof MultiblockControllerBase mcb) {
-                        if (mcb.isStructureFormed() && mcb.isValid()) {
-                            final var inenergy = mcb.getAbilities(MultiblockAbility.INPUT_ENERGY);
-                            if (inenergy.size() > 0) {
-                                long[] energys = new long[inenergy.size()];
-                                for (int j = 0; j < inenergy.size(); j++) {
-                                    energys[j] = inenergy.get(j).getEnergyStored();
-                                }
-                                if (te instanceof ITickable) {
-                                    for (int i = 0; i < getRapid(); i++) {
-                                        ((ITickable) te).update();
-                                        for (int j = 0; j < inenergy.size(); j++) {
-                                            if (inenergy.get(j).getEnergyStored() < energys[j])
-                                                inenergy.get(j).addEnergy(energys[j] - inenergy.get(j).getEnergyStored());
-                                        }
-                                    }
-                                }
-                            } else if (mte instanceof RecipeMapSteamMultiblockController smte) {
-                                final var fin = smte.getSteamFluidTank();
-                                int[] energys = new int[fin.getTanks()];
-                                for (int j = 0; j < fin.getTanks(); j++) {
-                                    energys[j] = fin.getTankAt(j).getFluidAmount();
-                                }
-                                if (te instanceof ITickable) {
-                                    for (int i = 0; i < getRapid(); i++) {
-                                        ((ITickable) te).update();
-                                        for (int j = 0; j < fin.getTanks(); j++) {
-                                            if (fin.getTankAt(j).getFluidAmount() < energys[j]) {
-                                                fin.getTankAt(j).fill(Materials.Steam.getFluid(energys[j] - fin.getTankAt(j).getFluidAmount()), true);
-                                            }
-
-                                        }
-                                    }
-                                }
-                            } else {
-                                for (int i = 0; i < getRapid(); i++) {
-                                    ((ITickable) te).update();
-                                }
-                                ((ITickable) te).update();
+                        if(mte!=null) {
+                            for (int i = 0; i < speed; i++) {
+                                mte.update();
                             }
+                            work(false);
+                            continue;
                         }
-                    } else {
-                        long cache = 0;
-                        for (EnumFacing facing : EnumFacing.VALUES) {
-                            if (mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing) instanceof IEnergyContainer) {
-                                IEnergyContainer container = mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing);
-                                cache = container.getEnergyStored();
+
+                        if(te!=null && te instanceof ITickable iTickable) {
+                            for (int i = 0; i < speed; i++) {
+                                iTickable.update();
                             }
-                        }
-                        if (te instanceof ITickable tickable) {
-                            for (int i = 0; i < getRapid(); i++) {
-                                tickable.update();
-                                addEnergy(this.getWorld(), poss.add(0, 1, 0), cache);
-                            }
+                            work(false);
+                            continue;
                         }
                     }
                 }
@@ -209,7 +169,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
                 .where('S', selfPredicate())
                 .where(' ', any())
                 .where('C', states(getCasingAState())
-                        .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1)))
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).setExactLimit(1)))
                 .build();
     }
 
@@ -217,19 +177,37 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (isStructureFormed()) {
-            textList.add(new TextComponentTranslation("等级: %s |魔力： %s / %s", this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTier(), this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMana(), this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getMaxMana()));
+            textList.add(new TextComponentTranslation("等级: %s |魔力： %s / %s", this.manaHandler.getTier(), this.manaHandler.getMana(), this.manaHandler.getMaxMana()));
             textList.add(new TextComponentTranslation("加速速率: %s |魔力消耗： %s", speed, Math.pow(2, speed - 1)));
         }
     }
 
+    ManaHandlerList manaHandler;
 
-    public int getTier() {
-        return this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).getTier();
+    @Override
+    protected void initializeAbilities() {
+        super.initializeAbilities();
+        manaHandler = new ManaHandlerList(getAbilities(POMultiblockAbility.MANA_INPUT_POOL));
+    }
+
+    @Override
+    protected void resetTileAbilities() {
+        super.resetTileAbilities();
+        manaHandler = new ManaHandlerList(new ArrayList<>());
     }
 
 
-    public boolean work() {
-        return this.getAbilities(POMultiblockAbility.MANA_HATCH).get(0).consumeMana((int) Math.pow(2, speed - 1), false);
+    private boolean consumeMana(long amount,boolean simulate) {
+        return this.manaHandler.consumeMana(amount,simulate);
+    }
+
+    public int getTier() {
+        return this.manaHandler.getTier();
+    }
+
+
+    public boolean work(boolean simulate) {
+        return this.consumeMana((long) Math.pow(2, speed - 1), simulate);
     }
 
     private IBlockState getCasingAState() {

@@ -68,4 +68,10 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity imple
             energyContainer.addEnergy(mana);
         }
     }
+
+    @Override
+    public boolean consumeMana(long amount, boolean simulate) {
+        // 发电机拒绝消耗魔力
+        return false;
+    }
 }

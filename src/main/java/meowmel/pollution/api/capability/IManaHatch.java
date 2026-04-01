@@ -10,4 +10,6 @@ public interface IManaHatch {
     int getTier();
 
     void receiveMana(long mana);
+
+    boolean consumeMana(long amount, boolean simulate);
 }

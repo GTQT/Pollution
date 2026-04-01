@@ -14,6 +14,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
+import meowmel.pollution.api.capability.ipml.ManaHandlerList;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
@@ -23,7 +24,6 @@ import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
-import meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityManaHatch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -48,7 +48,7 @@ import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAM
 public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl {
     public static HashMap<ChunkPos, BlockPos> CentralTowerCoveredChunks = new HashMap<>();
     private final int cleaningPeriod = 400;
-    MetaTileEntityManaHatch manaHatch;
+
     private int timer = 0;
     private boolean canWork = true;
     private int frameLevel;
@@ -99,6 +99,8 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
         return PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_BASIC);
     }
 
+    ManaHandlerList manaHandler;
+
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
@@ -106,21 +108,23 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
         this.frameLevel = POUtils.getOrDefault(() -> frameLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) frameLevel).getIntTier(),
                 0);
-        for (Map.Entry<String, Object> str : context.entrySet()) {
-            if (str.getKey().startsWith("Multi")) {
-                HashSet set = (HashSet) str.getValue();
-                for (var s : set
-                ) {
-                    if (s instanceof MetaTileEntityManaHatch) {
-                        this.manaHatch = (MetaTileEntityManaHatch) s;
-                    }
-                }
-            }
-        }
     }
 
-    private boolean consumeMana() {
-        return this.manaHatch.consumeMana(manaConsumptionSpeed,false);
+    @Override
+    protected void initializeAbilities() {
+        super.initializeAbilities();
+        manaHandler = new ManaHandlerList(getAbilities(POMultiblockAbility.MANA_INPUT_POOL));
+    }
+
+    @Override
+    protected void resetTileAbilities() {
+        super.resetTileAbilities();
+        manaHandler = new ManaHandlerList(new ArrayList<>());
+    }
+
+
+    private boolean consumeMana(boolean simulate) {
+        return this.manaHandler.consumeMana(manaConsumptionSpeed,simulate);
     }
 
     private void produceMansus(float fluxCleaned, float auraSupplemented, int goodChunkAmount) {
@@ -149,11 +153,11 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
         int aY = this.getPos().getY();
         int aZ = this.getPos().getZ();
 
-        manaConsumptionSpeed = (int) (4 * Math.pow(2, (Math.max(0, this.manaHatch.getTier() - 2))));
+        manaConsumptionSpeed = (int) (4 * Math.pow(2, (Math.max(0, this.manaHandler.getTier() - 2))));
 
-        if (canWork) {
+        if (canWork && consumeMana(true)) {
             timer++;
-            consumeMana();
+            consumeMana(false);
         }
 
         if (timer >= cleaningPeriod) {
@@ -173,7 +177,8 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
                     if (overAllAmount <= 4.2f) {
                         goodChunkAmount += 1;
                     }
-                    if (consumeMana()) {
+                    if (consumeMana(true)) {
+                        consumeMana(false);
                         //清除每个区块80%污染，补充灵气，同时计算清除量和补充量
                         fluxCleaned += 0.8f * fluxThisChunk;
                         AuraHelper.drainFlux(this.getWorld(), pos, 0.8f * fluxThisChunk, false);
@@ -230,7 +235,7 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
                 .where('H', states(getCasingState7()))
                 .where('J', states(getCasingState8()))
                 .where('K', states(getCasingState9()).setMinGlobalLimited(5)
-                        .or(abilities(POMultiblockAbility.MANA_HATCH).setExactLimit(1).setPreviewCount(1))
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).setExactLimit(1).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(3).setPreviewCount(3)))
                 .where(' ', any())
@@ -274,7 +279,7 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
         textList.add(new TextComponentTranslation("pollution.machine.central_vis_tower_canwork", this.canWork).setStyle((new Style()).setColor(TextFormatting.RED)));
         textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_framelevel", this.frameLevel)).setStyle((new Style()).setColor(TextFormatting.RED)));
         textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_timer", this.timer)).setStyle((new Style()).setColor(TextFormatting.RED)));
-        textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_manatier", this.manaHatch.getTier())).setStyle((new Style()).setColor(TextFormatting.RED)));
+        textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_manatier", this.manaHandler.getTier())).setStyle((new Style()).setColor(TextFormatting.RED)));
         textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_fluxcleaned", this.fluxCleaned)).setStyle((new Style()).setColor(TextFormatting.RED)));
         textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_aurasupplemented", this.auraSupplemented)).setStyle((new Style()).setColor(TextFormatting.RED)));
         textList.add((new TextComponentTranslation("pollution.machine.central_vis_tower_goodchunkamount", this.goodChunkAmount)).setStyle((new Style()).setColor(TextFormatting.RED)));

@@ -31,7 +31,6 @@ public class MetaTileEntityManaRuneAltar extends ManaMultiblockController {
 
 	public MetaTileEntityManaRuneAltar(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, MANA_RUNE_ALTAR_RECIPES);
-		this.recipeMapWorkable = new POManaMultiblockRecipeLogic(this);
 	}
 
 	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {

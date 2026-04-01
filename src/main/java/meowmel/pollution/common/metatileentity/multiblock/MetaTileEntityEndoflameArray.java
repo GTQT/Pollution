@@ -92,7 +92,7 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 .where('S', selfPredicate())
                 .where('A', states(getCasingState()).setMinGlobalLimited(15)
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1))
-                        .or(abilities(POMultiblockAbility.MANA_POOL_HATCH).setExactLimit(1))
+                        .or(abilities(POMultiblockAbility.MANA_OUTPUT_HATCH).setExactLimit(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
                 )
                 .where('B', states(getCasingState2()))

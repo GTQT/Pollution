@@ -31,7 +31,6 @@ public class MetaTileEntityIndustrialPureDaisy extends ManaMultiblockController 
 
 	public MetaTileEntityIndustrialPureDaisy(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, PURE_DAISY_RECIPES);
-		this.recipeMapWorkable = new POManaMultiblockRecipeLogic(this);
 	}
 
 	public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {

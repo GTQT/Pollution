@@ -85,12 +85,15 @@ public class MachineRecipes {
                 'B', EMITTER,
                 'C', ROTOR);
 
+        /*
         registerMachineRecipe(PollutionMetaTileEntities.VIS_CLEAR,
                 "ABA", "CHC", "ABA",
                 'H', HULL,
                 'A', MOTOR,
                 'B', SENSOR,
                 'C', ROTOR);
+
+         */
 
 
         ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.lv");
