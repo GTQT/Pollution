@@ -4,6 +4,7 @@ import gregicality.multiblocks.api.metatileentity.GCYMMultiblockAbility;
 import gregtech.api.capability.IDistillationTower;
 import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.DistillationTowerLogicHandler;
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -24,7 +25,6 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.appeng.MetaTileEntityMEOutputHatch;
-import meowmel.pollution.api.capability.ipml.ManaRecipesLogic;
 import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.client.textures.POTextures;
@@ -186,7 +186,7 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
         return true;
     }
 
-    private class ManaDistilleryRecipeLogic extends ManaRecipesLogic {
+    private class ManaDistilleryRecipeLogic extends MultiblockRecipeLogic {
 
         ManaMultiblockController controller;
 
