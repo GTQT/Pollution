@@ -2,8 +2,10 @@ package meowmel.pollution.common.block.tile;
 
 
 
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import meowmel.pollution.api.utils.FleshTreeGrowth;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -20,6 +22,8 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
+import java.util.UUID;
+
 import static gregtech.api.unification.material.Materials.Water;
 
 /**
@@ -33,6 +37,7 @@ import static gregtech.api.unification.material.Materials.Water;
  * - 控制整棵树的结构生长
  */
 public class TileEntityFleshHeart extends TileEntity implements ITickable {
+
 
     public static final int MAX_LEVEL = 10;
 
@@ -99,7 +104,12 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         fluidTimer++;
         if (fluidTimer < getFluidInterval()) return;
         fluidTimer = 0;
-        // 要输出的流体: 水 (可改为自定义流体如 "血液")
+        //填充新鲜的LP到玩家灵魂
+        if(getLevel()>=9)
+        {
+            var soul = NetworkHelper.getSoulNetwork(boundPlayerUUID);
+            soul.setCurrentEssence(soul.getCurrentEssence()+(getLevel()-8)*10000);
+        }
        // FluidStack toFill = GTFOMaterialHandler.Blood.getFluid(getFluidAmount());
         FluidStack toFill = Water.getFluid(getFluidAmount());
         // 扫描6个方向
@@ -258,7 +268,53 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         this.originPos = origin;
         markDirty();
     }
+    // ============================================================
+    // 玩家绑定 — 粘贴到 TileEntityFleshHeart 中
+    // ============================================================
+    //
+    // 需要 import:
+    //   import java.util.UUID;
 
+    /** 绑定玩家的 UUID, null = 未绑定 */
+    private UUID boundPlayerUUID = null;
+
+    /** 绑定玩家的名字 (仅用于显示, UUID才是唯一标识) */
+    private String boundPlayerName = "";
+
+    /** 是否已绑定 */
+    public boolean isBound() {
+        return boundPlayerUUID != null;
+    }
+
+    /** 获取绑定的玩家 UUID */
+    public UUID getBoundPlayerUUID() {
+        return boundPlayerUUID;
+    }
+
+    /** 获取绑定的玩家名 */
+    public String getBoundPlayerName() {
+        return boundPlayerName;
+    }
+
+    /** 判断某玩家是否是绑定者 */
+    public boolean isOwner(EntityPlayer player) {
+        return boundPlayerUUID != null && boundPlayerUUID.equals(player.getUniqueID());
+    }
+
+    /**
+     * 尝试绑定玩家, 只允许一次
+     * @return true = 绑定成功, false = 已被绑定
+     */
+    public boolean tryBind(EntityPlayer player) {
+        if (boundPlayerUUID != null) return false;
+        boundPlayerUUID = player.getUniqueID();
+        boundPlayerName = player.getName();
+        markDirty();
+        // 同步到客户端
+        IBlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
+        return true;
+    }
     // === NBT 序列化 ===
 
     @Override
@@ -269,6 +325,12 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         compound.setInteger("OriginX", originPos.getX());
         compound.setInteger("OriginY", originPos.getY());
         compound.setInteger("OriginZ", originPos.getZ());
+        compound.setBoolean("HasBoundPlayer", boundPlayerUUID != null);
+        if (boundPlayerUUID != null) {
+            compound.setLong("BoundUUIDMost", boundPlayerUUID.getMostSignificantBits());
+            compound.setLong("BoundUUIDLeast", boundPlayerUUID.getLeastSignificantBits());
+            compound.setString("BoundPlayerName", boundPlayerName);
+        }
         return compound;
     }
 
@@ -284,6 +346,15 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
                 compound.getInteger("OriginY"),
                 compound.getInteger("OriginZ")
         );
+        if (compound.getBoolean("HasBoundPlayer")) {
+            boundPlayerUUID = new UUID(
+                compound.getLong("BoundUUIDMost"),
+                compound.getLong("BoundUUIDLeast"));
+            boundPlayerName = compound.getString("BoundPlayerName");
+        } else {
+            boundPlayerUUID = null;
+            boundPlayerName = "";
+        }
     }
 
     // === 网络同步 ===

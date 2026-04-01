@@ -1,5 +1,6 @@
 package meowmel.pollution.common.items;
 
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import meowmel.pollution.Pollution;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +32,9 @@ public class ItemHeartFruit extends ItemFood {
             player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 200, 1));
             player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 600, 0));
             player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 60, 0));
+            //吃掉心鸣果 加5W lp
+            var soul = NetworkHelper.getSoulNetwork(player);
+            soul.setCurrentEssence(soul.getCurrentEssence()+50000);
         }
     }
 }
