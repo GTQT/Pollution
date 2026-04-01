@@ -52,19 +52,30 @@ public class BlockFleshHeart extends Block implements ITileEntityProvider {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TileEntityFleshHeart) {
                 TileEntityFleshHeart heart = (TileEntityFleshHeart) te;
-                int level = heart.getLevel();
-                int maxLevel = TileEntityFleshHeart.MAX_LEVEL;
-                String msg = TextFormatting.DARK_RED + "§l❤ " +
+
+                if (!heart.isBound()) {
+                    // 未绑定 → 绑定此玩家
+                    heart.tryBind(playerIn);
+                    playerIn.sendMessage(new TextComponentString(
+                        TextFormatting.DARK_RED + "❤ " +
+                        TextFormatting.RED + "血肉之树与你的灵魂相连..."));
+                } else if (heart.isOwner(playerIn)) {
+                    // 主人右键 → 显示信息
+                    int level = heart.getLevel();
+                    playerIn.sendMessage(new TextComponentString(
+                        TextFormatting.DARK_RED + "❤ " +
                         TextFormatting.RED + "血肉之树 " +
                         TextFormatting.GRAY + "等级: " +
-                        TextFormatting.GOLD + level + "/" + maxLevel;
-                if (level >= maxLevel) {
-                    msg += TextFormatting.DARK_PURPLE + " [已成熟]";
+                        TextFormatting.GOLD + level + "/" + TileEntityFleshHeart.MAX_LEVEL));
+                } else {
+                    // 其他人右键 → 拒绝
+                    playerIn.sendMessage(new TextComponentString(
+                        TextFormatting.DARK_PURPLE + "这棵树已与 " +
+                        TextFormatting.RED + heart.getBoundPlayerName() +
+                        TextFormatting.DARK_PURPLE + " 的灵魂绑定..."));
                 }
-                playerIn.sendMessage(new TextComponentString(msg));
             }
         }
-
         return true;
     }
 
