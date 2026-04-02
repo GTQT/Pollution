@@ -2,6 +2,7 @@ package meowmel.pollution.common.block.tile;
 
 
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import meowmel.pollution.api.utils.FleshTreeGrowth;
 import net.minecraft.block.state.IBlockState;
@@ -105,13 +106,14 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         if (fluidTimer < getFluidInterval()) return;
         fluidTimer = 0;
         //填充新鲜的LP到玩家灵魂
-        if(getLevel()>=9)
+        if(getLevel()>=9  && isBound())
         {
             var soul = NetworkHelper.getSoulNetwork(boundPlayerUUID);
+            if(soul.getOrbTier()<128)
+                soul.setOrbTier(128);
             soul.setCurrentEssence(soul.getCurrentEssence()+(getLevel()-8)*10000);
         }
-       // FluidStack toFill = GTFOMaterialHandler.Blood.getFluid(getFluidAmount());
-        FluidStack toFill = Water.getFluid(getFluidAmount());
+        FluidStack toFill = new FluidStack(BlockLifeEssence.getLifeEssence(),getFluidAmount());
         // 扫描6个方向
         for (EnumFacing facing : EnumFacing.values()) {
             BlockPos neighborPos = pos.offset(facing);
@@ -128,8 +130,7 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
             int accepted = handler.fill(toFill, false);
             if (accepted > 0) {
                 // 实际填充
-               // handler.fill(GTFOMaterialHandler.Blood.getFluid(accepted), true);
-                handler.fill(Water.getFluid(accepted), true);
+                handler.fill(new FluidStack(BlockLifeEssence.getLifeEssence(),accepted), true);
             }
         }
     }
