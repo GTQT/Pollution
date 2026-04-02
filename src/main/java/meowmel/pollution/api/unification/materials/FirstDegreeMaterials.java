@@ -1,6 +1,7 @@
 package meowmel.pollution.api.unification.materials;
 
 import gregtech.api.GTValues;
+import gregtech.api.fluids.FluidBuilder;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.BlastProperty;
 import gregtech.api.unification.material.properties.MaterialToolProperty;
@@ -14,6 +15,7 @@ import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
+import static gregtech.api.util.GTUtility.gregtechId;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 import static meowmel.pollution.api.utils.POUtils.pollutionId;
 

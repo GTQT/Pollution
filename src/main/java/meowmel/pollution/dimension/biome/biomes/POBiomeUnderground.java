@@ -1,12 +1,12 @@
 package meowmel.pollution.dimension.biome.biomes;
 
 import meowmel.pollution.common.entity.moster.*;
-import meowmel.pollution.common.entity.moster.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeHellDecorator;
 
-public class POBiomeBNTNether extends Biome {
-    public POBiomeBNTNether() {
+public class POBiomeUnderground extends Biome {
+
+    public POBiomeUnderground() {
         super(new Biome.BiomeProperties("Deep Cave Basic").setWaterColor(0xADD8E6).setTemperature(0.5F));
         this.spawnableMonsterList.clear();
         this.spawnableCreatureList.clear();

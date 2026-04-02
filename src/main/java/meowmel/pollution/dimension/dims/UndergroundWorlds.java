@@ -1,7 +1,7 @@
 package meowmel.pollution.dimension.dims;
 
 import meowmel.pollution.dimension.biome.POBiomeHandler;
-import meowmel.pollution.dimension.worldgen.ChunkGenerator.ChunkGeneratorUnderWorld;
+import meowmel.pollution.dimension.worldgen.ChunkGenerator.ChunkGeneratorUndergroundWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
@@ -12,9 +12,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static meowmel.pollution.dimension.worldgen.PODimensionType.UNDER_WORLD;
 
-public class UnderWorlds extends WorldProvider {
+public class UndergroundWorlds extends WorldProvider {
     public void init() {
-        this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.UnderWorld_BIOME);// 初始化你维度的生物群系提供器
+        this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.UNDERGROUND_BIOME);// 初始化你维度的生物群系提供器
     }
 
     @SideOnly(Side.CLIENT)
@@ -33,7 +33,7 @@ public class UnderWorlds extends WorldProvider {
 
 
     public IChunkGenerator createChunkGenerator() {
-        return new ChunkGeneratorUnderWorld(this.world, this.world.getWorldInfo().isMapFeaturesEnabled(), this.world.getSeed());
+        return new ChunkGeneratorUndergroundWorld(this.world, this.world.getWorldInfo().isMapFeaturesEnabled(), this.world.getSeed());
     }
 
     public boolean isSurfaceWorld() {

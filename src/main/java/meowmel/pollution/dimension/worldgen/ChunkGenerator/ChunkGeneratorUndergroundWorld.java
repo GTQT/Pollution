@@ -5,7 +5,6 @@ import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.dimension.worldgen.mapGen.*;
 import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
 import meowmel.gtqtcore.common.blocks.StoneVariantBlock;
-import meowmel.pollution.dimension.worldgen.mapGen.*;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
@@ -37,7 +36,7 @@ import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.Ev
 import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.EventType.BTN_CAVE;
 import static meowmel.pollution.dimension.worldgen.terraingen.TerrainGen.getModdedMapGen;
 
-public class ChunkGeneratorUnderWorld implements IChunkGenerator {
+public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
     protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
     protected static final IBlockState Stone = Blocks.STONE.getDefaultState();
     protected static final IBlockState SwampWater = Blocks.WATER.getDefaultState();
@@ -109,7 +108,7 @@ public class ChunkGeneratorUnderWorld implements IChunkGenerator {
     //洞穴集群
     private MapGenBase mapGenCavesBTN = new MapGenCavesBTN();
 
-    public ChunkGeneratorUnderWorld(World worldIn, boolean p_i45637_2_, long seed) {
+    public ChunkGeneratorUndergroundWorld(World worldIn, boolean p_i45637_2_, long seed) {
         this.world = worldIn;
         this.generateStructures = p_i45637_2_;
         this.rand = new Random(seed);

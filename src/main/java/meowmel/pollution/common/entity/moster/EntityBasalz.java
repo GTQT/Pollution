@@ -40,7 +40,7 @@ public class EntityBasalz extends EntityElemental {
     public static void initialize(int id) {
         lootTable = LootTableList.register(new ResourceLocation("pollution", "entities/basalz"));
         Set<Biome> validBiomes = new HashSet<>();
-        validBiomes.add(POBiomeHandler.UnderWorld_BIOME);
+        validBiomes.add(POBiomeHandler.UNDERGROUND_BIOME);
         EntityRegistry.addSpawn(EntityBasalz.class, spawnWeight, spawnMin, spawnMax, EnumCreatureType.MONSTER, validBiomes.toArray(new Biome[validBiomes.size()]));
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "ele_basalz"), EntityBasalz.class,"Basalz",id, Pollution.instance,64,3,true, 0x606060, 0xB3ABA3);
     }

@@ -8,7 +8,7 @@ public class InitMapGenEvent extends Event
 {
     /** Use CUSTOM to filter custom event types
      */
-    public static enum EventType {BTN,BTN_CAVE}
+    public static enum EventType {BTN,BTN_CAVE,BLOOD_CITY}
 
     private final EventType type;
     private final MapGenBase originalGen;

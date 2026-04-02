@@ -111,6 +111,7 @@ public class PollutionMaterials {
 	public static Material super_sticky_tar;
 	public static Material magic_nitrobenzene;
 	public static Material pure_tar;
+    public static Material BloodPlasma;
 
 	public static Material dragon_pulse_fuel;
 

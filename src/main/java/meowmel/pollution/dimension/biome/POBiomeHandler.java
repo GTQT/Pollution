@@ -1,6 +1,7 @@
 package meowmel.pollution.dimension.biome;
 
-import meowmel.pollution.dimension.biome.biomes.POBiomeBNTNether;
+import meowmel.pollution.dimension.biome.biomes.POBiomeBlood;
+import meowmel.pollution.dimension.biome.biomes.POBiomeUnderground;
 import meowmel.pollution.dimension.biome.biomes.POBiomeDemiplane;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -15,7 +16,9 @@ public class POBiomeHandler {
 
 	// 创建一个静态实例
 	public static final Biome DEMIPLANE_BIOME = new POBiomeDemiplane(); // 替换为你的自定义生物群系类
-	public static final Biome UnderWorld_BIOME = new POBiomeBNTNether();
+	public static final Biome UNDERGROUND_BIOME = new POBiomeUnderground();
+    public static final Biome BLOOD_BIOME = new POBiomeBlood();
+
 	@SubscribeEvent
 	public static void registerBiomes(RegistryEvent.Register<Biome> event) {
 		IForgeRegistry<Biome> registry = event.getRegistry();
@@ -26,8 +29,13 @@ public class POBiomeHandler {
 		BiomeManager.addSpawnBiome(DEMIPLANE_BIOME);
 
 		// 交错地狱 主维度
-		UnderWorld_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.2"));
-		registry.register(UnderWorld_BIOME);
-		BiomeManager.addSpawnBiome(UnderWorld_BIOME);
+		UNDERGROUND_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.2"));
+		registry.register(UNDERGROUND_BIOME);
+		BiomeManager.addSpawnBiome(UNDERGROUND_BIOME);
+
+        // 血色
+        BLOOD_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.3"));
+        registry.register(BLOOD_BIOME);
+        BiomeManager.addSpawnBiome(BLOOD_BIOME);
 	}
 }

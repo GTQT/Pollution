@@ -100,6 +100,13 @@ public class SecondDegreeMaterials {
                 .color(0x4F4F4F)
                 .build();
 
+        // 血浆 Blood Plasma
+        PollutionMaterials.BloodPlasma = new Material.Builder(getMaterialsId(), pollutionId("blood_plasma"))
+                .liquid(new FluidBuilder()
+                        .block())
+                .color(0x8B0000)
+                .build();
+
         //通用奇术基底，高阶奇术基底，用于锻炉
         PollutionMaterials.basic_substrate = new Material.Builder(getMaterialsId(), pollutionId("basic_substrate"))
                 .color(0xFFFFD8)

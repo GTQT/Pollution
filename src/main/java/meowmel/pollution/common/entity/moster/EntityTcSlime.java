@@ -66,7 +66,7 @@ public class EntityTcSlime extends EntitySlime {
             {
                 Biome biome = this.world.getBiome(blockpos);
 
-                if (biome == POBiomeHandler.UnderWorld_BIOME  && this.rand.nextFloat() < 0.5F && this.rand.nextFloat() < this.world.getCurrentMoonPhaseFactor() && this.world.getLightFromNeighbors(new BlockPos(this)) <= this.rand.nextInt(8))
+                if (biome == POBiomeHandler.UNDERGROUND_BIOME && this.rand.nextFloat() < 0.5F && this.rand.nextFloat() < this.world.getCurrentMoonPhaseFactor() && this.world.getLightFromNeighbors(new BlockPos(this)) <= this.rand.nextInt(8))
                 {
                     IBlockState iblockstate = this.world.getBlockState((new BlockPos(this)).down());
                     return iblockstate.canEntitySpawn(this);

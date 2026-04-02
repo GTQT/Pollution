@@ -40,7 +40,7 @@ public class EntityBlizz extends EntityElemental {
     public static void initialize(int id) {
         lootTable = LootTableList.register(new ResourceLocation("pollution", "entities/blizz"));
         Set<Biome> validBiomes = new HashSet<>();
-        validBiomes.add(POBiomeHandler.UnderWorld_BIOME);
+        validBiomes.add(POBiomeHandler.UNDERGROUND_BIOME);
         EntityRegistry.addSpawn(EntityBlizz.class, spawnWeight, spawnMin, spawnMax, EnumCreatureType.MONSTER, validBiomes.toArray(new Biome[validBiomes.size()]));
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "ele_blizz"), EntityBlizz.class,"Blizz",id, Pollution.instance,64,3,true, 0xE0FBFF, 0x6BE6FF);
     }
