@@ -10,6 +10,7 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.MetaBlocks;
+import meowmel.pollution.api.capability.ipml.ManaHandlerList;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.client.textures.POTextures;
@@ -32,12 +33,13 @@ import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl {
-    MetaTileEntityManaHatch ManaPool = null;
+
     private int num = 0;
     private int fireticks = 0;
     private final int MAX_TICKS = 1600000000;
@@ -51,7 +53,7 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     protected void updateFormedValid() {
         if (!this.isActive())
             setActive(true);
-        if (ManaPool != null && !this.getWorld().isRemote && this.isWorkingEnabled()) {
+        if (manaHandler != null && !this.getWorld().isRemote && this.isWorkingEnabled()) {
             if (this.inputInventory != null && this.inputInventory.getSlots() > 0) {
                 num = 0;
                 for (int i = 0; i < inputInventory.getSlots(); i++) {
@@ -68,13 +70,13 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                     }
                 }
             }
-            if (!ManaPool.isFull()) {
+            if (!manaHandler.isFull()) {
                 //产出最大速率
                 speed = num;
                 speed = Math.min(speed, fireticks);
                 //削减燃烧时间 产出魔力
                 fireticks -= speed;
-                //this.ManaPool.consumeMana((int) (speed * 1.5));
+                manaHandler.addMana((long) (speed * 1.5));
             }
         }
     }
@@ -92,7 +94,7 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
                 .where('S', selfPredicate())
                 .where('A', states(getCasingState()).setMinGlobalLimited(15)
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1))
-                        .or(abilities(POMultiblockAbility.MANA_OUTPUT_HATCH).setExactLimit(1))
+                        .or(abilities(POMultiblockAbility.MANA_OUTPUT_POOL).setExactLimit(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
                 )
                 .where('B', states(getCasingState2()))
@@ -150,19 +152,18 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
         return null;
     }
 
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        for (Map.Entry<String, Object> battery : context.entrySet()) {
-            if (battery.getKey().startsWith("Multi")) {
-                HashSet set = (HashSet) battery.getValue();
-                for (var s : set
-                ) {
-                    if (s instanceof MetaTileEntityManaHatch) {
-                        this.ManaPool = (MetaTileEntityManaHatch) s;
-                    }
-                }
-            }
-        }
+    ManaHandlerList manaHandler;
+
+    @Override
+    protected void initializeAbilities() {
+        super.initializeAbilities();
+        manaHandler = new ManaHandlerList(getAbilities(POMultiblockAbility.MANA_OUTPUT_POOL));
+    }
+
+    @Override
+    protected void resetTileAbilities() {
+        super.resetTileAbilities();
+        manaHandler = new ManaHandlerList(new ArrayList<>());
     }
 
     public void invalidateStructure() {

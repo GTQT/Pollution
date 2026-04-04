@@ -9,6 +9,7 @@ import meowmel.pollution.common.block.blocks.PollutionBlocksInit;
 import meowmel.pollution.common.entity.PoEntitiesRegistry;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
+import meowmel.pollution.common.metatileentity.multiblockpart.wireless.WirelessManager;
 import meowmel.pollution.dimension.worldgen.PODimensionManager;
 import meowmel.pollution.dimension.worldgen.PODimensionType;
 import meowmel.pollution.dimension.worldgen.POStructureManager;
@@ -84,6 +85,7 @@ public class Pollution {
         PollutionMetaTileEntities.initialization();
         buildPortalIngredient();
         PoEntitiesRegistry.init();
+        WirelessManager.getInstance().init();
     }
 
     @Mod.EventHandler

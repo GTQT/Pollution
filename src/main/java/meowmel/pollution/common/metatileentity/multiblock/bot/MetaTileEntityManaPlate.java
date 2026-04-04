@@ -126,12 +126,11 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
                             continue;
                         }
 
-                        if(te!=null && te instanceof ITickable iTickable) {
+                        if(te instanceof ITickable iTickable) {
                             for (int i = 0; i < speed; i++) {
                                 iTickable.update();
                             }
                             work(false);
-                            continue;
                         }
                     }
                 }
@@ -139,17 +138,6 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
         }
     }
 
-    public void addEnergy(World world, BlockPos pos, long cache) {
-        MetaTileEntity mte = GTUtility.getMetaTileEntity(world, pos);
-        for (EnumFacing facing : EnumFacing.VALUES) {
-            if (mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing) instanceof IEnergyContainer) {
-                IEnergyContainer container1 = mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, facing);
-                if (cache > container1.getEnergyStored())
-                    container1.changeEnergy(cache - container1.getEnergyStored());
-            }
-        }
-
-    }
 
     @Nonnull
     @Override
@@ -169,7 +157,7 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
                 .where('S', selfPredicate())
                 .where(' ', any())
                 .where('C', states(getCasingAState())
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).setExactLimit(1)))
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_POOL).setExactLimit(1)))
                 .build();
     }
 

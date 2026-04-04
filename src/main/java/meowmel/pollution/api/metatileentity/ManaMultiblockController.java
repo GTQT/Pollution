@@ -106,7 +106,7 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(TextFormatting.GREEN + I18n.format("-魔力能源仓支持："));
         if (onlyManaEnergy()) {
-            tooltip.add(TextFormatting.GRAY + I18n.format("只允许额外使用魔力能源仓作为能量输入接口"));
+            tooltip.add(TextFormatting.GRAY + I18n.format("只允许使用魔力能源仓作为能量输入接口"));
         } else {
             tooltip.add(TextFormatting.GRAY + I18n.format("允许额外使用魔力能源仓作为能量输入接口"));
         }

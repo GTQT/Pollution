@@ -18,6 +18,7 @@ public class PORecipeMaps {
             .sound(POSoundEvent.MANA_PLUSE)
             .build();
 
+    // 八级魔力线，每一级魔力是一个电压
     public static final RecipeMap<FuelRecipeBuilder> MANA_TO_EU = new RecipeMapBuilder<>("mana_to_eu", new FuelRecipeBuilder())
             .itemInputs(2)
             .itemOutputs(2)

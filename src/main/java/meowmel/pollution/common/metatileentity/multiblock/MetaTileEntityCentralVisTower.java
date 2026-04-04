@@ -235,7 +235,7 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
                 .where('H', states(getCasingState7()))
                 .where('J', states(getCasingState8()))
                 .where('K', states(getCasingState9()).setMinGlobalLimited(5)
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).setExactLimit(1).setPreviewCount(1))
+                        .or(abilities(POMultiblockAbility.MANA_INPUT_POOL).setExactLimit(1).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
                         .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(3).setPreviewCount(3)))
                 .where(' ', any())

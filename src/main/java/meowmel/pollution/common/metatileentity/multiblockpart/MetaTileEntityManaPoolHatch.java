@@ -12,9 +12,9 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import lombok.Getter;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,8 +28,8 @@ import static gregtech.api.GTValues.V;
 
 public class MetaTileEntityManaPoolHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<IManaHatch>, IManaHatch {
 
-    private final boolean isExport;
-    private ManaContainer manaContainer;
+    protected final boolean isExport;
+    protected ManaContainer manaContainer;
 
     public MetaTileEntityManaPoolHatch(ResourceLocation metaTileEntityId, int tier, boolean isExport) {
         super(metaTileEntityId, tier);
