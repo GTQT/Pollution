@@ -111,7 +111,7 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
             var soul = NetworkHelper.getSoulNetwork(boundPlayerUUID);
             if(soul.getOrbTier()<128)
                 soul.setOrbTier(128);
-            soul.setCurrentEssence(soul.getCurrentEssence()+(getLevel()-8)*10000);
+            soul.setCurrentEssence(soul.getCurrentEssence()+(getLevel()-8)*25000);
         }
         FluidStack toFill = new FluidStack(BlockLifeEssence.getLifeEssence(),getFluidAmount());
         // 扫描6个方向
@@ -269,12 +269,7 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
         this.originPos = origin;
         markDirty();
     }
-    // ============================================================
-    // 玩家绑定 — 粘贴到 TileEntityFleshHeart 中
-    // ============================================================
-    //
-    // 需要 import:
-    //   import java.util.UUID;
+
 
     /** 绑定玩家的 UUID, null = 未绑定 */
     private UUID boundPlayerUUID = null;
