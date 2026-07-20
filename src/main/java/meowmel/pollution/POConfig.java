@@ -26,6 +26,11 @@ public class POConfig {
         @Config.RequiresMcRestart
         @Config.Comment("为交错底世界维度分配的ID号。如果与其他模组冲突，请更改。")
         public int BTNetherDimensionID = 41;
+        @Config.RequiresMcRestart
+        @Config.Comment("Dimension ID used by the terrain-only Alfheim port.")
+        public int AlfheimDimensionID = 43;
+        @Config.Comment("Allow players to respawn in the terrain-only Alfheim dimension.")
+        public boolean enableAlfheimRespawn = true;
         @Config.Comment("可以始终前往交错底世界的维度，以及返回的维度。默认为交错次元。")
         public int originDimension = 0;
         @Config.Comment("允许在“主世界”维度之外创建前往交错底世界的传送门。这可能被视为作弊。")

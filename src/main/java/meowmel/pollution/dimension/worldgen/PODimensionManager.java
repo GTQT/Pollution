@@ -3,6 +3,7 @@ package meowmel.pollution.dimension.worldgen;
 import meowmel.pollution.dimension.dims.BloodWorld;
 import meowmel.pollution.dimension.dims.UndergroundWorlds;
 import meowmel.pollution.dimension.dims.DimensionDemiplane;
+import meowmel.pollution.POConfig;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 
@@ -11,6 +12,7 @@ public class PODimensionManager {
 	public static int DEMIPLANE_DIM_ID;
     public static int UNDERGROUND_DIM_ID;
     public static int BLOOD_DIM_ID;
+    public static int ALFHEIM_DIM_ID;
 
 	public static void init() {
 		// 这里注册你的维度ID和维度类型
@@ -22,5 +24,8 @@ public class PODimensionManager {
 
         BLOOD_DIM_ID = 42;
         DimensionManager.registerDimension(BLOOD_DIM_ID, DimensionType.register("the_blood", "_blood", BLOOD_DIM_ID, BloodWorld.class, false));
+
+        ALFHEIM_DIM_ID = POConfig.WorldSettingSwitch.AlfheimDimensionID;
+        DimensionManager.registerDimension(ALFHEIM_DIM_ID, PODimensionType.ALFHEIM_WORLD);
 	}
 }

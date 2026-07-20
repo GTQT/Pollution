@@ -3,6 +3,7 @@ package meowmel.pollution.dimension.biome;
 import meowmel.pollution.dimension.biome.biomes.POBiomeBlood;
 import meowmel.pollution.dimension.biome.biomes.POBiomeUnderground;
 import meowmel.pollution.dimension.biome.biomes.POBiomeDemiplane;
+import meowmel.pollution.dimension.biome.AlfheimBiomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeManager;
@@ -37,5 +38,23 @@ public class POBiomeHandler {
         BLOOD_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.3"));
         registry.register(BLOOD_BIOME);
         BiomeManager.addSpawnBiome(BLOOD_BIOME);
+
+        registerAlfheimBiome(registry, AlfheimBiomes.FIELD, "alfheim_field");
+        registerAlfheimBiome(registry, AlfheimBiomes.GIANT_FLOWER_FIELD, "alfheim_giant_flower_field");
+        registerAlfheimBiome(registry, AlfheimBiomes.BEACH, "alfheim_beach");
+        registerAlfheimBiome(registry, AlfheimBiomes.SANDBANK, "alfheim_sandbank");
+        registerAlfheimBiome(registry, AlfheimBiomes.RIVER, "alfheim_river");
+        registerAlfheimBiome(registry, AlfheimBiomes.LOW_PLATEAU, "alfheim_low_plateau");
+        registerAlfheimBiome(registry, AlfheimBiomes.MID_PLATEAU, "alfheim_mid_plateau");
+        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU, "alfheim_high_plateau");
+        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU_FOREST, "alfheim_high_plateau_forest");
+        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU_FIELD, "alfheim_high_plateau_field");
+        registerAlfheimBiome(registry, AlfheimBiomes.ISLAND_FOREST, "alfheim_island_forest");
+        registerAlfheimBiome(registry, AlfheimBiomes.PIT_FOREST, "alfheim_pit_forest");
 	}
+
+    private static void registerAlfheimBiome(IForgeRegistry<Biome> registry, Biome biome, String name) {
+        biome.setRegistryName(new ResourceLocation("pollution", name));
+        registry.register(biome);
+    }
 }
