@@ -6,7 +6,7 @@ plugins {
     id 'maven-publish'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.7'
     id 'eclipse'
-    id 'com.gtnewhorizons.retrofuturagradle' version '1.4.9'
+    id 'com.gtnewhorizons.retrofuturagradle' version '1.4.1'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
@@ -111,22 +111,21 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
     // Published dependencies
-    api("com.cleanroommc:modularui:3.0.7") { transitive = false }
+    api("com.cleanroommc:modularui:3.1.5") { transitive = false }
 
     implementation rfg.deobf(files("libs/gtqtcore-1.9.0.jar"))
-    implementation rfg.deobf(files("libs/gregtech-gtqt-1.12.2-2.9.0-190.jar"))
-    implementation rfg.deobf(files("libs/GregicalityMultiblocks-gtqt-1.9.0.jar"))
-    implementation rfg.deobf(files("libs/ae2fc-2.7.10-unofficial.jar"))
-    implementation rfg.deobf(files("libs/appliedenergistics2-v1.0.5-gtqt.jar"))
+    implementation rfg.deobf(files("libs/gregtech-gtqt-1.12.2-1.9.0.jar"))
+    implementation rfg.deobf(files("libs/gregtechfoodoption-gtqt-1.12.2-1.9.0.jar"))
+    implementation rfg.deobf(files("libs/gtsteam-1.9.0.jar"))
 
-    //前置
+    // 前置
     api rfg.deobf("curse.maven:ctm-267602:2915363") // CTM 1.0.2.31
     implementation rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848") // CCL 3.2.3.358
     implementation rfg.deobf("curse.maven:had-enough-items-557549:7515497")
     implementation rfg.deobf('curse.maven:top-245211:2667280') // TOP 1.4.28
     implementation rfg.deobf("curse.maven:mixin-booter-419286:7049694")
 
-    //辅助
+    // 魔法主线
     implementation rfg.deobf("curse.maven:baubles-227083:2518667")
     implementation rfg.deobf("curse.maven:thaumcraft-223628:2629023")
     implementation rfg.deobf("curse.maven:thaumic-jei-285492:2705304")
