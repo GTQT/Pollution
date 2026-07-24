@@ -96,7 +96,8 @@ public class Pollution {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        IndustrialInfusionBuilder.init();
+        // Dynamic Thaumcraft infusion imports are disabled until the GT/HEI input expansion is fixed upstream.开启的话会至少占用额外约 0.87 GiB
+        // IndustrialInfusionBuilder.init();
         Botania.init();
         MeteorsHelper.init();
     }
