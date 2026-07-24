@@ -4,11 +4,13 @@ import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.logic.OCResult;
 import gregtech.api.recipes.properties.RecipePropertyStorage;
@@ -18,6 +20,8 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
+import meowmel.gtqtcore.api.blocks.impl.IBlockTier;
+import meowmel.gtqtcore.api.blocks.impl.WrappedTired;
 import meowmel.gtqtcore.api.predicate.TiredTraceabilityPredicate;
 import meowmel.gtqtcore.common.blocks.BlockCoolingCoil;
 import meowmel.gtqtcore.common.blocks.BlockMachineCasing;
@@ -42,6 +46,54 @@ import vazkii.botania.api.state.enums.PylonVariant;
 import vazkii.botania.common.block.ModBlocks;
 
 public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:bot_vacuum_freezer", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("      AXXXA      ", "       XXX       ", "        X        ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("     BABBBAB     ", "     C     C     ", "     D     D     ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("    BBBAAABBB    ", "    CCC   CCC    ", "    DED   DED    ", "     D     D     ", "                 ", "     F     F     ", "                 ", "                 ", "                 ")
+                        .aisle("     B AAA B     ", "     C     C     ", "     D     D     ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("       GAG       ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("      GBBBG      ", "       DHD       ", "       DHD       ", "       DHD       ", "       DHD       ", "       GGG       ", "       ADA       ", "       GGG       ", "                 ")
+                        .aisle("     GBBCBBG     ", "      DE ED      ", "      DE ED      ", "      DE ED      ", "      DEBED      ", "      GGBGG      ", "      A   A      ", "      GGCGG      ", "       GGG       ")
+                        .aisle(" BAAGBBCCCBBGAAB ", " C   DE I ED   C ", " D   DE J ED   D ", "     DE   ED     ", "     DE   ED     ", "     GGBBBGG     ", "     A K K A     ", "     GGCCCGG     ", "      GGHGG      ")
+                        .aisle("BBBAABCCCCCBAABBB", "CCC  H IEI H  CCC", "DED  H JEJ H  DED", " D   H  E  H   D ", "     HB E BH     ", " F   GBBBBBG   F ", "     D  K  D     ", "     GCCCCCG     ", "      GHHHG      ")
+                        .aisle(" BAAGBBCCCBBGAAB ", " C   DE I ED   C ", " D   DE J ED   D ", "     DE   ED     ", "     DE   ED     ", "     GGBBBGG     ", "     A K K A     ", "     GGCCCGG     ", "      GGHGG      ")
+                        .aisle("     GBBCBBG     ", "      DE ED      ", "      DE ED      ", "      DE ED      ", "      DEBED      ", "      GGBGG      ", "      A   A      ", "      GGCGG      ", "       GGG       ")
+                        .aisle("      GBBBG      ", "       DHD       ", "       DHD       ", "       DHD       ", "       DHD       ", "       GGG       ", "       ADA       ", "       GGG       ", "                 ")
+                        .aisle("       GAG       ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("     B AAA B     ", "     C     C     ", "     D     D     ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("    BBBAAABBB    ", "    CCC   CCC    ", "    DED   DED    ", "     D     D     ", "                 ", "     F     F     ", "                 ", "                 ", "                 ")
+                        .aisle("     BABBBAB     ", "     C     C     ", "     D     D     ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .aisle("      AXXXA      ", "       XSX       ", "        X        ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
+                        .self('S', MetaTileEntityBotVacuumFreezer.class)
+                        .block('A', getCasingState())
+                        .block('B', getCasingState2())
+                        .block('C', getCasingState3())
+                        .block('D', getCasingState4())
+                        .block('E', getCasingState5())
+                        .block('F', getCasingState7())
+                        .block('G', getCasingState6())
+                        .where('H', TiredTraceabilityPredicate.element(TiredTraceabilityPredicate.coolingCoils()))
+                        .block('I', Blocks.DIRT.getDefaultState())
+                        .block('J', ModBlocks.floatingFlower.getDefaultState())
+                        .block('K', PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_4))
+                        .any(' ');
+                return builder
+                        .casing('X', getCasingState2())
+                        .custom(Elements.abilities(0, 13,
+                                meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH,
+                                MultiblockAbility.INPUT_ENERGY, MultiblockAbility.MAINTENANCE_HATCH,
+                                MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
+                                MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS), 13)
+                        .done()
+                        .abilityGroup(meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
+                                meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH,
+                                MultiblockAbility.INPUT_ENERGY)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .buildStructureDefinition();
+            });
 
     int temperature;
 
@@ -83,11 +135,13 @@ public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
         return new MetaTileEntityBotVacuumFreezer(this.metaTileEntityId);
     }
 
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object type = context.get("CoolingCoilType");
-        if (type instanceof BlockCoolingCoil.CoolingCoilType) {
-            this.temperature = ((BlockCoolingCoil.CoolingCoilType) type).getCoilTemperature();
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        IBlockTier type = TiredTraceabilityPredicate.getTier(formed, TiredTraceabilityPredicate.coolingCoils());
+        if (type instanceof WrappedTired &&
+                ((WrappedTired) type).getInner() instanceof BlockCoolingCoil.CoolingCoilType) {
+            this.temperature = ((BlockCoolingCoil.CoolingCoilType) ((WrappedTired) type).getInner())
+                    .getCoilTemperature();
         } else {
             this.temperature = BlockCoolingCoil.CoolingCoilType.MANGANESE_IRON_ARSENIC_PHOSPHIDE.getCoilTemperature();
         }
@@ -134,7 +188,9 @@ public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start()
                 .aisle("      AXXXA      ", "       XXX       ", "        X        ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
                 .aisle("     BABBBAB     ", "     C     C     ", "     D     D     ", "                 ", "                 ", "                 ", "                 ", "                 ", "                 ")
@@ -169,7 +225,7 @@ public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
                 .where('I', states(getCasingState8()))
                 .where('J', states(getCasingState9()))
                 .where('K', states(getCasingState10()))
-                .build();
+                .build();*/
     }
 
     @Override

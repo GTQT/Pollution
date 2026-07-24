@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.unification.material.Material;
 import gregtech.client.renderer.ICubeRenderer;
@@ -26,6 +26,23 @@ import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_GREENHOUSE_RECIPE
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
 
 public class MetaTileEntityMagicGreenHouse extends MagicRecipeMapMultiblockController {
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_greenhouse", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("CCCCC", "CCCCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
+                            .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
+                            .aisle("CCCCC", "CHHHC", "G###G", "G###G", "CHHHC", "CDDDC")
+                            .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
+                            .aisle("CCCCC", "CCSCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
+                            .self('S', MetaTileEntityMagicGreenHouse.class)
+                            .casing('C', getCasingState()),
+                    MAGIC_GREENHOUSE_RECIPES, 32)
+                    .block('P', getSecondCasingState())
+                    .block('D', getCasingState4())
+                    .block('H', getCasingState5())
+                    .block('G', getCasingState3())
+                    .air('#')
+                    .buildStructureDefinition());
     public MetaTileEntityMagicGreenHouse(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]
                 {
@@ -60,21 +77,8 @@ public class MetaTileEntityMagicGreenHouse extends MagicRecipeMapMultiblockContr
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("CCCCC", "CCCCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
-                .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
-                .aisle("CCCCC", "CHHHC", "G###G", "G###G", "CHHHC", "CDDDC")
-                .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
-                .aisle("CCCCC", "CCSCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
-                .where('S', selfPredicate())
-                .where('C', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
-                .where('P', states(getSecondCasingState()))
-                .where('D', states(getCasingState4()))
-                .where('H', states(getCasingState5()))
-                .where('G', states(getCasingState3()))
-                .where('#', air())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

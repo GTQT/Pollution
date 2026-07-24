@@ -95,7 +95,7 @@ public class OreMaterials {
                 .plasma()
                 .ore(true)
                 .color(0xDCDCDC)
-                .flags(EXT2_METAL, MORTAR_GRINDABLE, GENERATE_ROTOR, GENERATE_SPRING, GENERATE_SPRING_SMALL,
+                .flags(MORTAR_GRINDABLE, GENERATE_ROTOR, GENERATE_SPRING, GENERATE_SPRING_SMALL,
                         GENERATE_FINE_WIRE, GENERATE_DOUBLE_PLATE)
                 .components(Tin, 1, InfusedWater, 5, InfusedAir, 2)
                 .cableProperties(V[LV], 4, 1)
@@ -109,7 +109,7 @@ public class OreMaterials {
                 .liquid(new FluidBuilder().temperature(1337))
                 .ore(true)
                 .color(0xFFE650).iconSet(SHINY)
-                .flags(EXT2_METAL, GENERATE_RING, MORTAR_GRINDABLE, EXCLUDE_BLOCK_CRAFTING_BY_HAND_RECIPES,
+                .flags(GENERATE_RING, MORTAR_GRINDABLE, EXCLUDE_BLOCK_CRAFTING_BY_HAND_RECIPES,
                         GENERATE_SPRING, GENERATE_SPRING_SMALL, GENERATE_FINE_WIRE, GENERATE_FOIL,
                         GENERATE_DOUBLE_PLATE)
                 .components(Gold, 1, InfusedFire, 5, InfusedAir, 7)
@@ -124,7 +124,7 @@ public class OreMaterials {
                 .liquid(new FluidBuilder().temperature(600))
                 .ore(true)
                 .color(0x8C648C)
-                .flags(EXT2_METAL, MORTAR_GRINDABLE, GENERATE_ROTOR, GENERATE_SPRING, GENERATE_SPRING_SMALL,
+                .flags(MORTAR_GRINDABLE, GENERATE_ROTOR, GENERATE_SPRING, GENERATE_SPRING_SMALL,
                         GENERATE_FINE_WIRE, GENERATE_DOUBLE_PLATE)
                 .components(Lead, 1, InfusedFire, 5, InfusedOrder, 7)
                 .cableProperties(V[LV], 16, 2)

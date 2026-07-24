@@ -5,9 +5,11 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -16,6 +18,7 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import meowmel.pollution.api.capability.ipml.ManaHandlerList;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
 import meowmel.pollution.client.textures.POTextures;
@@ -24,6 +27,7 @@ import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
+import meowmel.gtqtcore.api.blocks.impl.IBlockTier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -43,7 +47,6 @@ import vazkii.botania.common.block.ModBlocks;
 
 import java.util.*;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAME;
 
 public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl {
     public static HashMap<ChunkPos, BlockPos> CentralTowerCoveredChunks = new HashMap<>();
@@ -102,9 +105,10 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
     ManaHandlerList manaHandler;
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object frameLevel = context.get("FRAMETieredStats");
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing frame = POTieredCasingGroups.frames().channel().getMatchedCasing(formed);
+        IBlockTier frameLevel = frame == null ? null : frame.getPayloadAs(IBlockTier.class);
         this.frameLevel = POUtils.getOrDefault(() -> frameLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) frameLevel).getIntTier(),
                 0);
@@ -207,8 +211,8 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
     }
 
         @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        return DeclarativePatternBuilder.start()
                 .aisle("AB           BA", "C             C", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "       D       ", "       E       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
                 .aisle("BAB         BAB", " C           C ", " C           C ", " C           C ", "               ", "               ", "               ", "               ", "               ", "       A       ", "    DDDFDDD    ", "       G       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
                 .aisle(" BAB       BAB ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  CA       AC  ", "   CAAACAAAC   ", "   DFFFDFFFD   ", "    GGGCGGG    ", "     H H H     ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "       D       ", "       E       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
@@ -224,22 +228,26 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
                 .aisle(" BAB       BAB ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  C         C  ", "  CA       AC  ", "   CAAACAAAC   ", "   DFFFDFFFD   ", "    GGGCGGG    ", "     H H H     ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "       D       ", "       E       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
                 .aisle("BAB         BAB", " C           C ", " C           C ", " C           C ", "               ", "               ", "               ", "               ", "               ", "               ", "    DDDFDDD    ", "       G       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
                 .aisle("AB           BA", "C             C", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "       D       ", "       E       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
-                .where('S', selfPredicate())
-                .where('A', states(getCasingState()))
-                .where('B', CP_FRAME.get())
-                .where('C', states(getCasingState2()))
-                .where('D', states(getCasingState3()))
-                .where('E', states(getCasingState4()))
-                .where('F', states(getCasingState5()))
-                .where('G', states(getCasingState6()))
-                .where('H', states(getCasingState7()))
-                .where('J', states(getCasingState8()))
-                .where('K', states(getCasingState9()).setMinGlobalLimited(5)
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_POOL).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(3).setPreviewCount(3)))
-                .where(' ', any())
-                .build();
+                .self('S', MetaTileEntityCentralVisTower.class)
+                .block('A', getCasingState())
+                .where('B', Elements.tieredCasing(POTieredCasingGroups.frames().group(),
+                        POTieredCasingGroups.frames().channel().getName(), 0, -1))
+                .block('C', getCasingState2())
+                .block('D', getCasingState3())
+                .block('E', getCasingState4())
+                .block('F', getCasingState5())
+                .block('G', getCasingState6())
+                .block('H', getCasingState7())
+                .block('J', getCasingState8())
+                .where('K', Elements.choice(Elements.counted(5, -1, Elements.block(getCasingState9())),
+                        Elements.abilities(POMultiblockAbility.MANA_INPUT_POOL),
+                        Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH),
+                        Elements.abilities(MultiblockAbility.EXPORT_FLUIDS)))
+                .any(' ')
+                .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 3, 8)
+                .buildStructureDefinition();
     }
 
     @Override

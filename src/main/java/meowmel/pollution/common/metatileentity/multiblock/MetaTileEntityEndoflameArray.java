@@ -5,9 +5,9 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import meowmel.pollution.api.capability.ipml.ManaHandlerList;
@@ -39,6 +39,38 @@ import java.util.List;
 import java.util.Map;
 
 public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl {
+
+    private final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:endoflame_array", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("AB   BA", " ABBBA ", "       ", "       ", "       ", "       ")
+                        .aisle("BABBBAB", "AAAAAAA", " BCCCB ", " D C D ", "       ", "       ")
+                        .aisle(" BAAAB ", "BAAEAAB", " CXFXC ", "  GXG  ", "   C   ", "       ")
+                        .aisle(" BAAAB ", "BAEAEAB", " CFXFC ", " CXXXC ", "  CXC  ", "   G   ")
+                        .aisle(" BAAAB ", "BAAEAAB", " CXFXC ", "  GXG  ", "   C   ", "       ")
+                        .aisle("BABBBAB", "AAAAAAA", " BCCCB ", " D C D ", "       ", "       ")
+                        .aisle("AB   BA", " ABSBA ", "       ", "       ", "       ", "       ")
+                        .self('S', MetaTileEntityEndoflameArray.class)
+                        .block('A', getCasingState())
+                        .block('B', getCasingState2())
+                        .block('C', getCasingState3())
+                        .block('D', getCasingState4())
+                        .block('E', getCasingState5())
+                        .block('F', getCasingState6())
+                        .block('G', getCasingState7())
+                        .air('X')
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
+                return casing
+                        .custom(Elements.abilities(0, 31,
+                                MultiblockAbility.IMPORT_ITEMS,
+                                POMultiblockAbility.MANA_OUTPUT_POOL,
+                                MultiblockAbility.MAINTENANCE_HATCH), 31)
+                        .done()
+                        .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_POOL, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .buildStructureDefinition();
+            });
 
     private int num = 0;
     private int fireticks = 0;
@@ -82,30 +114,8 @@ public class MetaTileEntityEndoflameArray extends MetaTileEntityBaseWithControl 
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("AB   BA", " ABBBA ", "       ", "       ", "       ", "       ")
-                .aisle("BABBBAB", "AAAAAAA", " BCCCB ", " D C D ", "       ", "       ")
-                .aisle(" BAAAB ", "BAAEAAB", " CXFXC ", "  GXG  ", "   C   ", "       ")
-                .aisle(" BAAAB ", "BAEAEAB", " CFXFC ", " CXXXC ", "  CXC  ", "   G   ")
-                .aisle(" BAAAB ", "BAAEAAB", " CXFXC ", "  GXG  ", "   C   ", "       ")
-                .aisle("BABBBAB", "AAAAAAA", " BCCCB ", " D C D ", "       ", "       ")
-                .aisle("AB   BA", " ABSBA ", "       ", "       ", "       ", "       ")
-                .where('S', selfPredicate())
-                .where('A', states(getCasingState()).setMinGlobalLimited(15)
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1))
-                        .or(abilities(POMultiblockAbility.MANA_OUTPUT_POOL).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
-                )
-                .where('B', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('D', states(getCasingState4()))
-                .where('E', states(getCasingState5()))
-                .where('F', states(getCasingState6()))
-                .where('G', states(getCasingState7()))
-                .where('X', air())
-                .where(' ', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     protected IBlockState getCasingState() {

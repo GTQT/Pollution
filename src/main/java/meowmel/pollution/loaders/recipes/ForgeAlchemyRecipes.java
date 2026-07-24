@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import vazkii.botania.common.item.ModItems;
 
-import static gregicality.multiblocks.api.fluids.GCYMFluidStorageKeys.MOLTEN;
+import static gregtech.api.fluids.store.FluidStorageKeys.MOLTEN;
 
 public class ForgeAlchemyRecipes {
 	public static void init() {

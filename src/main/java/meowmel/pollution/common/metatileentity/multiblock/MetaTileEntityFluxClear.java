@@ -16,16 +16,17 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
+import gregtech.api.util.GTQTDateHelper;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.BlockMultiblockCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.behaviors.AbstractMaterialPartBehavior;
-import gtqt.api.util.GTQTDateHelper;
 import meowmel.pollution.POConfig;
 import meowmel.pollution.common.items.behaviors.FilterBehavior;
 import meowmel.gtqtcore.client.textures.GTQTTextures;
@@ -53,6 +54,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
+    private static final String STRUCTURE_ID_PREFIX = "pollution:flux_clear_";
     @Override
     public boolean usesMui2() {
         return false;
@@ -107,8 +109,8 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
         this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
     }
 
@@ -210,18 +212,24 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
 
     @Nonnull
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("XXX", "XXX", "XXX", "AAA", "AAA")
-                .aisle("XXX", "XXX", "XXX", "AXA", "AAA")
-                .aisle("XXX", "XSX", "XXX", "AAA", "AAA")
-                .where('S', selfPredicate())
-                .where('A', states(getIntakeState()).addTooltips("gregtech.multiblock.pattern.clear_amount_1"))
-                .where('X', states(getCasingAState()).setMinGlobalLimited(15)
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1))
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1)))
-                .where(' ', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return StructureDefinition.getOrBuild(STRUCTURE_ID_PREFIX + tier, () -> {
+            DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
+                    .aisle("XXX", "XXX", "XXX", "AAA", "AAA")
+                    .aisle("XXX", "XXX", "XXX", "AXA", "AAA")
+                    .aisle("XXX", "XSX", "XXX", "AAA", "AAA")
+                    .self('S', MetaTileEntityFluxClear.class)
+                    .block('A', getIntakeState())
+                    .casing('X', getCasingAState());
+            return casing
+                    .custom(Elements.abilities(0, 12,
+                            MultiblockAbility.MAINTENANCE_HATCH,
+                            MultiblockAbility.INPUT_ENERGY), 12)
+                    .done()
+                    .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                    .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 1)
+                    .buildStructureDefinition();
+        });
     }
 
     @SideOnly(Side.CLIENT)

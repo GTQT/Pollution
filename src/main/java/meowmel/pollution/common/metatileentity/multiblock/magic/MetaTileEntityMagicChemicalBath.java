@@ -8,9 +8,10 @@ import codechicken.lib.vec.Matrix4;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FluidStructureElements;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -39,10 +40,29 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gregtech.api.pattern.FluidTraceability.*;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
 
 public class MetaTileEntityMagicChemicalBath extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_chemical_bath", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("XXXXXXX", "XXXXXXX", "XXXXXXX")
+                        .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
+                        .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
+                        .aisle("XXXXXXX", "XCCCCCX", "XAAAAAX")
+                        .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
+                        .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
+                        .aisle("XXXXXXX", "XXXSXXX", "XXXXXXX")
+                        .self('S', MetaTileEntityMagicChemicalBath.class)
+                        .block('X', getCasingState())
+                        .block('C', getCasingState2())
+                        .block('D', getCasingState3())
+                        .where('A', FluidStructureElements.fluidElement(FluidRegistry.WATER));
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('X', getCasingState());
+                return configureMagicRecipeCasing(casing, RecipeMaps.CHEMICAL_BATH_RECIPES, 31)
+                        .buildStructureDefinition();
+            });
 
     private boolean waterFilled;
     private List<BlockPos> waterPositions;
@@ -70,10 +90,11 @@ public class MetaTileEntityMagicChemicalBath extends MagicRecipeMapMultiblockCon
 
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
 
-        this.waterPositions = context.getOrDefault(FLUID_BLOCKS_KEY, new ArrayList<>());
+        this.waterPositions = formed.getAggregate(FluidStructureElements.FLUID_BLOCK_POSITIONS);
+        if (this.waterPositions == null) this.waterPositions = new ArrayList<>();
         this.waterFilled = waterPositions.isEmpty();
     }
 
@@ -88,7 +109,7 @@ public class MetaTileEntityMagicChemicalBath extends MagicRecipeMapMultiblockCon
     protected void updateFormedValid() {
         super.updateFormedValid();
         if (!waterFilled && getOffsetTimer() % 5 == 0) {
-            fillFluid(this, this.waterPositions, FluidRegistry.WATER);
+            FluidStructureElements.fillFluid(this, this.waterPositions, FluidRegistry.WATER);
             if (this.waterPositions.isEmpty()) {
                 this.waterFilled = true;
             }
@@ -101,21 +122,8 @@ public class MetaTileEntityMagicChemicalBath extends MagicRecipeMapMultiblockCon
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("XXXXXXX", "XXXXXXX", "XXXXXXX")
-                .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
-                .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
-                .aisle("XXXXXXX", "XCCCCCX", "XAAAAAX")
-                .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
-                .aisle("XXXXXXX", "XDDCDDX", "XAAAAAX")
-                .aisle("XXXXXXX", "XXXSXXX", "XXXXXXX")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(65).or(autoAbilities()))
-                .where('C', states(getCasingState2()))
-                .where('D', states(getCasingState3()))
-                .where('A', fluid(FluidRegistry.WATER))
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

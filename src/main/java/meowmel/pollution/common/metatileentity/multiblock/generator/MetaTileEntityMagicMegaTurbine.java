@@ -7,8 +7,9 @@ import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityLaserHatch;
@@ -29,7 +30,8 @@ import java.util.List;
 public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
 
     public MetaTileEntityMagicMegaTurbine(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, int tier, IBlockState casingState, IBlockState gearboxState, ICubeRenderer casingRenderer, boolean hasMufflerHatch, ICubeRenderer frontOverlay) {
-        super(metaTileEntityId, recipeMap, tier, casingState, gearboxState, casingRenderer, hasMufflerHatch, frontOverlay);
+        super(metaTileEntityId, new MagicTurbineType(metaTileEntityId.toString(), recipeMap, tier, casingState,
+                gearboxState, casingRenderer, hasMufflerHatch, frontOverlay));
     }
 
     @Override
@@ -40,8 +42,18 @@ public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
 
     @Nonnull
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        return StructureDefinition.getOrBuild("pollution:magic_mega_turbine_" + tier, () -> {
+            MetaTileEntity[] reinforcedRotors = MultiblockAbility.REGISTRY.get(GTQTMultiblockAbility.REINFORCED_ROTOR_HOLDER).stream()
+                    .filter(mte -> mte instanceof ITieredMetaTileEntity && ((ITieredMetaTileEntity) mte).getTier() >= tier)
+                    .toArray(MetaTileEntity[]::new);
+            MetaTileEntity[] manaOutputs = MultiblockAbility.REGISTRY.get(POMultiblockAbility.MANA_OUTPUT_HATCH).stream()
+                    .filter(mte -> {
+                        IEnergyContainer container = mte.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, null);
+                        return container != null && container.getOutputVoltage() * container.getOutputAmperage() >= GTValues.V[tier];
+                    })
+                    .toArray(MetaTileEntity[]::new);
+            DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
                 .aisle("CCCCCCC", "CCCCCCC", "CCMMMCC", "CCMMMCC", "CCMMMCC", "CCCCCCC", "CCCCCCC")
                 .aisle("CCCCCCC", "RGGGGGR", "CCCCCCC", "CCCCCCC", "CCCCCCC", "RGGGGGR", "CCCCCCC")
                 .aisle("CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC")
@@ -51,39 +63,29 @@ public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
                 .aisle("CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC")
                 .aisle("CCCCCCC", "RGGGGGR", "CCCCCCC", "CCCCCCC", "CCCCCCC", "RGGGGGR", "CCCCCCC")
                 .aisle("CCCCCCC", "CAAAAAC", "CAAAAAC", "CAASAAC", "CAAAAAC", "CAAAAAC", "CCCCCCC")
-                .where('S', this.selfPredicate())
-                .where('C', states(getCasingState()))
-                .where('G', states(getGearBoxState()))
-                .where('R', metaTileEntities(MultiblockAbility.REGISTRY.get(GTQTMultiblockAbility.REINFORCED_ROTOR_HOLDER).stream()
-                        .filter(mte -> (mte instanceof ITieredMetaTileEntity) &&
-                                (((ITieredMetaTileEntity) mte).getTier() >= tier))
-                        .toArray(MetaTileEntity[]::new))
-                        .addTooltips("gregtech.multiblock.pattern.clear_amount_3"))
-                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('A', states(getCasingState())
-                        .or(metaTileEntities(MultiblockAbility.REGISTRY.get(POMultiblockAbility.MANA_OUTPUT_HATCH).stream()
-                                .filter(mte -> {
-                                    IEnergyContainer container = mte
-                                            .getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, null);
-                                    return container != null &&
-                                            container.getOutputVoltage() * container.getOutputAmperage() >= GTValues.V[tier];
-                                })
-                                .toArray(MetaTileEntity[]::new))
-                                .setMaxGlobalLimited(8))
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH)
-                                .setExactLimit(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS)
-                                .setMaxGlobalLimited(1)
-                                .setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS)
-                                .setMinGlobalLimited(1)
-                                .setMaxGlobalLimited(4)
-                                .setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS)
-                                .setMinGlobalLimited(1)
-                                .setMaxGlobalLimited(4)
-                                .setPreviewCount(1)))
-                .build();
+                .self('S', MetaTileEntityMagicMegaTurbine.class)
+                .block('C', type.getCasingState())
+                .block('G', type.getGearboxState())
+                .where('R', Elements.metaTileEntitiesAsAbility(GTQTMultiblockAbility.REINFORCED_ROTOR_HOLDER,
+                        0, -1, -1, reinforcedRotors))
+                .hatch('M', MultiblockAbility.MUFFLER_HATCH)
+                .casing('A', type.getCasingState());
+            return casing
+                    .custom(Elements.choice(
+                            Elements.metaTileEntitiesAsAbility(POMultiblockAbility.MANA_OUTPUT_HATCH,
+                                    0, 8, 1, manaOutputs),
+                            Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH,
+                                    MultiblockAbility.IMPORT_ITEMS,
+                                    MultiblockAbility.IMPORT_FLUIDS,
+                                    MultiblockAbility.EXPORT_FLUIDS)), 18)
+                    .done()
+                    .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_HATCH, 0, 8)
+                    .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                    .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 0, 1)
+                    .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 4)
+                    .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 1, 4)
+                    .buildStructureDefinition();
+        });
     }
 
     @Override

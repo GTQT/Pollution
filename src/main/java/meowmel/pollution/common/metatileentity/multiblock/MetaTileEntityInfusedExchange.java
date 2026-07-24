@@ -8,8 +8,8 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -32,6 +32,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl {
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:infused_exchange", () -> DeclarativePatternBuilder.start()
+                    .aisle("A", "S")
+                    .self('S', MetaTileEntityInfusedExchange.class)
+                    .hatch('A', MultiblockAbility.EXPORT_FLUIDS)
+                    .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 0, 1)
+                    .buildStructureDefinition());
     @Override
     public boolean usesMui2() {
         return false;
@@ -153,12 +160,8 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
         this.name=data.getString("name");
     }
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("A","S")
-                .where('S', selfPredicate())
-                .where('A', abilities(MultiblockAbility.EXPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

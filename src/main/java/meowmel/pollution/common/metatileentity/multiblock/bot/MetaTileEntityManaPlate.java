@@ -9,9 +9,10 @@ import gregtech.api.gui.widgets.WidgetGroup;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.*;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import meowmel.pollution.api.capability.ipml.ManaHandlerList;
@@ -38,6 +39,28 @@ import java.util.List;
 
 
 public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
+    private static final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:mana_plate", () -> {
+                DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCCCCCCC")
+                        .aisle("CCCCCSCCCCC")
+                        .self('S', MetaTileEntityManaPlate.class)
+                        .casing('C', PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_BASIC));
+                return casing
+                        .custom(Elements.abilities(0, 1, POMultiblockAbility.MANA_INPUT_POOL), 1)
+                        .done()
+                        .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 1, 1)
+                        .buildStructureDefinition();
+            });
     @Override
     public boolean usesMui2() {
         return false;
@@ -61,8 +84,8 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
         speedMax = getTier();
     }
 
@@ -141,24 +164,8 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
 
     @Nonnull
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCCCCCCC")
-                .aisle("CCCCCSCCCCC")
-                .where('S', selfPredicate())
-                .where(' ', any())
-                .where('C', states(getCasingAState())
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_POOL).setExactLimit(1)))
-                .build();
+    protected StructureDefinition createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

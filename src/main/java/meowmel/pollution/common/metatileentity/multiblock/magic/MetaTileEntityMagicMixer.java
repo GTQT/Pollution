@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -25,6 +25,23 @@ import net.minecraft.util.ResourceLocation;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedEntropy;
 
 public class MetaTileEntityMagicMixer extends MagicRecipeMapMultiblockController {
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_mixer", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#XXX#", "##G##")
+                            .aisle("XXXXX", "XACAX", "XAAAX", "XACAX", "XAAAX", "##G##")
+                            .aisle("XXXXX", "XCPCX", "XAPAX", "XCPCX", "XAPAX", "GGGGG")
+                            .aisle("XXXXX", "XACAX", "XAAAX", "XACAX", "XAAAX", "##G##")
+                            .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#XXX#", "##G##")
+                            .self('S', MetaTileEntityMagicMixer.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.MIXER_RECIPES, 28)
+                    .block('P', getCasingState2())
+                    .block('C', getCasingState3())
+                    .block('G', getCasingState4())
+                    .air('A')
+                    .any('#')
+                    .buildStructureDefinition());
     public MetaTileEntityMagicMixer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MIXER_RECIPES});
     }
@@ -51,21 +68,8 @@ public class MetaTileEntityMagicMixer extends MagicRecipeMapMultiblockController
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#XXX#", "##G##")
-                .aisle("XXXXX", "XACAX", "XAAAX", "XACAX", "XAAAX", "##G##")
-                .aisle("XXXXX", "XCPCX", "XAPAX", "XCPCX", "XAPAX", "GGGGG")
-                .aisle("XXXXX", "XACAX", "XAAAX", "XACAX", "XAAAX", "##G##")
-                .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#XXX#", "##G##")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
-                .where('P', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('G', states(getCasingState4()))
-                .where('A', air())
-                .where('#', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

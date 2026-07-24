@@ -3,7 +3,7 @@ package meowmel.pollution.common.metatileentity.multiblockpart;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregicality.multiblocks.api.render.GCYMTextures;
+import gregtech.client.renderer.texture.GCYMTextures;
 import gregtech.api.GTValues;
 import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.gui.GuiTextures;

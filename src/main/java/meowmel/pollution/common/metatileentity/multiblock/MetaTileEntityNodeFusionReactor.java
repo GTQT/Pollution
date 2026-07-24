@@ -15,9 +15,10 @@ import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
@@ -102,8 +103,8 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
         return PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_1);
     }
 
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
         List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
         this.inputEnergyContainer = new EnergyContainerList(energyContainer);
         long euCapacity = this.calculateEnergyStorageFactor(energyContainer.size());
@@ -296,8 +297,8 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 
     //感谢小伞对本函数的大力支持！
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        return DeclarativePatternBuilder.start()
                 .aisle("                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "              ABA              ", "              BDB              ", "              ABA              ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ")
                 .aisle("                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "              ADA              ", "             AADAA             ", "             DDEDD             ", "             AADAA             ", "              ADA              ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ")
                 .aisle("                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "              ADA              ", "              ADA              ", "            AABEBAA            ", "            DDEDEDD            ", "            AABEBAA            ", "              ADA              ", "              ADA              ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ")
@@ -330,22 +331,26 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
                 .aisle("                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "              ADA              ", "             AADAA             ", "             DDEDD             ", "             AADAA             ", "              ADA              ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ")
                 .aisle("                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "              ABA              ", "              BSB              ", "              ABA              ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ", "                               ")
 
-                .where('S', selfPredicate())
-                .where(' ', any())
-                .where('A', states(getCasingState()))
-                .where('B', states(getCasingState2()))
-                .where('D', states(getCasingState3()))
-                .where('E', states(getCasingState4()))
-                .where('F', states(getCasingState3())
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(5).setPreviewCount(5))
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1))
-                )
-                .where('G', states(getCasingState3())
-                        .or(metaTileEntities(Arrays.stream(MetaTileEntities.ENERGY_INPUT_HATCH)
-                                .filter((mte) -> mte != null && this.tier <= mte.getTier())
-                                .toArray(MetaTileEntity[]::new)).setMinGlobalLimited(1).setPreviewCount(16)))
-                .where('H', metaTileEntities(MetaTileEntities.ITEM_IMPORT_BUS[GTValues.ULV]))
-                .build();
+                .self('S', MetaTileEntityNodeFusionReactor.class)
+                .any(' ')
+                .block('A', getCasingState())
+                .block('B', getCasingState2())
+                .block('D', getCasingState3())
+                .block('E', getCasingState4())
+                .where('F', Elements.choice(Elements.block(getCasingState3()),
+                        Elements.abilities(MultiblockAbility.IMPORT_FLUIDS),
+                        Elements.abilities(MultiblockAbility.EXPORT_FLUIDS)))
+                .where('G', Elements.choice(Elements.block(getCasingState3()),
+                        Elements.metaTileEntitiesAsAbility(MultiblockAbility.INPUT_ENERGY, 1, 16, 16,
+                                Arrays.stream(MetaTileEntities.ENERGY_INPUT_HATCH)
+                                        .filter(mte -> mte != null && this.tier <= mte.getTier())
+                                        .toArray(MetaTileEntity[]::new))))
+                .where('H', Elements.metaTileEntitiesAsAbility(MultiblockAbility.IMPORT_ITEMS, 1, 1, 1,
+                        MetaTileEntities.ITEM_IMPORT_BUS[GTValues.ULV]))
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 5, -1)
+                .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 1, -1)
+                .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 16)
+                .buildStructureDefinition();
     }
 
     private IBlockState getCasingState3() {

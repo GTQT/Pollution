@@ -8,7 +8,8 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
 import net.minecraft.client.resources.I18n;
@@ -48,44 +49,6 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
     }
 
     @Override
-    public TraceabilityPredicate autoAbilities() {
-        return this.autoAbilities(true, true, true, true, true, true, true);
-    }
-
-    @Override
-    public TraceabilityPredicate autoAbilities(boolean checkEnergyIn, boolean checkMaintenance, boolean checkItemIn, boolean checkItemOut, boolean checkFluidIn, boolean checkFluidOut, boolean checkMuffler) {
-        TraceabilityPredicate predicate = super.autoAbilities(checkMaintenance, checkMuffler);
-        if (checkEnergyIn) {
-            if (onlyManaEnergy()) {
-                predicate = predicate
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH)
-                                .setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
-            } else {
-                predicate = predicate
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_HATCH).or(abilities(MultiblockAbility.INPUT_ENERGY))
-                                .setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1));
-            }
-        }
-
-        if (checkItemIn && this.recipeMap.getMaxInputs() > 0) {
-            predicate = predicate.or(abilities(MultiblockAbility.IMPORT_ITEMS).setPreviewCount(1));
-        }
-
-        if (checkItemOut && this.recipeMap.getMaxOutputs() > 0) {
-            predicate = predicate.or(abilities(MultiblockAbility.EXPORT_ITEMS).setPreviewCount(1));
-        }
-
-        if (checkFluidOut && this.recipeMap.getMaxFluidInputs() > 0) {
-            predicate = predicate.or(abilities(MultiblockAbility.IMPORT_FLUIDS).setPreviewCount(1));
-        }
-        if (checkFluidOut && this.recipeMap.getMaxFluidOutputs() > 0) {
-            predicate = predicate.or(abilities(MultiblockAbility.EXPORT_FLUIDS).setPreviewCount(1));
-        }
-
-        return predicate;
-    }
-
-    @Override
     protected void configureDisplayText(MultiblockUIBuilder builder) {
         builder.setWorkingStatus(recipeMapWorkable.isWorkingEnabled(), recipeMapWorkable.isActive())
                 .addEnergyUsageLine(this.getEnergyContainer())
@@ -115,5 +78,31 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
 
     public boolean onlyManaEnergy() {
         return false;
+    }
+
+    /**
+     * V3 equivalent of this controller family's legacy {@code autoAbilities()} predicate.
+     * {@code maxHatches} is the number of casing positions the original predicate could replace.
+     */
+    protected static DeclarativePatternBuilder configureManaRecipeCasing(
+            DeclarativePatternBuilder.CasingSlot casing, RecipeMap<?> recipeMap, int maxHatches) {
+        List<MultiblockAbility<?>> abilities = new ArrayList<>();
+        abilities.add(POMultiblockAbility.MANA_INPUT_HATCH);
+        abilities.add(MultiblockAbility.INPUT_ENERGY);
+        abilities.add(MultiblockAbility.MAINTENANCE_HATCH);
+        abilities.add(MultiblockAbility.MUFFLER_HATCH);
+        if (recipeMap.getMaxInputs() > 0) abilities.add(MultiblockAbility.IMPORT_ITEMS);
+        if (recipeMap.getMaxOutputs() > 0) abilities.add(MultiblockAbility.EXPORT_ITEMS);
+        if (recipeMap.getMaxFluidInputs() > 0) abilities.add(MultiblockAbility.IMPORT_FLUIDS);
+        if (recipeMap.getMaxFluidOutputs() > 0) abilities.add(MultiblockAbility.EXPORT_FLUIDS);
+
+        return casing
+                .custom(Elements.abilities(0, maxHatches,
+                        abilities.toArray(new MultiblockAbility<?>[0])), maxHatches)
+                .done()
+                .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
+                        POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1);
     }
 }

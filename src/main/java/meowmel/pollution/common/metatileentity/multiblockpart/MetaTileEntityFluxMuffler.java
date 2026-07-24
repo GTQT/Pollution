@@ -34,7 +34,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.utils.TooltipHelper;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import gtqt.common.metatileentities.electric.MetaTileEntityDustCollector;
+import gregtech.common.metatileentities.electric.MetaTileEntityDustCollector;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;

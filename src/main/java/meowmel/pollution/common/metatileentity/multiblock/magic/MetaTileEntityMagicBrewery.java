@@ -4,8 +4,8 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -26,6 +26,24 @@ import org.jetbrains.annotations.NotNull;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
 
 public class MetaTileEntityMagicBrewery extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_brewery", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#####")
+                            .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
+                            .aisle("XXXXX", "XCPCX", "XAPAX", "XAPAX", "#XMX#")
+                            .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
+                            .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#####")
+                            .self('S', MetaTileEntityMagicBrewery.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.BREWING_RECIPES, 24)
+                    .block('C', getCasingState2())
+                    .block('P', getCasingState3())
+                    .block('A', getCasingState4())
+                    .any('#')
+                    .hatch('M', MultiblockAbility.MUFFLER_HATCH)
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicBrewery(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
@@ -54,21 +72,8 @@ public class MetaTileEntityMagicBrewery extends MagicRecipeMapMultiblockControll
     }
 
     @Override
-    protected @NotNull BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("#XXX#", "#XXX#", "#XXX#", "#XXX#", "#####")
-                .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
-                .aisle("XXXXX", "XCPCX", "XAPAX", "XAPAX", "#XMX#")
-                .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
-                .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#####")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
-                .where('C', states(getCasingState2()))
-                .where('P', states(getCasingState3()))
-                .where('A', states(getCasingState4()))
-                .where('#', any())
-                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .build();
+    protected @NotNull StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

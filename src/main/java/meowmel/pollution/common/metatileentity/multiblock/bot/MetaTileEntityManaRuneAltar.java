@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.bot;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
@@ -29,6 +29,32 @@ import static meowmel.pollution.api.recipes.PORecipeMaps.MANA_RUNE_ALTAR_RECIPES
 
 public class MetaTileEntityManaRuneAltar extends ManaMultiblockController {
 
+    private final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:mana_rune_altar", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("    AABAA    ", "    ACACA    ", "     C C     ", "     C C     ", "     C C     ", "     C C     ", "     D D     ", "      D      ", "      B      ")
+                        .aisle("  AA  A  AA  ", "  AAEEDFFAA  ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "   DG   GD   ", "   H     H   ", "             ")
+                        .aisle(" A    A    A ", " ACEEEDFFFCA ", "             ", "             ", "             ", "             ", "  G       G  ", "             ", "             ")
+                        .aisle(" A    A    A ", " AECEEDFFCFA ", " C         C ", " C         C ", " C         C ", " C         C ", " D         D ", " H         H ", "             ")
+                        .aisle("A     A     A", "AEEECEDFCFFFA", "             ", "             ", "             ", "             ", " G         G ", "             ", "             ")
+                        .aisle("A     A     A", "CEEEECDCFFFFC", "C           C", "C           C", "C           C", "C           C", "D           D", "             ", "             ")
+                        .aisle("BAAAAAAAAAAAB", "ADDDDDBDDDDDA", "             ", "             ", "             ", "             ", "             ", "D           D", "B           B")
+                        .aisle("A     A     A", "CIIIICDCJJJJC", "C           C", "C           C", "C           C", "C           C", "D           D", "             ", "             ")
+                        .aisle("A     A     A", "AIIICIDJCJJJA", "             ", "             ", "             ", "             ", " G         G ", "             ", "             ")
+                        .aisle(" A    A    A ", " AICIIDJJCJA ", " C         C ", " C         C ", " C         C ", " C         C ", " D         D ", " H         H ", "             ")
+                        .aisle(" A    A    A ", " ACIIIDJJJCA ", "             ", "             ", "             ", "             ", "  G       G  ", "             ", "             ")
+                        .aisle("  AA  A  AA  ", "  AAIIDJJAA  ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "   DG   GD   ", "   H     H   ", "             ")
+                        .aisle("    AABAA    ", "    ACSCA    ", "     C C     ", "     C C     ", "     C C     ", "     C C     ", "     D D     ", "      D      ", "      B      ")
+                        .self('S', MetaTileEntityManaRuneAltar.class)
+                        .block('A', getCasingState())
+                        .block('B', getCasingState2()).block('C', getCasingState3()).block('D', getCasingState4())
+                        .block('E', getCasingState5()).block('F', getCasingState6()).block('G', getCasingState7())
+                        .block('H', getCasingState8()).block('I', getCasingState9()).block('J', getCasingState10())
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
+                return configureManaRecipeCasing(casing, MANA_RUNE_ALTAR_RECIPES, 71).buildStructureDefinition();
+            });
+
 	public MetaTileEntityManaRuneAltar(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, MANA_RUNE_ALTAR_RECIPES);
 	}
@@ -37,36 +63,9 @@ public class MetaTileEntityManaRuneAltar extends ManaMultiblockController {
 		return new MetaTileEntityManaRuneAltar(this.metaTileEntityId);
 	}
 
-	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
-				.aisle("    AABAA    ", "    ACACA    ", "     C C     ", "     C C     ", "     C C     ", "     C C     ", "     D D     ", "      D      ", "      B      ")
-				.aisle("  AA  A  AA  ", "  AAEEDFFAA  ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "   DG   GD   ", "   H     H   ", "             ")
-				.aisle(" A    A    A ", " ACEEEDFFFCA ", "             ", "             ", "             ", "             ", "  G       G  ", "             ", "             ")
-				.aisle(" A    A    A ", " AECEEDFFCFA ", " C         C ", " C         C ", " C         C ", " C         C ", " D         D ", " H         H ", "             ")
-				.aisle("A     A     A", "AEEECEDFCFFFA", "             ", "             ", "             ", "             ", " G         G ", "             ", "             ")
-				.aisle("A     A     A", "CEEEECDCFFFFC", "C           C", "C           C", "C           C", "C           C", "D           D", "             ", "             ")
-				.aisle("BAAAAAAAAAAAB", "ADDDDDBDDDDDA", "             ", "             ", "             ", "             ", "             ", "D           D", "B           B")
-				.aisle("A     A     A", "CIIIICDCJJJJC", "C           C", "C           C", "C           C", "C           C", "D           D", "             ", "             ")
-				.aisle("A     A     A", "AIIICIDJCJJJA", "             ", "             ", "             ", "             ", " G         G ", "             ", "             ")
-				.aisle(" A    A    A ", " AICIIDJJCJA ", " C         C ", " C         C ", " C         C ", " C         C ", " D         D ", " H         H ", "             ")
-				.aisle(" A    A    A ", " ACIIIDJJJCA ", "             ", "             ", "             ", "             ", "  G       G  ", "             ", "             ")
-				.aisle("  AA  A  AA  ", "  AAIIDJJAA  ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "   DG   GD   ", "   H     H   ", "             ")
-				.aisle("    AABAA    ", "    ACSCA    ", "     C C     ", "     C C     ", "     C C     ", "     C C     ", "     D D     ", "      D      ", "      B      ")
-
-				.where('S', selfPredicate())
-				.where(' ', any())
-				.where('A', states(getCasingState()).setMinGlobalLimited(9).or(autoAbilities()))
-				.where('B', states(getCasingState2()))
-				.where('C', states(getCasingState3()))
-				.where('D', states(getCasingState4()))
-				.where('E', states(getCasingState5()))
-				.where('F', states(getCasingState6()))
-				.where('G', states(getCasingState7()))
-				.where('H', states(getCasingState8()))
-				.where('I', states(getCasingState9()))
-				.where('J', states(getCasingState10()))
-				.build();
+    @Override
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
 	}
 	@SideOnly(Side.CLIENT)
 	public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

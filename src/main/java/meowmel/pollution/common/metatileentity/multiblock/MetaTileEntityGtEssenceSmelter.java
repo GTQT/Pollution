@@ -5,8 +5,9 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
@@ -44,6 +45,44 @@ import static java.lang.Math.log;
 import static net.minecraft.util.math.MathHelper.ceil;
 
 public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithControl {
+
+    private final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:gt_essence_smelter", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder
+                        .start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
+                        .aisle(" ABBBBBA", " AACCCAA", " A AAA A", " D     D", "        ", "        ")
+                        .aisle("ABEEEEEB", "ABCCCCCA", " BBBBBB ", "  F   F ", "  FFFFF ", "  G   G ")
+                        .aisle("BBEEEEEB", "CCCHHHCC", " CBGGGBA", "   CCC  ", "  F   F ", "        ")
+                        .aisle("SBEEEEEB", "CCCHHHCC", " CBGGGBA", "   CCC  ", "  F   F ", "        ")
+                        .aisle("BBEEEEEB", "CCCHHHCC", " CBGGGBA", "   CCC  ", "  F   F ", "        ")
+                        .aisle("ABEEEEEB", "ABCCCCCA", " BBBBBB ", "  F   F ", "  FFFFF ", "  G   G ")
+                        .aisle(" ABBBBBA", " AACCCAA", " A AAA A", " D     D", "        ", "        ")
+                        .self('S', MetaTileEntityGtEssenceSmelter.class)
+                        .block('B', getCasingState())
+                        .block('E', getCasingState2())
+                        .block('A', getCasingState3())
+                        .block('F', getCasingState4())
+                        .block('D', getCasingState5())
+                        .block('G', getCasingState6())
+                        .block('C', getCasingState7())
+                        .block('H', getCasingState8())
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('B', getCasingState());
+                return casing
+                        .custom(Elements.abilities(0, 27,
+                                MultiblockAbility.IMPORT_ITEMS,
+                                MultiblockAbility.IMPORT_FLUIDS,
+                                MultiblockAbility.EXPORT_FLUIDS,
+                                MultiblockAbility.INPUT_ENERGY,
+                                MultiblockAbility.MAINTENANCE_HATCH), 27)
+                        .done()
+                        .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 1, 27)
+                        .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 6, 6)
+                        .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 0, 2)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .buildStructureDefinition();
+            });
     //变量
     //计时器
     int timer = 0;
@@ -71,32 +110,8 @@ public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithContro
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
-                .aisle(" ABBBBBA", " AACCCAA", " A AAA A", " D     D", "        ", "        ")
-                .aisle("ABEEEEEB", "ABCCCCCA", " BBBBBB ", "  F   F ", "  FFFFF ", "  G   G ")
-                .aisle("BBEEEEEB", "CCCHHHCC", " CBGGGBA", "   CCC  ", "  F   F ", "        ")
-                .aisle("SBEEEEEB", "CCCHHHCC", " CBGGGBA", "   CCC  ", "  F   F ", "        ")
-                .aisle("BBEEEEEB", "CCCHHHCC", " CBGGGBA", "   CCC  ", "  F   F ", "        ")
-                .aisle("ABEEEEEB", "ABCCCCCA", " BBBBBB ", "  F   F ", "  FFFFF ", "  G   G ")
-                .aisle(" ABBBBBA", " AACCCAA", " A AAA A", " D     D", "        ", "        ")
-                .where('S', selfPredicate())
-                .where('B', states(getCasingState()).setMinGlobalLimited(15)
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(6).setPreviewCount(6))
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setMaxGlobalLimited(2).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
-                )
-                .where('E', states(getCasingState2()))
-                .where('A', states(getCasingState3()))
-                .where('F', states(getCasingState4()))
-                .where('D', states(getCasingState5()))
-                .where('G', states(getCasingState6()))
-                .where('C', states(getCasingState7()))
-                .where('H', states(getCasingState8()))
-                .where(' ', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     protected IBlockState getCasingState() {

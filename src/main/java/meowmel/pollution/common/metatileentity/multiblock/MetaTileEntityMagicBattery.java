@@ -17,9 +17,11 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.IProgressBarMultiblock;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.RelativeDirection;
 import gregtech.api.util.TextComponentUtil;
 import gregtech.client.renderer.ICubeRenderer;
@@ -33,11 +35,10 @@ import gregtech.client.utils.EffectRenderContext;
 import gregtech.client.utils.IBloomEffect;
 import gregtech.client.utils.RenderBufferHelper;
 import gregtech.common.ConfigHolder;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -62,12 +63,43 @@ import java.util.List;
 
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.util.RelativeDirection.*;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_CORE;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static net.minecraft.util.EnumFacing.Axis.X;
 import static net.minecraft.util.EnumFacing.Axis.Y;
 
 public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implements IWorkable, IControllable, IProgressBarMultiblock, IBloomEffect, IFastRenderMetaTileEntity {
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_battery", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start(RIGHT, UP, FRONT)
+                        .aisle("               ", "               ", "               ", "               ", "               ", "       A       ", "      AAA      ", "     AASAA     ", "      AAA      ", "       A       ", "               ", "               ", "               ", "               ", "               ")
+                        .aisle("               ", "               ", "               ", "       A       ", "     BBABB     ", "    B  A  B    ", "    B CCC B    ", "   AAACBCAAA   ", "    B CCC B    ", "    B  A  B    ", "     BBABB     ", "       A       ", "               ", "               ", "               ")
+                        .aisle("               ", "               ", "       A       ", "       A       ", "               ", "               ", "               ", "  AA       AA  ", "               ", "               ", "               ", "       A       ", "       A       ", "               ", "               ")
+                        .aisle("               ", "       A       ", "       A       ", "               ", "               ", "               ", "               ", " AA         AA ", "               ", "               ", "               ", "               ", "       A       ", "       A       ", "               ")
+                        .aisle("               ", "     BBABB     ", "               ", "               ", "               ", " B           B ", " B           B ", " A           A ", " B           B ", " B           B ", "               ", "               ", "               ", "     BBABB     ", "               ")
+                        .aisle("       A       ", "    B  A  B    ", "               ", "               ", " B           B ", "               ", "               ", "AA           AA", "               ", "               ", " B           B ", "               ", "               ", "    B  A  B    ", "       A       ")
+                        .aisle("      AAA      ", "    B CCC B    ", "               ", "               ", " B           B ", "               ", "AC           CA", "AC           CA", "AC           CA", "               ", " B           B ", "               ", "               ", "    B CCC B    ", "      AAA      ")
+                        .aisle("     AAAAA     ", "   AAACBCAAA   ", "  AA       AA  ", " AA         AA ", " A           A ", "AA           AA", "AC           CA", "AB           BA", "AC           CA", "AA           AA", " A           A ", " AA         AA ", "  AA       AA  ", "   AAACBCAAA   ", "     AAAAA     ")
+                        .aisle("      AAA      ", "    B CCC B    ", "               ", "               ", " B           B ", "               ", "AC           CA", "AC           CA", "AC           CA", "               ", " B           B ", "               ", "               ", "    B CCC B    ", "      AAA      ")
+                        .aisle("       A       ", "    B  A  B    ", "               ", "               ", " B           B ", "               ", "               ", "AA           AA", "               ", "               ", " B           B ", "               ", "               ", "    B  A  B    ", "       A       ")
+                        .aisle("               ", "     BBABB     ", "               ", "               ", "               ", " B           B ", " B           B ", " A           A ", " B           B ", " B           B ", "               ", "               ", "               ", "     BBABB     ", "               ")
+                        .aisle("               ", "       A       ", "       A       ", "               ", "               ", "               ", "               ", " AA         AA ", "               ", "               ", "               ", "               ", "       A       ", "       A       ", "               ")
+                        .aisle("               ", "               ", "       A       ", "       A       ", "               ", "               ", "               ", "  AA       AA  ", "               ", "               ", "               ", "       A       ", "       A       ", "               ", "               ")
+                        .aisle("               ", "               ", "               ", "       A       ", "     BBABB     ", "    B  A  B    ", "    B CCC B    ", "   AAACBCAAA   ", "    B CCC B    ", "    B  A  B    ", "     BBABB     ", "       A       ", "               ", "               ", "               ")
+                        .aisle("               ", "               ", "               ", "               ", "               ", "       A       ", "      AAA      ", "     AAAAA     ", "      AAA      ", "       A       ", "               ", "               ", "               ", "               ", "               ")
+                        .self('S', MetaTileEntityMagicBattery.class)
+                        .block('A', getCasingState())
+                        .tieredCasing('B', POTieredCasingGroups.beamCores().group()).withChannel(POTieredCasingGroups.beamCores().channel())
+                        .tieredCasing('C', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
+                return casing
+                        .custom(Elements.abilities(0, 185, MultiblockAbility.MAINTENANCE_HATCH,
+                                MultiblockAbility.INPUT_ENERGY, MultiblockAbility.OUTPUT_ENERGY), 185)
+                        .done()
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 16)
+                        .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 1, 16)
+                        .buildStructureDefinition();
+            });
     @Override
     public boolean usesMui2() {
         return false;
@@ -247,21 +279,19 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
         initializeAbilities();
-        Object CoilLevel = context.get("COILTieredStats");
-        Object beamCore = context.get("BEAMTieredStats");
-        this.coilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) CoilLevel).getIntTier(),
-                0);
-        this.beamCore = POUtils.getOrDefault(() -> beamCore instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) beamCore).getIntTier(),
-                0);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        ICasing beam = POTieredCasingGroups.beamCores().channel().getMatchedCasing(formed);
+        this.coilLevel = coil == null ? 0 : coil.getTier();
+        this.beamCore = beam == null ? 0 : beam.getTier();
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         FactoryBlockPattern pattern = FactoryBlockPattern.start(RIGHT, UP, FRONT)
                 .aisle("               ", "               ", "               ", "               ", "               ", "       A       ", "      AAA      ", "     AASAA     ", "      AAA      ", "       A       ", "               ", "               ", "               ", "               ", "               ")
                 .aisle("               ", "               ", "               ", "       A       ", "     BBABB     ", "    B  A  B    ", "    B CCC B    ", "   AAACBCAAA   ", "    B CCC B    ", "    B  A  B    ", "     BBABB     ", "       A       ", "               ", "               ", "               ")
@@ -289,7 +319,7 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
                 .where('C', CP_COIL_CASING.get())
                 .where(' ', any());
 
-        return pattern.build();
+        return pattern.build();*/
     }
 
     @Override

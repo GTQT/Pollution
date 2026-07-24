@@ -7,9 +7,9 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
@@ -24,11 +24,10 @@ import gregtech.core.sound.GTSoundEvents;
 
 import meowmel.pollution.api.capability.ipml.MagicHeatingCoilRecipeLogic;
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -42,10 +41,24 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedFire;
 
 public class MetaTileEntityMagicElectricBlastFurnace extends MagicRecipeMapMultiblockController implements IHeatingCoil {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_electric_blast_furnace", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("XXX", "CCC", "CCC", "XXX")
+                            .aisle("XXX", "C#C", "C#C", "XMX")
+                            .aisle("XSX", "CCC", "CCC", "XXX")
+                            .self('S', MetaTileEntityMagicElectricBlastFurnace.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.BLAST_RECIPES, 10, false)
+                    .hatch('M', MultiblockAbility.MUFFLER_HATCH)
+                    .tieredCasing('C', POTieredCasingGroups.coilCasings().group())
+                    .withChannel(POTieredCasingGroups.coilCasings().channel())
+                    .air('#')
+                    .buildStructureDefinition());
 
     private int blastFurnaceTemperature;
 
@@ -64,12 +77,10 @@ public class MetaTileEntityMagicElectricBlastFurnace extends MagicRecipeMapMulti
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object CoilLevel = context.get("COILTieredStats");
-        int coilTier = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) CoilLevel).getIntTier(),
-                1);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        var casing = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        int coilTier = casing == null ? 1 : casing.getTier();
 
         blastFurnaceTemperature = 0;
         switch (coilTier) {
@@ -128,18 +139,8 @@ public class MetaTileEntityMagicElectricBlastFurnace extends MagicRecipeMapMulti
 
 
     @Override
-    protected @NotNull BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("XXX", "CCC", "CCC", "XXX")
-                .aisle("XXX", "C#C", "C#C", "XMX")
-                .aisle("XSX", "CCC", "CCC", "XXX")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(6)
-                        .or(autoAbilities(true, true, true, true, true, true, false)))
-                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('C', CP_COIL_CASING.get())
-                .where('#', air())
-                .build();
+    protected @NotNull StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

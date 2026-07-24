@@ -6,8 +6,9 @@ import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
@@ -26,7 +27,8 @@ import java.util.List;
 public class MetaTileEntityMagicLargeTurbine extends MetaTileEntityLargeTurbine {
 
     public MetaTileEntityMagicLargeTurbine(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, int tier, IBlockState casingState, IBlockState gearboxState, ICubeRenderer casingRenderer, boolean hasMufflerHatch, ICubeRenderer frontOverlay) {
-        super(metaTileEntityId, recipeMap, tier, casingState, gearboxState, casingRenderer, hasMufflerHatch, frontOverlay);
+        super(metaTileEntityId, new MagicTurbineType(metaTileEntityId.toString(), recipeMap, tier, casingState,
+                gearboxState, casingRenderer, hasMufflerHatch, frontOverlay));
     }
 
     @Override
@@ -36,24 +38,37 @@ public class MetaTileEntityMagicLargeTurbine extends MetaTileEntityLargeTurbine 
     }
 
     @Override
-    protected @NotNull BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected @NotNull StructureDefinition<?> createStructureDefinition() {
+        return StructureDefinition.getOrBuild("pollution:magic_large_turbine_" + tier, () -> {
+            DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
                 .aisle("CCCC", "CHHC", "CCCC")
                 .aisle("CHHC", "RGGR", "CHHC")
                 .aisle("CCCC", "CSHC", "CCCC")
-                .where('S', selfPredicate())
-                .where('G', states(getGearBoxState()))
-                .where('C', states(getCasingState()))
-                .where('R', metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.ROTOR_HOLDER).stream()
+                .self('S', MetaTileEntityMagicLargeTurbine.class)
+                .block('G', type.getGearboxState())
+                .block('C', type.getCasingState())
+                .where('R', Elements.chain(
+                        Elements.metaTileEntities(1, 1, MultiblockAbility.REGISTRY.get(MultiblockAbility.ROTOR_HOLDER).stream()
                         .filter(mte -> (mte instanceof ITieredMetaTileEntity) &&
                                 (((ITieredMetaTileEntity) mte).getTier() >= tier))
-                        .toArray(MetaTileEntity[]::new))
-                        .addTooltips("gregtech.multiblock.pattern.clear_amount_3")
-                        .addTooltip("gregtech.multiblock.pattern.error.limited.1", GTValues.VN[tier])
-                        .setExactLimit(1)
-                        .or(abilities(POMultiblockAbility.MANA_OUTPUT_HATCH)).setExactLimit(1))
-                .where('H', states(getCasingState()).or(autoAbilities(false, true, false, false, true, true, true)))
-                .build();
+                        .toArray(MetaTileEntity[]::new)),
+                        Elements.abilities(1, 1, POMultiblockAbility.MANA_OUTPUT_HATCH)))
+                .casing('H', type.getCasingState());
+            return casing
+                    .custom(Elements.abilities(0, 7,
+                            MultiblockAbility.MAINTENANCE_HATCH,
+                            MultiblockAbility.MUFFLER_HATCH,
+                            MultiblockAbility.IMPORT_FLUIDS,
+                            MultiblockAbility.EXPORT_FLUIDS), 7)
+                    .done()
+                    .globalAbilityLimit(MultiblockAbility.ROTOR_HOLDER, 1, 1)
+                    .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_HATCH, 1, 1)
+                    .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                    .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 0, 1)
+                    .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 0, 4)
+                    .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 0, 4)
+                    .buildStructureDefinition();
+        });
     }
 
     @Override

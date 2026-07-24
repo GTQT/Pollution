@@ -4,8 +4,9 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -26,6 +27,23 @@ import org.jetbrains.annotations.NotNull;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedEarth;
 
 public class MetaTileEntityMagicMacerator extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_macerator", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("XXXXX", "XXXXX", "XXXXX", "XXXXX")
+                            .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
+                            .aisle("XXXXX", "XCCCX", "XCCCX", "XGGGX")
+                            .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
+                            .aisle("XXIXX", "XXSXX", "XXXXX", "XXXXX")
+                            .self('S', MetaTileEntityMagicMacerator.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.MACERATOR_RECIPES, 16)
+                    .block('C', getCasingState2())
+                    .block('G', getCasingState3())
+                    .where('I', Elements.hatch(MultiblockAbility.IMPORT_FLUIDS, 0, 1, 1))
+                    .air('#')
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicMacerator(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.MACERATOR_RECIPES});
@@ -49,20 +67,8 @@ public class MetaTileEntityMagicMacerator extends MagicRecipeMapMultiblockContro
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("XXXXX", "XXXXX", "XXXXX", "XXXXX")
-                .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
-                .aisle("XXXXX", "XCCCX", "XCCCX", "XGGGX")
-                .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
-                .aisle("XXIXX", "XXSXX", "XXXXX", "XXXXX")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(55).or(autoAbilities()))
-                .where('C', states(getCasingState2()))
-                .where('G', states(getCasingState3()))
-                .where('I', abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1).setPreviewCount(1))
-                .where('#', air())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

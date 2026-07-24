@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.bot;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
@@ -29,6 +29,31 @@ import static meowmel.pollution.api.recipes.PORecipeMaps.PURE_DAISY_RECIPES;
 
 public class MetaTileEntityIndustrialPureDaisy extends ManaMultiblockController {
 
+    private final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:industrial_pure_daisy", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("ABA   ABA", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
+                        .aisle("BCCCCCCCB", " CC   CC ", " C     C ", " C     C ", " DAAAAAD ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
+                        .aisle("ACABBBACA", " CAEEEAC ", "  AEEEA  ", "  ABBBA  ", " AACCCAA ", "  CCDCC  ", "   CCC   ", "    C    ", "         ", "         ", "         ", "         ", "         ")
+                        .aisle(" CBACABC ", "  E F E  ", "  EF FE  ", "  B   B  ", " AC   CA ", "  C   C  ", "  C   C  ", "   C C   ", "    C    ", "         ", "         ", "         ", "         ")
+                        .aisle(" CBCGCBC ", "  EF FE  ", "  E   E  ", "  B   B  ", " AC   CA ", "  D   D  ", "  C   C  ", "  C   C  ", "   CGC   ", "    C    ", "    C    ", "    C    ", "    G    ")
+                        .aisle(" CBACABC ", "  E F E  ", "  EF FE  ", "  B   B  ", " AC   CA ", "  C   C  ", "  C   C  ", "   C C   ", "    C    ", "         ", "         ", "         ", "         ")
+                        .aisle("ACABBBACA", " CAEEEAC ", "  AEEEA  ", "  ABBBA  ", " AACCCAA ", "  CCDCC  ", "   CCC   ", "    C    ", "         ", "         ", "         ", "         ", "         ")
+                        .aisle("BCCCSCCCB", " CC   CC ", " C     C ", " C     C ", " DAAAAAD ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
+                        .aisle("ABA   ABA", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
+                        .self('S', MetaTileEntityIndustrialPureDaisy.class)
+                        .block('C', getCasingState3())
+                        .block('A', getCasingState())
+                        .block('B', getCasingState2())
+                        .block('D', getCasingState4())
+                        .block('E', getCasingState5())
+                        .block('F', getCasingState6())
+                        .block('G', getCasingState7())
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('C', getCasingState3());
+                return configureManaRecipeCasing(casing, PURE_DAISY_RECIPES, 89).buildStructureDefinition();
+            });
+
 	public MetaTileEntityIndustrialPureDaisy(ResourceLocation metaTileEntityId) {
 		super(metaTileEntityId, PURE_DAISY_RECIPES);
 	}
@@ -38,27 +63,8 @@ public class MetaTileEntityIndustrialPureDaisy extends ManaMultiblockController 
 	}
 
 	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
-				.aisle("ABA   ABA", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
-				.aisle("BCCCCCCCB", " CC   CC ", " C     C ", " C     C ", " DAAAAAD ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
-				.aisle("ACABBBACA", " CAEEEAC ", "  AEEEA  ", "  ABBBA  ", " AACCCAA ", "  CCDCC  ", "   CCC   ", "    C    ", "         ", "         ", "         ", "         ", "         ")
-				.aisle(" CBACABC ", "  E F E  ", "  EF FE  ", "  B   B  ", " AC   CA ", "  C   C  ", "  C   C  ", "   C C   ", "    C    ", "         ", "         ", "         ", "         ")
-				.aisle(" CBCGCBC ", "  EF FE  ", "  E   E  ", "  B   B  ", " AC   CA ", "  D   D  ", "  C   C  ", "  C   C  ", "   CGC   ", "    C    ", "    C    ", "    C    ", "    G    ")
-				.aisle(" CBACABC ", "  E F E  ", "  EF FE  ", "  B   B  ", " AC   CA ", "  C   C  ", "  C   C  ", "   C C   ", "    C    ", "         ", "         ", "         ", "         ")
-				.aisle("ACABBBACA", " CAEEEAC ", "  AEEEA  ", "  ABBBA  ", " AACCCAA ", "  CCDCC  ", "   CCC   ", "    C    ", "         ", "         ", "         ", "         ", "         ")
-				.aisle("BCCCSCCCB", " CC   CC ", " C     C ", " C     C ", " DAAAAAD ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
-				.aisle("ABA   ABA", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ", "         ")
-				.where('S', selfPredicate())
-				.where(' ', any())
-				.where('A', states(getCasingState()))
-				.where('B', states(getCasingState2()))
-				.where('C', states(getCasingState3()).setMinGlobalLimited(9).or(autoAbilities()))
-				.where('D', states(getCasingState4()))
-				.where('E', states(getCasingState5()))
-				.where('F', states(getCasingState6()))
-				.where('G', states(getCasingState7()))
-				.build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
 	}
 	@SideOnly(Side.CLIENT)
 	public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

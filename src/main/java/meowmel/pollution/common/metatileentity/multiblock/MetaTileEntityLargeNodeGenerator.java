@@ -8,9 +8,12 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.IStructureElement;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -19,7 +22,7 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POFusionReactor;
@@ -27,7 +30,6 @@ import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.items.PollutionMetaItems;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -43,11 +45,58 @@ import thaumcraft.api.aura.AuraHelper;
 import java.util.*;
 
 import static java.lang.Math.max;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static net.minecraft.util.math.MathHelper.ceil;
 import static net.minecraft.util.math.MathHelper.sqrt;
 
 public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithControl {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:large_node_generator", () -> {
+                IStructureElement frame = Elements.counted(25, -1, Elements.block(getCasingState3()));
+                IStructureElement frameHatches = Elements.abilities(
+                        MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS);
+                return DeclarativePatternBuilder.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
+                        .aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", "HAC", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", "HAC", "CAC", "   ", "   ", "DDD", "   ", "DDD", "   ", "   ")
+                        .aisle("ABA", "BBB", "HBC", "CBC", " B ", " B ", "DBD", " B ", "DBD", " E ", "   ")
+                        .aisle("ABA", "BBB", " A ", "C C", "C C", " A ", "DDD", "   ", "DDD", "   ", "   ")
+                        .aisle("ABA", "BBB", " A ", " A ", " A ", " A ", " A ", " A ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "BBB", "BBB", "BBB", "   ", "   ")
+                        .aisle(" B ", "   ", "   ", "   ", "   ", "   ", "   ", " F ", "   ", "   ", "   ")
+                        .aisle(" A ", " A ", " A ", " A ", " F ", "   ", " C ", " F ", " C ", "   ", " F ")
+                        .aisle(" B ", "   ", "   ", "   ", "   ", " F ", "   ", "   ", "   ", " F ", "   ")
+                        .aisle(" A ", " B ", "   ", "   ", " C ", "   ", "   ", " C ", "   ", "   ", " C ")
+                        .aisle(" A ", " G ", " B ", "   ", " C ", "   ", " C ", " S ", " C ", "   ", " C ")
+                        .aisle(" A ", " B ", "   ", "   ", " C ", "   ", "   ", " C ", "   ", "   ", " C ")
+                        .aisle(" B ", "   ", "   ", "   ", "   ", " F ", "   ", "   ", "   ", " F ", "   ")
+                        .aisle(" A ", " A ", " A ", " A ", " F ", "   ", " C ", " F ", " C ", "   ", " F ")
+                        .aisle(" B ", "   ", "   ", "   ", "   ", "   ", "   ", " F ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "BBB", "BBB", "BBB", "   ", "   ")
+                        .aisle("ABA", "BBB", " A ", " A ", " A ", " A ", " A ", " A ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", " A ", "C C", "C C", " A ", "DDD", "   ", "DDD", "   ", "   ")
+                        .aisle("ABA", "BBB", "HBC", "CBC", " B ", " B ", "DBD", " B ", "DBD", " E ", "   ")
+                        .aisle("ABA", "BBB", "HAC", "CAC", "   ", "   ", "DDD", "   ", "DDD", "   ", "   ")
+                        .aisle("ABA", "BBB", "HAC", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+                        .aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+                        .aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
+                        .self('S', MetaTileEntityLargeNodeGenerator.class)
+                        .where('G', Elements.choice(Elements.block(getCasingState2()),
+                                Elements.abilities(MultiblockAbility.OUTPUT_ENERGY, MultiblockAbility.OUTPUT_LASER)))
+                        .block('A', getCasingState()).block('B', getCasingState2())
+                        .where('C', Elements.choice(frame, frameHatches))
+                        .where('H', Elements.metaTileEntitiesAsAbility(MultiblockAbility.IMPORT_ITEMS, 6, 6, 6,
+                                MetaTileEntities.ITEM_IMPORT_BUS[GTValues.ULV]))
+                        .block('E', getCasingState4()).block('F', getCasingState5())
+                        .tieredCasing('D', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                        .any(' ')
+                        .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 0, 1)
+                        .globalAbilityLimit(MultiblockAbility.OUTPUT_LASER, 0, 1)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
+                        .buildStructureDefinition();
+            });
 
     private static final int BASIC_CAPACITY = 2048;
     //随机数
@@ -101,12 +150,10 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object coilLevel = context.get("COILTieredStats");
-        this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) coilLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        this.coilLevel = coil == null ? 0 : coil.getTier();
         List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.OUTPUT_ENERGY));
         energyContainer.addAll(this.getAbilities(MultiblockAbility.OUTPUT_LASER));
         this.outEnergyContainer = new EnergyContainerList(energyContainer);
@@ -259,7 +306,9 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
                 .aisle(" A ", " B ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
                 .aisle("ABA", "BBB", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ")
@@ -300,7 +349,7 @@ public class MetaTileEntityLargeNodeGenerator extends MetaTileEntityBaseWithCont
                 .where('F', states(getCasingState5()))
                 .where('D', CP_COIL_CASING.get())
                 .where(' ', any())
-                .build();
+                .build();*/
     }
 
     @Override

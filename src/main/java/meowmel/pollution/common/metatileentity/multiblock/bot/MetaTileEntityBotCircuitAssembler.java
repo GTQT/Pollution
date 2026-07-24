@@ -2,11 +2,14 @@ package meowmel.pollution.common.metatileentity.multiblock.bot;
 
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.logic.OCResult;
 import gregtech.api.recipes.properties.RecipePropertyStorage;
@@ -18,21 +21,20 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
 import meowmel.pollution.api.metatileentity.ManaMultiblockController;
+import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import org.jetbrains.annotations.NotNull;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_FRAME;
 
 public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController {
 
@@ -68,12 +70,10 @@ public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController 
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object frameLevel = context.get("FRAMETieredStats");
-        this.frameLevel = POUtils.getOrDefault(() -> frameLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) frameLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing frame = POTieredCasingGroups.frames().channel().getMatchedCasing(formed);
+        this.frameLevel = frame == null ? 0 : frame.getTier();
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
@@ -91,8 +91,8 @@ public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController 
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
                 .aisle("A           A", "A           A", "A           A", "A           A", "A           A", "B           B")
                 .aisle(" ACCCCCCCCCA ", " ADDDDDDDDDA ", " AEEEEEEEEEA ", " CCCCCCCCCCC ", "             ", "             ")
                 .aisle(" CCCCCCCCCCC ", " DFXFXFXFXFD ", " EXXXXXXXXXE ", " CEEEEGEEEEC ", "             ", "             ")
@@ -103,18 +103,21 @@ public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController 
                 .aisle(" ACCCCCCCCCA ", " ADDDDSDDDDA ", " AEEEEEEEEEA ", " CCCCCCCCCCC ", "             ", "             ")
                 .aisle("A           A", "A           A", "A           A", "A           A", "A           A", "B           B")
 
-                .where('S', selfPredicate())
-                .where('A', states(getCasingState()))
-                .where('B', states(getCasingState2()))
-                .where('C', states(getCasingState3()).setMinGlobalLimited(40)
-                        .or(autoAbilities()))
-                .where('D', states(getCasingState4()))
-                .where('E', states(getCasingState5()))
-                .where('F', states(getCasingState6()))
-                .where('G', CP_FRAME.get())
-                .where(' ', any())
-                .where('X', air())
-                .build();
+                .self('S', MetaTileEntityBotCircuitAssembler.class)
+                .block('A', getCasingState()).block('B', getCasingState2()).block('C', getCasingState3())
+                .block('D', getCasingState4()).block('E', getCasingState5()).block('F', getCasingState6())
+                .tieredCasing('G', POTieredCasingGroups.frames().group()).withChannel(POTieredCasingGroups.frames().channel())
+                .any(' ').air('X');
+        DeclarativePatternBuilder.CasingSlot casing = builder.casing('C', getCasingState3());
+        return casing
+                .custom(Elements.abilities(0, 44, POMultiblockAbility.MANA_INPUT_HATCH,
+                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.MAINTENANCE_HATCH,
+                        MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS), 44)
+                .done()
+                .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
+                        POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .buildStructureDefinition();
     }
 
     @Override

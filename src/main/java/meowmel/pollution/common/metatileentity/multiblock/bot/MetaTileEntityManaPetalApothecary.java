@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.bot;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.MetaBlocks;
@@ -38,8 +38,8 @@ public class MetaTileEntityManaPetalApothecary extends ManaMultiblockController 
 	}
 
 	@Override
-	protected BlockPattern createStructurePattern() {
-		return FactoryBlockPattern.start()
+	protected StructureDefinition<?> createStructureDefinition() {
+		DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
 				.aisle("       A       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
 				.aisle("      AAA      ", "       A       ", "       B       ", "       C       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
 				.aisle("       A       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
@@ -55,16 +55,12 @@ public class MetaTileEntityManaPetalApothecary extends ManaMultiblockController 
 				.aisle("       A       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
 				.aisle("      AAA      ", "       A       ", "       B       ", "       C       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
 				.aisle("       A       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
-				.where('S', selfPredicate())
-				.where(' ', any())
-				.where('A', states(getCasingState()))
-				.where('B', states(getCasingState2()))
-				.where('C', states(getCasingState3()))
-				.where('D', states(getCasingState4()))
-				.where('E', states(getCasingState5()).setMinGlobalLimited(9).or(autoAbilities()))
-				.where('F', states(getCasingState6()))
-				.where('G', states(getCasingState7()))
-				.build();
+				.self('S', MetaTileEntityManaPetalApothecary.class)
+				.block('A', getCasingState()).block('B', getCasingState2()).block('C', getCasingState3())
+				.block('D', getCasingState4()).block('E', getCasingState5()).block('F', getCasingState6())
+				.block('G', getCasingState7()).any(' ');
+		DeclarativePatternBuilder.CasingSlot casing = builder.casing('E', getCasingState5());
+		return configureManaRecipeCasing(casing, MANA_PETAL_RECIPES, 117).buildStructureDefinition();
 	}
 	@SideOnly(Side.CLIENT)
 	public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

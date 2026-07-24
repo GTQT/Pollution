@@ -10,9 +10,10 @@ import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.util.GTUtility;
@@ -22,6 +23,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.utils.POUtils;
 import meowmel.pollution.client.textures.POTextures;
@@ -40,9 +42,26 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:small_chemical_plant", () -> DeclarativePatternBuilder.start()
+                    .aisle("GGGGG", "BAAAB", "BAAAB", "BAAAB", "GGGGG")
+                    .aisle("GXXXG", "ADDDA", "ABEBA", "ADDDA", "GXXXG")
+                    .aisle("GXXXG", "ADDDA", "AECEA", "ADDDA", "GXXXG")
+                    .aisle("GXXXG", "ADDDA", "ABEBA", "ADDDA", "GXXXG")
+                    .aisle("GGSGG", "BAAAB", "BAAAB", "BAAAB", "GGGGG")
+                    .self('S', MetaTileEntitySmallChemicalPlant.class)
+                    .casing('G', getCasingState()).auto()
+                    .block('B', getCasingState2())
+                    .block('C', getCasingState3())
+                    .tieredCasing('D', POTieredCasingGroups.coilCasings().group())
+                    .withChannel(POTieredCasingGroups.coilCasings().channel())
+                    .block('E', getCasingState4())
+                    .block('X', getCasingState5())
+                    .any('A')
+                    .buildStructureDefinition());
 
     int CoilLevel;
 
@@ -83,12 +102,10 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object CoilLevel = context.get("COILTieredStats");
-        this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) CoilLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        this.CoilLevel = coil == null ? 0 : coil.getTier();
 
         List<IEnergyContainer> energyContainer = new ArrayList(this.getAbilities(MultiblockAbility.INPUT_ENERGY));
         this.energyContainer = new EnergyContainerList(energyContainer);
@@ -118,22 +135,8 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("GGGGG", "BAAAB", "BAAAB", "BAAAB", "GGGGG")
-                .aisle("GXXXG", "ADDDA", "ABEBA", "ADDDA", "GXXXG")
-                .aisle("GXXXG", "ADDDA", "AECEA", "ADDDA", "GXXXG")
-                .aisle("GXXXG", "ADDDA", "ABEBA", "ADDDA", "GXXXG")
-                .aisle("GGSGG", "BAAAB", "BAAAB", "BAAAB", "GGGGG")
-                .where('S', selfPredicate())
-                .where('G', states(getCasingState()).setMinGlobalLimited(8).or(autoAbilities()))
-                .where('B', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('D', CP_COIL_CASING.get())
-                .where('E', states(getCasingState4()))
-                .where('X', states(getCasingState5()))
-                .where('A', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

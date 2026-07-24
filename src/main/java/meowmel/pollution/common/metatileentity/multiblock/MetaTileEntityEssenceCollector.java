@@ -5,9 +5,11 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.unification.material.Material;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
@@ -17,14 +19,13 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.shader.postprocessing.BloomType;
 import gregtech.common.ConfigHolder;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POTurbine;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -41,10 +42,44 @@ import thaumcraft.api.aura.AuraHelper;
 import java.util.*;
 
 import static gregtech.api.GTValues.VA;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 
 public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithControl {
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:essence_collector", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("      AAA      ", "      AAA      ", "      CCC      ", "               ", "               ", "               ", "               ", "               ", "      CCC      ", "      AAA      ", "      AAA      ")
+                        .aisle("   AAAABAAAA   ", "   ACE   ECA   ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "   ACE   ECA   ", "   AAAABAAAA   ")
+                        .aisle("  AAFFABAFFAA  ", "  A         A  ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "  A         A  ", "  AAFFABAFFAA  ")
+                        .aisle(" AAFFEABAEFFAA ", " C           C ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", " C           C ", " AAFFEABAEFFAA ")
+                        .aisle(" AFFEFABAFEFFA ", " E   I   K   E ", " A   I   K   A ", " A   D   D   A ", " A   E   E   A ", " A           A ", " A   E   E   A ", " A   A   A   A ", " A   I   K   A ", " E   I   K   E ", " AFFEFABAFEFFA ")
+                        .aisle("AAAAAAABAAAAAAA", "A             A", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "A             A", "AAAAAAABAAAAAAA")
+                        .aisle("ABBBFBBEBBFBBBA", "A   G     L   A", "    G     L    ", "    D     D    ", "    E     E    ", "               ", "    E     E    ", "    A     A    ", "    G     L    ", "A   G     L   A", "ABBBFBBEBBFBBBA")
+                        .aisle("AAAAAAABAAAAAAA", "A             A", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "A             A", "AAAAAAABAAAAAAA")
+                        .aisle(" AFFEFABAFEFFA ", " E   H   J   E ", " A   H   J   A ", " A   D   D   A ", " A   E   E   A ", " A           A ", " A   E   E   A ", " A   A   A   A ", " A   H   J   A ", " E   H   J   E ", " AFFEFABAFEFFA ")
+                        .aisle(" AAFFEABAEFFAA ", " C           C ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", " C           C ", " AAFFEABAEFFAA ")
+                        .aisle("  AAFFABAFFAA  ", "  A         A  ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "  A         A  ", "  AAFFABAFFAA  ")
+                        .aisle("   AAAABAAAA   ", "   ACE   ECA   ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "   ACE   ECA   ", "   AAAABAAAA   ")
+                        .aisle("      AOA      ", "      ASA      ", "      CCC      ", "               ", "               ", "               ", "               ", "               ", "      CCC      ", "      AAA      ", "      AAA      ")
+                        .self('S', MetaTileEntityEssenceCollector.class)
+                        .block('A', getCasingState())
+                .tieredCasing('B', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                        .block('C', getCasingState2()).block('E', getCasingState3()).block('F', getCasingState4())
+                        .where('D', Elements.abilities(MultiblockAbility.EXPORT_FLUIDS))
+                        .where('O', Elements.abilities(MultiblockAbility.IMPORT_ITEMS))
+                        .block('G', getCasingState5()).block('H', getCasingState6()).block('I', getCasingState7())
+                        .block('J', getCasingState8()).block('K', getCasingState9()).block('L', getCasingState10()).any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
+                return casing
+                        .custom(Elements.abilities(0, 68, MultiblockAbility.MAINTENANCE_HATCH,
+                                MultiblockAbility.INPUT_ENERGY), 68)
+                        .done()
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 0, 2)
+                        .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 6, 6)
+                        .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 0, 2)
+                        .buildStructureDefinition();
+            });
     //最低输入功率，默认为30
     //输出单种流体的类型,只在聚焦时
     //当前区块灵气、污染
@@ -120,7 +155,9 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start()
                 .aisle("      AAA      ", "      AAA      ", "      CCC      ", "               ", "               ", "               ", "               ", "               ", "      CCC      ", "      AAA      ", "      AAA      ")
                 .aisle("   AAAABAAAA   ", "   ACE   ECA   ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "     A   A     ", "   ACE   ECA   ", "   AAAABAAAA   ")
@@ -153,7 +190,7 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
                 .where('J', states(getCasingState8()))
                 .where('K', states(getCasingState9()))
                 .where('L', states(getCasingState10()))
-                .build();
+                .build();*/
     }
 
     @Override
@@ -167,12 +204,10 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object coilLevel = context.get("COILTieredStats");
-        this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) coilLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        this.coilLevel = coil == null ? 0 : coil.getTier();
     }
 
 

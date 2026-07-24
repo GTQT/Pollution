@@ -5,9 +5,11 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.GTTransferUtils;
@@ -18,13 +20,12 @@ import gregtech.common.blocks.MetaBlocks;
 import meowmel.pollution.api.capability.ipml.ManaHandlerList;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POBotBlock;
 import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -40,7 +41,6 @@ import net.minecraftforge.fluids.IFluidTank;
 
 import java.util.*;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_CORE;
 
 public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl {
 
@@ -147,12 +147,10 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object beamLevel = context.get("BEAMTieredStats");
-        this.beamLevel = POUtils.getOrDefault(() -> beamLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) beamLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing beam = POTieredCasingGroups.beamCores().channel().getMatchedCasing(formed);
+        this.beamLevel = beam == null ? 0 : beam.getTier();
     }
 
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
@@ -228,22 +226,25 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
                 .aisle("E E", "E E", "DDD", "AAA", "AAA", "AAA", "AAA", "AAA", "AAA")
                 .aisle("   ", "   ", "DDD", "AAA", "ABA", "ABA", "ABA", "AAA", "AAA")
                 .aisle("E E", "E E", "DDD", "ASA", "ACA", "ACA", "ACA", "AAA", "AAA")
-                .where('A', states(getCasingState()).setMinGlobalLimited(15)
-                        .or(abilities(POMultiblockAbility.MANA_INPUT_POOL).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(2).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.EXPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1)))
-                .where('B', CP_BEAM_CORE.get())
-                .where('C', states(getCasingState2()))
-                .where('D', states(getCasingState3()))
-                .where('E', states(getCasingState4()))
-                .where(' ', any())
-                .where('S', selfPredicate())
-                .build();
+                .self('S', MetaTileEntityBotGasCollector.class)
+                .block('A', getCasingState())
+                .tieredCasing('B', POTieredCasingGroups.beamCores().group()).withChannel(POTieredCasingGroups.beamCores().channel())
+                .block('C', getCasingState2()).block('D', getCasingState3()).block('E', getCasingState4()).any(' ');
+        DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
+        return casing
+                .custom(Elements.abilities(0, 32, POMultiblockAbility.MANA_INPUT_POOL,
+                        MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS,
+                        MultiblockAbility.EXPORT_FLUIDS), 32)
+                .done()
+                .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 2, 32)
+                .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 1, 32)
+                .buildStructureDefinition();
     }
 }

@@ -1,6 +1,5 @@
 package meowmel.pollution.common.metatileentity.multiblock.bot;
 
-import gregicality.multiblocks.api.metatileentity.GCYMMultiblockAbility;
 import gregtech.api.capability.IDistillationTower;
 import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.DistillationTowerLogicHandler;
@@ -9,9 +8,12 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.StructurePieceKey;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.IStructureElement;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.util.GTTransferUtils;
@@ -23,8 +25,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
-import gregtech.common.metatileentities.multi.multiblockpart.appeng.MetaTileEntityMEOutputHatch;
 import meowmel.pollution.api.metatileentity.ManaMultiblockController;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.client.textures.POTextures;
@@ -45,6 +45,39 @@ import java.util.function.Function;
 import static gregtech.api.util.RelativeDirection.*;
 
 public class MetaTileEntityBotDistillery extends ManaMultiblockController implements IDistillationTower {
+
+    private static final StructurePieceKey BODY_PIECE = StructurePieceKey.of("body");
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:bot_distillery", () -> {
+                IStructureElement casing = Elements.counted(28, -1, Elements.block(getCasingState()));
+                IStructureElement hatches = Elements.abilities(
+                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_FLUIDS,
+                        MultiblockAbility.EXPORT_ITEMS, POMultiblockAbility.MANA_INPUT_HATCH,
+                        MultiblockAbility.PARALLEL_HATCH, MultiblockAbility.MAINTENANCE_HATCH);
+                return DeclarativePatternBuilder.start(RIGHT, FRONT, UP)
+                        .piece("base")
+                        .aisle("___XXX___", "___XXX___", "__XXXXX__", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "__XXXXX__", "___XXX___", "___XXX___")
+                        .aisle("_________", "___XSX___", "__XXXXX__", "_XXXXXXX_", "_XXXZXXX_", "_XXXXXXX_", "__XXXXX__", "___XXX___", "_________")
+                        .aisle("_________", "____X____", "___XXX___", "__XXXXX__", "_XXXZXXX_", "__XXXXX__", "___XXX___", "____X____", "_________")
+                        .repeatablePiece("body", 1, 12)
+                        .aisle("_________", "_________", "___M_M___", "__Y___Y__", "____Z____", "__Y___Y__", "___Y_Y___", "_________", "_________")
+                        .piece("outlets")
+                        .aisle("_________", "_________", "___Y_Y___", "__Y___Y__", "____Z____", "__Y___Y__", "___Y_Y___", "_________", "_________")
+                        .piece("cap")
+                        .aisle("_________", "_________", "_________", "_________", "____Z____", "_________", "_________", "_________", "_________")
+                        .self('S', MetaTileEntityBotDistillery.class)
+                        .where('X', Elements.choice(casing, hatches))
+                        .where('M', Elements.choice(Elements.block(getCasingState()),
+                                Elements.abilitiesPerLayer(1, 1, 1, MultiblockAbility.EXPORT_FLUIDS)))
+                        .block('Y', getCasingState2()).block('Z', getCasingState3()).any('_')
+                        .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 2)
+                        .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.EXPORT_ITEMS, 1, 1)
+                        .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.PARALLEL_HATCH, 0, 1)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .buildStructureDefinition();
+            });
 
     protected final DistillationTowerLogicHandler handler;
 
@@ -72,7 +105,9 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("___XXX___", "___XXX___", "__XXXXX__", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "__XXXXX__", "___XXX___", "___XXX___")
                 .aisle("_________", "___XSX___", "__XXXXX__", "_XXXXXXX_", "_XXXZXXX_", "_XXXXXXX_", "__XXXXX__", "___XXX___", "_________")
@@ -98,7 +133,7 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
                                 .setMinLayerLimited(1).setMaxLayerLimited(1)))
                 .where('Z', states(getCasingState3()))
                 .where('_', any())
-                .build();
+                .build();*/
     }
 
     @Override
@@ -146,10 +181,10 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        if (!usesAdvHatchLogic() || this.structurePattern == null) return;
-        handler.determineLayerCount(this.structurePattern);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        if (!usesAdvHatchLogic()) return;
+        handler.determineLayerCountFromReps(formed.getPieceRepeat(BODY_PIECE, 0));
         handler.determineOrderedFluidOutputs();
     }
 

@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -26,6 +26,23 @@ import org.jetbrains.annotations.NotNull;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedInstrument;
 
 public class MetaTileEntityMagicExtruder extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_extruder", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("##XXX", "##XXX", "##XXX")
+                            .aisleRepeated(2, "##XXX", "##XPX", "##XGX")
+                            .aisle("XXXXX", "XXXPX", "XXXGX")
+                            .aisle("XXXXX", "XAXPX", "XXXGX")
+                            .aisle("XXXXX", "XSXXX", "XXXXX")
+                            .self('S', MetaTileEntityMagicExtruder.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.EXTRUDER_RECIPES, 20)
+                    .block('P', getCasingState2())
+                    .block('G', getCasingState3())
+                    .block('A', getCasingState4())
+                    .any('#')
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicExtruder(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.EXTRUDER_RECIPES});
@@ -53,20 +70,8 @@ public class MetaTileEntityMagicExtruder extends MagicRecipeMapMultiblockControl
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("##XXX", "##XXX", "##XXX")
-                .aisle("##XXX", "##XPX", "##XGX").setRepeatable(2)
-                .aisle("XXXXX", "XXXPX", "XXXGX")
-                .aisle("XXXXX", "XAXPX", "XXXGX")
-                .aisle("XXXXX", "XSXXX", "XXXXX")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(35).or(autoAbilities()))
-                .where('P', states(getCasingState2()))
-                .where('G', states(getCasingState3()))
-                .where('A', states(getCasingState4()))
-                .where('#', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

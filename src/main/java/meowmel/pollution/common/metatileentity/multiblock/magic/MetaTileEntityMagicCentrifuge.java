@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -22,6 +22,23 @@ import net.minecraft.util.ResourceLocation;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedAir;
 
 public class MetaTileEntityMagicCentrifuge extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_centrifuge", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("BXXXB", "XXXXX", "BXXXB")
+                            .aisle("XXXXX", "XHGHX", "XXXXX")
+                            .aisle("XXXXX", "XGHGX", "XXXXX")
+                            .aisle("XXXXX", "XHGHX", "XXXXX")
+                            .aisle("BXXXB", "XXSXX", "BXXXB")
+                            .self('S', MetaTileEntityMagicCentrifuge.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.CENTRIFUGE_RECIPES, 17)
+                    .any('B')
+                    .air('A')
+                    .block('G', getCasingState2())
+                    .block('H', getCasingState3())
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicCentrifuge(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CENTRIFUGE_RECIPES, RecipeMaps.THERMAL_CENTRIFUGE_RECIPES});
@@ -45,20 +62,8 @@ public class MetaTileEntityMagicCentrifuge extends MagicRecipeMapMultiblockContr
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("BXXXB", "XXXXX", "BXXXB")
-                .aisle("XXXXX", "XHGHX", "XXXXX")
-                .aisle("XXXXX", "XGHGX", "XXXXX")
-                .aisle("XXXXX", "XHGHX", "XXXXX")
-                .aisle("BXXXB", "XXSXX", "BXXXB")
-                .where('S', selfPredicate())
-                .where('B', any())
-                .where('A', air())
-                .where('X', states(getCasingState()).setMinGlobalLimited(40).or(autoAbilities()))
-                .where('G', states(getCasingState2()))
-                .where('H', states(getCasingState3()))
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

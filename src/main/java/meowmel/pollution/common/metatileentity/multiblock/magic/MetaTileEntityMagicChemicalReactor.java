@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -28,6 +28,31 @@ import org.jetbrains.annotations.NotNull;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedAlchemy;
 
 public class MetaTileEntityMagicChemicalReactor extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_chemical_reactor", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("   AAAAA   ", "    B      ", "     B     ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "   AAAAA   ")
+                        .aisle("  AACCCAA  ", "           ", "           ", "      B    ", "           ", "           ", "    B      ", "     B     ", "           ", "           ", "           ", "           ", "  AACCCAA  ")
+                        .aisle(" AADCACDAA ", "    D D    ", "           ", "           ", "       B   ", "   B       ", "           ", "           ", "      B    ", "           ", "           ", "    D D    ", " AADCACDAA ")
+                        .aisle("AADCCACCDAA", "           ", "           ", "           ", "  B        ", "        B  ", "           ", "           ", "           ", "   B   B   ", "    B      ", "     B     ", "AADCCACCDAA")
+                        .aisle("ACCCCACCCCA", "  D  E  D B", "     E     ", " B   E     ", "     E     ", "     E     ", "     E   B ", "     E     ", "  B  E     ", "     E     ", "     E B   ", "  D  E  D  ", "ACCCCACCCCA")
+                        .aisle("ACAAAAAAACA", "    EEE    ", "B   EEE   B", "    EEE    ", "    EEE    ", "    EEE    ", "    EEE    ", " B  EEE  B ", "    EEE    ", "    EEE    ", "    EEE    ", "   BEEEB   ", "ACAAAAAAACA")
+                        .aisle("ACCCCACCCCA", "B D  E  D  ", "     E     ", "     E   B ", "     E     ", "     E     ", " B   E     ", "     E     ", "     E  B  ", "     E     ", "   B E     ", "  D  E  D  ", "ACCCCACCCCA")
+                        .aisle("AADCCACCDAA", "           ", "           ", "           ", "        B  ", "  B        ", "           ", "           ", "           ", "   B   B   ", "      B    ", "     B     ", "AADCCACCDAA")
+                        .aisle(" AADCACDAA ", "    D D    ", "           ", "           ", "   B       ", "       B   ", "           ", "           ", "    B      ", "           ", "           ", "    D D    ", " AADCACDAA ")
+                        .aisle("  AACCCAA  ", "           ", "           ", "    B      ", "           ", "           ", "      B    ", "     B     ", "           ", "           ", "           ", "           ", "  AACCCAA  ")
+                        .aisle("   AASAA   ", "      B    ", "     B     ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "   AAAAA   ")
+                        .self('S', MetaTileEntityMagicChemicalReactor.class)
+                        .block('A', getCasingState())
+                        .block('B', getCasingState2())
+                        .block('C', getCasingState3())
+                        .block('D', getCasingState4())
+                        .block('E', getCasingState5())
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
+                return configureMagicRecipeCasing(casing, RecipeMaps.CHEMICAL_RECIPES, 70).buildStructureDefinition();
+            });
 
     public MetaTileEntityMagicChemicalReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.CHEMICAL_RECIPES, PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES});
@@ -59,27 +84,8 @@ public class MetaTileEntityMagicChemicalReactor extends MagicRecipeMapMultiblock
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("   AAAAA   ", "    B      ", "     B     ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "   AAAAA   ")
-                .aisle("  AACCCAA  ", "           ", "           ", "      B    ", "           ", "           ", "    B      ", "     B     ", "           ", "           ", "           ", "           ", "  AACCCAA  ")
-                .aisle(" AADCACDAA ", "    D D    ", "           ", "           ", "       B   ", "   B       ", "           ", "           ", "      B    ", "           ", "           ", "    D D    ", " AADCACDAA ")
-                .aisle("AADCCACCDAA", "           ", "           ", "           ", "  B        ", "        B  ", "           ", "           ", "           ", "   B   B   ", "    B      ", "     B     ", "AADCCACCDAA")
-                .aisle("ACCCCACCCCA", "  D  E  D B", "     E     ", " B   E     ", "     E     ", "     E     ", "     E   B ", "     E     ", "  B  E     ", "     E     ", "     E B   ", "  D  E  D  ", "ACCCCACCCCA")
-                .aisle("ACAAAAAAACA", "    EEE    ", "B   EEE   B", "    EEE    ", "    EEE    ", "    EEE    ", "    EEE    ", " B  EEE  B ", "    EEE    ", "    EEE    ", "    EEE    ", "   BEEEB   ", "ACAAAAAAACA")
-                .aisle("ACCCCACCCCA", "B D  E  D  ", "     E     ", "     E   B ", "     E     ", "     E     ", " B   E     ", "     E     ", "     E  B  ", "     E     ", "   B E     ", "  D  E  D  ", "ACCCCACCCCA")
-                .aisle("AADCCACCDAA", "           ", "           ", "           ", "        B  ", "  B        ", "           ", "           ", "           ", "   B   B   ", "      B    ", "     B     ", "AADCCACCDAA")
-                .aisle(" AADCACDAA ", "    D D    ", "           ", "           ", "   B       ", "       B   ", "           ", "           ", "    B      ", "           ", "           ", "    D D    ", " AADCACDAA ")
-                .aisle("  AACCCAA  ", "           ", "           ", "    B      ", "           ", "           ", "      B    ", "     B     ", "           ", "           ", "           ", "           ", "  AACCCAA  ")
-                .aisle("   AASAA   ", "      B    ", "     B     ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "   AAAAA   ")
-                .where('S', selfPredicate())
-                .where('A', states(getCasingState()).setMinGlobalLimited(35).or(autoAbilities()))
-                .where('B', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('D', states(getCasingState4()))
-                .where('E', states(getCasingState5()))
-                .where(' ', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {

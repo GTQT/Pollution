@@ -9,9 +9,11 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
@@ -19,6 +21,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.api.utils.POUtils;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -26,6 +29,7 @@ import meowmel.pollution.common.block.metablocks.*;
 import meowmel.pollution.common.block.metablocks.*;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
+import meowmel.gtqtcore.api.blocks.impl.IBlockTier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -45,7 +49,6 @@ import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.*;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static net.minecraft.util.math.MathHelper.abs;
 import static net.minecraft.util.math.MathHelper.ceil;
 
@@ -124,12 +127,12 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object coilLevel = context.get("COILTieredStats");
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        IBlockTier coilLevel = coil == null ? null : coil.getPayloadAs(IBlockTier.class);
         this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) coilLevel).getIntTier(),
-                0);
+                () -> ((WrappedIntTired) coilLevel).getIntTier(), 0);
     }
 
     protected void initializeAbilities() {
@@ -239,8 +242,8 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
+    protected StructureDefinition<?> createStructureDefinition() {
+        return DeclarativePatternBuilder.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
                 .aisle("                    ", "                    ", "                    ", "                    ", "                    ", "                    ", "                    ", "      A     A       ", "      B     B       ", "      B     B       ", "      B     B       ", "      A     A       ", "                    ", "                    ", "                    ", "                    ")
                 .aisle("    CCCCCCCCCCC     ", "    BBBBBBBBBBB     ", "    BBBBBBBBBBB     ", "    CCCCCCCCCCC     ", "                    ", "      B     B       ", "      D     E       ", "     AAA   AAA      ", "     B B   B B      ", "     B B   B B      ", "     B B   B B      ", "     AAA   AAA      ", "      A     A       ", "      D     E       ", "                    ", "                    ")
                 .aisle("   CFFFFFFFFFFFCGFCF", "   CGGGGGGGGGGGC  B ", "   C           C  B ", "   C           C  B ", "   C  B     B  C  B ", "   C           C  B ", "   C           C  B ", "   C  A     A  C GAG", "      B     B     A ", "      B     B       ", "      B     B       ", "      A     A       ", "                    ", "                    ", "                    ", "                    ")
@@ -256,25 +259,30 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
                 .aisle("   CFFFFFFFFFFFCGFCF", "   CGGGGGGGGGGGC  B ", "   C           C  B ", "   C           C  B ", "   C  B     B  C  B ", "   C           C  B ", "   C           C  B ", "   C  A     A  C GAG", "      B     B     A ", "      B     B       ", "      B     B       ", "      A     A       ", "                    ", "                    ", "                    ", "                    ")
                 .aisle("    CCCCCCCCCCC     ", "    BBBBBBBBBBB     ", "    BBBBBBBBBBB     ", "    CCCCCCCCCCC     ", "                    ", "      B     B       ", "      K     L       ", "     AAA   AAA      ", "     B B   B B      ", "     B B   B B      ", "     B B   B B      ", "     AAA   AAA      ", "      A     A       ", "      K     L       ", "                    ", "                    ")
                 .aisle("                    ", "                    ", "                    ", "                    ", "                    ", "                    ", "                    ", "      A     A       ", "      B     B       ", "      B     B       ", "      B     B       ", "      A     A       ", "                    ", "                    ", "                    ", "                    ")
-                .where('S', selfPredicate())
-                .where(' ', any())
-                .where('A', states(getCasingState()))
-                .where('X', states(getCasingState())
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1)))
-                .where('O', abilities(MultiblockAbility.EXPORT_ITEMS).setExactLimit(1).setPreviewCount(1))
-                .where('B', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('D', states(getCasingState4()))
-                .where('E', states(getCasingState5()))
-                .where('F', states(getCasingState6()))
-                .where('G', states(getCasingState7()))
-                .where('H', states(getCasingState8()))
-                .where('I', CP_COIL_CASING.get())
-                .where('K', states(getCasingState9()))
-                .where('L', states(getCasingState10()))
-                .build();
+                .self('S', MetaTileEntityNodeProducer.class)
+                .any(' ')
+                .block('A', getCasingState())
+                .where('X', Elements.choice(Elements.block(getCasingState()),
+                        Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH),
+                        Elements.abilities(MultiblockAbility.INPUT_ENERGY),
+                        Elements.abilities(MultiblockAbility.IMPORT_FLUIDS)))
+                .where('O', Elements.abilities(MultiblockAbility.EXPORT_ITEMS))
+                .block('B', getCasingState2())
+                .block('C', getCasingState3())
+                .block('D', getCasingState4())
+                .block('E', getCasingState5())
+                .block('F', getCasingState6())
+                .block('G', getCasingState7())
+                .block('H', getCasingState8())
+                .where('I', Elements.tieredCasing(POTieredCasingGroups.coilCasings().group(),
+                        POTieredCasingGroups.coilCasings().channel().getName(), 0, -1))
+                .block('K', getCasingState9())
+                .block('L', getCasingState10())
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.EXPORT_ITEMS, 1, 1)
+                .buildStructureDefinition();
     }
 
     @Override

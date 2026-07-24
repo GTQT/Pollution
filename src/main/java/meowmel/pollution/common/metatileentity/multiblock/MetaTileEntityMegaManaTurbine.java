@@ -4,7 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.EnergyContainerList;
-import gregtech.api.capability.impl.MultiblockFuelRecipeLogic;
+import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.FuelMultiblockController;
@@ -14,9 +14,11 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.KeyUtil;
@@ -26,11 +28,10 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -46,7 +47,6 @@ import java.util.List;
 
 import static com.cleanroommc.modularui.api.drawable.IKey.AQUA;
 import static com.cleanroommc.modularui.utils.MathUtils.min;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 //巨型魔力轮机，计划是跑MANA_To_EU的配方，提供少量某些材料可以增大输出上限，持续运作有并行加成，白板工作上限为UV，64A IV发电
 //目前计划是可以提供的材料组合包括黑白漫宿（要求几把气线，上限拉到UHV 1A，对应64A LuV），液态超次元秘银和刻金（要求白垩和持续运作的锻炉，上限拉到UEV 2A，对应128A ZPM）
@@ -134,8 +134,9 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        return StructureDefinition.getOrBuild("pollution:mega_mana_turbine_" + tier + '_' + hasMufflerHatch, () ->
+                DeclarativePatternBuilder.start()
                 .aisle("AAAAAAA", "ABBBBBA", "ABCCCBA", "ABCJCBA", "ABCCCBA", "ABBBBBA", "AAAAAAA")
                 .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
                 .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
@@ -150,20 +151,20 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
                 .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
                 .aisle("ABBBBBA", "BEEEEEB", "BEFGFEB", "BEGDGEB", "BEFGFEB", "BEEEEEB", "ABBBBBA")
                 .aisle("AAAAAAA", "ABBBBBA", "ABHHHBA", "ABHIHBA", "ABHHHBA", "ABBBBBA", "AAAAAAA")
-                .where('A', states(getCasingState_Frame()))
-                .where('B', states(getOuterFilling()))
-                .where('C', states(getCasingBackFacing()))
-                .where('D', states(getCasingFusionCoil()))
-                .where('E', states(getInnerFilling()))
-                .where('F', states(getCasingInner()))
-                .where('G', CP_COIL_CASING.get())
-                .where('H', states(getCasingFrontFacing())
-                        .or(this.autoAbilities(false, true, false, false, true, true, false)))
-                .where('I', selfPredicate())
-                .where('J', states(getCasingFusionCoil())
-                        .or(abilities(MultiblockAbility.OUTPUT_ENERGY).setMaxGlobalLimited(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.OUTPUT_LASER).setMaxGlobalLimited(1).setPreviewCount(1)))
-                .build();
+                .self('I', MetaTileEntityMegaManaTurbine.class)
+                .block('A', getCasingState_Frame()).block('B', getOuterFilling()).block('C', getCasingBackFacing())
+                .block('D', getCasingFusionCoil()).block('E', getInnerFilling()).block('F', getCasingInner())
+                        .tieredCasing('G', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                .casing('H', getCasingFrontFacing())
+                .maintenance()
+                .optionalHatch(MultiblockAbility.IMPORT_FLUIDS, 4)
+                .optionalHatch(MultiblockAbility.EXPORT_FLUIDS, 4)
+                .optionalHatch(MultiblockAbility.MUFFLER_HATCH, hasMufflerHatch ? 1 : 0)
+                .where('J', Elements.choice(Elements.block(getCasingFusionCoil()),
+                        Elements.abilities(MultiblockAbility.OUTPUT_ENERGY, MultiblockAbility.OUTPUT_LASER)))
+                .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 0, 1)
+                .globalAbilityLimit(MultiblockAbility.OUTPUT_LASER, 0, 1)
+                .buildStructureDefinition());
     }
 
     public IBlockState getOuterFilling() {
@@ -191,12 +192,10 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object CoilLevel = context.get("COILTieredStats");
-        this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) CoilLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        this.CoilLevel = coil == null ? 0 : coil.getTier();
     }
 
     //客户端渲染
@@ -243,7 +242,7 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         this.energyContainer = new EnergyContainerList(energyContainer);
     }
 
-    protected class MegaManaTurbineWorkable extends MultiblockFuelRecipeLogic {
+    protected class MegaManaTurbineWorkable extends MultiblockRecipeLogic {
         public static final FluidStack BlackManSusStack = PollutionMaterials.blackmansus.getFluid(32);
         public static final FluidStack WhiteManSusStack = PollutionMaterials.whitemansus.getFluid(32);
         public static final FluidStack KeQinGoldStack = PollutionMaterials.KQGold.getFluid(32);
@@ -251,6 +250,7 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         public static final FluidStack GanZhiStack = PollutionMaterials.sentient_metal.getFluid(32);
         public static final FluidStack YueShuStack = PollutionMaterials.binding_metal.getFluid(32);
         private final MetaTileEntityMegaManaTurbine megaManaTurbine;
+        private long totalContinuousRunningTime;
 
         public MegaManaTurbineWorkable(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
@@ -311,9 +311,12 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
             if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
                 this.drainCatalyst();
                 this.drawEnergy(this.recipeEUt, false);
+                this.totalContinuousRunningTime++;
                 if (++this.progressTime > this.maxProgressTime) {
                     this.completeRecipe();
                 }
+            } else {
+                this.totalContinuousRunningTime = 0;
             }
         }
 

@@ -12,9 +12,11 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
@@ -29,13 +31,12 @@ import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.*;
 import meowmel.pollution.common.block.metablocks.*;
 import meowmel.pollution.common.items.PollutionMetaItems;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -48,9 +49,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController {
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:node_blast_furnace", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("  ABBBBBBBA  ", "  CBBBBBBBC  ", "   CBBBBBC   ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
+                        .aisle(" AADDDBDDDAA ", " CBDDDDDDDBC ", " EC       CE ", "             ", "             ", "  DDDDDDDDD  ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
+                        .aisle("AADDDDBDDDDAA", "CBCDDDDDDDCBC", " CC       CC ", "  C       C  ", "  C       C  ", " DC       CD ", "  C       C  ", "  E       E  ", "             ", "             ", "             ", "   DDDDDDD   ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
+                        .aisle("BDDDDDBDDDDDB", "BDDCFFFFFCDDB", "C  CGGGGGC  C", "   CGGGGGC   ", "   CGGGGGC   ", " D CHHHHHC D ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "  DC     CD  ", "   C     C   ", "   E     E   ", "             ", "             ", "    DDDDD    ", "             ", "             ")
+                        .aisle("BDDDBBBBBDDDB", "BDDFFFFFFFDDB", "B  GIIIIIG  B", "   GIIIIIG   ", "   GIIIIIG   ", " D HFFFFFH D ", "    GGGGG    ", "    GGGGG    ", "    HHHHH    ", "    GGGGG    ", "    GGGGG    ", "  D HHHHH D  ", "    C   C    ", "    C   C    ", "    C   C    ", "    CHHHC    ", "   DCCCCCD   ", "    E   E    ", "             ")
+                        .aisle("BDDDBDDDBDDDB", "BDDFF   FFDDB", "B  GI   IG  B", "   GI   IG   ", "   GI   IG   ", " D HF   FH D ", "    GIIIG    ", "    GIIIG    ", "    HIIIH    ", "    GIIIG    ", "    GIIIG    ", "  D HFFFH D  ", "     GGG     ", "     GGG     ", "     GGG     ", "    HGGGH    ", "   DCFFFCD   ", "     CCC     ", "     XXX     ")
+                        .aisle("BBBBBDDDBBBBB", "BDDFF   FFDDB", "B  GI   IG  B", "   GI   IG   ", "   GI   IG   ", " D HF   FH D ", "    GI IG    ", "    GI IG    ", "    HI IH    ", "    GI IG    ", "    GI IG    ", "  D HF FH D  ", "     GIG     ", "     GIG     ", "     GIG     ", "    HGIGH    ", "   DCF FCD   ", "     C C     ", "     XYX     ")
+                        .aisle("BDDDBDDDBDDDB", "BDDFF   FFDDB", "B  GI   IG  B", "   GI   IG   ", "   GI   IG   ", " D HF   FH D ", "    GIIIG    ", "    GIIIG    ", "    HIIIH    ", "    GIIIG    ", "    GIIIG    ", "  D HFFFH D  ", "     GGG     ", "     GGG     ", "     GGG     ", "    HGGGH    ", "   DCFFFCD   ", "     CCC     ", "     XXX     ")
+                        .aisle("BDDDBBBBBDDDB", "BDDFFFFFFFDDB", "B  GIIIIIG  B", "   GIIIIIG   ", "   GIIIIIG   ", " D HFFFFFH D ", "    GGGGG    ", "    GGGGG    ", "    HHHHH    ", "    GGGGG    ", "    GGGGG    ", "  D HHHHH D  ", "    C   C    ", "    C   C    ", "    C   C    ", "    CHHHC    ", "   DCCCCCD   ", "    E   E    ", "             ")
+                        .aisle("BDDDDDBDDDDDB", "BDDCFFFFFCDDB", "C  CGGGGGC  C", "   CGGGGGC   ", "   CGGGGGC   ", " D CHHHHHC D ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "   C     C   ", "  DC     CD  ", "   C     C   ", "   E     E   ", "             ", "             ", "    DDDDD    ", "             ", "             ")
+                        .aisle("AADDDDBDDDDAA", "CBCDDDDDDDCBC", " CC       CC ", "  C       C  ", "  C       C  ", " DC       CD ", "  C       C  ", "  E       E  ", "             ", "             ", "             ", "   DDDDDDD   ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
+                        .aisle(" AADDDBDDDAA ", " CBDDDDDDDBC ", " EC       CE ", "             ", "             ", "  DDDDDDDDD  ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
+                        .aisle("  ABBBBBBBA  ", "  CBBBSBBBC  ", "   CBBBBBC   ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
+                        .self('S', MetaTileEntityNodeBlastFurnace.class).block('A', getCasingState()).block('B', getCasingState2())
+                        .block('C', getCasingState3()).block('D', getCasingState4()).block('E', getCasingState5())
+                        .block('F', getCasingState6()).block('G', getCasingState7()).block('H', getCasingState8())
+                        .tieredCasing('I', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                        .block('X', getCasingState2()).hatch('Y', MultiblockAbility.MUFFLER_HATCH).any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('B', getCasingState2());
+                return casing.custom(Elements.abilities(0, 91, MultiblockAbility.INPUT_ENERGY,
+                                MultiblockAbility.INPUT_LASER, MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
+                                MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS,
+                                MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.MUFFLER_HATCH), 91)
+                        .done().globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 91)
+                        .globalAbilityLimit(MultiblockAbility.INPUT_LASER, 0, 3)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1).buildStructureDefinition();
+            });
     int CoilLevel;
     int Temp;
 
@@ -114,12 +145,10 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 
     //在成型时读取机器的线圈级别 并且给炉温赋值 	//还有激光仓支持
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object CoilLevel = context.get("COILTieredStats");
-        this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) CoilLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        this.CoilLevel = coil == null ? 0 : coil.getTier();
         Temp = 0;
         switch (this.CoilLevel) {
             case 1, 2, 3, 4, 5:
@@ -255,7 +284,9 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start()
                 .aisle("  ABBBBBBBA  ", "  CBBBBBBBC  ", "   CBBBBBC   ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
                 .aisle(" AADDDBDDDAA ", " CBDDDDDDDBC ", " EC       CE ", "             ", "             ", "  DDDDDDDDD  ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ", "             ")
@@ -287,7 +318,7 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
                 .where('I', CP_COIL_CASING.get())
                 .where('X', states(getCasingState2()))
                 .where('Y', abilities(MultiblockAbility.MUFFLER_HATCH).setExactLimit(1).setPreviewCount(1))
-                .build();
+                .build();*/
     }
 
     @Override

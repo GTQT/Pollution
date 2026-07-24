@@ -1,6 +1,6 @@
 package meowmel.pollution.common.metatileentity.multiblock.magic;
 
-import gregicality.multiblocks.api.recipes.GCYMRecipeMaps;
+import gregtech.api.recipes.GCYMRecipeMaps;
 import gregtech.api.capability.IHeatingCoil;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -8,9 +8,9 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.properties.impl.TemperatureProperty;
@@ -24,11 +24,10 @@ import gregtech.core.sound.GTSoundEvents;
 import meowmel.pollution.api.capability.ipml.MagicHeatingCoilRecipeLogic;
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.api.recipes.PORecipeMaps;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -43,10 +42,28 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedFire;
 
 public class MetaTileEntityMagicAlloyBlastSmelter extends MagicRecipeMapMultiblockController implements IHeatingCoil {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_alloy_blast_smelter", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("#XXX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
+                            .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
+                            .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXMXX")
+                            .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
+                            .aisle("#XSX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
+                            .self('S', MetaTileEntityMagicAlloyBlastSmelter.class)
+                            .casing('X', getCasingState1()),
+                    PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES, 31)
+                    .hatch('M', MultiblockAbility.MUFFLER_HATCH)
+                    .tieredCasing('C', POTieredCasingGroups.coilCasings().group())
+                    .withChannel(POTieredCasingGroups.coilCasings().channel())
+                    .block('G', getCasingState2())
+                    .any('#')
+                    .air('A')
+                    .buildStructureDefinition());
 
     private int blastFurnaceTemperature;
 
@@ -69,12 +86,10 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends MagicRecipeMapMultiblo
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object CoilLevel = context.get("COILTieredStats");
-        int coilTier = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) CoilLevel).getIntTier(),
-                1);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        var casing = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        int coilTier = casing == null ? 1 : casing.getTier();
 
         blastFurnaceTemperature = 0;
         switch (coilTier) {
@@ -131,21 +146,8 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends MagicRecipeMapMultiblo
     }
 
     @Override
-    protected @NotNull BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("#XXX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
-                .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
-                .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXMXX")
-                .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
-                .aisle("#XSX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState1()).setMinGlobalLimited(9).or(autoAbilities()))
-                .where('M', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('C', CP_COIL_CASING.get())
-                .where('G', states(getCasingState2()))
-                .where('#', any())
-                .where('A', air())
-                .build();
+    protected @NotNull StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

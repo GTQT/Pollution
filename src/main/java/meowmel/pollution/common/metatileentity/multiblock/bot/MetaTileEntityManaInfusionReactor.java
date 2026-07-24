@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.bot;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.core.sound.GTSoundEvents;
@@ -29,6 +29,34 @@ import static meowmel.pollution.api.recipes.PORecipeMaps.MANA_INFUSION_RECIPES;
 
 public class MetaTileEntityManaInfusionReactor extends ManaMultiblockController {
 
+    private final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:mana_infusion_reactor", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle(" ABBBBBBBA ", "    C C    ", "    D D    ", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("ACEEEEEEECA", " C       C ", " C       C ", " C       C ", " C       C ", " C       C ", " D       D ", " F       F ", " G       G ")
+                        .aisle("BEHHHHHHHEB", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("BEHAAAAAHEB", "     F     ", "     G     ", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("BEHAAAAAHEB", "C         C", "D         D", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("BEHAAAAAHEB", "   F A F   ", "   G A G   ", "     A     ", "     F     ", "     G     ", "           ", "           ", "           ")
+                        .aisle("BEHAAAAAHEB", "C         C", "D         D", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("BEHAAAAAHEB", "     F     ", "     G     ", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("BEHHHHHHHEB", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .aisle("ACEEEEEEECA", " C       C ", " C       C ", " C       C ", " C       C ", " C       C ", " D       D ", " F       F ", " G       G ")
+                        .aisle(" ABBBSBBBA ", "    C C    ", "    D D    ", "           ", "           ", "           ", "           ", "           ", "           ")
+                        .self('S', MetaTileEntityManaInfusionReactor.class)
+                        .block('A', getCasingState())
+                        .block('B', getCasingState2())
+                        .block('C', getCasingState3())
+                        .block('D', getCasingState4())
+                        .block('E', getCasingState5())
+                        .block('F', getCasingState6())
+                        .block('G', getCasingState7())
+                        .block('H', getCasingState8())
+                        .any(' ');
+                DeclarativePatternBuilder.CasingSlot casing = builder.casing('B', getCasingState2());
+                return configureManaRecipeCasing(casing, MANA_INFUSION_RECIPES, 18).buildStructureDefinition();
+            });
+
     public MetaTileEntityManaInfusionReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, MANA_INFUSION_RECIPES);
     }
@@ -38,30 +66,8 @@ public class MetaTileEntityManaInfusionReactor extends ManaMultiblockController 
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle(" ABBBBBBBA ", "    C C    ", "    D D    ", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("ACEEEEEEECA", " C       C ", " C       C ", " C       C ", " C       C ", " C       C ", " D       D ", " F       F ", " G       G ")
-                .aisle("BEHHHHHHHEB", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("BEHAAAAAHEB", "     F     ", "     G     ", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("BEHAAAAAHEB", "C         C", "D         D", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("BEHAAAAAHEB", "   F A F   ", "   G A G   ", "     A     ", "     F     ", "     G     ", "           ", "           ", "           ")
-                .aisle("BEHAAAAAHEB", "C         C", "D         D", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("BEHAAAAAHEB", "     F     ", "     G     ", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("BEHHHHHHHEB", "           ", "           ", "           ", "           ", "           ", "           ", "           ", "           ")
-                .aisle("ACEEEEEEECA", " C       C ", " C       C ", " C       C ", " C       C ", " C       C ", " D       D ", " F       F ", " G       G ")
-                .aisle(" ABBBSBBBA ", "    C C    ", "    D D    ", "           ", "           ", "           ", "           ", "           ", "           ")
-                .where('S', selfPredicate())
-                .where(' ', any())
-                .where('A', states(getCasingState()))
-                .where('B', states(getCasingState2()).setMinGlobalLimited(9).or(autoAbilities()))
-                .where('C', states(getCasingState3()))
-                .where('D', states(getCasingState4()))
-                .where('E', states(getCasingState5()))
-                .where('F', states(getCasingState6()))
-                .where('G', states(getCasingState7()))
-                .where('H', states(getCasingState8()))
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
     @SideOnly(Side.CLIENT)
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

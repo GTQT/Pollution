@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -26,6 +26,25 @@ import org.jetbrains.annotations.NotNull;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedExchange;
 
 public class MetaTileEntityMagicSolidifier extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_solidifier", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("#XXX#####", "#XXX#####", "#XXX#####", "#XXX#####", "#XXX#####", "##G######", "#########")
+                            .aisle("XXXXXPYYY", "XXXXXPYYY", "XXXXX#YYY", "XXXXX#YYY", "XCCCX#YYY", "##G###GGG", "#######G#")
+                            .aisle("XXXXXPYYY", "XXXXXPYCY", "XXXXX#YCY", "XXXXX#YCY", "XCCCX#YCY", "GGGGG#GCG", "######GGG")
+                            .aisle("XXXXXPYYY", "XXXXXPYYY", "XXXXX#YYY", "XXXXX#YYY", "XCCCX#YYY", "##G###GGG", "#######G#")
+                            .aisle("#XXX#####", "#XXX#####", "#XSX#####", "#XXX#####", "#XXX#####", "##G######", "#########")
+                            .self('S', MetaTileEntityMagicSolidifier.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.FLUID_SOLIDFICATION_RECIPES, 35)
+                    .block('Y', getCasingState2())
+                    .block('C', getCasingState3())
+                    .block('G', getCasingState4())
+                    .block('P', getCasingState5())
+                    .air('A')
+                    .any('#')
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicSolidifier(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.FLUID_SOLIDFICATION_RECIPES, RecipeMaps.EXTRACTOR_RECIPES, RecipeMaps.CANNER_RECIPES});
@@ -57,22 +76,8 @@ public class MetaTileEntityMagicSolidifier extends MagicRecipeMapMultiblockContr
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("#XXX#####", "#XXX#####", "#XXX#####", "#XXX#####", "#XXX#####", "##G######", "#########")
-                .aisle("XXXXXPYYY", "XXXXXPYYY", "XXXXX#YYY", "XXXXX#YYY", "XCCCX#YYY", "##G###GGG", "#######G#")
-                .aisle("XXXXXPYYY", "XXXXXPYCY", "XXXXX#YCY", "XXXXX#YCY", "XCCCX#YCY", "GGGGG#GCG", "######GGG")
-                .aisle("XXXXXPYYY", "XXXXXPYYY", "XXXXX#YYY", "XXXXX#YYY", "XCCCX#YYY", "##G###GGG", "#######G#")
-                .aisle("#XXX#####", "#XXX#####", "#XSX#####", "#XXX#####", "#XXX#####", "##G######", "#########")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(60).or(autoAbilities()))
-                .where('Y', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('G', states(getCasingState4()))
-                .where('P', states(getCasingState5()))
-                .where('A', air())
-                .where('#', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

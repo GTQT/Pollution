@@ -5,13 +5,16 @@ import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.*;
 import gregtech.api.util.interpolate.Eases;
 import gregtech.client.renderer.ICubeRenderer;
@@ -23,6 +26,7 @@ import gregtech.client.shader.postprocessing.BloomType;
 import gregtech.client.utils.*;
 import gregtech.common.ConfigHolder;
 import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -50,7 +54,6 @@ import thaumcraft.api.aura.AuraHelper;
 import java.util.Collections;
 import java.util.List;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.*;
 import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_FUSION_REACTOR;
 import static meowmel.pollution.api.unification.PollutionMaterials.ErichAura;
 import static meowmel.pollution.api.unification.PollutionMaterials.RichAura;
@@ -58,6 +61,38 @@ import static meowmel.gtqtcore.api.GTQTValues.REQUIRE_DATA_UPDATE;
 import static meowmel.gtqtcore.api.GTQTValues.UPDATE_TIER;
 
 public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockController implements IBloomEffect, IFastRenderMetaTileEntity {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_fusion_reactor", () -> {
+                DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
+                        .aisle("           ", "           ", "           ", "     A     ", "     A     ", "   AAAAA   ", "     A     ", "     A     ", "           ", "           ", "           ")
+                        .aisle("           ", "     A     ", "     A     ", "   BBABB   ", "   B   B   ", "  AA A AA  ", "   B   B   ", "   BBABB   ", "     A     ", "     A     ", "           ")
+                        .aisle("           ", "     A     ", "           ", "           ", "    CCC    ", " A  CCC  A ", "    CCC    ", "           ", "           ", "     A     ", "           ")
+                        .aisle("     A     ", "   BBABB   ", "           ", " B       B ", " B  DDD  B ", "AA  DDD  AA", " B  DDD  B ", " B       B ", "           ", "   BBABB   ", "     A     ")
+                        .aisle("     A     ", "   B   B   ", "    CCC    ", " B  DDD  B ", "  CD   DC  ", "A CD   DC A", "  CD   DC  ", " B  DDD  B ", "    CCC    ", "   B   B   ", "     A     ")
+                        .aisle("   AAAAA   ", " AAA A AAA ", " A  CCC  A ", "AA  DDD  AA", "A CD   DC A", "AACD   DCAA", "A CD   DC A", "AA  DDD  AA", " A  CCC  A ", " AAA A AAA ", "   AAAAA   ")
+                        .aisle("     A     ", "   B   B   ", "    CCC    ", " B  DDD  B ", "  CD   DC  ", "A CD   DC A", "  CD   DC  ", " B  DDD  B ", "    CCC    ", "   B   B   ", "     A     ")
+                        .aisle("     A     ", "   BBABB   ", "           ", " B       B ", " B  DDD  B ", "AA  DDD  AA", " B  DDD  B ", " B       B ", "           ", "   BBABB   ", "     A     ")
+                        .aisle("           ", "     A     ", "           ", "           ", "    CCC    ", " A  CCC  A ", "    CCC    ", "           ", "           ", "     A     ", "           ")
+                        .aisle("           ", "     A     ", "     A     ", "   BBABB   ", "   B   B   ", "  AA A AA  ", "   B   B   ", "   BBABB   ", "     A     ", "     A     ", "           ")
+                        .aisle("           ", "           ", "           ", "     A     ", "     A     ", "   AASAA   ", "     A     ", "     A     ", "           ", "           ", "           ")
+                        .self('S', MetaTileEntityMagicFusionReactor.class)
+                        .where('A', Elements.choice(
+                                Elements.tieredCasing(POTieredCasingGroups.frames().group(),
+                                        POTieredCasingGroups.frames().channel().getName(), 105, -1),
+                                Elements.abilities(MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_ITEMS,
+                                        MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS,
+                                        MultiblockAbility.EXPORT_FLUIDS, MultiblockAbility.MAINTENANCE_HATCH,
+                                        MultiblockAbility.MUFFLER_HATCH)))
+                        .tieredCasing('B', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                        .tieredCasing('C', POTieredCasingGroups.compositionCasings().group()).withChannel(POTieredCasingGroups.compositionCasings().channel())
+                        .tieredCasing('D', POTieredCasingGroups.glasses().group()).withChannel(POTieredCasingGroups.glasses().channel())
+                        .any(' ');
+                return builder
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1)
+                        .buildStructureDefinition();
+            });
 
     protected static final int NO_COLOR = 0;
     int glass;//不知道
@@ -149,7 +184,9 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start()
                 .aisle("           ", "           ", "           ", "     A     ", "     A     ", "   AAAAA   ", "     A     ", "     A     ", "           ", "           ", "           ")
                 .aisle("           ", "     A     ", "     A     ", "   BBABB   ", "   B   B   ", "  AA A AA  ", "   B   B   ", "   BBABB   ", "     A     ", "     A     ", "           ")
@@ -168,28 +205,20 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
                 .where('C', CP_COMPOSE.get())
                 .where('D', CP_GLASS.get())
                 .where(' ', any())
-                .build();
+                .build();*/
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object coil = context.get("COILTieredStats");
-        this.coil = POUtils.getOrDefault(() -> coil instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) coil).getIntTier(),
-                1);
-        Object glass = context.get("GLASSTieredStats");
-        this.glass = POUtils.getOrDefault(() -> glass instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) glass).getIntTier(),
-                1);
-        Object frame = context.get("FRAMETieredStats");
-        this.frame = POUtils.getOrDefault(() -> frame instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) frame).getIntTier(),
-                1);
-        Object compose = context.get("COMPOSETieredStats");
-        this.compose = POUtils.getOrDefault(() -> compose instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) compose).getIntTier(),
-                1);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        ICasing glass = POTieredCasingGroups.glasses().channel().getMatchedCasing(formed);
+        ICasing frame = POTieredCasingGroups.frames().channel().getMatchedCasing(formed);
+        ICasing compose = POTieredCasingGroups.compositionCasings().channel().getMatchedCasing(formed);
+        this.coil = coil == null ? 1 : coil.getTier();
+        this.glass = glass == null ? 1 : glass.getTier();
+        this.frame = frame == null ? 1 : frame.getTier();
+        this.compose = compose == null ? 1 : compose.getTier();
         this.writeCustomData(UPDATE_TIER, buf -> buf.writeInt(this.frame));
     }
 

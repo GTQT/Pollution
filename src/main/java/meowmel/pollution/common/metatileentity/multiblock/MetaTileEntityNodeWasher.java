@@ -5,15 +5,17 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MetaTileEntityBaseWithControl;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POGlass;
@@ -21,7 +23,6 @@ import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POTurbine;
 import meowmel.pollution.common.items.PollutionMetaItems;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.log;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 import static net.minecraft.util.math.MathHelper.ceil;
 
 public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
@@ -95,12 +95,10 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object coilLevel = context.get("COILTieredStats");
-        this.coilLevel = POUtils.getOrDefault(() -> coilLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) coilLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        this.coilLevel = coil == null ? 0 : coil.getTier();
     }
 
     private String decideType(FluidStack stack) {
@@ -139,24 +137,28 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    protected StructureDefinition<?> createStructureDefinition() {
+        DeclarativePatternBuilder builder = DeclarativePatternBuilder.start()
                 .aisle("XXXXXXX", "XXXXXXX", "XXXXXXX", "##XXXXX")
                 .aisle("XXXXXXX", "XAXCCCX", "XXXAAAX", "##XXXXX")
                 .aisle("XXXXXXX", "XAXCCCX", "XXXAAAX", "##XXXXX")
                 .aisle("XXXXXXX", "XSXDDDX", "XEXDDDX", "##XXXXX")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(30)
-                        .or(abilities(MultiblockAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.MAINTENANCE_HATCH).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
-                        .or(abilities(MultiblockAbility.IMPORT_ITEMS).setExactLimit(1).setPreviewCount(1)))
-                .where('C', states(getCasingState2()))
-                .where('D', states(getCasingState3()))
-                .where('A', states(getCasingState4()))
-                .where('E', CP_COIL_CASING.get())
-                .where('#', any())
-                .build();
+                .self('S', MetaTileEntityNodeWasher.class)
+                .block('X', getCasingState())
+                .block('C', getCasingState2()).block('D', getCasingState3()).block('A', getCasingState4())
+                .tieredCasing('E', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
+                .any('#');
+        DeclarativePatternBuilder.CasingSlot casing = builder.casing('X', getCasingState());
+        return casing
+                .custom(Elements.abilities(0, 52, MultiblockAbility.INPUT_ENERGY,
+                        MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS,
+                        MultiblockAbility.IMPORT_ITEMS), 52)
+                .done()
+                .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 1, 1)
+                .buildStructureDefinition();
     }
 
     @Override

@@ -7,10 +7,12 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.pattern.TraceabilityPredicate;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.StructurePieceKey;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.IStructureElement;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
@@ -22,10 +24,9 @@ import gregtech.api.util.TextComponentUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
-import gregtech.common.metatileentities.multi.multiblockpart.appeng.MetaTileEntityMEOutputHatch;
 import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
@@ -46,6 +47,46 @@ import static gregtech.api.util.RelativeDirection.*;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedWater;
 
 public class MetaTileEntityMagicDistillery extends MagicRecipeMapMultiblockController implements IDistillationTower {
+
+    private static final StructurePieceKey BODY_PIECE = StructurePieceKey.of("body");
+    private static final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_distillery", () -> {
+                IStructureElement casing = Elements.counted(40, -1, Elements.block(getCasingState()));
+                IStructureElement magicHatches = Elements.abilities(
+                        POMultiblockAbility.MANA_INPUT_HATCH,
+                        MultiblockAbility.INPUT_ENERGY,
+                        MultiblockAbility.MAINTENANCE_HATCH,
+                        POMultiblockAbility.VIS_HATCH,
+                        POMultiblockAbility.INFUSED_FLUID_HATCH,
+                        MultiblockAbility.IMPORT_ITEMS,
+                        MultiblockAbility.EXPORT_ITEMS,
+                        MultiblockAbility.IMPORT_FLUIDS);
+
+                return DeclarativePatternBuilder.start(RIGHT, FRONT, DOWN)
+                        .piece("top")
+                        .aisle("#####", "#ZZZ#", "#ZCZ#", "#ZZZ#", "#####")
+                        .repeatablePiece("body", 1, 12)
+                        .aisle("##X##", "#XAX#", "XAPAX", "#XAX#", "##X##")
+                        .piece("base")
+                        .aisle("#YSY#", "YAAAY", "YATAY", "YAAAY", "#YYY#")
+                        .piece("cap")
+                        .aisle("#YYY#", "YYYYY", "YYYYY", "YYYYY", "#YYY#")
+                        .self('S', MetaTileEntityMagicDistillery.class)
+                        .where('Y', Elements.choice(casing, magicHatches))
+                        .where('X', Elements.choice(casing,
+                                Elements.abilitiesPerLayer(1, 1, 1, MultiblockAbility.EXPORT_FLUIDS)))
+                        .where('Z', casing)
+                        .block('P', getCasingState2())
+                        .block('A', getCasingState3())
+                        .hatch('C', MultiblockAbility.MUFFLER_HATCH)
+                        .block('T', getCasingState4())
+                        .any('#')
+                        .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
+                                POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
+                        .globalAbilityLimit(POMultiblockAbility.VIS_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.INFUSED_FLUID_HATCH, 1, 1)
+                        .buildStructureDefinition();
+            });
 
     protected final DistillationTowerLogicHandler handler;
 
@@ -77,30 +118,8 @@ public class MetaTileEntityMagicDistillery extends MagicRecipeMapMultiblockContr
     }
 
     @Override
-    protected @NotNull BlockPattern createStructurePattern() {
-        TraceabilityPredicate casingPredicate = states(getCasingState()).setMinGlobalLimited(40); // Different
-
-        return FactoryBlockPattern.start(RIGHT, FRONT, DOWN)
-                .aisle("#####", "#ZZZ#", "#ZCZ#", "#ZZZ#", "#####")
-                .aisle("##X##", "#XAX#", "XAPAX", "#XAX#", "##X##").setRepeatable(1, 12)
-                .aisle("#YSY#", "YAAAY", "YATAY", "YAAAY", "#YYY#")
-                .aisle("#YYY#", "YYYYY", "YYYYY", "YYYYY", "#YYY#")
-                .where('S', selfPredicate())
-                .where('Y', casingPredicate
-                        .or(autoAbilities(true, true, true, true, true, false, false)))
-                .where('X', casingPredicate
-                        .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
-                                .filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch)
-                                        && !(mte instanceof MetaTileEntityMEOutputHatch))
-                                .toArray(MetaTileEntity[]::new))
-                                .setMinLayerLimited(1).setMaxLayerLimited(1)))
-                .where('Z', casingPredicate)
-                .where('P', states(getCasingState2()))
-                .where('A', states(getCasingState3()))
-                .where('C', abilities(MultiblockAbility.MUFFLER_HATCH))
-                .where('T', states(getCasingState4()))
-                .where('#', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override
@@ -137,10 +156,10 @@ public class MetaTileEntityMagicDistillery extends MagicRecipeMapMultiblockContr
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        if (!usesAdvHatchLogic() || this.structurePattern == null) return;
-        handler.determineLayerCount(this.structurePattern);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        if (!usesAdvHatchLogic()) return;
+        handler.determineLayerCountFromReps(formed.getPieceRepeat(BODY_PIECE, 0));
         handler.determineOrderedFluidOutputs();
     }
 

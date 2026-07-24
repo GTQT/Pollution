@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -25,6 +25,24 @@ import org.jetbrains.annotations.NotNull;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedCrystal;
 
 public class MetaTileEntityMagicSifter extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_sifter", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("#X#X#", "#X#X#", "#YYY#", "#YYY#", "#YYY#")
+                            .aisle("XXXXX", "X#X#X", "YCCCY", "YCCCY", "YEEEY")
+                            .aisle("#XXX#", "#X#X#", "YCCCY", "YCCCY", "YEEEY")
+                            .aisle("XXXXX", "X#X#X", "YCCCY", "YCCCY", "YEEEY")
+                            .aisle("#X#X#", "#X#X#", "#YYY#", "#YSY#", "#YYY#")
+                            .self('S', MetaTileEntityMagicSifter.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.SIFTER_RECIPES, 9)
+                    .block('Y', getCasingState2())
+                    .block('C', getCasingState3())
+                    .block('E', getCasingState4())
+                    .air('A')
+                    .any('#')
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicSifter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.SIFTER_RECIPES});
@@ -52,21 +70,8 @@ public class MetaTileEntityMagicSifter extends MagicRecipeMapMultiblockControlle
     }
 
     @Override
-    protected @NotNull BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("#X#X#", "#X#X#", "#YYY#", "#YYY#", "#YYY#")
-                .aisle("XXXXX", "X#X#X", "YCCCY", "YCCCY", "YEEEY")
-                .aisle("#XXX#", "#X#X#", "YCCCY", "YCCCY", "YEEEY")
-                .aisle("XXXXX", "X#X#X", "YCCCY", "YCCCY", "YEEEY")
-                .aisle("#X#X#", "#X#X#", "#YYY#", "#YSY#", "#YYY#")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(20).or(autoAbilities()))
-                .where('Y', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('E', states(getCasingState4()))
-                .where('A', air())
-                .where('#', any())
-                .build();
+    protected @NotNull StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

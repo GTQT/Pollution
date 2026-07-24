@@ -39,7 +39,7 @@ import static meowmel.pollution.api.utils.POTeleporter.buildPortalIngredient;
         name = "Pollution",
         acceptedMinecraftVersions = "[1.12.2,1.13)",
         version = "0.0.1-beta",
-        dependencies = "required-after:gregtech@[2.8.5-beta,);" +
+        dependencies = "required-after:gregtech@[0,);" +
                 "required-after:gtqtcore@[0,);" +
                 "required-after:bloodmagic@[0,);" +
                 "required-after:extrabotany@[0,);" +

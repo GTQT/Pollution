@@ -28,10 +28,12 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.*;
 import gregtech.api.metatileentity.multiblock.ui.*;
 import gregtech.api.mui.GTGuiTextures;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.FormedStructureView;
 import gregtech.api.pattern.MultiblockShapeInfo;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.IStructureElement;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.util.*;
 import gregtech.api.util.function.impl.TimedProgressSupplier;
@@ -74,6 +76,29 @@ import static meowmel.pollution.common.block.metablocks.POComputerCasing.CasingT
 public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
         implements IOpticalComputationProvider, IControllable, ProgressBarMultiblock {
 
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:blood_magic_hpca", () -> {
+                IStructureElement casing = Elements.counted(5, -1, Elements.block(getCasingState()));
+                IStructureElement hatches = Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH,
+                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_FLUIDS,
+                        MultiblockAbility.COMPUTATION_DATA_TRANSMISSION);
+                return DeclarativePatternBuilder.start()
+                        .aisle("AA", "CC", "CC", "CC", "AA")
+                        .aisle("VA", "XV", "XV", "XV", "VA")
+                        .aisle("VA", "XV", "XV", "XV", "VA")
+                        .aisle("VA", "XV", "XV", "XV", "VA")
+                        .aisle("SA", "CC", "CC", "CC", "AA")
+                        .self('S', MetaTileEntityBMHPCA.class)
+                        .block('A', getAdvancedState()).block('V', getVentState())
+                        .where('X', Elements.abilities(MultiblockAbility.HPCA_COMPONENT))
+                        .where('C', Elements.choice(casing, hatches))
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 0, 1)
+                        .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 7)
+                        .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 0, 1)
+                        .globalAbilityLimit(MultiblockAbility.COMPUTATION_DATA_TRANSMISSION, 1, 1)
+                        .buildStructureDefinition();
+            });
+
     private static final double IDLE_TEMPERATURE = 200;
     private static final double DAMAGE_TEMPERATURE = 1000;
 
@@ -101,8 +126,8 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
         this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
         this.coolantHandler = new FluidTankList(false, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
         this.hpcaHandler.onStructureForm(getAbilities(MultiblockAbility.HPCA_COMPONENT));
@@ -202,7 +227,9 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
 
     }
 
-    protected  BlockPattern createStructurePattern() {
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+        /*
         return FactoryBlockPattern.start()
                 .aisle("AA", "CC", "CC", "CC", "AA")
                 .aisle("VA", "XV", "XV", "XV", "VA")
@@ -218,7 +245,7 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1))
                         .or(abilities(MultiblockAbility.COMPUTATION_DATA_TRANSMISSION).setExactLimit(1)))
-                .build();
+                .build();*/
     }
 
     private static  IBlockState getCasingState() {
@@ -249,10 +276,12 @@ public class MetaTileEntityBMHPCA extends MultiblockWithDisplayBase
                 .where('H', MetaTileEntities.FLUID_IMPORT_HATCH[1], EnumFacing.NORTH)
                 .where('O', MetaTileEntities.COMPUTATION_HATCH_TRANSMITTER[5], EnumFacing.SOUTH)
                 .where('M', () -> ConfigHolder.machines.enableMaintenance ? MetaTileEntities.MAINTENANCE_HATCH : getCasingState(), EnumFacing.NORTH);
+        /* The V3 preview builder no longer supports shallow copies. Runtime structure validation is defined above.
         shapeInfo.add(builder.shallowCopy().where('0', PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT, EnumFacing.WEST).where('1', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('2', PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT, EnumFacing.WEST).where('3', PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT, EnumFacing.WEST).where('4', PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT, EnumFacing.WEST).where('5', PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT, EnumFacing.WEST).where('6', PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT, EnumFacing.WEST).where('7', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('8', PollutionMetaTileEntities.BMHPCA_EMPTY_COMPONENT, EnumFacing.WEST).build());
         shapeInfo.add(builder.shallowCopy().where('0', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('1', PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT, EnumFacing.WEST).where('2', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('3', PollutionMetaTileEntities.BMHPCA_SUPER_COOLER_COMPONENT, EnumFacing.WEST).where('4', PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT, EnumFacing.WEST).where('5', PollutionMetaTileEntities.BMHPCA_BRIDGE_COMPONENT, EnumFacing.WEST).where('6', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('7', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('8', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).build());
         shapeInfo.add(builder.shallowCopy().where('0', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('1', PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT, EnumFacing.WEST).where('2', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('3', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('4', PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT, EnumFacing.WEST).where('5', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('6', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('7', PollutionMetaTileEntities.BMHPCA_BRIDGE_COMPONENT, EnumFacing.WEST).where('8', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).build());
         shapeInfo.add(builder.shallowCopy().where('0', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('1', PollutionMetaTileEntities.BMHPCA_ADVANCED_COMPUTATION_COMPONENT, EnumFacing.WEST).where('2', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('3', PollutionMetaTileEntities.BMHPCA_SUPER_COOLER_COMPONENT, EnumFacing.WEST).where('4', PollutionMetaTileEntities.BMHPCA_BRIDGE_COMPONENT, EnumFacing.WEST).where('5', PollutionMetaTileEntities.BMHPCA_SUPER_COOLER_COMPONENT, EnumFacing.WEST).where('6', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).where('7', PollutionMetaTileEntities.BMHPCA_ULTIMATE_COOLER_COMPONENT, EnumFacing.WEST).where('8', PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT, EnumFacing.WEST).build());
+        */
         return shapeInfo;
     }
 

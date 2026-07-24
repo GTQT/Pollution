@@ -3,10 +3,9 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.logic.OCResult;
@@ -23,13 +22,12 @@ import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POBotBlock;
 import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
-import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -39,10 +37,35 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_BEAM_CORE;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedCraft;
 
 public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_assembler", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
+                            .aisle(" ABABA ", "  CDC  ", "  CDC  ", "  EDE  ", "  EDE  ", "  AAA  ")
+                            .aisle("AAAAAAA", " D   D ", " D   D ", " D   D ", " DBBBD ", " AAAAA ")
+                            .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
+                            .aisle("AAABAAA", "D     D", "D     D", "D     D", "DDB BDD", "AAAAAAA")
+                            .aisle("AAABAAA", "D F F D", "D F F D", "D F F D", "DBB BBD", "AAAAAAA")
+                            .aisle("SABBBAA", "D     D", "D     D", "D     D", "DB   BD", "AAAAAAA")
+                            .aisle("AAABAAA", "D F F D", "D F F D", "D F F D", "DBB BBD", "AAAAAAA")
+                            .aisle("AAABAAA", "D     D", "D     D", "D     D", "DDB BDD", "AAAAAAA")
+                            .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
+                            .aisle("AAAAAAA", " D   D ", " D   D ", " D   D ", " DBBBD ", " AAAAA ")
+                            .aisle(" ABABA ", "  CDC  ", "  CDC  ", "  EDE  ", "  EDE  ", "  AAA  ")
+                            .self('S', MetaTileEntityMagicAssembler.class)
+                            .casing('A', getCasingState()),
+                    RecipeMaps.ASSEMBLER_RECIPES, 94)
+                    .block('B', getCasingState2())
+                    .block('C', getCasingState3())
+                    .block('D', getCasingState4())
+                    .block('E', getCasingState5())
+                    .tieredCasing('F', POTieredCasingGroups.beamCores().group())
+                    .withChannel(POTieredCasingGroups.beamCores().channel())
+                    .any(' ')
+                    .buildStructureDefinition());
 
     //BEAM方块等级
     int BeamLevel;
@@ -78,12 +101,16 @@ public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockContro
     }
 
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object BeamLevel = context.get("BEAMTieredStats");
-        this.BeamLevel = POUtils.getOrDefault(() -> BeamLevel instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) BeamLevel).getIntTier(),
-                0);
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        var casing = POTieredCasingGroups.beamCores().channel().getMatchedCasing(formed);
+        this.BeamLevel = casing == null ? 0 : casing.getTier();
+    }
+
+    @Override
+    public void invalidateStructure() {
+        super.invalidateStructure();
+        this.BeamLevel = 0;
     }
 
     @Override
@@ -98,28 +125,8 @@ public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockContro
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start(RelativeDirection.FRONT, RelativeDirection.UP, RelativeDirection.RIGHT)
-                .aisle(" ABABA ", "  CDC  ", "  CDC  ", "  EDE  ", "  EDE  ", "  AAA  ")
-                .aisle("AAAAAAA", " D   D ", " D   D ", " D   D ", " DBBBD ", " AAAAA ")
-                .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
-                .aisle("AAABAAA", "D     D", "D     D", "D     D", "DDB BDD", "AAAAAAA")
-                .aisle("AAABAAA", "D F F D", "D F F D", "D F F D", "DBB BBD", "AAAAAAA")
-                .aisle("SABBBAA", "D     D", "D     D", "D     D", "DB   BD", "AAAAAAA")
-                .aisle("AAABAAA", "D F F D", "D F F D", "D F F D", "DBB BBD", "AAAAAAA")
-                .aisle("AAABAAA", "D     D", "D     D", "D     D", "DDB BDD", "AAAAAAA")
-                .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
-                .aisle("AAAAAAA", " D   D ", " D   D ", " D   D ", " DBBBD ", " AAAAA ")
-                .aisle(" ABABA ", "  CDC  ", "  CDC  ", "  EDE  ", "  EDE  ", "  AAA  ")
-                .where('S', selfPredicate())
-                .where('A', states(getCasingState()).setMinGlobalLimited(30).or(autoAbilities()))
-                .where('B', states(getCasingState2()))
-                .where('C', states(getCasingState3()))
-                .where('D', states(getCasingState4()))
-                .where('E', states(getCasingState5()))
-                .where('F', CP_BEAM_CORE.get())
-                .where(' ', any())
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

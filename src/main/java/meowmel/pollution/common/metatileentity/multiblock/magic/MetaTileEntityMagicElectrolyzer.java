@@ -3,8 +3,8 @@ package meowmel.pollution.common.metatileentity.multiblock.magic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Material;
@@ -23,6 +23,21 @@ import net.minecraft.util.ResourceLocation;
 import static meowmel.pollution.api.unification.PollutionMaterials.InfusedOrder;
 
 public class MetaTileEntityMagicElectrolyzer extends MagicRecipeMapMultiblockController {
+
+    private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
+            "pollution:magic_electrolyzer", () -> configureMagicRecipeCasing(
+                    DeclarativePatternBuilder.start()
+                            .aisle("XXXXX", "XXXXX", "XXXXX")
+                            .aisle("XXXXX", "XBDBX", "XCCCX")
+                            .aisle("XXXXX", "XBDBX", "XCCCX")
+                            .aisle("XXXXX", "XXSXX", "XXXXX")
+                            .self('S', MetaTileEntityMagicElectrolyzer.class)
+                            .casing('X', getCasingState()),
+                    RecipeMaps.ELECTROLYZER_RECIPES, 17)
+                    .block('C', getCasingState2())
+                    .block('B', getCasingState3())
+                    .block('D', getCasingState4())
+                    .buildStructureDefinition());
 
     public MetaTileEntityMagicElectrolyzer(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{RecipeMaps.ELECTROLYZER_RECIPES});
@@ -50,18 +65,8 @@ public class MetaTileEntityMagicElectrolyzer extends MagicRecipeMapMultiblockCon
     }
 
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
-                .aisle("XXXXX", "XXXXX", "XXXXX")
-                .aisle("XXXXX", "XBDBX", "XCCCX")
-                .aisle("XXXXX", "XBDBX", "XCCCX")
-                .aisle("XXXXX", "XXSXX", "XXXXX")
-                .where('S', selfPredicate())
-                .where('X', states(getCasingState()).setMinGlobalLimited(30).or(autoAbilities()))
-                .where('C', states(getCasingState2()))
-                .where('B', states(getCasingState3()))
-                .where('D', states(getCasingState4()))
-                .build();
+    protected StructureDefinition<?> createStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
 
     @Override

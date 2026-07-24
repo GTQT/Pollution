@@ -8,9 +8,13 @@ import gregtech.api.capability.impl.MultiblockFuelRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.*;
-import gregtech.api.pattern.BlockPattern;
-import gregtech.api.pattern.FactoryBlockPattern;
-import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.pattern.FormedStructureView;
+import gregtech.api.pattern.MultiblockShapeInfo;
+import gregtech.api.pattern.StructureElementPreviewEntry;
+import gregtech.api.pattern.casing.DeclarativePatternBuilder;
+import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.util.TextComponentUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -20,11 +24,13 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import meowmel.pollution.POConfig;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.api.utils.POUtils;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.*;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
+import meowmel.gtqtcore.api.blocks.impl.IBlockTier;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import meowmel.pollution.common.block.metablocks.POBotBlock;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
@@ -49,10 +55,11 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Math.pow;
-import static meowmel.pollution.api.predicate.TiredTraceabilityPredicate.CP_COIL_CASING;
 
 public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
     @Override
@@ -78,9 +85,33 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityMultiDanDeLifeOn(this.metaTileEntityId);
     }
+
+    /**
+     * The complete structure is 63 x 10 x 63 (39,690 positions).  The default
+     * V3 preview generator materializes every position in a virtual world while
+     * JEI builds its recipe registry, which stalls client startup for seconds.
+     * This only removes the JEI preview; the real structure definition and its
+     * in-world validation remain unchanged.
+     */
     @Override
-    protected BlockPattern createStructurePattern() {
-        return FactoryBlockPattern.start()
+    public List<MultiblockShapeInfo> getMatchingShapes() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<MultiblockShapeInfo> getMatchingShapes(Map<String, Integer> channelValues) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Map<BlockPos, StructureElementPreviewEntry> buildStructurePreviewEntries(
+            Map<String, Integer> channelValues) {
+        return Collections.emptyMap();
+    }
+
+    @Override
+    protected StructureDefinition<?> createStructureDefinition() {
+        return DeclarativePatternBuilder.start()
                 .aisle("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                                                               " )
                 .aisle("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "BCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCB", "ADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDA", " QQQQQQQQQQQQQQQQQQQQQQQQQQQI     IQQQQQQQQQQQQQQQQQQQQQQQQQQQ ", " Q                          Q     Q                          Q ", " M                          Q     Q                          M ", " N                          Q     Q                          N ", "                            Q     Q                            ", "                            QQ   QQ                            ", "                             QQQQQ                             " )
                 .aisle("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "BCOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOCB", "ADPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPDA", " Q                                                           Q ", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                            Q     Q                            ", "                            Q     Q                            " )
@@ -146,31 +177,39 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
                 .aisle("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGEGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                                                               ", "                                                               " )
 
 
-                .where('A', states(getCasingStateLivingRock()))
-                .where('B', states(getCasingFusionGlass()))
-                .where('C', CP_COIL_CASING.get())
-                .where('D', states(getCasingStateMossLivingRock()))
-                .where('E', this.selfPredicate())
-                .where('F', states(getCasingManaPylon()))
-                .where('I', states(getCasingLivingRockSquare()))
-                .where('M', states(getCasingLivingRockSlab()))
-                .where('N', states(getCasingNaturalPylon()))
-                .where('O', states(getCasingFusionCasing3()))
-                .where('P', states(getCasingEnchantedSoil()))
-                .where('Q', states(getCasingLivingRockWall()))
-                .where('R', states(getCasingBioPcb()))
-                .where('T', states(getCasingManaPlate5()))
-                .where('V', states(getCasingBotBlock2()))
-                .where('W', states(getCasingDragonStone()))
-                .where('X', states(getCasingDreamWoodGlimmering()))
-                .where('Y', states(getCasingLeaves()))
-                .where('Z', states(getCasingAltGrass()))
-                .where('G', states(getCasingManaPlate4())
-                        .or(abilities(MultiblockAbility.OUTPUT_ENERGY).setMaxGlobalLimited(1).setPreviewCount(0))
-                        .or(abilities(MultiblockAbility.OUTPUT_LASER).setMaxGlobalLimited(1).setPreviewCount(1))
-                        .or(autoAbilities(false,true,true,false,false,true,false)))
-                .where('H', states(getCasingManaPlate3()))
-                .build();
+                .block('A', getCasingStateLivingRock())
+                .block('B', getCasingFusionGlass())
+                .where('C', Elements.tieredCasing(POTieredCasingGroups.coilCasings().group(),
+                        POTieredCasingGroups.coilCasings().channel().getName(), 0, -1))
+                .block('D', getCasingStateMossLivingRock())
+                .self('E', MetaTileEntityMultiDanDeLifeOn.class)
+                .block('F', getCasingManaPylon())
+                .block('I', getCasingLivingRockSquare())
+                .block('M', getCasingLivingRockSlab())
+                .block('N', getCasingNaturalPylon())
+                .block('O', getCasingFusionCasing3())
+                .block('P', getCasingEnchantedSoil())
+                .block('Q', getCasingLivingRockWall())
+                .block('R', getCasingBioPcb())
+                .block('T', getCasingManaPlate5())
+                .block('V', getCasingBotBlock2())
+                .block('W', getCasingDragonStone())
+                .block('X', getCasingDreamWoodGlimmering())
+                .block('Y', getCasingLeaves())
+                .block('Z', getCasingAltGrass())
+                .where('G', Elements.choice(Elements.block(getCasingManaPlate4()),
+                        Elements.abilities(MultiblockAbility.OUTPUT_ENERGY),
+                        Elements.abilities(MultiblockAbility.OUTPUT_LASER),
+                        Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH),
+                        Elements.abilities(MultiblockAbility.INPUT_ENERGY),
+                        Elements.abilities(MultiblockAbility.IMPORT_FLUIDS)))
+                .block('H', getCasingManaPlate3())
+                .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 0, 1)
+                .globalAbilityLimit(MultiblockAbility.OUTPUT_LASER, 0, 1)
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 2)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 2)
+                .buildStructureDefinition();
     }
 
     public IBlockState getCasingStateLivingRock() {
@@ -303,9 +342,10 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
         return modeText;
     }
     @Override
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        Object CoilLevel = context.get("COILTieredStats");
+    protected void formStructure(FormedStructureView formed) {
+        super.formStructure(formed);
+        ICasing coil = POTieredCasingGroups.coilCasings().channel().getMatchedCasing(formed);
+        IBlockTier CoilLevel = coil == null ? null : coil.getPayloadAs(IBlockTier.class);
         this.CoilLevel = POUtils.getOrDefault(() -> CoilLevel instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) CoilLevel).getIntTier(),
                 0);
