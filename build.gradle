@@ -117,7 +117,7 @@ dependencies {
     implementation rfg.deobf(files("libs/gregtech-gtqt-1.12.2-1.9.0.jar"))
     implementation rfg.deobf(files("libs/gregtechfoodoption-gtqt-1.12.2-1.9.0.jar"))
     implementation rfg.deobf(files("libs/gtsteam-1.9.0.jar"))
-    implementation rfg.deobf(files("libs/modelloader-1.0.0.jar"))
+    //implementation rfg.deobf(files("libs/modelloader-1.0.0.jar"))
 
 
     // 前置
@@ -136,7 +136,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:extrabotany-299086:3112313")
     implementation rfg.deobf("curse.maven:blood-magic-224791:2822288")
     implementation rfg.deobf("curse.maven:guide-api-228832:2645992")
-    //implementation rfg.deobf(files("libs/astralsorcery-1.12.2-1.10.27.jar"))
+    implementation rfg.deobf(files("libs/astralsorcery-1.12.2-1.10.27.jar"))
 
     // 商店系统
     implementation rfg.deobf("curse.maven:ftb-library-legacy-forge-237167:2985811")

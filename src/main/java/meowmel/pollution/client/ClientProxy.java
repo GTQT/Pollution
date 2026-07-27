@@ -1,10 +1,15 @@
 package meowmel.pollution.client;
 
+import gregtech.api.GregTechAPI;
+import gregtech.client.renderer.handler.MetaTileEntityRenderer;
+import meowmel.pollution.Pollution;
 import meowmel.pollution.client.tesr.TesrMagicCircle;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.CommonProxy;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.tile.TileEntityMagicCircle;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -21,6 +26,9 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
 		PollutionMetaBlocks.registerItemModels();
+		ModelLoader.setCustomMeshDefinition(
+				Item.getItemFromBlock(GregTechAPI.mteManager.getRegistry(Pollution.MODID).getBlock()),
+				stack -> MetaTileEntityRenderer.MODEL_LOCATION);
 	}
 
 	public void preLoad() {

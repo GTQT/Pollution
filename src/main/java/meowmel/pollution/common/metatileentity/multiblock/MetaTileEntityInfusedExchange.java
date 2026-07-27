@@ -133,6 +133,14 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
 
     }
 
+    private String getLocalizedAspectName() {
+        if (this.name == null) {
+            return "";
+        }
+        Aspect aspect = Aspect.getAspect(this.name);
+        return aspect == null ? this.name : aspect.getLocalizedDescription();
+    }
+
     public void clearInfused() {
         if (this.getWorld().getTileEntity(this.getPos().add(0, 2, 0)) instanceof TileJarFillable s) {
             s.amount = 0;
@@ -143,8 +151,9 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         if (this.isStructureFormed()) {
-            textList.add(new TextComponentTranslation("源质罐内缓存:Infused: %s  Amount: %s", this.name, this.storage));
-            textList.add(new TextComponentTranslation("多方块内缓存：Infused: %s  Amount: %s", this.name, this.number));
+            String aspectName = getLocalizedAspectName();
+            textList.add(new TextComponentTranslation("pollution.machine.infused_exchange.tank_storage", aspectName, this.storage));
+            textList.add(new TextComponentTranslation("pollution.machine.infused_exchange.multiblock_storage", aspectName, this.number));
         }
     }
 
@@ -188,8 +197,8 @@ public class MetaTileEntityInfusedExchange extends MetaTileEntityBaseWithControl
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("在控制器正上方放置源质罐子即可输入对应的源质"));
-        tooltip.add(I18n.format("仅限：Aer，Terra，Aqua，Ignis，Ordo，Perditio源质"));
+        tooltip.add(I18n.format("pollution.machine.infused_exchange.tooltip.1"));
+        tooltip.add(I18n.format("pollution.machine.infused_exchange.tooltip.2"));
     }
 
 }

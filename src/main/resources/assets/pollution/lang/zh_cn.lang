@@ -1029,8 +1029,8 @@ pollution.machine.mana_pool_hatch.uxv.name=魔力池仓（§eUXV§r）
 pollution.machine.mana_pool_hatch.opv.name=魔力池仓（§9OpV§r）
 pollution.machine.mana_pool_hatch.max.name=魔力池仓（§c§lMAX§r）
 
-pollution.flux_clear.tier=§5Tier: %s Pollution Cleansed per Tick: %s Vis
-pollution.flux_clear.tier1=%spollution.machine.mana_pool_hatch.max.name=魔力池仓(MAX)
+pollution.flux_clear.tier=§5结构等级：%s 每刻净化污染量：%s Vis
+pollution.flux_clear.tier1=%s
 
 pollution.gui.aspect_amount=源质总量：
 
@@ -1100,3 +1100,26 @@ tile.pollution.alfheim_white_grape.name=白葡萄
 tile.pollution.alfheim_red_grape_0.name=红葡萄藤
 tile.pollution.alfheim_red_grape_1.name=红葡萄藤
 tile.pollution.alfheim_red_grape_2.name=红葡萄藤
+
+metaitem.plateMansussteel.tooltip=§7采集漫宿之梦，压制为板材§r
+item.material.oreprefix.frameGtMansussteel.tooltip=§7收集散落的漫宿之魂，铸成框架（此行尚未生效）§r
+
+pollution.machine.magic_energy_absorber.lv.name=虚弱魔法能源吸收器
+pollution.machine.magic_energy_absorber.mv.name=学徒魔法能源吸收器
+pollution.machine.magic_energy_absorber.hv.name=法师魔法能源吸收器
+pollution.machine.magic_energy_absorber.ev.name=导师魔法能源吸收器
+pollution.machine.magic_energy_absorber.iv.name=贤者魔法能源吸收器
+pollution.machine.magic_energy_absorber.lv.tooltip=/n借助顶部方块从大气中吸收能量/n发电量取决于顶部方块的类型/n龙蛋、魔力水晶——HV，盖亚水晶——EV，盖亚守护者头颅——IV/n输出电压等级等同于机器等级/n本机器不会因环境因素爆炸。
+pollution.machine.magic_energy_absorber.mv.tooltip=/n借助顶部方块从大气中吸收能量/n发电量取决于顶部方块的类型/n龙蛋、魔力水晶——HV，盖亚水晶——EV，盖亚守护者头颅——IV/n输出电压等级等同于机器等级/n本机器不会因环境因素爆炸。
+pollution.machine.magic_energy_absorber.hv.tooltip=/n借助顶部方块从大气中吸收能量/n发电量取决于顶部方块的类型/n龙蛋、魔力水晶——HV，盖亚水晶——EV，盖亚守护者头颅——IV/n输出电压等级等同于机器等级/n本机器不会因环境因素爆炸。
+pollution.machine.magic_energy_absorber.ev.tooltip=/n借助顶部方块从大气中吸收能量/n发电量取决于顶部方块的类型/n龙蛋、魔力水晶——HV，盖亚水晶——EV，盖亚守护者头颅——IV/n输出电压等级等同于机器等级/n本机器不会因环境因素爆炸。
+pollution.machine.magic_energy_absorber.iv.tooltip=/n借助顶部方块从大气中吸收能量/n发电量取决于顶部方块的类型/n龙蛋、魔力水晶——HV，盖亚水晶——EV，盖亚守护者头颅——IV/n输出电压等级等同于机器等级/n本机器不会因环境因素爆炸。
+
+pollution.gui.changelock=切换锁定状态
+pollution.machine.node_washer.infusedtype=当前注入要素：%s
+pollution.machine.node_washer.maxinfusedvalue=本次期望要素值：%s
+tile.pollution.magic_circle.name=魔法阵
+pollution.machine.infused_exchange.tank_storage=源质罐缓存：要素：%s，数量：%s
+pollution.machine.infused_exchange.multiblock_storage=多方块缓存：要素：%s，数量：%s
+pollution.machine.infused_exchange.tooltip.1=在控制器正上方放置源质罐，即可输入对应的源质
+pollution.machine.infused_exchange.tooltip.2=仅支持：风、地、水、火、秩序、混沌源质
