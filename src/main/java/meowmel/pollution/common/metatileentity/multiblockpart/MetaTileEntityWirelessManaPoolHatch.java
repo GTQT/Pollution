@@ -2,6 +2,8 @@ package meowmel.pollution.common.metatileentity.multiblockpart;
 
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.metatileentity.multiblockpart.wireless.WirelessManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,6 +16,13 @@ public class MetaTileEntityWirelessManaPoolHatch extends MetaTileEntityManaPoolH
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
         return new MetaTileEntityWirelessManaPoolHatch(this.metaTileEntityId, this.getTier(), isExport);
+    }
+
+    @Override
+    protected SimpleOverlayRenderer getOverlay() {
+        return isExport
+                ? POTextures.WIRELESS_MANA_POOL_HATCH_OUTPUT
+                : POTextures.WIRELESS_MANA_POOL_HATCH_INPUT;
     }
 
 

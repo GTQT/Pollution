@@ -17,6 +17,7 @@ public class RecipeManger {
         CrystalLine.init();
         MagicFuelRecipes.init();
         MagicGCYMRecipes.init();
+        MagicHatchRecipes.init();
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();

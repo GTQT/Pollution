@@ -7,6 +7,8 @@ import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.recipes.properties.AstralCondition;
+import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.*;
@@ -2194,7 +2196,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		//高级魔导组件
 		//理式核心
-		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+		MagicRecipeProperties.magic(PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(stickLong, aetheric_dark_steel, 2)
 				.input(frameGt, aetheric_dark_steel, 1)
 				.input(plate, iizunamaru_electrum, 8)
@@ -2205,10 +2207,11 @@ public class MagicGCYMRecipes {
 				.fluidInputs(starrymansus.getFluid(1000))
 				.output(CORE_OF_IDEA)
 				.EUt(30720)
-				.duration(400)
+				.duration(400),
+				4, 50, 0, 64, AstralCondition.night("aevitas", 0.15F), "the_magician")
 				.buildAndRegister();
 		//自动反诘装置
-		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+		MagicRecipeProperties.magic(PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(gear, blood_of_avernus, 6)
 				.input(gearSmall, blood_of_avernus, 4)
 				.input(stickLong, iizunamaru_electrum, 4)
@@ -2222,10 +2225,11 @@ public class MagicGCYMRecipes {
 				.fluidInputs(whitemansus.getFluid(8000))
 				.output(AUTO_ELENCHUS_DEVICE)
 				.EUt(30720)
-				.duration(400)
+				.duration(400),
+				8, 80, 40, 96, AstralCondition.NONE, "the_high_priestess")
 				.buildAndRegister();
 		//太一燃素瓶
-		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+		MagicRecipeProperties.magic(PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(rotor, iizunamaru_electrum, 2)
 				.input(gearSmall, blood_of_avernus, 4)
 				.input(ring, iizunamaru_electrum, 32)
@@ -2239,10 +2243,11 @@ public class MagicGCYMRecipes {
 				.fluidInputs(whitemansus.getFluid(8000))
 				.output(BOTTLE_OF_PHLOGISTONIC_ONENESS)
 				.EUt(30720)
-				.duration(400)
+				.duration(400),
+				16, 160, 80, 128, AstralCondition.night("evorsio", 0.10F), "the_tower")
 				.buildAndRegister();
 		//四因阐释器
-		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+		MagicRecipeProperties.magic(PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(plate, iizunamaru_electrum, 16)
 				.input(plate, blood_of_avernus, 16)
 				.input(plate, aetheric_dark_steel, 16)
@@ -2256,7 +2261,8 @@ public class MagicGCYMRecipes {
 				.fluidInputs(whitemansus.getFluid(8000))
 				.output(ELUCIDATOR_OF_FOUR_CAUSES)
 				.EUt(30720)
-				.duration(400)
+				.duration(400),
+				16, 240, 120, 160, AstralCondition.fullMoon("armara", 0.10F), "the_emperor")
 				.buildAndRegister();
 		//意志数据链
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()

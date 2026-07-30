@@ -11,12 +11,13 @@ import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import lombok.Getter;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.client.textures.POTextures;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -125,13 +126,12 @@ public class MetaTileEntityManaPoolHatch extends MetaTileEntityMultiblockPart im
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (shouldRenderOverlay()) {
-            getOverlay().renderSided(getFrontFacing(), renderState, translation,
-                    PipelineUtil.color(pipeline, GTValues.VC[getTier()]));
+            getOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
         }
     }
 
     @NotNull
-    private OrientedOverlayRenderer getOverlay() {
-        return Textures.HPCA_OVERLAY;
+    protected SimpleOverlayRenderer getOverlay() {
+        return isExport ? POTextures.MANA_POOL_HATCH_OUTPUT : POTextures.MANA_POOL_HATCH_INPUT;
     }
 }

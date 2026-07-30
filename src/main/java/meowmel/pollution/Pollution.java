@@ -2,6 +2,7 @@ package meowmel.pollution;
 
 import meowmel.pollution.api.POAPI;
 import meowmel.pollution.api.recipes.builder.IndustrialInfusionBuilder;
+import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.utils.PollutionLog;
 import meowmel.pollution.common.CommonProxy;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -43,7 +44,8 @@ import static meowmel.pollution.api.utils.POTeleporter.buildPortalIngredient;
                 "required-after:gtqtcore@[0,);" +
                 "required-after:bloodmagic@[0,);" +
                 "required-after:extrabotany@[0,);" +
-                "required-after:botania@[0,);"
+                "required-after:botania@[0,);" +
+                "required-after:astralsorcery@[0,);"
 )
 public class Pollution {
     public static final String MODID = "pollution";
@@ -74,6 +76,7 @@ public class Pollution {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         PollutionLog.init(event.getModLog());
+        MagicRecipeProperties.init();
         PollutionMetaBlocks.init();
         POAPI.init();
         PollutionMetaItems.initialization();

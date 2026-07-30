@@ -81,6 +81,26 @@ public class POTextures {
 	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");
 	public static final SimpleOverlayRenderer ASPECT_OUTPUT_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_aspect_out");
 
+	public static SimpleOverlayRenderer MANA_HATCH_INPUT_1A;
+	public static SimpleOverlayRenderer MANA_HATCH_INPUT_4A;
+	public static SimpleOverlayRenderer MANA_HATCH_INPUT_16A;
+	public static SimpleOverlayRenderer MANA_HATCH_INPUT_64A;
+	public static SimpleOverlayRenderer MANA_HATCH_OUTPUT_1A;
+	public static SimpleOverlayRenderer MANA_HATCH_OUTPUT_4A;
+	public static SimpleOverlayRenderer MANA_HATCH_OUTPUT_16A;
+	public static SimpleOverlayRenderer MANA_HATCH_OUTPUT_64A;
+	public static SimpleOverlayRenderer WIRELESS_MANA_HATCH_INPUT;
+	public static SimpleOverlayRenderer WIRELESS_MANA_HATCH_OUTPUT;
+	public static SimpleOverlayRenderer MANA_POOL_HATCH_INPUT;
+	public static SimpleOverlayRenderer MANA_POOL_HATCH_OUTPUT;
+	public static SimpleOverlayRenderer WIRELESS_MANA_POOL_HATCH_INPUT;
+	public static SimpleOverlayRenderer WIRELESS_MANA_POOL_HATCH_OUTPUT;
+	public static SimpleOverlayRenderer VIS_HATCH;
+	public static SimpleOverlayRenderer INFUSED_FLUID_HATCH;
+	public static SimpleOverlayRenderer BLOOD_MAGIC_HATCH;
+	public static SimpleOverlayRenderer ASTRAL_LENS_HATCH;
+	public static SimpleOverlayRenderer TAROT_HATCH;
+
 
 	static {
 		BMCOMPUTER_CASING = new SidedCubeRenderer("casings/bm_computer/computer_casing");
@@ -144,6 +164,26 @@ public class POTextures {
 		HYPER_5 = new SimpleOverlayRenderer("hyper/hyper_5");
 
 		Livingrock_0 = new SimpleOverlayRenderer("botblock/livingrock0");
+
+		MANA_HATCH_INPUT_1A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_input_1a");
+		MANA_HATCH_INPUT_4A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_input_4a");
+		MANA_HATCH_INPUT_16A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_input_16a");
+		MANA_HATCH_INPUT_64A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_input_64a");
+		MANA_HATCH_OUTPUT_1A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_1a");
+		MANA_HATCH_OUTPUT_4A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_4a");
+		MANA_HATCH_OUTPUT_16A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_16a");
+		MANA_HATCH_OUTPUT_64A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_64a");
+		WIRELESS_MANA_HATCH_INPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_input");
+		WIRELESS_MANA_HATCH_OUTPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_output");
+		MANA_POOL_HATCH_INPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_pool_input");
+		MANA_POOL_HATCH_OUTPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_pool_output");
+		WIRELESS_MANA_POOL_HATCH_INPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_pool_input");
+		WIRELESS_MANA_POOL_HATCH_OUTPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_pool_output");
+		VIS_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/vis_hatch");
+		INFUSED_FLUID_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/infused_fluid_hatch");
+		BLOOD_MAGIC_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/blood_magic_hatch");
+		ASTRAL_LENS_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/astral_lens_hatch");
+		TAROT_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/tarot_hatch");
 	}
 
 	public static void register(TextureMap textureMap) {

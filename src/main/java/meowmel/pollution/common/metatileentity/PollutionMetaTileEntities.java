@@ -78,6 +78,9 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityLargeNodeGenerator LARGE_NODE_GENERATOR;
     public static MetaTileEntityNodeWasher NODE_WASHER;
     public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
+    public static MetaTileEntityBloodMagicHatch BLOOD_MAGIC_HATCH;
+    public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH;
+    public static MetaTileEntityTarotHatch TAROT_HATCH;
 
     public static MetaTileEntityManaHatch[] MANA_INPUT_HATCH_1A = new MetaTileEntityManaHatch[14];
     public static MetaTileEntityManaHatch[] MANA_INPUT_HATCH_4A = new MetaTileEntityManaHatch[14];
@@ -313,6 +316,13 @@ public class PollutionMetaTileEntities {
                     PollutionID(String.format("vis_hatch.%s", GTValues.VN[tier])), tier));
         }
 
+        BLOOD_MAGIC_HATCH = registerMetaTileEntity(760,
+                new MetaTileEntityBloodMagicHatch(PollutionID("blood_magic_hatch"), GTValues.MV));
+        ASTRAL_LENS_HATCH = registerMetaTileEntity(761,
+                new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch"), GTValues.MV));
+        TAROT_HATCH = registerMetaTileEntity(762,
+                new MetaTileEntityTarotHatch(PollutionID("tarot_hatch"), GTValues.LV));
+
 
         // 普通
         for (int i = 0; i < MANA_INPUT_HATCH_1A.length; i++) {
@@ -335,6 +345,7 @@ public class PollutionMetaTileEntities {
         for (int i = 0; i < WIRELESS_MANA_INPUT_HATCH_1A.length; i++) {
             int tier = GTValues.LV + i;
             WIRELESS_MANA_INPUT_HATCH_1A[i] = registerMetaTileEntity(600 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_1a.%s", GTValues.VN[tier])), tier,1,false));
+            WIRELESS_MANA_INPUT_HATCH_4A[i] = registerMetaTileEntity(615 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_4a.%s", GTValues.VN[tier])), tier,4,false));
             WIRELESS_MANA_INPUT_HATCH_16A[i] = registerMetaTileEntity(630 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_16a.%s", GTValues.VN[tier])), tier,16,false));
             WIRELESS_MANA_INPUT_HATCH_64A[i] = registerMetaTileEntity(645 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_64a.%s", GTValues.VN[tier])), tier,64,false));
 

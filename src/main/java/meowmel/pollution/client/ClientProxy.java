@@ -4,10 +4,12 @@ import gregtech.api.GregTechAPI;
 import gregtech.client.renderer.handler.MetaTileEntityRenderer;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.client.tesr.TesrMagicCircle;
+import meowmel.pollution.client.tesr.TesrMineralExtractor;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.CommonProxy;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.tile.TileEntityMagicCircle;
+import meowmel.pollution.common.block.tile.TileEntityMineralExtractor;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -36,6 +38,7 @@ public class ClientProxy extends CommonProxy {
 		POTextures.init();
 		POTextures.preInit();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMagicCircle.class, new TesrMagicCircle());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMineralExtractor.class, new TesrMineralExtractor());
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMulti
 import gregtech.common.metatileentities.storage.MetaTileEntityQuantumTank;
 import gregtech.common.mui.widget.GTFluidSlot;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -86,8 +87,7 @@ public class MetaTileEntityInfusedFluidHatch extends MetaTileEntityMultiblockPar
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (shouldRenderOverlay()) {
-            Textures.PIPE_IN_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
-            Textures.FLUID_HATCH_INPUT_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+            POTextures.INFUSED_FLUID_HATCH.renderSided(getFrontFacing(), renderState, translation, pipeline);
         }
     }
 

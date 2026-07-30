@@ -18,6 +18,7 @@ import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.client.textures.POTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -128,32 +129,31 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (shouldRenderOverlay()) {
-            getOverlay().renderSided(getFrontFacing(), renderState, translation,
-                    PipelineUtil.color(pipeline, GTValues.VC[getTier()]));
+            getOverlay().renderSided(getFrontFacing(), renderState, translation, pipeline);
         }
     }
 
     @NotNull
-    private SimpleOverlayRenderer getOverlay() {
+    protected SimpleOverlayRenderer getOverlay() {
         if (isExportHatch) {
-            if (amperage <= 2) {
-                return Textures.ENERGY_OUT_MULTI;
+            if (amperage <= 1) {
+                return POTextures.MANA_HATCH_OUTPUT_1A;
             } else if (amperage <= 4) {
-                return Textures.ENERGY_OUT_HI;
+                return POTextures.MANA_HATCH_OUTPUT_4A;
             } else if (amperage <= 16) {
-                return Textures.ENERGY_OUT_ULTRA;
+                return POTextures.MANA_HATCH_OUTPUT_16A;
             } else {
-                return Textures.ENERGY_OUT_MAX;
+                return POTextures.MANA_HATCH_OUTPUT_64A;
             }
         } else {
-            if (amperage <= 2) {
-                return Textures.ENERGY_IN_MULTI;
+            if (amperage <= 1) {
+                return POTextures.MANA_HATCH_INPUT_1A;
             } else if (amperage <= 4) {
-                return Textures.ENERGY_IN_HI;
+                return POTextures.MANA_HATCH_INPUT_4A;
             } else if (amperage <= 16) {
-                return Textures.ENERGY_IN_ULTRA;
+                return POTextures.MANA_HATCH_INPUT_16A;
             } else {
-                return Textures.ENERGY_IN_MAX;
+                return POTextures.MANA_HATCH_INPUT_64A;
             }
         }
     }

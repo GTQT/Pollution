@@ -135,6 +135,29 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem BLOOD_IPS_HUMAN_BRAIN;
 	public static MetaItem<?>.MetaValueItem BLOOD_PORT;
 
+	// Magic integration cores
+	public static MetaItem<?>.MetaValueItem ASTRAL_LENS_BASIC;
+	public static MetaItem<?>.MetaValueItem ASTRAL_LENS_ADVANCED;
+	public static MetaItem<?>.MetaValueItem CELESTIAL_CALIBRATION_CORE;
+	public static MetaItem<?>.MetaValueItem HARMONIZING_RUNE_CORE;
+	public static MetaItem<?>.MetaValueItem ASTRAL_BLOOD_CATALYST;
+	public static MetaItem<?>.MetaValueItem ASTRAL_NEURAL_BUNDLE;
+	public static MetaItem<?>.MetaValueItem PRIMORDIAL_STAR_BLOOD_CRYSTAL;
+	public static MetaItem<?>.MetaValueItem CAUSALITY_CATALYST;
+
+	// Magic integration processing intermediates
+	public static MetaItem<?>.MetaValueItem SILVERED_GLASS_LENS;
+	public static MetaItem<?>.MetaValueItem ASTRAL_RESONANCE_COIL;
+	public static MetaItem<?>.MetaValueItem MANA_RESONANCE_COIL;
+	public static MetaItem<?>.MetaValueItem STERILE_SLATE_BLANK;
+	public static MetaItem<?>.MetaValueItem PRECISION_RUNE_BLANK;
+	public static MetaItem<?>.MetaValueItem ROCK_CRYSTAL_SEED;
+	public static MetaItem<?>.MetaValueItem NATURAL_INFUSED_COIL;
+	public static MetaItem<?>.MetaValueItem MAGIC_CONTROL_ASSEMBLY_EV;
+	public static MetaItem<?>.MetaValueItem NODE_STABILIZATION_FRAME;
+	public static MetaItem<?>.MetaValueItem BLANK_TAROT_CARD;
+	public static MetaItem<?>.MetaValueItem ARCANE_INK_CAPSULE;
+
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_MV;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_HV;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_EV;

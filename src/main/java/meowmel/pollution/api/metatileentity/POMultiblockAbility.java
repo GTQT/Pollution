@@ -2,7 +2,10 @@ package meowmel.pollution.api.metatileentity;
 
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import meowmel.pollution.api.capability.IAstralHatch;
+import meowmel.pollution.api.capability.IBloodMagicHatch;
 import meowmel.pollution.api.capability.IManaHatch;
+import meowmel.pollution.api.capability.ITarotHatch;
 import meowmel.pollution.api.capability.IVisHatch;
 import net.minecraftforge.fluids.IFluidTank;
 
@@ -11,6 +14,10 @@ public final class POMultiblockAbility {
     public static final MultiblockAbility<IVisHatch> VIS_HATCH = new MultiblockAbility<>("vis_hatch", IVisHatch.class);
 
     public static final MultiblockAbility<IFluidTank> INFUSED_FLUID_HATCH = new MultiblockAbility<>("infused_fluid_hatch", IFluidTank.class);
+
+    public static final MultiblockAbility<IBloodMagicHatch> BLOOD_MAGIC_HATCH = new MultiblockAbility<>("blood_magic_hatch", IBloodMagicHatch.class);
+    public static final MultiblockAbility<IAstralHatch> ASTRAL_LENS_HATCH = new MultiblockAbility<>("astral_lens_hatch", IAstralHatch.class);
+    public static final MultiblockAbility<ITarotHatch> TAROT_HATCH = new MultiblockAbility<>("tarot_hatch", ITarotHatch.class);
 
     // 依旧属于电力系统部分，例如配方类多方块，发电机
     // 可接受魔力作为输入的能源仓，本质上是能源仓

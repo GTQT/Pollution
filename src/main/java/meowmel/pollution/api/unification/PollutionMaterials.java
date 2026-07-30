@@ -188,6 +188,15 @@ public class PollutionMaterials {
 	public static Material EnergyCrystal;
 	public static Material StarmetalAlloy;
 
+	// Magic integration processing materials
+	public static Material OpticalGradeAquamarine;
+	public static Material StarlightPollen;
+	public static Material MoonlightResin;
+	public static Material AstralBloodPlasma;
+	public static Material CelestialBiologicalMedium;
+	public static Material ArcaneInk;
+	public static Material StarryArcaneAlloy;
+
 
 	public PollutionMaterials() {
 	}
@@ -199,6 +208,7 @@ public class PollutionMaterials {
 		FirstDegreeMaterials.register();
 		SecondDegreeMaterials.register();
 		HigherDegreeMaterials.register();
+		MagicIntegrationMaterials.register();
 		MaterialPropertyAddition.init();
 		MaterialFlagAddition.init();
 	}

@@ -86,9 +86,9 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("容量："+2000*getTier()));
-        tooltip.add(I18n.format("每秒消耗："+0.05+"vis灵气"));
-        tooltip.add(I18n.format("每秒缓存："+getTier()+"vis灵气"));
+        tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.capacity", getMaxVisStore()));
+        tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.drain"));
+        tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.buffer", getTier()));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
 
     @NotNull
     private SimpleOverlayRenderer getOverlay() {
-        return Textures.HPCA_COMPUTATION_OVERLAY;
+        return POTextures.VIS_HATCH;
     }
 
     @Override

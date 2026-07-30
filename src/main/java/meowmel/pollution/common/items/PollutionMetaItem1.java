@@ -117,7 +117,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.ELUCIDATOR_OF_FOUR_CAUSES = this.addItem(104, "elucidator_of_four_causes").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK = this.addItem(105, "symptomatic_vis_data_link").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.NEEDLE_OF_MYSTIC_INTERPELLATION = this.addItem(106, "needle_of_mystic_interpellation").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.COGITO_AED = this.addItem(107, "cogito_AED").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.COGITO_AED = this.addItem(107, "cogito_defibrillator").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BALL_IN_ITSELF = this.addItem(108, "ball_in_itself").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 
 		//贤者之石
@@ -211,6 +211,79 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.BLOOD_LYSOSOME_STABILIZER  = this.addItem(435, "lysosome_stabilizer").setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BLOOD_IPS_HUMAN_BRAIN      = this.addItem(436, "ips_human_brain").setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BLOOD_PORT                 = this.addItem(437, "blood_port").setCreativeTabs(Pollution_TAB);
+
+		// Magic integration cores (500-507)
+		PollutionMetaItems.ASTRAL_LENS_BASIC =
+				this.addItem(500, "astral_lens_basic")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.UNCOMMON)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.ASTRAL_LENS_ADVANCED =
+				this.addItem(501, "astral_lens_advanced")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.RARE)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.CELESTIAL_CALIBRATION_CORE =
+				this.addItem(502, "celestial_calibration_core")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.RARE)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.HARMONIZING_RUNE_CORE =
+				this.addItem(503, "harmonizing_rune_core")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.RARE)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.ASTRAL_BLOOD_CATALYST =
+				this.addItem(504, "astral_blood_catalyst")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.EPIC)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.ASTRAL_NEURAL_BUNDLE =
+				this.addItem(505, "astral_neural_bundle")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.EPIC)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL =
+				this.addItem(506, "primordial_star_blood_crystal")
+						.setMaxStackSize(1)
+						.setRarity(EnumRarity.EPIC)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.CAUSALITY_CATALYST =
+				this.addItem(507, "causality_catalyst")
+						.setMaxStackSize(1)
+						.setRarity(EnumRarity.EPIC)
+						.setCreativeTabs(Pollution_TAB);
+
+		// Magic integration processing intermediates (520-530)
+		PollutionMetaItems.SILVERED_GLASS_LENS =
+				this.addItem(520, "silvered_glass_lens").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.ASTRAL_RESONANCE_COIL =
+				this.addItem(521, "astral_resonance_coil").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MANA_RESONANCE_COIL =
+				this.addItem(522, "mana_resonance_coil").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.STERILE_SLATE_BLANK =
+				this.addItem(523, "sterile_slate_blank").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.PRECISION_RUNE_BLANK =
+				this.addItem(524, "precision_rune_blank").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.ROCK_CRYSTAL_SEED =
+				this.addItem(525, "rock_crystal_seed")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.UNCOMMON)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.NATURAL_INFUSED_COIL =
+				this.addItem(526, "natural_infused_coil").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY_EV =
+				this.addItem(527, "magic_control_assembly_ev")
+						.setRarity(EnumRarity.UNCOMMON)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.NODE_STABILIZATION_FRAME =
+				this.addItem(528, "node_stabilization_frame")
+						.setRarity(EnumRarity.UNCOMMON)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.BLANK_TAROT_CARD =
+				this.addItem(529, "blank_tarot_card").setCreativeTabs(Pollution_TAROT);
+		PollutionMetaItems.ARCANE_INK_CAPSULE =
+				this.addItem(530, "arcane_ink_capsule").setCreativeTabs(Pollution_TAROT);
 
 	}
 
