@@ -1,13 +1,22 @@
 package meowmel.pollution.loaders.recipes;
 
 import gregtech.api.items.metaitem.MetaItem;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.pollution.api.recipes.PORecipeMaps;
 
+import static gregtech.api.GTValues.VA;
+import static gregtech.api.unification.ore.OrePrefix.rotor;
+import static gregtech.api.unification.ore.OrePrefix.screw;
+import static gregtech.common.metatileentities.MetaTileEntities.MUFFLER_HATCH;
+import static meowmel.pollution.api.unification.PollutionMaterials.ElvenElementium;
+import static meowmel.pollution.api.unification.PollutionMaterials.Terrasteel;
 import static meowmel.pollution.common.items.PollutionMetaItems.*;
+import static meowmel.pollution.common.metatileentity.PollutionMetaTileEntities.FLUX_MUFFLERS;
 
 public class MufflerHatchRecipes {
     public static void init() {
 
-        /*
+
         for(int i = 0; i < 9; ++i) {
             PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                     .input(FLUX_MUFFLERS[i])
@@ -21,7 +30,7 @@ public class MufflerHatchRecipes {
                     .buildAndRegister();
         }
 
-         */
+
     }
 
     public static MetaItem<?>.MetaValueItem getFilterByTier(int tier) {

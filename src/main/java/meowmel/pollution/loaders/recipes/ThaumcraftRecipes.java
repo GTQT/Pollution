@@ -7,11 +7,13 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POCoilBlock;
+import meowmel.pollution.common.block.metablocks.POGlass;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
@@ -36,16 +38,17 @@ public class ThaumcraftRecipes {
     public static void init() {
         catalyst();
         misc();
-        //solar();
+        solar();
         tarots();
 
     }
-/*
+
     private static void solar() {
         //阳光化合物制作
+
         PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-                .fluidInputs(PollutionMaterials.infused_light.getFluid(2304))
-                .input(OrePrefix.dust, PollutionMaterials.salismundus, 4)
+                .fluidInputs(PollutionMaterials.InfusedLight.getFluid(2304))
+                .input(OrePrefix.dust, PollutionMaterials.Salismundus, 4)
                 .notConsumable(PollutionMetaItems.HOTCORE.getStackForm())
                 .output(OrePrefix.dust, PollutionMaterials.sunnarium, 1)
                 .duration(200)
@@ -60,7 +63,7 @@ public class ThaumcraftRecipes {
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.AIR, 16),
                 "frameGtMansussteel",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_LV.getMetaItem(), 1, 90),
                 "circuitLv",
                 new ItemStack(BlocksTC.crystalAir),
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
@@ -75,7 +78,7 @@ public class ThaumcraftRecipes {
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.ENTROPY, 16),
                 "frameGtMansussteel",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_LV.getMetaItem(), 1, 90),
                 "circuitLv",
                 new ItemStack(BlocksTC.crystalEntropy),
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
@@ -90,7 +93,7 @@ public class ThaumcraftRecipes {
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.EARTH, 16),
                 "frameGtMansussteel",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_LV.getMetaItem(), 1, 90),
                 "circuitLv",
                 new ItemStack(BlocksTC.crystalEarth),
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
@@ -105,7 +108,7 @@ public class ThaumcraftRecipes {
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.FIRE, 16),
                 "frameGtMansussteel",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_LV.getMetaItem(), 1, 90),
                 "circuitLv",
                 new ItemStack(BlocksTC.crystalFire),
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
@@ -120,7 +123,7 @@ public class ThaumcraftRecipes {
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.ORDER, 16),
                 "frameGtMansussteel",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_LV.getMetaItem(), 1, 90),
                 "circuitLv",
                 new ItemStack(BlocksTC.crystalOrder),
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
@@ -135,7 +138,7 @@ public class ThaumcraftRecipes {
                 new AspectList().add(Aspect.ENERGY, 16).add(Aspect.WATER, 16),
                 "frameGtMansussteel",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_LV.getMetaItem(), 1, 90),
                 "circuitLv",
                 new ItemStack(BlocksTC.crystalWater),
                 new ItemStack(MetaItems.SENSOR_LV.getMetaItem(), 1, 232),
@@ -152,7 +155,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaTileEntities.SOLAR_PLATE[0].getStackForm(),
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_MV.getMetaItem(), 1, 90),
                 "circuitMv",
                 new ItemStack(BlocksTC.crystalAir),
                 new ItemStack(MetaItems.SENSOR_MV.getMetaItem(), 1, 233),
@@ -168,7 +171,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaTileEntities.SOLAR_PLATE[3].getStackForm(),
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_MV.getMetaItem(), 1, 90),
                 "circuitMv",
                 new ItemStack(BlocksTC.crystalEntropy),
                 new ItemStack(MetaItems.SENSOR_MV.getMetaItem(), 1, 233),
@@ -184,7 +187,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaTileEntities.SOLAR_PLATE[6].getStackForm(),
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_MV.getMetaItem(), 1, 90),
                 "circuitMv",
                 new ItemStack(BlocksTC.crystalEarth),
                 new ItemStack(MetaItems.SENSOR_MV.getMetaItem(), 1, 233),
@@ -200,7 +203,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaTileEntities.SOLAR_PLATE[9].getStackForm(),
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_MV.getMetaItem(), 1, 90),
                 "circuitMv",
                 new ItemStack(BlocksTC.crystalFire),
                 new ItemStack(MetaItems.SENSOR_MV.getMetaItem(), 1, 233),
@@ -216,7 +219,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaTileEntities.SOLAR_PLATE[12].getStackForm(),
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_MV.getMetaItem(), 1, 90),
                 "circuitMv",
                 new ItemStack(BlocksTC.crystalOrder),
                 new ItemStack(MetaItems.SENSOR_MV.getMetaItem(), 1, 233),
@@ -232,7 +235,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaTileEntities.SOLAR_PLATE[15].getStackForm(),
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_MV.getMetaItem(), 1, 90),
                 "circuitMv",
                 new ItemStack(BlocksTC.crystalWater),
                 new ItemStack(MetaItems.SENSOR_MV.getMetaItem(), 1, 233),
@@ -251,7 +254,7 @@ public class ThaumcraftRecipes {
                 "dustSunnarium",
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_HV.getMetaItem(), 1, 90),
                 "circuitHv",
                 new ItemStack(BlocksTC.crystalAir),
                 new ItemStack(MetaItems.SENSOR_HV.getMetaItem(), 1, 234),
@@ -269,7 +272,7 @@ public class ThaumcraftRecipes {
                 "dustSunnarium",
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_HV.getMetaItem(), 1, 90),
                 "circuitHv",
                 new ItemStack(BlocksTC.crystalEntropy),
                 new ItemStack(MetaItems.SENSOR_HV.getMetaItem(), 1, 234),
@@ -287,7 +290,7 @@ public class ThaumcraftRecipes {
                 "dustSunnarium",
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_HV.getMetaItem(), 1, 90),
                 "circuitHv",
                 new ItemStack(BlocksTC.crystalEarth),
                 new ItemStack(MetaItems.SENSOR_HV.getMetaItem(), 1, 234),
@@ -305,7 +308,7 @@ public class ThaumcraftRecipes {
                 "dustSunnarium",
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_HV.getMetaItem(), 1, 90),
                 "circuitHv",
                 new ItemStack(BlocksTC.crystalFire),
                 new ItemStack(MetaItems.SENSOR_HV.getMetaItem(), 1, 234),
@@ -323,7 +326,7 @@ public class ThaumcraftRecipes {
                 "dustSunnarium",
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_HV.getMetaItem(), 1, 90),
                 "circuitHv",
                 new ItemStack(BlocksTC.crystalOrder),
                 new ItemStack(MetaItems.SENSOR_HV.getMetaItem(), 1, 234),
@@ -341,7 +344,7 @@ public class ThaumcraftRecipes {
                 "dustSunnarium",
                 "dustSunnarium",
                 "dustSunnarium",
-                new ItemStack(GTQTMetaItems.SOLAR_PLATE_MKI.getMetaItem(), 1, 90),
+                new ItemStack(MetaItems.COVER_SOLAR_PANEL_HV.getMetaItem(), 1, 90),
                 "circuitHv",
                 new ItemStack(BlocksTC.crystalWater),
                 new ItemStack(MetaItems.SENSOR_HV.getMetaItem(), 1, 234),
@@ -350,7 +353,7 @@ public class ThaumcraftRecipes {
                 PollutionMetaBlocks.GLASS.getItemVariant(POGlass.MagicBlockType.LAMINATED_GLASS),
                 "cableGtSingleGold"));
     }
-    */
+
 
     private static void catalyst() {
         //活性催化粗胚，搅拌机
@@ -493,10 +496,9 @@ public class ThaumcraftRecipes {
                 .duration(1200)
                 .EUt(480)
                 .buildAndRegister();
-        /*
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
-                .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+                .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, Bismuth, 4)
                 .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(1440))
@@ -507,8 +509,8 @@ public class ThaumcraftRecipes {
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
-                .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
-                .input(OrePrefix.dust, PollutionMaterials.syrmorite, 4)
+                .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
+                .input(OrePrefix.dust, PollutionMaterials.Syrmorite, 4)
                 .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(5760))
                 .blastFurnaceTemp(3600)
@@ -517,10 +519,10 @@ public class ThaumcraftRecipes {
                 .EUt(1920)
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(OrePrefix.dust, PollutionMaterials.valonite, 3)
-                .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
+                .input(OrePrefix.dust, PollutionMaterials.Valonite, 3)
+                .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, Bismuth, 4)
-                .fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.hyper_substrate.getFluid(1440))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
@@ -528,10 +530,10 @@ public class ThaumcraftRecipes {
                 .EUt(30720)
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(OrePrefix.dust, PollutionMaterials.valonite, 3)
-                .input(OrePrefix.dust, PollutionMaterials.salismundus, 2)
-                .input(OrePrefix.dust, PollutionMaterials.syrmorite, 4)
-                .fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+                .input(OrePrefix.dust, PollutionMaterials.Valonite, 3)
+                .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
+                .input(OrePrefix.dust, PollutionMaterials.Syrmorite, 4)
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
                 .fluidOutputs(PollutionMaterials.hyper_substrate.getFluid(5760))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
@@ -540,7 +542,6 @@ public class ThaumcraftRecipes {
                 .buildAndRegister();
 
 
-         */
     }
 
     private static void misc() {

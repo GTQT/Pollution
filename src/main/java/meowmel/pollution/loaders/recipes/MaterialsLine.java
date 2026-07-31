@@ -19,16 +19,13 @@ public class MaterialsLine {
                 .circuitMeta(4)
                 .duration(800).EUt(VA[EV]).buildAndRegister();
 
-        /*
         MIXER_RECIPES.recipeBuilder()
-                .input(dust, energy_crystal, 4)
-                .input(dust, infused_entropy, 1)
-                .input(dust, infused_order, 1)
-                .output(dust, Okin, 6)
+                .input(dust, EnergyCrystal, 4)
+                .input(dust, InfusedEntropy, 1)
+                .input(dust, InfusedOrder, 1)
+                .output(dust, StarmetalAlloy, 6)
                 .circuitMeta(6)
                 .duration(800).EUt(VA[EV]).buildAndRegister();
-
-         */
 
     }
 }

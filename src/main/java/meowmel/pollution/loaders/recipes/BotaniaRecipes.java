@@ -1,19 +1,44 @@
 package meowmel.pollution.loaders.recipes;
 
+import gregtech.api.metatileentity.multiblock.CleanroomType;
+import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
+import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
+import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.pollution.common.items.PollutionMetaItems;
+import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
+
+import static gregtech.api.GTValues.*;
+import static gregtech.api.recipes.RecipeMaps.CANNER_RECIPES;
+import static gregtech.api.recipes.RecipeMaps.MACERATOR_RECIPES;
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.ore.OrePrefix.dust;
+import static meowmel.gtqtcore.api.recipes.GTQTRecipeMaps.BACTERIAL_VAT_RECIPES;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
+import static net.minecraft.init.Blocks.RED_FLOWER;
+import static vazkii.botania.common.block.ModBlocks.mushroom;
+import static vazkii.botania.common.item.ModItems.*;
+
 public class BotaniaRecipes {
     public static void init() {
-        /*
         remove();
         flower();
         rune();
         manahatch();
 
-         */
     }
-/*
     private static void rune() {
         //三种符文
-        PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
+        MagicRecipeProperties.manaPerTick(PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(ModItems.rune, 1, 1))
                 .inputs(new ItemStack(ModItems.rune, 1, 5))
                 .inputs(new ItemStack(ModItems.rune, 1, 9))
@@ -23,11 +48,10 @@ public class BotaniaRecipes {
                 .input(PollutionMetaItems.CORE_OF_IDEA)
                 .input(OrePrefix.frameGt, PollutionMaterials.Terrasteel)
                 .output(PollutionMetaItems.WHITE_RUNE)
-                .TotalMana(100000)
                 .EUt(7680)
-                .duration(100)
+                .duration(100), 1000L)
                 .buildAndRegister();
-        PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
+        MagicRecipeProperties.manaPerTick(PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(ModItems.rune, 1, 2))
                 .inputs(new ItemStack(ModItems.rune, 1, 6))
                 .inputs(new ItemStack(ModItems.rune, 1, 9))
@@ -37,56 +61,51 @@ public class BotaniaRecipes {
                 .input(PollutionMetaItems.CORE_OF_IDEA)
                 .input(OrePrefix.frameGt, PollutionMaterials.Terrasteel)
                 .output(PollutionMetaItems.BLACK_RUNE)
-                .TotalMana(100000)
                 .EUt(7680)
-                .duration(100)
+                .duration(100), 1000L)
                 .buildAndRegister();
-        PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
+        MagicRecipeProperties.manaPerTick(PORecipeMaps.MANA_RUNE_ALTAR_RECIPES.recipeBuilder()
                 .inputs(new ItemStack(ModItems.rune, 1, 4))
                 .inputs(new ItemStack(ModItems.rune, 1, 8))
                 .inputs(new ItemStack(ModItems.rune, 1, 9))
                 .inputs(new ItemStack(ModItems.rune, 1, 10))
                 .input(OrePrefix.block, PollutionMaterials.iizunamaru_electrum)
-                .input(OrePrefix.block, PollutionMaterials.meowmelgold)
+                .input(OrePrefix.block, PollutionMaterials.KQGold)
                 .input(PollutionMetaItems.CORE_OF_IDEA)
                 .input(OrePrefix.frameGt, PollutionMaterials.Terrasteel)
                 .output(PollutionMetaItems.STARRY_RUNE)
-                .TotalMana(100000)
                 .EUt(7680)
-                .duration(100)
+                .duration(100), 1000L)
                 .buildAndRegister();
     }
     //"puredaisy", "manastar", "endoflame", "hydroangeas", "thermalily", "arcanerose", "munchdew", "entropinnyum", "kekimurus", "gourmaryllis", "narslimmus", "spectrolus", "rafflowsia", "shulk_me_not", "dandelifeon", "jadedAmaranthus", "bellethorn", "dreadthorn", "heiseiDream", "tigerseye", "marimorphosis", "orechid", "orechidIgnem", "fallenKanade", "exoflame", "agricarnation", "hopperhock", "rannuncarpus", "tangleberrie", "jiyuulia", "hyacidus", "medumone", "pollidisiac", "clayconia", "loonium", "daffomill", "vinculotus", "spectranthemum", "bubbell", "solegnolia", "bergamute"
     private static void flower() {
 
         //白雏菊诱变改造
-        BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+        BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 8))
                 .input(dust, NetherStar)
-                .fluidInputs(Enzymesac.getFluid(100))
+                .fluidInputs(SterileGrowthMedium.getFluid(100))
                 .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
-                .rate(10)
                 .buildAndRegister();
 
         //火红莲诱变改造
-        BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+        BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 0))
                 .input(dust, Blaze)
-                .fluidInputs(Enzymesac.getFluid(100))
+                .fluidInputs(SterileGrowthMedium.getFluid(100))
                 .chancedOutput(ItemBlockSpecialFlower.ofType("endoflame"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
-                .rate(10)
                 .buildAndRegister();
 
         //火红莲诱变改造
-        BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+        BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 0))
                 .input(OrePrefix.dust, PollutionMaterials.llp, 1)
-                .fluidInputs(Enzymesac.getFluid(100))
+                .fluidInputs(SterileGrowthMedium.getFluid(100))
                 .chancedOutput(ItemBlockSpecialFlower.ofType("hydroangeas"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
-                .rate(10)
                 .buildAndRegister();
 
         //瓶装末地空气
@@ -100,48 +119,43 @@ public class BotaniaRecipes {
         //染料线
         int min;
         for (min = 0; min < 16; ++min) {
-            BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                     .fluidInputs(Water.getFluid(500))
                     .input(RED_FLOWER)
                     .inputs(new ItemStack(dye, 1, min))
                     .outputs(new ItemStack(petal, 4, min))
-                    .rate(10)
                     .cleanroom(CleanroomType.CLEANROOM)
                     .buildAndRegister();
 
-            BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                     .fluidInputs(Water.getFluid(500))
                     .input(Blocks.YELLOW_FLOWER)
                     .inputs(new ItemStack(dye, 1, min))
                     .outputs(new ItemStack(petal, 4, min))
-                    .rate(10)
                     .cleanroom(CleanroomType.CLEANROOM)
                     .buildAndRegister();
 
-            BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                     .fluidInputs(Water.getFluid(500))
                     .input(Blocks.BROWN_MUSHROOM)
                     .inputs(new ItemStack(dye, 1, min))
                     .outputs(new ItemStack(petal, 4, min))
-                    .rate(10)
                     .cleanroom(CleanroomType.CLEANROOM)
                     .buildAndRegister();
 
-            BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                     .fluidInputs(Water.getFluid(500))
                     .input(Blocks.RED_MUSHROOM)
                     .inputs(new ItemStack(dye, 1, min))
                     .outputs(new ItemStack(petal, 4, min))
-                    .rate(10)
                     .cleanroom(CleanroomType.CLEANROOM)
                     .buildAndRegister();
 
-            BIOLOGICAL_REACTION_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
+            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                     .fluidInputs(Water.getFluid(500))
-                    .input(GTQTMetaItems.COMMON_ALGAE)
+                    .input(GTQTMetaItems.ORDINARY_ALGAE)
                     .inputs(new ItemStack(dye, 1, min))
                     .outputs(new ItemStack(petal, 4, min))
-                    .rate(10)
                     .cleanroom(CleanroomType.CLEANROOM)
                     .buildAndRegister();
 
@@ -166,50 +180,50 @@ public class BotaniaRecipes {
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_INPUT_HATCH[LV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.SENSOR_LV.getMetaItem(), 2, 232)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[0].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[0].getStackForm())
                 .duration(100)
                 .EUt(VA[LV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_INPUT_HATCH[MV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.SENSOR_MV.getMetaItem(), 2, 233)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[1].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[1].getStackForm())
                 .duration(100)
                 .EUt(VA[MV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_INPUT_HATCH[HV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.SENSOR_HV.getMetaItem(), 2, 234)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[2].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[2].getStackForm())
                 .duration(100)
                 .EUt(VA[HV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_INPUT_HATCH[EV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.SENSOR_EV.getMetaItem(), 2, 235)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[3].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[3].getStackForm())
                 .duration(100)
                 .EUt(VA[EV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_INPUT_HATCH[IV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.SENSOR_IV.getMetaItem(), 2, 236)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[4].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[4].getStackForm())
                 .duration(100)
                 .EUt(VA[IV])
                 .buildAndRegister();
@@ -218,8 +232,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.SENSOR_LuV.getMetaItem(), 2, 237)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[5].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[5].getStackForm())
                 .duration(100)
                 .EUt(VA[LuV])
                 .buildAndRegister();
@@ -228,8 +242,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.SENSOR_ZPM.getMetaItem(), 2, 238)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[6].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[6].getStackForm())
                 .duration(100)
                 .EUt(VA[ZPM])
                 .buildAndRegister();
@@ -238,8 +252,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.SENSOR_UV.getMetaItem(), 2, 239)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[7].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[7].getStackForm())
                 .duration(100)
                 .EUt(VA[UV])
                 .buildAndRegister();
@@ -248,8 +262,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.SENSOR_UHV.getMetaItem(), 2, 240)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[8].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[8].getStackForm())
                 .duration(100)
                 .EUt(VA[UHV])
                 .buildAndRegister();
@@ -259,7 +273,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.SENSOR_UEV.getMetaItem(), 2, 241)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[9].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[9].getStackForm())
                 .duration(100)
                 .EUt(VA[UEV])
                 .buildAndRegister();
@@ -269,7 +283,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.SENSOR_UIV.getMetaItem(), 2, 242)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[10].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[10].getStackForm())
                 .duration(100)
                 .EUt(VA[UIV])
                 .buildAndRegister();
@@ -279,7 +293,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.SENSOR_UXV.getMetaItem(), 2, 243)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[11].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[11].getStackForm())
                 .duration(100)
                 .EUt(VA[UXV])
                 .buildAndRegister();
@@ -289,7 +303,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.SENSOR_OpV.getMetaItem(), 2, 244)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_HATCH[12].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_INPUT_HATCH_1A[12].getStackForm())
                 .duration(100)
                 .EUt(VA[OpV])
                 .buildAndRegister();
@@ -297,50 +311,50 @@ public class BotaniaRecipes {
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_OUTPUT_HATCH[LV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.EMITTER_LV.getMetaItem(), 2, 217)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[0].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[0].getStackForm())
                 .duration(100)
                 .EUt(VA[LV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_OUTPUT_HATCH[MV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.EMITTER_MV.getMetaItem(), 2, 218)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[1].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[1].getStackForm())
                 .duration(100)
                 .EUt(VA[MV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_OUTPUT_HATCH[HV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.EMITTER_HV.getMetaItem(), 2, 219)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[2].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[2].getStackForm())
                 .duration(100)
                 .EUt(VA[HV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_OUTPUT_HATCH[EV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.EMITTER_EV.getMetaItem(), 2, 220)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[3].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[3].getStackForm())
                 .duration(100)
                 .EUt(VA[EV])
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .inputs(MetaTileEntities.ENERGY_OUTPUT_HATCH[IV].getStackForm())
                 .input(rune, 1, 8)
-                .input(OrePrefix.gear, PollutionMaterials.mansussteel, 2)
+                .input(OrePrefix.gear, PollutionMaterials.Mansussteel, 2)
                 .input(MetaItems.EMITTER_IV.getMetaItem(), 2, 221)
-                .fluidInputs(Magic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[4].getStackForm())
+                .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[4].getStackForm())
                 .duration(100)
                 .EUt(VA[IV])
                 .buildAndRegister();
@@ -349,8 +363,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.EMITTER_LuV.getMetaItem(), 2, 222)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[5].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[5].getStackForm())
                 .duration(100)
                 .EUt(VA[LuV])
                 .buildAndRegister();
@@ -359,8 +373,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.EMITTER_ZPM.getMetaItem(), 2, 223)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[6].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[6].getStackForm())
                 .duration(100)
                 .EUt(VA[ZPM])
                 .buildAndRegister();
@@ -369,8 +383,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.EMITTER_UV.getMetaItem(), 2, 224)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[7].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[7].getStackForm())
                 .duration(100)
                 .EUt(VA[UV])
                 .buildAndRegister();
@@ -379,8 +393,8 @@ public class BotaniaRecipes {
                 .input(rune, 1, 8)
                 .input(OrePrefix.gear, PollutionMaterials.Terrasteel, 2)
                 .input(MetaItems.EMITTER_UHV.getMetaItem(), 2, 225)
-                .fluidInputs(Richmagic.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[8].getStackForm())
+                .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[8].getStackForm())
                 .duration(100)
                 .EUt(VA[UHV])
                 .buildAndRegister();
@@ -390,7 +404,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.EMITTER_UEV.getMetaItem(), 2, 226)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[9].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[9].getStackForm())
                 .duration(100)
                 .EUt(VA[UEV])
                 .buildAndRegister();
@@ -400,7 +414,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.EMITTER_UIV.getMetaItem(), 2, 227)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[10].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[10].getStackForm())
                 .duration(100)
                 .EUt(VA[UIV])
                 .buildAndRegister();
@@ -410,7 +424,7 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.EMITTER_UXV.getMetaItem(), 2, 228)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[11].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[11].getStackForm())
                 .duration(100)
                 .EUt(VA[UXV])
                 .buildAndRegister();
@@ -420,11 +434,10 @@ public class BotaniaRecipes {
                 .input(OrePrefix.gear, PollutionMaterials.ElvenElementium, 2)
                 .input(MetaItems.EMITTER_OpV.getMetaItem(), 2, 229)
                 .fluidInputs(PollutionMaterials.whitemansus.getFluid(1000))
-                .outputs(PollutionMetaTileEntities.MANA_POOL_HATCH[12].getStackForm())
+                .outputs(PollutionMetaTileEntities.MANA_POOL_OUTPUT_HATCH[12].getStackForm())
                 .duration(100)
                 .EUt(VA[OpV])
                 .buildAndRegister();
     }
 
- */
 }

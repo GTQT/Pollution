@@ -40,14 +40,14 @@ public class BloodAltar {
         addBloodAltar(Polonium, Radium, 5);
         addBloodAltar(Radium, Thorium, 5);
         addBloodAltar(Thorium, Uranium238, 5);
-        /*
+
         addBloodAltar(Uranium238, Plutonium242, 5);
         addBloodAltar(Plutonium242, Curium247, 5);
         addBloodAltar(Curium247, Californium252, 5);
-        //BloodMagicAPI.INSTANCE.getRecipeRegistrar().addBloodAltar(Ingredient.fromStacks(OreDictUnifier.get(dust, Iron, 1)),OreDictUnifier.get(dust, Copper, 1),1,1,1,1);
+        BloodMagicAPI.INSTANCE.getRecipeRegistrar().addBloodAltar(Ingredient.fromStacks(OreDictUnifier.get(dust, Iron, 1)),OreDictUnifier.get(dust, Copper, 1),1,1,1,1);
         addBloodAltar(Curium247, Californium252, 5);
 
-         */
+
 
 
         addBloodAltarEx(OreDictUnifier.get(dust, Gold, 1), new ItemStack(ItemsTC.quicksilver), 2);

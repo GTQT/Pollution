@@ -85,15 +85,17 @@ public class MachineRecipes {
                 'B', EMITTER,
                 'C', ROTOR);
 
-        /*
-        registerMachineRecipe(PollutionMetaTileEntities.VIS_CLEAR,
-                "ABA", "CHC", "ABA",
-                'H', HULL,
-                'A', MOTOR,
-                'B', SENSOR,
-                'C', ROTOR);
+        for (int i = 0; i < PollutionMetaTileEntities.VIS_CLEAR.length; i++) {
+            int tier = i + GTValues.LV;
+            ModHandler.addShapedRecipe(true, "vis_clear_" + GTValues.VN[tier].toLowerCase(),
+                    PollutionMetaTileEntities.VIS_CLEAR[i].getStackForm(),
+                    "ABA", "CHC", "ABA",
+                    'H', HULL.getIngredient(tier),
+                    'A', MOTOR.getIngredient(tier),
+                    'B', SENSOR.getIngredient(tier),
+                    'C', ROTOR.getIngredient(tier));
+        }
 
-         */
 
 
         ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.lv");
@@ -106,7 +108,6 @@ public class MachineRecipes {
         ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.uv");
         ModHandler.removeRecipeByName("gregtech:gregtech.machine.muffler_hatch.uhv");
 
-        /*
         registerMachineRecipe(PollutionMetaTileEntities.FLUX_MUFFLERS,
                 "HM", "PR",
                 'H', HULL,
@@ -114,7 +115,6 @@ public class MachineRecipes {
                 'P', PIPE_NORMAL,
                 'R', ROTOR);
 
-         */
 
         registerMachineRecipe(PollutionMetaTileEntities.VIS_HATCH,
                 "ABA", "CHC", "ABA",
@@ -123,7 +123,6 @@ public class MachineRecipes {
                 'B', BLANKCORE,
                 'C', EMITTER);
 
-        /*
         registerMachineRecipe(PollutionMetaTileEntities.FLUX_PROMOTED_FUEL_CELL,
                 "PBP", "EHE", "MCM",
                 'H', HULL,
@@ -133,7 +132,6 @@ public class MachineRecipes {
                 'M', MOTOR,
                 'E', EMITTER);
 
-         */
         registerMachineRecipe(PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER,
                 "CSC", "HBH", "MEM",
                 'H', HULL,
@@ -143,7 +141,6 @@ public class MachineRecipes {
                 'M', MOTOR,
                 'E', EMITTER
         );
-        /*
         registerMachineRecipe(PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER,
                 "CVC", "FLF", "EHE",
                 'H', HULL,
@@ -154,7 +151,6 @@ public class MachineRecipes {
                 'F', FIELD_GENERATOR
         );
 
-         */
     }
 
     private static void machine() {

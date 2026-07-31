@@ -9,6 +9,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.InfusionRecipe;
 
 import static gregtech.common.items.MetaItems.*;
+import static meowmel.gtqtcore.common.items.GTQTMetaItems.*;
 
 import static meowmel.pollution.common.items.PollutionMetaItems.*;
 
@@ -169,7 +170,6 @@ public class CircuitManager {
                 ADVANCED_SMD_DIODE.getStackForm()
         ));
 
-        /*
         //UHV
         ThaumcraftApi.addInfusionCraftingRecipe(new ResourceLocation(Pollution.MODID, "circuit"+MAGIC_CIRCUIT_UHV.unlocalizedName), new InfusionRecipe(
                 "INFUSION@2",
@@ -278,7 +278,6 @@ public class CircuitManager {
                 SUPRACAUSAL_SMD_DIODE.getStackForm()
         ));
 
-         */
     }
 
 }

@@ -1,11 +1,17 @@
 package meowmel.pollution.loaders.recipes;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.MetaTileEntities;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.unification.Elements;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POHyper;
@@ -19,6 +25,8 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.material.Materials.*;
 
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.Mana;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 
 public class NodeFusionRecipes {
@@ -89,7 +97,7 @@ public class NodeFusionRecipes {
 				.EUt(VA[UV])
 				.duration(400)
 				.buildAndRegister();
-        /*
+
 		//魔法聚变 MK1-MK3
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.input(MetaTileEntities.FUSION_REACTOR[0], 16)
@@ -100,16 +108,16 @@ public class NodeFusionRecipes {
 				.input(PollutionMetaItems.AUTO_ELENCHUS_DEVICE, 4)
 				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 4))
 				.input(OrePrefix.plate, Materials.Osmiridium, 32)
-				.input(GTQTMetaItems.NEUTRON, 16)
+				.input(OrePrefix.dust, Materials.Neutronium, 16)
 				.fluidInputs(PollutionMaterials.aetheric_dark_steel.getFluid(36000))
-				.fluidInputs(PollutionMaterials.meowmelgold.getFluid(36000))
+				.fluidInputs(PollutionMaterials.KQGold.getFluid(36000))
 				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
 				.EUt(VA[ZPM])
 				.duration(40000)
 				.buildAndRegister();
 
-         */
+
 		PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
 				.inputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
 				.inputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_2_CASING, 8))
@@ -158,9 +166,9 @@ public class NodeFusionRecipes {
 				.EUt(VA[LuV])
 				.duration(400)
 				.buildAndRegister();
-        /*
+
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+				.fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.fluidInputs(Materials.Silver.getFluid(144))
 				.fluidOutputs(PollutionMaterials.hyperdimensional_silver.getPlasma(144))
 				.EUToStart(80000000L)
@@ -168,15 +176,15 @@ public class NodeFusionRecipes {
 				.duration(90)
 				.buildAndRegister();
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+				.fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.fluidInputs(Materials.Gold.getFluid(144))
-				.fluidOutputs(PollutionMaterials.meowmelgold.getPlasma(144))
+				.fluidOutputs(KQGold.getPlasma(144))
 				.EUToStart(80000000L)
 				.EUt(VA[LuV])
 				.duration(90)
 				.buildAndRegister();
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(GTQTMaterials.Richmagic.getFluid(1000))
+				.fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.fluidInputs(Materials.Water.getFluid(1000))
 				.fluidOutputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
 				.EUToStart(60000000L)
@@ -185,17 +193,17 @@ public class NodeFusionRecipes {
 				.buildAndRegister();
 
 		RecipeMaps.FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_magic.getFluid(144))
+				.fluidInputs(PollutionMaterials.InfusedMagic.getFluid(144))
 				.fluidInputs(Materials.Water.getFluid(1000))
-				.fluidOutputs(GTQTMaterials.Richmagic.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.EUToStart(60000000L)
 				.EUt(VA[EV])
 				.duration(200)
 				.buildAndRegister();
         //生命源质聚变
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(infused_life.getFluid(1000))
-				.fluidInputs(Richmagic.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedLife.getFluid(144))
+				.fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.fluidOutputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
 				.EUToStart(140000000L)
 				.EUt(VA[LuV])
@@ -218,7 +226,7 @@ public class NodeFusionRecipes {
 				.duration(200)
 				.buildAndRegister();
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(infused_instrument.getFluid(144))
+				.fluidInputs(InfusedInstrument.getFluid(144))
 				.fluidInputs(Titanium.getFluid(144))
 				.fluidOutputs(Tritanium.getFluid(288))
 				.EUToStart(400000000L)
@@ -227,7 +235,7 @@ public class NodeFusionRecipes {
 				.buildAndRegister();
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(Naquadria.getFluid(144))
-				.fluidInputs(infused_energy.getFluid(1000))
+				.fluidInputs(InfusedEnergy.getFluid(1000))
 				.fluidOutputs(Neutronium.getFluid(144))
 				.EUToStart(400000000L)
 				.EUt(VA[ZPM])
@@ -235,13 +243,13 @@ public class NodeFusionRecipes {
 				.buildAndRegister();
 
 		RecipeMaps.FUSION_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(144))
-				.fluidInputs(PollutionMaterials.infused_order.getFluid(144))
-				.fluidOutputs(GTQTMaterials.Okin.getFluid(576))
+				.fluidInputs(InfusedEntropy.getFluid(144))
+				.fluidInputs(InfusedOrder.getFluid(144))
+				.fluidOutputs(PollutionMaterials.StarmetalAlloy.getFluid(576))
 				.EUToStart(420000000L)
 				.EUt(VA[UHV])
 				.duration(200)
 				.buildAndRegister();
-        */
+
 	}
 }

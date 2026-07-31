@@ -54,10 +54,8 @@ public class TarChain {
                 .EUt(120)
                 .buildAndRegister();
 
-        /*
-        lightlyCrack(PollutionMaterials.pure_tar, LightlyHydroCrackedCoalOil, LightlySteamCrackedCoalOil);
-        severelyCrack(PollutionMaterials.pure_tar, SeverelyHydroCrackedCoalOil, SeverelySteamCrackedCoalOil);
-*/
+        lightlyCrack(PollutionMaterials.pure_tar, LightlyHydroCrackedHeavyFuel, LightlySteamCrackedHeavyFuel);
+        severelyCrack(PollutionMaterials.pure_tar, SeverelyHydroCrackedHeavyFuel, SeverelySteamCrackedHeavyFuel);
 
     }
 }

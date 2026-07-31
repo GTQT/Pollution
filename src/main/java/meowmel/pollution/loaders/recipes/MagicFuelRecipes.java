@@ -1,17 +1,29 @@
 package meowmel.pollution.loaders.recipes;
 
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.pollution.common.items.PollutionMetaItems;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
+import static gregtech.api.GTValues.*;
+import static gregtech.api.unification.material.Materials.*;
+import static meowmel.gtqtcore.api.recipes.GTQTRecipeMaps.ROCKET_ENGINE_RECIPES;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.*;
+import static meowmel.pollution.api.unification.PollutionMaterials.*;
+
 public class MagicFuelRecipes {
     public static void init() {
-        /*
         CombustionGenerator();
         RocketEngine();
 
-         */
     }
 
-    /*
     private static void RocketEngine() {
-        /*
         //焚天烈焰推进剂 烈焰之炽焰+ 肼硫酸盐 + 硝酸 + 铝粉
         RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
                 .fluidInputs(Hydrazine.getFluid(2000))         // N₂H₄（肼）
@@ -22,10 +34,10 @@ public class MagicFuelRecipes {
                 .buildAndRegister();
 
         PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-                .fluidInputs(Pyrotheum.getFluid(1000))
+                .fluidInputs(BlazingPyrotheum.getFluid(1000))
                 .fluidInputs(hydrazine_sulfate.getFluid(1000))
                 .fluidInputs(NitricAcid.getFluid(10000))
-                .fluidInputs(PollutionMaterials.infused_energy.getFluid(1152))
+                .fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1152))
                 .input(OrePrefix.dust,Aluminium,8)
                 .notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
                 .fluidOutputs(PollutionMaterials.infernal_blaze_propellant.getFluid(16000))
@@ -33,9 +45,9 @@ public class MagicFuelRecipes {
                 .EUt(VA[HV])
                 .buildAndRegister();
 
-        ROCKET_RECIPES.recipeBuilder()
+        ROCKET_ENGINE_RECIPES.recipeBuilder()
                 .fluidInputs(infernal_blaze_propellant.getFluid(9))
-                .fluidOutputs(OverheatedGas.getFluid(4 * 1000))
+                .fluidOutputs(SupercriticalExhaustGas.getFluid(4 * 1000))
                 .EUt(2048)
                 .duration(4 * SECOND)
                 .buildAndRegister();
@@ -52,7 +64,7 @@ public class MagicFuelRecipes {
         RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust,Sodium)
                 .input(OrePrefix.dust,LeadChloride,3)
-                .fluidOutputs(SodiumLeadAlloy, 1000)
+                .fluidOutputs(SodiumLeadAlloy.getFluid(1000))
                 .fluidOutputs(Chlorine.getFluid(2000))
                 .duration(120)
                 .EUt(VA[HV])
@@ -61,8 +73,8 @@ public class MagicFuelRecipes {
         //NaPb+4*C₂H₅Cl=Pb(C₂H₅)₄+NaCl
         RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
                 .fluidInputs(SodiumLeadAlloy.getFluid(1000))
-                .fluidInputs(Dichloroethane.getFluid(4000))
-                .fluidOutputs(TetraethylLead, 1000)
+                .fluidInputs(Ethylene.getFluid(4000))
+                .fluidOutputs(TetraethylLead.getFluid(1000))
                 .output(OrePrefix.dust,Salt)
                 .duration(120)
                 .EUt(VA[HV])
@@ -72,17 +84,17 @@ public class MagicFuelRecipes {
                 .fluidInputs(TetraethylLead.getFluid(1000))
                 .fluidInputs(ChlorineTrifluoride.getFluid(1000))
                 .fluidInputs(Dimethylhydrazine.getFluid(10000))
-                .fluidInputs(DragonBreath.getFluid(4000))
-                .fluidInputs(PollutionMaterials.infused_energy.getFluid(1152))
+                .input(Items.DRAGON_BREATH, 4)
+                .fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1152))
                 .notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
                 .fluidOutputs(PollutionMaterials.dragon_pulse_fuel.getFluid(16000))
                 .duration(800)
                 .EUt(VA[IV])
                 .buildAndRegister();
 
-        ROCKET_RECIPES.recipeBuilder()
+        ROCKET_ENGINE_RECIPES.recipeBuilder()
                 .fluidInputs(dragon_pulse_fuel.getFluid(6))
-                .fluidOutputs(OverheatedGas.getFluid(6 * 1000))
+                .fluidOutputs(SupercriticalExhaustGas.getFluid(6 * 1000))
                 .EUt(2048)
                 .duration(8 * SECOND)
                 .buildAndRegister();
@@ -91,10 +103,10 @@ public class MagicFuelRecipes {
     public static void CombustionGenerator() {
         //魔力抗爆焦化硝基苯
         PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-                .fluidInputs(GTQTMaterials.Methylfuran.getFluid(1000))
+                .fluidInputs(GTQTMaterials.MethylFormate.getFluid(1000))
                 .fluidInputs(Materials.Ethanol.getFluid(1000))
                 .fluidInputs(Materials.Nitrobenzene.getFluid(10000))
-                .fluidInputs(PollutionMaterials.infused_energy.getFluid(1152))
+                .fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1152))
                 .notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
                 .fluidOutputs(PollutionMaterials.magic_nitrobenzene.getFluid(16000))
                 .duration(200)
@@ -103,11 +115,10 @@ public class MagicFuelRecipes {
 
         RecipeMaps.COMBUSTION_GENERATOR_FUELS.recipeBuilder()
                 .fluidInputs(magic_nitrobenzene.getFluid(1))
-                .fluidOutputs(SuperCriticalGas.getFluid(4500))
+                .fluidOutputs(SupercriticalExhaustGas.getFluid(4500))
                 .duration(90)
                 .EUt(512)
                 .buildAndRegister();
     }
 
-         */
 }

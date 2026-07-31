@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.meteor.MeteorComponent;
 import WayofTime.bloodmagic.meteor.MeteorRegistry;
 import com.google.common.collect.Lists;
 import gregtech.api.recipes.RecipeBuilder;
+import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
@@ -16,6 +17,8 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 import static gregtech.api.GTValues.VA;
+import static gregtech.api.unification.material.Materials.Diamond;
+import static gregtech.api.unification.ore.OrePrefix.gem;
 import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_METEORS_RECIPES;
 
 public class MeteorsHelper {
@@ -68,7 +71,6 @@ public class MeteorsHelper {
                 Materials.GarnetSand, 100,
                 Materials.Asbestos, 100
         );
-        /*
         registerMeteor(
                 OreDictUnifier.get(gem,Diamond),
                 15,
@@ -76,10 +78,9 @@ public class MeteorsHelper {
                 2,
                 420000,
                 Diamond, 100,
-                Materials.Coal, 100,
+                Materials.Coal, 200,
                 Materials.Graphite, 100,
-                GTQTMaterials.Lignite, 100,
-                GTQTMaterials.Gashydrate, 100
+                Materials.Oilsands, 100
         );
         registerMeteor(
                 MetaItems.SENSOR_MV.getStackForm(),
@@ -104,7 +105,6 @@ public class MeteorsHelper {
                 GTQTMaterials.Cryolite, 100
         );
 
-         */
         registerMeteor(
                 MetaItems.EMITTER_MV.getStackForm(),
                 12,

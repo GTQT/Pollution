@@ -1,8 +1,41 @@
 package meowmel.pollution.loaders.recipes;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.OrePrefix;
+import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
+import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.pollution.common.block.PollutionMetaBlocks;
+import meowmel.pollution.common.block.metablocks.POMBeamCore;
+import meowmel.pollution.common.items.PollutionMetaItems;
+import gregtechfoodoption.common.item.GTFOMetaItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
+import thaumcraft.Thaumcraft;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.blocks.BlocksTC;
+import thaumcraft.api.crafting.InfusionRecipe;
+import thaumcraft.api.items.ItemsTC;
+
+import static gregtech.api.GTValues.*;
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.*;
+import static meowmel.pollution.api.unification.PollutionMaterials.*;
+import static meowmel.pollution.common.items.PollutionMetaItems.*;
+
 public class MagicChemicalRecipes {
 	public static void init() {
-        /*
 		chemical();
 		kqt_chain();
 		superconductor_chain();
@@ -11,11 +44,8 @@ public class MagicChemicalRecipes {
 		hachimi_chain();
 		blood_chain();
 
-         */
 	}
-/*
 	private static void chemical() {
-/*
 		//贤者之石复制
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
@@ -37,7 +67,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_4.getMetaItem(), 1, 153))
 				.input(OrePrefix.block, PollutionMaterials.existing_nexus)
-				.fluidInputs(Ichorium.getFluid(100000))
+				.fluidInputs(GTQTMaterials.Infinity.getFluid(100000))
 				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
 				.duration(10000)
 				.EUt(1966080)
@@ -45,7 +75,7 @@ public class MagicChemicalRecipes {
 		//四种催化剂的更简单的配方
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
-				.fluidInputs(PollutionMaterials.infused_fire.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedFire.getFluid(2304))
 				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(), 1, 3))
 				.outputs(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(), 1, 3))
 				.duration(3600)
@@ -53,7 +83,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
-				.fluidInputs(PollutionMaterials.infused_cold.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedCold.getFluid(2304))
 				.notConsumable(new ItemStack(PollutionMetaItems.COLDCORE.getMetaItem(), 1, 4))
 				.outputs(new ItemStack(PollutionMetaItems.COLDCORE.getMetaItem(), 1, 4))
 				.duration(3600)
@@ -61,7 +91,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
-				.fluidInputs(PollutionMaterials.infused_magic.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedMagic.getFluid(2304))
 				.notConsumable(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
 				.outputs(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
 				.duration(3600)
@@ -69,7 +99,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.inputs(new ItemStack(PollutionMetaItems.BLANKCORE.getMetaItem(), 1, 2))
-				.fluidInputs(PollutionMaterials.infused_magic.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedMagic.getFluid(2304))
 				.notConsumable(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
 				.outputs(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
 				.duration(3600)
@@ -129,7 +159,7 @@ public class MagicChemicalRecipes {
 
 		//魔力蒸馏
 		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.impuremana.getFluid(1000))
+				.fluidInputs(PollutionMaterials.Impuremana.getFluid(1000))
 				.fluidOutputs(GTQTMaterials.Mana.getFluid(500))
 				.fluidOutputs(Materials.Water.getFluid(500))
 				.duration(400)
@@ -142,7 +172,7 @@ public class MagicChemicalRecipes {
 				.fluidInputs(Materials.Water.getFluid(1000))
 				.fluidInputs(Materials.SulfurDioxide.getFluid(3000))
 				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(), 1, 3))
-				.output(dust, GTQTMaterials.PotassiumNitrite, 2)
+				.output(dust, Saltpeter, 2)
 				.fluidOutputs(Materials.SulfuricAcid.getFluid(3000))
 				.duration(200)
 				.EUt(120)
@@ -150,7 +180,7 @@ public class MagicChemicalRecipes {
 
 		//可燃冰→石墨烯+氢
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-				.input(dust, GTQTMaterials.Gashydrate, 4)
+				.input(dust, Oilsands, 4)
 				.output(dust, Materials.Graphene, 1)
 				.fluidOutputs(Materials.Methane.getFluid(9600))
 				.fluidOutputs(Materials.Water.getFluid(4800))
@@ -210,7 +240,7 @@ public class MagicChemicalRecipes {
 		//LLP@SiO2
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.rough_llp, 4)
-				.fluidInputs(PollutionMaterials.infused_water.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedWater.getFluid(2304))
 				.output(dust, PollutionMaterials.llp, 1)
 				.duration(2000)
 				.EUt(480)
@@ -248,67 +278,61 @@ public class MagicChemicalRecipes {
 		RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.oil_with_llp.getFluid(1000))
 				.output(dust, PollutionMaterials.llp, 1)
-				.fluidOutputs(GTQTMaterials.PreTreatedCrudeOil.getFluid(1500))
+				.fluidOutputs(Oil.getFluid(1500))
 				.fluidOutputs(Materials.SaltWater.getFluid(200))
 				.duration(20)
 				.EUt(120)
 				.buildAndRegister();
 		//悖论物质
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(2304))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedEntropy.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(2304))
 				.input(ItemsTC.alumentum)
 				.output(ItemsTC.causalityCollapser)
 				.duration(200)
 				.EUt(120)
 				.buildAndRegister();
 		//史莱姆产出：焦油、糖、甘油、胶水、橡胶、燃油（特殊）
-		GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES.recipeBuilder()
+		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(200))
 				.notConsumable(new ItemStack(PollutionMetaItems.TARSLIME.getMetaItem(), 1, 20))
 				.fluidOutputs(Materials.OilHeavy.getFluid(1000))
-				.rate(10)
 				.duration(60)
 				.EUt(120)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES.recipeBuilder()
+		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(200))
 				.notConsumable(new ItemStack(PollutionMetaItems.SUGARSLIME.getMetaItem(), 1, 21))
 				.output(Items.SUGAR, 16)
-				.rate(10)
 				.duration(60)
 				.EUt(120)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES.recipeBuilder()
+		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(200))
 				.notConsumable(new ItemStack(PollutionMetaItems.GLYCEROLSLIME.getMetaItem(), 1, 23))
 				.fluidOutputs(Materials.Glycerol.getFluid(1000))
-				.rate(10)
 				.duration(60)
 				.EUt(120)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES.recipeBuilder()
+		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(200))
 				.notConsumable(new ItemStack(PollutionMetaItems.GLUESLIME.getMetaItem(), 1, 22))
 				.fluidOutputs(Materials.Glue.getFluid(1000))
-				.rate(10)
 				.duration(60)
 				.EUt(120)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES.recipeBuilder()
+		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(200))
 				.notConsumable(new ItemStack(PollutionMetaItems.RUBBERSLIME.getMetaItem(), 1, 24))
 				.fluidOutputs(Materials.Rubber.getFluid(1000))
-				.rate(10)
 				.duration(60)
 				.EUt(120)
 				.buildAndRegister();
-		GTQTcoreRecipeMaps.BIOLOGICAL_REACTION_RECIPES.recipeBuilder()
+		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(1000))
 				.notConsumable(new ItemStack(PollutionMetaItems.TARSLIME.getMetaItem(), 1, 20))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(144))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(144))
 				.fluidOutputs(Materials.Diesel.getFluid(1000))
-				.rate(20)
 				.duration(120)
 				.EUt(120)
 				.buildAndRegister();
@@ -326,8 +350,8 @@ public class MagicChemicalRecipes {
 		//超粘稠焦油 魔导催化反应 焦油史莱姆
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.super_sticky_tar.getFluid(4000))
-				.fluidInputs(PollutionMaterials.infused_life.getFluid(9216))
-				.fluidInputs(PollutionMaterials.infused_soul.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedLife.getFluid(9216))
+				.fluidInputs(PollutionMaterials.InfusedSoul.getFluid(576))
 				.outputs(new ItemStack(PollutionMetaItems.TARSLIME.getMetaItem(), 1, 20))
 				.duration(2000)
 				.EUt(120)
@@ -381,7 +405,7 @@ public class MagicChemicalRecipes {
 				.input(Items.SUGAR, 8)
 				.notConsumable(Materials.DilutedSulfuricAcid.getFluid(1000))
 				.notConsumable(dust,ZirconiumTetrachloride,1)
-				.fluidOutputs(GTQTMaterials.Hydroxymethylfurfural.getFluid(1000))
+				.fluidOutputs(GTQTMaterials.Crotonaldehyde.getFluid(1000))
 				.duration(400)
 				.EUt(30)
 				.buildAndRegister();
@@ -390,19 +414,19 @@ public class MagicChemicalRecipes {
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
 				.notConsumable(dust, Materials.Palladium)
 				.notConsumable(dust, Materials.SodiumBicarbonate, 8)
-				.fluidInputs(GTQTMaterials.Hydroxymethylfurfural.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Crotonaldehyde.getFluid(1000))
 				.fluidInputs(Materials.Hydrogen.getFluid(10000))
-				.fluidOutputs(GTQTMaterials.Methylfuran.getFluid(500))
+				.fluidOutputs(GTQTMaterials.MethylFormate.getFluid(500))
 				.duration(400)
 				.EUt(120)
 				.buildAndRegister();
 
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
-				.notConsumable(dust, PollutionMaterials.thaummix)
+				.notConsumable(dust, PollutionMaterials.Thaummix)
 				.notConsumable(dust, Materials.SodiumBicarbonate, 8)
-				.fluidInputs(GTQTMaterials.Hydroxymethylfurfural.getFluid(1000))
+				.fluidInputs(GTQTMaterials.Crotonaldehyde.getFluid(1000))
 				.fluidInputs(Materials.Hydrogen.getFluid(10000))
-				.fluidOutputs(GTQTMaterials.Methylfuran.getFluid(500))
+				.fluidOutputs(GTQTMaterials.MethylFormate.getFluid(500))
 				.duration(400)
 				.EUt(120)
 				.buildAndRegister();
@@ -413,7 +437,7 @@ public class MagicChemicalRecipes {
 				.input(BlocksTC.logGreatwood, 16)
 				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(),1, 3))
 				.output(dust, Materials.Ash, 4)
-				.fluidOutputs(PollutionMaterials.impuremana.getFluid(576))
+				.fluidOutputs(PollutionMaterials.Impuremana.getFluid(576))
 				.duration(400)
 				.EUt(120)
 				.buildAndRegister();
@@ -422,7 +446,7 @@ public class MagicChemicalRecipes {
 				.input(BlocksTC.logSilverwood, 8)
 				.notConsumable(new ItemStack(PollutionMetaItems.HOTCORE.getMetaItem(),1, 3))
 				.output(dust, Materials.Ash, 4)
-				.fluidOutputs(PollutionMaterials.impuremana.getFluid(576))
+				.fluidOutputs(PollutionMaterials.Impuremana.getFluid(576))
 				.duration(400)
 				.EUt(120)
 				.buildAndRegister();
@@ -440,7 +464,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(dust, Materials.Salt, 10)
-				.output(dust, PollutionMaterials.salismundus, 1)
+				.output(dust, PollutionMaterials.Salismundus, 1)
 				.duration(1000)
 				.EUt(30)
 				.buildAndRegister();
@@ -464,8 +488,8 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(Items.ROTTEN_FLESH, 1)
-				.fluidInputs(PollutionMaterials.infused_death.getFluid(576))
-				.fluidInputs(PollutionMaterials.infused_soul.getFluid(144))
+				.fluidInputs(PollutionMaterials.InfusedDeath.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedSoul.getFluid(144))
 				.output(ItemsTC.brain, 1)
 				.duration(120)
 				.EUt(120)
@@ -473,7 +497,7 @@ public class MagicChemicalRecipes {
 		//海水提溴（贤者1）
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.fluidInputs(GTQTMaterials.SeaWater.getFluid(16000))
+				.fluidInputs(SaltWater.getFluid(16000))
 				.fluidOutputs(Materials.Bromine.getFluid(100))
 				.fluidOutputs(Materials.Iodine.getFluid(10))
 				.output(dust, Materials.Salt, 16)
@@ -508,7 +532,7 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(dust, Materials.Barium)
 				.input(dust, Materials.Sodium, 2)
-				.output(GTFOMetaItem.BANANA.getMetaItem(), 1, 122)
+				.output(GTFOMetaItem.BANANA)
 				.duration(120)
 				.EUt(344)
 				.buildAndRegister();
@@ -517,8 +541,8 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(OrePrefix.gem, Materials.Diamond, 9)
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
-				.fluidInputs(PollutionMaterials.infused_crystal.getFluid(1440))
-				.output(OrePrefix.gem, PollutionMaterials.valonite, 1)
+				.fluidInputs(PollutionMaterials.InfusedCrystal.getFluid(1440))
+				.output(OrePrefix.gem, PollutionMaterials.Valonite, 1)
 				.duration(500)
 				.EUt(7680)
 				.buildAndRegister();
@@ -526,8 +550,8 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(dust, Materials.Iron, 4)
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(6))
-				.fluidInputs(PollutionMaterials.infused_fire.getFluid(576))
-				.output(dust, PollutionMaterials.octine, 1)
+				.fluidInputs(PollutionMaterials.InfusedFire.getFluid(576))
+				.output(dust, PollutionMaterials.Octine, 1)
 				.duration(240)
 				.EUt(1920)
 				.buildAndRegister();
@@ -535,16 +559,16 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(dust, Materials.Copper, 4)
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(6))
-				.fluidInputs(PollutionMaterials.infused_instrument.getFluid(576))
-				.output(dust, PollutionMaterials.syrmorite, 1)
+				.fluidInputs(PollutionMaterials.InfusedInstrument.getFluid(576))
+				.output(dust, PollutionMaterials.Syrmorite, 1)
 				.duration(240)
 				.EUt(1920)
 				.buildAndRegister();
 		//贤者石复制（贤者1）
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
-				.input(OrePrefix.block, PollutionMaterials.meowmelgold, 1)
-				.fluidInputs(PollutionMaterials.infused_alchemy.getFluid(14400))
+				.input(OrePrefix.block, PollutionMaterials.KQGold, 1)
+				.fluidInputs(PollutionMaterials.InfusedAlchemy.getFluid(14400))
 				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.duration(10000)
 				.EUt(480)
@@ -553,7 +577,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(576))
 				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0))
 				.circuitMeta(1)
 				.duration(1000)
@@ -562,7 +586,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(576))
 				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1))
 				.circuitMeta(2)
 				.duration(1000)
@@ -571,7 +595,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(576))
 				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2))
 				.circuitMeta(3)
 				.duration(1000)
@@ -580,7 +604,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(576))
 				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3))
 				.circuitMeta(4)
 				.duration(1000)
@@ -589,7 +613,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.input(OrePrefix.frameGt, PollutionMaterials.hyperdimensional_silver, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(576))
 				.outputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_4))
 				.circuitMeta(5)
 				.duration(1000)
@@ -601,7 +625,7 @@ public class MagicChemicalRecipes {
 
 		//方铅矿矿粉+世界盐 搅拌 硫铅盐
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(dust, PollutionMaterials.salismundus, 1)
+				.input(dust, PollutionMaterials.Salismundus, 1)
 				.input(dust, Materials.Galena, 2)
 				.output(dust, PollutionMaterials.sulfo_plumbic_salt, 3)
 				.duration(300)
@@ -611,7 +635,7 @@ public class MagicChemicalRecipes {
 		//硫铅盐+不纯魔力 流体固化 蕴魔硫铅盐
 		RecipeMaps.FLUID_SOLIDFICATION_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.sulfo_plumbic_salt, 1)
-				.fluidInputs(PollutionMaterials.impuremana.getFluid(48))
+				.fluidInputs(PollutionMaterials.Impuremana.getFluid(48))
 				.output(dust, PollutionMaterials.magical_sulfo_plumbic_salt, 1)
 				.duration(100)
 				.EUt(120)
@@ -620,7 +644,7 @@ public class MagicChemicalRecipes {
 		//蕴魔硫铅盐+液态序 工业高炉 一次炼金残渣+一次升华蒸汽
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.magical_sulfo_plumbic_salt, 3)
-				.fluidInputs(PollutionMaterials.infused_order.getFluid(432))
+				.fluidInputs(PollutionMaterials.InfusedOrder.getFluid(432))
 				.output(dust, PollutionMaterials.alchemical_residue_1, 3)
 				.fluidOutputs(PollutionMaterials.alchemical_vapor_1.getFluid(1000))
 				.duration(1200)
@@ -669,7 +693,7 @@ public class MagicChemicalRecipes {
 		//高魔素硫酸亚锡+液态水 工业高炉 二次炼金残渣+二次升华蒸汽
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.highmana_stannous_sulfate, 3)
-				.fluidInputs(PollutionMaterials.infused_water.getFluid(432))
+				.fluidInputs(PollutionMaterials.InfusedWater.getFluid(432))
 				.output(dust, PollutionMaterials.alchemical_residue_2, 3)
 				.fluidOutputs(PollutionMaterials.alchemical_vapor_2.getFluid(1000))
 				.duration(1800)
@@ -682,7 +706,7 @@ public class MagicChemicalRecipes {
 				.input(dust, PollutionMaterials.alchemical_residue_2, 1)
 				.output(dust, Materials.Tin,1)
 				.chancedOutput(dust, Materials.Sulfur, 1, 2000, 200)
-				.fluidOutputs(PollutionMaterials.impuremana.getFluid(18))
+				.fluidOutputs(PollutionMaterials.Impuremana.getFluid(18))
 				.duration(200)
 				.EUt(30)
 				.buildAndRegister();
@@ -691,7 +715,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.alchemical_vapor_2.getFluid(1000))
 				.fluidInputs(Materials.Mercury.getFluid(9000))
-				.input(dust, PollutionMaterials.salismundus, 10)
+				.input(dust, PollutionMaterials.Salismundus, 10)
 				.fluidOutputs(PollutionMaterials.impure_mercuric_salt_solution.getFluid(10000))
 				.duration(300)
 				.EUt(480)
@@ -700,7 +724,7 @@ public class MagicChemicalRecipes {
 		//含杂汞盐溶液 蒸馏塔 神秘汞盐溶液+世界盐+水
 		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.impure_mercuric_salt_solution.getFluid(1000))
-				.output(dust, PollutionMaterials.salismundus, 1)
+				.output(dust, PollutionMaterials.Salismundus, 1)
 				.fluidOutputs(PollutionMaterials.mercuric_salt_solution.getFluid(100))
 				.fluidOutputs(Materials.Water.getFluid(900))
 				.duration(30)
@@ -709,7 +733,7 @@ public class MagicChemicalRecipes {
 
 		//神秘汞盐溶液+火粉 工业高炉 三次炼金残渣+三次升华蒸汽
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
-				.input(dust, PollutionMaterials.infused_fire, 3)
+				.input(dust, PollutionMaterials.InfusedFire, 3)
 				.fluidInputs(PollutionMaterials.mercuric_salt_solution.getFluid(1000))
 				.output(dust, PollutionMaterials.alchemical_residue_3, 10)
 				.fluidOutputs(PollutionMaterials.alchemical_vapor_3.getFluid(1000))
@@ -740,7 +764,7 @@ public class MagicChemicalRecipes {
 		//魔力激活氯化铁溶液+小撮炽焰铁粉+铁粉+甲醇 化反 魔力激活氯化亚铁甲醇溶液
 		RecipeMaps.LARGE_CHEMICAL_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.magic_activated_iron_chloride_solution.getFluid(3000))
-				.input(OrePrefix.dustTiny, PollutionMaterials.octine, 1)
+				.input(OrePrefix.dustTiny, PollutionMaterials.Octine, 1)
 				.input(dust, Materials.Iron, 3)
 				.fluidInputs(Materials.Methanol.getFluid(1000))
 				.fluidOutputs(PollutionMaterials.magic_activated_ferrous_chloride_ethanol_solution.getFluid(6000))
@@ -761,9 +785,9 @@ public class MagicChemicalRecipes {
 		//四次炼金残渣 离心 概率火+概率魔力钢粉+概率世界盐
 		RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.alchemical_residue_4, 2)
-				.chancedOutput(dust, PollutionMaterials.infused_fire, 1, 1500, 100)
-				.chancedOutput(dust, PollutionMaterials.manasteel, 1, 2500, 100)
-				.chancedOutput(dust, PollutionMaterials.salismundus, 1, 500, 100)
+				.chancedOutput(dust, PollutionMaterials.InfusedFire, 1, 1500, 100)
+				.chancedOutput(dust, PollutionMaterials.Manasteel, 1, 2500, 100)
+				.chancedOutput(dust, PollutionMaterials.Salismundus, 1, 500, 100)
 				.duration(300)
 				.EUt(30)
 				.buildAndRegister();
@@ -779,7 +803,7 @@ public class MagicChemicalRecipes {
 		//除杂激活氯化亚铁+地粉 工业高炉 四次升华蒸汽+氯化亚铁
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.purified_activated_ferrous_chloride, 6)
-				.input(dust, PollutionMaterials.infused_earth, 3)
+				.input(dust, PollutionMaterials.InfusedEarth, 3)
 				.output(dust, PollutionMaterials.ferrous_chloride, 6)
 				.fluidOutputs(PollutionMaterials.alchemical_vapor_4.getFluid(1000))
 				.duration(900)
@@ -790,7 +814,7 @@ public class MagicChemicalRecipes {
 		//四次升华蒸汽+小撮赛摩铜粉+蒸馏水 搅拌 赛摩铜掺杂魔水溶液
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.alchemical_vapor_4.getFluid(1000))
-				.input(OrePrefix.dustTiny, PollutionMaterials.syrmorite, 1)
+				.input(OrePrefix.dustTiny, PollutionMaterials.Syrmorite, 1)
 				.fluidInputs(Materials.DistilledWater.getFluid(520))
 				.fluidOutputs(PollutionMaterials.syrmorite_doped_magic_water_solution.getFluid(1520))
 				.duration(300)
@@ -800,7 +824,7 @@ public class MagicChemicalRecipes {
 		//赛摩铜掺杂魔水溶液+世界盐 化反 铜粉+未成形胚胎魔水+水
 		RecipeMaps.LARGE_CHEMICAL_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.syrmorite_doped_magic_water_solution.getFluid(15200))
-				.input(dust, PollutionMaterials.salismundus, 1)
+				.input(dust, PollutionMaterials.Salismundus, 1)
 				.output(dust, Materials.Copper)
 				.fluidOutputs(PollutionMaterials.unformed_embryo_magic_water.getFluid(1000))
 				.fluidOutputs(Materials.Water.getFluid(14200))
@@ -821,7 +845,7 @@ public class MagicChemicalRecipes {
 		//胚胎魔水+风粉 工业高炉 五次升华蒸汽+五次炼金残渣
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.embryo_magic_water.getFluid(100))
-				.input(dust, PollutionMaterials.infused_air, 3)
+				.input(dust, PollutionMaterials.InfusedAir, 3)
 				.output(dust, PollutionMaterials.alchemical_residue_5, 1)
 				.fluidOutputs(PollutionMaterials.alchemical_vapor_5.getFluid(1000))
 				.duration(600)
@@ -832,7 +856,7 @@ public class MagicChemicalRecipes {
 		//五次炼金残渣 离心 白漫宿+概率地
 		RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.alchemical_residue_5, 1)
-				.chancedOutput(dust, PollutionMaterials.infused_earth, 1, 1000, 100)
+				.chancedOutput(dust, PollutionMaterials.InfusedEarth, 1, 1000, 100)
 				.fluidOutputs(PollutionMaterials.whitemansus.getFluid(10))
 				.duration(1600)
 				.EUt(30)
@@ -861,7 +885,7 @@ public class MagicChemicalRecipes {
 
 		//超次元含杂秘银流+世界盐 化学浸洗 超次元秘银（粉）+六次炼金残渣
 		RecipeMaps.CHEMICAL_BATH_RECIPES.recipeBuilder()
-				.input(dust, PollutionMaterials.salismundus, 1)
+				.input(dust, PollutionMaterials.Salismundus, 1)
 				.fluidInputs(PollutionMaterials.impure_hyperdimensional_silver.getFluid(1440))
 				.output(dust, PollutionMaterials.hyperdimensional_silver, 1)
 				.output(dust, PollutionMaterials.alchemical_residue_6, 10)
@@ -883,7 +907,7 @@ public class MagicChemicalRecipes {
 		//超次元秘银+液态熵 工业高炉 六次升华蒸汽
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.hyperdimensional_silver, 1)
-				.fluidInputs(PollutionMaterials.infused_entropy.getFluid(432))
+				.fluidInputs(PollutionMaterials.InfusedEntropy.getFluid(432))
 				.fluidOutputs(PollutionMaterials.alchemical_vapor_6.getFluid(890))
 				.duration(600)
 				.blastFurnaceTemp(4500)
@@ -905,7 +929,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.BLAST_RECIPES.recipeBuilder()
 				.input(dust, Materials.Gold, 1)
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(42))
-				.output(OrePrefix.ingotHot, PollutionMaterials.meowmelgold, 1)
+				.output(OrePrefix.ingotHot, PollutionMaterials.KQGold, 1)
 				.duration(2000)
 				.blastFurnaceTemp(5400)
 				.EUt(7680)
@@ -920,7 +944,7 @@ public class MagicChemicalRecipes {
 				.input(dust, Materials.Copper, 4)
 				.input(dust, Materials.Phosphate, 6)
 				.fluidInputs(Materials.Oxygen.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.crude_lk_99.getFluid(MOLTEN, 2448))
+				.fluidOutputs(PollutionMaterials.crude_lk_99.getFluid(2448))
 				.blastFurnaceTemp(2700)
 				.circuitMeta(4)
 				.duration(1700)
@@ -932,7 +956,7 @@ public class MagicChemicalRecipes {
 				.input(dust, Materials.Phosphate, 6)
 				.fluidInputs(Materials.Oxygen.getFluid(1000))
 				.fluidInputs(Materials.Nitrogen.getFluid(17000))
-				.fluidOutputs(PollutionMaterials.crude_lk_99.getFluid(MOLTEN, 2448))
+				.fluidOutputs(PollutionMaterials.crude_lk_99.getFluid(2448))
 				.blastFurnaceTemp(2700)
 				.circuitMeta(14)
 				.duration(1120)
@@ -940,10 +964,10 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		//做液体
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.infused_metal.getFluid(1296))
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1296))
+				.fluidInputs(PollutionMaterials.InfusedMetal.getFluid(1296))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1296))
 				.input(dust, PollutionMaterials.crude_lk_99, 4)
-				.input(dust, PollutionMaterials.syrmorite, 4)
+				.input(dust, PollutionMaterials.Syrmorite, 4)
 				.fluidOutputs(PollutionMaterials.magical_superconductive_liquid.getFluid(2000))
 				.circuitMeta(1)
 				.duration(400)
@@ -953,7 +977,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(576))
 				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
-				.input(dust, PollutionMaterials.mansussteel, 4)
+				.input(dust, PollutionMaterials.Mansussteel, 4)
 				.input(dust, GTQTMaterials.Thaumium, 4)
 				.fluidOutputs(PollutionMaterials.basic_thaumic_superconductor.getFluid(2304))
 				.circuitMeta(4)
@@ -964,7 +988,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(576))
 				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
-				.input(dust, PollutionMaterials.meowmelgold, 4)
+				.input(dust, PollutionMaterials.KQGold, 4)
 				.input(dust, PollutionMaterials.hyperdimensional_silver, 4)
 				.fluidOutputs(PollutionMaterials.advanced_thaumic_superconductor.getFluid(2304))
 				.circuitMeta(4)
@@ -975,8 +999,8 @@ public class MagicChemicalRecipes {
 	}
 	private static void battery_chain() {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(dust, PollutionMaterials.mansussteel, 4)
-				.input(dust, PollutionMaterials.ordolead, 1)
+				.input(dust, PollutionMaterials.Mansussteel, 4)
+				.input(dust, PollutionMaterials.Ordolead, 1)
 				.output(dust, PollutionMaterials.basic_battery_hull_alloy, 5)
 				.circuitMeta(2)
 				.duration(400)
@@ -984,7 +1008,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.hyperdimensional_silver, 4)
-				.input(dust, PollutionMaterials.valonite, 1)
+				.input(dust, PollutionMaterials.Valonite, 1)
 				.output(dust, PollutionMaterials.advanced_battery_hull_alloy, 5)
 				.circuitMeta(2)
 				.duration(400)
@@ -993,17 +1017,17 @@ public class MagicChemicalRecipes {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.input(dust, Materials.Lithium, 6)
 				.input(dust, GTQTMaterials.Thaumium, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_motion.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedMotion.getFluid(1000))
 				.output(dust, PollutionMaterials.basic_battery_content, 9)
 				.duration(800)
 				.EUt(120)
 				.buildAndRegister();
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
-				.input(dust, PollutionMaterials.meowmelgold, 6)
+				.input(dust, PollutionMaterials.KQGold, 6)
 				.input(dust, Materials.Caesium, 1)
-				.fluidInputs(PollutionMaterials.infused_energy.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_motion.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedMotion.getFluid(1000))
 				.output(dust, PollutionMaterials.basic_battery_content, 9)
 				.duration(800)
 				.EUt(7680)
@@ -1132,7 +1156,7 @@ public class MagicChemicalRecipes {
 				.input(dust, Materials.Netherrack, 6)
 				.input(dust, Materials.Endstone)
 				.input(dust, Materials.Stone)
-				.fluidInputs(PollutionMaterials.infused_taint.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedTaint.getFluid(1000))
 				.output(dust, PollutionMaterials.filth, 9)
 				.duration(800)
 				.EUt(VA[IV])
@@ -1140,8 +1164,8 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.input(dust, PollutionMaterials.filth, 9)
-				.fluidInputs(PollutionMaterials.infused_death.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_dark.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedDeath.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedDark.getFluid(1000))
 				.fluidOutputs(PollutionMaterials.filth_water.getFluid(11000))
 				.duration(800)
 				.EUt(VA[IV])
@@ -1149,7 +1173,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.filth_water.getFluid(1000))
 				.fluidOutputs(GTQTMaterials.Mana.getFluid(800))
-				.fluidOutputs(PollutionMaterials.infused_taint.getFluid(100))
+				.fluidOutputs(PollutionMaterials.InfusedTaint.getFluid(100))
 				.fluidOutputs(PollutionMaterials.void_water.getFluid(100))
 				.duration(180)
 				.EUt(VA[LuV])
@@ -1157,8 +1181,8 @@ public class MagicChemicalRecipes {
 		RecipeMaps.DISTILLATION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.void_water.getFluid(1000))
 				.output(dust, PollutionMaterials.void_material)
-				.fluidOutputs(GTQTMaterials.Richmagic.getFluid(800))
-				.fluidOutputs(PollutionMaterials.infused_taint.getFluid(100))
+				.fluidOutputs(PollutionMaterials.ErichAura.getFluid(800))
+				.fluidOutputs(PollutionMaterials.InfusedTaint.getFluid(100))
 				.fluidOutputs(Materials.Water.getFluid(100))
 				.duration(1980)
 				.EUt(VA[LuV])
@@ -1166,7 +1190,7 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.fluidInputs(Materials.Iron.getFluid(576))
-				.fluidInputs(PollutionMaterials.infused_void.getFluid(576))
+				.fluidInputs(PollutionMaterials.InfusedVoid.getFluid(576))
 				.input(ItemsTC.voidSeed, 4)
 				.input(dust, PollutionMaterials.void_material)
 				.output(dust, GTQTMaterials.VoidMetal, 4)
@@ -1175,7 +1199,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		PORecipeMaps.MAGIC_GREENHOUSE_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
-				.fluidInputs(PollutionMaterials.infused_void.getFluid(2304))
+				.fluidInputs(PollutionMaterials.InfusedVoid.getFluid(2304))
 				.input(Items.WHEAT_SEEDS, 64)
 				.input(dust, PollutionMaterials.void_material)
 				.output(ItemsTC.voidSeed, 4)
@@ -1189,7 +1213,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Ammonia.getFluid(1000))
 				.fluidInputs(Materials.HydrochloricAcid.getFluid(1000))
-				.input(dust, SodiumNitrite, 1)
+				.input(dust, GTQTMaterials.SodiumNitrate, 1)
 				.output(dust, Materials.Salt, 1)
 				.fluidOutputs(PollutionMaterials.hydrazoic_acid.getFluid(1000))
 				.fluidOutputs(Materials.Water.getFluid(2000))
@@ -1208,7 +1232,7 @@ public class MagicChemicalRecipes {
 		//环戊二烯基钠合成
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
 				.input(dust, Materials.Sodium, 2)
-		        .fluidInputs(Cyclopentadiene, 2000)
+		        .fluidInputs(GTQTMaterials.Acetylene.getFluid(2000))
 				.output(dust, PollutionMaterials.sodium_cyclopentadienide, 2)
 				.fluidOutputs(Hydrogen.getFluid(1000))
 				.duration(400)
@@ -1218,7 +1242,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.CHEMICAL_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.sodium_cyclopentadienide, 2)
 				.input(dust, HafniumTetrachloride, 1)
-				.output(dust, PollutionMaterials.hafnocene_dichloride, 1)
+				.output(dust, PollutionMaterials.HafnoceneDichloride, 1)
 				.output(dust, Salt, 2)
 				.duration(400)
 				.EUt(VA[EV])
@@ -1226,10 +1250,10 @@ public class MagicChemicalRecipes {
 		//茂叠铪基醚
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
-				.input(dust, PollutionMaterials.hafnocene_dichloride, 2)
+				.input(dust, PollutionMaterials.HafnoceneDichloride, 2)
 				.input(dust, PollutionMaterials.sodium_azide, 2)
 				.fluidInputs(Water.getFluid(1000))
-				.output(dust, PollutionMaterials.μ_oxo_bis_hafnocene_azide, 1)
+				.output(dust, PollutionMaterials.uOxoBisHafnoceneAzide, 1)
 				.fluidOutputs(HydrochloricAcid.getFluid(2000))
 				.output(dust, Salt, 2)
 				.duration(400)
@@ -1247,7 +1271,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		//注魔除杂血 魔导反应
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
-				.input(dust, PollutionMaterials.infused_magic, 2)
+				.input(dust, PollutionMaterials.InfusedMagic, 2)
 				.notConsumable(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getStackForm())
 				.fluidInputs(PollutionMaterials.purified_blood.getFluid(1000))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(100))
@@ -1259,7 +1283,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.MIXER_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
 				.fluidInputs(GTQTMaterials.GelidCryotheum.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_cold.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedCold.getFluid(1000))
 				.fluidOutputs(PollutionMaterials.arcane_gelid_fluid.getFluid(3000))
 				.duration(200)
 				.EUt(VA[EV])
@@ -1276,7 +1300,7 @@ public class MagicChemicalRecipes {
 		//秘学运算液基底 魔法炖屎
 		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
-				.fluidInputs(PollutionMaterials.infused_thought.getFluid(1000))
+				.fluidInputs(PollutionMaterials.InfusedThought.getFluid(1000))
 				.input(PollutionMetaItems.BLOOD_IPS_HUMAN_BRAIN)
 				.fluidOutputs(PollutionMaterials.arcane_computational_substrate.getFluid(2000))
 				.duration(1000)
@@ -1294,5 +1318,4 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 	}
 
- */
 }
