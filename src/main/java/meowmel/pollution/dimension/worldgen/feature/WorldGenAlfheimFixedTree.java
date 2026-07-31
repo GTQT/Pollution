@@ -1,5 +1,6 @@
 package meowmel.pollution.dimension.worldgen.feature;
 
+import meowmel.pollution.common.block.alfheim.AlfheimBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -25,25 +26,36 @@ import java.util.Random;
 public final class WorldGenAlfheimFixedTree {
 
     private static final List<Placement> SCHEMA = loadSchema();
+    private static final IBlockState STABLE_OAK_LEAVES = Blocks.LEAVES.getDefaultState()
+            .withProperty(BlockLeaves.CHECK_DECAY, false)
+            .withProperty(BlockLeaves.DECAYABLE, true);
 
     private WorldGenAlfheimFixedTree() {
     }
 
     public static boolean generateDreamTree(World world, Random random, BlockPos origin) {
-        return generate(world, origin, ModBlocks.dreamwood.getDefaultState(), stableOakLeaves());
+        return generate(world, origin, ModBlocks.dreamwood.getDefaultState(),
+                AlfheimBlocks.DREAM_LEAVES.getDefaultState());
     }
 
     public static boolean generateSadOak(World world, Random random, BlockPos origin) {
-        return generate(world, origin, Blocks.LOG.getDefaultState(), stableOakLeaves());
+        return generate(world, origin, Blocks.LOG.getDefaultState(), STABLE_OAK_LEAVES);
     }
 
     private static boolean generate(World world, BlockPos origin, IBlockState wood, IBlockState leaves) {
         if (!locationIsValidSpawn(world, origin)) {
             return false;
         }
+        IBlockState woodX = orient(wood, 'X');
+        IBlockState woodY = orient(wood, 'Y');
+        IBlockState woodZ = orient(wood, 'Z');
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         for (Placement placement : SCHEMA) {
-            BlockPos pos = origin.add(placement.x, placement.y, placement.z);
-            IBlockState state = placement.kind == 'L' ? leaves : orient(wood, placement.kind);
+            pos.setPos(origin.getX() + placement.x, origin.getY() + placement.y,
+                    origin.getZ() + placement.z);
+            IBlockState state = placement.kind == 'L' ? leaves
+                    : placement.kind == 'X' ? woodX
+                    : placement.kind == 'Z' ? woodZ : woodY;
             if (canBePlaced(world, pos, placement.kind == 'L')) {
                 world.setBlockState(pos, state, 2);
             }
@@ -95,12 +107,6 @@ public final class WorldGenAlfheimFixedTree {
         BlockLog.EnumAxis axis = kind == 'X' ? BlockLog.EnumAxis.X
                 : kind == 'Z' ? BlockLog.EnumAxis.Z : BlockLog.EnumAxis.Y;
         return state.withProperty(BlockLog.LOG_AXIS, axis);
-    }
-
-    private static IBlockState stableOakLeaves() {
-        return Blocks.LEAVES.getDefaultState()
-                .withProperty(BlockLeaves.CHECK_DECAY, false)
-                .withProperty(BlockLeaves.DECAYABLE, true);
     }
 
     private static List<Placement> loadSchema() {

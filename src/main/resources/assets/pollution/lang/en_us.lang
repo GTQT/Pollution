@@ -1,3 +1,7 @@
+# Magical Rainbow Tree
+tile.pollution.rainbow_leaves.name=Magical Rainbow Leaves
+tile.pollution.rainbow_sapling.name=Magical Rainbow Sapling
+
 # Tarot Items
 metaitem.the_world.name=The World (Upright)
 metaitem.the_world.tooltip=Wish you the universe in your grasp
@@ -1123,6 +1127,7 @@ item.pollution.heart_fruit_i.name=Heart Fruit
 tile.pollution.eldritch_eye.name=Eldritch Eye
 tile.pollution.tentacle.name=Writhing Tentacle
 tile.pollution.alfheim_elven_sand.name=Elven Sand
+tile.pollution.alfheim_dream_leaves.name=Dream Leaves
 tile.pollution.alfheim_white_grape.name=White Grapes
 tile.pollution.alfheim_red_grape_0.name=Red Grape Vine
 tile.pollution.alfheim_red_grape_1.name=Red Grape Vine

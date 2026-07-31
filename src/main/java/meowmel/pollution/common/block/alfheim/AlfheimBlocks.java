@@ -21,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public final class AlfheimBlocks {
 
     public static final BlockAlfheimElvenSand ELVEN_SAND = named(new BlockAlfheimElvenSand(), "alfheim_elven_sand");
+    public static final BlockAlfheimDreamLeaves DREAM_LEAVES =
+            named(new BlockAlfheimDreamLeaves(), "alfheim_dream_leaves");
     public static final BlockAlfheimWhiteGrape WHITE_GRAPE = named(new BlockAlfheimWhiteGrape(), "alfheim_white_grape");
     public static final BlockAlfheimRedGrape[] RED_GRAPES = {
             named(new BlockAlfheimRedGrape(0), "alfheim_red_grape_0"),
@@ -29,7 +31,7 @@ public final class AlfheimBlocks {
     };
 
     private static final Block[] ALL = {
-            ELVEN_SAND, WHITE_GRAPE, RED_GRAPES[0], RED_GRAPES[1], RED_GRAPES[2]
+            ELVEN_SAND, DREAM_LEAVES, WHITE_GRAPE, RED_GRAPES[0], RED_GRAPES[1], RED_GRAPES[2]
     };
 
     private AlfheimBlocks() {

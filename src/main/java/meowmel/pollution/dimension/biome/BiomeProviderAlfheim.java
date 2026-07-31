@@ -1,10 +1,13 @@
 package meowmel.pollution.dimension.biome;
 
+import meowmel.pollution.dimension.worldgen.WorldEngineNoise;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +18,8 @@ public final class BiomeProviderAlfheim extends BiomeProvider {
     private static final int OCTAVES = 6;
     private static final double SCALE_X = 8000.0D;
     private static final double SCALE_Y = 0.4D;
+    private static final WorldEngineNoise.NoiseProfile BIOME_NOISE =
+            WorldEngineNoise.profile(PERSISTENCE, OCTAVES);
 
     /** Registration order from WorldProviderAlfheim.genSettings. */
     private static final Profile[] PROFILES = {
@@ -32,20 +37,21 @@ public final class BiomeProviderAlfheim extends BiomeProvider {
             new Profile(AlfheimBiomes.PIT_FOREST, 0.82D, 1.0D)
     };
 
-    private final long seed;
+    private static final List<Biome> SPAWN_BIOMES = Collections.unmodifiableList(Arrays.asList(
+            AlfheimBiomes.FIELD,
+            AlfheimBiomes.ISLAND_FOREST
+    ));
+
+    private final long noiseSeed;
 
     public BiomeProviderAlfheim(long seed) {
-        this.seed = seed;
+        // WE_Biome.getBiomeAt: (long) Math.pow(worldSeed * 84, 6)
+        this.noiseSeed = (long) Math.pow((double) (seed * 84L), 6.0D);
     }
 
     @Override
-    public Biome getBiome(BlockPos pos) {
-        return getBiomeAt(pos.getX(), pos.getZ());
-    }
-
-    @Override
-    public Biome getBiome(BlockPos pos, Biome defaultBiome) {
-        return getBiomeAt(pos.getX(), pos.getZ());
+    public List<Biome> getBiomesToSpawnIn() {
+        return SPAWN_BIOMES;
     }
 
     @Override
@@ -58,10 +64,20 @@ public final class BiomeProviderAlfheim extends BiomeProvider {
         return fill(biomes, x, z, width, height);
     }
 
+    /**
+     * BiomeCache calls this overload directly. The base implementation cannot
+     * be used because this provider deliberately has no GenLayer instances.
+     */
+    @Override
+    public Biome[] getBiomes(@Nullable Biome[] biomes, int x, int z,
+                             int width, int height, boolean cacheFlag) {
+        return fill(biomes, x, z, width, height);
+    }
+
     @Override
     public boolean areBiomesViable(int x, int z, int radius, List<Biome> allowed) {
-        for (int sampleX = x - radius; sampleX <= x + radius; sampleX += 16) {
-            for (int sampleZ = z - radius; sampleZ <= z + radius; sampleZ += 16) {
+        for (int sampleX = x - radius; sampleX <= x + radius; sampleX += 4) {
+            for (int sampleZ = z - radius; sampleZ <= z + radius; sampleZ += 4) {
                 if (!allowed.contains(getBiomeAt(sampleX, sampleZ))) {
                     return false;
                 }
@@ -77,8 +93,11 @@ public final class BiomeProviderAlfheim extends BiomeProvider {
         int matches = 0;
         for (int sampleX = x - range; sampleX <= x + range; sampleX += 4) {
             for (int sampleZ = z - range; sampleZ <= z + range; sampleZ += 4) {
-                if (biomes.contains(getBiomeAt(sampleX, sampleZ)) && (result == null || random.nextInt(++matches) == 0)) {
-                    result = new BlockPos(sampleX, 0, sampleZ);
+                if (biomes.contains(getBiomeAt(sampleX, sampleZ))) {
+                    if (result == null || random.nextInt(matches + 1) == 0) {
+                        result = new BlockPos(sampleX, 0, sampleZ);
+                    }
+                    matches++;
                 }
             }
         }
@@ -98,8 +117,8 @@ public final class BiomeProviderAlfheim extends BiomeProvider {
     }
 
     private Biome getBiomeAt(int x, int z) {
-        long noiseSeed = (long) Math.pow((double) (seed * 84L), 6.0D);
-        double mapValue = perlinNoise2D(noiseSeed, x / SCALE_X, z / SCALE_X, PERSISTENCE, OCTAVES) * SCALE_Y;
+        double mapValue = WorldEngineNoise.perlinNoise2D(
+                noiseSeed, x / SCALE_X, z / SCALE_X, BIOME_NOISE) * SCALE_Y;
 
         Profile selected = null;
         for (Profile profile : PROFILES) {
@@ -110,56 +129,6 @@ public final class BiomeProviderAlfheim extends BiomeProvider {
         }
         // WorldEngine uses the first registered biome as its fallback.
         return selected == null ? AlfheimBiomes.FIELD : selected.biome;
-    }
-
-    private static double perlinNoise2D(long seed, double x, double z, double persistence, int octaves) {
-        double total = 0.0D;
-        for (int octave = 1; octave <= octaves; octave++) {
-            double frequency = Math.pow(2.0D, octave);
-            double amplitude = Math.pow(persistence, octave);
-            total += cosineInterpolatedNoise2D(seed, x * frequency, z * frequency) * amplitude;
-        }
-        return total;
-    }
-
-    private static double cosineInterpolatedNoise2D(long seed, double x, double z) {
-        long integerX = (long) x;
-        long integerZ = (long) z;
-        double fractionalX = Math.abs(x) - Math.abs(integerX);
-        double fractionalZ = Math.abs(z) - Math.abs(integerZ);
-        long neighborX = Math.abs(x) == x ? integerX + 1L : integerX - 1L;
-        long neighborZ = Math.abs(z) == z ? integerZ + 1L : integerZ - 1L;
-
-        double v1 = smoothNoise2D(seed, integerX, integerZ);
-        double v2 = smoothNoise2D(seed, neighborX, integerZ);
-        double v3 = smoothNoise2D(seed, integerX, neighborZ);
-        double v4 = smoothNoise2D(seed, neighborX, neighborZ);
-        return cosineInterpolate(cosineInterpolate(v1, v2, fractionalX),
-                cosineInterpolate(v3, v4, fractionalX), fractionalZ);
-    }
-
-    private static double smoothNoise2D(long seed, long x, long z) {
-        double corners = (numberNoise2D(seed, x - 1L, z - 1L)
-                + numberNoise2D(seed, x + 1L, z - 1L)
-                + numberNoise2D(seed, x - 1L, z + 1L)
-                + numberNoise2D(seed, x + 1L, z + 1L)) / 16.0D;
-        double sides = (numberNoise2D(seed, x - 1L, z)
-                + numberNoise2D(seed, x + 1L, z)
-                + numberNoise2D(seed, x, z - 1L)
-                + numberNoise2D(seed, x, z + 1L)) / 8.0D;
-        return corners + sides + numberNoise2D(seed, x, z) / 4.0D;
-    }
-
-    private static double numberNoise2D(long seed, long x, long z) {
-        long n = x + z * 31L + seed * 11L;
-        n = (n << 13) ^ n;
-        long value = ((n * n * 15731L + 789221L) * n + 1376312589L) & 2147483647L;
-        return 1.0D - value / 1073741824.0D;
-    }
-
-    private static double cosineInterpolate(double a, double b, double amount) {
-        double factor = (1.0D - Math.cos(amount * Math.PI)) * 0.5D;
-        return a * (1.0D - factor) + b * factor;
     }
 
     private static final class Profile {

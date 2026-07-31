@@ -2,6 +2,7 @@ package meowmel.pollution.common.metatileentity.storage;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.GregtechDataCodes;
@@ -40,6 +41,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -57,6 +59,8 @@ import java.util.function.Consumer;
 import static meowmel.pollution.common.metatileentity.PollutionMetaTileEntities.ASPECT_TANK;
 
 public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredMetaTileEntity, IActiveOutputSide, IFastRenderMetaTileEntity, IAspectSource, IEssentiaTransport {
+    private static final int UPDATE_ASPECT_FILTER = 202;
+
     private final int tier;
     private final int maxAspectCapacity;
     private boolean autoOutputFluids;
@@ -342,13 +346,10 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
     }
 
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        /*
-        Textures.QUANTUM_STORAGE_RENDERER.renderMachine(renderState, translation,
+        AspectStorageRenderer.renderMachineFrame(renderState, translation,
                 ArrayUtils.add(pipeline,
                         new ColourMultiplier(GTUtility.convertRGBtoOpaqueRGBA_CL(getPaintingColorForRendering()))),
-                this);
-
-         */
+                this.tier, this.getFrontFacing());
         POTextures.QUANTUM_ASPECT_TANK_OVERLAY.renderSided(EnumFacing.UP, renderState, translation, pipeline);
         if (this.outputFacing != null) {
             POTextures.PIPE_ASPECT_OUT_OVERLAY.renderSided(this.outputFacing, renderState, translation, pipeline);
@@ -501,7 +502,7 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
 
     public void writeAspectFilter(Aspect aspect)
     {
-        this.writeCustomData(GregtechDataCodes.UPDATE_IS_VOIDING, (buf ->
+        this.writeCustomData(UPDATE_ASPECT_FILTER, (buf ->
         {
             buf.writeString(aspect != null ? aspect.getTag() : "");
         }));
@@ -528,22 +529,21 @@ public class MetaTileEntityAspectTank extends MetaTileEntity implements ITieredM
             {
                 this.scheduleRenderUpdate();
             }
-        }   else if (dataId == GregtechDataCodes.UPDATE_IS_VOIDING)
+        }   else if (dataId == UPDATE_ASPECT_FILTER)
         {
             String aspect = buf.readString(100);
 
             this.aspectFilter = Aspect.getAspect(aspect);
             this.scheduleRenderUpdate();
 
-        }
-        if (dataId == GregtechDataCodes.UPDATE_OUTPUT_FACING) {
+        } else if (dataId == GregtechDataCodes.UPDATE_OUTPUT_FACING) {
             this.outputFacing = EnumFacing.VALUES[buf.readByte()];
             this.scheduleRenderUpdate();
         } else if (dataId == GregtechDataCodes.UPDATE_AUTO_OUTPUT_FLUIDS) {
             this.autoOutputFluids = buf.readBoolean();
             this.scheduleRenderUpdate();
         }  else if (dataId == GregtechDataCodes.UPDATE_IS_VOIDING) {
-            this.setVoiding(buf.readBoolean());
+            this.voiding = buf.readBoolean();
         }
     }
 

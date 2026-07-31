@@ -44,7 +44,7 @@ public class QuantumAspectTankMainWidget  extends AbstractWidgetGroup {
     {
         this.writeUpdateInfo(204, packetBuffer ->
         {
-            packetBuffer.writeString(aspect.getTag());
+            packetBuffer.writeString(aspect == null ? "" : aspect.getTag());
         });
 
     }
@@ -78,7 +78,8 @@ public class QuantumAspectTankMainWidget  extends AbstractWidgetGroup {
             this.widget.setActive(true);
             this.widget.setVisible(true);
         } else if (id == 204) {
-            Aspect aspect = Aspect.getAspect(buffer.readString(100));
+            String aspectTag = buffer.readString(100);
+            Aspect aspect = aspectTag.isEmpty() ? null : Aspect.getAspect(aspectTag);
             this.widget.setAspectImage(aspect);
         }
         else {

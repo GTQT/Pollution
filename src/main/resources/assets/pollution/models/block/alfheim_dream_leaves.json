@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "pollution:blocks/alfheim_dream_leaves"
+  }
+}

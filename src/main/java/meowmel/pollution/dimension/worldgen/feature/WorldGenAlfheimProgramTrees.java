@@ -9,11 +9,16 @@ import net.minecraft.world.World;
 import vazkii.botania.common.block.ModBlocks;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 /** Port of the WE_WorldTreeGen entry lists used by Alfheim's forest biomes. */
 public final class WorldGenAlfheimProgramTrees {
+
+    private static final List<Entry> ISLAND_FOREST_ENTRIES = createEntries(Set.ISLAND_FOREST);
+    private static final List<Entry> FOREST_ENTRIES = createEntries(Set.FOREST);
+    private static final List<Entry> PLATEAU_ENTRIES = createEntries(Set.PLATEAU);
 
     public enum Set {
         ISLAND_FOREST,
@@ -25,6 +30,29 @@ public final class WorldGenAlfheimProgramTrees {
     }
 
     public static void generate(World world, Random random, BlockPos chunkOrigin, Set set) {
+        for (Entry entry : entriesFor(set)) {
+            if (random.nextInt(entry.dispersion) != 0) {
+                continue;
+            }
+            for (int attempt = 0; attempt < entry.treesPerChunk; attempt++) {
+                // Forge 1.12 populates against the prepared east/south 2x2
+                // chunk area. The +8 adaptation keeps canopies out of
+                // unprepared west/north chunks without changing tree counts.
+                int x = chunkOrigin.getX() + random.nextInt(16) + 8;
+                int z = chunkOrigin.getZ() + random.nextInt(16) + 8;
+                BlockPos pos = new BlockPos(x, world.getHeight(x, z), z);
+                int woodIndex = random.nextInt(entry.smallTrees.length);
+                boolean big = entry.chanceForBig > 0 && random.nextInt(entry.chanceForBig) == 0;
+                if (big) {
+                    entry.bigTrees[woodIndex].generate(world, random, pos);
+                } else {
+                    entry.smallTrees[woodIndex].generate(world, random, pos);
+                }
+            }
+        }
+    }
+
+    private static List<Entry> createEntries(Set set) {
         List<Entry> entries = new ArrayList<>();
         if (set == Set.ISLAND_FOREST) {
             entries.add(new Entry(new IBlockState[]{Blocks.LOG.getDefaultState()}, Blocks.LEAVES.getDefaultState(),
@@ -35,25 +63,18 @@ public final class WorldGenAlfheimProgramTrees {
         } else {
             addStandardEntries(entries, 32, 3, false);
         }
+        return Collections.unmodifiableList(entries);
+    }
 
-        for (Entry entry : entries) {
-            if (random.nextInt(entry.dispersion) != 0) {
-                continue;
-            }
-            for (int attempt = 0; attempt < entry.treesPerChunk; attempt++) {
-                int x = chunkOrigin.getX() + random.nextInt(16);
-                int z = chunkOrigin.getZ() + random.nextInt(16);
-                BlockPos pos = world.getHeight(new BlockPos(x, 0, z));
-                IBlockState wood = entry.woods[random.nextInt(entry.woods.length)];
-                boolean big = entry.chanceForBig > 0 && random.nextInt(entry.chanceForBig) == 0;
-                if (big) {
-                    new WorldGenWorldEngineBigTree(wood, entry.leaves, entry.trunkSize,
-                            12, 4, 0.618D, 0.381D, 1.0D, 1.0D).generate(world, random, pos);
-                } else {
-                    new WorldGenWorldEngineTree(wood, entry.leaves, entry.vine, entry.minHeight,
-                            entry.vinesGrowLeaves, entry.vinesGrowLog).generate(world, random, pos);
-                }
-            }
+    private static List<Entry> entriesFor(Set set) {
+        switch (set) {
+            case ISLAND_FOREST:
+                return ISLAND_FOREST_ENTRIES;
+            case FOREST:
+                return FOREST_ENTRIES;
+            case PLATEAU:
+            default:
+                return PLATEAU_ENTRIES;
         }
     }
 
@@ -79,30 +100,27 @@ public final class WorldGenAlfheimProgramTrees {
     }
 
     private static final class Entry {
-        private final IBlockState[] woods;
-        private final IBlockState leaves;
-        private final Block vine;
+        private final WorldGenWorldEngineTree[] smallTrees;
+        private final WorldGenWorldEngineBigTree[] bigTrees;
         private final int dispersion;
         private final int treesPerChunk;
         private final int chanceForBig;
-        private final int minHeight;
-        private final boolean vinesGrowLeaves;
-        private final boolean vinesGrowLog;
-        private final int trunkSize;
 
         private Entry(IBlockState[] woods, IBlockState leaves, Block vine, int dispersion,
                       int treesPerChunk, int chanceForBig, int minHeight,
                       boolean vinesGrowLeaves, boolean vinesGrowLog, int trunkSize) {
-            this.woods = woods;
-            this.leaves = leaves;
-            this.vine = vine;
+            this.smallTrees = new WorldGenWorldEngineTree[woods.length];
+            this.bigTrees = new WorldGenWorldEngineBigTree[woods.length];
+            for (int i = 0; i < woods.length; i++) {
+                this.smallTrees[i] = new WorldGenWorldEngineTree(
+                        woods[i], leaves, vine, minHeight, vinesGrowLeaves, vinesGrowLog);
+                this.bigTrees[i] = new WorldGenWorldEngineBigTree(
+                        woods[i], leaves, trunkSize,
+                        12, 4, 0.618D, 0.381D, 1.0D, 1.0D);
+            }
             this.dispersion = dispersion;
             this.treesPerChunk = treesPerChunk;
             this.chanceForBig = chanceForBig;
-            this.minHeight = minHeight;
-            this.vinesGrowLeaves = vinesGrowLeaves;
-            this.vinesGrowLog = vinesGrowLog;
-            this.trunkSize = trunkSize;
         }
     }
 }

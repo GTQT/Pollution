@@ -18,9 +18,9 @@ public final class AlfheimBiomes {
     public static final Biome GIANT_FLOWER_FIELD = biome("Alfheim Mutated Field", 1.0, 10.0, 1.8, 3, 250.0, 2.0, 71, 2,
             Blocks.GRASS.getDefaultState(), Blocks.DIRT.getDefaultState(), AlfheimBiome.Decoration.FLOWER_FIELD);
     public static final Biome BEACH = biome("Alfheim Beach", -0.5, -0.35, 1.33, 3, 250.0, 1.4, 65, 4,
-            AlfheimBlocks.ELVEN_SAND.getDefaultState(), ModBlocks.livingrock.getDefaultState(), AlfheimBiome.Decoration.NONE);
+            AlfheimBlocks.ELVEN_SAND.getDefaultState(), AlfheimBlocks.ELVEN_SAND.getDefaultState(), AlfheimBiome.Decoration.NONE);
     public static final Biome SANDBANK = biome("Alfheim Sandbank", -0.41, -0.38, 1.33, 3, 250.0, 0.5, 62, 2,
-            AlfheimBlocks.ELVEN_SAND.getDefaultState(), ModBlocks.livingrock.getDefaultState(), AlfheimBiome.Decoration.NONE);
+            AlfheimBlocks.ELVEN_SAND.getDefaultState(), AlfheimBlocks.ELVEN_SAND.getDefaultState(), AlfheimBiome.Decoration.NONE);
     public static final Biome RIVER = biome("Alfheim River", -0.48, -0.38, 1.33, 3, 250.0, 1.0, 58, 4,
             Blocks.GRAVEL.getDefaultState(), Blocks.CLAY.getDefaultState(), AlfheimBiome.Decoration.NONE);
     public static final Biome LOW_PLATEAU = biome("Alfheim Low Plateau", 0.2, 0.78, 1.8, 3, 250.0, 0.8, 96, 1,

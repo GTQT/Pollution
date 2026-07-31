@@ -2,21 +2,26 @@ package meowmel.pollution.dimension.worldgen.ChunkGenerator;
 
 import meowmel.pollution.dimension.biome.AlfheimBiomes;
 import meowmel.pollution.dimension.biome.biomes.AlfheimBiome;
+import meowmel.pollution.dimension.worldgen.WorldEngineNoise;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenAlfheimLake;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.MapGenRavine;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.terraingen.InitMapGenEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import vazkii.botania.common.block.ModBlocks;
 
 import javax.annotation.Nullable;
@@ -24,60 +29,82 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Base-only Alfheim terrain port.
- * Story structures, anomalies, seasonal logic, portals and dynamic islands are
- * intentionally absent; see the migration boundary in the task description.
+ * Base-world-generation-only Alfheim port.
+ *
+ * <p>The terrain, biome interpolation, biome layers, ores and lakes are based
+ * on the actual WorldEngine and Alfheim sources. Story structures, seasonal
+ * systems, disasters, portals and other-world travel are intentionally absent.</p>
  */
 public final class ChunkGeneratorAlfheim implements IChunkGenerator {
 
-    // WorldProviderAlfheim.kt applies BiomeAlfheim.offset (-7) to
-    // WE_TerrainGenerator.worldSeaGenMaxY.  The source generator's normal
-    // water plane is Y=64, so Alfheim's actual water plane is Y=57.
     private static final int SEA_LEVEL = 57;
     private static final IBlockState WATER = Blocks.WATER.getDefaultState();
     private static final IBlockState BEDROCK = Blocks.BEDROCK.getDefaultState();
     private static final IBlockState CARVABLE_STONE = Blocks.STONE.getDefaultState();
     private static final IBlockState LIVINGROCK = ModBlocks.livingrock.getDefaultState();
+    private static final WorldGenAlfheimLake WATER_LAKE = new WorldGenAlfheimLake(Blocks.WATER);
+    private static final int MAX_INTERPOLATE_QUALITY = findMaxInterpolationQuality();
+    private static final InterpolationStencil[] INTERPOLATION_STENCILS =
+            buildInterpolationStencils(MAX_INTERPOLATE_QUALITY);
 
     private final World world;
+    private final long seed;
     private final Random random;
-    private final NoiseGeneratorOctaves terrainNoise;
-    private final NoiseGeneratorOctaves detailNoise;
-    private final MapGenCaves caves = new MapGenCaves();
-    private final MapGenRavine ravines = new MapGenRavine();
+    private final MapGenBase caves;
+    private final MapGenBase ravines;
 
     public ChunkGeneratorAlfheim(World world, long seed) {
         this.world = world;
+        this.seed = seed;
         this.world.setSeaLevel(SEA_LEVEL);
         this.random = new Random(seed);
-        this.terrainNoise = new NoiseGeneratorOctaves(new Random(seed), 6);
-        this.detailNoise = new NoiseGeneratorOctaves(new Random(seed ^ 0x5DEECE66DL), 4);
+        this.caves = TerrainGen.getModdedMapGen(new MapGenCaves(), InitMapGenEvent.EventType.CAVE);
+        this.ravines = TerrainGen.getModdedMapGen(new MapGenRavine(), InitMapGenEvent.EventType.RAVINE);
     }
 
     @Override
     public Chunk generateChunk(int chunkX, int chunkZ) {
-        random.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
+        int chunkBlockX = chunkX * 16;
+        int chunkBlockZ = chunkZ * 16;
         ChunkPrimer primer = new ChunkPrimer();
-        Biome[] biomes = world.getBiomeProvider().getBiomesForGeneration(null, chunkX * 16, chunkZ * 16, 16, 16);
-        double[] large = terrainNoise.generateNoiseOctaves(null, chunkX * 16, chunkZ * 16, 16, 16, 0.00125D, 0.00125D, 1.0D);
-        double[] detail = detailNoise.generateNoiseOctaves(null, chunkX * 16, chunkZ * 16, 16, 16, 0.0125D, 0.0125D, 1.0D);
+
+        int border = MAX_INTERPOLATE_QUALITY;
+        int borderedSize = 16 + border * 2;
+        Biome[] borderedBiomes = world.getBiomeProvider().getBiomesForGeneration(
+                null, chunkBlockX - border, chunkBlockZ - border, borderedSize, borderedSize);
+        Biome[] biomes = new Biome[256];
+        for (int localZ = 0; localZ < 16; localZ++) {
+            for (int localX = 0; localX < 16; localX++) {
+                biomes[localX + localZ * 16] =
+                        borderedBiomes[index(localX + border, localZ + border, borderedSize)];
+            }
+        }
+        boolean interpolate = containsMultipleBiomes(borderedBiomes);
+        int[] terrainHeights = new int[256];
+        int maxTerrainHeight = 0;
 
         for (int localX = 0; localX < 16; localX++) {
             for (int localZ = 0; localZ < 16; localZ++) {
                 int index = localX + localZ * 16;
-                Biome biome = biomes[index];
-                int terrainHeight = terrainHeight(biome, large[index], detail[index]);
-                generateColumn(primer, localX, localZ, terrainHeight, biome);
+                int terrainHeight = MathHelper.floor(interpolatedHeight(
+                        chunkBlockX, chunkBlockZ, localX, localZ,
+                        borderedBiomes, borderedSize, interpolate, border));
+                terrainHeights[index] = terrainHeight;
+                maxTerrainHeight = Math.max(maxTerrainHeight, Math.min(255, terrainHeight));
+                generateBaseColumn(primer, localX, localZ, terrainHeight);
             }
         }
 
-        // Vanilla 1.12 carvers only recognize vanilla stone. Generate a
-        // temporary stone body, carve it, then restore every surviving stone
-        // cell to livingrock. This reproduces WorldEngine's livingrock
-        // replacement list without importing its 1.7 carvers.
+        // Vanilla carvers recognize vanilla stone. After carving, only scan
+        // through the highest generated terrain cell instead of all 256 Y
+        // levels, then apply WorldEngine's biome layers in source order.
         caves.generate(world, chunkX, chunkZ, primer);
         ravines.generate(world, chunkX, chunkZ, primer);
-        restoreLivingrock(primer);
+        restoreLivingrock(primer, maxTerrainHeight);
+
+        random.setSeed(seed * (long) Math.pow(chunkX, 3)
+                + (long) Math.pow(chunkZ, 2) * 9874L + 7684053L);
+        applyBiomeLayers(primer, biomes, terrainHeights);
 
         Chunk chunk = new Chunk(world, primer, chunkX, chunkZ);
         byte[] biomeArray = chunk.getBiomeArray();
@@ -88,54 +115,78 @@ public final class ChunkGeneratorAlfheim implements IChunkGenerator {
         return chunk;
     }
 
-    private static int terrainHeight(Biome biome, double largeNoise, double detailNoise) {
-        int sourceHeight = biome instanceof AlfheimBiome
-                ? ((AlfheimBiome) biome).getSurfaceHeight()
-                : SEA_LEVEL;
-        // NoiseGeneratorOctaves is not normalized.  Constrain it before
-        // applying variation so an unusually large octave result cannot turn
-        // every land biome into seabed.
-        double large = normalizeNoise(largeNoise);
-        double detail = normalizeNoise(detailNoise);
-        double variation = Math.max(4.0D, biome.getHeightVariation() * 8.0D);
-        int height = (int) Math.round(sourceHeight + large * variation + detail * 3.0D);
+    /**
+     * Direct port of WE_TerrainGenerator.interpolatedBlock.
+     */
+    private double interpolatedHeight(int chunkBlockX, int chunkBlockZ, int localX, int localZ,
+                                      Biome[] bordered, int borderedSize,
+                                      boolean interpolate, int border) {
+        int centerX = border + localX;
+        int centerZ = border + localZ;
+        AlfheimBiome center = alfheimBiome(bordered[index(centerX, centerZ, borderedSize)]);
 
-        // Every source biome with a grass surface (field, forests and all
-        // plateaus) is terrestrial.  Keep its top block above the source's
-        // shifted water plane so its vanilla grass, trees and decorations
-        // have valid generation ground.
-        if (biome.topBlock.getBlock() == Blocks.GRASS) {
-            height = Math.max(SEA_LEVEL + 1, height);
+        if (!interpolate) {
+            return center.getSurfaceHeight() + WorldEngineNoise.perlinNoise2D(
+                    seed,
+                    (chunkBlockX + (long) localX) / center.getTerrainScaleX(),
+                    (chunkBlockZ + (long) localZ) / center.getTerrainScaleX(),
+                    center.getTerrainNoiseProfile()) * center.getTerrainScaleY();
         }
-        return Math.max(5, Math.min(245, height));
+
+        double persistence = 0.0D;
+        double scaleX = 0.0D;
+        double scaleY = 0.0D;
+        int octaves = 0;
+        int surfaceHeight = 0;
+        int samples = 0;
+        WorldEngineNoise.NoiseProfile commonNoiseProfile = center.getTerrainNoiseProfile();
+        boolean sameNoiseProfile = true;
+
+        InterpolationStencil stencil = INTERPOLATION_STENCILS[center.getInterpolateQuality()];
+        int[] offsetX = stencil.offsetXByCenter[centerX];
+        int[] offsetZ = stencil.offsetZByCenter[centerZ];
+        for (int i = 0; i < offsetX.length; i++) {
+            int sampleX = centerX + offsetX[i];
+            int sampleZ = centerZ + offsetZ[i];
+            AlfheimBiome sample = alfheimBiome(bordered[index(sampleX, sampleZ, borderedSize)]);
+            if (sample.getTerrainNoiseProfile() != commonNoiseProfile) {
+                sameNoiseProfile = false;
+            }
+            samples++;
+            persistence += sample.getTerrainPersistence();
+            octaves += sample.getTerrainOctaves();
+            scaleX += sample.getTerrainScaleX();
+            scaleY += sample.getTerrainScaleY();
+            surfaceHeight += sample.getSurfaceHeight();
+        }
+
+        persistence /= samples;
+        scaleX /= samples;
+        scaleY /= samples;
+        octaves /= samples;
+        surfaceHeight /= samples;
+        double noiseX = (chunkBlockX + (long) localX) / scaleX;
+        double noiseZ = (chunkBlockZ + (long) localZ) / scaleX;
+        double noise = sameNoiseProfile
+                ? WorldEngineNoise.perlinNoise2D(seed, noiseX, noiseZ, commonNoiseProfile)
+                : WorldEngineNoise.perlinNoise2D(seed, noiseX, noiseZ, persistence, octaves);
+        return surfaceHeight + noise * scaleY;
     }
 
-    private static double normalizeNoise(double value) {
-        return value / (1.0D + Math.abs(value));
-    }
-
-    private static void generateColumn(ChunkPrimer primer, int x, int z, int terrainHeight, Biome biome) {
-        for (int y = 0; y <= terrainHeight; y++) {
-            primer.setBlockState(x, y, z, y == 0 ? BEDROCK : CARVABLE_STONE);
+    private static void generateBaseColumn(ChunkPrimer primer, int x, int z, int terrainHeight) {
+        int cappedHeight = Math.min(255, terrainHeight);
+        for (int y = 0; y <= cappedHeight; y++) {
+            primer.setBlockState(x, y, z, CARVABLE_STONE);
         }
-        for (int y = terrainHeight + 1; y <= SEA_LEVEL; y++) {
+        for (int y = Math.max(0, terrainHeight + 1); y <= SEA_LEVEL; y++) {
             primer.setBlockState(x, y, z, WATER);
         }
-
-        IBlockState top = biome.topBlock;
-        IBlockState filler = biome.fillerBlock;
-        primer.setBlockState(x, terrainHeight, z, top);
-        if (terrainHeight >= SEA_LEVEL - 1) {
-            for (int y = Math.max(1, terrainHeight - 3); y < terrainHeight; y++) {
-                primer.setBlockState(x, y, z, filler);
-            }
-        }
     }
 
-    private static void restoreLivingrock(ChunkPrimer primer) {
+    private static void restoreLivingrock(ChunkPrimer primer, int maxTerrainHeight) {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                for (int y = 1; y < 256; y++) {
+                for (int y = 0; y <= maxTerrainHeight; y++) {
                     if (primer.getBlockState(x, y, z).getBlock() == Blocks.STONE) {
                         primer.setBlockState(x, y, z, LIVINGROCK);
                     }
@@ -144,58 +195,170 @@ public final class ChunkGeneratorAlfheim implements IChunkGenerator {
         }
     }
 
+    /**
+     * Ports the per-biome WE_BiomeLayer passes after caves and ravines.
+     */
+    private void applyBiomeLayers(ChunkPrimer primer, Biome[] biomes, int[] terrainHeights) {
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                int columnIndex = x + z * 16;
+                AlfheimBiome biome = alfheimBiome(biomes[columnIndex]);
+                int topY = findTopSolid(primer, x, z, Math.min(255, terrainHeights[columnIndex]));
+
+                if (topY >= 0) {
+                    int fillerDepth = biome.getFillerDepth(random);
+                    for (int y = topY; y >= Math.max(0, topY - fillerDepth); y--) {
+                        if (primer.getBlockState(x, y, z).getBlock() == ModBlocks.livingrock) {
+                            primer.setBlockState(x, y, z, biome.fillerBlock);
+                        }
+                    }
+
+                    boolean liquidAbove = topY < 255
+                            && primer.getBlockState(x, topY + 1, z).getMaterial().isLiquid();
+                    if (biome.canGenerateTopUnderwater() || !liquidAbove) {
+                        if (primer.getBlockState(x, topY, z).equals(biome.fillerBlock)) {
+                            primer.setBlockState(x, topY, z, biome.getGeneratedTopBlock(random));
+                        }
+                    }
+                }
+                primer.setBlockState(x, 0, z, BEDROCK);
+            }
+        }
+    }
+
+    private static int findTopSolid(ChunkPrimer primer, int x, int z, int startY) {
+        for (int y = startY; y >= 0; y--) {
+            IBlockState state = primer.getBlockState(x, y, z);
+            if (state.getBlock() != Blocks.AIR && !state.getMaterial().isLiquid()) {
+                return y;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public void populate(int chunkX, int chunkZ) {
+        BlockFalling.fallInstantly = true;
         random.setSeed(world.getSeed());
         long xSeed = random.nextLong() / 2L * 2L + 1L;
         long zSeed = random.nextLong() / 2L * 2L + 1L;
         random.setSeed(chunkX * xSeed + chunkZ * zSeed ^ world.getSeed());
 
         BlockPos origin = new BlockPos(chunkX * 16, 0, chunkZ * 16);
-        Biome biome = world.getBiome(origin.add(8, 0, 8));
-        generateOres(origin);
-        generateLakes(origin, biome);
-        biome.decorate(world, random, origin);
-    }
+        boolean populateStarted = false;
+        try {
+            ForgeEventFactory.onChunkPopulate(true, this, world, random, chunkX, chunkZ, false);
+            populateStarted = true;
+            generateLake(chunkX, chunkZ, origin, 12, 0);
 
-    private void generateOres(BlockPos origin) {
-        // Source material -> replacement: Dragonstone/Elementium/Iffesal use
-        // vanilla diamond/gold/emerald. Quartz, gold and lapis retain their
-        // corresponding vanilla forms. All veins replace Botania livingrock.
-        generateOre(Blocks.DIAMOND_ORE.getDefaultState(), 4, 6, 1, 16, origin);
-        generateOre(Blocks.GOLD_ORE.getDefaultState(), 6, 18, 1, 59, origin);
-        generateOre(Blocks.GOLD_ORE.getDefaultState(), 4, 24, 60, 140, origin);
-        generateOre(Blocks.QUARTZ_ORE.getDefaultState(), 6, 18, 1, 59, origin);
-        generateOre(Blocks.QUARTZ_ORE.getDefaultState(), 4, 24, 60, 140, origin);
-        generateOre(Blocks.GOLD_ORE.getDefaultState(), 4, 3, 1, 34, origin);
-        generateOre(Blocks.EMERALD_ORE.getDefaultState(), 3, 4, 16, 48, origin);
-        generateOre(Blocks.LAPIS_ORE.getDefaultState(), 10, 2, 1, 26, origin);
-    }
-
-    private void generateOre(IBlockState state, int size, int count, int minY, int maxY, BlockPos origin) {
-        WorldGenMinable generator = new WorldGenMinable(state, size, BlockMatcher.forBlock(ModBlocks.livingrock));
-        for (int i = 0; i < count; i++) {
-            int y = minY + random.nextInt(maxY - minY + 1);
-            generator.generate(world, random, origin.add(random.nextInt(16), y, random.nextInt(16)));
+            // Decoration features use the vanilla +8 offset and may extend
+            // into the neighboring chunk. Select the biome at the center of
+            // that decoration area instead of consuming two random values and
+            // sampling an unrelated point in the raw 16x16 chunk.
+            Biome biome = world.getBiome(origin.add(16, 0, 16));
+            if (biome == AlfheimBiomes.LOW_PLATEAU) {
+                generateLake(chunkX, chunkZ, origin, 2, 76);
+            } else if (biome == AlfheimBiomes.MID_PLATEAU) {
+                generateLake(chunkX, chunkZ, origin, 2, 100);
+            } else if (biome == AlfheimBiomes.HIGH_PLATEAU) {
+                generateLake(chunkX, chunkZ, origin, 1, 124);
+            } else if (biome == AlfheimBiomes.HIGH_PLATEAU_FOREST) {
+                generateLake(chunkX, chunkZ, origin, 2, 124);
+            }
+            biome.decorate(world, random, origin);
+        } finally {
+            try {
+                if (populateStarted) {
+                    ForgeEventFactory.onChunkPopulate(
+                            false, this, world, random, chunkX, chunkZ, false);
+                }
+            } finally {
+                BlockFalling.fallInstantly = false;
+            }
         }
     }
 
-    private void generateLakes(BlockPos origin, Biome biome) {
-        int chance = 12;
-        int minY = 0;
-        if (biome == AlfheimBiomes.LOW_PLATEAU || biome == AlfheimBiomes.MID_PLATEAU || biome == AlfheimBiomes.HIGH_PLATEAU_FOREST) {
-            chance = 2;
-            minY = biome == AlfheimBiomes.LOW_PLATEAU ? 76 : biome == AlfheimBiomes.MID_PLATEAU ? 100 : 124;
-        } else if (biome == AlfheimBiomes.HIGH_PLATEAU) {
-            chance = 1;
-            minY = 124;
+    private void generateLake(int chunkX, int chunkZ, BlockPos origin, int chance, int minY) {
+        if (random.nextInt(chance) != 0
+                || !TerrainGen.populate(this, world, random, chunkX, chunkZ, false,
+                PopulateChunkEvent.Populate.EventType.LAKE)) {
+            return;
         }
-        if (random.nextInt(chance) == 0) {
-            // AlfheimLakeGen chooses a random Y in [minY, 255], then descends
-            // through air before carving its lake.  WorldGenLakes performs the
-            // same descent/carve pattern on the 1.12 target.
-            BlockPos lakePos = origin.add(random.nextInt(16), minY + random.nextInt(256 - minY), random.nextInt(16));
-            new WorldGenLakes(Blocks.WATER).generate(world, random, lakePos);
+        BlockPos lakePos = origin.add(
+                random.nextInt(16),
+                minY + random.nextInt(256 - minY),
+                random.nextInt(16));
+        WATER_LAKE.generate(world, random, lakePos);
+    }
+
+    private static boolean containsMultipleBiomes(Biome[] biomes) {
+        Biome first = biomes[0];
+        for (int i = 1; i < biomes.length; i++) {
+            if (biomes[i] != first) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static AlfheimBiome alfheimBiome(Biome biome) {
+        return biome instanceof AlfheimBiome
+                ? (AlfheimBiome) biome
+                : (AlfheimBiome) AlfheimBiomes.FIELD;
+    }
+
+    private static int findMaxInterpolationQuality() {
+        int result = 0;
+        for (Biome biome : AlfheimBiomes.ALL) {
+            result = Math.max(result, alfheimBiome(biome).getInterpolateQuality());
+        }
+        return result;
+    }
+
+    /**
+     * Precomputes the exact angle/radius sampling order used by WorldEngine.
+     * Keeping duplicate offsets is intentional: they contribute repeatedly to
+     * the source average, but their trigonometry does not need to be redone for
+     * every terrain column.
+     */
+    private static InterpolationStencil[] buildInterpolationStencils(int maxQuality) {
+        InterpolationStencil[] stencils = new InterpolationStencil[maxQuality + 1];
+        int maxCenterCoordinate = 15 + maxQuality * 2;
+        for (int quality = 0; quality <= maxQuality; quality++) {
+            int sampleCount = 361 * (quality + 1);
+            int[][] offsetXByCenter = new int[maxCenterCoordinate + 1][sampleCount];
+            int[][] offsetZByCenter = new int[maxCenterCoordinate + 1][sampleCount];
+            int sample = 0;
+            for (int angle = 0; angle <= 360; angle++) {
+                float radians = angle * (float) Math.PI / 180.0F;
+                for (int radius = 0; radius <= quality; radius++) {
+                    float xOffset = MathHelper.cos(radians) * radius;
+                    float zOffset = MathHelper.sin(radians) * radius;
+                    for (int center = 0; center <= maxCenterCoordinate; center++) {
+                        offsetXByCenter[center][sample] =
+                                MathHelper.floor(center + xOffset) - center;
+                        offsetZByCenter[center][sample] =
+                                MathHelper.floor(center + zOffset) - center;
+                    }
+                    sample++;
+                }
+            }
+            stencils[quality] = new InterpolationStencil(offsetXByCenter, offsetZByCenter);
+        }
+        return stencils;
+    }
+
+    private static int index(int x, int z, int width) {
+        return x + z * width;
+    }
+
+    private static final class InterpolationStencil {
+        private final int[][] offsetXByCenter;
+        private final int[][] offsetZByCenter;
+
+        private InterpolationStencil(int[][] offsetXByCenter, int[][] offsetZByCenter) {
+            this.offsetXByCenter = offsetXByCenter;
+            this.offsetZByCenter = offsetZByCenter;
         }
     }
 
@@ -211,13 +374,14 @@ public final class ChunkGeneratorAlfheim implements IChunkGenerator {
 
     @Override
     @Nullable
-    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
+    public BlockPos getNearestStructurePos(World worldIn, String structureName,
+                                           BlockPos position, boolean findUnexplored) {
         return null;
     }
 
     @Override
     public void recreateStructures(Chunk chunkIn, int x, int z) {
-        // No static structures are part of this migration.
+        // No structures are part of the requested migration boundary.
     }
 
     @Override

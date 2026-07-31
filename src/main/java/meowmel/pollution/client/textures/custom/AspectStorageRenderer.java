@@ -9,6 +9,7 @@ import gregtech.api.gui.resources.TextureArea;
 import gregtech.api.util.TextFormattingUtil;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.custom.QuantumStorageRenderer;
+import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer.RenderSide;
 import gregtech.client.utils.RenderUtil;
 import gregtech.common.ConfigHolder;
 import net.minecraft.client.Minecraft;
@@ -24,10 +25,65 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.aspects.Aspect;
 
 import java.awt.*;
+import java.util.EnumMap;
 
 public class AspectStorageRenderer extends QuantumStorageRenderer {
 
     private static final TextTexture textRenderer = (new TextTexture()).setWidth(32);
+    private static final Cuboid6 GLASS_BOX =
+            new Cuboid6(0.0625, 0.0625, 0.0625, 0.9375, 0.9375, 0.9375);
+    private static final EnumMap<EnumFacing, Cuboid6> FRAME_BOXES = new EnumMap<>(EnumFacing.class);
+
+    static {
+        FRAME_BOXES.put(EnumFacing.UP, new Cuboid6(0.0, 0.875, 0.0, 1.0, 1.0, 1.0));
+        FRAME_BOXES.put(EnumFacing.DOWN, new Cuboid6(0.0, 0.0, 0.0, 1.0, 0.125, 1.0));
+        FRAME_BOXES.put(EnumFacing.WEST, new Cuboid6(0.0, 0.0, 0.0, 0.125, 1.0, 1.0));
+        FRAME_BOXES.put(EnumFacing.EAST, new Cuboid6(0.875, 0.0, 0.0, 1.0, 1.0, 1.0));
+        FRAME_BOXES.put(EnumFacing.SOUTH, new Cuboid6(0.0, 0.0, 0.875, 1.0, 1.0, 1.0));
+        FRAME_BOXES.put(EnumFacing.NORTH, new Cuboid6(0.0, 0.0, 0.0, 1.0, 1.0, 0.125));
+    }
+
+    public static void renderMachineFrame(CCRenderState renderState, Matrix4 translation,
+                                          IVertexOperation[] pipeline, int tier,
+                                          EnumFacing frontFacing) {
+        TextureAtlasSprite glass = Minecraft.getMinecraft().getTextureMapBlocks()
+                .getAtlasSprite("gregtech:blocks/overlay/machine/overlay_screen_glass");
+        TextureAtlasSprite casing = Textures.VOLTAGE_CASINGS[tier]
+                .getSpriteOnSide(RenderSide.bySide(EnumFacing.NORTH));
+
+        Textures.renderFace(renderState, translation, pipeline, frontFacing,
+                GLASS_BOX, glass, BlockRenderLayer.CUTOUT_MIPPED);
+
+        for (EnumFacing side : EnumFacing.VALUES) {
+            if (side == frontFacing) {
+                continue;
+            }
+            Cuboid6 box = FRAME_BOXES.get(side);
+            Textures.renderFace(renderState, translation, pipeline, side,
+                    box, casing, BlockRenderLayer.CUTOUT_MIPPED);
+            Textures.renderFace(renderState, translation, pipeline, side.getOpposite(),
+                    box, casing, BlockRenderLayer.CUTOUT_MIPPED);
+        }
+
+        if (frontFacing.getAxis() != EnumFacing.Axis.Y) {
+            renderFrontFramePart(renderState, translation, pipeline, frontFacing,
+                    FRAME_BOXES.get(EnumFacing.DOWN), casing);
+            renderFrontFramePart(renderState, translation, pipeline, frontFacing,
+                    FRAME_BOXES.get(EnumFacing.UP), casing);
+            EnumFacing horizontal = frontFacing.rotateY();
+            renderFrontFramePart(renderState, translation, pipeline, frontFacing,
+                    FRAME_BOXES.get(horizontal), casing);
+            renderFrontFramePart(renderState, translation, pipeline, frontFacing,
+                    FRAME_BOXES.get(horizontal.getOpposite()), casing);
+        }
+    }
+
+    private static void renderFrontFramePart(CCRenderState renderState, Matrix4 translation,
+                                             IVertexOperation[] pipeline, EnumFacing frontFacing,
+                                             Cuboid6 box, TextureAtlasSprite casing) {
+        Textures.renderFace(renderState, translation, pipeline, frontFacing,
+                box, casing, BlockRenderLayer.CUTOUT_MIPPED);
+    }
 
     @SideOnly(Side.CLIENT)
     public static void renderTankAspect(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline, Aspect aspect, int maxCap, int amount, IBlockAccess world, BlockPos pos, EnumFacing frontFacing) {
@@ -123,8 +179,8 @@ public class AspectStorageRenderer extends QuantumStorageRenderer {
                 GlStateManager.translate(-32.0F, -32.0F, 0.0F);
                 GlStateManager.disableLighting();
                 textureFilterArea.draw(-80, 80, 64, 64);
-//            textRenderer.draw(0.0, 24.0, 64, 28);
                 GlStateManager.enableLighting();
+                GlStateManager.resetColor();
                 GlStateManager.popMatrix();
             }   else if (aspect != null)
             {
@@ -133,8 +189,8 @@ public class AspectStorageRenderer extends QuantumStorageRenderer {
                 GlStateManager.translate(-32.0F, -32.0F, 0.0F);
                 GlStateManager.disableLighting();
                 textureArea.draw(-80, 80, 64, 64);
-//            textRenderer.draw(0.0, 24.0, 64, 28);
                 GlStateManager.enableLighting();
+                GlStateManager.resetColor();
                 GlStateManager.popMatrix();
             }
 

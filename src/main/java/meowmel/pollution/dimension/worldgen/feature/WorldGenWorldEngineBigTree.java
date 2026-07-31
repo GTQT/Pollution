@@ -19,7 +19,9 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
 
     private static final int[] OTHER_COORD_PAIRS = {2, 0, 0, 1, 2, 1};
 
-    private final IBlockState wood;
+    private final IBlockState woodX;
+    private final IBlockState woodY;
+    private final IBlockState woodZ;
     private final IBlockState leaves;
     private final int trunkSize;
     private final int heightLimitLimit;
@@ -34,7 +36,9 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
                                       double heightAttenuation, double branchSlope,
                                       double scaleWidth, double leafDensity) {
         super(false);
-        this.wood = wood;
+        this.woodX = orientWood(wood, BlockLog.EnumAxis.X);
+        this.woodY = orientWood(wood, BlockLog.EnumAxis.Y);
+        this.woodZ = orientWood(wood, BlockLog.EnumAxis.Z);
         this.leaves = leaves;
         this.trunkSize = trunkSize;
         this.heightLimitLimit = heightLimitLimit;
@@ -168,6 +172,7 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
         int firstAxis = OTHER_COORD_PAIRS[1];
         int secondAxis = OTHER_COORD_PAIRS[4];
         int[] cursor = {0, center[1], 0};
+        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
         int rounded = (int) (radius + 0.618D);
         for (int a = -rounded; a <= rounded; a++) {
             cursor[firstAxis] = center[firstAxis] + a;
@@ -177,10 +182,11 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
                     continue;
                 }
                 cursor[secondAxis] = center[secondAxis] + b;
-                BlockPos pos = new BlockPos(cursor[0], cursor[1], cursor[2]);
-                IBlockState state = world.getBlockState(pos);
-                if (state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos)) {
-                    setBlockAndNotifyAdequately(world, pos, leaves);
+                blockPos.setPos(cursor[0], cursor[1], cursor[2]);
+                IBlockState state = world.getBlockState(blockPos);
+                if (state.getBlock().isAir(state, world, blockPos)
+                        || state.getBlock().isLeaves(state, world, blockPos)) {
+                    setBlockAndNotifyAdequately(world, blockPos, leaves);
                 }
             }
         }
@@ -199,12 +205,16 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
         double thirdSlope = (double) delta[thirdAxis] / delta[mainAxis];
         int stop = delta[mainAxis] + step;
         int distance = 0;
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         for (; distance != stop; distance += step) {
-            int[] cursor = new int[3];
-            cursor[mainAxis] = start[mainAxis] + distance;
-            cursor[secondAxis] = floor(start[secondAxis] + distance * secondSlope);
-            cursor[thirdAxis] = floor(start[thirdAxis] + distance * thirdSlope);
-            if (!isReplaceable(world, new BlockPos(cursor[0], cursor[1], cursor[2]))) {
+            int x = coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                    distance, secondSlope, thirdSlope, 0);
+            int y = coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                    distance, secondSlope, thirdSlope, 1);
+            int z = coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                    distance, secondSlope, thirdSlope, 2);
+            cursor.setPos(x, y, z);
+            if (!isReplaceable(world, cursor)) {
                 break;
             }
         }
@@ -222,17 +232,37 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
         int step = delta[mainAxis] > 0 ? 1 : -1;
         double secondSlope = (double) delta[secondAxis] / delta[mainAxis];
         double thirdSlope = (double) delta[thirdAxis] / delta[mainAxis];
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         for (int distance = 0, stop = delta[mainAxis] + step; distance != stop; distance += step) {
-            int[] cursor = new int[3];
-            cursor[mainAxis] = floor(start[mainAxis] + distance + 0.5D);
-            cursor[secondAxis] = floor(start[secondAxis] + distance * secondSlope + 0.5D);
-            cursor[thirdAxis] = floor(start[thirdAxis] + distance * thirdSlope + 0.5D);
-            int dx = Math.abs(cursor[0] - start[0]);
-            int dz = Math.abs(cursor[2] - start[2]);
+            int x = coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                    distance, secondSlope, thirdSlope, 0, 0.5D);
+            int y = coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                    distance, secondSlope, thirdSlope, 1, 0.5D);
+            int z = coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                    distance, secondSlope, thirdSlope, 2, 0.5D);
+            int dx = Math.abs(x - start[0]);
+            int dz = Math.abs(z - start[2]);
             BlockLog.EnumAxis axis = dx == 0 && dz == 0 ? BlockLog.EnumAxis.Y
                     : (dx >= dz ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z);
-            setBlockAndNotifyAdequately(world, new BlockPos(cursor[0], cursor[1], cursor[2]), orientedWood(axis));
+            cursor.setPos(x, y, z);
+            setBlockAndNotifyAdequately(world, cursor, orientedWood(axis));
         }
+    }
+
+    private static int coordinateOnLine(int[] start, int mainAxis, int secondAxis, int thirdAxis,
+                                        int distance, double secondSlope, double thirdSlope, int axis) {
+        return coordinateOnLine(start, mainAxis, secondAxis, thirdAxis,
+                distance, secondSlope, thirdSlope, axis, 0.0D);
+    }
+
+    private static int coordinateOnLine(int[] start, int mainAxis, int secondAxis, int thirdAxis,
+                                        int distance, double secondSlope, double thirdSlope,
+                                        int axis, double roundingOffset) {
+        if (axis == mainAxis) {
+            return floor(start[axis] + distance + roundingOffset);
+        }
+        double slope = axis == secondAxis ? secondSlope : thirdSlope;
+        return floor(start[axis] + distance * slope + roundingOffset);
     }
 
     private static int dominantAxis(int[] delta) {
@@ -246,7 +276,20 @@ public final class WorldGenWorldEngineBigTree extends WorldGenerator {
     }
 
     private IBlockState orientedWood(BlockLog.EnumAxis axis) {
-        return wood.getBlock() instanceof BlockLog ? wood.withProperty(BlockLog.LOG_AXIS, axis) : wood;
+        switch (axis) {
+            case X:
+                return woodX;
+            case Z:
+                return woodZ;
+            case Y:
+            default:
+                return woodY;
+        }
+    }
+
+    private static IBlockState orientWood(IBlockState wood, BlockLog.EnumAxis axis) {
+        return wood.getBlock() instanceof BlockLog
+                ? wood.withProperty(BlockLog.LOG_AXIS, axis) : wood;
     }
 
     private static boolean isReplaceable(World world, BlockPos pos) {

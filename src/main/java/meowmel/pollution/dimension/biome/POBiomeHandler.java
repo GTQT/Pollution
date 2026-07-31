@@ -6,6 +6,7 @@ import meowmel.pollution.dimension.biome.biomes.POBiomeDemiplane;
 import meowmel.pollution.dimension.biome.AlfheimBiomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,22 +40,42 @@ public class POBiomeHandler {
         registry.register(BLOOD_BIOME);
         BiomeManager.addSpawnBiome(BLOOD_BIOME);
 
-        registerAlfheimBiome(registry, AlfheimBiomes.FIELD, "alfheim_field");
-        registerAlfheimBiome(registry, AlfheimBiomes.GIANT_FLOWER_FIELD, "alfheim_giant_flower_field");
-        registerAlfheimBiome(registry, AlfheimBiomes.BEACH, "alfheim_beach");
-        registerAlfheimBiome(registry, AlfheimBiomes.SANDBANK, "alfheim_sandbank");
-        registerAlfheimBiome(registry, AlfheimBiomes.RIVER, "alfheim_river");
-        registerAlfheimBiome(registry, AlfheimBiomes.LOW_PLATEAU, "alfheim_low_plateau");
-        registerAlfheimBiome(registry, AlfheimBiomes.MID_PLATEAU, "alfheim_mid_plateau");
-        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU, "alfheim_high_plateau");
-        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU_FOREST, "alfheim_high_plateau_forest");
-        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU_FIELD, "alfheim_high_plateau_field");
-        registerAlfheimBiome(registry, AlfheimBiomes.ISLAND_FOREST, "alfheim_island_forest");
-        registerAlfheimBiome(registry, AlfheimBiomes.PIT_FOREST, "alfheim_pit_forest");
+        registerAlfheimBiome(registry, AlfheimBiomes.FIELD, "alfheim_field",
+                BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
+        registerAlfheimBiome(registry, AlfheimBiomes.GIANT_FLOWER_FIELD, "alfheim_giant_flower_field",
+                BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
+        registerAlfheimBiome(registry, AlfheimBiomes.BEACH, "alfheim_beach",
+                BiomeDictionary.Type.SANDY, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.BEACH);
+        registerAlfheimBiome(registry, AlfheimBiomes.SANDBANK, "alfheim_sandbank",
+                BiomeDictionary.Type.SANDY, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.BEACH);
+        registerAlfheimBiome(registry, AlfheimBiomes.RIVER, "alfheim_river",
+                BiomeDictionary.Type.RIVER, BiomeDictionary.Type.WET);
+        registerAlfheimBiome(registry, AlfheimBiomes.LOW_PLATEAU, "alfheim_low_plateau",
+                BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS);
+        registerAlfheimBiome(registry, AlfheimBiomes.MID_PLATEAU, "alfheim_mid_plateau",
+                BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS);
+        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU, "alfheim_high_plateau",
+                BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS);
+        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU_FOREST, "alfheim_high_plateau_forest",
+                BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MOUNTAIN,
+                BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
+        registerAlfheimBiome(registry, AlfheimBiomes.HIGH_PLATEAU_FIELD, "alfheim_high_plateau_field",
+                BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.MOUNTAIN,
+                BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
+        registerAlfheimBiome(registry, AlfheimBiomes.ISLAND_FOREST, "alfheim_island_forest",
+                BiomeDictionary.Type.FOREST, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
+        registerAlfheimBiome(registry, AlfheimBiomes.PIT_FOREST, "alfheim_pit_forest",
+                BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS,
+                BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
 	}
 
-    private static void registerAlfheimBiome(IForgeRegistry<Biome> registry, Biome biome, String name) {
+    private static void registerAlfheimBiome(IForgeRegistry<Biome> registry, Biome biome, String name,
+                                             BiomeDictionary.Type... sourceTypes) {
         biome.setRegistryName(new ResourceLocation("pollution", name));
         registry.register(biome);
+        BiomeDictionary.Type[] types = new BiomeDictionary.Type[sourceTypes.length + 1];
+        types[0] = BiomeDictionary.Type.MAGICAL;
+        System.arraycopy(sourceTypes, 0, types, 1, sourceTypes.length);
+        BiomeDictionary.addTypes(biome, types);
     }
 }

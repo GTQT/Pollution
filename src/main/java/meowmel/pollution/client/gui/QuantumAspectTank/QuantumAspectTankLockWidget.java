@@ -39,7 +39,7 @@ public class QuantumAspectTankLockWidget extends WidgetGroup {
         {
             aspectList.add(entry.getValue());
         }
-        this.pages = aspectList.size() / 16 + 1;
+        this.pages = Math.max(1, (aspectList.size() + 15) / 16);
         for (int i = 0; i < this.pages; i++)
         {
             List<AspectImageWidget> tempList = new ArrayList<>();

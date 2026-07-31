@@ -17,7 +17,7 @@ import java.util.Random;
 /** 1.12 state-based port of WorldEngine's WE_TreeGen. */
 public final class WorldGenWorldEngineTree extends WorldGenerator {
 
-    private final IBlockState wood;
+    private final IBlockState verticalWood;
     private final IBlockState leaves;
     private final Block vine;
     private final int minTreeHeight;
@@ -27,7 +27,7 @@ public final class WorldGenWorldEngineTree extends WorldGenerator {
     public WorldGenWorldEngineTree(IBlockState wood, IBlockState leaves, Block vine,
                                    int minTreeHeight, boolean vinesGrowLeaves, boolean vinesGrowLog) {
         super(false);
-        this.wood = wood;
+        this.verticalWood = verticalWood(wood);
         this.leaves = leaves;
         this.vine = vine;
         this.minTreeHeight = minTreeHeight;
@@ -42,11 +42,12 @@ public final class WorldGenWorldEngineTree extends WorldGenerator {
             return false;
         }
 
+        BlockPos.MutableBlockPos check = new BlockPos.MutableBlockPos();
         for (int y = origin.getY(); y <= origin.getY() + height + 1; y++) {
             int radius = y == origin.getY() ? 0 : (y >= origin.getY() + height - 1 ? 2 : 1);
             for (int x = origin.getX() - radius; x <= origin.getX() + radius; x++) {
                 for (int z = origin.getZ() - radius; z <= origin.getZ() + radius; z++) {
-                    BlockPos check = new BlockPos(x, y, z);
+                    check.setPos(x, y, z);
                     if (y < 0 || y >= world.getHeight() || !isReplaceable(world, check)) {
                         return false;
                     }
@@ -62,6 +63,7 @@ public final class WorldGenWorldEngineTree extends WorldGenerator {
         }
         soil.getBlock().onPlantGrow(soil, world, soilPos, origin);
 
+        BlockPos.MutableBlockPos canopyPos = new BlockPos.MutableBlockPos();
         for (int y = origin.getY() + height - 3; y <= origin.getY() + height; y++) {
             int fromTop = y - origin.getY() - height;
             int radius = 1 - fromTop / 2;
@@ -71,23 +73,24 @@ public final class WorldGenWorldEngineTree extends WorldGenerator {
                     int dz = z - origin.getZ();
                     if (Math.abs(dx) != radius || Math.abs(dz) != radius
                             || random.nextInt(2) == 0 || fromTop == 0) {
-                        BlockPos leafPos = new BlockPos(x, y, z);
-                        IBlockState state = world.getBlockState(leafPos);
-                        if (state.getBlock().isAir(state, world, leafPos)
-                                || state.getBlock().isLeaves(state, world, leafPos)) {
-                            setBlockAndNotifyAdequately(world, leafPos, leaves);
+                        canopyPos.setPos(x, y, z);
+                        IBlockState state = world.getBlockState(canopyPos);
+                        if (state.getBlock().isAir(state, world, canopyPos)
+                                || state.getBlock().isLeaves(state, world, canopyPos)) {
+                            setBlockAndNotifyAdequately(world, canopyPos, leaves);
                         }
                     }
                 }
             }
         }
 
+        BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
         for (int y = 0; y < height; y++) {
-            BlockPos trunkPos = origin.up(y);
+            trunkPos.setPos(origin.getX(), origin.getY() + y, origin.getZ());
             IBlockState state = world.getBlockState(trunkPos);
             if (state.getBlock().isAir(state, world, trunkPos)
                     || state.getBlock().isLeaves(state, world, trunkPos)) {
-                setBlockAndNotifyAdequately(world, trunkPos, verticalWood(wood));
+                setBlockAndNotifyAdequately(world, trunkPos, verticalWood);
                 if (vinesGrowLog && y > 0 && vine != null) {
                     placeTrunkVine(world, random, trunkPos.west(), 8);
                     placeTrunkVine(world, random, trunkPos.east(), 2);

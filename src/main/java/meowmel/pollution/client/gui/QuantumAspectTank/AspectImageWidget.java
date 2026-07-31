@@ -34,14 +34,7 @@ public class AspectImageWidget extends ClickButtonWidget {
     @Override
     @SideOnly(Side.CLIENT)
     public void drawInBackground(int mouseX, int mouseY, float partialTicks, IRenderContext context) {
-        AspectImage image = null;
-        if (this.aspect == null)
-        {
-            image = AspectImage.EMPTY;
-        }   else
-        {
-            image = AspectImage.aspectImages.get(this.aspect.getTag());
-        }
+        AspectImage image = getAspectImage();
         IGuiTexture area = image.getArea();
 
         if (super.isVisible() && area != null) {
@@ -57,6 +50,7 @@ public class AspectImageWidget extends ClickButtonWidget {
             Position position = this.getPosition();
             Size size = this.getSize();
             area.draw((double)position.x, (double)position.y, size.width, size.height);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         }
 
         if (this.isActive())
@@ -77,7 +71,7 @@ public class AspectImageWidget extends ClickButtonWidget {
         Aspect aspect = null;
         if (this.aspect != null)
         {
-            AspectImage image = AspectImage.aspectImages.get(this.aspect.getTag());
+            AspectImage image = getAspectImage();
             IGuiTexture area = image.getArea();
             if (this.isVisible() && this.tooltipText != null && area != null && this.isMouseOverElement(mouseX, mouseY)) {
                 List<String> hoverList = Arrays.asList(LocalizationUtils.formatLines(this.tooltipText, new Object[0]));
@@ -116,7 +110,7 @@ public class AspectImageWidget extends ClickButtonWidget {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int button) {
-        if (!(Boolean)this.shouldDisplay.get()) {
+        if (this.onPressCallbackA == null || !(Boolean)this.shouldDisplay.get()) {
             return false;
         } else if (this.isMouseOverElement(mouseX, mouseY)) {
             this.triggerButton();
@@ -126,11 +120,23 @@ public class AspectImageWidget extends ClickButtonWidget {
         }
     }
 
+    private AspectImage getAspectImage() {
+        if (this.aspect == null) {
+            return AspectImage.EMPTY;
+        }
+        AspectImage image = AspectImage.aspectImages.get(this.aspect.getTag());
+        if (image == null) {
+            image = new AspectImage(this.aspect);
+            AspectImage.aspectImages.put(this.aspect.getTag(), image);
+        }
+        return image;
+    }
+
     protected void triggerButton() {
         ClickAspectData clickData = new ClickAspectData(Mouse.getEventButton(), isShiftDown(), isCtrlDown(), this.aspect);
         Objects.requireNonNull(clickData);
         this.writeClientAction(1, clickData::writeToBuf);
-        if (this.shouldClientCallback) {
+        if (this.shouldClientCallback && this.onPressCallbackA != null) {
             this.onPressCallbackA.accept(new ClickAspectData(Mouse.getEventButton(), isShiftDown(), isCtrlDown(), this.aspect));
         }
 
@@ -141,7 +147,9 @@ public class AspectImageWidget extends ClickButtonWidget {
     public void handleClientAction(int id, PacketBuffer buffer) {
         if (id == 1) {
             ClickAspectData clickData = ClickAspectData.readFromBuf(buffer);
-            this.onPressCallbackA.accept(clickData);
+            if (this.onPressCallbackA != null) {
+                this.onPressCallbackA.accept(clickData);
+            }
         }
 
     }

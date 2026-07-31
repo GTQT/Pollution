@@ -1,3 +1,7 @@
+# 魔法彩虹树
+tile.pollution.rainbow_leaves.name=魔法彩虹树叶
+tile.pollution.rainbow_sapling.name=魔法彩虹树苗
+
 #材料注册
 metaitem.the_world.name=世界（正位）
 metaitem.the_world.tooltip=愿您寰宇尽握
@@ -1107,6 +1111,7 @@ item.pollution.heart_fruit_i.name=心鸣果
 tile.pollution.eldritch_eye.name=深渊之眼
 tile.pollution.tentacle.name=腐化触点
 tile.pollution.alfheim_elven_sand.name=精灵沙
+tile.pollution.alfheim_dream_leaves.name=梦之树叶
 tile.pollution.alfheim_white_grape.name=白葡萄
 tile.pollution.alfheim_red_grape_0.name=红葡萄藤
 tile.pollution.alfheim_red_grape_1.name=红葡萄藤

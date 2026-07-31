@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "check_decay=false,decayable=false,small=false": { "model": "pollution:rainbow_leaves" },
+    "check_decay=false,decayable=false,small=true":  { "model": "pollution:rainbow_leaves" },
+    "check_decay=false,decayable=true,small=false":  { "model": "pollution:rainbow_leaves" },
+    "check_decay=false,decayable=true,small=true":   { "model": "pollution:rainbow_leaves" },
+    "check_decay=true,decayable=false,small=false":  { "model": "pollution:rainbow_leaves" },
+    "check_decay=true,decayable=false,small=true":   { "model": "pollution:rainbow_leaves" },
+    "check_decay=true,decayable=true,small=false":   { "model": "pollution:rainbow_leaves" },
+    "check_decay=true,decayable=true,small=true":    { "model": "pollution:rainbow_leaves" }
+  }
+}
