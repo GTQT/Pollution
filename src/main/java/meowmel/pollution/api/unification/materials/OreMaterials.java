@@ -149,5 +149,25 @@ public class OreMaterials {
                 .components(Zinc, 2, Antimony, 1, Oxygen, 1, InfusedWater, 5, InfusedEarth, 7)
                 .build()
                 .setTooltips("你无法移开视线");
+        PollutionMaterials.Dragonstone = new Material.Builder(getMaterialsId(), pollutionId("dragonstone"))
+                .gem().ore()
+                .color(0xF274D3)
+                .iconSet(SHINY)
+                .flags(DISABLE_DECOMPOSITION)
+                .build();
+
+        PollutionMaterials.PixieDust = new Material.Builder(getMaterialsId(), pollutionId("pixie_dust"))
+                .dust().ore()
+                .color(0xF7B4EC)
+                .iconSet(SHINY)
+                .flags(DISABLE_DECOMPOSITION)
+                .build();
+
+        PollutionMaterials.ElvenQuartz = new Material.Builder(getMaterialsId(), pollutionId("elven_quartz"))
+                .gem().ore()
+                .color(0xB8F1EA)
+                .iconSet(SHINY)
+                .flags(DISABLE_DECOMPOSITION)
+                .build();
     }
 }

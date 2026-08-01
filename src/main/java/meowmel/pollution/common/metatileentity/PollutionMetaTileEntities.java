@@ -92,8 +92,8 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityManaHatch[] MANA_OUTPUT_HATCH_16A = new MetaTileEntityManaHatch[14];
     public static MetaTileEntityManaHatch[] MANA_OUTPUT_HATCH_64A = new MetaTileEntityManaHatch[14];
 
-    public static MetaTileEntityManaPoolHatch[] MANA_POOL_INPUT_HATCH = new MetaTileEntityManaPoolHatch[14];
-    public static MetaTileEntityManaPoolHatch[] MANA_POOL_OUTPUT_HATCH = new MetaTileEntityManaPoolHatch[14];
+    public static MetaTileEntityManaPoolHatch[] MANA_POOL_INPUT_HATCH = new MetaTileEntityManaPoolHatch[3];
+    public static MetaTileEntityManaPoolHatch[] MANA_POOL_OUTPUT_HATCH = new MetaTileEntityManaPoolHatch[3];
 
     public static MetaTileEntityWirelessManaHatch[] WIRELESS_MANA_INPUT_HATCH_1A = new MetaTileEntityWirelessManaHatch[14];
     public static MetaTileEntityWirelessManaHatch[] WIRELESS_MANA_INPUT_HATCH_4A = new MetaTileEntityWirelessManaHatch[14];
@@ -105,8 +105,8 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityWirelessManaHatch[] WIRELESS_MANA_OUTPUT_HATCH_16A = new MetaTileEntityWirelessManaHatch[14];
     public static MetaTileEntityWirelessManaHatch[] WIRELESS_MANA_OUTPUT_HATCH_64A = new MetaTileEntityWirelessManaHatch[14];
 
-    public static MetaTileEntityWirelessManaPoolHatch[] WIRELESS_MANA_POOL_INPUT_HATCH = new MetaTileEntityWirelessManaPoolHatch[14];
-    public static MetaTileEntityWirelessManaPoolHatch[] WIRELESS_MANA_POOL_OUTPUT_HATCH = new MetaTileEntityWirelessManaPoolHatch[14];
+    public static MetaTileEntityWirelessManaPoolHatch[] WIRELESS_MANA_POOL_INPUT_HATCH = new MetaTileEntityWirelessManaPoolHatch[3];
+    public static MetaTileEntityWirelessManaPoolHatch[] WIRELESS_MANA_POOL_OUTPUT_HATCH = new MetaTileEntityWirelessManaPoolHatch[3];
 
     public static MetaTileEntityMagicLargeTurbine LARGE_MAGIC_TURBINE;
     public static MetaTileEntityMagicLargeTurbine LARGE_MANA_TURBINE;
@@ -336,9 +336,15 @@ public class PollutionMetaTileEntities {
             MANA_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(490 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_4a.%s", GTValues.VN[tier])), tier,4,true));
             MANA_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(505 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_16a.%s", GTValues.VN[tier])), tier,16,true));
             MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(520 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
+        }
 
-            MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(535 + i, new MetaTileEntityManaPoolHatch(PollutionID(String.format("mana_pool_input_hatch.%s", GTValues.VN[tier])), tier,false));
-            MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(550 + i, new MetaTileEntityManaPoolHatch(PollutionID(String.format("mana_pool_output_hatch.%s", GTValues.VN[tier])), tier,true));
+        MetaTileEntityManaPoolHatch.PoolType[] poolTypes = MetaTileEntityManaPoolHatch.PoolType.values();
+        for (int i = 0; i < poolTypes.length; i++) {
+            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
+            MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(535 + i, new MetaTileEntityManaPoolHatch(
+                    PollutionID("mana_pool_input_hatch." + poolType.getName()), poolType, false));
+            MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(550 + i, new MetaTileEntityManaPoolHatch(
+                    PollutionID("mana_pool_output_hatch." + poolType.getName()), poolType, true));
         }
 
         // 无线
@@ -353,9 +359,14 @@ public class PollutionMetaTileEntities {
             WIRELESS_MANA_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(675 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_4a.%s", GTValues.VN[tier])), tier,4,true));
             WIRELESS_MANA_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(690 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_16a.%s", GTValues.VN[tier])), tier,16,true));
             WIRELESS_MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(705 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
+        }
 
-            WIRELESS_MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(720 + i, new MetaTileEntityWirelessManaPoolHatch(PollutionID(String.format("wireless.mana_pool_input_hatch.%s", GTValues.VN[tier])), tier,false));
-            WIRELESS_MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(735 + i, new MetaTileEntityWirelessManaPoolHatch(PollutionID(String.format("wireless.mana_pool_output_hatch.%s", GTValues.VN[tier])), tier,true));
+        for (int i = 0; i < poolTypes.length; i++) {
+            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
+            WIRELESS_MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(720 + i, new MetaTileEntityWirelessManaPoolHatch(
+                    PollutionID("wireless.mana_pool_input_hatch." + poolType.getName()), poolType, false));
+            WIRELESS_MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(735 + i, new MetaTileEntityWirelessManaPoolHatch(
+                    PollutionID("wireless.mana_pool_output_hatch." + poolType.getName()), poolType, true));
         }
 
         // HPCA

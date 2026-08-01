@@ -130,7 +130,7 @@ dependencies {
     // 魔法主线
     implementation rfg.deobf("curse.maven:baubles-227083:2518667")
     implementation rfg.deobf("curse.maven:thaumcraft-223628:2629023")
-    //implementation rfg.deobf("curse.maven:thaumic-jei-285492:2705304")
+    implementation rfg.deobf("curse.maven:thaumic-jei-285492:2705304")
     //implementation rfg.deobf("curse.maven:thaumic-energistics-extended-life-849094:6321322")
     implementation rfg.deobf("curse.maven:botania-225643:3330934")
     implementation rfg.deobf("curse.maven:extrabotany-299086:3112313")

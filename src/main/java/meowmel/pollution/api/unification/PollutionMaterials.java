@@ -123,6 +123,9 @@ public class PollutionMaterials {
 	public static Material Terrasteel;
 	public static Material Orichalcos;
 	public static Material ElvenElementium;
+	public static Material Dragonstone;
+	public static Material PixieDust;
+	public static Material ElvenQuartz;
 	public static Material elven;
 	public static Material basic_substrate;
 	public static Material advanced_substrate;

@@ -120,6 +120,11 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     }
 
     @Override
+    public boolean canReceiveManaFromBursts() {
+        return !isExportHatch && !isFull();
+    }
+
+    @Override
     public boolean consumeMana(long amount, boolean simulate) {
         if(simulate) return energyContainer.getEnergyStored() >= amount;
         return energyContainer.removeEnergy(amount) > 0;
@@ -166,6 +171,7 @@ public class MetaTileEntityManaHatch extends MetaTileEntityMultiblockPart implem
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, @NotNull List<String> tooltip, boolean advanced) {
         String tierName = GTValues.VNF[getTier()];
+        tooltip.add(I18n.format("pollution.machine.mana_energy_hatch.tooltip"));
         addDescriptorTooltip(stack, world, tooltip, advanced);
 
         if (isExportHatch) {

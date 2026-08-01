@@ -12,10 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WirelessManager {
     private static WirelessManager INSTANCE;
 
-    private final Map<Integer, Long> cacheByDim = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> energyManaCacheByDim = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> manaPoolCacheByDim = new ConcurrentHashMap<>();
 
     private WirelessManager() {
-
     }
 
     public static WirelessManager getInstance() {
@@ -30,86 +30,88 @@ public class WirelessManager {
         GTQTCore.LOGGER.info("Magic Wireless Manager Initialized");
     }
 
+    /** Energy-type mana used by wireless/infinite mana hatches. */
     public long getEnergy(int dim) {
-        return cacheByDim.getOrDefault(dim, 0L);
+        return energyManaCacheByDim.getOrDefault(dim, 0L);
     }
 
-    /**
-     * 向无线网添加能量
-     * @param dim    维度
-     * @param amount 请求添加的量（负数视为无效）
-     * @return 实际添加的量（amount>0时返回amount，否则返回0）
-     */
     public long addEnergy(int dim, long amount) {
-        if (amount <= 0) return 0L;
-        long current = cacheByDim.getOrDefault(dim, 0L);
-        cacheByDim.put(dim, current + amount);
-        return amount;
+        return addToCache(energyManaCacheByDim, dim, amount);
     }
 
-    /**
-     * 从无线网移除能量
-     * @param dim    维度
-     * @param amount 请求移除的量（负数视为无效）
-     * @return 实际移除的量（不超过现有能量）
-     */
     public long removeEnergy(int dim, long amount) {
-        if (amount <= 0) return 0L;
-        long current = cacheByDim.getOrDefault(dim, 0L);
+        return removeFromCache(energyManaCacheByDim, dim, amount);
+    }
+
+    public long requestEnergy(int dim, long request) {
+        return removeFromCache(energyManaCacheByDim, dim, request);
+    }
+
+    /** Pure Botania mana used only by wireless mana-pool hatches. */
+    public long getManaPool(int dim) {
+        return manaPoolCacheByDim.getOrDefault(dim, 0L);
+    }
+
+    public long addManaPool(int dim, long amount) {
+        return addToCache(manaPoolCacheByDim, dim, amount);
+    }
+
+    public long removeManaPool(int dim, long amount) {
+        return removeFromCache(manaPoolCacheByDim, dim, amount);
+    }
+
+    public long requestManaPool(int dim, long request) {
+        return removeFromCache(manaPoolCacheByDim, dim, request);
+    }
+
+    private long addToCache(Map<Integer, Long> cache, int dim, long amount) {
+        if (amount <= 0L) return 0L;
+        final long[] accepted = {amount};
+        cache.merge(dim, amount, (current, added) -> {
+            long free = Long.MAX_VALUE - current;
+            accepted[0] = Math.min(added, free);
+            return current + accepted[0];
+        });
+        return accepted[0];
+    }
+
+    private long removeFromCache(Map<Integer, Long> cache, int dim, long amount) {
+        if (amount <= 0L) return 0L;
+        long current = cache.getOrDefault(dim, 0L);
         long removed = Math.min(current, amount);
-        long newValue = current - removed;
-        if (newValue == 0) {
-            cacheByDim.remove(dim);
+        if (removed == 0L) return 0L;
+        long remaining = current - removed;
+        if (remaining == 0L) {
+            cache.remove(dim);
         } else {
-            cacheByDim.put(dim, newValue);
+            cache.put(dim, remaining);
         }
         return removed;
     }
 
-    /**
-     * 设备请求能量（从无线网中取出）
-     * @param dim     维度
-     * @param request 请求量（负数视为无效）
-     * @return 实际给予的量（不超过请求量且不超过当前缓存）
-     */
-    public long requestEnergy(int dim, long request) {
-        if (request <= 0) return 0L;
-        long current = cacheByDim.getOrDefault(dim, 0L);
-        long give = Math.min(current, request);
-        if (give == 0) return 0L;
-        long newValue = current - give;
-        if (newValue == 0) {
-            cacheByDim.remove(dim);
-        } else {
-            cacheByDim.put(dim, newValue);
-        }
-        return give;
-    }
-
-    /**
-     * 从世界数据中加载缓存（通常在服务器加载世界时调用一次）
-     * @param world 服务端世界对象（建议使用世界的 overworld）
-     */
     public void loadFromWorld(World world) {
-        if (world.isRemote) return; // 仅服务端保存
+        if (world.isRemote) return;
         WirelessWorldData data = WirelessWorldData.get(world);
-        cacheByDim.clear();
-        cacheByDim.putAll(data.getData());
-        GTQTCore.LOGGER.info("Loaded wireless energy data for {} dimensions", cacheByDim.size());
+        energyManaCacheByDim.clear();
+        manaPoolCacheByDim.clear();
+        energyManaCacheByDim.putAll(data.getEnergyManaData());
+        manaPoolCacheByDim.putAll(data.getManaPoolData());
+        GTQTCore.LOGGER.info("Loaded wireless mana data: {} energy dimensions, {} pool dimensions",
+                energyManaCacheByDim.size(), manaPoolCacheByDim.size());
     }
 
-    /**
-     * 将当前缓存保存到世界数据中（通常在服务器保存世界时自动调用）
-     * @param world 服务端世界对象
-     */
     public void saveToWorld(World world) {
         if (world.isRemote) return;
         WirelessWorldData data = WirelessWorldData.get(world);
-        Map<Integer, Long> storage = data.getData();
-        storage.clear();
-        storage.putAll(cacheByDim);
+        Map<Integer, Long> energyStorage = data.getEnergyManaData();
+        Map<Integer, Long> manaPoolStorage = data.getManaPoolData();
+        energyStorage.clear();
+        manaPoolStorage.clear();
+        energyStorage.putAll(energyManaCacheByDim);
+        manaPoolStorage.putAll(manaPoolCacheByDim);
         data.markDirty();
-        GTQTCore.LOGGER.debug("Saved wireless energy data for {} dimensions", storage.size());
+        GTQTCore.LOGGER.debug("Saved wireless mana data: {} energy dimensions, {} pool dimensions",
+                energyStorage.size(), manaPoolStorage.size());
     }
 
     @SubscribeEvent

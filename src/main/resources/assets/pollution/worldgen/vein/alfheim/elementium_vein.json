@@ -1,0 +1,28 @@
+{
+  "name": "pollution.vein.elementium",
+  "weight": 8,
+  "density": 0.15,
+  "min_height": 8,
+  "max_height": 40,
+  "dimension_filter": [
+    "dimension_id:43"
+  ],
+  "generation_predicate": "block:botania:livingrock",
+  "vein_populator": {
+    "type": "surface_rock",
+    "material": "pollution:elven_elementium"
+  },
+  "generator": {
+    "type": "layered",
+    "radius": [16, 24]
+  },
+  "filler": {
+    "type": "layered",
+    "values": [
+      { "primary": "ore:pollution:elven_elementium" },
+      { "secondary": "ore:pollution:elven_elementium" },
+      { "between": "ore:pollution:elven_elementium" },
+      { "sporadic": "ore:pollution:elven_elementium" }
+    ]
+  }
+}

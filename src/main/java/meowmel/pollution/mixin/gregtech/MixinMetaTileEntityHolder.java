@@ -35,14 +35,14 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
 
     @Override
     public void recieveMana(int mana) {
-        if (metaTileEntity instanceof IManaHatch manaHatch) {
-            manaHatch.receiveMana(mana);
+        if (metaTileEntity instanceof IManaHatch manaHatch && manaHatch.canReceiveManaFromBursts()) {
+            manaHatch.receiveManaFromBurst(mana);
         }
     }
 
     @Override
     public boolean canRecieveManaFromBursts() {
-        return true;
+        return metaTileEntity instanceof IManaHatch manaHatch && manaHatch.canReceiveManaFromBursts();
     }
 
     @Override
@@ -58,7 +58,7 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
     @Override
     public boolean isFull() {
         if (metaTileEntity instanceof IManaHatch manaHatch) {
-            return manaHatch.isFull();
+            return manaHatch.isFull() || !manaHatch.canReceiveManaFromBursts();
         }
         return true;
     }
@@ -66,7 +66,7 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
     @Override
     public int getCurrentMana() {
         if (metaTileEntity instanceof IManaHatch manaHatch) {
-            return Math.toIntExact(manaHatch.getMana());
+            return (int) Math.min(Integer.MAX_VALUE, Math.max(0L, manaHatch.getMana()));
         }
         return 0;
     }
@@ -74,7 +74,7 @@ public abstract class MixinMetaTileEntityHolder extends TickableTileEntityBase i
     @Override
     public int getMaxMana() {
         if (metaTileEntity instanceof IManaHatch manaHatch) {
-            return Math.toIntExact(manaHatch.getMaxMana());
+            return (int) Math.min(Integer.MAX_VALUE, Math.max(0L, manaHatch.getMaxMana()));
         }
         return 0;
     }

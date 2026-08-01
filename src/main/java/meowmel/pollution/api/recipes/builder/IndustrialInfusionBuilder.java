@@ -1,5 +1,6 @@
 package meowmel.pollution.api.recipes.builder;
 
+import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.utils.POAspectToGtFluidList;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -34,7 +35,7 @@ public class IndustrialInfusionBuilder {
                     int during = 0;
                     for (int i=0; i<aspect.length;i++)
                     {
-                        during+=aspectList.getAmount(aspect[i]);
+                        during+=aspectList.getAmount(aspect[i])*5;
                         if(POAspectToGtFluidList.aspectToGtFluidList.get(aspect[i])!=null)
                             fluids[i] = POAspectToGtFluidList.aspectToGtFluidList.get(aspect[i]).getFluid(aspectList.getAmount(aspect[i])*144);
                     }
@@ -43,7 +44,9 @@ public class IndustrialInfusionBuilder {
                             .outputs(out)
                             .fluidInputs(fluids)
                             .duration(during)
-                            .EUt(120);
+                            .EUt(480);
+
+                    MagicRecipeProperties.thaumcraftResearch(brec, read.getResearch());
 
 
 

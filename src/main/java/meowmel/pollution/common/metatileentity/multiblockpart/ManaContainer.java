@@ -13,12 +13,14 @@ public class ManaContainer {
     }
 
     public long addMana(long amount) {
+        if (amount <= 0L) return 0L;
         long add = Math.min(amount, manaStorageMax - manaStorage);
         manaStorage += add;
         return add;
     }
 
     public long removeMana(long amount) {
+        if (amount <= 0L) return 0L;
         long remove = Math.min(amount, manaStorage);
         manaStorage -= remove;
         return remove;

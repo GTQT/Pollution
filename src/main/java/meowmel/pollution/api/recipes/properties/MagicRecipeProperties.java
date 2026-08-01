@@ -32,6 +32,8 @@ public final class MagicRecipeProperties {
     public static final AstralProperty ASTRAL_CONDITION = new AstralProperty();
     public static final StringProperty TAROT = new StringProperty(
             "pollution.magic.tarot", "塔罗牌");
+    public static final StringProperty THAUMCRAFT_RESEARCH = new StringProperty(
+            "pollution.magic.thaumcraft_research", "所需神秘研究");
 
     private static boolean initialized;
 
@@ -47,6 +49,7 @@ public final class MagicRecipeProperties {
         GregTechAPI.RECIPE_PROPERTIES.register(VIS_PER_CRAFT.getKey(), VIS_PER_CRAFT);
         GregTechAPI.RECIPE_PROPERTIES.register(ASTRAL_CONDITION.getKey(), ASTRAL_CONDITION);
         GregTechAPI.RECIPE_PROPERTIES.register(TAROT.getKey(), TAROT);
+        GregTechAPI.RECIPE_PROPERTIES.register(THAUMCRAFT_RESEARCH.getKey(), THAUMCRAFT_RESEARCH);
     }
 
     public static <R extends RecipeBuilder<R>> R infusedFluidPerTick(R builder, int amount) {
@@ -76,6 +79,14 @@ public final class MagicRecipeProperties {
 
     public static <R extends RecipeBuilder<R>> R tarot(R builder, String tarotId) {
         builder.applyProperty(TAROT, tarotId == null ? "" : tarotId.trim());
+        return builder;
+    }
+
+    public static <R extends RecipeBuilder<R>> R thaumcraftResearch(R builder, String researchKey) {
+        String normalized = researchKey == null ? "" : researchKey.trim();
+        if (!normalized.isEmpty()) {
+            builder.applyProperty(THAUMCRAFT_RESEARCH, normalized);
+        }
         return builder;
     }
 

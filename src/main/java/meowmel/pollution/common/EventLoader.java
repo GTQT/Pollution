@@ -4,10 +4,12 @@ import gregtech.api.GregTechAPI;
 import gregtech.api.metatileentity.registry.MTEManager;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
+import gregtech.api.unification.material.event.PostMaterialEvent;
 
 import meowmel.pollution.POConfig;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.pollution.api.unification.PollutionStoneTypes;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,6 +46,11 @@ public class EventLoader {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void registerMaterials(MaterialEvent event) {
         PollutionMaterials.register();
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void registerStoneTypes(PostMaterialEvent event) {
+        PollutionStoneTypes.init();
     }
 
     @SubscribeEvent

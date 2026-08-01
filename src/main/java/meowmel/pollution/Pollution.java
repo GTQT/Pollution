@@ -14,7 +14,9 @@ import meowmel.pollution.common.metatileentity.multiblockpart.wireless.WirelessM
 import meowmel.pollution.dimension.worldgen.PODimensionManager;
 import meowmel.pollution.dimension.worldgen.PODimensionType;
 import meowmel.pollution.dimension.worldgen.POStructureManager;
+import meowmel.pollution.dimension.worldgen.PollutionOreVeins;
 import meowmel.pollution.integration.POIntegration;
+import meowmel.pollution.integration.botania.BotaniaMaterialUnification;
 import meowmel.pollution.loaders.loot.GregTechLootTable;
 import meowmel.pollution.loaders.recipes.MeteorsHelper;
 import meowmel.pollution.loaders.recipes.mods.Botania;
@@ -64,6 +66,7 @@ public class Pollution {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        BotaniaMaterialUnification.init();
         POIntegration.init();
         proxy.init();
         GregTechLootTable.init();
@@ -77,6 +80,11 @@ public class Pollution {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         PollutionLog.init(event.getModLog());
+        try {
+            PollutionOreVeins.init(event.getModConfigurationDirectory().toPath());
+        } catch (Exception exception) {
+            LOGGER.error("Failed to install GTCEu ore veins for Alfheim dimension 43", exception);
+        }
         MagicRecipeProperties.init();
         PollutionMetaBlocks.init();
         POAPI.init();
@@ -101,7 +109,7 @@ public class Pollution {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         // Dynamic Thaumcraft infusion imports are disabled until the GT/HEI input expansion is fixed upstream.开启的话会至少占用额外约 0.87 GiB
-        // IndustrialInfusionBuilder.init();
+        IndustrialInfusionBuilder.init();
         Botania.init();
         MeteorsHelper.init();
     }

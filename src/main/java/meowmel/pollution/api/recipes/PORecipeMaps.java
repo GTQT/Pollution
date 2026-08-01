@@ -5,6 +5,7 @@ import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMapBuilder;
 import gregtech.api.recipes.builders.*;
 import gregtech.core.sound.GTSoundEvents;
+import meowmel.pollution.api.recipes.ui.IndustrialInfusionUI;
 import meowmel.pollution.client.POSoundEvent;
 import net.minecraft.init.SoundEvents;
 
@@ -139,6 +140,7 @@ public class PORecipeMaps {
             .itemOutputs(1)
             .fluidInputs(8)
             .fluidOutputs(0)
+            .ui(IndustrialInfusionUI::new)
             .build();
 
     public static final RecipeMap<SimpleRecipeBuilder> MAGIC_METEORS_RECIPES = new RecipeMapBuilder<>("magic_meteors_recipes", new SimpleRecipeBuilder())

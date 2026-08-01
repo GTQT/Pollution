@@ -286,21 +286,21 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 				this.addItem(530, "arcane_ink_capsule").setCreativeTabs(Pollution_TAROT);
 
 		// One animated magic circuit substrate for every voltage tier (540-554)
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ULV = this.addItem(540, "magic_circuit_board.ulv").setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LV = this.addItem(541, "magic_circuit_board.lv").setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MV = this.addItem(542, "magic_circuit_board.mv").setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_HV = this.addItem(543, "magic_circuit_board.hv").setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_EV = this.addItem(544, "magic_circuit_board.ev").setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_IV = this.addItem(545, "magic_circuit_board.iv").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV = this.addItem(546, "magic_circuit_board.luv").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM = this.addItem(547, "magic_circuit_board.zpm").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UV = this.addItem(548, "magic_circuit_board.uv").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV = this.addItem(549, "magic_circuit_board.uhv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV = this.addItem(550, "magic_circuit_board.uev").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV = this.addItem(551, "magic_circuit_board.uiv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV = this.addItem(552, "magic_circuit_board.uxv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV = this.addItem(553, "magic_circuit_board.opv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MAX = this.addItem(554, "magic_circuit_board.max").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ULV = this.addItem(540, "magic_circuit_board.ulv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.ULV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LV = this.addItem(541, "magic_circuit_board.lv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.LV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MV = this.addItem(542, "magic_circuit_board.mv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MV).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_HV = this.addItem(543, "magic_circuit_board.hv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.HV).setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_EV = this.addItem(544, "magic_circuit_board.ev").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.EV).setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_IV = this.addItem(545, "magic_circuit_board.iv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.IV).setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV = this.addItem(546, "magic_circuit_board.luv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.LuV).setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM = this.addItem(547, "magic_circuit_board.zpm").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.ZPM).setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UV = this.addItem(548, "magic_circuit_board.uv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UV).setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV = this.addItem(549, "magic_circuit_board.uhv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UHV).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV = this.addItem(550, "magic_circuit_board.uev").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV = this.addItem(551, "magic_circuit_board.uiv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV = this.addItem(552, "magic_circuit_board.uxv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV = this.addItem(553, "magic_circuit_board.opv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MAX = this.addItem(554, "magic_circuit_board.max").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MAX).setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
 
 		// Recipe-first functional carriers (560-563)
 		PollutionMetaItems.ATTUNED_CRYSTAL_WAFER =
