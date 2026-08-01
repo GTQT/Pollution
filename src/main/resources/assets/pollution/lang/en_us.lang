@@ -1488,3 +1488,45 @@ pollution.machine.tarot_hatch.tooltip.1=Insert one Major Arcana tarot card to au
 pollution.machine.tarot_hatch.tooltip.2=The tarot card is an authorization medium and is never consumed by recipes
 pollution.machine.infused_fluid_hatch.name=Essentia Fluid Input Hatch
 pollution.machine.infused_fluid_hatch.tooltip=Stores and supplies essentia fluids required by magical machinery
+
+# One magic circuit substrate for every voltage tier
+metaitem.magic_circuit_board.ulv.name=Magic Circuit Substrate (§8ULV§r)
+metaitem.magic_circuit_board.lv.name=Magic Circuit Substrate (§7LV§r)
+metaitem.magic_circuit_board.mv.name=Magic Circuit Substrate (§bMV§r)
+metaitem.magic_circuit_board.hv.name=Magic Circuit Substrate (§6HV§r)
+metaitem.magic_circuit_board.ev.name=Magic Circuit Substrate (§5EV§r)
+metaitem.magic_circuit_board.iv.name=Magic Circuit Substrate (§1IV§r)
+metaitem.magic_circuit_board.luv.name=Magic Circuit Substrate (§dLuV§r)
+metaitem.magic_circuit_board.zpm.name=Magic Circuit Substrate (§cZPM§r)
+metaitem.magic_circuit_board.uv.name=Magic Circuit Substrate (§3UV§r)
+metaitem.magic_circuit_board.uhv.name=Magic Circuit Substrate (§4UHV§r)
+metaitem.magic_circuit_board.uev.name=Magic Circuit Substrate (§aUEV§r)
+metaitem.magic_circuit_board.uiv.name=Magic Circuit Substrate (§2UIV§r)
+metaitem.magic_circuit_board.uxv.name=Magic Circuit Substrate (§eUXV§r)
+metaitem.magic_circuit_board.opv.name=Magic Circuit Substrate (§9OpV§r)
+metaitem.magic_circuit_board.max.name=Magic Circuit Substrate (§c§lMAX§r)
+metaitem.magic_circuit_board.ulv.tooltip=A basic industrial magic substrate with faint runic traces
+metaitem.magic_circuit_board.lv.tooltip=A runic printed substrate able to carry low-voltage magic components
+metaitem.magic_circuit_board.mv.tooltip=Mana-stabilized traces reinforce its edge contacts
+metaitem.magic_circuit_board.hv.tooltip=Essentia etching forms high-voltage magic pathways
+metaitem.magic_circuit_board.ev.tooltip=High-energy runes flow continuously across its surface
+metaitem.magic_circuit_board.iv.tooltip=Carries both thaumic data and living mana traces
+metaitem.magic_circuit_board.luv.tooltip=Living computing tissue synchronizes with its magic pathways
+metaitem.magic_circuit_board.zpm.tooltip=Constellation data is written into stable celestial traces
+metaitem.magic_circuit_board.uv.tooltip=High-density starlight pathways cover the entire substrate
+metaitem.magic_circuit_board.uhv.tooltip=Causal constraints begin stabilizing ultra-high-tier magic computation
+metaitem.magic_circuit_board.uev.tooltip=Cross-system magic signals travel in parallel through phase traces
+metaitem.magic_circuit_board.uiv.tooltip=Its pathways adapt between node, starlight and living signals
+metaitem.magic_circuit_board.uxv.tooltip=World-scale magic information is compressed into dense traces
+metaitem.magic_circuit_board.opv.tooltip=A nearly complete causal computing network cycles within the substrate
+metaitem.magic_circuit_board.max.tooltip=The final circuit substrate attainable by magic industry
+
+# Recipe-first functional intermediates
+metaitem.attuned_crystal_wafer.name=Attuned Crystal Wafer
+metaitem.attuned_crystal_wafer.tooltip=Cut from an attuned astral crystal and able to retain crystal quality and constellation data
+metaitem.constellation_data_wafer.name=Constellation Data Wafer
+metaitem.constellation_data_wafer.tooltip=An industrial carrier for a discovered constellation; it cannot reveal an unknown one
+metaitem.living_magic_biofilm.name=Living Magic Biofilm
+metaitem.living_magic_biofilm.tooltip=A biological computing medium linking botanical mana, blood tissue and celestial culture
+metaitem.depleted_magic_core.name=Depleted Magic Core
+metaitem.depleted_magic_core.tooltip=A spent catalyst shell that can be purified and recycled into a blank catalyst core

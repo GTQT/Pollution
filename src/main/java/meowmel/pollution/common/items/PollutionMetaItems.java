@@ -158,6 +158,29 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem BLANK_TAROT_CARD;
 	public static MetaItem<?>.MetaValueItem ARCANE_INK_CAPSULE;
 
+	// One animated magic circuit substrate for every voltage tier
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_ULV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_LV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_MV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_HV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_EV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_IV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_LuV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_ZPM;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_UV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_UHV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_UEV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_UIV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_UXV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_OpV;
+	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_MAX;
+
+	// Recipe-first functional carriers
+	public static MetaItem<?>.MetaValueItem ATTUNED_CRYSTAL_WAFER;
+	public static MetaItem<?>.MetaValueItem CONSTELLATION_DATA_WAFER;
+	public static MetaItem<?>.MetaValueItem LIVING_MAGIC_BIOFILM;
+	public static MetaItem<?>.MetaValueItem DEPLETED_MAGIC_CORE;
+
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_MV;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_HV;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_EV;

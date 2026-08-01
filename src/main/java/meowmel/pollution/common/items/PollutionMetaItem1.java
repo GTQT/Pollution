@@ -285,6 +285,44 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.ARCANE_INK_CAPSULE =
 				this.addItem(530, "arcane_ink_capsule").setCreativeTabs(Pollution_TAROT);
 
+		// One animated magic circuit substrate for every voltage tier (540-554)
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ULV = this.addItem(540, "magic_circuit_board.ulv").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LV = this.addItem(541, "magic_circuit_board.lv").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MV = this.addItem(542, "magic_circuit_board.mv").setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_HV = this.addItem(543, "magic_circuit_board.hv").setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_EV = this.addItem(544, "magic_circuit_board.ev").setRarity(EnumRarity.UNCOMMON).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_IV = this.addItem(545, "magic_circuit_board.iv").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV = this.addItem(546, "magic_circuit_board.luv").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM = this.addItem(547, "magic_circuit_board.zpm").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UV = this.addItem(548, "magic_circuit_board.uv").setRarity(EnumRarity.RARE).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV = this.addItem(549, "magic_circuit_board.uhv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV = this.addItem(550, "magic_circuit_board.uev").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV = this.addItem(551, "magic_circuit_board.uiv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV = this.addItem(552, "magic_circuit_board.uxv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV = this.addItem(553, "magic_circuit_board.opv").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MAX = this.addItem(554, "magic_circuit_board.max").setRarity(EnumRarity.EPIC).setCreativeTabs(Pollution_TAB);
+
+		// Recipe-first functional carriers (560-563)
+		PollutionMetaItems.ATTUNED_CRYSTAL_WAFER =
+				this.addItem(560, "attuned_crystal_wafer")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.RARE)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.CONSTELLATION_DATA_WAFER =
+				this.addItem(561, "constellation_data_wafer")
+						.setMaxStackSize(16)
+						.setRarity(EnumRarity.RARE)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.LIVING_MAGIC_BIOFILM =
+				this.addItem(562, "living_magic_biofilm")
+						.setMaxStackSize(32)
+						.setRarity(EnumRarity.RARE)
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.DEPLETED_MAGIC_CORE =
+				this.addItem(563, "depleted_magic_core")
+						.setMaxStackSize(64)
+						.setCreativeTabs(Pollution_TAB);
+
 	}
 
 }

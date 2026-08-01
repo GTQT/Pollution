@@ -47,7 +47,6 @@ public class MagicFuelRecipes {
 
         ROCKET_ENGINE_RECIPES.recipeBuilder()
                 .fluidInputs(infernal_blaze_propellant.getFluid(9))
-                .fluidOutputs(SupercriticalExhaustGas.getFluid(4 * 1000))
                 .EUt(2048)
                 .duration(4 * SECOND)
                 .buildAndRegister();
@@ -94,7 +93,6 @@ public class MagicFuelRecipes {
 
         ROCKET_ENGINE_RECIPES.recipeBuilder()
                 .fluidInputs(dragon_pulse_fuel.getFluid(6))
-                .fluidOutputs(SupercriticalExhaustGas.getFluid(6 * 1000))
                 .EUt(2048)
                 .duration(8 * SECOND)
                 .buildAndRegister();
@@ -115,7 +113,6 @@ public class MagicFuelRecipes {
 
         RecipeMaps.COMBUSTION_GENERATOR_FUELS.recipeBuilder()
                 .fluidInputs(magic_nitrobenzene.getFluid(1))
-                .fluidOutputs(SupercriticalExhaustGas.getFluid(4500))
                 .duration(90)
                 .EUt(512)
                 .buildAndRegister();

@@ -24,7 +24,7 @@ public class MufflerHatchRecipes {
                     .input(rotor, ElvenElementium, 1)
                     .input(getFilterByTier(i), 4)
                     .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
-                    .output(MUFFLER_HATCH[i+1])
+                    .output(MUFFLER_HATCH[i])
                     .duration(400)
                     .EUt(VA[i])
                     .buildAndRegister();

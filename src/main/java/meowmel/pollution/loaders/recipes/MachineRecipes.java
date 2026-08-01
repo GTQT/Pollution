@@ -141,15 +141,19 @@ public class MachineRecipes {
                 'M', MOTOR,
                 'E', EMITTER
         );
-        registerMachineRecipe(PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER,
-                "CVC", "FLF", "EHE",
-                'H', HULL,
-                'L', LARGE_NODE_GENERATOR.getStackForm(),
-                'E', MetaItems.EMITTER_LuV,
-                'C', CIRCUIT,
-                'V', VIS_HATCH,
-                'F', FIELD_GENERATOR
-        );
+        for (int i = 0; i < PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER.length; i++) {
+            int tier = GTValues.LV + i;
+            ModHandler.addShapedRecipe(true,
+                    "magic_energy_absorber_node_" + GTValues.VN[tier].toLowerCase(),
+                    PollutionMetaTileEntities.MAGIC_ENERGY_ABSORBER[i].getStackForm(),
+                    "CVC", "FLF", "EHE",
+                    'H', HULL.getIngredient(tier),
+                    'L', LARGE_NODE_GENERATOR.getStackForm(),
+                    'E', MetaItems.EMITTER_LuV,
+                    'C', CIRCUIT.getIngredient(tier),
+                    'V', VIS_HATCH[i].getStackForm(),
+                    'F', FIELD_GENERATOR.getIngredient(tier));
+        }
 
     }
 

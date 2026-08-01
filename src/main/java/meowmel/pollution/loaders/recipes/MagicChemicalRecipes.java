@@ -1280,7 +1280,7 @@ public class MagicChemicalRecipes {
 				.EUt(VA[LuV])
 				.buildAndRegister();
 		//奇术凛冰液 搅拌机
-		RecipeMaps.MIXER_RECIPES.recipeBuilder()
+		RecipeMaps.LARGE_MIXER_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
 				.fluidInputs(GTQTMaterials.GelidCryotheum.getFluid(1000))
 				.fluidInputs(PollutionMaterials.InfusedCold.getFluid(1000))
