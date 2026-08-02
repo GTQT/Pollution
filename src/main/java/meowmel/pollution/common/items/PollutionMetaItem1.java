@@ -228,6 +228,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 				this.addItem(502, "celestial_calibration_core")
 						.setMaxStackSize(16)
 						.setRarity(EnumRarity.RARE)
+						.addComponents(new ConstellationDataBehavior())
 						.setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.HARMONIZING_RUNE_CORE =
 				this.addItem(503, "harmonizing_rune_core")
@@ -315,6 +316,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 				this.addItem(561, "constellation_data_wafer")
 						.setMaxStackSize(16)
 						.setRarity(EnumRarity.RARE)
+						.addComponents(new ConstellationDataBehavior())
 						.setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.LIVING_MAGIC_BIOFILM =
 				this.addItem(562, "living_magic_biofilm")

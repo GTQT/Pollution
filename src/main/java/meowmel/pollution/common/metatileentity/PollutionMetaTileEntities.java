@@ -21,6 +21,8 @@ import meowmel.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClea
 import meowmel.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEntityBMHPCA;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialStarlightInfuser;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialLightwell;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialObservationArray;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialCalibrationMatrix;
 import meowmel.pollution.common.metatileentity.multiblock.bot.*;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicLargeTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicMegaTurbine;
@@ -155,6 +157,8 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
     public static MetaTileEntityIndustrialStarlightInfuser INDUSTRIAL_STARLIGHT_INFUSER;
     public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
+    public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
+    public static MetaTileEntityCelestialCalibrationMatrix CELESTIAL_CALIBRATION_MATRIX;
 
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
@@ -318,6 +322,10 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityIndustrialStarlightInfuser(PollutionID("industrial_starlight_infuser")));
         INDUSTRIAL_LIGHTWELL = registerMetaTileEntity(349,
                 new MetaTileEntityIndustrialLightwell(PollutionID("industrial_lightwell")));
+        CELESTIAL_OBSERVATION_ARRAY = registerMetaTileEntity(350,
+                new MetaTileEntityCelestialObservationArray(PollutionID("celestial_observation_array")));
+        CELESTIAL_CALIBRATION_MATRIX = registerMetaTileEntity(351,
+                new MetaTileEntityCelestialCalibrationMatrix(PollutionID("celestial_calibration_matrix")));
 
         //仓口
         for (int i = 0; i < VIS_HATCH.length; i++) {

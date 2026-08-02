@@ -135,6 +135,17 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
                 manager.add(KeyUtil.lang(TextFormatting.RED,
                         "未安装灵气仓"));
             }
+            Recipe currentRecipe = recipeMapWorkable.getPreviousRecipe();
+            AstralCondition condition = currentRecipe == null ? AstralCondition.NONE
+                    : currentRecipe.getProperty(MagicRecipeProperties.ASTRAL_CONDITION, AstralCondition.NONE);
+            if (syncer.syncBoolean(condition.isConfigured())) {
+                if (syncer.syncBoolean(astralLensHatch == null)) {
+                    manager.add(KeyUtil.string(TextFormatting.RED, "当前配方缺少星辉透镜仓"));
+                } else if (syncer.syncBoolean(!astralLensHatch.matches(condition))) {
+                    manager.add(KeyUtil.string(TextFormatting.RED,
+                            "星座数据、透镜焦点或实时天空与当前配方不一致"));
+                }
+            }
         });
     }
 
@@ -188,7 +199,22 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
                 keyManager.add(KeyUtil.string(TextFormatting.GRAY, "生命源质：" + syncer.syncInt(bloodMagicHatch.getLifeEssence())));
             }
             if (astralLensHatch != null) {
-                keyManager.add(KeyUtil.string(TextFormatting.GRAY, "星辉焦点：" + astralLensHatch.getFocusedConstellation()));
+                String constellation = syncer.syncString(astralLensHatch.getFocusedConstellation());
+                boolean skyVisible = syncer.syncBoolean(astralLensHatch.isSkyVisible());
+                boolean night = syncer.syncBoolean(astralLensHatch.isNight());
+                boolean active = syncer.syncBoolean(astralLensHatch.isFocusedConstellationActive());
+                keyManager.add(KeyUtil.string(TextFormatting.GRAY, "星辉焦点：" +
+                        (constellation.isEmpty() ? "未调谐" : constellation)));
+                keyManager.add(KeyUtil.string(skyVisible ? TextFormatting.GREEN : TextFormatting.RED,
+                        "露天状态：" + (skyVisible ? "可见天空" : "被遮挡")));
+                keyManager.add(KeyUtil.string(TextFormatting.GRAY,
+                        "天空状态：" + (night ? "夜间" : "日间") +
+                                " / 月相 " + syncer.syncString(astralLensHatch.getMoonPhase())));
+                keyManager.add(KeyUtil.string(TextFormatting.GRAY,
+                        "天象事件：" + syncer.syncString(astralLensHatch.getCelestialEvent())));
+                keyManager.add(KeyUtil.string(active ? TextFormatting.AQUA : TextFormatting.RED,
+                        "星座活跃度：" + String.format("%.1f%%",
+                                syncer.syncDouble(astralLensHatch.getFocusedDistribution() * 100.0F))));
             }
             if (tarotHatch != null) {
                 keyManager.add(KeyUtil.string(TextFormatting.GRAY, "塔罗授权：" + tarotHatch.getActiveTarot()));

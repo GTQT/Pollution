@@ -1545,6 +1545,30 @@ metaitem.living_magic_biofilm.tooltip=连接植物魔力、血液组织与天体
 metaitem.depleted_magic_core.name=耗竭魔导核心
 metaitem.depleted_magic_core.tooltip=失去催化活性的核心外壳，可净化并回收为空白催化核心
 
+# 星座NBT状态
+pollution.astral_data.unattuned=未写入星座数据
+pollution.astral_data.constellation=已写入星座：%s
+pollution.astral_data.function=天体校准倾向：%s
+pollution.astral_data.function.life=生命培养
+pollution.astral_data.function.processing=加工与破坏
+pollution.astral_data.function.stability=稳定与防护
+pollution.astral_data.function.energy=能量与激进超频
+pollution.astral_data.function.time=时序与精密校准
+pollution.astral_data.function.resonance=通用星辉共振
+pollution.astral_data.nbt_preserved=星座身份以星辉魔法原生NBT保存
+
+# 天象观测与校准
+pollution.machine.celestial_observation_array.name=工业天象观测阵列
+recipemap.celestial_observation.name=工业天象观测
+pollution.machine.celestial_observation_array.tooltip.1=读取实时星座、月相、星能分布和天象事件
+pollution.machine.celestial_observation_array.tooltip.2=晶圆、透镜仓焦点与当前活跃星座必须一致
+pollution.machine.celestial_observation_array.tooltip.3=星辉透镜仓必须安装在可直接看见天空的位置
+pollution.machine.celestial_calibration_matrix.name=天体校准矩阵
+recipemap.celestial_calibration.name=天体校准
+pollution.machine.celestial_calibration_matrix.tooltip.1=将星座数据晶圆的原生NBT写入天体校准核心
+pollution.machine.celestial_calibration_matrix.tooltip.2=数据晶圆、透镜仓与实时天空不一致时拒绝启动
+pollution.machine.celestial_calibration_matrix.tooltip.3=用于ZPM以上魔法电路、星辉仓和因果组件
+
 # 工业星能聚合器（Starlight Infuser）
 pollution.machine.industrial_starlight_infuser.name=工业星能聚合器
 recipemap.industrial_starlight_infuser_recipes.name=工业星能聚合

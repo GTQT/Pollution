@@ -1538,6 +1538,30 @@ metaitem.living_magic_biofilm.tooltip=A biological computing medium linking bota
 metaitem.depleted_magic_core.name=Depleted Magic Core
 metaitem.depleted_magic_core.tooltip=A spent catalyst shell that can be purified and recycled into a blank catalyst core
 
+# Constellation NBT state
+pollution.astral_data.unattuned=No constellation data written
+pollution.astral_data.constellation=Written constellation: %s
+pollution.astral_data.function=Celestial calibration affinity: %s
+pollution.astral_data.function.life=Life cultivation
+pollution.astral_data.function.processing=Processing and destruction
+pollution.astral_data.function.stability=Stability and protection
+pollution.astral_data.function.energy=Energy and aggressive overclocking
+pollution.astral_data.function.time=Timing and precision calibration
+pollution.astral_data.function.resonance=General astral resonance
+pollution.astral_data.nbt_preserved=Constellation identity is stored using canonical Astral Sorcery NBT
+
+# Celestial observation and calibration
+pollution.machine.celestial_observation_array.name=Industrial Celestial Observation Array
+recipemap.celestial_observation.name=Industrial Celestial Observation
+pollution.machine.celestial_observation_array.tooltip.1=Reads live constellations, moon phase, starlight distribution and celestial events
+pollution.machine.celestial_observation_array.tooltip.2=Wafer NBT, lens-hatch focus and the active sky constellation must match
+pollution.machine.celestial_observation_array.tooltip.3=The Astral Lens Hatch must be placed with direct sky access
+pollution.machine.celestial_calibration_matrix.name=Celestial Calibration Matrix
+recipemap.celestial_calibration.name=Celestial Calibration
+pollution.machine.celestial_calibration_matrix.tooltip.1=Writes canonical constellation NBT from a data wafer into a celestial calibration core
+pollution.machine.celestial_calibration_matrix.tooltip.2=Refuses to start unless wafer, lens hatch and live sky all match
+pollution.machine.celestial_calibration_matrix.tooltip.3=Used by ZPM+ magic circuits, astral hatches and causal components
+
 # Industrial Starlight Infuser
 pollution.machine.industrial_starlight_infuser.name=Industrial Starlight Infuser
 recipemap.industrial_starlight_infuser_recipes.name=Industrial Starlight Infusion

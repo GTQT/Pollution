@@ -79,14 +79,60 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
         return constellation == null ? "" : constellation.getSimpleName().toLowerCase(Locale.ROOT);
     }
 
+    @Nullable
+    private WorldSkyHandler getWorldSkyHandler() {
+        if (getWorld() == null) return null;
+        return ConstellationSkyHandler.getInstance().getWorldHandler(getWorld());
+    }
+
+    @Override
+    public boolean isSkyVisible() {
+        return getWorld() != null && getWorld().canSeeSky(getPos().up());
+    }
+
+    @Override
+    public boolean isNight() {
+        return getWorld() != null && ConstellationSkyHandler.getInstance().isNight(getWorld());
+    }
+
+    @Override
+    public boolean isFocusedConstellationActive() {
+        IConstellation focus = getConstellation(getFocusStack());
+        WorldSkyHandler handler = getWorldSkyHandler();
+        return focus != null && handler != null && handler.isActive(focus);
+    }
+
+    @Override
+    public float getFocusedDistribution() {
+        IConstellation focus = getConstellation(getFocusStack());
+        WorldSkyHandler handler = getWorldSkyHandler();
+        if (focus == null || handler == null) return 0.0F;
+        Float distribution = handler.getCurrentDistribution(focus, Function.identity());
+        return distribution == null ? 0.0F : distribution;
+    }
+
+    @Override
+    public String getMoonPhase() {
+        WorldSkyHandler handler = getWorldSkyHandler();
+        return handler == null || handler.getCurrentMoonPhase() == null
+                ? "" : handler.getCurrentMoonPhase().name();
+    }
+
+    @Override
+    public String getCelestialEvent() {
+        WorldSkyHandler handler = getWorldSkyHandler();
+        return handler == null || handler.getCurrentlyActiveEvent() == null
+                ? "" : handler.getCurrentlyActiveEvent().name();
+    }
+
     @Override
     public boolean matches(AstralCondition condition) {
         if (condition == null || !condition.isConfigured()) return true;
         IConstellation focus = getConstellation(getFocusStack());
-        if (focus == null || getWorld() == null || !getWorld().canSeeSky(getPos().up())) return false;
+        if (focus == null || getWorld() == null || !isSkyVisible()) return false;
 
         ConstellationSkyHandler skyHandler = ConstellationSkyHandler.getInstance();
-        WorldSkyHandler worldHandler = skyHandler.getWorldHandler(getWorld());
+        WorldSkyHandler worldHandler = getWorldSkyHandler();
         if (worldHandler == null) return false;
         if (condition.isNightRequired() && !skyHandler.isNight(getWorld())) return false;
 

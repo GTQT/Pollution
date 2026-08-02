@@ -2,6 +2,8 @@ package meowmel.pollution.loaders.recipes;
 
 import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import hellfirepvp.astralsorcery.common.lib.ItemsAS;
@@ -20,8 +22,8 @@ public final class MagicHatchRecipes {
         registerBloodMagicHatch(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MV.getStackForm());
         registerAstralLensHatch(PollutionMetaItems.MAGIC_CIRCUIT_MV.getStackForm());
         registerAstralLensHatch(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MV.getStackForm());
-        registerAdvancedAstralLensHatch(PollutionMetaItems.MAGIC_CIRCUIT_ZPM.getStackForm());
-        registerAdvancedAstralLensHatch(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM.getStackForm());
+        registerAdvancedAstralLensHatch(PollutionMetaItems.MAGIC_CIRCUIT_LuV.getStackForm());
+        registerAdvancedAstralLensHatch(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV.getStackForm());
         registerTarotHatch(PollutionMetaItems.MAGIC_CIRCUIT_LV.getStackForm());
         registerTarotHatch(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LV.getStackForm());
     }
@@ -73,7 +75,7 @@ public final class MagicHatchRecipes {
                 .input(MetaItems.FIELD_GENERATOR_LuV)
                 .input(MetaItems.SENSOR_LuV)
                 .input(PollutionMetaItems.ASTRAL_LENS_ADVANCED)
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
+                .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
                 .input(PollutionMetaItems.CELESTIAL_CALIBRATION_CORE)
                 .inputs(circuit)
                 .output(PollutionMetaTileEntities.ASTRAL_LENS_HATCH_ADVANCED)

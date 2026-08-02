@@ -4,6 +4,8 @@ import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.item.ItemSlate;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
+import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
@@ -14,7 +16,9 @@ import hellfirepvp.astralsorcery.common.item.ItemCraftingComponent;
 import hellfirepvp.astralsorcery.common.lib.BlocksAS;
 import hellfirepvp.astralsorcery.common.lib.ItemsAS;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.Pollution;
+import meowmel.pollution.api.astral.AstralNbtHelper;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
@@ -23,11 +27,11 @@ import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
+import gregtech.common.metatileentities.MetaTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.ThaumcraftApi;
@@ -41,7 +45,6 @@ import vazkii.botania.common.item.ModItems;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static gregtech.api.GTValues.EV;
 import static gregtech.api.GTValues.HV;
@@ -50,6 +53,13 @@ import static gregtech.api.GTValues.LV;
 import static gregtech.api.GTValues.LuV;
 import static gregtech.api.GTValues.MV;
 import static gregtech.api.GTValues.ULV;
+import static gregtech.api.GTValues.UHV;
+import static gregtech.api.GTValues.UEV;
+import static gregtech.api.GTValues.UIV;
+import static gregtech.api.GTValues.UXV;
+import static gregtech.api.GTValues.OpV;
+import static gregtech.api.GTValues.MAX;
+import static gregtech.api.GTValues.UV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.GTValues.ZPM;
 import static gregtech.api.unification.material.Materials.Copper;
@@ -83,6 +93,7 @@ public final class MagicIntegrationRecipes {
         registerTarotStock();
         registerCircuitBoards();
         registerAdvancedAstralComponents();
+        registerCelestialMachines();
         registerMagicFunctionalComponents();
         registerThaumcraftInfusionComponents();
         registerTransformCore();
@@ -262,11 +273,7 @@ public final class MagicIntegrationRecipes {
             hellfirepvp.astralsorcery.common.item.ItemConstellationPaper
                     .setConstellation(constellationPaper, constellation);
 
-            ItemStack dataWafer = PollutionMetaItems.CONSTELLATION_DATA_WAFER.getStackForm();
-            NBTTagCompound tag = new NBTTagCompound();
-            constellation.writeToNBT(tag);
-            tag.setString("pollutionConstellation", constellation.getSimpleName().toLowerCase(Locale.ROOT));
-            dataWafer.setTagCompound(tag);
+            ItemStack dataWafer = AstralNbtHelper.createDataWafer(constellation);
 
             SimpleRecipeBuilder builder = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                     .input(PollutionMetaItems.ATTUNED_CRYSTAL_WAFER)
@@ -325,7 +332,7 @@ public final class MagicIntegrationRecipes {
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .input(PollutionMetaItems.BLOOD_CIRCUIT_ULTIMATE)
                 .inputs(ItemCraftingComponent.MetaType.STARDUST.asStack())
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
+                .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
                 .fluidInputs(PollutionMaterials.infused_purified_blood.getFluid(1000))
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 1000))
                 .output(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
@@ -413,6 +420,7 @@ public final class MagicIntegrationRecipes {
         registerMagicCircuitBoardLuV();
         registerMagicCircuitBoardZPM();
         registerMagicCircuitBoardUV();
+        registerMagicCircuitBoardsHighTier();
     }
 
     private static void registerMagicCircuitBoardEV() {
@@ -474,34 +482,156 @@ public final class MagicIntegrationRecipes {
     }
 
     private static void registerMagicCircuitBoardZPM() {
-        PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
-                .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV)
-                .input(PollutionMetaItems.ATTUNED_CRYSTAL_WAFER)
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
-                .input(PollutionMetaItems.CELESTIAL_CALIBRATION_CORE)
-                .input(MetaItems.ADVANCED_SMD_DIODE, 8)
-                .input(MetaItems.ADVANCED_SMD_TRANSISTOR, 8)
-                .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
-                .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM, 4)
-                .duration(800)
-                .EUt(VA[LuV])
-                .buildAndRegister();
+        for (IConstellation constellation : ConstellationRegistry.getAllConstellations()) {
+            if (constellation == null) continue;
+            SimpleRecipeBuilder builder = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV)
+                    .input(PollutionMetaItems.ATTUNED_CRYSTAL_WAFER)
+                    .inputs(AstralNbtHelper.createDataWafer(constellation))
+                    .inputs(AstralNbtHelper.createCalibratedCore(constellation))
+                    .input(MetaItems.ADVANCED_SMD_DIODE, 8)
+                    .input(MetaItems.ADVANCED_SMD_TRANSISTOR, 8)
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM, 4)
+                    .duration(800)
+                    .EUt(VA[LuV]);
+            MagicRecipeProperties.astralCondition(builder,
+                    AstralCondition.night(constellation.getSimpleName(), 0.10F));
+            builder.buildAndRegister();
+        }
     }
 
     private static void registerMagicCircuitBoardUV() {
-        PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
-                .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM)
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
-                .input(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
-                .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE)
-                .input(MetaItems.ADVANCED_SMD_RESISTOR, 8)
-                .input(MetaItems.ADVANCED_SMD_CAPACITOR, 8)
-                .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(500))
-                .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 1000))
-                .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UV, 4)
-                .duration(1000)
-                .EUt(VA[ZPM])
-                .buildAndRegister();
+        for (IConstellation constellation : ConstellationRegistry.getAllConstellations()) {
+            if (constellation == null) continue;
+            SimpleRecipeBuilder builder = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ZPM)
+                    .inputs(AstralNbtHelper.createDataWafer(constellation))
+                    .inputs(AstralNbtHelper.createCalibratedCore(constellation))
+                    .input(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
+                    .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE)
+                    .input(MetaItems.ADVANCED_SMD_RESISTOR, 8)
+                    .input(MetaItems.ADVANCED_SMD_CAPACITOR, 8)
+                    .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(500))
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 1000))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UV, 4)
+                    .duration(1000)
+                    .EUt(VA[ZPM]);
+            MagicRecipeProperties.astralCondition(builder,
+                    AstralCondition.night(constellation.getSimpleName(), 0.15F));
+            builder.buildAndRegister();
+        }
+    }
+
+    private static void registerMagicCircuitBoardsHighTier() {
+        for (IConstellation constellation : ConstellationRegistry.getAllConstellations()) {
+            if (constellation == null) continue;
+            ItemStack wafer = AstralNbtHelper.createDataWafer(constellation);
+            ItemStack core = AstralNbtHelper.createCalibratedCore(constellation);
+            AstralCondition condition = AstralCondition.night(constellation.getSimpleName(), 0.20F);
+
+            SimpleRecipeBuilder uhv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UV)
+                    .inputs(wafer.copy())
+                    .inputs(core.copy())
+                    .input(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
+                    .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE, 2)
+                    .input(PollutionMetaItems.ASTRAL_LENS_ADVANCED)
+                    .input(GTQTMetaItems.GOOWARE_SMD_TRANSISTOR, 8)
+                    .input(GTQTMetaItems.GOOWARE_SMD_CAPACITOR, 8)
+                    .input(GTQTMetaItems.GOOWARE_SMD_DIODE, 8)
+                    .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(1000))
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 2000))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV, 4)
+                    .duration(1200).EUt(VA[UV]);
+            MagicRecipeProperties.astralCondition(uhv, condition);
+            uhv.buildAndRegister();
+
+            SimpleRecipeBuilder uev = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV)
+                    .inputs(wafer.copy())
+                    .inputs(core.copy())
+                    .input(PollutionMetaItems.ASTRAL_BLOOD_CATALYST)
+                    .input(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
+                    .input(GTQTMetaItems.OPTICAL_SMD_TRANSISTOR, 8)
+                    .input(GTQTMetaItems.OPTICAL_SMD_RESISTOR, 8)
+                    .input(GTQTMetaItems.OPTICAL_SMD_DIODE, 8)
+                    .input(GTQTMetaItems.OPTICAL_SMD_CAPACITOR, 8)
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(500))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV, 4)
+                    .duration(1400).EUt(VA[UHV]);
+            MagicRecipeProperties.astralCondition(uev, condition);
+            uev.buildAndRegister();
+
+            SimpleRecipeBuilder uiv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV)
+                    .inputs(wafer.copy())
+                    .inputs(withCount(core, 2))
+                    .input(PollutionMetaItems.HARMONIZING_RUNE_CORE)
+                    .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE, 4)
+                    .input(GTQTMetaItems.SPINTRONIC_SMD_TRANSISTOR, 8)
+                    .input(GTQTMetaItems.SPINTRONIC_SMD_RESISTOR, 8)
+                    .input(GTQTMetaItems.SPINTRONIC_SMD_DIODE, 8)
+                    .input(GTQTMetaItems.SPINTRONIC_SMD_CAPACITOR, 8)
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(4000))
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV, 4)
+                    .duration(1600).EUt(VA[UEV]);
+            MagicRecipeProperties.astralCondition(uiv, condition);
+            uiv.buildAndRegister();
+
+            SimpleRecipeBuilder uxv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV)
+                    .inputs(wafer.copy())
+                    .inputs(withCount(core, 2))
+                    .input(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
+                    .input(PollutionMetaItems.HARMONIZING_RUNE_CORE, 2)
+                    .input(GTQTMetaItems.COSMIC_SMD_TRANSISTOR, 8)
+                    .input(GTQTMetaItems.COSMIC_SMD_RESISTOR, 8)
+                    .input(GTQTMetaItems.COSMIC_SMD_DIODE, 8)
+                    .input(GTQTMetaItems.COSMIC_SMD_CAPACITOR, 8)
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(8000))
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(2000))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV, 4)
+                    .duration(1800).EUt(VA[UIV]);
+            MagicRecipeProperties.astralCondition(uxv, condition);
+            uxv.buildAndRegister();
+
+            SimpleRecipeBuilder opv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV)
+                    .inputs(wafer.copy())
+                    .inputs(withCount(core, 4))
+                    .input(PollutionMetaItems.CAUSALITY_CATALYST)
+                    .input(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_TRANSISTOR, 16)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_RESISTOR, 16)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_DIODE, 16)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_CAPACITOR, 16)
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(16000))
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(4000))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV, 4)
+                    .duration(2000).EUt(VA[UXV]);
+            MagicRecipeProperties.astralCondition(opv, condition);
+            opv.buildAndRegister();
+
+            SimpleRecipeBuilder max = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV)
+                    .inputs(withCount(wafer, 4))
+                    .inputs(withCount(core, 8))
+                    .input(PollutionMetaItems.CAUSALITY_CATALYST, 2)
+                    .input(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL, 2)
+                    .input(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME, 8)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_TRANSISTOR, 32)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_DIODE, 32)
+                    .input(GTQTMetaItems.SUPRACAUSAL_SMD_CAPACITOR, 32)
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(32000))
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(8000))
+                    .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MAX, 4)
+                    .duration(2400).EUt(VA[OpV]);
+            MagicRecipeProperties.astralCondition(max, condition);
+            max.buildAndRegister();
+        }
     }
 
     private static void registerAdvancedAstralComponents() {
@@ -521,21 +651,21 @@ public final class MagicIntegrationRecipes {
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .input(PollutionMetaItems.ASTRAL_LENS_ADVANCED)
                 .input(PollutionMetaItems.ATTUNED_CRYSTAL_WAFER, 2)
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
+                .input(ItemsAS.skyResonator)
                 .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV)
-                .input(MetaItems.FIELD_GENERATOR_ZPM)
+                .input(MetaItems.FIELD_GENERATOR_LuV)
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 1000))
                 .fluidInputs(PollutionMaterials.InfusedOrder.getFluid(576))
                 .output(PollutionMetaItems.CELESTIAL_CALIBRATION_CORE)
                 .duration(800)
-                .EUt(VA[ZPM])
+                .EUt(VA[LuV])
                 .buildAndRegister();
 
         PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
                 .input(PollutionMetaItems.LIVING_MAGIC_BIOFILM, 2)
                 .input(PollutionMetaItems.BLOOD_CIRCUIT_ADVANCED)
                 .input(PollutionMetaItems.ATTUNED_CRYSTAL_WAFER)
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
+                .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
                 .input(MetaItems.ADVANCED_SMD_TRANSISTOR, 8)
                 .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(500))
                 .fluidInputs(PollutionMaterials.synthetic_computational_blood.getFluid(500))
@@ -543,6 +673,137 @@ public final class MagicIntegrationRecipes {
                 .output(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE, 2)
                 .duration(800)
                 .EUt(VA[ZPM])
+                .buildAndRegister();
+
+        // High-tier bridge items are constellation-specific at production time.
+        // Their output remains a common item, while the exact wafer/core pair and
+        // live sky authorization prevent cross-constellation substitution.
+        for (IConstellation constellation : ConstellationRegistry.getAllConstellations()) {
+            if (constellation == null) continue;
+            ItemStack wafer = AstralNbtHelper.createDataWafer(constellation);
+            ItemStack core = AstralNbtHelper.createCalibratedCore(constellation);
+            AstralCondition condition = AstralCondition.night(constellation.getSimpleName(), 0.20F);
+
+            SimpleRecipeBuilder astralBlood = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV)
+                    .inputs(wafer.copy())
+                    .inputs(core.copy())
+                    .input(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
+                    .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE, 2)
+                    .inputs(withCount(ItemCraftingComponent.MetaType.STARDUST.asStack(), 4))
+                    .fluidInputs(PollutionMaterials.infused_purified_blood.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(1000))
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 2000))
+                    .output(PollutionMetaItems.ASTRAL_BLOOD_CATALYST, 2)
+                    .duration(1400).EUt(VA[UHV]);
+            MagicRecipeProperties.astralCondition(astralBlood, condition);
+            astralBlood.buildAndRegister();
+
+            SimpleRecipeBuilder harmonizing = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV)
+                    .inputs(wafer.copy())
+                    .inputs(core.copy())
+                    .input(PollutionMetaItems.WHITE_RUNE)
+                    .input(PollutionMetaItems.BLACK_RUNE)
+                    .input(PollutionMetaItems.STARRY_RUNE)
+                    .input(MetaItems.FIELD_GENERATOR_UV)
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(2000))
+                    .fluidInputs(GTQTMaterials.Mana.getFluid(4000))
+                    .output(PollutionMetaItems.HARMONIZING_RUNE_CORE)
+                    .duration(1400).EUt(VA[UHV]);
+            MagicRecipeProperties.astralCondition(harmonizing, condition);
+            harmonizing.buildAndRegister();
+
+            SimpleRecipeBuilder primordial = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV)
+                    .inputs(core.copy())
+                    .input(PollutionMetaItems.ASTRAL_BLOOD_CATALYST)
+                    .input(PollutionMetaItems.HARMONIZING_RUNE_CORE)
+                    .input(PollutionMetaItems.BALL_IN_ITSELF)
+                    .input(ItemsAS.celestialCrystal)
+                    .input(MetaItems.FIELD_GENERATOR_UHV)
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(2000))
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 4000))
+                    .output(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
+                    .duration(1800).EUt(VA[UHV]);
+            MagicRecipeProperties.astralCondition(primordial, condition);
+            primordial.buildAndRegister();
+
+            SimpleRecipeBuilder causality = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV)
+                    .inputs(wafer.copy())
+                    .inputs(core.copy())
+                    .input(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
+                    .input(PollutionMetaItems.BALL_IN_ITSELF)
+                    .input(PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK)
+                    .input(MetaItems.FIELD_GENERATOR_UIV)
+                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(8000))
+                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(16000))
+                    .output(PollutionMetaItems.CAUSALITY_CATALYST)
+                    .duration(2200).EUt(VA[UIV]);
+            MagicRecipeProperties.astralCondition(causality, condition);
+            causality.buildAndRegister();
+        }
+    }
+
+    private static void registerCelestialMachines() {
+        for (IConstellation constellation : ConstellationRegistry.getAllConstellations()) {
+            if (constellation == null) continue;
+            ItemStack constellationPaper = new ItemStack(ItemsAS.constellationPaper);
+            hellfirepvp.astralsorcery.common.item.ItemConstellationPaper
+                    .setConstellation(constellationPaper, constellation);
+
+            SimpleRecipeBuilder observation = PORecipeMaps.CELESTIAL_OBSERVATION_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.ATTUNED_CRYSTAL_WAFER)
+                    .input(MetaItems.TOOL_DATA_STICK)
+                    .notConsumable(constellationPaper)
+                    .fluidInputs(PollutionMaterials.ArcaneInk.getFluid(100))
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 250))
+                    .outputs(AstralNbtHelper.createDataWafer(constellation))
+                    .duration(300).EUt(VA[LuV]);
+            MagicRecipeProperties.infusedFluidPerTick(observation, 0);
+            MagicRecipeProperties.astralCondition(observation,
+                    AstralCondition.night(constellation.getSimpleName(), 0.10F));
+            observation.buildAndRegister();
+
+            SimpleRecipeBuilder calibration = PORecipeMaps.CELESTIAL_CALIBRATION_RECIPES.recipeBuilder()
+                    .input(PollutionMetaItems.CELESTIAL_CALIBRATION_CORE)
+                    .inputs(AstralNbtHelper.createDataWafer(constellation))
+                    .notConsumable(PollutionMetaItems.ASTRAL_LENS_ADVANCED)
+                    .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 1000))
+                    .fluidInputs(PollutionMaterials.InfusedOrder.getFluid(576))
+                    .outputs(AstralNbtHelper.createCalibratedCore(constellation))
+                    .duration(600).EUt(VA[LuV]);
+            MagicRecipeProperties.infusedFluidPerTick(calibration, 0);
+            MagicRecipeProperties.astralCondition(calibration,
+                    AstralCondition.night(constellation.getSimpleName(), 0.15F));
+            calibration.buildAndRegister();
+        }
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[LuV])
+                .input(PollutionMetaItems.ASTRAL_LENS_ADVANCED, 2)
+                .input(MetaItems.SENSOR_LuV, 2)
+                .input(MetaItems.EMITTER_LuV)
+                .input(MetaItems.TOOL_DATA_STICK, 4)
+                .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV, 4)
+                .input(ItemsAS.skyResonator)
+                .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 2000))
+                .output(PollutionMetaTileEntities.CELESTIAL_OBSERVATION_ARRAY)
+                .duration(800).EUt(VA[LuV])
+                .buildAndRegister();
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[LuV])
+                .input(PollutionMetaItems.ASTRAL_LENS_ADVANCED, 4)
+                .input(MetaItems.FIELD_GENERATOR_LuV, 2)
+                .input(MetaItems.ROBOT_ARM_LuV, 2)
+                .input(PollutionMetaItems.CELESTIAL_CALIBRATION_CORE)
+                .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LuV, 4)
+                .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
+                .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 4000))
+                .output(PollutionMetaTileEntities.CELESTIAL_CALIBRATION_MATRIX)
+                .duration(1200).EUt(VA[LuV])
                 .buildAndRegister();
     }
 
@@ -555,7 +816,7 @@ public final class MagicIntegrationRecipes {
                 .input(MetaItems.EMITTER_LuV)
                 .input(PollutionMetaItems.LIVING_MAGIC_BIOFILM)
                 .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE)
-                .input(PollutionMetaItems.CONSTELLATION_DATA_WAFER)
+                .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
                 .fluidInputs(PollutionMaterials.synthetic_computational_blood.getFluid(1000))
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
                 .output(PollutionMetaItems.NEEDLE_OF_MYSTIC_INTERPELLATION)

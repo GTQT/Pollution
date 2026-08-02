@@ -170,4 +170,24 @@ public class PORecipeMaps {
                     .sound(GTSoundEvents.ARC)
                     .build();
 
+    public static final RecipeMap<SimpleRecipeBuilder> CELESTIAL_OBSERVATION_RECIPES =
+            new RecipeMapBuilder<>("celestial_observation", new SimpleRecipeBuilder())
+                    .itemInputs(3)
+                    .itemOutputs(1)
+                    .fluidInputs(2)
+                    .fluidOutputs(0)
+                    .progressBar(GuiTextures.PROGRESS_BAR_ARROW)
+                    .sound(GTSoundEvents.ARC)
+                    .build();
+
+    public static final RecipeMap<SimpleRecipeBuilder> CELESTIAL_CALIBRATION_RECIPES =
+            new RecipeMapBuilder<>("celestial_calibration", new SimpleRecipeBuilder())
+                    .itemInputs(6)
+                    .itemOutputs(1)
+                    .fluidInputs(2)
+                    .fluidOutputs(0)
+                    .progressBar(GuiTextures.PROGRESS_BAR_ARROW)
+                    .sound(GTSoundEvents.ARC)
+                    .build();
+
 }
