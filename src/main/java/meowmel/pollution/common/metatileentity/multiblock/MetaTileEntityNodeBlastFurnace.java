@@ -72,12 +72,13 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
                         .block('F', getCasingState6()).block('G', getCasingState7()).block('H', getCasingState8())
                         .tieredCasing('I', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
                         .block('X', getCasingState2()).hatch('Y', MultiblockAbility.MUFFLER_HATCH).any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('B', getCasingState2());
-                return casing.custom(Elements.abilities(0, 91, MultiblockAbility.INPUT_ENERGY,
-                                MultiblockAbility.INPUT_LASER, MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
-                                MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS,
-                                MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.MUFFLER_HATCH), 91)
-                        .done().globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 91)
+                return builder.where('B', Elements.choice(
+                                Elements.block(getCasingState2()),
+                                Elements.abilities(0, 91, MultiblockAbility.INPUT_ENERGY,
+                                        MultiblockAbility.INPUT_LASER, MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
+                                        MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS,
+                                        MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.MUFFLER_HATCH)))
+                        .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 91)
                         .globalAbilityLimit(MultiblockAbility.INPUT_LASER, 0, 3)
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1).buildStructureDefinition();

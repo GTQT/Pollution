@@ -90,11 +90,11 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
                         .tieredCasing('B', POTieredCasingGroups.beamCores().group()).withChannel(POTieredCasingGroups.beamCores().channel())
                         .tieredCasing('C', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
                         .any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
-                return casing
-                        .custom(Elements.abilities(0, 185, MultiblockAbility.MAINTENANCE_HATCH,
-                                MultiblockAbility.INPUT_ENERGY, MultiblockAbility.OUTPUT_ENERGY), 185)
-                        .done()
+                return builder
+                        .where('A', Elements.choice(
+                                Elements.block(getCasingState()),
+                                Elements.abilities(0, 185, MultiblockAbility.MAINTENANCE_HATCH,
+                                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.OUTPUT_ENERGY)))
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 16)
                         .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 1, 16)

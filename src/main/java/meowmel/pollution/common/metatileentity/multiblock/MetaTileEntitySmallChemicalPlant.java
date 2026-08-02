@@ -13,6 +13,8 @@ import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.pattern.FormedStructureView;
 import gregtech.api.pattern.casing.DeclarativePatternBuilder;
 import gregtech.api.pattern.casing.ICasing;
+import gregtech.api.pattern.element.Elements;
+import gregtech.api.pattern.element.IStructureElement;
 import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
@@ -46,14 +48,24 @@ import java.util.List;
 public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockController {
 
     private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
-            "pollution:small_chemical_plant", () -> DeclarativePatternBuilder.start()
+            "pollution:small_chemical_plant", () -> {
+                IStructureElement casing = Elements.counted(8, -1, Elements.block(getCasingState()));
+                IStructureElement hatches = Elements.abilities(
+                        MultiblockAbility.INPUT_ENERGY,
+                        MultiblockAbility.MAINTENANCE_HATCH,
+                        MultiblockAbility.MUFFLER_HATCH,
+                        MultiblockAbility.IMPORT_ITEMS,
+                        MultiblockAbility.EXPORT_ITEMS,
+                        MultiblockAbility.IMPORT_FLUIDS,
+                        MultiblockAbility.EXPORT_FLUIDS);
+                return DeclarativePatternBuilder.start()
                     .aisle("GGGGG", "BAAAB", "BAAAB", "BAAAB", "GGGGG")
                     .aisle("GXXXG", "ADDDA", "ABEBA", "ADDDA", "GXXXG")
                     .aisle("GXXXG", "ADDDA", "AECEA", "ADDDA", "GXXXG")
                     .aisle("GXXXG", "ADDDA", "ABEBA", "ADDDA", "GXXXG")
                     .aisle("GGSGG", "BAAAB", "BAAAB", "BAAAB", "GGGGG")
                     .self('S', MetaTileEntitySmallChemicalPlant.class)
-                    .casing('G', getCasingState()).auto()
+                    .where('G', Elements.choice(casing, hatches))
                     .block('B', getCasingState2())
                     .block('C', getCasingState3())
                     .tieredCasing('D', POTieredCasingGroups.coilCasings().group())
@@ -61,7 +73,15 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
                     .block('E', getCasingState4())
                     .block('X', getCasingState5())
                     .any('A')
-                    .buildStructureDefinition());
+                    .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 23)
+                    .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                    .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1)
+                    .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 1, 23)
+                    .globalAbilityLimit(MultiblockAbility.EXPORT_ITEMS, 1, 23)
+                    .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 23)
+                    .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 1, 23)
+                    .buildStructureDefinition();
+            });
 
     int CoilLevel;
 

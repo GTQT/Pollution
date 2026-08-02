@@ -41,7 +41,7 @@ import java.util.List;
 public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
     private static final StructureDefinition STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
             "pollution:mana_plate", () -> {
-                DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
+                return DeclarativePatternBuilder.start()
                         .aisle("CCCCCCCCCCC")
                         .aisle("CCCCCCCCCCC")
                         .aisle("CCCCCCCCCCC")
@@ -54,10 +54,9 @@ public class MetaTileEntityManaPlate extends MetaTileEntityBaseWithControl {
                         .aisle("CCCCCCCCCCC")
                         .aisle("CCCCCSCCCCC")
                         .self('S', MetaTileEntityManaPlate.class)
-                        .casing('C', PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_BASIC));
-                return casing
-                        .custom(Elements.abilities(0, 1, POMultiblockAbility.MANA_INPUT_POOL), 1)
-                        .done()
+                        .where('C', Elements.choice(
+                                Elements.block(PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_BASIC)),
+                                Elements.abilities(0, 1, POMultiblockAbility.MANA_INPUT_POOL)))
                         .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 1, 1)
                         .buildStructureDefinition();
             });

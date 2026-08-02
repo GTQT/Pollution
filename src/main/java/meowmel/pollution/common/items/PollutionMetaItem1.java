@@ -157,6 +157,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
         PollutionMetaItems.TRANSFORM_ENHANCE = this.addItem(224, "transform_enhance").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 
 		//血魔法电路
+		// Preserve legacy IDs 250-253 for saves; these are culture templates, not ore:circuit entries.
 		PollutionMetaItems.BLOOD_CIRCUIT = this.addItem(250, "blood_circuit").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BLOOD_CIRCUIT_ADVANCED = this.addItem(251, "blood_circuit_advanced").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.BLOOD_CIRCUIT_ULTIMATE = this.addItem(252, "blood_circuit_ultimate").setMaxStackSize(64).setCreativeTabs(Pollution_TAB);
@@ -272,10 +273,12 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 						.setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.NATURAL_INFUSED_COIL =
 				this.addItem(526, "natural_infused_coil").setCreativeTabs(Pollution_TAB);
-		PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY_EV =
+		PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY =
 				this.addItem(527, "magic_control_assembly_ev")
 						.setRarity(EnumRarity.UNCOMMON)
 						.setCreativeTabs(Pollution_TAB);
+		// Keep the old field and unlocalized key as aliases so existing saves and integrations remain valid.
+		PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY_EV = PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY;
 		PollutionMetaItems.NODE_STABILIZATION_FRAME =
 				this.addItem(528, "node_stabilization_frame")
 						.setRarity(EnumRarity.UNCOMMON)
@@ -285,7 +288,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 		PollutionMetaItems.ARCANE_INK_CAPSULE =
 				this.addItem(530, "arcane_ink_capsule").setCreativeTabs(Pollution_TAROT);
 
-		// One animated magic circuit substrate for every voltage tier (540-554)
+		// One animated independent magic circuit board for every voltage tier (540-554)
 		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ULV = this.addItem(540, "magic_circuit_board.ulv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.ULV).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_LV = this.addItem(541, "magic_circuit_board.lv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.LV).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MV = this.addItem(542, "magic_circuit_board.mv").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MV).setCreativeTabs(Pollution_TAB);

@@ -19,6 +19,8 @@ import meowmel.pollution.common.block.metablocks.POTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.*;
 import meowmel.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear;
 import meowmel.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEntityBMHPCA;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialStarlightInfuser;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialLightwell;
 import meowmel.pollution.common.metatileentity.multiblock.bot.*;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicLargeTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicMegaTurbine;
@@ -78,8 +80,10 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityLargeNodeGenerator LARGE_NODE_GENERATOR;
     public static MetaTileEntityNodeWasher NODE_WASHER;
     public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
+    public static MetaTileEntityInfusedFluidHatch[] INFUSED_FLUID_HATCH = new MetaTileEntityInfusedFluidHatch[14];
     public static MetaTileEntityBloodMagicHatch BLOOD_MAGIC_HATCH;
     public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH;
+    public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH_ADVANCED;
     public static MetaTileEntityTarotHatch TAROT_HATCH;
 
     public static MetaTileEntityManaHatch[] MANA_INPUT_HATCH_1A = new MetaTileEntityManaHatch[14];
@@ -149,6 +153,8 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityManaPetalApothecary MANA_PETAL_APOTHECARY;
     public static MetaTileEntityManaRuneAltar MANA_RUNE_ALTAR;
     public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
+    public static MetaTileEntityIndustrialStarlightInfuser INDUSTRIAL_STARLIGHT_INFUSER;
+    public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
 
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
@@ -308,6 +314,10 @@ public class PollutionMetaTileEntities {
         INDUSTRIAL_PURE_DAISY = registerMetaTileEntity(345, new MetaTileEntityIndustrialPureDaisy(PollutionID("industial_pure_daisy")));
         MANA_PETAL_APOTHECARY = registerMetaTileEntity(346, new MetaTileEntityManaPetalApothecary(PollutionID("mana_petal_apothecary")));
         MANA_RUNE_ALTAR = registerMetaTileEntity(347, new MetaTileEntityManaRuneAltar(PollutionID("mana_rune_altar")));
+        INDUSTRIAL_STARLIGHT_INFUSER = registerMetaTileEntity(348,
+                new MetaTileEntityIndustrialStarlightInfuser(PollutionID("industrial_starlight_infuser")));
+        INDUSTRIAL_LIGHTWELL = registerMetaTileEntity(349,
+                new MetaTileEntityIndustrialLightwell(PollutionID("industrial_lightwell")));
 
         //仓口
         for (int i = 0; i < VIS_HATCH.length; i++) {
@@ -322,6 +332,15 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch"), GTValues.MV));
         TAROT_HATCH = registerMetaTileEntity(762,
                 new MetaTileEntityTarotHatch(PollutionID("tarot_hatch"), GTValues.LV));
+
+        for (int i = 0; i < INFUSED_FLUID_HATCH.length; i++) {
+            int tier = GTValues.LV + i;
+            INFUSED_FLUID_HATCH[i] = registerMetaTileEntity(763 + i,
+                    new MetaTileEntityInfusedFluidHatch(
+                            PollutionID("infused_fluid_hatch." + GTValues.VN[tier].toLowerCase()), tier));
+        }
+        ASTRAL_LENS_HATCH_ADVANCED = registerMetaTileEntity(777,
+                new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch_advanced"), GTValues.LuV));
 
 
         // 普通

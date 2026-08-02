@@ -63,7 +63,7 @@ public class PORecipeMaps {
             .build();
 
     public static final RecipeMap<SimpleRecipeBuilder> MAGIC_CHEMICAL_REACTOR_RECIPES = new RecipeMapBuilder<>("magic_chemical_reactor", new SimpleRecipeBuilder())
-            .itemInputs(3)
+            .itemInputs(5)
             .itemOutputs(4)
             .fluidInputs(5)
             .fluidOutputs(4)
@@ -149,5 +149,25 @@ public class PORecipeMaps {
             .fluidInputs(1)
             .sound(SoundEvents.ENTITY_GENERIC_EXPLODE)
             .build();
+
+    public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_STARLIGHT_INFUSER_RECIPES =
+            new RecipeMapBuilder<>("industrial_starlight_infuser_recipes", new SimpleRecipeBuilder())
+                    .itemInputs(1)
+                    .itemOutputs(1)
+                    .fluidInputs(2)
+                    .fluidOutputs(0)
+                    .progressBar(GuiTextures.PROGRESS_BAR_ARROW)
+                    .sound(GTSoundEvents.ARC)
+                    .build();
+
+    public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_LIGHTWELL_RECIPES =
+            new RecipeMapBuilder<>("industrial_lightwell_recipes", new SimpleRecipeBuilder())
+                    .itemInputs(1)
+                    .itemOutputs(0)
+                    .fluidInputs(0)
+                    .fluidOutputs(1)
+                    .progressBar(GuiTextures.PROGRESS_BAR_ARROW)
+                    .sound(GTSoundEvents.ARC)
+                    .build();
 
 }

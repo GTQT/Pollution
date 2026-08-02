@@ -545,6 +545,7 @@ public class MagicGCYMRecipes {
 				4,
 				new AspectList().add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128).add(Aspect.FIRE, 64),
 				new ItemStack(HOTCORE.getMetaItem(), 1, 3),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -658,6 +659,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.PLANT, 250).add(Aspect.MAGIC, 128).add(Aspect.MECHANISM, 128),
 				GTFOTileEntities.GREENHOUSE.getStackForm(),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitHv",
 				"circuitHv",
@@ -735,6 +737,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.AIR, 125).add(Aspect.WATER, 125).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -752,6 +755,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.AIR, 125).add(Aspect.WATER, 125).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -770,6 +774,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.ALCHEMY, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				MetaTileEntities.LARGE_CHEMICAL_REACTOR.getStackForm(),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				new ItemStack(HOTCORE.getMetaItem(), 1, 3),
 				new ItemStack(PollutionMetaItems.COLDCORE.getMetaItem(), 1, 4),
@@ -785,6 +790,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.AIR, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -802,6 +808,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.TOOL, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -817,6 +824,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.METAL, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -836,6 +844,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.EXCHANGE, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.COLDCORE.getMetaItem(), 1, 4),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
 				"gemValonite",
@@ -857,6 +866,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.TOOL, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -874,6 +884,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.CRYSTAL, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -891,6 +902,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.SOUL, 125).add(Aspect.ENTROPY, 125).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(HOTCORE.getMetaItem(), 1, 3),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -908,6 +920,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.AIR, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -924,6 +937,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.FIRE, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(HOTCORE.getMetaItem(), 1, 3),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -940,6 +954,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.WATER, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.COLDCORE.getMetaItem(), 1, 4),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -956,6 +971,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.EARTH, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -971,6 +987,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.ORDER, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -986,6 +1003,7 @@ public class MagicGCYMRecipes {
 				5,
 				new AspectList().add(Aspect.ENTROPY, 250).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 128),
 				new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"gemValonite",
 				"circuitMv",
 				"circuitMv",
@@ -1757,6 +1775,7 @@ public class MagicGCYMRecipes {
 				10,
 				new AspectList().add(Aspect.CRAFT, 250).add(Aspect.ORDER, 128).add(Aspect.MAGIC, 64).add(Aspect.MOTION, 64),
 				PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.FILTER_5),
+				PollutionMetaItems.MAGIC_CONTROL_ASSEMBLY.getStackForm(),
 				"blockValonite",
 				"frameGtKeqinggold",
 				"frameGtHyperdimensionalSilver",
@@ -2382,7 +2401,7 @@ public class MagicGCYMRecipes {
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
 				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0).getItem())
-				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
 				.output(ENERGY_REDUCE)
@@ -2392,7 +2411,7 @@ public class MagicGCYMRecipes {
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
 				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1).getItem())
-				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
 				.output(TIME_REDUCE)
@@ -2402,7 +2421,7 @@ public class MagicGCYMRecipes {
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
 				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2).getItem())
-				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
 				.output(PARALLEL_ENHANCE)
@@ -2412,7 +2431,49 @@ public class MagicGCYMRecipes {
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
 				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3).getItem())
-				.input(circuit, MarkerMaterials.Tier.MV, 1)
+				.input(MAGIC_CIRCUIT_MV)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, Scabyst, 4)
+				.output(OVERCLOCKING_ENHANCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+
+		//魔法电路板与蕴魔电路板是同级并列路线，升级核心提供等价配方。
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, Mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0).getItem())
+				.input(MAGIC_CIRCUIT_BOARD_MV)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, Scabyst, 4)
+				.output(ENERGY_REDUCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, Mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1).getItem())
+				.input(MAGIC_CIRCUIT_BOARD_MV)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, Scabyst, 4)
+				.output(TIME_REDUCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, Mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2).getItem())
+				.input(MAGIC_CIRCUIT_BOARD_MV)
+				.input(ItemsTC.morphicResonator, 4)
+				.input(gem, Scabyst, 4)
+				.output(PARALLEL_ENHANCE)
+				.duration(400)
+				.EUt(VA[MV])
+				.buildAndRegister();
+		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+				.input(frameGt, Mansussteel)
+				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3).getItem())
+				.input(MAGIC_CIRCUIT_BOARD_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
 				.output(OVERCLOCKING_ENHANCE)
@@ -2489,6 +2550,7 @@ public class MagicGCYMRecipes {
 				.input(wireFine, Europium, 64)
 				.input(MetaItems.FIELD_GENERATOR_LuV)
 				.input(CORE_OF_IDEA)
+				.input(LIVING_MAGIC_BIOFILM)
 				.fluidInputs(synthetic_computational_blood.getFluid(1000))
 				.output(PollutionMetaTileEntities.BMHPCA_COMPUTATION_COMPONENT)
 				.duration(400)
@@ -2500,6 +2562,10 @@ public class MagicGCYMRecipes {
 				.input(wireFine, Americium, 64)
 				.input(MetaItems.FIELD_GENERATOR_UV)
 				.input(CORE_OF_IDEA)
+				.input(LIVING_MAGIC_BIOFILM, 2)
+				.input(ASTRAL_NEURAL_BUNDLE)
+				.input(NEEDLE_OF_MYSTIC_INTERPELLATION)
+				.input(COGITO_AED)
 				.fluidInputs(synthetic_computational_blood.getFluid(2000))
 				.output(PollutionMetaTileEntities.BMHPCA_ADVANCED_COMPUTATION_COMPONENT)
 				.duration(400)
@@ -2512,6 +2578,7 @@ public class MagicGCYMRecipes {
 				.input(MetaItems.SENSOR_LuV)
 				.input(MetaItems.EMITTER_LuV)
 				.input(SYMPTOMATIC_VIS_DATA_LINK)
+				.input(ASTRAL_NEURAL_BUNDLE)
 				.fluidInputs(synthetic_computational_blood.getFluid(2000))
 				.output(PollutionMetaTileEntities.BMHPCA_BRIDGE_COMPONENT)
 				.duration(400)
@@ -2524,6 +2591,7 @@ public class MagicGCYMRecipes {
 				.input(rotor, Duranium, 4)
 				.input(MetaItems.ELECTRIC_MOTOR_LuV)
 				.input(ELUCIDATOR_OF_FOUR_CAUSES)
+				.input(BOTTLE_OF_PHLOGISTONIC_ONENESS)
 				.fluidInputs(cryogenic_synthetic_blood.getFluid(1000))
 				.output(PollutionMetaTileEntities.BMHPCA_ADVANCED_COOLER_COMPONENT)
 				.duration(400)

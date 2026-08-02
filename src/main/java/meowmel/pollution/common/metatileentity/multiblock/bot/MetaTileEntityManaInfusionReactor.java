@@ -53,8 +53,8 @@ public class MetaTileEntityManaInfusionReactor extends ManaMultiblockController 
                         .block('G', getCasingState7())
                         .block('H', getCasingState8())
                         .any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('B', getCasingState2());
-                return configureManaRecipeCasing(casing, MANA_INFUSION_RECIPES, 18).buildStructureDefinition();
+                return configureManaRecipeCasing(builder, 'B', getCasingState2(), MANA_INFUSION_RECIPES, 18)
+                        .buildStructureDefinition();
             });
 
     public MetaTileEntityManaInfusionReactor(ResourceLocation metaTileEntityId) {

@@ -51,8 +51,8 @@ public class MetaTileEntityMagicElectricBlastFurnace extends MagicRecipeMapMulti
                             .aisle("XXX", "CCC", "CCC", "XXX")
                             .aisle("XXX", "C#C", "C#C", "XMX")
                             .aisle("XSX", "CCC", "CCC", "XXX")
-                            .self('S', MetaTileEntityMagicElectricBlastFurnace.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicElectricBlastFurnace.class),
+                    'X', getCasingState(),
                     RecipeMaps.BLAST_RECIPES, 10, false)
                     .hatch('M', MultiblockAbility.MUFFLER_HATCH)
                     .tieredCasing('C', POTieredCasingGroups.coilCasings().group())

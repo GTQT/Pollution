@@ -53,7 +53,7 @@ public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
                         return container != null && container.getOutputVoltage() * container.getOutputAmperage() >= GTValues.V[tier];
                     })
                     .toArray(MetaTileEntity[]::new);
-            DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
+            return DeclarativePatternBuilder.start()
                 .aisle("CCCCCCC", "CCCCCCC", "CCMMMCC", "CCMMMCC", "CCMMMCC", "CCCCCCC", "CCCCCCC")
                 .aisle("CCCCCCC", "RGGGGGR", "CCCCCCC", "CCCCCCC", "CCCCCCC", "RGGGGGR", "CCCCCCC")
                 .aisle("CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC")
@@ -69,16 +69,15 @@ public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
                 .where('R', Elements.metaTileEntitiesAsAbility(GTQTMultiblockAbility.REINFORCED_ROTOR_HOLDER,
                         0, -1, -1, reinforcedRotors))
                 .hatch('M', MultiblockAbility.MUFFLER_HATCH)
-                .casing('A', type.getCasingState());
-            return casing
-                    .custom(Elements.choice(
-                            Elements.metaTileEntitiesAsAbility(POMultiblockAbility.MANA_OUTPUT_HATCH,
-                                    0, 8, 1, manaOutputs),
-                            Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH,
-                                    MultiblockAbility.IMPORT_ITEMS,
-                                    MultiblockAbility.IMPORT_FLUIDS,
-                                    MultiblockAbility.EXPORT_FLUIDS)), 18)
-                    .done()
+                    .where('A', Elements.choice(
+                            Elements.block(type.getCasingState()),
+                            Elements.counted(0, 18, Elements.choice(
+                                    Elements.metaTileEntitiesAsAbility(POMultiblockAbility.MANA_OUTPUT_HATCH,
+                                            0, 8, 1, manaOutputs),
+                                    Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH,
+                                            MultiblockAbility.IMPORT_ITEMS,
+                                            MultiblockAbility.IMPORT_FLUIDS,
+                                            MultiblockAbility.EXPORT_FLUIDS)))))
                     .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_HATCH, 0, 8)
                     .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                     .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 0, 1)

@@ -81,16 +81,18 @@ public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
                         .block('K', PollutionMetaBlocks.BEAM_CORE.getState(POMBeamCore.MagicBlockType.BEAM_CORE_4))
                         .any(' ');
                 return builder
-                        .casing('X', getCasingState2())
-                        .custom(Elements.abilities(0, 13,
-                                meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH,
-                                MultiblockAbility.INPUT_ENERGY, MultiblockAbility.MAINTENANCE_HATCH,
-                                MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
-                                MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS), 13)
-                        .done()
+                        .where('X', Elements.choice(
+                                Elements.block(getCasingState2()),
+                                Elements.abilities(0, 13,
+                                        meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH,
+                                        meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_POOL,
+                                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.MAINTENANCE_HATCH,
+                                        MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
+                                        MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS)))
                         .abilityGroup(meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
                                 meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_HATCH,
                                 MultiblockAbility.INPUT_ENERGY)
+                        .globalAbilityLimit(meowmel.pollution.api.metatileentity.POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .buildStructureDefinition();
             });

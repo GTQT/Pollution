@@ -31,8 +31,8 @@ public class MetaTileEntityMagicElectrolyzer extends MagicRecipeMapMultiblockCon
                             .aisle("XXXXX", "XBDBX", "XCCCX")
                             .aisle("XXXXX", "XBDBX", "XCCCX")
                             .aisle("XXXXX", "XXSXX", "XXXXX")
-                            .self('S', MetaTileEntityMagicElectrolyzer.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicElectrolyzer.class),
+                    'X', getCasingState(),
                     RecipeMaps.ELECTROLYZER_RECIPES, 17)
                     .block('C', getCasingState2())
                     .block('B', getCasingState3())

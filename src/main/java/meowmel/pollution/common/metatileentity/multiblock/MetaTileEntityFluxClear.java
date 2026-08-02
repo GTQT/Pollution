@@ -214,18 +214,17 @@ public class MetaTileEntityFluxClear extends MultiblockWithDisplayBase {
     @Override
     protected StructureDefinition<?> createStructureDefinition() {
         return StructureDefinition.getOrBuild(STRUCTURE_ID_PREFIX + tier, () -> {
-            DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
+            return DeclarativePatternBuilder.start()
                     .aisle("XXX", "XXX", "XXX", "AAA", "AAA")
                     .aisle("XXX", "XXX", "XXX", "AXA", "AAA")
                     .aisle("XXX", "XSX", "XXX", "AAA", "AAA")
                     .self('S', MetaTileEntityFluxClear.class)
                     .block('A', getIntakeState())
-                    .casing('X', getCasingAState());
-            return casing
-                    .custom(Elements.abilities(0, 12,
-                            MultiblockAbility.MAINTENANCE_HATCH,
-                            MultiblockAbility.INPUT_ENERGY), 12)
-                    .done()
+                    .where('X', Elements.choice(
+                            Elements.block(getCasingAState()),
+                            Elements.abilities(0, 12,
+                                    MultiblockAbility.MAINTENANCE_HATCH,
+                                    MultiblockAbility.INPUT_ENERGY)))
                     .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                     .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 1)
                     .buildStructureDefinition();

@@ -67,18 +67,18 @@ public class MetaTileEntityGtEssenceSmelter extends MetaTileEntityBaseWithContro
                         .block('C', getCasingState7())
                         .block('H', getCasingState8())
                         .any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('B', getCasingState());
-                return casing
-                        .custom(Elements.abilities(0, 27,
-                                MultiblockAbility.IMPORT_ITEMS,
-                                MultiblockAbility.IMPORT_FLUIDS,
-                                MultiblockAbility.EXPORT_FLUIDS,
-                                MultiblockAbility.INPUT_ENERGY,
-                                MultiblockAbility.MAINTENANCE_HATCH), 27)
-                        .done()
+                return builder
+                        .where('B', Elements.choice(
+                                Elements.block(getCasingState()),
+                                Elements.abilities(0, 27,
+                                        MultiblockAbility.IMPORT_ITEMS,
+                                        MultiblockAbility.IMPORT_FLUIDS,
+                                        MultiblockAbility.EXPORT_FLUIDS,
+                                        MultiblockAbility.INPUT_ENERGY,
+                                        MultiblockAbility.MAINTENANCE_HATCH)))
                         .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 1, 27)
                         .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
-                        .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 6, 6)
+                        .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 6, 27)
                         .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 0, 2)
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .buildStructureDefinition();

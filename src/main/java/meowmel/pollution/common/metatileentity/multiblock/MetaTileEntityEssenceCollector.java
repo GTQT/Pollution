@@ -69,11 +69,11 @@ public class MetaTileEntityEssenceCollector extends MetaTileEntityBaseWithContro
                         .where('O', Elements.abilities(MultiblockAbility.IMPORT_ITEMS))
                         .block('G', getCasingState5()).block('H', getCasingState6()).block('I', getCasingState7())
                         .block('J', getCasingState8()).block('K', getCasingState9()).block('L', getCasingState10()).any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
-                return casing
-                        .custom(Elements.abilities(0, 68, MultiblockAbility.MAINTENANCE_HATCH,
-                                MultiblockAbility.INPUT_ENERGY), 68)
-                        .done()
+                return builder
+                        .where('A', Elements.choice(
+                                Elements.block(getCasingState()),
+                                Elements.abilities(0, 68, MultiblockAbility.MAINTENANCE_HATCH,
+                                        MultiblockAbility.INPUT_ENERGY)))
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 0, 2)
                         .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 6, 6)

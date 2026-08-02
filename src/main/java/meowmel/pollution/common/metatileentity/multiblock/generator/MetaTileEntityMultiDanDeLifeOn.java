@@ -207,8 +207,8 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
                 .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 0, 1)
                 .globalAbilityLimit(MultiblockAbility.OUTPUT_LASER, 0, 1)
                 .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
-                .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 2)
-                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 2)
+                .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, -1)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, -1)
                 .buildStructureDefinition();
     }
 

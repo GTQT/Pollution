@@ -1,6 +1,7 @@
 package meowmel.pollution.common.metatileentity.multiblockpart;
 
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.GTValues;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
@@ -18,6 +19,7 @@ import meowmel.pollution.api.capability.IAstralHatch;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.client.textures.POTextures;
+import meowmel.pollution.common.items.PollutionMetaItems;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -63,6 +65,10 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
         }
         if (stack.getItem() instanceof ItemTunedCrystalBase) {
             return ((ItemTunedCrystalBase) stack.getItem()).getFocusConstellation(stack);
+        }
+        if (ItemStack.areItemsEqual(stack, PollutionMetaItems.CONSTELLATION_DATA_WAFER.getStackForm())
+                && stack.hasTagCompound()) {
+            return IConstellation.readFromNBT(stack.getTagCompound());
         }
         return null;
     }
@@ -130,7 +136,10 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("pollution.machine.astral_lens_hatch.tooltip.1"));
-        tooltip.add(I18n.format("pollution.machine.astral_lens_hatch.tooltip.2"));
+        String key = getTier() >= GTValues.LuV
+                ? "pollution.machine.astral_lens_hatch_advanced.tooltip."
+                : "pollution.machine.astral_lens_hatch.tooltip.";
+        tooltip.add(I18n.format(key + "1"));
+        tooltip.add(I18n.format(key + "2"));
     }
 }

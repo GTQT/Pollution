@@ -58,6 +58,10 @@ public class MetaTileEntityMagicDistillery extends MagicRecipeMapMultiblockContr
                         MultiblockAbility.MAINTENANCE_HATCH,
                         POMultiblockAbility.VIS_HATCH,
                         POMultiblockAbility.INFUSED_FLUID_HATCH,
+                        POMultiblockAbility.MANA_INPUT_POOL,
+                        POMultiblockAbility.BLOOD_MAGIC_HATCH,
+                        POMultiblockAbility.ASTRAL_LENS_HATCH,
+                        POMultiblockAbility.TAROT_HATCH,
                         MultiblockAbility.IMPORT_ITEMS,
                         MultiblockAbility.EXPORT_ITEMS,
                         MultiblockAbility.IMPORT_FLUIDS);
@@ -83,8 +87,13 @@ public class MetaTileEntityMagicDistillery extends MagicRecipeMapMultiblockContr
                         .any('#')
                         .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
                                 POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
+                        .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .globalAbilityLimit(POMultiblockAbility.VIS_HATCH, 0, 1)
                         .globalAbilityLimit(POMultiblockAbility.INFUSED_FLUID_HATCH, 1, 1)
+                        .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.BLOOD_MAGIC_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                         .buildStructureDefinition();
             });
 

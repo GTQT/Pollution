@@ -108,14 +108,17 @@ public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController 
                 .block('D', getCasingState4()).block('E', getCasingState5()).block('F', getCasingState6())
                 .tieredCasing('G', POTieredCasingGroups.frames().group()).withChannel(POTieredCasingGroups.frames().channel())
                 .any(' ').air('X');
-        DeclarativePatternBuilder.CasingSlot casing = builder.casing('C', getCasingState3());
-        return casing
-                .custom(Elements.abilities(0, 44, POMultiblockAbility.MANA_INPUT_HATCH,
-                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.MAINTENANCE_HATCH,
-                        MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS), 44)
-                .done()
+        return builder
+                .where('C', Elements.choice(
+                        Elements.block(getCasingState3()),
+                        Elements.abilities(0, 44, POMultiblockAbility.MANA_INPUT_HATCH,
+                                POMultiblockAbility.MANA_INPUT_POOL,
+                                MultiblockAbility.INPUT_ENERGY, MultiblockAbility.MAINTENANCE_HATCH,
+                                MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.EXPORT_ITEMS,
+                                MultiblockAbility.IMPORT_FLUIDS)))
                 .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
                         POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
+                .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
                 .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                 .buildStructureDefinition();
     }

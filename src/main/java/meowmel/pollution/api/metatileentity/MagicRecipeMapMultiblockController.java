@@ -19,6 +19,7 @@ import meowmel.pollution.api.capability.IVisHatch;
 import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -57,13 +58,28 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
      * minimum instead of silently relaxing the structure.
      */
     protected static DeclarativePatternBuilder configureMagicRecipeCasing(
-            DeclarativePatternBuilder.CasingSlot casing, RecipeMap<?> recipeMap, int maxHatches) {
-        return configureMagicRecipeCasing(casing, recipeMap, maxHatches, true);
+            DeclarativePatternBuilder builder, char symbol, IBlockState casingState,
+            RecipeMap<?> recipeMap, int maxHatches) {
+        return configureMagicRecipeCasing(builder, symbol, casingState,
+                new RecipeMap<?>[]{recipeMap}, maxHatches, true);
     }
 
     protected static DeclarativePatternBuilder configureMagicRecipeCasing(
-            DeclarativePatternBuilder.CasingSlot casing, RecipeMap<?> recipeMap, int maxHatches,
-            boolean includeMuffler) {
+            DeclarativePatternBuilder builder, char symbol, IBlockState casingState,
+            RecipeMap<?> recipeMap, int maxHatches, boolean includeMuffler) {
+        return configureMagicRecipeCasing(builder, symbol, casingState,
+                new RecipeMap<?>[]{recipeMap}, maxHatches, includeMuffler);
+    }
+
+    protected static DeclarativePatternBuilder configureMagicRecipeCasing(
+            DeclarativePatternBuilder builder, char symbol, IBlockState casingState,
+            RecipeMap<?>[] recipeMaps, int maxHatches) {
+        return configureMagicRecipeCasing(builder, symbol, casingState, recipeMaps, maxHatches, true);
+    }
+
+    protected static DeclarativePatternBuilder configureMagicRecipeCasing(
+            DeclarativePatternBuilder builder, char symbol, IBlockState casingState,
+            RecipeMap<?>[] recipeMaps, int maxHatches, boolean includeMuffler) {
         List<MultiblockAbility<?>> abilities = new ArrayList<>();
         abilities.add(POMultiblockAbility.MANA_INPUT_HATCH);
         abilities.add(MultiblockAbility.INPUT_ENERGY);
@@ -75,15 +91,26 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
         abilities.add(POMultiblockAbility.BLOOD_MAGIC_HATCH);
         abilities.add(POMultiblockAbility.ASTRAL_LENS_HATCH);
         abilities.add(POMultiblockAbility.TAROT_HATCH);
-        if (recipeMap.getMaxInputs() > 0) abilities.add(MultiblockAbility.IMPORT_ITEMS);
-        if (recipeMap.getMaxOutputs() > 0) abilities.add(MultiblockAbility.EXPORT_ITEMS);
-        if (recipeMap.getMaxFluidInputs() > 0) abilities.add(MultiblockAbility.IMPORT_FLUIDS);
-        if (recipeMap.getMaxFluidOutputs() > 0) abilities.add(MultiblockAbility.EXPORT_FLUIDS);
+        boolean importsItems = false;
+        boolean exportsItems = false;
+        boolean importsFluids = false;
+        boolean exportsFluids = false;
+        for (RecipeMap<?> recipeMap : recipeMaps) {
+            importsItems |= recipeMap.getMaxInputs() > 0;
+            exportsItems |= recipeMap.getMaxOutputs() > 0;
+            importsFluids |= recipeMap.getMaxFluidInputs() > 0;
+            exportsFluids |= recipeMap.getMaxFluidOutputs() > 0;
+        }
+        if (importsItems) abilities.add(MultiblockAbility.IMPORT_ITEMS);
+        if (exportsItems) abilities.add(MultiblockAbility.EXPORT_ITEMS);
+        if (importsFluids) abilities.add(MultiblockAbility.IMPORT_FLUIDS);
+        if (exportsFluids) abilities.add(MultiblockAbility.EXPORT_FLUIDS);
 
-        return casing
-                .custom(Elements.abilities(0, maxHatches,
-                        abilities.toArray(new MultiblockAbility<?>[0])), maxHatches)
-                .done()
+        return builder
+                .where(symbol, Elements.choice(
+                        Elements.block(casingState),
+                        Elements.abilities(0, maxHatches,
+                                abilities.toArray(new MultiblockAbility<?>[0]))))
                 .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
                         POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
                 .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)

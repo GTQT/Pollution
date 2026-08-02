@@ -315,14 +315,14 @@ metaitem.transform_enhance.tooltip=扩展魔导机器对不同加工类型的适
 metaitem.baubles.water_ring.name=灵水指环
 metaitem.baubles.water_ring.tooltip=佩戴后消耗水源质强化水下移动与视野，缺氧时可消耗魔力补充空气
 
-metaitem.blood_circuit.name=血肉电路板
-metaitem.blood_circuit.tooltip=§c§l███血肉电路板：███████不可名状的低语在其表面流淌§r
-metaitem.blood_circuit_advanced.name=腐化血肉电路板
-metaitem.blood_circuit_advanced.tooltip=§c§l███腐化血肉电路板：███脉动的血管与███未知的意识交织§r
-metaitem.blood_circuit_ultimate.name=深渊血肉电路板
-metaitem.blood_circuit_ultimate.tooltip=§c§l███深渊血肉电路板：███来自███未知维度的███禁忌馈赠§r
-metaitem.blood_circuit_supreme.name=终焉血肉电路板
-metaitem.blood_circuit_supreme.tooltip=§c§l███终焉血肉电路板：███同步率███警告：███████不可直视§r
+metaitem.blood_circuit.name=原始培养膜
+metaitem.blood_circuit.tooltip=低分化血肉组织的无菌培养载体，不再作为电路使用
+metaitem.blood_circuit_advanced.name=神经分化模板
+metaitem.blood_circuit_advanced.tooltip=诱导培养组织形成稳定神经网络的生物模板
+metaitem.blood_circuit_ultimate.name=人脑培养模板
+metaitem.blood_circuit_ultimate.tooltip=保存人脑类器官结构与分化参数的培养模板
+metaitem.blood_circuit_supreme.name=星血计算模板
+metaitem.blood_circuit_supreme.tooltip=将星辉调谐信息写入血肉计算组织的终级培养模板
 
 metaitem.blood_circuit.0.name=血肉电路(MV)
 metaitem.blood_circuit.0.tooltip=§c试验品血肉，能按规律对电刺激进行反应
@@ -952,6 +952,11 @@ pollution.machine.endoflame_array.tooltip.1=§a碳排放量为零的火电厂，
 pollution.machine.endoflame_array.tooltip.2=在输入总线内放置若干火红莲，以实现火红莲的并行发魔，如同处理阵列一样
 pollution.machine.endoflame_array.tooltip.3=输入总线输入燃料，熔炉内可用的燃料均可转化为燃料缓存
 pollution.machine.endoflame_array.tooltip.4=放置魔力容器，导出魔力池仓内的魔力缓存。放心，0污染！
+pollution.machine.endoflame_array.display.flowers=火红莲数量：%s
+pollution.machine.endoflame_array.display.fuel_items=剩余燃料数量：%s
+pollution.machine.endoflame_array.display.fuel_cache=燃烧缓存：%s / %s tick
+pollution.machine.endoflame_array.display.output=实际魔力输出：%s Mana/t
+pollution.machine.endoflame_array.display.mana_pool=输出池缓存：%s / %s Mana
 
 #大集气
 pollution.machine.bot_gas_collector.name=次元秘术大气泵机
@@ -1170,6 +1175,7 @@ pollution.machine.infused_exchange.tooltip.1=在控制器正上方放置源质�
 pollution.machine.infused_exchange.tooltip.2=仅支持：风、地、水、火、秩序、混沌源质
 pollution.machine.blood_magic_hatch.name=血魔法仓
 pollution.machine.astral_lens_hatch.name=星辉透镜仓
+pollution.machine.astral_lens_hatch_advanced.name=高级星辉透镜仓
 pollution.machine.tarot_hatch.name=塔罗牌仓
 
 # 魔法联动材料
@@ -1214,8 +1220,8 @@ metaitem.rock_crystal_seed.name=岩石水晶晶种
 metaitem.rock_crystal_seed.tooltip=用于受控生长星辉水晶的选育晶种
 metaitem.natural_infused_coil.name=自然灌注线圈
 metaitem.natural_infused_coil.tooltip=以植物生命力维持魔导加工场的自适应线圈
-metaitem.magic_control_assembly_ev.name=EV 魔导控制组件
-metaitem.magic_control_assembly_ev.tooltip=连接 GT 控制电路与多种魔法输入仓的标准控制件
+metaitem.magic_control_assembly_ev.name=魔导控制组件
+metaitem.magic_control_assembly_ev.tooltip=MV阶段连接GT控制电路与多种魔法接口的标准控制件
 metaitem.node_stabilization_frame.name=节点稳定框架
 metaitem.node_stabilization_frame.tooltip=固定灵气节点，并隔离外部源质扰动
 metaitem.blank_tarot_card.name=空白塔罗牌
@@ -1476,42 +1482,58 @@ pollution.machine.blood_magic_hatch.tooltip.1=插入已绑定的血之宝珠，�
 pollution.machine.blood_magic_hatch.tooltip.2=宝珠不会被消耗；无绑定或生命源质不足时配方不会运行
 pollution.machine.astral_lens_hatch.tooltip.1=插入星座纸或已调谐的星辉水晶
 pollution.machine.astral_lens_hatch.tooltip.2=必须露天放置，并实时校验星座、月相及天象事件
+pollution.machine.astral_lens_hatch_advanced.tooltip.1=插入带星座NBT的数据晶圆、星座纸或已调谐水晶
+pollution.machine.astral_lens_hatch_advanced.tooltip.2=LuV级天象授权仓，必须露天放置并实时校验天空
 pollution.machine.tarot_hatch.tooltip.1=插入一张大阿卡纳塔罗牌以解锁对应仪式配方
 pollution.machine.tarot_hatch.tooltip.2=塔罗牌仅作为授权媒介，不会被配方消耗
 pollution.machine.infused_fluid_hatch.name=源质流体输入仓
 pollution.machine.infused_fluid_hatch.tooltip=储存并向魔导机器提供配方所需的源质流体
+pollution.machine.infused_fluid_hatch.lv.name=源质流体输入仓（§7LV§r）
+pollution.machine.infused_fluid_hatch.mv.name=源质流体输入仓（§bMV§r）
+pollution.machine.infused_fluid_hatch.hv.name=源质流体输入仓（§6HV§r）
+pollution.machine.infused_fluid_hatch.ev.name=源质流体输入仓（§5EV§r）
+pollution.machine.infused_fluid_hatch.iv.name=源质流体输入仓（§1IV§r）
+pollution.machine.infused_fluid_hatch.luv.name=源质流体输入仓（§dLuV§r）
+pollution.machine.infused_fluid_hatch.zpm.name=源质流体输入仓（§cZPM§r）
+pollution.machine.infused_fluid_hatch.uv.name=源质流体输入仓（§3UV§r）
+pollution.machine.infused_fluid_hatch.uhv.name=源质流体输入仓（§4UHV§r）
+pollution.machine.infused_fluid_hatch.uev.name=源质流体输入仓（§aUEV§r）
+pollution.machine.infused_fluid_hatch.uiv.name=源质流体输入仓（§2UIV§r）
+pollution.machine.infused_fluid_hatch.uxv.name=源质流体输入仓（§eUXV§r）
+pollution.machine.infused_fluid_hatch.opv.name=源质流体输入仓（§9OpV§r）
+pollution.machine.infused_fluid_hatch.max.name=源质流体输入仓（§c§lMAX§r）
 
-# 每个电压等级独立的魔法电路基板
-metaitem.magic_circuit_board.ulv.name=魔法电路基板（§8ULV§r）
-metaitem.magic_circuit_board.lv.name=魔法电路基板（§7LV§r）
-metaitem.magic_circuit_board.mv.name=魔法电路基板（§bMV§r）
-metaitem.magic_circuit_board.hv.name=魔法电路基板（§6HV§r）
-metaitem.magic_circuit_board.ev.name=魔法电路基板（§5EV§r）
-metaitem.magic_circuit_board.iv.name=魔法电路基板（§1IV§r）
-metaitem.magic_circuit_board.luv.name=魔法电路基板（§dLuV§r）
-metaitem.magic_circuit_board.zpm.name=魔法电路基板（§cZPM§r）
-metaitem.magic_circuit_board.uv.name=魔法电路基板（§3UV§r）
-metaitem.magic_circuit_board.uhv.name=魔法电路基板（§4UHV§r）
-metaitem.magic_circuit_board.uev.name=魔法电路基板（§aUEV§r）
-metaitem.magic_circuit_board.uiv.name=魔法电路基板（§2UIV§r）
-metaitem.magic_circuit_board.uxv.name=魔法电路基板（§eUXV§r）
-metaitem.magic_circuit_board.opv.name=魔法电路基板（§9OpV§r）
-metaitem.magic_circuit_board.max.name=魔法电路基板（§c§lMAX§r）
-metaitem.magic_circuit_board.ulv.tooltip=刻有微弱符文导路的基础工业魔法基板
-metaitem.magic_circuit_board.lv.tooltip=可承载低压魔导元件的符文印刷基板
+# 每个电压等级独立的魔法电路板；与蕴魔电路板同级并列
+metaitem.magic_circuit_board.ulv.name=魔法电路板（§8ULV§r）
+metaitem.magic_circuit_board.lv.name=魔法电路板（§7LV§r）
+metaitem.magic_circuit_board.mv.name=魔法电路板（§bMV§r）
+metaitem.magic_circuit_board.hv.name=魔法电路板（§6HV§r）
+metaitem.magic_circuit_board.ev.name=魔法电路板（§5EV§r）
+metaitem.magic_circuit_board.iv.name=魔法电路板（§1IV§r）
+metaitem.magic_circuit_board.luv.name=魔法电路板（§dLuV§r）
+metaitem.magic_circuit_board.zpm.name=魔法电路板（§cZPM§r）
+metaitem.magic_circuit_board.uv.name=魔法电路板（§3UV§r）
+metaitem.magic_circuit_board.uhv.name=魔法电路板（§4UHV§r）
+metaitem.magic_circuit_board.uev.name=魔法电路板（§aUEV§r）
+metaitem.magic_circuit_board.uiv.name=魔法电路板（§2UIV§r）
+metaitem.magic_circuit_board.uxv.name=魔法电路板（§eUXV§r）
+metaitem.magic_circuit_board.opv.name=魔法电路板（§9OpV§r）
+metaitem.magic_circuit_board.max.name=魔法电路板（§c§lMAX§r）
+metaitem.magic_circuit_board.ulv.tooltip=刻有微弱符文导路的基础工业魔法电路
+metaitem.magic_circuit_board.lv.tooltip=可承载低压魔导元件的符文印刷电路
 metaitem.magic_circuit_board.mv.tooltip=以魔力稳定导路并强化边缘接点
 metaitem.magic_circuit_board.hv.tooltip=以源质蚀刻形成高压魔导回路
-metaitem.magic_circuit_board.ev.tooltip=高能符文开始在基板表面持续流动
+metaitem.magic_circuit_board.ev.tooltip=高能符文开始在电路表面持续流动
 metaitem.magic_circuit_board.iv.tooltip=可同时承载神秘数据与活体魔力导路
 metaitem.magic_circuit_board.luv.tooltip=活体计算组织与魔法导路实现同步
 metaitem.magic_circuit_board.zpm.tooltip=星座信息被写入稳定的天体导路
-metaitem.magic_circuit_board.uv.tooltip=高密度星辉回路覆盖整块基板
+metaitem.magic_circuit_board.uv.tooltip=高密度星辉回路覆盖整块电路板
 metaitem.magic_circuit_board.uhv.tooltip=因果约束开始稳定超高阶魔法计算
 metaitem.magic_circuit_board.uev.tooltip=跨体系魔法信号在相位导路中并行传输
 metaitem.magic_circuit_board.uiv.tooltip=导路可在节点、星光与生命信号间自适应切换
 metaitem.magic_circuit_board.uxv.tooltip=世界尺度的魔法信息被压缩进细密回路
-metaitem.magic_circuit_board.opv.tooltip=近乎完整的因果计算网络在基板内循环
-metaitem.magic_circuit_board.max.tooltip=魔法工业所能制造的最终电路基底
+metaitem.magic_circuit_board.opv.tooltip=近乎完整的因果计算网络在电路板内循环
+metaitem.magic_circuit_board.max.tooltip=魔法工业所能制造的最终级独立电路
 
 # 配方优先联动功能中间件
 metaitem.attuned_crystal_wafer.name=调谐晶体晶圆
@@ -1522,3 +1544,17 @@ metaitem.living_magic_biofilm.name=活体魔导生物膜
 metaitem.living_magic_biofilm.tooltip=连接植物魔力、血液组织与天体培养基的生物计算介质
 metaitem.depleted_magic_core.name=耗竭魔导核心
 metaitem.depleted_magic_core.tooltip=失去催化活性的核心外壳，可净化并回收为空白催化核心
+
+# 工业星能聚合器（Starlight Infuser）
+pollution.machine.industrial_starlight_infuser.name=工业星能聚合器
+recipemap.industrial_starlight_infuser_recipes.name=工业星能聚合
+pollution.machine.industrial_starlight_infuser.tooltip.1=星辉魔法的星能聚合器（Starlight Infuser）配方
+pollution.machine.industrial_starlight_infuser.tooltip.2=保持普通星能聚合配方的一比一输入与输出
+pollution.machine.industrial_starlight_infuser.tooltip.3=星能液消耗为普通星能聚合器十二个液源位平均消耗的六分之一
+
+# 工业聚星缸（Lightwell）
+pollution.machine.industrial_lightwell.name=工业聚星缸
+recipemap.industrial_lightwell_recipes.name=工业聚星缸产液
+pollution.machine.industrial_lightwell.tooltip.1=自动导入星辉魔法聚星缸的催化物产液配方
+pollution.machine.industrial_lightwell.tooltip.2=每 200 tick 产出普通聚星缸理想产量的 5 倍
+pollution.machine.industrial_lightwell.tooltip.3=催化物不会立即消耗，但会按普通聚星缸同等工作量的概率碎裂

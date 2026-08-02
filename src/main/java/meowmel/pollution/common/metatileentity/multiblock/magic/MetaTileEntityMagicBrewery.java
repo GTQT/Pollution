@@ -35,9 +35,10 @@ public class MetaTileEntityMagicBrewery extends MagicRecipeMapMultiblockControll
                             .aisle("XXXXX", "XCPCX", "XAPAX", "XAPAX", "#XMX#")
                             .aisle("XXXXX", "XCCCX", "XAAAX", "XXAXX", "##X##")
                             .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#####")
-                            .self('S', MetaTileEntityMagicBrewery.class)
-                            .casing('X', getCasingState()),
-                    RecipeMaps.BREWING_RECIPES, 24)
+                            .self('S', MetaTileEntityMagicBrewery.class),
+                    'X', getCasingState(),
+                    new RecipeMap<?>[]{RecipeMaps.BREWING_RECIPES, RecipeMaps.FERMENTING_RECIPES,
+                            RecipeMaps.FLUID_HEATER_RECIPES}, 24)
                     .block('C', getCasingState2())
                     .block('P', getCasingState3())
                     .block('A', getCasingState4())

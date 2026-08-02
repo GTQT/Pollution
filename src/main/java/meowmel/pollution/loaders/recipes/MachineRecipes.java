@@ -8,6 +8,8 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
+import hellfirepvp.astralsorcery.common.block.BlockMarble;
+import hellfirepvp.astralsorcery.common.lib.BlocksAS;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.init.Items;
@@ -123,6 +125,13 @@ public class MachineRecipes {
                 'B', BLANKCORE,
                 'C', EMITTER);
 
+        registerMachineRecipe(PollutionMetaTileEntities.INFUSED_FLUID_HATCH,
+                "PBP", "CHC", "PBP",
+                'H', HULL,
+                'P', PUMP,
+                'B', PIPE_NORMAL,
+                'C', CIRCUIT);
+
         registerMachineRecipe(PollutionMetaTileEntities.FLUX_PROMOTED_FUEL_CELL,
                 "PBP", "EHE", "MCM",
                 'H', HULL,
@@ -169,6 +178,27 @@ public class MachineRecipes {
                 'B', new UnificationEntry(OrePrefix.rotor, TungstenSteel),
                 'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.IV),
                 'F', MetaItems.ELECTRIC_PUMP_IV);
+
+        ModHandler.addShapedRecipe(true, "industrial_starlight_infuser",
+                INDUSTRIAL_STARLIGHT_INFUSER.getStackForm(),
+                "RCR", "PIP", "FHF",
+                'R', BlockMarble.MarbleBlockType.RUNED.asStack(),
+                'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.IV),
+                'P', MetaItems.ELECTRIC_PUMP_IV,
+                'I', BlocksAS.starlightInfuser,
+                'F', MetaItems.FIELD_GENERATOR_IV,
+                'H', MetaTileEntities.HULL[GTValues.IV].getStackForm());
+
+        ModHandler.addShapedRecipe(true, "industrial_lightwell",
+                INDUSTRIAL_LIGHTWELL.getStackForm(),
+                "RCR", "PWP", "FHF",
+                'R', BlockMarble.MarbleBlockType.RUNED.asStack(),
+                'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.IV),
+                'P', MetaItems.ELECTRIC_PUMP_IV,
+                'W', BlocksAS.blockWell,
+                'F', MetaItems.FIELD_GENERATOR_IV,
+                'H', MetaTileEntities.HULL[GTValues.IV].getStackForm());
+
         ModHandler.addShapedRecipe(true, "SMALL_NODE_GENERATOR_LuV", SMALL_NODE_GENERATOR[0].getStackForm(),
                 "CVC", "FLF", "EHE",
                 'H', MetaTileEntities.HULL[6].getStackForm(),

@@ -153,12 +153,15 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem PRECISION_RUNE_BLANK;
 	public static MetaItem<?>.MetaValueItem ROCK_CRYSTAL_SEED;
 	public static MetaItem<?>.MetaValueItem NATURAL_INFUSED_COIL;
+	public static MetaItem<?>.MetaValueItem MAGIC_CONTROL_ASSEMBLY;
+	/** @deprecated Legacy source name kept for compatibility; the component is MV-stage and tierless. */
+	@Deprecated
 	public static MetaItem<?>.MetaValueItem MAGIC_CONTROL_ASSEMBLY_EV;
 	public static MetaItem<?>.MetaValueItem NODE_STABILIZATION_FRAME;
 	public static MetaItem<?>.MetaValueItem BLANK_TAROT_CARD;
 	public static MetaItem<?>.MetaValueItem ARCANE_INK_CAPSULE;
 
-	// One animated magic circuit substrate for every voltage tier
+	// Independent animated magic circuit boards, parallel to the enchanted circuit family
 	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_ULV;
 	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_LV;
 	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_MV;

@@ -55,9 +55,10 @@ public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockContro
                             .aisle("AAABAAA", "C F F C", "C F F C", "E F F E", "EDB BDE", "AAAAAAA")
                             .aisle("AAAAAAA", " D   D ", " D   D ", " D   D ", " DBBBD ", " AAAAA ")
                             .aisle(" ABABA ", "  CDC  ", "  CDC  ", "  EDE  ", "  EDE  ", "  AAA  ")
-                            .self('S', MetaTileEntityMagicAssembler.class)
-                            .casing('A', getCasingState()),
-                    RecipeMaps.ASSEMBLER_RECIPES, 94)
+                            .self('S', MetaTileEntityMagicAssembler.class),
+                    'A', getCasingState(),
+                    new RecipeMap<?>[]{RecipeMaps.ASSEMBLER_RECIPES,
+                            PORecipeMaps.MAGIC_ASSEMBLER_RECIPES}, 94)
                     .block('B', getCasingState2())
                     .block('C', getCasingState3())
                     .block('D', getCasingState4())

@@ -19,6 +19,7 @@ import meowmel.pollution.integration.POIntegration;
 import meowmel.pollution.integration.botania.BotaniaMaterialUnification;
 import meowmel.pollution.loaders.loot.GregTechLootTable;
 import meowmel.pollution.loaders.recipes.MeteorsHelper;
+import meowmel.pollution.loaders.recipes.mods.AstralSorcery;
 import meowmel.pollution.loaders.recipes.mods.Botania;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -111,6 +112,7 @@ public class Pollution {
         // Dynamic Thaumcraft infusion imports are disabled until the GT/HEI input expansion is fixed upstream.开启的话会至少占用额外约 0.87 GiB
         IndustrialInfusionBuilder.init();
         Botania.init();
+        AstralSorcery.init();
         MeteorsHelper.init();
     }
 

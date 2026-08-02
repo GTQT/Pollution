@@ -31,9 +31,10 @@ public class MetaTileEntityMagicCentrifuge extends MagicRecipeMapMultiblockContr
                             .aisle("XXXXX", "XGHGX", "XXXXX")
                             .aisle("XXXXX", "XHGHX", "XXXXX")
                             .aisle("BXXXB", "XXSXX", "BXXXB")
-                            .self('S', MetaTileEntityMagicCentrifuge.class)
-                            .casing('X', getCasingState()),
-                    RecipeMaps.CENTRIFUGE_RECIPES, 17)
+                            .self('S', MetaTileEntityMagicCentrifuge.class),
+                    'X', getCasingState(),
+                    new RecipeMap<?>[]{RecipeMaps.CENTRIFUGE_RECIPES,
+                            RecipeMaps.THERMAL_CENTRIFUGE_RECIPES}, 17)
                     .any('B')
                     .air('A')
                     .block('G', getCasingState2())

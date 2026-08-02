@@ -54,9 +54,10 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends MagicRecipeMapMultiblo
                             .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXMXX")
                             .aisle("XXXXX", "CAAAC", "GAAAG", "CAAAC", "XXXXX")
                             .aisle("#XSX#", "#CCC#", "#GGG#", "#CCC#", "#XXX#")
-                            .self('S', MetaTileEntityMagicAlloyBlastSmelter.class)
-                            .casing('X', getCasingState1()),
-                    PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES, 31)
+                            .self('S', MetaTileEntityMagicAlloyBlastSmelter.class),
+                    'X', getCasingState1(),
+                    new RecipeMap<?>[]{PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES,
+                            GCYMRecipeMaps.ALLOY_BLAST_RECIPES}, 31)
                     .hatch('M', MultiblockAbility.MUFFLER_HATCH)
                     .tieredCasing('C', POTieredCasingGroups.coilCasings().group())
                     .withChannel(POTieredCasingGroups.coilCasings().channel())

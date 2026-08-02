@@ -40,7 +40,7 @@ public class MetaTileEntityMagicLargeTurbine extends MetaTileEntityLargeTurbine 
     @Override
     protected @NotNull StructureDefinition<?> createStructureDefinition() {
         return StructureDefinition.getOrBuild("pollution:magic_large_turbine_" + tier, () -> {
-            DeclarativePatternBuilder.CasingSlot casing = DeclarativePatternBuilder.start()
+            return DeclarativePatternBuilder.start()
                 .aisle("CCCC", "CHHC", "CCCC")
                 .aisle("CHHC", "RGGR", "CHHC")
                 .aisle("CCCC", "CSHC", "CCCC")
@@ -53,14 +53,13 @@ public class MetaTileEntityMagicLargeTurbine extends MetaTileEntityLargeTurbine 
                                 (((ITieredMetaTileEntity) mte).getTier() >= tier))
                         .toArray(MetaTileEntity[]::new)),
                         Elements.abilities(1, 1, POMultiblockAbility.MANA_OUTPUT_HATCH)))
-                .casing('H', type.getCasingState());
-            return casing
-                    .custom(Elements.abilities(0, 7,
-                            MultiblockAbility.MAINTENANCE_HATCH,
-                            MultiblockAbility.MUFFLER_HATCH,
-                            MultiblockAbility.IMPORT_FLUIDS,
-                            MultiblockAbility.EXPORT_FLUIDS), 7)
-                    .done()
+                    .where('H', Elements.choice(
+                            Elements.block(type.getCasingState()),
+                            Elements.abilities(0, 7,
+                                    MultiblockAbility.MAINTENANCE_HATCH,
+                                    MultiblockAbility.MUFFLER_HATCH,
+                                    MultiblockAbility.IMPORT_FLUIDS,
+                                    MultiblockAbility.EXPORT_FLUIDS)))
                     .globalAbilityLimit(MultiblockAbility.ROTOR_HOLDER, 1, 1)
                     .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_HATCH, 1, 1)
                     .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)

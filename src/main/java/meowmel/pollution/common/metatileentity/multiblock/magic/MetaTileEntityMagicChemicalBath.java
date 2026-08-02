@@ -59,8 +59,8 @@ public class MetaTileEntityMagicChemicalBath extends MagicRecipeMapMultiblockCon
                         .block('C', getCasingState2())
                         .block('D', getCasingState3())
                         .where('A', FluidStructureElements.fluidElement(FluidRegistry.WATER));
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('X', getCasingState());
-                return configureMagicRecipeCasing(casing, RecipeMaps.CHEMICAL_BATH_RECIPES, 31)
+                return configureMagicRecipeCasing(builder, 'X', getCasingState(),
+                        new RecipeMap<?>[]{RecipeMaps.CHEMICAL_BATH_RECIPES, RecipeMaps.ORE_WASHER_RECIPES}, 31)
                         .buildStructureDefinition();
             });
 

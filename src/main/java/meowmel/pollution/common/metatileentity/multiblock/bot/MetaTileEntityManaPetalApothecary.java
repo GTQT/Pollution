@@ -59,8 +59,8 @@ public class MetaTileEntityManaPetalApothecary extends ManaMultiblockController 
 				.block('A', getCasingState()).block('B', getCasingState2()).block('C', getCasingState3())
 				.block('D', getCasingState4()).block('E', getCasingState5()).block('F', getCasingState6())
 				.block('G', getCasingState7()).any(' ');
-		DeclarativePatternBuilder.CasingSlot casing = builder.casing('E', getCasingState5());
-		return configureManaRecipeCasing(casing, MANA_PETAL_RECIPES, 117).buildStructureDefinition();
+		return configureManaRecipeCasing(builder, 'E', getCasingState5(), MANA_PETAL_RECIPES, 117)
+				.buildStructureDefinition();
 	}
 	@SideOnly(Side.CLIENT)
 	public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {

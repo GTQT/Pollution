@@ -318,14 +318,14 @@ metaitem.transform_enhance.tooltip=Extends magic machinery compatibility across 
 metaitem.baubles.water_ring.name=Infused Water Ring
 metaitem.baubles.water_ring.tooltip=Consumes Aqua essentia to improve underwater movement and vision; consumes mana to restore air
 
-metaitem.blood_circuit.name=Flesh Circuit Board
-metaitem.blood_circuit.tooltip=§c§lFlesh Circuit Board: Indescribable whispers flow across its surface§r
-metaitem.blood_circuit_advanced.name=Corrupted Flesh Circuit Board
-metaitem.blood_circuit_advanced.tooltip=§c§lCorrupted Flesh Circuit Board: Pulsating veins intertwine with an unknown consciousness§r
-metaitem.blood_circuit_ultimate.name=Abyssal Flesh Circuit Board
-metaitem.blood_circuit_ultimate.tooltip=§c§lAbyssal Flesh Circuit Board: A forbidden gift from an unknown dimension§r
-metaitem.blood_circuit_supreme.name=Terminal Flesh Circuit Board
-metaitem.blood_circuit_supreme.tooltip=§c§lTerminal Flesh Circuit Board: Synchronization rate warning: Do not look directly§r
+metaitem.blood_circuit.name=Primitive Culture Membrane
+metaitem.blood_circuit.tooltip=Sterile carrier for low-differentiation flesh cultures; no longer a circuit
+metaitem.blood_circuit_advanced.name=Neural Differentiation Template
+metaitem.blood_circuit_advanced.tooltip=Biological template that induces a stable neural network
+metaitem.blood_circuit_ultimate.name=Human Brain Culture Template
+metaitem.blood_circuit_ultimate.tooltip=Stores organoid topology and human-brain differentiation parameters
+metaitem.blood_circuit_supreme.name=Star-Blood Computation Template
+metaitem.blood_circuit_supreme.tooltip=Writes attuned starlight information into living computation tissue
 
 
 metaitem.blood_circuit.0.name=血肉电路(MV)
@@ -967,6 +967,11 @@ pollution.machine.endoflame_array.tooltip.1=§aA zero-carbon-emission power plan
 pollution.machine.endoflame_array.tooltip.2=Place several Endoflames in the input bus to achieve parallel magical generation, just like processing arrays.
 pollution.machine.endoflame_array.tooltip.3=Input fuel into the input bus; all usable fuels in the furnace are converted into fuel buffers.
 pollution.machine.endoflame_array.tooltip.4=Place mana containers to extract mana from the mana pool. Rest assured, 0 pollution!
+pollution.machine.endoflame_array.display.flowers=Endoflames: %s
+pollution.machine.endoflame_array.display.fuel_items=Remaining fuel items: %s
+pollution.machine.endoflame_array.display.fuel_cache=Burn-time buffer: %s / %s ticks
+pollution.machine.endoflame_array.display.output=Actual mana output: %s Mana/t
+pollution.machine.endoflame_array.display.mana_pool=Output pool buffer: %s / %s Mana
 
 # Dimensional Gas Collector
 pollution.machine.bot_gas_collector.name=Dimensional Secret Art Atmospheric Pump
@@ -1162,6 +1167,7 @@ tile.pollution.alfheim_red_grape_0.name=Red Grape Vine
 tile.pollution.alfheim_red_grape_1.name=Red Grape Vine
 pollution.machine.blood_magic_hatch.name=Blood Magic Hatch
 pollution.machine.astral_lens_hatch.name=Astral Lens Hatch
+pollution.machine.astral_lens_hatch_advanced.name=Advanced Astral Lens Hatch
 pollution.machine.tarot_hatch.name=Tarot Hatch
 
 # Magic integration materials
@@ -1206,8 +1212,8 @@ metaitem.rock_crystal_seed.name=Rock Crystal Seed
 metaitem.rock_crystal_seed.tooltip=A selected seed for controlled Astral Sorcery crystal growth
 metaitem.natural_infused_coil.name=Natural Infused Coil
 metaitem.natural_infused_coil.tooltip=Uses plant vitality to sustain an adaptive magical processing field
-metaitem.magic_control_assembly_ev.name=EV Magic Control Assembly
-metaitem.magic_control_assembly_ev.tooltip=The standard link between GT control circuits and magic input hatches
+metaitem.magic_control_assembly_ev.name=Magic Control Assembly
+metaitem.magic_control_assembly_ev.tooltip=The MV-stage standard link between GT control circuits and magical interfaces
 metaitem.node_stabilization_frame.name=Node Stabilization Frame
 metaitem.node_stabilization_frame.tooltip=Secures an aura node while isolating it from external essentia disturbances
 metaitem.blank_tarot_card.name=Blank Tarot Card
@@ -1469,42 +1475,58 @@ pollution.machine.blood_magic_hatch.tooltip.1=Insert a bound Blood Orb to draw L
 pollution.machine.blood_magic_hatch.tooltip.2=The orb is not consumed; recipes stop when binding or Life Essence is unavailable
 pollution.machine.astral_lens_hatch.tooltip.1=Insert constellation paper or an attuned Astral Sorcery crystal
 pollution.machine.astral_lens_hatch.tooltip.2=Requires open sky and validates constellation, moon phase and celestial events live
+pollution.machine.astral_lens_hatch_advanced.tooltip.1=Accepts constellation-data wafers, constellation paper, or attuned crystals
+pollution.machine.astral_lens_hatch_advanced.tooltip.2=LuV celestial authorization hatch; requires open sky and validates live sky state
 pollution.machine.tarot_hatch.tooltip.1=Insert one Major Arcana tarot card to authorize the corresponding ritual recipe
 pollution.machine.tarot_hatch.tooltip.2=The tarot card is an authorization medium and is never consumed by recipes
 pollution.machine.infused_fluid_hatch.name=Essentia Fluid Input Hatch
 pollution.machine.infused_fluid_hatch.tooltip=Stores and supplies essentia fluids required by magical machinery
+pollution.machine.infused_fluid_hatch.lv.name=Essentia Fluid Input Hatch (§7LV§r)
+pollution.machine.infused_fluid_hatch.mv.name=Essentia Fluid Input Hatch (§bMV§r)
+pollution.machine.infused_fluid_hatch.hv.name=Essentia Fluid Input Hatch (§6HV§r)
+pollution.machine.infused_fluid_hatch.ev.name=Essentia Fluid Input Hatch (§5EV§r)
+pollution.machine.infused_fluid_hatch.iv.name=Essentia Fluid Input Hatch (§1IV§r)
+pollution.machine.infused_fluid_hatch.luv.name=Essentia Fluid Input Hatch (§dLuV§r)
+pollution.machine.infused_fluid_hatch.zpm.name=Essentia Fluid Input Hatch (§cZPM§r)
+pollution.machine.infused_fluid_hatch.uv.name=Essentia Fluid Input Hatch (§3UV§r)
+pollution.machine.infused_fluid_hatch.uhv.name=Essentia Fluid Input Hatch (§4UHV§r)
+pollution.machine.infused_fluid_hatch.uev.name=Essentia Fluid Input Hatch (§aUEV§r)
+pollution.machine.infused_fluid_hatch.uiv.name=Essentia Fluid Input Hatch (§2UIV§r)
+pollution.machine.infused_fluid_hatch.uxv.name=Essentia Fluid Input Hatch (§eUXV§r)
+pollution.machine.infused_fluid_hatch.opv.name=Essentia Fluid Input Hatch (§9OpV§r)
+pollution.machine.infused_fluid_hatch.max.name=Essentia Fluid Input Hatch (§c§lMAX§r)
 
-# One magic circuit substrate for every voltage tier
-metaitem.magic_circuit_board.ulv.name=Magic Circuit Substrate (§8ULV§r)
-metaitem.magic_circuit_board.lv.name=Magic Circuit Substrate (§7LV§r)
-metaitem.magic_circuit_board.mv.name=Magic Circuit Substrate (§bMV§r)
-metaitem.magic_circuit_board.hv.name=Magic Circuit Substrate (§6HV§r)
-metaitem.magic_circuit_board.ev.name=Magic Circuit Substrate (§5EV§r)
-metaitem.magic_circuit_board.iv.name=Magic Circuit Substrate (§1IV§r)
-metaitem.magic_circuit_board.luv.name=Magic Circuit Substrate (§dLuV§r)
-metaitem.magic_circuit_board.zpm.name=Magic Circuit Substrate (§cZPM§r)
-metaitem.magic_circuit_board.uv.name=Magic Circuit Substrate (§3UV§r)
-metaitem.magic_circuit_board.uhv.name=Magic Circuit Substrate (§4UHV§r)
-metaitem.magic_circuit_board.uev.name=Magic Circuit Substrate (§aUEV§r)
-metaitem.magic_circuit_board.uiv.name=Magic Circuit Substrate (§2UIV§r)
-metaitem.magic_circuit_board.uxv.name=Magic Circuit Substrate (§eUXV§r)
-metaitem.magic_circuit_board.opv.name=Magic Circuit Substrate (§9OpV§r)
-metaitem.magic_circuit_board.max.name=Magic Circuit Substrate (§c§lMAX§r)
-metaitem.magic_circuit_board.ulv.tooltip=A basic industrial magic substrate with faint runic traces
-metaitem.magic_circuit_board.lv.tooltip=A runic printed substrate able to carry low-voltage magic components
+# One independent magic circuit board for every voltage tier, parallel to enchanted circuit boards
+metaitem.magic_circuit_board.ulv.name=Magic Circuit Board (§8ULV§r)
+metaitem.magic_circuit_board.lv.name=Magic Circuit Board (§7LV§r)
+metaitem.magic_circuit_board.mv.name=Magic Circuit Board (§bMV§r)
+metaitem.magic_circuit_board.hv.name=Magic Circuit Board (§6HV§r)
+metaitem.magic_circuit_board.ev.name=Magic Circuit Board (§5EV§r)
+metaitem.magic_circuit_board.iv.name=Magic Circuit Board (§1IV§r)
+metaitem.magic_circuit_board.luv.name=Magic Circuit Board (§dLuV§r)
+metaitem.magic_circuit_board.zpm.name=Magic Circuit Board (§cZPM§r)
+metaitem.magic_circuit_board.uv.name=Magic Circuit Board (§3UV§r)
+metaitem.magic_circuit_board.uhv.name=Magic Circuit Board (§4UHV§r)
+metaitem.magic_circuit_board.uev.name=Magic Circuit Board (§aUEV§r)
+metaitem.magic_circuit_board.uiv.name=Magic Circuit Board (§2UIV§r)
+metaitem.magic_circuit_board.uxv.name=Magic Circuit Board (§eUXV§r)
+metaitem.magic_circuit_board.opv.name=Magic Circuit Board (§9OpV§r)
+metaitem.magic_circuit_board.max.name=Magic Circuit Board (§c§lMAX§r)
+metaitem.magic_circuit_board.ulv.tooltip=A basic independent industrial magic circuit with faint runic traces
+metaitem.magic_circuit_board.lv.tooltip=A runic printed circuit able to carry low-voltage magic components
 metaitem.magic_circuit_board.mv.tooltip=Mana-stabilized traces reinforce its edge contacts
 metaitem.magic_circuit_board.hv.tooltip=Essentia etching forms high-voltage magic pathways
 metaitem.magic_circuit_board.ev.tooltip=High-energy runes flow continuously across its surface
 metaitem.magic_circuit_board.iv.tooltip=Carries both thaumic data and living mana traces
 metaitem.magic_circuit_board.luv.tooltip=Living computing tissue synchronizes with its magic pathways
 metaitem.magic_circuit_board.zpm.tooltip=Constellation data is written into stable celestial traces
-metaitem.magic_circuit_board.uv.tooltip=High-density starlight pathways cover the entire substrate
+metaitem.magic_circuit_board.uv.tooltip=High-density starlight pathways cover the entire circuit board
 metaitem.magic_circuit_board.uhv.tooltip=Causal constraints begin stabilizing ultra-high-tier magic computation
 metaitem.magic_circuit_board.uev.tooltip=Cross-system magic signals travel in parallel through phase traces
 metaitem.magic_circuit_board.uiv.tooltip=Its pathways adapt between node, starlight and living signals
 metaitem.magic_circuit_board.uxv.tooltip=World-scale magic information is compressed into dense traces
-metaitem.magic_circuit_board.opv.tooltip=A nearly complete causal computing network cycles within the substrate
-metaitem.magic_circuit_board.max.tooltip=The final circuit substrate attainable by magic industry
+metaitem.magic_circuit_board.opv.tooltip=A nearly complete causal computing network cycles within the circuit board
+metaitem.magic_circuit_board.max.tooltip=The final independent circuit attainable by magic industry
 
 # Recipe-first functional intermediates
 metaitem.attuned_crystal_wafer.name=Attuned Crystal Wafer
@@ -1515,3 +1537,17 @@ metaitem.living_magic_biofilm.name=Living Magic Biofilm
 metaitem.living_magic_biofilm.tooltip=A biological computing medium linking botanical mana, blood tissue and celestial culture
 metaitem.depleted_magic_core.name=Depleted Magic Core
 metaitem.depleted_magic_core.tooltip=A spent catalyst shell that can be purified and recycled into a blank catalyst core
+
+# Industrial Starlight Infuser
+pollution.machine.industrial_starlight_infuser.name=Industrial Starlight Infuser
+recipemap.industrial_starlight_infuser_recipes.name=Industrial Starlight Infusion
+pollution.machine.industrial_starlight_infuser.tooltip.1=Astral Sorcery Starlight Infuser recipes
+pollution.machine.industrial_starlight_infuser.tooltip.2=Keeps the standard recipe's one-to-one input and output
+pollution.machine.industrial_starlight_infuser.tooltip.3=Uses one sixth of the standard infuser's expected Liquid Starlight consumption
+
+# Industrial Lightwell
+pollution.machine.industrial_lightwell.name=Industrial Lightwell
+recipemap.industrial_lightwell_recipes.name=Industrial Lightwell Liquefaction
+pollution.machine.industrial_lightwell.tooltip.1=Automatically imports Astral Sorcery Lightwell catalyst recipes
+pollution.machine.industrial_lightwell.tooltip.2=Produces five times an ideal Lightwell's output every 200 ticks
+pollution.machine.industrial_lightwell.tooltip.3=Catalysts are retained but may shatter with the standard Lightwell probability for the same work

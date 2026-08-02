@@ -32,8 +32,8 @@ public class MetaTileEntityMagicWireMill extends MagicRecipeMapMultiblockControl
                             .aisle("XXXXX", "XXGGG", "XXXXX")
                             .aisle("XXXXX", "XACCG", "XXXXX")
                             .aisle("XXXXX", "XSGGG", "XXXXX")
-                            .self('S', MetaTileEntityMagicWireMill.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicWireMill.class),
+                    'X', getCasingState(),
                     RecipeMaps.WIREMILL_RECIPES, 9)
                     .block('C', getCasingState2())
                     .block('G', getCasingState3())

@@ -34,8 +34,8 @@ public class MetaTileEntityMagicCutter extends MagicRecipeMapMultiblockControlle
                             .aisle("XXXXXXX", "XAXCCCX", "XXXAAAX", "##XXXXX")
                             .aisle("XXXXXXX", "XAXCCCX", "XXXAAAX", "##XXXXX")
                             .aisle("XXXXXXX", "XSXDDDX", "XXXDDDX", "##XXXXX")
-                            .self('S', MetaTileEntityMagicCutter.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicCutter.class),
+                    'X', getCasingState(),
                     RecipeMaps.CUTTER_RECIPES, 18)
                     .block('C', getCasingState2())
                     .block('D', getCasingState3())

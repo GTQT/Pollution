@@ -11,6 +11,7 @@ public class RecipeManger {
         BloodAltar.init();
         BloodCircuit.init();
         MaterialsLine.init();
+        MagicIntegrationRecipes.init();
         ForgeAlchemyRecipes.init();
         CircuitManager.init();
         ThaumcraftRecipes.init();

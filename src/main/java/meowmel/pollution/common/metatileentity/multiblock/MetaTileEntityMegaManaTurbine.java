@@ -155,13 +155,19 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
                 .block('A', getCasingState_Frame()).block('B', getOuterFilling()).block('C', getCasingBackFacing())
                 .block('D', getCasingFusionCoil()).block('E', getInnerFilling()).block('F', getCasingInner())
                         .tieredCasing('G', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
-                .casing('H', getCasingFrontFacing())
-                .maintenance()
-                .optionalHatch(MultiblockAbility.IMPORT_FLUIDS, 4)
-                .optionalHatch(MultiblockAbility.EXPORT_FLUIDS, 4)
-                .optionalHatch(MultiblockAbility.MUFFLER_HATCH, hasMufflerHatch ? 1 : 0)
+                .where('H', Elements.choice(
+                        Elements.block(getCasingFrontFacing()),
+                        Elements.abilities(0, hasMufflerHatch ? 10 : 9,
+                                MultiblockAbility.MAINTENANCE_HATCH,
+                                MultiblockAbility.IMPORT_FLUIDS,
+                                MultiblockAbility.EXPORT_FLUIDS,
+                                MultiblockAbility.MUFFLER_HATCH)))
                 .where('J', Elements.choice(Elements.block(getCasingFusionCoil()),
                         Elements.abilities(MultiblockAbility.OUTPUT_ENERGY, MultiblockAbility.OUTPUT_LASER)))
+                .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 0, 4)
+                .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 0, 4)
+                .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 0, hasMufflerHatch ? 1 : 0)
                 .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 0, 1)
                 .globalAbilityLimit(MultiblockAbility.OUTPUT_LASER, 0, 1)
                 .buildStructureDefinition());

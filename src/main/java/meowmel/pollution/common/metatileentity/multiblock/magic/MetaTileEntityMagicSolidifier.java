@@ -35,9 +35,10 @@ public class MetaTileEntityMagicSolidifier extends MagicRecipeMapMultiblockContr
                             .aisle("XXXXXPYYY", "XXXXXPYCY", "XXXXX#YCY", "XXXXX#YCY", "XCCCX#YCY", "GGGGG#GCG", "######GGG")
                             .aisle("XXXXXPYYY", "XXXXXPYYY", "XXXXX#YYY", "XXXXX#YYY", "XCCCX#YYY", "##G###GGG", "#######G#")
                             .aisle("#XXX#####", "#XXX#####", "#XSX#####", "#XXX#####", "#XXX#####", "##G######", "#########")
-                            .self('S', MetaTileEntityMagicSolidifier.class)
-                            .casing('X', getCasingState()),
-                    RecipeMaps.FLUID_SOLIDFICATION_RECIPES, 35)
+                            .self('S', MetaTileEntityMagicSolidifier.class),
+                    'X', getCasingState(),
+                    new RecipeMap<?>[]{RecipeMaps.FLUID_SOLIDFICATION_RECIPES,
+                            RecipeMaps.EXTRACTOR_RECIPES, RecipeMaps.CANNER_RECIPES}, 35)
                     .block('Y', getCasingState2())
                     .block('C', getCasingState3())
                     .block('G', getCasingState4())

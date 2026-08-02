@@ -53,7 +53,9 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
                 IStructureElement hatches = Elements.abilities(
                         MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_FLUIDS,
                         MultiblockAbility.EXPORT_ITEMS, POMultiblockAbility.MANA_INPUT_HATCH,
-                        MultiblockAbility.PARALLEL_HATCH, MultiblockAbility.MAINTENANCE_HATCH);
+                        POMultiblockAbility.MANA_INPUT_POOL,
+                        MultiblockAbility.PARALLEL_HATCH, MultiblockAbility.MAINTENANCE_HATCH,
+                        MultiblockAbility.MUFFLER_HATCH);
                 return DeclarativePatternBuilder.start(RIGHT, FRONT, UP)
                         .piece("base")
                         .aisle("___XXX___", "___XXX___", "__XXXXX__", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "__XXXXX__", "___XXX___", "___XXX___")
@@ -74,8 +76,10 @@ public class MetaTileEntityBotDistillery extends ManaMultiblockController implem
                         .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.EXPORT_ITEMS, 1, 1)
                         .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_HATCH, 1, 1)
-                        .globalAbilityLimit(MultiblockAbility.PARALLEL_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
+                        .globalAbilityLimit(MultiblockAbility.PARALLEL_HATCH, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                        .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1)
                         .buildStructureDefinition();
             });
 

@@ -33,8 +33,8 @@ public class MetaTileEntityMagicAutoclave extends MagicRecipeMapMultiblockContro
                             .aisle("XXX", "XCX", "XXX")
                             .aisle("XXX", "XCX", "XXX")
                             .aisle("XXX", "XSX", "XXX")
-                            .self('S', MetaTileEntityMagicAutoclave.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicAutoclave.class),
+                    'X', getCasingState(),
                     RecipeMaps.AUTOCLAVE_RECIPES, 17)
                     .block('C', getCasingState2())
                     .block('Y', getCasingState3())

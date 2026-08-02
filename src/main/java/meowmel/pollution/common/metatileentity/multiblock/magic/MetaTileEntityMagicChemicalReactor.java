@@ -50,8 +50,10 @@ public class MetaTileEntityMagicChemicalReactor extends MagicRecipeMapMultiblock
                         .block('D', getCasingState4())
                         .block('E', getCasingState5())
                         .any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
-                return configureMagicRecipeCasing(casing, RecipeMaps.CHEMICAL_RECIPES, 70).buildStructureDefinition();
+                return configureMagicRecipeCasing(builder, 'A', getCasingState(),
+                        new RecipeMap<?>[]{RecipeMaps.CHEMICAL_RECIPES,
+                                PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES}, 70)
+                        .buildStructureDefinition();
             });
 
     public MetaTileEntityMagicChemicalReactor(ResourceLocation metaTileEntityId) {

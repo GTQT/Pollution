@@ -36,8 +36,8 @@ public class MetaTileEntityMagicMacerator extends MagicRecipeMapMultiblockContro
                             .aisle("XXXXX", "XCCCX", "XCCCX", "XGGGX")
                             .aisle("XXXXX", "XCCCX", "XCCCX", "X#G#X")
                             .aisle("XXIXX", "XXSXX", "XXXXX", "XXXXX")
-                            .self('S', MetaTileEntityMagicMacerator.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicMacerator.class),
+                    'X', getCasingState(),
                     RecipeMaps.MACERATOR_RECIPES, 16)
                     .block('C', getCasingState2())
                     .block('G', getCasingState3())

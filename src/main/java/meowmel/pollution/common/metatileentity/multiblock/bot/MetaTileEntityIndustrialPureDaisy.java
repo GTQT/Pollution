@@ -50,8 +50,8 @@ public class MetaTileEntityIndustrialPureDaisy extends ManaMultiblockController 
                         .block('F', getCasingState6())
                         .block('G', getCasingState7())
                         .any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('C', getCasingState3());
-                return configureManaRecipeCasing(casing, PURE_DAISY_RECIPES, 89).buildStructureDefinition();
+                return configureManaRecipeCasing(builder, 'C', getCasingState3(), PURE_DAISY_RECIPES, 89)
+                        .buildStructureDefinition();
             });
 
 	public MetaTileEntityIndustrialPureDaisy(ResourceLocation metaTileEntityId) {

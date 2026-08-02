@@ -33,8 +33,8 @@ public class MetaTileEntityMagicMixer extends MagicRecipeMapMultiblockController
                             .aisle("XXXXX", "XCPCX", "XAPAX", "XCPCX", "XAPAX", "GGGGG")
                             .aisle("XXXXX", "XACAX", "XAAAX", "XACAX", "XAAAX", "##G##")
                             .aisle("#XXX#", "#XSX#", "#XXX#", "#XXX#", "#XXX#", "##G##")
-                            .self('S', MetaTileEntityMagicMixer.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicMixer.class),
+                    'X', getCasingState(),
                     RecipeMaps.MIXER_RECIPES, 28)
                     .block('P', getCasingState2())
                     .block('C', getCasingState3())

@@ -235,12 +235,12 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
                 .block('A', getCasingState())
                 .tieredCasing('B', POTieredCasingGroups.beamCores().group()).withChannel(POTieredCasingGroups.beamCores().channel())
                 .block('C', getCasingState2()).block('D', getCasingState3()).block('E', getCasingState4()).any(' ');
-        DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
-        return casing
-                .custom(Elements.abilities(0, 32, POMultiblockAbility.MANA_INPUT_POOL,
-                        MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS,
-                        MultiblockAbility.EXPORT_FLUIDS), 32)
-                .done()
+        return builder
+                .where('A', Elements.choice(
+                        Elements.block(getCasingState()),
+                        Elements.abilities(0, 32, POMultiblockAbility.MANA_INPUT_POOL,
+                                MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS,
+                                MultiblockAbility.EXPORT_FLUIDS)))
                 .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 1, 1)
                 .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                 .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 2, 32)

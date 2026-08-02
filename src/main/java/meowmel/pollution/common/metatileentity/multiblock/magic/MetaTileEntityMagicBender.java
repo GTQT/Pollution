@@ -31,9 +31,10 @@ public class MetaTileEntityMagicBender extends MagicRecipeMapMultiblockControlle
                             .aisle("XXXXXXX", "XXXXXXX", "XXXXXXX")
                             .aisle("XXXXXXX", "XXXGGGX", "XXXXXXX")
                             .aisle("XXXXXXX", "XSXCCCX", "XXXXXXX")
-                            .self('S', MetaTileEntityMagicBender.class)
-                            .casing('X', getCasingState()),
-                    RecipeMaps.BENDER_RECIPES, 16)
+                            .self('S', MetaTileEntityMagicBender.class),
+                    'X', getCasingState(),
+                    new RecipeMap<?>[]{RecipeMaps.BENDER_RECIPES, RecipeMaps.COMPRESSOR_RECIPES,
+                            RecipeMaps.FORMING_PRESS_RECIPES, RecipeMaps.FORGE_HAMMER_RECIPES}, 16)
                     .block('G', getCasingState2())
                     .block('C', getCasingState3())
                     .buildStructureDefinition());

@@ -35,8 +35,8 @@ public class MetaTileEntityMagicExtruder extends MagicRecipeMapMultiblockControl
                             .aisle("XXXXX", "XXXPX", "XXXGX")
                             .aisle("XXXXX", "XAXPX", "XXXGX")
                             .aisle("XXXXX", "XSXXX", "XXXXX")
-                            .self('S', MetaTileEntityMagicExtruder.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicExtruder.class),
+                    'X', getCasingState(),
                     RecipeMaps.EXTRUDER_RECIPES, 20)
                     .block('P', getCasingState2())
                     .block('G', getCasingState3())

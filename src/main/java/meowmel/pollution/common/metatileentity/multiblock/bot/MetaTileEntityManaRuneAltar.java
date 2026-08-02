@@ -51,8 +51,8 @@ public class MetaTileEntityManaRuneAltar extends ManaMultiblockController {
                         .block('E', getCasingState5()).block('F', getCasingState6()).block('G', getCasingState7())
                         .block('H', getCasingState8()).block('I', getCasingState9()).block('J', getCasingState10())
                         .any(' ');
-                DeclarativePatternBuilder.CasingSlot casing = builder.casing('A', getCasingState());
-                return configureManaRecipeCasing(casing, MANA_RUNE_ALTAR_RECIPES, 71).buildStructureDefinition();
+                return configureManaRecipeCasing(builder, 'A', getCasingState(), MANA_RUNE_ALTAR_RECIPES, 71)
+                        .buildStructureDefinition();
             });
 
 	public MetaTileEntityManaRuneAltar(ResourceLocation metaTileEntityId) {

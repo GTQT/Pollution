@@ -34,8 +34,8 @@ public class MetaTileEntityMagicSifter extends MagicRecipeMapMultiblockControlle
                             .aisle("#XXX#", "#X#X#", "YCCCY", "YCCCY", "YEEEY")
                             .aisle("XXXXX", "X#X#X", "YCCCY", "YCCCY", "YEEEY")
                             .aisle("#X#X#", "#X#X#", "#YYY#", "#YSY#", "#YYY#")
-                            .self('S', MetaTileEntityMagicSifter.class)
-                            .casing('X', getCasingState()),
+                            .self('S', MetaTileEntityMagicSifter.class),
+                    'X', getCasingState(),
                     RecipeMaps.SIFTER_RECIPES, 9)
                     .block('Y', getCasingState2())
                     .block('C', getCasingState3())

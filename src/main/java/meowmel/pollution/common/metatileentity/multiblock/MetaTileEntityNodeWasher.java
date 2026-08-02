@@ -148,12 +148,12 @@ public class MetaTileEntityNodeWasher extends MetaTileEntityBaseWithControl {
                 .block('C', getCasingState2()).block('D', getCasingState3()).block('A', getCasingState4())
                 .tieredCasing('E', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
                 .any('#');
-        DeclarativePatternBuilder.CasingSlot casing = builder.casing('X', getCasingState());
-        return casing
-                .custom(Elements.abilities(0, 52, MultiblockAbility.INPUT_ENERGY,
-                        MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS,
-                        MultiblockAbility.IMPORT_ITEMS), 52)
-                .done()
+        return builder
+                .where('X', Elements.choice(
+                        Elements.block(getCasingState()),
+                        Elements.abilities(0, 52, MultiblockAbility.INPUT_ENERGY,
+                                MultiblockAbility.MAINTENANCE_HATCH, MultiblockAbility.IMPORT_FLUIDS,
+                                MultiblockAbility.IMPORT_ITEMS)))
                 .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 1)
                 .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                 .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 1)

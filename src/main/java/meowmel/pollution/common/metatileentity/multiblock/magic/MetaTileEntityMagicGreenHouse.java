@@ -34,8 +34,8 @@ public class MetaTileEntityMagicGreenHouse extends MagicRecipeMapMultiblockContr
                             .aisle("CCCCC", "CHHHC", "G###G", "G###G", "CHHHC", "CDDDC")
                             .aisle("CCCCC", "CPHPC", "G###G", "G###G", "CPHPC", "CDDDC")
                             .aisle("CCCCC", "CCSCC", "GGGGG", "GGGGG", "CCCCC", "CCCCC")
-                            .self('S', MetaTileEntityMagicGreenHouse.class)
-                            .casing('C', getCasingState()),
+                            .self('S', MetaTileEntityMagicGreenHouse.class),
+                    'C', getCasingState(),
                     MAGIC_GREENHOUSE_RECIPES, 32)
                     .block('P', getSecondCasingState())
                     .block('D', getCasingState4())

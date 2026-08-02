@@ -12,6 +12,7 @@ import gregtech.api.pattern.casing.DeclarativePatternBuilder;
 import gregtech.api.pattern.element.Elements;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTUtility;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -85,9 +86,11 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
      * {@code maxHatches} is the number of casing positions the original predicate could replace.
      */
     protected static DeclarativePatternBuilder configureManaRecipeCasing(
-            DeclarativePatternBuilder.CasingSlot casing, RecipeMap<?> recipeMap, int maxHatches) {
+            DeclarativePatternBuilder builder, char symbol, IBlockState casingState,
+            RecipeMap<?> recipeMap, int maxHatches) {
         List<MultiblockAbility<?>> abilities = new ArrayList<>();
         abilities.add(POMultiblockAbility.MANA_INPUT_HATCH);
+        abilities.add(POMultiblockAbility.MANA_INPUT_POOL);
         abilities.add(MultiblockAbility.INPUT_ENERGY);
         abilities.add(MultiblockAbility.MAINTENANCE_HATCH);
         abilities.add(MultiblockAbility.MUFFLER_HATCH);
@@ -96,12 +99,14 @@ public abstract class ManaMultiblockController extends MultiMapMultiblockControl
         if (recipeMap.getMaxFluidInputs() > 0) abilities.add(MultiblockAbility.IMPORT_FLUIDS);
         if (recipeMap.getMaxFluidOutputs() > 0) abilities.add(MultiblockAbility.EXPORT_FLUIDS);
 
-        return casing
-                .custom(Elements.abilities(0, maxHatches,
-                        abilities.toArray(new MultiblockAbility<?>[0])), maxHatches)
-                .done()
+        return builder
+                .where(symbol, Elements.choice(
+                        Elements.block(casingState),
+                        Elements.abilities(0, maxHatches,
+                                abilities.toArray(new MultiblockAbility<?>[0]))))
                 .abilityGroup(POMultiblockAbility.MANA_INPUT_HATCH, 1, 2,
                         POMultiblockAbility.MANA_INPUT_HATCH, MultiblockAbility.INPUT_ENERGY)
+                .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
                 .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                 .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1);
     }

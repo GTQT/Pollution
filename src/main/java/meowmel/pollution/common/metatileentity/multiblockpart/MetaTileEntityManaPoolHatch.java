@@ -56,7 +56,7 @@ public class MetaTileEntityManaPoolHatch extends MetaTileEntityMultiblockPart im
 
     @Override
     public void registerAbilities(@NotNull AbilityInstances abilityInstances) {
-        abilityInstances.add(manaContainer);
+        abilityInstances.add(this);
     }
 
     @Override
