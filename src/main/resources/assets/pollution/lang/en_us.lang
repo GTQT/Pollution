@@ -1538,6 +1538,9 @@ metaitem.living_magic_biofilm.tooltip=A biological computing medium linking bota
 metaitem.depleted_magic_core.name=Depleted Magic Core
 metaitem.depleted_magic_core.tooltip=A spent catalyst shell that can be purified and recycled into a blank catalyst core
 
+metaitem.magic_sweep.name=Magic Sweep
+metaitem.magic_sweep.tooltip.1=Ride this broom and soar through the sky
+metaitem.magic_sweep.tooltip.2=Grants §cCr§6ea§eti§ave§3Fly§9Ab§dili§5ty§7 and no damage from any source while held or worn
 # Constellation NBT state
 pollution.astral_data.unattuned=No constellation data written
 pollution.astral_data.constellation=Written constellation: %s

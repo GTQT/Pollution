@@ -179,6 +179,7 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem MAGIC_CIRCUIT_BOARD_MAX;
 
 	// Recipe-first functional carriers
+	public static MetaItem<?>.MetaValueItem MAGIC_SWEEP;
 	public static MetaItem<?>.MetaValueItem ATTUNED_CRYSTAL_WAFER;
 	public static MetaItem<?>.MetaValueItem CONSTELLATION_DATA_WAFER;
 	public static MetaItem<?>.MetaValueItem LIVING_MAGIC_BIOFILM;
