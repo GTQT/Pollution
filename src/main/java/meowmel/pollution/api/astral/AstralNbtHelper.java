@@ -1,6 +1,7 @@
 package meowmel.pollution.api.astral;
 
 import hellfirepvp.astralsorcery.common.constellation.IConstellation;
+import hellfirepvp.astralsorcery.common.constellation.ConstellationRegistry;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,6 +49,28 @@ public final class AstralNbtHelper {
     @Nullable
     public static IConstellation readConstellation(ItemStack stack) {
         if (stack == null || stack.isEmpty() || !stack.hasTagCompound()) return null;
-        return IConstellation.readFromNBT(stack.getTagCompound());
+        NBTTagCompound tag = stack.getTagCompound();
+        IConstellation constellation = IConstellation.readFromNBT(tag);
+        if (constellation != null) return constellation;
+
+        // Early data wafers and copied recipe outputs may only retain the
+        // Pollution identifier.  It is an authoritative fallback, not a
+        // client-side guess, and keeps those existing wafers usable.
+        String id = tag.getString(POLLUTION_CONSTELLATION);
+        return findConstellation(id);
+    }
+
+    /** Resolves both Astral Sorcery's unlocalized ID and this mod's simple ID. */
+    @Nullable
+    public static IConstellation findConstellation(String id) {
+        if (id == null || id.isEmpty()) return null;
+        IConstellation constellation = ConstellationRegistry.getConstellationByName(id);
+        if (constellation != null) return constellation;
+        for (IConstellation candidate : ConstellationRegistry.getAllConstellations()) {
+            if (candidate != null && candidate.getSimpleName().equalsIgnoreCase(id)) {
+                return candidate;
+            }
+        }
+        return null;
     }
 }

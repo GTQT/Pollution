@@ -25,6 +25,7 @@ import meowmel.pollution.client.textures.POTextures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -37,30 +38,36 @@ public class MetaTileEntityCelestialCalibrationMatrix extends MagicRecipeMapMult
 
     private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
             "pollution:celestial_calibration_matrix", () -> DeclarativePatternBuilder.start()
-                    .aisle("CCCCCCC", "CRRRRRC", "CRRRRRC", "CRRRRRC", "CCCCCCC")
-                    .aisle("CCCCCCC", "C     C", "C P P C", "C     C", "CCCCCCC")
-                    .aisle("CCCCCCC", "C     C", "C  A  C", "C     C", "CCCCCCC")
-                    .aisle("CCCCCCC", "C     C", "C ALA C", "C     C", "CCCCCCC")
-                    .aisle("CCCCCCC", "C     C", "C  A  C", "C     C", "CCCCCCC")
-                    .aisle("CCCCCCC", "C     C", "C P P C", "C     C", "CCCCCCC")
-                    .aisle("CCCSCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC")
+                    // 9x7x9 four-pylon calibration array. The open interior is part of the
+                    // structure rather than decoration: every '#' must be air, and L is the
+                    // unique roof aperture for the mandatory advanced astral lens hatch.
+                    .aisle("#CCCSCCC#", "##CCCCC##", "###RRR###", "####R####", "####R####", "####C####", "#########")
+                    .aisle("C#######C", "#P#####P#", "##R###R##", "###P#P###", "###R#R###", "###C#C###", "#########")
+                    .aisle("C#######C", "##P###P##", "#R#####R#", "##R###R##", "##R###R##", "##C###C##", "#########")
+                    .aisle("C#######C", "###AAA###", "R##A#A##R", "###AAA###", "R##A#A##R", "###C#C###", "#########")
+                    .aisle("C###A###C", "####P####", "R##A#A##R", "###P#P###", "R##A#A##R", "####C####", "####L####")
+                    .aisle("C#######C", "###AAA###", "R##A#A##R", "###AAA###", "R##A#A##R", "###C#C###", "#########")
+                    .aisle("C#######C", "##P###P##", "#R#####R#", "##R###R##", "##R###R##", "##C###C##", "#########")
+                    .aisle("C#######C", "#P#####P#", "##R###R##", "###P#P###", "###R#R###", "###C#C###", "#########")
+                    .aisle("#CCCCCCC#", "##CCCCC##", "###RRR###", "####R####", "####R####", "####C####", "#########")
                     .self('S', MetaTileEntityCelestialCalibrationMatrix.class)
                     .where('C', Elements.choice(Elements.block(marble(BlockMarble.MarbleBlockType.BRICKS)),
                             Elements.abilities(MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_ITEMS,
                                     MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS,
                                     MultiblockAbility.MAINTENANCE_HATCH,
-                                    POMultiblockAbility.ASTRAL_LENS_HATCH)))
+                                    POMultiblockAbility.TAROT_HATCH)))
                     .block('R', marble(BlockMarble.MarbleBlockType.RUNED))
                     .block('P', marble(BlockMarble.MarbleBlockType.PILLAR))
                     .block('A', marble(BlockMarble.MarbleBlockType.ARCH))
-                    .block('L', BlocksAS.lens.getDefaultState())
-                    .any(' ')
+                    .where('L', Elements.abilities(1, 1, POMultiblockAbility.ASTRAL_LENS_HATCH))
+                    .air('#')
                     .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 2)
                     .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 1, 2)
                     .globalAbilityLimit(MultiblockAbility.EXPORT_ITEMS, 1, 2)
                     .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 2)
                     .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                     .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 1, 1)
+                    .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                     .buildStructureDefinition());
 
     public MetaTileEntityCelestialCalibrationMatrix(ResourceLocation metaTileEntityId) {
@@ -79,6 +86,16 @@ public class MetaTileEntityCelestialCalibrationMatrix extends MagicRecipeMapMult
     @Override
     protected StructureDefinition<?> createStructureDefinition() {
         return STRUCTURE_DEFINITION;
+    }
+
+    /**
+     * The V3 structure preview is assembled in a south-facing canonical frame.
+     * State this explicitly so the controller overlay faces the observer instead
+     * of inheriting the unplaced MTE's default north-facing direction.
+     */
+    @Override
+    public EnumFacing getPreviewFrontFacing() {
+        return EnumFacing.SOUTH;
     }
 
     @Override

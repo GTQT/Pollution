@@ -68,5 +68,6 @@ public class MetaTileEntityTarotHatch extends MetaTileEntityMagicItemHatch
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.tarot_hatch.tooltip.1"));
         tooltip.add(I18n.format("pollution.machine.tarot_hatch.tooltip.2"));
+        tooltip.add(I18n.format("pollution.machine.tarot_hatch.tooltip.3"));
     }
 }

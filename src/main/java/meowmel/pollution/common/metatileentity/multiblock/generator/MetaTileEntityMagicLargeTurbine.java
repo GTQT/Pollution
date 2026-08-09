@@ -6,13 +6,18 @@ import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.casing.DeclarativePatternBuilder;
 import gregtech.api.pattern.element.Elements;
 import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
+import gregtech.api.util.KeyUtil;
 import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.api.amplification.MagicEnergyAmplification;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -29,6 +34,39 @@ public class MetaTileEntityMagicLargeTurbine extends MetaTileEntityLargeTurbine 
     public MetaTileEntityMagicLargeTurbine(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, int tier, IBlockState casingState, IBlockState gearboxState, ICubeRenderer casingRenderer, boolean hasMufflerHatch, ICubeRenderer frontOverlay) {
         super(metaTileEntityId, new MagicTurbineType(metaTileEntityId.toString(), recipeMap, tier, casingState,
                 gearboxState, casingRenderer, hasMufflerHatch, frontOverlay));
+        this.recipeMapWorkable = new MagicLargeTurbineWorkableHandler(this, tier);
+        this.recipeMapWorkable.setMaximumOverclockVoltage(GTValues.V[tier]);
+    }
+
+    @Override
+    public MetaTileEntity createMetaTileEntity(gregtech.api.metatileentity.interfaces.IGregTechTileEntity tileEntity) {
+        return new MetaTileEntityMagicLargeTurbine(metaTileEntityId, type.getRecipeMap(), type.getTier(),
+                type.getCasingState(), type.getGearboxState(), type.getCasingRenderer(), type.hasMufflerHatch(),
+                type.getFrontOverlay());
+    }
+
+    public MagicEnergyAmplification getEnergyAmplification() {
+        return MagicEnergyAmplification.read(getAbilities(POMultiblockAbility.ASTRAL_LENS_HATCH),
+                getAbilities(POMultiblockAbility.TAROT_HATCH), MagicEnergyAmplification.MachineKind.LARGE_TURBINE);
+    }
+
+    @Override
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        super.configureDisplayText(builder);
+        builder.addCustom(this::addMagicEnergyAmplification);
+    }
+
+    private void addMagicEnergyAmplification(KeyManager keyManager, UISyncer syncer) {
+        MagicEnergyAmplification amplification = getEnergyAmplification();
+        if (!syncer.syncBoolean(amplification.getAstral().hasDataWafer())) return;
+        keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
+                "魔导发电增幅：" + syncer.syncString(amplification.getAstral().getConstellation())
+                        + " / " + syncer.syncString(amplification.getTarot())
+                        + "，发电 +" + percent(syncer.syncDouble(amplification.getGenerationBonus())) + "%"));
+    }
+
+    private static int percent(double value) {
+        return (int) Math.round(value * 100.0D);
     }
 
     @Override
@@ -59,13 +97,17 @@ public class MetaTileEntityMagicLargeTurbine extends MetaTileEntityLargeTurbine 
                                     MultiblockAbility.MAINTENANCE_HATCH,
                                     MultiblockAbility.MUFFLER_HATCH,
                                     MultiblockAbility.IMPORT_FLUIDS,
-                                    MultiblockAbility.EXPORT_FLUIDS)))
+                                    MultiblockAbility.EXPORT_FLUIDS,
+                                    POMultiblockAbility.ASTRAL_LENS_HATCH,
+                                    POMultiblockAbility.TAROT_HATCH)))
                     .globalAbilityLimit(MultiblockAbility.ROTOR_HOLDER, 1, 1)
                     .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_HATCH, 1, 1)
                     .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                     .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 0, 1)
                     .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 0, 4)
                     .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 0, 4)
+                    .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                    .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                     .buildStructureDefinition();
         });
     }

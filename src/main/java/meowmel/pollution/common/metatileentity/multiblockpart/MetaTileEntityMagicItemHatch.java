@@ -29,13 +29,25 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public abstract class MetaTileEntityMagicItemHatch extends MetaTileEntityMultiblockPart {
 
     protected final GTItemStackHandler inventory;
+    private boolean focusLocked;
 
     protected MetaTileEntityMagicItemHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.inventory = new GTItemStackHandler(this, 1) {
             @Override
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                if (focusLocked) return stack;
                 return isAcceptedStack(stack) ? super.insertItem(slot, stack, simulate) : stack;
+            }
+
+            @Override
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                return focusLocked ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
+            }
+
+            @Override
+            public void setStackInSlot(int slot, ItemStack stack) {
+                if (!focusLocked) super.setStackInSlot(slot, stack);
             }
         };
     }
@@ -46,6 +58,17 @@ public abstract class MetaTileEntityMagicItemHatch extends MetaTileEntityMultibl
 
     protected ItemStack getFocusStack() {
         return inventory.getStackInSlot(0);
+    }
+
+    public void setFocusLocked(boolean locked) {
+        if (focusLocked != locked) {
+            focusLocked = locked;
+            markDirty();
+        }
+    }
+
+    public boolean isFocusLocked() {
+        return focusLocked;
     }
 
     @Override
@@ -71,13 +94,16 @@ public abstract class MetaTileEntityMagicItemHatch extends MetaTileEntityMultibl
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setTag("MagicFocus", inventory.serializeNBT());
+        data.setBoolean("MagicFocusLocked", focusLocked);
         return super.writeToNBT(data);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
+        focusLocked = false;
         inventory.deserializeNBT(data.getCompoundTag("MagicFocus"));
+        focusLocked = data.getBoolean("MagicFocusLocked");
     }
 
     @Override

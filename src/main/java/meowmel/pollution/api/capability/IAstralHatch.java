@@ -7,6 +7,13 @@ public interface IAstralHatch {
 
     int getTier();
 
+    /** A valid constellation-data wafer is required for passive machine amplification. */
+    boolean hasConstellationDataWafer();
+
+    void setFocusLocked(boolean locked);
+
+    boolean isFocusLocked();
+
     String getFocusedConstellation();
 
     boolean matches(AstralCondition condition);

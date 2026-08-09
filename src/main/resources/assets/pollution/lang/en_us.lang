@@ -1555,12 +1555,14 @@ pollution.machine.celestial_observation_array.name=Industrial Celestial Observat
 recipemap.celestial_observation.name=Industrial Celestial Observation
 pollution.machine.celestial_observation_array.tooltip.1=Reads live constellations, moon phase, starlight distribution and celestial events
 pollution.machine.celestial_observation_array.tooltip.2=Wafer NBT, lens-hatch focus and the active sky constellation must match
-pollution.machine.celestial_observation_array.tooltip.3=The Astral Lens Hatch must be placed with direct sky access
+pollution.machine.celestial_observation_array.tooltip.3=Place the advanced Astral Lens Hatch in the open dome's highest centre; a Tarot Hatch may replace any outer marble brick
 pollution.machine.celestial_calibration_matrix.name=Celestial Calibration Matrix
 recipemap.celestial_calibration.name=Celestial Calibration
+recipemap.constellation_wafer_guide.name=Constellation Data Wafer Guide
+recipemap.tarot_guide.name=Tarot Amplification Guide
 pollution.machine.celestial_calibration_matrix.tooltip.1=Writes canonical constellation NBT from a data wafer into a celestial calibration core
 pollution.machine.celestial_calibration_matrix.tooltip.2=Refuses to start unless wafer, lens hatch and live sky all match
-pollution.machine.celestial_calibration_matrix.tooltip.3=Used by ZPM+ magic circuits, astral hatches and causal components
+pollution.machine.celestial_calibration_matrix.tooltip.3=Place the advanced Astral Lens Hatch at the four-pylon array's roof centre; a Tarot Hatch may replace any outer marble brick
 
 # Industrial Starlight Infuser
 pollution.machine.industrial_starlight_infuser.name=Industrial Starlight Infuser
@@ -1575,3 +1577,4 @@ recipemap.industrial_lightwell_recipes.name=Industrial Lightwell Liquefaction
 pollution.machine.industrial_lightwell.tooltip.1=Automatically imports Astral Sorcery Lightwell catalyst recipes
 pollution.machine.industrial_lightwell.tooltip.2=Produces five times an ideal Lightwell's output every 200 ticks
 pollution.machine.industrial_lightwell.tooltip.3=Catalysts are retained but may shatter with the standard Lightwell probability for the same work
+pollution.magic_energy_amplification=Magic energy amplification: %s / %s, capacity +%s%%, transfer +%s%%, generation +%s%%

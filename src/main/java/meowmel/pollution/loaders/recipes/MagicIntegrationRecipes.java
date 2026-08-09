@@ -19,6 +19,7 @@ import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.astral.AstralNbtHelper;
+import meowmel.pollution.api.amplification.MagicProcessTag;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
@@ -180,7 +181,7 @@ public final class MagicIntegrationRecipes {
     }
 
     private static void registerStarmetalAlchemy() {
-        PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+        SimpleRecipeBuilder stardust = PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust, Iron)
                 .input(OrePrefix.dust, PollutionMaterials.OpticalGradeAquamarine)
                 .fluidInputs(PollutionMaterials.InfusedMagic.getFluid(144))
@@ -188,10 +189,12 @@ public final class MagicIntegrationRecipes {
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
                 .outputs(ItemCraftingComponent.MetaType.STARDUST.asStack())
                 .duration(200)
-                .EUt(VA[IV])
-                .buildAndRegister();
+                .EUt(VA[IV]);
+        MagicRecipeProperties.processTags(stardust, MagicProcessTag.ORE, MagicProcessTag.MINERAL_ENRICHMENT,
+                MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.MULTI_MAGIC, MagicProcessTag.CATALYTIC);
+        stardust.buildAndRegister();
 
-        PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+        SimpleRecipeBuilder starmetal = PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
                 .input(OrePrefix.ingot, Iron)
                 .input(OrePrefix.dust, PollutionMaterials.OpticalGradeAquamarine)
                 .fluidInputs(PollutionMaterials.InfusedMagic.getFluid(144))
@@ -199,12 +202,14 @@ public final class MagicIntegrationRecipes {
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
                 .outputs(ItemCraftingComponent.MetaType.STARMETAL_INGOT.asStack())
                 .duration(200)
-                .EUt(VA[IV])
-                .buildAndRegister();
+                .EUt(VA[IV]);
+        MagicRecipeProperties.processTags(starmetal, MagicProcessTag.ORE, MagicProcessTag.MINERAL_ENRICHMENT,
+                MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.MULTI_MAGIC, MagicProcessTag.CATALYTIC);
+        starmetal.buildAndRegister();
     }
 
     private static void registerRockCrystalCatalysis() {
-        PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
+        SimpleRecipeBuilder rockCrystal = PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
                 .input(ModBlocks.livingrock)
                 .inputs(new ItemStack(ItemsAS.shiftingStar))
                 .notConsumable(PollutionMetaItems.INTEGRATECORE.getStackForm())
@@ -212,8 +217,10 @@ public final class MagicIntegrationRecipes {
                 .notConsumable(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getStackForm())
                 .outputs(BlockCustomOre.OreType.ROCK_CRYSTAL.asStack())
                 .duration(600)
-                .EUt(VA[LuV])
-                .buildAndRegister();
+                .EUt(VA[LuV]);
+        MagicRecipeProperties.processTags(rockCrystal, MagicProcessTag.ORE, MagicProcessTag.MINERAL_ENRICHMENT,
+                MagicProcessTag.CATALYTIC, MagicProcessTag.HIDDEN_RITUAL, MagicProcessTag.STRUCTURAL_CONTROL);
+        rockCrystal.buildAndRegister();
     }
 
     private static void registerBloodAndBotaniaIntermediates() {
@@ -286,6 +293,8 @@ public final class MagicIntegrationRecipes {
                     .EUt(VA[LuV]);
             MagicRecipeProperties.astralCondition(builder,
                     AstralCondition.night(constellation.getSimpleName(), 0.10F));
+            MagicRecipeProperties.processTags(builder, MagicProcessTag.PRECISION, MagicProcessTag.TIMED,
+                    MagicProcessTag.MULTI_MAGIC, MagicProcessTag.INFUSION);
             builder.buildAndRegister();
             constellationRecipes++;
         }
@@ -368,6 +377,53 @@ public final class MagicIntegrationRecipes {
                 .duration(100)
                 .EUt(VA[MV])
                 .buildAndRegister();
+
+        // The card image is not a cosmetic crafting result: each Major Arcana
+        // is a written magic-program used by the Tarot Hatch. The circuit
+        // setting identifies the arcana while the emblem prevents all cards
+        // from collapsing into a single interchangeable blank-card recipe.
+        registerTarotCards();
+    }
+
+    private static void registerTarotCards() {
+        registerTarotCard(1, PollutionMetaItems.TAROT_THE_FOOL, new ItemStack(Items.ENDER_PEARL));
+        registerTarotCard(2, PollutionMetaItems.TAROT_THE_MAGICIAN, new ItemStack(ItemsTC.salisMundus));
+        registerTarotCard(3, PollutionMetaItems.TAROT_THE_HIGH_PRIESTESS, new ItemStack(Items.ENDER_EYE));
+        registerTarotCard(4, PollutionMetaItems.TAROT_THE_EMPRESS, new ItemStack(Items.GOLDEN_APPLE));
+        registerTarotCard(5, PollutionMetaItems.TAROT_THE_EMPEROR, new ItemStack(Items.IRON_INGOT));
+        registerTarotCard(6, PollutionMetaItems.TAROT_THE_HIGHOPHANT, new ItemStack(Items.BOOK));
+        registerTarotCard(7, PollutionMetaItems.TAROT_THE_LOVERS, new ItemStack(Items.DYE, 1, 1));
+        registerTarotCard(8, PollutionMetaItems.TAROT_THE_CHARIOT, new ItemStack(Items.MINECART));
+        registerTarotCard(9, PollutionMetaItems.TAROT_THE_STRENGTH, new ItemStack(Items.BLAZE_ROD));
+        registerTarotCard(10, PollutionMetaItems.TAROT_THE_HERMIT, new ItemStack(Items.GOLD_NUGGET));
+        registerTarotCard(11, PollutionMetaItems.TAROT_THE_WHEEL_OF_FORTUNE, new ItemStack(Items.CLOCK));
+        registerTarotCard(12, PollutionMetaItems.TAROT_JUSTICE, new ItemStack(Items.IRON_SWORD));
+        registerTarotCard(13, PollutionMetaItems.TAROT_THE_HANGED_MAN, new ItemStack(Items.LEAD));
+        registerTarotCard(14, PollutionMetaItems.TAROT_DEATH, new ItemStack(Items.BONE));
+        registerTarotCard(15, PollutionMetaItems.TAROT_TEMPERANCE, new ItemStack(Items.GLASS_BOTTLE));
+        registerTarotCard(16, PollutionMetaItems.TAROT_THE_DEVIL, new ItemStack(Items.MAGMA_CREAM));
+        registerTarotCard(17, PollutionMetaItems.TAROT_THE_TOWER, new ItemStack(Blocks.TNT));
+        registerTarotCard(18, PollutionMetaItems.TAROT_THE_STAR, new ItemStack(Items.NETHER_STAR));
+        registerTarotCard(19, PollutionMetaItems.TAROT_THE_MOON, new ItemStack(Items.GHAST_TEAR));
+        registerTarotCard(20, PollutionMetaItems.TAROT_THE_SUN, new ItemStack(Items.GLOWSTONE_DUST));
+        registerTarotCard(21, PollutionMetaItems.TAROT_JUDGEMENT, new ItemStack(Items.TOTEM_OF_UNDYING));
+        registerTarotCard(22, PollutionMetaItems.TAROT_THE_WORLD, new ItemStack(Items.DRAGON_BREATH));
+    }
+
+    private static void registerTarotCard(int circuit, gregtech.api.items.metaitem.MetaItem<?>.MetaValueItem card,
+                                          ItemStack emblem) {
+        SimpleRecipeBuilder builder = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
+                .circuitMeta(circuit)
+                .input(PollutionMetaItems.BLANK_TAROT_CARD)
+                .input(PollutionMetaItems.ARCANE_INK_CAPSULE)
+                .input(OrePrefix.dust, PollutionMaterials.Salismundus)
+                .inputs(emblem)
+                .fluidInputs(PollutionMaterials.InfusedMagic.getFluid(144))
+                .output(card)
+                .duration(200)
+                .EUt(VA[MV]);
+        MagicRecipeProperties.processTags(builder, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.INFUSION);
+        builder.buildAndRegister();
     }
 
     private static void registerCircuitBoards() {
@@ -497,6 +553,8 @@ public final class MagicIntegrationRecipes {
                     .EUt(VA[LuV]);
             MagicRecipeProperties.astralCondition(builder,
                     AstralCondition.night(constellation.getSimpleName(), 0.10F));
+            MagicRecipeProperties.processTags(builder, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC);
             builder.buildAndRegister();
         }
     }
@@ -519,6 +577,8 @@ public final class MagicIntegrationRecipes {
                     .EUt(VA[ZPM]);
             MagicRecipeProperties.astralCondition(builder,
                     AstralCondition.night(constellation.getSimpleName(), 0.15F));
+            MagicRecipeProperties.processTags(builder, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC);
             builder.buildAndRegister();
         }
     }
@@ -545,6 +605,8 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV, 4)
                     .duration(1200).EUt(VA[UV]);
             MagicRecipeProperties.astralCondition(uhv, condition);
+            MagicRecipeProperties.processTags(uhv, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS);
             uhv.buildAndRegister();
 
             SimpleRecipeBuilder uev = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
@@ -562,6 +624,10 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV, 4)
                     .duration(1400).EUt(VA[UHV]);
             MagicRecipeProperties.astralCondition(uev, condition);
+            MagicRecipeProperties.processTags(uev, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS,
+                    MagicProcessTag.CONSUMABLE_CATALYST);
+            MagicRecipeProperties.consumableCatalystInputs(uev, 3);
             uev.buildAndRegister();
 
             SimpleRecipeBuilder uiv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
@@ -579,6 +645,8 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV, 4)
                     .duration(1600).EUt(VA[UEV]);
             MagicRecipeProperties.astralCondition(uiv, condition);
+            MagicRecipeProperties.processTags(uiv, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS);
             uiv.buildAndRegister();
 
             SimpleRecipeBuilder uxv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
@@ -596,6 +664,8 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV, 4)
                     .duration(1800).EUt(VA[UIV]);
             MagicRecipeProperties.astralCondition(uxv, condition);
+            MagicRecipeProperties.processTags(uxv, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS);
             uxv.buildAndRegister();
 
             SimpleRecipeBuilder opv = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
@@ -613,6 +683,10 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV, 4)
                     .duration(2000).EUt(VA[UXV]);
             MagicRecipeProperties.astralCondition(opv, condition);
+            MagicRecipeProperties.processTags(opv, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS,
+                    MagicProcessTag.CONSUMABLE_CATALYST);
+            MagicRecipeProperties.consumableCatalystInputs(opv, 3);
             opv.buildAndRegister();
 
             SimpleRecipeBuilder max = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
@@ -630,6 +704,10 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MAX, 4)
                     .duration(2400).EUt(VA[OpV]);
             MagicRecipeProperties.astralCondition(max, condition);
+            MagicRecipeProperties.processTags(max, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS,
+                    MagicProcessTag.CONSUMABLE_CATALYST);
+            MagicRecipeProperties.consumableCatalystInputs(max, 3);
             max.buildAndRegister();
         }
     }
@@ -727,6 +805,10 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
                     .duration(1800).EUt(VA[UHV]);
             MagicRecipeProperties.astralCondition(primordial, condition);
+            MagicRecipeProperties.processTags(primordial, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.MAGIC_CONVERSION, MagicProcessTag.THREE_MAGIC_SYSTEMS,
+                    MagicProcessTag.CONSUMABLE_CATALYST);
+            MagicRecipeProperties.consumableCatalystInputs(primordial, 2);
             primordial.buildAndRegister();
 
             SimpleRecipeBuilder causality = PORecipeMaps.MAGIC_ASSEMBLER_RECIPES.recipeBuilder()
@@ -742,6 +824,9 @@ public final class MagicIntegrationRecipes {
                     .output(PollutionMetaItems.CAUSALITY_CATALYST)
                     .duration(2200).EUt(VA[UIV]);
             MagicRecipeProperties.astralCondition(causality, condition);
+            MagicRecipeProperties.processTags(causality, MagicProcessTag.PRECISION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.HIDDEN_RITUAL, MagicProcessTag.STRUCTURAL_CONTROL,
+                    MagicProcessTag.THREE_MAGIC_SYSTEMS);
             causality.buildAndRegister();
         }
     }
@@ -764,6 +849,9 @@ public final class MagicIntegrationRecipes {
             MagicRecipeProperties.infusedFluidPerTick(observation, 0);
             MagicRecipeProperties.astralCondition(observation,
                     AstralCondition.night(constellation.getSimpleName(), 0.10F));
+            MagicRecipeProperties.celestialTarget(observation, constellation.getSimpleName());
+            MagicRecipeProperties.processTags(observation, MagicProcessTag.PRECISION, MagicProcessTag.TIMED,
+                    MagicProcessTag.INFUSION, MagicProcessTag.EXPERIMENTAL, MagicProcessTag.HIDDEN_RITUAL);
             observation.buildAndRegister();
 
             SimpleRecipeBuilder calibration = PORecipeMaps.CELESTIAL_CALIBRATION_RECIPES.recipeBuilder()
@@ -777,6 +865,10 @@ public final class MagicIntegrationRecipes {
             MagicRecipeProperties.infusedFluidPerTick(calibration, 0);
             MagicRecipeProperties.astralCondition(calibration,
                     AstralCondition.night(constellation.getSimpleName(), 0.15F));
+            MagicRecipeProperties.celestialTarget(calibration, constellation.getSimpleName());
+            MagicRecipeProperties.processTags(calibration, MagicProcessTag.PRECISION, MagicProcessTag.TIMED,
+                    MagicProcessTag.CATALYTIC, MagicProcessTag.INFUSION, MagicProcessTag.MULTI_MAGIC,
+                    MagicProcessTag.HIDDEN_RITUAL, MagicProcessTag.STRUCTURAL_CONTROL);
             calibration.buildAndRegister();
         }
 

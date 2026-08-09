@@ -60,12 +60,14 @@ public final class MagicHatchRecipes {
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(MetaItems.BATTERY_HULL_LV)
                 .input(MetaItems.SENSOR_LV)
-                .input(PollutionMetaItems.TAROT_THE_FOOL)
-                .input(PollutionMetaItems.TAROT_THE_WHEEL_OF_FORTUNE)
+                .input(MetaItems.FIELD_GENERATOR_LV)
+                .input(PollutionMetaItems.BLANK_TAROT_CARD)
+                .input(PollutionMetaItems.ARCANE_INK_CAPSULE)
+                .input(thaumcraft.api.items.ItemsTC.salisMundus)
                 .inputs(circuit)
                 .output(PollutionMetaTileEntities.TAROT_HATCH)
-                .duration(200)
-                .EUt(GTValues.VA[GTValues.LV])
+                .duration(240)
+                .EUt(GTValues.VA[GTValues.MV])
                 .buildAndRegister();
     }
 

@@ -27,14 +27,19 @@ public class MagicHeatingCoilRecipeLogic extends MagicMultiblockRecipeLogic {
         super.modifyOverclockPre(ocParams, storage);
         // coil EU/t discount
         ocParams.setEut(OverclockingLogic.applyCoilEUtDiscount(ocParams.eut(),
-                ((IHeatingCoil) metaTileEntity).getCurrentTemperature(),
+                getEffectiveTemperature(),
                 storage.get(TemperatureProperty.getInstance(), 0)));
     }
 
     @Override
     protected void runOverclockingLogic(@NotNull OCParams ocParams, @NotNull OCResult ocResult,
                                         @NotNull RecipePropertyStorage propertyStorage, long maxVoltage) {
-        heatingCoilOC(ocParams, ocResult, maxVoltage, ((IHeatingCoil) metaTileEntity).getCurrentTemperature(),
+        heatingCoilOC(ocParams, ocResult, maxVoltage, getEffectiveTemperature(),
                 propertyStorage.get(TemperatureProperty.getInstance(), 0));
+    }
+
+    private int getEffectiveTemperature() {
+        return ((IHeatingCoil) metaTileEntity).getCurrentTemperature()
+                + getAmplificationBeingPrepared().getFurnaceTemperatureBonus();
     }
 }

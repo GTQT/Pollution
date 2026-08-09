@@ -140,7 +140,10 @@ public class MetaTileEntityMagicAlloyBlastSmelter extends MagicRecipeMapMultiblo
     @Override
     public boolean checkRecipe(@NotNull Recipe recipe, boolean consumeIfSuccess) {
         int recipeTemp = recipe.getProperty(TemperatureProperty.getInstance(), 0);
-        if(this.blastFurnaceTemperature >= recipeTemp)
+        int effectiveTemperature = this.blastFurnaceTemperature
+                + getMagicAmplificationPreview(recipe, recipeMapWorkable.getParallelLimit() == 1)
+                .getFurnaceTemperatureBonus();
+        if(effectiveTemperature >= recipeTemp)
             return true;
         recipeMapWorkable.setWhyFailed("线圈温度过低，配方需求至少 "+ recipeTemp + " K温度");
         return false;

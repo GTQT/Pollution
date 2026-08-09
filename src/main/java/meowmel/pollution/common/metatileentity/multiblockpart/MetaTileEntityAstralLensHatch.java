@@ -16,6 +16,7 @@ import hellfirepvp.astralsorcery.common.constellation.distribution.WorldSkyHandl
 import hellfirepvp.astralsorcery.common.item.ItemConstellationPaper;
 import hellfirepvp.astralsorcery.common.item.crystal.base.ItemTunedCrystalBase;
 import meowmel.pollution.api.capability.IAstralHatch;
+import meowmel.pollution.api.astral.AstralNbtHelper;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.client.textures.POTextures;
@@ -68,7 +69,7 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
         }
         if (ItemStack.areItemsEqual(stack, PollutionMetaItems.CONSTELLATION_DATA_WAFER.getStackForm())
                 && stack.hasTagCompound()) {
-            return IConstellation.readFromNBT(stack.getTagCompound());
+            return AstralNbtHelper.readConstellation(stack);
         }
         return null;
     }
@@ -77,6 +78,13 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
     public String getFocusedConstellation() {
         IConstellation constellation = getConstellation(getFocusStack());
         return constellation == null ? "" : constellation.getSimpleName().toLowerCase(Locale.ROOT);
+    }
+
+    @Override
+    public boolean hasConstellationDataWafer() {
+        ItemStack stack = getFocusStack();
+        return ItemStack.areItemsEqual(stack, PollutionMetaItems.CONSTELLATION_DATA_WAFER.getStackForm())
+                && getConstellation(stack) != null;
     }
 
     @Nullable

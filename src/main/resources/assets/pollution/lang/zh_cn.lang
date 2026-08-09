@@ -4,70 +4,70 @@ tile.pollution.rainbow_sapling.name=魔法彩虹树苗
 
 #材料注册
 metaitem.the_world.name=世界（正位）
-metaitem.the_world.tooltip=愿您寰宇尽握
+metaitem.the_world.tooltip=三系或多魔法工序：时间缩短10%%、介质-10%%、并行+1
 
 metaitem.the_judgement.name=审判（正位）
-metaitem.the_judgement.tooltip=愿您明辨是非
+metaitem.the_judgement.tooltip=回收工序：产出+25%%
 
 metaitem.the_sun.name=太阳（正位）
-metaitem.the_sun.tooltip=愿您启示加身
+metaitem.the_sun.tooltip=白天且日照/净化/无菌/光化工序：时间缩短20%%、产出+10%%
 
 metaitem.the_moon.name=月亮（正位）
-metaitem.the_moon.tooltip=愿您失而复得
+metaitem.the_moon.tooltip=夜间炼金工序：产出+15%%
 
 metaitem.the_star.name=星星（正位）
-metaitem.the_star.tooltip=愿您心想事成
+metaitem.the_star.tooltip=星辉晶圆最终强度×1.25，晶圆强度上限仍为50%%
 
 metaitem.the_tower.name=塔（正位）
-metaitem.the_tower.tooltip=愿您劫后余生
+metaitem.the_tower.tooltip=毁灭仪式工序：时间缩短10%%、并行+2
 
 metaitem.the_devil.name=恶魔（正位）
-metaitem.the_devil.tooltip=愿您多钱善贾
+metaitem.the_devil.tooltip=危险工序：产出+20%%
 
 metaitem.the_temperance.name=节制（正位）
-metaitem.the_temperance.tooltip=愿您内心纯洁
+metaitem.the_temperance.tooltip=多魔法工序：介质消耗-10%%
 
 metaitem.the_death.name=死亡（正位）
-metaitem.the_death.tooltip=愿您死得其所
+metaitem.the_death.tooltip=回收工序：产出+25%%
 
 metaitem.the_hanged_man.name=倒吊人（正位）
-metaitem.the_hanged_man.tooltip=愿您寻得启示
+metaitem.the_hanged_man.tooltip=基础时长≥400tick：EU-25%%、介质消耗-20%%
 
 metaitem.the_justice.name=正义（正位）
-metaitem.the_justice.tooltip=愿您平步青云
+metaitem.the_justice.tooltip=概率产物工序：概率额外重判+50%%
 
 metaitem.the_wheel_of_fortune.name=命运之轮（正位）
-metaitem.the_wheel_of_fortune.tooltip=愿您逢凶化吉
+metaitem.the_wheel_of_fortune.tooltip=概率产物工序：概率额外重判设为100%%
 
 metaitem.the_hermit.name=隐者（正位）
-metaitem.the_hermit.tooltip=愿您枕石漱流
+metaitem.the_hermit.tooltip=仅单并行：EU-20%%、催化保护+25%%
 
 metaitem.the_strength.name=力量（正位）
-metaitem.the_strength.tooltip=愿您所向披靡
+metaitem.the_strength.tooltip=任意工序：时间缩短10%%、并行+1
 
 metaitem.the_chariot.name=战车（正位）
-metaitem.the_chariot.tooltip=愿您无往不利
+metaitem.the_chariot.tooltip=连续生产层数×5%%时间缩短，最多计5层
 
 metaitem.the_lovers.name=恋人（正位）
-metaitem.the_lovers.tooltip=愿您健康繁盛
+metaitem.the_lovers.tooltip=双材料工序：产出+10%%
 
 metaitem.the_highophant.name=主教（正位）
-metaitem.the_highophant.tooltip=愿您桃李成荫
+metaitem.the_highophant.tooltip=注魔工序：介质消耗-15%%
 
 metaitem.the_emperor.name=皇帝（正位）
-metaitem.the_emperor.tooltip=愿您抱头蹲防
+metaitem.the_emperor.tooltip=结构控制工序：并行+1、催化保护+10%%
 
 metaitem.the_empress.name=皇后（正位）
-metaitem.the_empress.tooltip=愿您足智多谋
+metaitem.the_empress.tooltip=生物/植物/细胞工序：产出+25%%
 
 metaitem.the_high_priestess.name=女祭司（正位）
-metaitem.the_high_priestess.tooltip=愿您知行合一
+metaitem.the_high_priestess.tooltip=隐藏仪式工序：介质消耗-10%%，并作为授权牌
 
 metaitem.the_magician.name=魔术师（正位）
-metaitem.the_magician.tooltip=愿您足智多谋
+metaitem.the_magician.tooltip=魔法转化/多魔法工序：介质消耗-10%%，并作为授权牌
 
 metaitem.the_fool.name=愚者（正位）
-metaitem.the_fool.tooltip=愿您归有所处
+metaitem.the_fool.tooltip=实验工序：概率额外重判+10%%，并作为授权牌
 
 metaitem.test_item.name=papa测试物品
 metaitem.test_item.tooltip=这是一个tooltip
@@ -1486,6 +1486,7 @@ pollution.machine.astral_lens_hatch_advanced.tooltip.1=插入带星座NBT的数�
 pollution.machine.astral_lens_hatch_advanced.tooltip.2=LuV级天象授权仓，必须露天放置并实时校验天空
 pollution.machine.tarot_hatch.tooltip.1=插入一张大阿卡纳塔罗牌以解锁对应仪式配方
 pollution.machine.tarot_hatch.tooltip.2=塔罗牌仅作为授权媒介，不会被配方消耗
+pollution.machine.tarot_hatch.tooltip.3=装配消耗空白塔罗牌、奥术墨液胶囊与萨利斯蒙杜斯；所有魔导机器最多安装一个
 pollution.machine.infused_fluid_hatch.name=源质流体输入仓
 pollution.machine.infused_fluid_hatch.tooltip=储存并向魔导机器提供配方所需的源质流体
 pollution.machine.infused_fluid_hatch.lv.name=源质流体输入仓（§7LV§r）
@@ -1562,12 +1563,14 @@ pollution.machine.celestial_observation_array.name=工业天象观测阵列
 recipemap.celestial_observation.name=工业天象观测
 pollution.machine.celestial_observation_array.tooltip.1=读取实时星座、月相、星能分布和天象事件
 pollution.machine.celestial_observation_array.tooltip.2=晶圆、透镜仓焦点与当前活跃星座必须一致
-pollution.machine.celestial_observation_array.tooltip.3=星辉透镜仓必须安装在可直接看见天空的位置
+pollution.machine.celestial_observation_array.tooltip.3=高级星辉透镜仓必须放在露天拱顶的最高中心位；塔罗仓可替换任意外圈大理石砖
 pollution.machine.celestial_calibration_matrix.name=天体校准矩阵
 recipemap.celestial_calibration.name=天体校准
+recipemap.constellation_wafer_guide.name=星座数据晶圆说明
+recipemap.tarot_guide.name=塔罗牌增幅说明
 pollution.machine.celestial_calibration_matrix.tooltip.1=将星座数据晶圆的原生NBT写入天体校准核心
 pollution.machine.celestial_calibration_matrix.tooltip.2=数据晶圆、透镜仓与实时天空不一致时拒绝启动
-pollution.machine.celestial_calibration_matrix.tooltip.3=用于ZPM以上魔法电路、星辉仓和因果组件
+pollution.machine.celestial_calibration_matrix.tooltip.3=四向校准塔中心顶部必须放置高级星辉透镜仓；塔罗仓可替换任意外圈大理石砖
 
 # 工业星能聚合器（Starlight Infuser）
 pollution.machine.industrial_starlight_infuser.name=工业星能聚合器
@@ -1582,3 +1585,4 @@ recipemap.industrial_lightwell_recipes.name=工业聚星缸产液
 pollution.machine.industrial_lightwell.tooltip.1=自动导入星辉魔法聚星缸的催化物产液配方
 pollution.machine.industrial_lightwell.tooltip.2=每 200 tick 产出普通聚星缸理想产量的 5 倍
 pollution.machine.industrial_lightwell.tooltip.3=催化物不会立即消耗，但会按普通聚星缸同等工作量的概率碎裂
+pollution.magic_energy_amplification=魔导储能增幅：%s / %s，容量 +%s%%，传输 +%s%%，发电 +%s%%
