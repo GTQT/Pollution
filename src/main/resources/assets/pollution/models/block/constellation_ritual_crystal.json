@@ -1,0 +1,50 @@
+{
+  "parent": "block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "crystal": "astralsorcery:models/c_crystal_tex_colorless",
+    "particle": "astralsorcery:blocks/rock_crystal"
+  },
+  "elements": [
+    {
+      "from": [6.5, 0, 6.5],
+      "to": [9.5, 3, 9.5],
+      "rotation": {"origin": [8, 1.5, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#crystal"}, "up": {"texture": "#crystal"},
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "west": {"texture": "#crystal"}, "east": {"texture": "#crystal"}
+      }
+    },
+    {
+      "from": [5, 2.5, 5],
+      "to": [11, 7, 11],
+      "rotation": {"origin": [8, 4.75, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#crystal"}, "up": {"texture": "#crystal"},
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "west": {"texture": "#crystal"}, "east": {"texture": "#crystal"}
+      }
+    },
+    {
+      "from": [5.75, 7, 5.75],
+      "to": [10.25, 13.5, 10.25],
+      "rotation": {"origin": [8, 10.25, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#crystal"}, "up": {"texture": "#crystal"},
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "west": {"texture": "#crystal"}, "east": {"texture": "#crystal"}
+      }
+    },
+    {
+      "from": [7, 13, 7],
+      "to": [9, 16, 9],
+      "rotation": {"origin": [8, 14.5, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#crystal"}, "up": {"texture": "#crystal"},
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "west": {"texture": "#crystal"}, "east": {"texture": "#crystal"}
+      }
+    }
+  ]
+}

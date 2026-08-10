@@ -16,6 +16,7 @@ public class RecipeManger {
         FleshTreeRecipes.init();
         MaterialsLine.init();
         MagicIntegrationRecipes.init();
+        ConstellationTowerRecipes.init();
         MagicGuideRecipes.init();
         ForgeAlchemyRecipes.init();
         CircuitManager.init();

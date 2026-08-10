@@ -18,7 +18,6 @@ public final class POMultiblockAbility {
     public static final MultiblockAbility<IBloodMagicHatch> BLOOD_MAGIC_HATCH = new MultiblockAbility<>("blood_magic_hatch", IBloodMagicHatch.class);
     public static final MultiblockAbility<IAstralHatch> ASTRAL_LENS_HATCH = new MultiblockAbility<>("astral_lens_hatch", IAstralHatch.class);
     public static final MultiblockAbility<ITarotHatch> TAROT_HATCH = new MultiblockAbility<>("tarot_hatch", ITarotHatch.class);
-
     // 依旧属于电力系统部分，例如配方类多方块，发电机
     // 可接受魔力作为输入的能源仓，本质上是能源仓
     public static final MultiblockAbility<IEnergyContainer> MANA_INPUT_HATCH = new MultiblockAbility<>("mana_input_hatch", IEnergyContainer.class);

@@ -24,6 +24,8 @@ import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityI
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialObservationArray;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialCalibrationMatrix;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialCrystalGrowthArray;
+import meowmel.pollution.common.metatileentity.multiblock.astral.ConstellationTowerDefinition;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityConstellationTower;
 import meowmel.pollution.common.metatileentity.multiblock.bot.*;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicLargeTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicMegaTurbine;
@@ -161,6 +163,8 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
     public static MetaTileEntityCelestialCalibrationMatrix CELESTIAL_CALIBRATION_MATRIX;
     public static MetaTileEntityCelestialCrystalGrowthArray CELESTIAL_CRYSTAL_GROWTH_ARRAY;
+    public static final MetaTileEntityConstellationTower[] CONSTELLATION_TOWERS =
+            new MetaTileEntityConstellationTower[ConstellationTowerDefinition.values().length];
 
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
@@ -330,6 +334,12 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityCelestialCalibrationMatrix(PollutionID("celestial_calibration_matrix")));
         CELESTIAL_CRYSTAL_GROWTH_ARRAY = registerMetaTileEntity(352,
                 new MetaTileEntityCelestialCrystalGrowthArray(PollutionID("celestial_crystal_growth_array")));
+        ConstellationTowerDefinition[] constellationTowers = ConstellationTowerDefinition.values();
+        for (int i = 0; i < constellationTowers.length; i++) {
+            ConstellationTowerDefinition definition = constellationTowers[i];
+            CONSTELLATION_TOWERS[i] = registerMetaTileEntity(353 + i,
+                    new MetaTileEntityConstellationTower(PollutionID(definition.getControllerPath()), definition));
+        }
 
         //仓口
         for (int i = 0; i < VIS_HATCH.length; i++) {
@@ -353,8 +363,6 @@ public class PollutionMetaTileEntities {
         }
         ASTRAL_LENS_HATCH_ADVANCED = registerMetaTileEntity(777,
                 new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch_advanced"), GTValues.LuV));
-
-
         // 普通
         for (int i = 0; i < MANA_INPUT_HATCH_1A.length; i++) {
             int tier = GTValues.LV + i;

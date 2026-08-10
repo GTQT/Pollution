@@ -23,6 +23,7 @@ public class PollutionMetaBlocks {
 	public static POManaPlate MANA_PLATE;
 	public static POHyper HYPER;
 	public static POComputerCasing COMPUTER_CASING;
+	public static POConstellationCrystal CONSTELLATION_CRYSTAL;
 
 	private PollutionMetaBlocks() {
 	}
@@ -56,6 +57,9 @@ public class PollutionMetaBlocks {
 
 		COMPUTER_CASING=new POComputerCasing();
 		COMPUTER_CASING.setRegistryName("bm_computer_casing");
+
+		CONSTELLATION_CRYSTAL = new POConstellationCrystal();
+		CONSTELLATION_CRYSTAL.setRegistryName("constellation_crystal");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -70,6 +74,7 @@ public class PollutionMetaBlocks {
 		registerItemModel(MANA_PLATE);
 		registerItemModel(HYPER);
 		registerItemModel(COMPUTER_CASING);
+		registerItemModel(CONSTELLATION_CRYSTAL);
 	}
 
 	@SideOnly(Side.CLIENT)

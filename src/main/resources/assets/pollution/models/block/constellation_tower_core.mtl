@@ -1,0 +1,4 @@
+newmtl crystal
+Kd 1.000 1.000 1.000
+d 1.000
+map_Kd #texture0

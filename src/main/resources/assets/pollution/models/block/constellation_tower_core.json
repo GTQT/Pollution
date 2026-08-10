@@ -1,0 +1,61 @@
+{
+  "parent": "block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "shell": "astralsorcery:models/crystal_big_blue",
+    "glow": "astralsorcery:models/c_crystal_tex_colorless",
+    "particle": "astralsorcery:blocks/crystal/celestial_cluster_core"
+  },
+  "elements": [
+    {
+      "from": [4, 4, 4],
+      "to": [12, 12, 12],
+      "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#shell"}, "up": {"texture": "#shell"},
+        "north": {"texture": "#shell"}, "south": {"texture": "#shell"},
+        "west": {"texture": "#shell"}, "east": {"texture": "#shell"}
+      }
+    },
+    {
+      "from": [5, 3, 5],
+      "to": [11, 13, 11],
+      "rotation": {"origin": [8, 8, 8], "axis": "x", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#shell"}, "up": {"texture": "#shell"},
+        "north": {"texture": "#shell"}, "south": {"texture": "#shell"},
+        "west": {"texture": "#shell"}, "east": {"texture": "#shell"}
+      }
+    },
+    {
+      "from": [5, 5, 3],
+      "to": [11, 11, 13],
+      "rotation": {"origin": [8, 8, 8], "axis": "z", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#shell"}, "up": {"texture": "#shell"},
+        "north": {"texture": "#shell"}, "south": {"texture": "#shell"},
+        "west": {"texture": "#shell"}, "east": {"texture": "#shell"}
+      }
+    },
+    {
+      "from": [3, 6, 3],
+      "to": [13, 10, 13],
+      "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#glow"}, "up": {"texture": "#glow"},
+        "north": {"texture": "#glow"}, "south": {"texture": "#glow"},
+        "west": {"texture": "#glow"}, "east": {"texture": "#glow"}
+      }
+    },
+    {
+      "from": [6, 6, 6],
+      "to": [10, 10, 10],
+      "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true},
+      "faces": {
+        "down": {"texture": "#glow"}, "up": {"texture": "#glow"},
+        "north": {"texture": "#glow"}, "south": {"texture": "#glow"},
+        "west": {"texture": "#glow"}, "east": {"texture": "#glow"}
+      }
+    }
+  ]
+}
