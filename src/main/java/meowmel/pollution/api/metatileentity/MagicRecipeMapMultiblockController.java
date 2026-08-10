@@ -23,6 +23,7 @@ import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
 import meowmel.pollution.api.amplification.AstralAmplifierSnapshot;
 import meowmel.pollution.api.amplification.MagicAmplificationResult;
 import meowmel.pollution.api.amplification.MagicAmplificationEngine;
+import meowmel.pollution.api.amplification.MagicJeiHintResolver;
 import meowmel.pollution.api.amplification.MagicProcessTag;
 import meowmel.pollution.api.amplification.MagicMachineProfileRegistry;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
@@ -292,38 +293,82 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
                                         : astralLensHatch.getFocusedDistribution() * 100.0F))));
             }
             if (syncer.syncBoolean(astralLensHatch != null && astralLensHatch.hasConstellationDataWafer())) {
-                int baseStrength = astralLensHatch != null && astralLensHatch.getTier() >= gregtech.api.GTValues.LuV ? 30 : 10;
+                int baseStrength = (int) Math.round(AstralAmplifierSnapshot.from(astralLensHatch)
+                        .getBaseStrength() * 100.0D);
                 boolean skyMatched = syncer.syncBoolean(astralLensHatch != null && astralLensHatch.isSkyVisible()
                         && astralLensHatch.isFocusedConstellationActive());
                 keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
                         "星座数据晶圆：常驻 " + baseStrength + "%"
                                 + (skyMatched ? "，天相匹配额外 +10%" : "")));
+                int opticalQuality = syncer.syncInt(astralLensHatch == null ? 0
+                        : astralLensHatch.getOpticalCrystalQuality());
+                int opticalBonus = syncer.syncInt((int) Math.round((astralLensHatch == null ? 0.0D
+                        : astralLensHatch.getOpticalCrystalStrengthBonus()) * 100.0D));
+                if (opticalQuality > 0) {
+                    keyManager.add(KeyUtil.string(TextFormatting.AQUA,
+                            "晶体光学校准：品质 " + opticalQuality + "% / 晶圆强度 +" + opticalBonus + "%"));
+                } else {
+                    keyManager.add(KeyUtil.string(TextFormatting.DARK_GRAY,
+                            "晶体光学校准：未插入培育水晶 / 晶圆强度 +0%"));
+                }
             }
             if (recipeMapWorkable instanceof MagicMultiblockRecipeLogic) {
                 MagicAmplificationResult result = ((MagicMultiblockRecipeLogic) recipeMapWorkable)
                         .getActiveAmplification();
+                MagicAmplificationResult tarotContribution = ((MagicMultiblockRecipeLogic) recipeMapWorkable)
+                        .getActiveTarotAmplification();
                 if (syncer.syncBoolean(result.isActive())) {
+                    int durationReduction = syncer.syncInt(percent(result.getDurationReduction()));
+                    int eutReduction = syncer.syncInt(percent(result.getEutReduction()));
+                    int magicCostReduction = syncer.syncInt(percent(result.getMagicCostReduction()));
+                    int extraParallel = syncer.syncInt(result.getExtraParallel());
+                    int outputBonus = syncer.syncInt(percent(result.getOutputBonus()));
+                    int chanceExtraRoll = syncer.syncInt(percent(result.getChanceExtraRoll()));
+                    int catalystSaveChance = syncer.syncInt(percent(result.getCatalystSaveChance()));
+                    int progressRetentionTicks = syncer.syncInt(result.getProgressRetentionTicks());
+                    int furnaceTemperatureBonus = syncer.syncInt(result.getFurnaceTemperatureBonus());
                     keyManager.add(KeyUtil.string(TextFormatting.AQUA,
-                            "魔导增幅：耗时 -" + percent(result.getDurationReduction())
-                                    + "% / EU/t -" + percent(result.getEutReduction()) + "% / 并行 +"
-                                    + result.getExtraParallel()));
-                    if (result.getMagicCostReduction() > 0.0D) {
+                            "魔导增幅：耗时 -" + durationReduction
+                                    + "% / EU/t -" + eutReduction + "% / 并行 +"
+                                    + extraParallel));
+                    if (magicCostReduction > 0) {
                         keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
-                                "魔法介质消耗 -" + percent(result.getMagicCostReduction()) + "%"));
+                                "魔法介质消耗 -" + magicCostReduction + "%"));
                     }
-                    if (result.getOutputBonus() > 0.0D || result.getChanceExtraRoll() > 0.0D) {
+                    if (outputBonus > 0 || chanceExtraRoll > 0) {
                         keyManager.add(KeyUtil.string(TextFormatting.GOLD,
-                                "安全产物 +" + percent(result.getOutputBonus()) + "% / 概率额外判定 "
-                                        + percent(result.getChanceExtraRoll()) + "%"));
+                                "安全产物 +" + outputBonus + "% / 概率额外判定 "
+                                        + chanceExtraRoll + "%"));
                     }
-                    if (result.getCatalystSaveChance() > 0.0D || result.getProgressRetentionTicks() > 0) {
+                    if (catalystSaveChance > 0 || progressRetentionTicks > 0) {
                         keyManager.add(KeyUtil.string(TextFormatting.GREEN,
-                                "催化剂保护 " + percent(result.getCatalystSaveChance()) + "% / 进度保持 "
-                                        + result.getProgressRetentionTicks() + " tick"));
+                                "催化剂保护 " + catalystSaveChance + "% / 进度保持 "
+                                        + progressRetentionTicks + " tick"));
                     }
-                    if (result.getFurnaceTemperatureBonus() > 0) {
+                    if (furnaceTemperatureBonus > 0) {
                         keyManager.add(KeyUtil.string(TextFormatting.RED,
-                                "有效炉温 +" + result.getFurnaceTemperatureBonus() + " K"));
+                                "有效炉温 +" + furnaceTemperatureBonus + " K"));
+                    }
+                    String activeTarot = syncer.syncString(result.getTarot());
+                    int tarotDuration = syncer.syncInt(percent(tarotContribution.getDurationReduction()));
+                    int tarotEut = syncer.syncInt(percent(tarotContribution.getEutReduction()));
+                    int tarotMagic = syncer.syncInt(percent(tarotContribution.getMagicCostReduction()));
+                    int tarotParallel = syncer.syncInt(tarotContribution.getExtraParallel());
+                    int tarotOutput = syncer.syncInt(percent(tarotContribution.getOutputBonus()));
+                    int tarotChance = syncer.syncInt(percent(tarotContribution.getChanceExtraRoll()));
+                    int tarotCatalyst = syncer.syncInt(percent(tarotContribution.getCatalystSaveChance()));
+                    int tarotTemperature = syncer.syncInt(tarotContribution.getFurnaceTemperatureBonus());
+                    boolean tarotApplied = tarotDuration > 0 || tarotEut > 0 || tarotMagic > 0 || tarotParallel > 0
+                            || tarotOutput > 0 || tarotChance > 0 || tarotCatalyst > 0 || tarotTemperature > 0;
+                    if (!activeTarot.isEmpty()) {
+                        keyManager.add(KeyUtil.string(tarotApplied ? TextFormatting.LIGHT_PURPLE : TextFormatting.GRAY,
+                                "塔罗牌：" + MagicJeiHintResolver.tarotDisplayName(activeTarot)
+                                        + (tarotApplied ? "（已生效，已汇入魔导增幅）" : "（未匹配当前工序）")));
+                        if (tarotApplied) {
+                            keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
+                                    "塔罗贡献：" + formatTarotContribution(tarotDuration, tarotEut, tarotMagic,
+                                            tarotParallel, tarotOutput, tarotChance, tarotCatalyst, tarotTemperature)));
+                        }
                     }
                 }
             }
@@ -345,21 +390,72 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
         String constellation = astralLensHatch.getFocusedConstellation();
         if (constellation.isEmpty()) return "";
 
-        int baseStrength = astralLensHatch.getTier() >= gregtech.api.GTValues.LuV ? 30 : 10;
+        int baseStrength = (int) Math.round(AstralAmplifierSnapshot.from(astralLensHatch)
+                .getBaseStrength() * 100.0D);
         boolean skyMatched = astralLensHatch.isSkyVisible() && astralLensHatch.isFocusedConstellationActive();
         int distribution = Math.round(astralLensHatch.getFocusedDistribution() * 100.0F);
         MagicAmplificationResult result = recipeMapWorkable instanceof MagicMultiblockRecipeLogic
                 ? ((MagicMultiblockRecipeLogic) recipeMapWorkable).getActiveAmplification()
                 : MagicAmplificationResult.NONE;
+        MagicAmplificationResult tarotContribution = recipeMapWorkable instanceof MagicMultiblockRecipeLogic
+                ? ((MagicMultiblockRecipeLogic) recipeMapWorkable).getActiveTarotAmplification()
+                : MagicAmplificationResult.NONE;
+        boolean idlePreview = !result.isActive();
+        if (idlePreview) {
+            // There is no selected recipe while idle. Preview the machine's
+            // conservative fallback process profile so its installed wafer and
+            // tarot are still informative without claiming recipe-specific data.
+            AstralAmplifierSnapshot previewSnapshot = getAstralAmplifierSnapshot();
+            MagicAmplificationResult astralOnly = MagicAmplificationEngine.calculate(
+                    getMagicProcessTags(null), 0, previewSnapshot, null, 0, true);
+            result = MagicAmplificationEngine.calculate(getMagicProcessTags(null), 0, previewSnapshot,
+                    tarotHatch, 0, true);
+            tarotContribution = result.subtract(astralOnly);
+        }
+        // The hatch is the authoritative insertion state. The active recipe
+        // snapshot is empty while the machine is idle, so using only
+        // result.getTarot() made an inserted card look absent between crafts.
+        String insertedTarot = tarotHatch == null ? "" : tarotHatch.getActiveTarot();
+        String displayedTarot = insertedTarot.isEmpty() ? result.getTarot() : insertedTarot;
         return constellation + "|" + baseStrength + "|" + skyMatched + "|" + distribution + "|"
                 + percent(result.getDurationReduction()) + "|" + percent(result.getEutReduction()) + "|"
                 + percent(result.getMagicCostReduction()) + "|" + result.getExtraParallel() + "|"
                 + percent(result.getOutputBonus()) + "|" + percent(result.getChanceExtraRoll()) + "|"
-                + percent(result.getCatalystSaveChance()) + "|" + result.getFurnaceTemperatureBonus();
+                + percent(result.getCatalystSaveChance()) + "|" + result.getFurnaceTemperatureBonus() + "|"
+                + astralLensHatch.getOpticalCrystalQuality() + "|"
+                + percent(astralLensHatch.getOpticalCrystalStrengthBonus()) + "|"
+                + displayedTarot + "|" + percent(tarotContribution.getDurationReduction()) + "|"
+                + percent(tarotContribution.getEutReduction()) + "|"
+                + percent(tarotContribution.getMagicCostReduction()) + "|"
+                + tarotContribution.getExtraParallel() + "|"
+                + percent(tarotContribution.getOutputBonus()) + "|"
+                + percent(tarotContribution.getChanceExtraRoll()) + "|"
+                + percent(tarotContribution.getCatalystSaveChance()) + "|"
+                + tarotContribution.getFurnaceTemperatureBonus() + "|" + idlePreview;
     }
 
     private static int percent(double value) {
         return (int) Math.round(value * 100.0D);
+    }
+
+    private static String formatTarotContribution(int duration, int eut, int magic, int parallel,
+                                                   int output, int chance, int catalyst, int temperature) {
+        StringBuilder text = new StringBuilder();
+        appendTarotContribution(text, "耗时 -", duration, "%");
+        appendTarotContribution(text, "EU/t -", eut, "%");
+        appendTarotContribution(text, "介质 -", magic, "%");
+        appendTarotContribution(text, "并行 +", parallel, "");
+        appendTarotContribution(text, "产物 +", output, "%");
+        appendTarotContribution(text, "重判 +", chance, "%");
+        appendTarotContribution(text, "催化 ", catalyst, "%");
+        appendTarotContribution(text, "炉温 +", temperature, "K");
+        return text.toString();
+    }
+
+    private static void appendTarotContribution(StringBuilder text, String label, int value, String suffix) {
+        if (value <= 0) return;
+        if (text.length() > 0) text.append(" / ");
+        text.append(label).append(value).append(suffix);
     }
 
     public int getVisCapacity() {

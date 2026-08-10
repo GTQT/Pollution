@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.nbt.NBTTagString;
@@ -36,6 +37,18 @@ public final class MagicRecipeProperties {
             "pollution.magic.tarot", "塔罗牌");
     public static final StringProperty THAUMCRAFT_RESEARCH = new StringProperty(
             "pollution.magic.thaumcraft_research", "所需神秘研究");
+    /** Dynamic one-to-one transformation that copies native Astral crystal data into a crystal seed. */
+    public static final BooleanProperty CRYSTAL_SEED_SELECTION = new BooleanProperty(
+            "pollution.magic.crystal_seed_selection", "岩石水晶选种");
+    /** Dynamic one-to-one transformation that carries a crystal seed's data into a cultivation embryo. */
+    public static final BooleanProperty CRYSTAL_EMBRYO_CULTIVATION = new BooleanProperty(
+            "pollution.magic.crystal_embryo_cultivation", "天体晶体培养");
+    /** Dynamic one-to-one transformation that restores a cultivated Astral rock crystal. */
+    public static final BooleanProperty CRYSTAL_CELESTIAL_GROWTH = new BooleanProperty(
+            "pollution.magic.crystal_celestial_growth", "天体晶体生长");
+    /** Minimum quality required from a first-generation cultivated rock crystal catalyst. */
+    public static final IntProperty MIN_CULTIVATED_CRYSTAL_QUALITY = new IntProperty(
+            "pollution.magic.min_cultivated_crystal_quality", "培育晶体最低品质");
     private static final ConstellationTargetProperty CELESTIAL_TARGET = new ConstellationTargetProperty();
     private static final ConstellationEffectProperty CELESTIAL_EFFECT = new ConstellationEffectProperty();
 
@@ -76,6 +89,11 @@ public final class MagicRecipeProperties {
         GregTechAPI.RECIPE_PROPERTIES.register(ASTRAL_CONDITION.getKey(), ASTRAL_CONDITION);
         GregTechAPI.RECIPE_PROPERTIES.register(TAROT.getKey(), TAROT);
         GregTechAPI.RECIPE_PROPERTIES.register(THAUMCRAFT_RESEARCH.getKey(), THAUMCRAFT_RESEARCH);
+        GregTechAPI.RECIPE_PROPERTIES.register(CRYSTAL_SEED_SELECTION.getKey(), CRYSTAL_SEED_SELECTION);
+        GregTechAPI.RECIPE_PROPERTIES.register(CRYSTAL_EMBRYO_CULTIVATION.getKey(), CRYSTAL_EMBRYO_CULTIVATION);
+        GregTechAPI.RECIPE_PROPERTIES.register(CRYSTAL_CELESTIAL_GROWTH.getKey(), CRYSTAL_CELESTIAL_GROWTH);
+        GregTechAPI.RECIPE_PROPERTIES.register(MIN_CULTIVATED_CRYSTAL_QUALITY.getKey(),
+                MIN_CULTIVATED_CRYSTAL_QUALITY);
         GregTechAPI.RECIPE_PROPERTIES.register(CELESTIAL_TARGET.getKey(), CELESTIAL_TARGET);
         GregTechAPI.RECIPE_PROPERTIES.register(CELESTIAL_EFFECT.getKey(), CELESTIAL_EFFECT);
         GregTechAPI.RECIPE_PROPERTIES.register(PROCESS_TAG_MASK.getKey(), PROCESS_TAG_MASK);
@@ -126,6 +144,31 @@ public final class MagicRecipeProperties {
         if (!normalized.isEmpty()) {
             builder.applyProperty(THAUMCRAFT_RESEARCH, normalized);
         }
+        return builder;
+    }
+
+    public static <R extends RecipeBuilder<R>> R crystalSeedSelection(R builder) {
+        builder.applyProperty(CRYSTAL_SEED_SELECTION, true);
+        return builder;
+    }
+
+    public static <R extends RecipeBuilder<R>> R crystalEmbryoCultivation(R builder) {
+        builder.applyProperty(CRYSTAL_EMBRYO_CULTIVATION, true);
+        return builder;
+    }
+
+    public static <R extends RecipeBuilder<R>> R crystalCelestialGrowth(R builder) {
+        builder.applyProperty(CRYSTAL_CELESTIAL_GROWTH, true);
+        return builder;
+    }
+
+    /**
+     * Requires an inserted, non-consumed, first-generation cultivated rock crystal
+     * at or above the supplied quality. The recipe logic performs the NBT check;
+     * recipes still declare a raw rock crystal as their visible catalyst slot.
+     */
+    public static <R extends RecipeBuilder<R>> R cultivatedCrystalQuality(R builder, int minimumQuality) {
+        builder.applyProperty(MIN_CULTIVATED_CRYSTAL_QUALITY, Math.max(0, Math.min(100, minimumQuality)));
         return builder;
     }
 
@@ -278,6 +321,32 @@ public final class MagicRecipeProperties {
         @Override
         public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
             minecraft.fontRenderer.drawString(TextFormatting.GRAY + label + ": " + castValue(value), x, y, color);
+        }
+    }
+
+    public static final class BooleanProperty extends RecipeProperty<Boolean> {
+        private final String label;
+
+        private BooleanProperty(String key, String label) {
+            super(key, Boolean.class);
+            this.label = label;
+        }
+
+        @Override
+        public NBTBase serialize(Object value) {
+            return new NBTTagByte((byte) (castValue(value) ? 1 : 0));
+        }
+
+        @Override
+        public Object deserialize(NBTBase tag) {
+            return tag instanceof NBTPrimitive && ((NBTPrimitive) tag).getByte() != 0;
+        }
+
+        @Override
+        public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
+            if (castValue(value)) {
+                minecraft.fontRenderer.drawString(TextFormatting.AQUA + label, x, y, color);
+            }
         }
     }
 

@@ -17,6 +17,7 @@ import hellfirepvp.astralsorcery.common.item.ItemConstellationPaper;
 import hellfirepvp.astralsorcery.common.item.crystal.base.ItemTunedCrystalBase;
 import meowmel.pollution.api.capability.IAstralHatch;
 import meowmel.pollution.api.astral.AstralNbtHelper;
+import meowmel.pollution.api.astral.AstralCrystalNbtHelper;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.client.textures.POTextures;
@@ -40,7 +41,7 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
         implements IMultiblockAbilityPart<IAstralHatch>, IAstralHatch {
 
     public MetaTileEntityAstralLensHatch(ResourceLocation metaTileEntityId, int tier) {
-        super(metaTileEntityId, tier);
+        super(metaTileEntityId, tier, tier >= GTValues.LuV ? 2 : 1);
     }
 
     @Override
@@ -51,6 +52,12 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
     @Override
     protected boolean isAcceptedStack(ItemStack stack) {
         return getConstellation(stack) != null;
+    }
+
+    @Override
+    protected boolean isAcceptedStack(int slot, ItemStack stack) {
+        return slot == 0 ? isAcceptedStack(stack)
+                : getTier() >= GTValues.LuV && AstralCrystalNbtHelper.isCultivatedCrystal(stack);
     }
 
     @Override
@@ -85,6 +92,21 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
         ItemStack stack = getFocusStack();
         return ItemStack.areItemsEqual(stack, PollutionMetaItems.CONSTELLATION_DATA_WAFER.getStackForm())
                 && getConstellation(stack) != null;
+    }
+
+    @Override
+    public int getOpticalCrystalQuality() {
+        return getTier() >= GTValues.LuV
+                ? AstralCrystalNbtHelper.getOpticalQuality(getAuxiliaryStack(1)) : 0;
+    }
+
+    @Override
+    public double getOpticalCrystalStrengthBonus() {
+        int quality = getOpticalCrystalQuality();
+        if (quality < 50) return 0.0D;
+        if (quality < 70) return 0.05D;
+        if (quality < 85) return 0.10D;
+        return 0.20D;
     }
 
     @Nullable
@@ -195,5 +217,8 @@ public class MetaTileEntityAstralLensHatch extends MetaTileEntityMagicItemHatch
                 : "pollution.machine.astral_lens_hatch.tooltip.";
         tooltip.add(I18n.format(key + "1"));
         tooltip.add(I18n.format(key + "2"));
+        if (getTier() >= GTValues.LuV) {
+            tooltip.add(I18n.format(key + "3"));
+        }
     }
 }

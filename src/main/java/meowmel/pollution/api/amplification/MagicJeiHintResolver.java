@@ -44,6 +44,34 @@ public final class MagicJeiHintResolver {
         return constellation == null || constellation.trim().isEmpty() ? "任意" : constellation;
     }
 
+    /** Stable client-side title for a major arcana id synced by a Tarot Hatch. */
+    public static String tarotDisplayName(String tarot) {
+        String id = normalize(tarot);
+        if ("the_fool".equals(id)) return "愚者";
+        if ("the_magician".equals(id)) return "魔术师";
+        if ("the_high_priestess".equals(id)) return "女祭司";
+        if ("the_empress".equals(id)) return "皇后";
+        if ("the_emperor".equals(id)) return "皇帝";
+        if ("the_highophant".equals(id)) return "教皇";
+        if ("the_lovers".equals(id)) return "恋人";
+        if ("the_chariot".equals(id)) return "战车";
+        if ("the_strength".equals(id)) return "力量";
+        if ("the_hermit".equals(id)) return "隐者";
+        if ("the_wheel_of_fortune".equals(id)) return "命运之轮";
+        if ("the_justice".equals(id)) return "正义";
+        if ("the_hanged_man".equals(id)) return "倒吊人";
+        if ("death".equals(id)) return "死神";
+        if ("temperance".equals(id)) return "节制";
+        if ("the_devil".equals(id)) return "恶魔";
+        if ("the_tower".equals(id)) return "高塔";
+        if ("the_star".equals(id)) return "星星";
+        if ("the_moon".equals(id)) return "月亮";
+        if ("the_sun".equals(id)) return "太阳";
+        if ("judgement".equals(id)) return "审判";
+        if ("the_world".equals(id)) return "世界";
+        return id.isEmpty() ? "未插入" : tarot;
+    }
+
     /** A compact, per-wafer description for celestial-machine JEI pages. */
     public static String constellationEffect(String constellation) {
         String id = normalize(constellation);

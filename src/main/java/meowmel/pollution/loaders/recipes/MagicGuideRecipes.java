@@ -19,6 +19,7 @@ public final class MagicGuideRecipes {
     public static void init() {
         registerConstellationWaferGuide();
         registerTarotGuide();
+        registerCrystalCultivationGuide();
     }
 
     private static void registerConstellationWaferGuide() {
@@ -29,7 +30,7 @@ public final class MagicGuideRecipes {
                         .EUt(1),
                 "【星座数据晶圆／星辉透镜仓】",
                 "入口：晶圆必须保存星座NBT，放入星辉透镜仓；运行时不消耗。",
-                "强度S：MV仓10%；LuV及以上30%；露天且对应星座活跃时额外+10%。",
+                "强度S：MV仓10%；LuV及以上20%；培育晶体透镜额外最高+20%；露天且对应星座活跃时额外+10%。",
                 "星星塔罗：S×1.25，最终S不超过50%；无晶圆则没有任何星辉增幅。",
                 "仅工序标签匹配时生效；总上限见塔罗说明页，所有效果均为正向。",
                 "生息 Aevitas：生物/植物/细胞，产出+S、概率+S、时间缩短0.25S。",
@@ -84,6 +85,36 @@ public final class MagicGuideRecipes {
                 "太阳：白天且日照/净化/无菌/光化工序，时间缩短20%、产出+10%。",
                 "审判：回收配方产出+25%。",
                 "世界：三系或多魔法配方，时间缩短10%、介质-10%、并行+1。"
+        ).buildAndRegister();
+    }
+
+    /** Two non-executable handbook pages for the one-way rock-crystal lineage. */
+    private static void registerCrystalCultivationGuide() {
+        MagicRecipeProperties.guidePage(
+                PORecipeMaps.CRYSTAL_CULTIVATION_GUIDE_RECIPES.recipeBuilder()
+                        .notConsumable(PollutionMetaItems.ROCK_CRYSTAL_SEED)
+                        .duration(1)
+                        .EUt(1),
+                "【晶种选育：不可重复】",
+                "1. 仅野生岩石水晶（第 0 代）可被选种。",
+                "2. 晶种记录尺寸、纯度、集合能力与裂隙。",
+                "3. 晶体胚不改写属性，只负责稳定培育基底。",
+                "4. 第 1 代培育水晶无法再次选种。",
+                "5. 选育前请保留最好的野生原晶。"
+        ).buildAndRegister();
+
+        MagicRecipeProperties.guidePage(
+                PORecipeMaps.CRYSTAL_CULTIVATION_GUIDE_RECIPES.recipeBuilder()
+                        .notConsumable(PollutionMetaItems.CELESTIAL_CRYSTAL_EMBRYO)
+                        .duration(1)
+                        .EUt(1),
+                "【天体晶体生长：LuV】",
+                "1. 使用天体晶体生长阵与高级星辉透镜仓。",
+                "2. 透镜仓必须露天；夜间且目标星座活跃。",
+                "3. 消耗月光树脂、星能液与 500 mB 玻璃要素。",
+                "4. 基础强化：尺寸 +3、纯度 +12、集合 +8、裂隙 -1。",
+                "5. 不同星座进一步强化不同的原生晶体属性。",
+                "6. 成品可置入高级透镜仓第二槽，提供品质增幅。"
         ).buildAndRegister();
     }
 

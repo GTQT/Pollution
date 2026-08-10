@@ -13,6 +13,7 @@ public class RecipeManger {
         AERecipes.init();
         BloodAltar.init();
         BloodCircuit.init();
+        FleshTreeRecipes.init();
         MaterialsLine.init();
         MagicIntegrationRecipes.init();
         MagicGuideRecipes.init();

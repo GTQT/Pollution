@@ -23,6 +23,7 @@ import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityI
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialLightwell;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialObservationArray;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialCalibrationMatrix;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialCrystalGrowthArray;
 import meowmel.pollution.common.metatileentity.multiblock.bot.*;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicLargeTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicMegaTurbine;
@@ -159,6 +160,7 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
     public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
     public static MetaTileEntityCelestialCalibrationMatrix CELESTIAL_CALIBRATION_MATRIX;
+    public static MetaTileEntityCelestialCrystalGrowthArray CELESTIAL_CRYSTAL_GROWTH_ARRAY;
 
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
@@ -326,6 +328,8 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityCelestialObservationArray(PollutionID("celestial_observation_array")));
         CELESTIAL_CALIBRATION_MATRIX = registerMetaTileEntity(351,
                 new MetaTileEntityCelestialCalibrationMatrix(PollutionID("celestial_calibration_matrix")));
+        CELESTIAL_CRYSTAL_GROWTH_ARRAY = registerMetaTileEntity(352,
+                new MetaTileEntityCelestialCrystalGrowthArray(PollutionID("celestial_crystal_growth_array")));
 
         //仓口
         for (int i = 0; i < VIS_HATCH.length; i++) {

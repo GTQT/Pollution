@@ -1,5 +1,7 @@
 package meowmel.pollution.api.amplification;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 /** First-batch, recipe-start modifiers. All values are non-negative ratios. */
 public final class MagicAmplificationResult {
 
@@ -42,6 +44,57 @@ public final class MagicAmplificationResult {
 
     private static double cap(double value, double maximum) {
         return Math.max(0.0D, Math.min(maximum, value));
+    }
+
+    /**
+     * Returns only the contribution added on top of a baseline snapshot. This
+     * lets the UI report a tarot card separately while the recipe logic still
+     * consumes one authoritative, already-combined result.
+     */
+    public MagicAmplificationResult subtract(MagicAmplificationResult baseline) {
+        MagicAmplificationResult base = baseline == null ? NONE : baseline;
+        return new MagicAmplificationResult(
+                durationReduction - base.durationReduction,
+                eutReduction - base.eutReduction,
+                magicCostReduction - base.magicCostReduction,
+                extraParallel - base.extraParallel,
+                strength - base.strength,
+                outputBonus - base.outputBonus,
+                chanceExtraRoll - base.chanceExtraRoll,
+                catalystSaveChance - base.catalystSaveChance,
+                magicEnergyEfficiencyBonus - base.magicEnergyEfficiencyBonus,
+                progressRetentionTicks - base.progressRetentionTicks,
+                furnaceTemperatureBonus - base.furnaceTemperatureBonus,
+                constellation, tarot);
+    }
+
+    /** Compact persistence used for the baseline snapshot of a running recipe. */
+    public NBTTagCompound serializeSnapshot() {
+        NBTTagCompound data = new NBTTagCompound();
+        data.setDouble("duration", durationReduction);
+        data.setDouble("eut", eutReduction);
+        data.setDouble("magic", magicCostReduction);
+        data.setInteger("parallel", extraParallel);
+        data.setDouble("strength", strength);
+        data.setDouble("output", outputBonus);
+        data.setDouble("chance", chanceExtraRoll);
+        data.setDouble("catalyst", catalystSaveChance);
+        data.setDouble("efficiency", magicEnergyEfficiencyBonus);
+        data.setInteger("retention", progressRetentionTicks);
+        data.setInteger("temperature", furnaceTemperatureBonus);
+        data.setString("constellation", constellation);
+        data.setString("tarot", tarot);
+        return data;
+    }
+
+    public static MagicAmplificationResult deserializeSnapshot(NBTTagCompound data) {
+        if (data == null || data.isEmpty()) return NONE;
+        return new MagicAmplificationResult(
+                data.getDouble("duration"), data.getDouble("eut"), data.getDouble("magic"),
+                data.getInteger("parallel"), data.getDouble("strength"), data.getDouble("output"),
+                data.getDouble("chance"), data.getDouble("catalyst"), data.getDouble("efficiency"),
+                data.getInteger("retention"), data.getInteger("temperature"),
+                data.getString("constellation"), data.getString("tarot"));
     }
 
     public double getDurationReduction() { return durationReduction; }

@@ -11,14 +11,18 @@ import meowmel.pollution.api.amplification.AstralAmplifierSnapshot;
 import meowmel.pollution.api.amplification.MagicAmplificationEngine;
 import meowmel.pollution.api.amplification.MagicAmplificationResult;
 import meowmel.pollution.api.amplification.MagicOutputProcessor;
+import meowmel.pollution.api.astral.AstralCrystalNbtHelper;
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +34,9 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
     MagicRecipeMapMultiblockController metaTileEntity;
     private boolean explicitVisPaid;
     private MagicAmplificationResult pendingAmplification = MagicAmplificationResult.NONE;
+    private MagicAmplificationResult pendingAstralAmplification = MagicAmplificationResult.NONE;
     private MagicAmplificationResult activeAmplification = MagicAmplificationResult.NONE;
+    private MagicAmplificationResult activeAstralAmplification = MagicAmplificationResult.NONE;
     private int chariotStacks;
     private int activeRecipeHash;
     private int lastCompletedRecipeHash;
@@ -38,6 +44,7 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
     private boolean pendingNaturalSkyMatch;
     private final Map<String, Double> fractionalOutputRemainders = new HashMap<>();
     private int progressRetentionTicks;
+    private ItemStack pendingCrystalTransformSource = ItemStack.EMPTY;
 
     public MagicMultiblockRecipeLogic(MagicRecipeMapMultiblockController tileEntity) {
         super(tileEntity);
@@ -100,10 +107,20 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
     @Override
     public boolean prepareRecipe(Recipe recipe, IItemHandlerModifiable inputs, IMultipleTankHandler fluidInputs) {
+        pendingCrystalTransformSource = ItemStack.EMPTY;
+        if (!hasRequiredCultivatedCrystal(recipe, inputs)) return false;
+        if (isCrystalTransformRecipe(recipe)) {
+            ItemStack source = findCrystalTransformSource(recipe, inputs);
+            if (source.isEmpty()) return false;
+            pendingCrystalTransformSource = source.copy();
+            pendingCrystalTransformSource.setCount(1);
+        }
         pendingAmplification = calculateAmplification(recipe);
+        pendingAstralAmplification = calculateAstralAmplification(recipe);
         boolean prepared = super.prepareRecipe(recipe, inputs, fluidInputs);
         if (prepared) {
             activeAmplification = pendingAmplification;
+            activeAstralAmplification = pendingAstralAmplification;
             activeRecipeHash = recipe.hashCode();
             if ("the_star".equals(activeAmplification.getTarot()) && pendingNaturalSkyMatch) {
                 starAfterglowUntil = getWorldTime() + 200L;
@@ -111,13 +128,19 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
             if (activeAmplification.isActive()) metaTileEntity.setMagicFocusLocked(true);
         } else {
             pendingAmplification = MagicAmplificationResult.NONE;
+            pendingAstralAmplification = MagicAmplificationResult.NONE;
             pendingNaturalSkyMatch = false;
+            pendingCrystalTransformSource = ItemStack.EMPTY;
         }
         return prepared;
     }
 
     @Override
     public int getParallelLimit() {
+        if (!pendingCrystalTransformSource.isEmpty()
+                || previousRecipe != null && isCrystalTransformRecipe(previousRecipe)) {
+            return 1;
+        }
         MagicAmplificationResult result = pendingAmplification.isActive()
                 ? pendingAmplification : activeAmplification;
         return Math.max(1, super.getParallelLimit() + result.getExtraParallel());
@@ -136,6 +159,16 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
     @Override
     protected boolean checkOutputSpaceItems(Recipe recipe, IItemHandlerModifiable outputInventory) {
+        // Crystal transforms replace JEI's static placeholder with an NBT-bearing
+        // item. Validate that exact output first: otherwise a slot holding a
+        // different-quality crystal can be mistaken for a valid stack target.
+        if (isCrystalTransformRecipe(recipe) && !pendingCrystalTransformSource.isEmpty()) {
+            ItemStack transformed = getCrystalTransformOutput(recipe);
+            if (transformed.isEmpty() || !GTTransferUtils.addItemsToItemHandler(outputInventory, true,
+                    Collections.singletonList(transformed))) {
+                return false;
+            }
+        }
         if (!super.checkOutputSpaceItems(recipe, outputInventory)) return false;
         List<net.minecraft.item.ItemStack> forecast = MagicOutputProcessor.forecast(recipe, getParallelLimit(),
                 pendingAmplification);
@@ -145,6 +178,7 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
     @Override
     protected void setupRecipe(Recipe recipe) {
         super.setupRecipe(recipe);
+        applyCrystalTransformOutput(recipe);
         List<net.minecraft.item.ItemStack> bonusOutputs = MagicOutputProcessor.settle(recipe, parallelRecipesPerformed,
                 pendingAmplification, fractionalOutputRemainders);
         if (!bonusOutputs.isEmpty()) itemOutputs.addAll(bonusOutputs);
@@ -183,7 +217,10 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
         explicitVisPaid = false;
         activeAmplification = MagicAmplificationResult.NONE;
         pendingAmplification = MagicAmplificationResult.NONE;
+        activeAstralAmplification = MagicAmplificationResult.NONE;
+        pendingAstralAmplification = MagicAmplificationResult.NONE;
         pendingNaturalSkyMatch = false;
+        pendingCrystalTransformSource = ItemStack.EMPTY;
         progressRetentionTicks = 0;
         metaTileEntity.setMagicFocusLocked(false);
     }
@@ -199,7 +236,10 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
         explicitVisPaid = false;
         pendingAmplification = MagicAmplificationResult.NONE;
         activeAmplification = MagicAmplificationResult.NONE;
+        pendingAstralAmplification = MagicAmplificationResult.NONE;
+        activeAstralAmplification = MagicAmplificationResult.NONE;
         pendingNaturalSkyMatch = false;
+        pendingCrystalTransformSource = ItemStack.EMPTY;
         progressRetentionTicks = 0;
         metaTileEntity.setMagicFocusLocked(false);
     }
@@ -265,6 +305,21 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
     }
 
     private MagicAmplificationResult calculateAmplification(Recipe recipe) {
+        AstralAmplifierSnapshot snapshot = getEffectiveAstralSnapshot();
+        int stacks = recipe != null && recipe.hashCode() == lastCompletedRecipeHash ? chariotStacks : 0;
+        return MagicAmplificationEngine.calculate(metaTileEntity.getMagicProcessTags(recipe), recipe.getDuration(),
+                snapshot, metaTileEntity.getTarotHatch(), stacks, super.getParallelLimit() == 1);
+    }
+
+    /** Same recipe snapshot with no tarot, used only to expose the card's actual delta in the UI. */
+    private MagicAmplificationResult calculateAstralAmplification(Recipe recipe) {
+        AstralAmplifierSnapshot snapshot = getEffectiveAstralSnapshot();
+        int stacks = recipe != null && recipe.hashCode() == lastCompletedRecipeHash ? chariotStacks : 0;
+        return MagicAmplificationEngine.calculate(metaTileEntity.getMagicProcessTags(recipe), recipe.getDuration(),
+                snapshot, null, stacks, super.getParallelLimit() == 1);
+    }
+
+    private AstralAmplifierSnapshot getEffectiveAstralSnapshot() {
         AstralAmplifierSnapshot snapshot = metaTileEntity.getAstralAmplifierSnapshot();
         pendingNaturalSkyMatch = snapshot.isSkyMatched();
         String tarot = metaTileEntity.getTarotHatch() == null ? "" : metaTileEntity.getTarotHatch().getActiveTarot();
@@ -272,9 +327,83 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
                 && getWorldTime() <= starAfterglowUntil) {
             snapshot = snapshot.withSkyMatched(true);
         }
-        int stacks = recipe != null && recipe.hashCode() == lastCompletedRecipeHash ? chariotStacks : 0;
-        return MagicAmplificationEngine.calculate(metaTileEntity.getMagicProcessTags(recipe), recipe.getDuration(),
-                snapshot, metaTileEntity.getTarotHatch(), stacks, super.getParallelLimit() == 1);
+        return snapshot;
+    }
+
+    private static boolean isCrystalTransformRecipe(Recipe recipe) {
+        return recipe != null && (recipe.hasProperty(MagicRecipeProperties.CRYSTAL_SEED_SELECTION)
+                || recipe.hasProperty(MagicRecipeProperties.CRYSTAL_EMBRYO_CULTIVATION)
+                || recipe.hasProperty(MagicRecipeProperties.CRYSTAL_CELESTIAL_GROWTH));
+    }
+
+    /**
+     * GT's generic NBT matcher can expose the catalyst in JEI, but cannot compare
+     * Astral Sorcery crystal attributes. Keep that comparison here so quality
+     * gates remain authoritative for every magic multiblock recipe map.
+     */
+    private static boolean hasRequiredCultivatedCrystal(Recipe recipe, IItemHandlerModifiable inventory) {
+        if (recipe == null || !recipe.hasProperty(MagicRecipeProperties.MIN_CULTIVATED_CRYSTAL_QUALITY)) {
+            return true;
+        }
+        int minimumQuality = recipe.getProperty(MagicRecipeProperties.MIN_CULTIVATED_CRYSTAL_QUALITY, 0);
+        if (minimumQuality <= 0) return true;
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            ItemStack stack = inventory.getStackInSlot(slot);
+            if (AstralCrystalNbtHelper.isCultivatedCrystal(stack)
+                    && AstralCrystalNbtHelper.getOpticalQuality(stack) >= minimumQuality) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static ItemStack findCrystalTransformSource(Recipe recipe, IItemHandlerModifiable inventory) {
+        boolean seedSelection = recipe.hasProperty(MagicRecipeProperties.CRYSTAL_SEED_SELECTION);
+        boolean embryoCultivation = recipe.hasProperty(MagicRecipeProperties.CRYSTAL_EMBRYO_CULTIVATION);
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            ItemStack stack = inventory.getStackInSlot(slot);
+            if (seedSelection ? AstralCrystalNbtHelper.isEligibleRockCrystal(stack)
+                    : embryoCultivation ? AstralCrystalNbtHelper.isCrystalSeed(stack)
+                    : AstralCrystalNbtHelper.isCrystalEmbryo(stack)) {
+                return stack;
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
+    private void applyCrystalTransformOutput(Recipe recipe) {
+        if (!isCrystalTransformRecipe(recipe) || pendingCrystalTransformSource.isEmpty()) return;
+        ItemStack transformed = getCrystalTransformOutput(recipe);
+        if (transformed.isEmpty()) return;
+
+        ItemStack placeholder;
+        if (recipe.hasProperty(MagicRecipeProperties.CRYSTAL_SEED_SELECTION)) {
+            placeholder = PollutionMetaItems.ROCK_CRYSTAL_SEED.getStackForm();
+        } else if (recipe.hasProperty(MagicRecipeProperties.CRYSTAL_EMBRYO_CULTIVATION)) {
+            placeholder = PollutionMetaItems.CELESTIAL_CRYSTAL_EMBRYO.getStackForm();
+        } else {
+            placeholder = PollutionMetaItems.CULTIVATED_CRYSTAL.getStackForm();
+        }
+        for (int index = 0; index < itemOutputs.size(); index++) {
+            if (ItemStack.areItemsEqual(itemOutputs.get(index), placeholder)) {
+                itemOutputs.set(index, transformed);
+                return;
+            }
+        }
+        itemOutputs.add(transformed);
+    }
+
+    private ItemStack getCrystalTransformOutput(Recipe recipe) {
+        if (recipe == null || pendingCrystalTransformSource.isEmpty()) return ItemStack.EMPTY;
+        if (recipe.hasProperty(MagicRecipeProperties.CRYSTAL_SEED_SELECTION)) {
+            return AstralCrystalNbtHelper.createSeed(pendingCrystalTransformSource);
+        }
+        if (recipe.hasProperty(MagicRecipeProperties.CRYSTAL_EMBRYO_CULTIVATION)) {
+            return AstralCrystalNbtHelper.createEmbryo(pendingCrystalTransformSource);
+        }
+        AstralCondition condition = recipe.getProperty(MagicRecipeProperties.ASTRAL_CONDITION, AstralCondition.NONE);
+        return AstralCrystalNbtHelper.createCultivatedCrystal(pendingCrystalTransformSource,
+                condition.getConstellation());
     }
 
     private List<net.minecraft.item.ItemStack> collectProtectedCatalysts(Recipe recipe,
@@ -326,6 +455,11 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
         return activeAmplification;
     }
 
+    /** The portion of the active total that was contributed by the inserted tarot card. */
+    public MagicAmplificationResult getActiveTarotAmplification() {
+        return activeAmplification.subtract(activeAstralAmplification);
+    }
+
     protected MagicAmplificationResult getAmplificationBeingPrepared() {
         return pendingAmplification.isActive() ? pendingAmplification : activeAmplification;
     }
@@ -355,6 +489,7 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
         data.setInteger("MagicProgressRetentionTicks", progressRetentionTicks);
         data.setString("ActiveMagicConstellation", activeAmplification.getConstellation());
         data.setString("ActiveMagicTarot", activeAmplification.getTarot());
+        data.setTag("ActiveAstralOnlyAmplification", activeAstralAmplification.serializeSnapshot());
         NBTTagCompound remainders = new NBTTagCompound();
         for (Map.Entry<String, Double> entry : fractionalOutputRemainders.entrySet()) {
             remainders.setDouble(entry.getKey(), entry.getValue());
@@ -378,6 +513,8 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
                 data.getDouble("ActiveMagicEnergyEfficiency"), data.getInteger("ActiveMagicRetention"),
                 data.getInteger("ActiveMagicFurnaceTemperature"), data.getString("ActiveMagicConstellation"),
                 data.getString("ActiveMagicTarot"));
+        activeAstralAmplification = MagicAmplificationResult.deserializeSnapshot(
+                data.getCompoundTag("ActiveAstralOnlyAmplification"));
         progressRetentionTicks = Math.max(0, data.getInteger("MagicProgressRetentionTicks"));
         fractionalOutputRemainders.clear();
         NBTTagCompound remainders = data.getCompoundTag("MagicOutputRemainders");

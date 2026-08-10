@@ -10,6 +10,12 @@ public interface IAstralHatch {
     /** A valid constellation-data wafer is required for passive machine amplification. */
     boolean hasConstellationDataWafer();
 
+    /** Quality of the optional cultivated rock-crystal optical insert, 0..100. */
+    int getOpticalCrystalQuality();
+
+    /** Extra constellation strength supplied by the optical insert, 0..10 percentage points. */
+    double getOpticalCrystalStrengthBonus();
+
     void setFocusLocked(boolean locked);
 
     boolean isFocusLocked();

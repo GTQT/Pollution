@@ -152,6 +152,8 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem STERILE_SLATE_BLANK;
 	public static MetaItem<?>.MetaValueItem PRECISION_RUNE_BLANK;
 	public static MetaItem<?>.MetaValueItem ROCK_CRYSTAL_SEED;
+	public static MetaItem<?>.MetaValueItem CELESTIAL_CRYSTAL_EMBRYO;
+	public static MetaItem<?>.MetaValueItem CULTIVATED_CRYSTAL;
 	public static MetaItem<?>.MetaValueItem NATURAL_INFUSED_COIL;
 	public static MetaItem<?>.MetaValueItem MAGIC_CONTROL_ASSEMBLY;
 	/** @deprecated Legacy source name kept for compatibility; the component is MV-stage and tierless. */

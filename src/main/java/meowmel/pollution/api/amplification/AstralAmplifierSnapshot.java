@@ -11,14 +11,23 @@ public final class AstralAmplifierSnapshot {
     private final boolean hasDataWafer;
     private final boolean skyMatched;
     private final boolean night;
+    private final int opticalCrystalQuality;
+    private final double opticalCrystalStrengthBonus;
 
     public AstralAmplifierSnapshot(String constellation, int hatchTier, boolean hasDataWafer, boolean skyMatched,
                                    boolean night) {
+        this(constellation, hatchTier, hasDataWafer, skyMatched, night, 0, 0.0D);
+    }
+
+    public AstralAmplifierSnapshot(String constellation, int hatchTier, boolean hasDataWafer, boolean skyMatched,
+                                   boolean night, int opticalCrystalQuality, double opticalCrystalStrengthBonus) {
         this.constellation = constellation == null ? "" : constellation;
         this.hatchTier = hatchTier;
         this.hasDataWafer = hasDataWafer;
         this.skyMatched = skyMatched;
         this.night = night;
+        this.opticalCrystalQuality = Math.max(0, Math.min(100, opticalCrystalQuality));
+        this.opticalCrystalStrengthBonus = Math.max(0.0D, Math.min(0.20D, opticalCrystalStrengthBonus));
     }
 
     public static AstralAmplifierSnapshot empty() {
@@ -29,7 +38,7 @@ public final class AstralAmplifierSnapshot {
         if (hatch == null || !hatch.hasConstellationDataWafer()) return empty();
         boolean matched = hatch.isSkyVisible() && hatch.isFocusedConstellationActive();
         return new AstralAmplifierSnapshot(hatch.getFocusedConstellation(), hatch.getTier(), true, matched,
-                hatch.isNight());
+                hatch.isNight(), hatch.getOpticalCrystalQuality(), hatch.getOpticalCrystalStrengthBonus());
     }
 
     public String getConstellation() {
@@ -45,16 +54,21 @@ public final class AstralAmplifierSnapshot {
     }
 
     public AstralAmplifierSnapshot withSkyMatched(boolean matched) {
-        return new AstralAmplifierSnapshot(constellation, hatchTier, hasDataWafer, matched, night);
+        return new AstralAmplifierSnapshot(constellation, hatchTier, hasDataWafer, matched, night,
+                opticalCrystalQuality, opticalCrystalStrengthBonus);
     }
 
     public boolean isNight() { return night; }
 
-    /** MV hatches give 10%, LuV and above give 30%; sky match adds 10 pp. */
+    /** MV hatches give 10%, LuV and above give 20%; a calibrated optical insert adds up to 20 pp. */
     public double getBaseStrength() {
         if (!hasDataWafer) return 0.0D;
-        return hatchTier >= GTValues.LuV ? 0.30D : 0.10D;
+        return (hatchTier >= GTValues.LuV ? 0.20D : 0.10D) + opticalCrystalStrengthBonus;
     }
+
+    public int getOpticalCrystalQuality() { return opticalCrystalQuality; }
+
+    public double getOpticalCrystalStrengthBonus() { return opticalCrystalStrengthBonus; }
 
     public boolean isAdvancedHatch() {
         return hasDataWafer && hatchTier >= GTValues.LuV;

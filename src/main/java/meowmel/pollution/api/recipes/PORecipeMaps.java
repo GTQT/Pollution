@@ -199,6 +199,30 @@ public class PORecipeMaps {
                     .sound(GTSoundEvents.ARC)
                     .build();
 
+    /** One-way NBT-preserving cultivation chain; only the magic autoclave exposes this map. */
+    public static final RecipeMap<SimpleRecipeBuilder> CRYSTAL_CULTIVATION_RECIPES =
+            new RecipeMapBuilder<>("crystal_cultivation", new SimpleRecipeBuilder())
+                    .itemInputs(6)
+                    .itemOutputs(1)
+                    .fluidInputs(3)
+                    .fluidOutputs(0)
+                    .ui(MagicPropertyRecipeUI::new)
+                    .progressBar(GuiTextures.PROGRESS_BAR_ARROW)
+                    .sound(GTSoundEvents.CHEMICAL_REACTOR)
+                    .build();
+
+    /** The open-sky celestial growth array is the only controller for this map. */
+    public static final RecipeMap<SimpleRecipeBuilder> CELESTIAL_CRYSTAL_GROWTH_RECIPES =
+            new RecipeMapBuilder<>("celestial_crystal_growth", new SimpleRecipeBuilder())
+                    .itemInputs(4)
+                    .itemOutputs(1)
+                    .fluidInputs(3)
+                    .fluidOutputs(0)
+                    .ui(MagicPropertyRecipeUI::new)
+                    .progressBar(GuiTextures.PROGRESS_BAR_ARROW)
+                    .sound(GTSoundEvents.ARC)
+                    .build();
+
     /** Static JEI documentation; these maps deliberately have no executable controller. */
     public static final RecipeMap<SimpleRecipeBuilder> CONSTELLATION_WAFER_GUIDE_RECIPES =
             new RecipeMapBuilder<>("constellation_wafer_guide", new SimpleRecipeBuilder())
@@ -211,6 +235,15 @@ public class PORecipeMaps {
     /** Static JEI documentation; these maps deliberately have no executable controller. */
     public static final RecipeMap<SimpleRecipeBuilder> TAROT_GUIDE_RECIPES =
             new RecipeMapBuilder<>("tarot_guide", new SimpleRecipeBuilder())
+                    .itemInputs(1)
+                    .itemOutputs(0)
+                    .allowEmptyOutputs()
+                    .ui(MagicGuideUI::new)
+                    .build();
+
+    /** Static JEI documentation for the non-repeatable crystal seed and growth chain. */
+    public static final RecipeMap<SimpleRecipeBuilder> CRYSTAL_CULTIVATION_GUIDE_RECIPES =
+            new RecipeMapBuilder<>("crystal_cultivation_guide", new SimpleRecipeBuilder())
                     .itemInputs(1)
                     .itemOutputs(0)
                     .allowEmptyOutputs()

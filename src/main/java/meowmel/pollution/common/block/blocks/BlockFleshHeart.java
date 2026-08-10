@@ -67,6 +67,13 @@ public class BlockFleshHeart extends Block implements ITileEntityProvider {
                         TextFormatting.RED + "血肉之树 " +
                         TextFormatting.GRAY + "等级: " +
                         TextFormatting.GOLD + level + "/" + TileEntityFleshHeart.MAX_LEVEL));
+                    if (level < TileEntityFleshHeart.MAX_LEVEL) {
+                        playerIn.sendMessage(new TextComponentString(
+                            TextFormatting.GRAY + "下一次生长需要 " +
+                            TextFormatting.DARK_RED + String.format("%,d", heart.getRequiredGrowthLP()) + " LP" +
+                            TextFormatting.GRAY + "，灵魂网络当前拥有 " +
+                            TextFormatting.RED + String.format("%,d", heart.getCurrentNetworkLP()) + " LP"));
+                    }
                 } else {
                     // 其他人右键 → 拒绝
                     playerIn.sendMessage(new TextComponentString(

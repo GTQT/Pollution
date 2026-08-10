@@ -256,7 +256,7 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 						.setRarity(EnumRarity.EPIC)
 						.setCreativeTabs(Pollution_TAB);
 
-		// Magic integration processing intermediates (520-530)
+		// Magic integration processing intermediates (520-531)
 		PollutionMetaItems.SILVERED_GLASS_LENS =
 				this.addItem(520, "silvered_glass_lens").setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.ASTRAL_RESONANCE_COIL =
@@ -269,8 +269,21 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 				this.addItem(524, "precision_rune_blank").setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.ROCK_CRYSTAL_SEED =
 				this.addItem(525, "rock_crystal_seed")
-						.setMaxStackSize(16)
+						.setMaxStackSize(1)
 						.setRarity(EnumRarity.UNCOMMON)
+						.addComponents(new CrystalQualityBehavior())
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.CELESTIAL_CRYSTAL_EMBRYO =
+				this.addItem(531, "celestial_crystal_embryo")
+						.setMaxStackSize(1)
+						.setRarity(EnumRarity.RARE)
+						.addComponents(new CrystalQualityBehavior())
+						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.CULTIVATED_CRYSTAL =
+				this.addItem(532, "cultivated_crystal")
+						.setMaxStackSize(1)
+						.setRarity(EnumRarity.RARE)
+						.addComponents(new CrystalQualityBehavior())
 						.setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.NATURAL_INFUSED_COIL =
 				this.addItem(526, "natural_infused_coil").setCreativeTabs(Pollution_TAB);

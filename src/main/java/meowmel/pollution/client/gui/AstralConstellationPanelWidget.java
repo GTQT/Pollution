@@ -31,7 +31,7 @@ import java.util.Locale;
 public final class AstralConstellationPanelWidget extends Widget<AstralConstellationPanelWidget> {
 
     public static final int WIDTH = 176;
-    public static final int HEIGHT = 166;
+    public static final int HEIGHT = 182;
     private final IValue<String> state;
 
     public AstralConstellationPanelWidget(IValue<String> state) {
@@ -81,24 +81,35 @@ public final class AstralConstellationPanelWidget extends Widget<AstralConstella
         int englishStart = name.indexOf('（');
         if (englishStart > 0) name = name.substring(0, englishStart);
         font.drawString("§b" + name, 86, 25, 0xDFFBFF, false);
-        font.drawString("§7晶圆强度 §d" + panel.baseStrength + "%"
-                + (panel.skyMatched ? " §b+天象10%" : ""), 86, 39, 0xC9D3DB, false);
-        font.drawString(panel.skyMatched ? "§a天象活跃 / 露天" : "§c天象未匹配", 86, 51,
+        int waferBaseStrength = Math.max(0, panel.baseStrength - panel.opticalBonus);
+        font.drawString("§7晶圆基础 §d" + waferBaseStrength + "%", 86, 39, 0xC9D3DB, false);
+        font.drawString("§b透镜+" + panel.opticalBonus + "% §7= §d" + panel.baseStrength + "%",
+                86, 51, 0xC9D3DB, false);
+        font.drawString(panel.skyMatched ? "§a天象活跃 §b+10%" : "§c天象未匹配", 86, 63,
                 panel.skyMatched ? 0x7CFFB0 : 0xFF8C8C, false);
-        font.drawString("§7活跃度 §f" + panel.distribution + "%", 86, 63, 0xC9D3DB, false);
+        font.drawString(panel.opticalQuality > 0
+                        ? "§7晶体品质 §b" + panel.opticalQuality + "%"
+                        : "§8未插入培育水晶",
+                86, 75, 0xC9D3DB, false);
+        font.drawString(panel.tarot.isEmpty() ? "§8塔罗：未插入" : "§d塔罗："
+                        + MagicJeiHintResolver.tarotDisplayName(panel.tarot)
+                        + (panel.hasTarotEffect() ? " §a已生效" : " §8未匹配"),
+                86, 86, panel.hasTarotEffect() ? 0x8CFFB0 : 0x9BA8B4, false);
 
-        font.drawString("§9晶圆加成明细", 7, 91, 0xB9D6FF, false);
-        font.drawString("§7基础 §d" + panel.baseStrength + "% §7/ 天象 §b"
-                + (panel.skyMatched ? "+10%" : "+0%"), 7, 102, 0xC9D3DB, false);
-        font.drawString("§f耗时 §a-" + panel.duration + "%  §fEUt §a-" + panel.eut + "%", 7, 113,
+        font.drawString(panel.idlePreview ? "§9晶圆、塔罗待机预览" : "§9晶圆、塔罗与工序合计",
+                7, 99, 0xB9D6FF, false);
+        font.drawString("§7基础 §d" + waferBaseStrength + "% §7/ 透镜 §b+" + panel.opticalBonus
+                + "% §7/ 天象 §b" + (panel.skyMatched ? "+10%" : "+0%"), 7, 110, 0xC9D3DB, false);
+        font.drawString("§f耗时 §a-" + panel.duration + "%  §fEUt §a-" + panel.eut + "%", 7, 121,
                 panel.hasRecipeBonus() ? 0xE3F5E9 : 0x9BA8B4, false);
-        font.drawString("§f介质 §a-" + panel.magic + "%  §f并行 §e+" + panel.parallel, 7, 124,
+        font.drawString("§f介质 §a-" + panel.magic + "%  §f并行 §e+" + panel.parallel, 7, 132,
                 panel.hasRecipeBonus() ? 0xE3F5E9 : 0x9BA8B4, false);
-        font.drawString("§f产物 §e+" + panel.output + "%  §f重判 §e+" + panel.chance + "%", 7, 135,
+        font.drawString("§f产物 §e+" + panel.output + "%  §f重判 §e+" + panel.chance + "%", 7, 143,
                 panel.hasRecipeBonus() ? 0xFFF0C2 : 0x9BA8B4, false);
-        font.drawString("§f催化 §e" + panel.catalyst + "%  §f炉温 §6+" + panel.temperature + "K", 7, 146,
+        font.drawString("§f催化 §e" + panel.catalyst + "%  §f炉温 §6+" + panel.temperature + "K", 7, 154,
                 panel.hasRecipeBonus() ? 0xFFF0C2 : 0x9BA8B4, false);
-        font.drawString("§8以上为当前晶圆/塔罗及工序的实时合计", 7, 157, 0x8795A3, false);
+        font.drawString(panel.getTarotContributionText(), 7, 165,
+                panel.hasTarotEffect() ? 0xF7A8FF : 0x8795A3, false);
     }
 
     @SideOnly(Side.CLIENT)
@@ -170,10 +181,24 @@ public final class AstralConstellationPanelWidget extends Widget<AstralConstella
         private final int chance;
         private final int catalyst;
         private final int temperature;
+        private final int opticalQuality;
+        private final int opticalBonus;
+        private final String tarot;
+        private final int tarotDuration;
+        private final int tarotEut;
+        private final int tarotMagic;
+        private final int tarotParallel;
+        private final int tarotOutput;
+        private final int tarotChance;
+        private final int tarotCatalyst;
+        private final int tarotTemperature;
+        private final boolean idlePreview;
 
         private PanelState(String constellation, int baseStrength, boolean skyMatched, int distribution,
                            int duration, int eut, int magic, int parallel, int output, int chance,
-                           int catalyst, int temperature) {
+                           int catalyst, int temperature, int opticalQuality, int opticalBonus, String tarot,
+                           int tarotDuration, int tarotEut, int tarotMagic, int tarotParallel, int tarotOutput,
+                           int tarotChance, int tarotCatalyst, int tarotTemperature, boolean idlePreview) {
             this.constellation = constellation;
             this.baseStrength = baseStrength;
             this.skyMatched = skyMatched;
@@ -186,22 +211,39 @@ public final class AstralConstellationPanelWidget extends Widget<AstralConstella
             this.chance = chance;
             this.catalyst = catalyst;
             this.temperature = temperature;
+            this.opticalQuality = opticalQuality;
+            this.opticalBonus = opticalBonus;
+            this.tarot = tarot == null ? "" : tarot;
+            this.tarotDuration = tarotDuration;
+            this.tarotEut = tarotEut;
+            this.tarotMagic = tarotMagic;
+            this.tarotParallel = tarotParallel;
+            this.tarotOutput = tarotOutput;
+            this.tarotChance = tarotChance;
+            this.tarotCatalyst = tarotCatalyst;
+            this.tarotTemperature = tarotTemperature;
+            this.idlePreview = idlePreview;
         }
 
         private static PanelState parse(String encoded) {
             if (encoded == null || encoded.isEmpty()) return new PanelState("", 0, false, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0);
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, 0, true);
             String[] fields = encoded.split("\\|", -1);
-            if (fields.length != 12) return new PanelState("", 0, false, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0);
+            if (fields.length != 24) return new PanelState("", 0, false, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, 0, true);
             try {
                 return new PanelState(fields[0].toLowerCase(Locale.ROOT), Integer.parseInt(fields[1]),
                         Boolean.parseBoolean(fields[2]), Integer.parseInt(fields[3]), Integer.parseInt(fields[4]),
                         Integer.parseInt(fields[5]), Integer.parseInt(fields[6]), Integer.parseInt(fields[7]),
                         Integer.parseInt(fields[8]), Integer.parseInt(fields[9]), Integer.parseInt(fields[10]),
-                        Integer.parseInt(fields[11]));
+                        Integer.parseInt(fields[11]), Integer.parseInt(fields[12]), Integer.parseInt(fields[13]),
+                        fields[14].toLowerCase(Locale.ROOT), Integer.parseInt(fields[15]),
+                        Integer.parseInt(fields[16]), Integer.parseInt(fields[17]), Integer.parseInt(fields[18]),
+                        Integer.parseInt(fields[19]), Integer.parseInt(fields[20]), Integer.parseInt(fields[21]),
+                        Integer.parseInt(fields[22]), Boolean.parseBoolean(fields[23]));
             } catch (NumberFormatException ignored) {
-                return new PanelState("", 0, false, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                return new PanelState("", 0, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        "", 0, 0, 0, 0, 0, 0, 0, 0, true);
             }
         }
 
@@ -212,6 +254,36 @@ public final class AstralConstellationPanelWidget extends Widget<AstralConstella
         private boolean hasRecipeBonus() {
             return duration > 0 || eut > 0 || magic > 0 || parallel > 0 || output > 0
                     || chance > 0 || catalyst > 0 || temperature > 0;
+        }
+
+        private boolean hasTarotEffect() {
+            return tarotDuration > 0 || tarotEut > 0 || tarotMagic > 0 || tarotParallel > 0
+                    || tarotOutput > 0 || tarotChance > 0 || tarotCatalyst > 0 || tarotTemperature > 0;
+        }
+
+        private String getTarotContributionText() {
+            if (tarot.isEmpty()) return "§8塔罗贡献：未插入塔罗牌";
+            if (!hasTarotEffect()) return "§8塔罗贡献：已插入，但未匹配";
+            StringBuilder line = new StringBuilder("§d塔罗贡献：");
+            append(line, "耗时 -", tarotDuration, "%");
+            append(line, "EUt -", tarotEut, "%");
+            append(line, "介质 -", tarotMagic, "%");
+            append(line, "并行 +", tarotParallel, "");
+            append(line, "产物 +", tarotOutput, "%");
+            append(line, "重判 +", tarotChance, "%");
+            append(line, "催化 ", tarotCatalyst, "%");
+            append(line, "炉温 +", tarotTemperature, "K");
+            return line.toString();
+        }
+
+        private static void append(StringBuilder line, String label, int value, String suffix) {
+            if (value <= 0) return;
+            // The floating panel is intentionally compact. The normal machine
+            // UI contains the complete contribution list; keep this one line
+            // within the 176 px panel instead of allowing it to overlap it.
+            if (line.length() > 20) return;
+            if (line.length() > 7) line.append(' ');
+            line.append(label).append(value).append(suffix);
         }
 
     }
