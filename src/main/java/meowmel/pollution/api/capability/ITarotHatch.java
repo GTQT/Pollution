@@ -6,4 +6,8 @@ public interface ITarotHatch {
     String getActiveTarot();
 
     boolean hasTarot(String tarotId);
+
+    void setFocusLocked(boolean locked);
+
+    boolean isFocusLocked();
 }

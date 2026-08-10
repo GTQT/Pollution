@@ -4,7 +4,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.casing.DeclarativePatternBuilder;
 import gregtech.api.pattern.element.Elements;
 import gregtech.api.pattern.element.StructureDefinition;
@@ -14,6 +13,10 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import hellfirepvp.astralsorcery.common.block.BlockMarble;
 import hellfirepvp.astralsorcery.common.lib.BlocksAS;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.api.unification.PollutionMaterials;
+import gregtech.api.unification.material.Material;
 import meowmel.pollution.client.textures.POTextures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -27,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MetaTileEntityIndustrialStarlightInfuser extends RecipeMapMultiblockController {
+public class MetaTileEntityIndustrialStarlightInfuser extends MagicRecipeMapMultiblockController {
 
     private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
             "pollution:industrial_starlight_infuser", () -> DeclarativePatternBuilder.start()
@@ -44,7 +47,10 @@ public class MetaTileEntityIndustrialStarlightInfuser extends RecipeMapMultibloc
                     .where('C', Elements.choice(Elements.block(marble(BlockMarble.MarbleBlockType.BRICKS)),
                             Elements.abilities(MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_ITEMS,
                                     MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS,
-                                    MultiblockAbility.MAINTENANCE_HATCH)))
+                                    MultiblockAbility.MAINTENANCE_HATCH, POMultiblockAbility.VIS_HATCH,
+                                    POMultiblockAbility.INFUSED_FLUID_HATCH, POMultiblockAbility.MANA_INPUT_POOL,
+                                    POMultiblockAbility.BLOOD_MAGIC_HATCH, POMultiblockAbility.ASTRAL_LENS_HATCH,
+                                    POMultiblockAbility.TAROT_HATCH)))
                     .block('R', marble(BlockMarble.MarbleBlockType.RUNED))
                     .block('P', marble(BlockMarble.MarbleBlockType.PILLAR))
                     .block('A', marble(BlockMarble.MarbleBlockType.ARCH))
@@ -56,6 +62,12 @@ public class MetaTileEntityIndustrialStarlightInfuser extends RecipeMapMultibloc
                      .globalAbilityLimit(MultiblockAbility.EXPORT_ITEMS, 1, -1)
                      .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, -1)
                      .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
+                     .globalAbilityLimit(POMultiblockAbility.VIS_HATCH, 0, 1)
+                     .globalAbilityLimit(POMultiblockAbility.INFUSED_FLUID_HATCH, 1, 1)
+                     .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
+                     .globalAbilityLimit(POMultiblockAbility.BLOOD_MAGIC_HATCH, 0, 1)
+                     .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                     .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                      .buildStructureDefinition());
 
     public MetaTileEntityIndustrialStarlightInfuser(ResourceLocation metaTileEntityId) {
@@ -84,6 +96,11 @@ public class MetaTileEntityIndustrialStarlightInfuser extends RecipeMapMultibloc
     @Override
     protected @NotNull OrientedOverlayRenderer getFrontOverlay() {
         return Textures.HPCA_OVERLAY;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return PollutionMaterials.InfusedLight;
     }
 
     @Override

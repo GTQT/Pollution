@@ -7,15 +7,20 @@ import gregtech.api.capability.impl.EnergyContainerList;
 import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.ui.KeyManager;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
+import gregtech.api.metatileentity.multiblock.ui.UISyncer;
 import gregtech.api.pattern.casing.DeclarativePatternBuilder;
 import gregtech.api.pattern.element.Elements;
 import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.client.renderer.ICubeRenderer;
+import gregtech.api.util.KeyUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityLaserHatch;
 import meowmel.gtqtcore.api.metatileentity.multiblock.GTQTMultiblockAbility;
 import meowmel.gtqtcore.common.metatileentities.multi.electric.generator.MetaTileEntityMegaTurbine;
 import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.api.amplification.MagicEnergyAmplification;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -32,6 +37,39 @@ public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
     public MetaTileEntityMagicMegaTurbine(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, int tier, IBlockState casingState, IBlockState gearboxState, ICubeRenderer casingRenderer, boolean hasMufflerHatch, ICubeRenderer frontOverlay) {
         super(metaTileEntityId, new MagicTurbineType(metaTileEntityId.toString(), recipeMap, tier, casingState,
                 gearboxState, casingRenderer, hasMufflerHatch, frontOverlay));
+        this.recipeMapWorkable = new MagicMegaTurbineWorkableHandler(this, tier);
+        this.recipeMapWorkable.setMaximumOverclockVoltage(GTValues.V[tier]);
+    }
+
+    @Override
+    public MetaTileEntity createMetaTileEntity(gregtech.api.metatileentity.interfaces.IGregTechTileEntity tileEntity) {
+        return new MetaTileEntityMagicMegaTurbine(metaTileEntityId, type.getRecipeMap(), type.getTier(),
+                type.getCasingState(), type.getGearboxState(), type.getCasingRenderer(), type.hasMufflerHatch(),
+                type.getFrontOverlay());
+    }
+
+    public MagicEnergyAmplification getEnergyAmplification() {
+        return MagicEnergyAmplification.read(getAbilities(POMultiblockAbility.ASTRAL_LENS_HATCH),
+                getAbilities(POMultiblockAbility.TAROT_HATCH), MagicEnergyAmplification.MachineKind.MEGA_TURBINE);
+    }
+
+    @Override
+    protected void configureDisplayText(MultiblockUIBuilder builder) {
+        super.configureDisplayText(builder);
+        builder.addCustom(this::addMagicEnergyAmplification);
+    }
+
+    private void addMagicEnergyAmplification(KeyManager keyManager, UISyncer syncer) {
+        MagicEnergyAmplification amplification = getEnergyAmplification();
+        if (!syncer.syncBoolean(amplification.getAstral().hasDataWafer())) return;
+        keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
+                "魔导发电增幅：" + syncer.syncString(amplification.getAstral().getConstellation())
+                        + " / " + syncer.syncString(amplification.getTarot())
+                        + "，发电 +" + percent(syncer.syncDouble(amplification.getGenerationBonus())) + "%"));
+    }
+
+    private static int percent(double value) {
+        return (int) Math.round(value * 100.0D);
     }
 
     @Override
@@ -77,12 +115,16 @@ public class MetaTileEntityMagicMegaTurbine extends MetaTileEntityMegaTurbine {
                                     Elements.abilities(MultiblockAbility.MAINTENANCE_HATCH,
                                             MultiblockAbility.IMPORT_ITEMS,
                                             MultiblockAbility.IMPORT_FLUIDS,
-                                            MultiblockAbility.EXPORT_FLUIDS)))))
+                                            MultiblockAbility.EXPORT_FLUIDS,
+                                            POMultiblockAbility.ASTRAL_LENS_HATCH,
+                                            POMultiblockAbility.TAROT_HATCH)))))
                     .globalAbilityLimit(POMultiblockAbility.MANA_OUTPUT_HATCH, 0, 8)
                     .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                     .globalAbilityLimit(MultiblockAbility.IMPORT_ITEMS, 0, 1)
                     .globalAbilityLimit(MultiblockAbility.IMPORT_FLUIDS, 1, 4)
                     .globalAbilityLimit(MultiblockAbility.EXPORT_FLUIDS, 1, 4)
+                    .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                    .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                     .buildStructureDefinition();
         });
     }

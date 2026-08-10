@@ -3,6 +3,7 @@ package meowmel.pollution.api.metatileentity;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
+import gregtech.api.metatileentity.multiblock.ui.MultiblockUIFactory;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.FormedStructureView;
 import gregtech.api.pattern.casing.DeclarativePatternBuilder;
@@ -11,14 +12,27 @@ import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.unification.material.Material;
 import gregtech.api.util.KeyUtil;
+import com.cleanroommc.modularui.api.IPanelHandler;
+import com.cleanroommc.modularui.screen.ModularPanel;
 import meowmel.pollution.api.capability.IAstralHatch;
 import meowmel.pollution.api.capability.IBloodMagicHatch;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.capability.ITarotHatch;
 import meowmel.pollution.api.capability.IVisHatch;
 import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
+import meowmel.pollution.api.amplification.AstralAmplifierSnapshot;
+import meowmel.pollution.api.amplification.MagicAmplificationResult;
+import meowmel.pollution.api.amplification.MagicAmplificationEngine;
+import meowmel.pollution.api.amplification.MagicJeiHintResolver;
+import meowmel.pollution.api.amplification.MagicProcessTag;
+import meowmel.pollution.api.amplification.MagicMachineProfileRegistry;
 import meowmel.pollution.api.recipes.properties.AstralCondition;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
+import meowmel.pollution.client.gui.AstralConstellationPanelWidget;
+import com.cleanroommc.modularui.value.sync.GenericSyncValue;
+import com.cleanroommc.modularui.widgets.ButtonWidget;
+import com.cleanroommc.modularui.widgets.TextWidget;
+import com.cleanroommc.modularui.utils.Alignment;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -26,6 +40,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -49,6 +64,64 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
     public MagicRecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?>[] recipeMaps) {
         super(metaTileEntityId, recipeMaps);
         this.recipeMapWorkable = new MagicMultiblockRecipeLogic(this);
+    }
+
+    @Override
+    protected MultiblockUIFactory createUIFactory() {
+        // Preserve the MultiMap controller's stock factory: it owns the recipe
+        // selector and all standard bottom/side controls.
+        return super.createUIFactory().addScreenChildren((screen, syncManager) -> {
+            GenericSyncValue<String> state = syncManager.getOrCreateSyncHandler("pollution_astral_mini", 0,
+                    GenericSyncValue.class, () -> GenericSyncValue.builder(String.class)
+                            .getter(this::getAstralPanelState)
+                            .serializer((buffer, value) -> buffer.writeString(value))
+                            .deserializer(buffer -> buffer.readString(256))
+                            .copyImmutable()
+                            .build());
+            // This factory is executed on both logical sides before the parent
+            // panel is initialised. Build the client-only secondary panel on
+            // its first click, not during initial screen construction.
+            final IPanelHandler[] astralWindow = new IPanelHandler[1];
+            ButtonWidget<?> toggle = new ButtonWidget<>()
+                    .size(18)
+                    .top(3)
+                    .right(3)
+                    .onMousePressed(button -> {
+                        if (button != 0) return false;
+                        if (astralWindow[0] == null) {
+                            astralWindow[0] = IPanelHandler.simple(screen.getPanel(), (parent, player) ->
+                                    new ModularPanel("pollution_astral_constellation")
+                                            .size(AstralConstellationPanelWidget.WIDTH, AstralConstellationPanelWidget.HEIGHT)
+                                            .relative(parent)
+                                            .left(-184)
+                                            .top(0)
+                                            .child(new AstralConstellationPanelWidget(state))
+                                            .child(ButtonWidget.panelCloseButton()), true);
+                        }
+                        astralWindow[0].openPanel();
+                        return true;
+                    });
+            toggle.child(new TextWidget<>("✦")
+                    .textAlign(Alignment.Center)
+                    .size(18));
+            screen.child(toggle);
+
+            // Open once the client main panel is valid.  The screen builder
+            // itself also runs server-side, so opening here would break every
+            // machine GUI on an integrated/dedicated server.
+            screen.onUpdateListener(widget -> {
+                if (!FMLCommonHandler.instance().getSide().isClient() || astralWindow[0] != null) return;
+                astralWindow[0] = IPanelHandler.simple(widget.getPanel(), (parent, player) ->
+                        new ModularPanel("pollution_astral_constellation")
+                                .size(AstralConstellationPanelWidget.WIDTH, AstralConstellationPanelWidget.HEIGHT)
+                                .relative(parent)
+                                .left(-184)
+                                .top(0)
+                                .child(new AstralConstellationPanelWidget(state))
+                                .child(ButtonWidget.panelCloseButton()), true);
+                astralWindow[0].openPanel();
+            }, true);
+        });
     }
 
     /**
@@ -185,41 +258,204 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
     }
 
     public void addCustomCapacity(KeyManager keyManager, UISyncer syncer) {
-        if (isStructureFormed()) {
+        if (syncer.syncBoolean(isStructureFormed())) {
             int infusedAmount = syncer.syncInt(infusedFluidTank == null ? 0 : infusedFluidTank.getFluidAmount());
             keyManager.add(KeyUtil.string(TextFormatting.GRAY, "源质仓储量：" + getMaterial().getLocalizedName() + " " + infusedAmount + "L"));
 
             int visStore = syncer.syncInt(getVisStore());
             keyManager.add(KeyUtil.string(TextFormatting.GRAY, "灵气仓储量：" + visStore + "vis"));
 
-            if (manaPoolHatch != null) {
-                keyManager.add(KeyUtil.string(TextFormatting.GRAY, "纯魔力池：" + syncer.syncLong(manaPoolHatch.getMana())));
+            if (syncer.syncBoolean(manaPoolHatch != null)) {
+                keyManager.add(KeyUtil.string(TextFormatting.GRAY, "纯魔力池：" +
+                        syncer.syncLong(manaPoolHatch == null ? 0L : manaPoolHatch.getMana())));
             }
-            if (bloodMagicHatch != null) {
-                keyManager.add(KeyUtil.string(TextFormatting.GRAY, "生命源质：" + syncer.syncInt(bloodMagicHatch.getLifeEssence())));
+            if (syncer.syncBoolean(bloodMagicHatch != null)) {
+                keyManager.add(KeyUtil.string(TextFormatting.GRAY, "生命源质：" +
+                        syncer.syncInt(bloodMagicHatch == null ? 0 : bloodMagicHatch.getLifeEssence())));
             }
-            if (astralLensHatch != null) {
-                String constellation = syncer.syncString(astralLensHatch.getFocusedConstellation());
-                boolean skyVisible = syncer.syncBoolean(astralLensHatch.isSkyVisible());
-                boolean night = syncer.syncBoolean(astralLensHatch.isNight());
-                boolean active = syncer.syncBoolean(astralLensHatch.isFocusedConstellationActive());
+            if (syncer.syncBoolean(astralLensHatch != null)) {
+                String constellation = syncer.syncString(astralLensHatch == null ? "" : astralLensHatch.getFocusedConstellation());
+                boolean skyVisible = syncer.syncBoolean(astralLensHatch != null && astralLensHatch.isSkyVisible());
+                boolean night = syncer.syncBoolean(astralLensHatch != null && astralLensHatch.isNight());
+                boolean active = syncer.syncBoolean(astralLensHatch != null && astralLensHatch.isFocusedConstellationActive());
                 keyManager.add(KeyUtil.string(TextFormatting.GRAY, "星辉焦点：" +
                         (constellation.isEmpty() ? "未调谐" : constellation)));
                 keyManager.add(KeyUtil.string(skyVisible ? TextFormatting.GREEN : TextFormatting.RED,
                         "露天状态：" + (skyVisible ? "可见天空" : "被遮挡")));
                 keyManager.add(KeyUtil.string(TextFormatting.GRAY,
                         "天空状态：" + (night ? "夜间" : "日间") +
-                                " / 月相 " + syncer.syncString(astralLensHatch.getMoonPhase())));
+                                " / 月相 " + syncer.syncString(astralLensHatch == null ? "" : astralLensHatch.getMoonPhase())));
                 keyManager.add(KeyUtil.string(TextFormatting.GRAY,
-                        "天象事件：" + syncer.syncString(astralLensHatch.getCelestialEvent())));
+                        "天象事件：" + syncer.syncString(astralLensHatch == null ? "" : astralLensHatch.getCelestialEvent())));
                 keyManager.add(KeyUtil.string(active ? TextFormatting.AQUA : TextFormatting.RED,
                         "星座活跃度：" + String.format("%.1f%%",
-                                syncer.syncDouble(astralLensHatch.getFocusedDistribution() * 100.0F))));
+                                syncer.syncDouble(astralLensHatch == null ? 0.0D
+                                        : astralLensHatch.getFocusedDistribution() * 100.0F))));
+            }
+            if (syncer.syncBoolean(astralLensHatch != null && astralLensHatch.hasConstellationDataWafer())) {
+                int baseStrength = (int) Math.round(AstralAmplifierSnapshot.from(astralLensHatch)
+                        .getBaseStrength() * 100.0D);
+                boolean skyMatched = syncer.syncBoolean(astralLensHatch != null && astralLensHatch.isSkyVisible()
+                        && astralLensHatch.isFocusedConstellationActive());
+                keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
+                        "星座数据晶圆：常驻 " + baseStrength + "%"
+                                + (skyMatched ? "，天相匹配额外 +10%" : "")));
+                int opticalQuality = syncer.syncInt(astralLensHatch == null ? 0
+                        : astralLensHatch.getOpticalCrystalQuality());
+                int opticalBonus = syncer.syncInt((int) Math.round((astralLensHatch == null ? 0.0D
+                        : astralLensHatch.getOpticalCrystalStrengthBonus()) * 100.0D));
+                if (opticalQuality > 0) {
+                    keyManager.add(KeyUtil.string(TextFormatting.AQUA,
+                            "晶体光学校准：品质 " + opticalQuality + "% / 晶圆强度 +" + opticalBonus + "%"));
+                } else {
+                    keyManager.add(KeyUtil.string(TextFormatting.DARK_GRAY,
+                            "晶体光学校准：未插入培育水晶 / 晶圆强度 +0%"));
+                }
+            }
+            if (recipeMapWorkable instanceof MagicMultiblockRecipeLogic) {
+                MagicAmplificationResult result = ((MagicMultiblockRecipeLogic) recipeMapWorkable)
+                        .getActiveAmplification();
+                MagicAmplificationResult tarotContribution = ((MagicMultiblockRecipeLogic) recipeMapWorkable)
+                        .getActiveTarotAmplification();
+                if (syncer.syncBoolean(result.isActive())) {
+                    int durationReduction = syncer.syncInt(percent(result.getDurationReduction()));
+                    int eutReduction = syncer.syncInt(percent(result.getEutReduction()));
+                    int magicCostReduction = syncer.syncInt(percent(result.getMagicCostReduction()));
+                    int extraParallel = syncer.syncInt(result.getExtraParallel());
+                    int outputBonus = syncer.syncInt(percent(result.getOutputBonus()));
+                    int chanceExtraRoll = syncer.syncInt(percent(result.getChanceExtraRoll()));
+                    int catalystSaveChance = syncer.syncInt(percent(result.getCatalystSaveChance()));
+                    int progressRetentionTicks = syncer.syncInt(result.getProgressRetentionTicks());
+                    int furnaceTemperatureBonus = syncer.syncInt(result.getFurnaceTemperatureBonus());
+                    keyManager.add(KeyUtil.string(TextFormatting.AQUA,
+                            "魔导增幅：耗时 -" + durationReduction
+                                    + "% / EU/t -" + eutReduction + "% / 并行 +"
+                                    + extraParallel));
+                    if (magicCostReduction > 0) {
+                        keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
+                                "魔法介质消耗 -" + magicCostReduction + "%"));
+                    }
+                    if (outputBonus > 0 || chanceExtraRoll > 0) {
+                        keyManager.add(KeyUtil.string(TextFormatting.GOLD,
+                                "安全产物 +" + outputBonus + "% / 概率额外判定 "
+                                        + chanceExtraRoll + "%"));
+                    }
+                    if (catalystSaveChance > 0 || progressRetentionTicks > 0) {
+                        keyManager.add(KeyUtil.string(TextFormatting.GREEN,
+                                "催化剂保护 " + catalystSaveChance + "% / 进度保持 "
+                                        + progressRetentionTicks + " tick"));
+                    }
+                    if (furnaceTemperatureBonus > 0) {
+                        keyManager.add(KeyUtil.string(TextFormatting.RED,
+                                "有效炉温 +" + furnaceTemperatureBonus + " K"));
+                    }
+                    String activeTarot = syncer.syncString(result.getTarot());
+                    int tarotDuration = syncer.syncInt(percent(tarotContribution.getDurationReduction()));
+                    int tarotEut = syncer.syncInt(percent(tarotContribution.getEutReduction()));
+                    int tarotMagic = syncer.syncInt(percent(tarotContribution.getMagicCostReduction()));
+                    int tarotParallel = syncer.syncInt(tarotContribution.getExtraParallel());
+                    int tarotOutput = syncer.syncInt(percent(tarotContribution.getOutputBonus()));
+                    int tarotChance = syncer.syncInt(percent(tarotContribution.getChanceExtraRoll()));
+                    int tarotCatalyst = syncer.syncInt(percent(tarotContribution.getCatalystSaveChance()));
+                    int tarotTemperature = syncer.syncInt(tarotContribution.getFurnaceTemperatureBonus());
+                    boolean tarotApplied = tarotDuration > 0 || tarotEut > 0 || tarotMagic > 0 || tarotParallel > 0
+                            || tarotOutput > 0 || tarotChance > 0 || tarotCatalyst > 0 || tarotTemperature > 0;
+                    if (!activeTarot.isEmpty()) {
+                        keyManager.add(KeyUtil.string(tarotApplied ? TextFormatting.LIGHT_PURPLE : TextFormatting.GRAY,
+                                "塔罗牌：" + MagicJeiHintResolver.tarotDisplayName(activeTarot)
+                                        + (tarotApplied ? "（已生效，已汇入魔导增幅）" : "（未匹配当前工序）")));
+                        if (tarotApplied) {
+                            keyManager.add(KeyUtil.string(TextFormatting.LIGHT_PURPLE,
+                                    "塔罗贡献：" + formatTarotContribution(tarotDuration, tarotEut, tarotMagic,
+                                            tarotParallel, tarotOutput, tarotChance, tarotCatalyst, tarotTemperature)));
+                        }
+                    }
+                }
             }
             if (tarotHatch != null) {
                 keyManager.add(KeyUtil.string(TextFormatting.GRAY, "塔罗授权：" + tarotHatch.getActiveTarot()));
             }
         }
+    }
+
+    /**
+     * Compact server-authoritative state for the left-hand constellation panel.
+     * The actual star geometry is resolved client-side from Astral Sorcery's
+     * registered constellation, so only dynamic state crosses the GUI sync.
+     */
+    public String getAstralPanelState() {
+        if (!isStructureFormed() || astralLensHatch == null || !astralLensHatch.hasConstellationDataWafer()) {
+            return "";
+        }
+        String constellation = astralLensHatch.getFocusedConstellation();
+        if (constellation.isEmpty()) return "";
+
+        int baseStrength = (int) Math.round(AstralAmplifierSnapshot.from(astralLensHatch)
+                .getBaseStrength() * 100.0D);
+        boolean skyMatched = astralLensHatch.isSkyVisible() && astralLensHatch.isFocusedConstellationActive();
+        int distribution = Math.round(astralLensHatch.getFocusedDistribution() * 100.0F);
+        MagicAmplificationResult result = recipeMapWorkable instanceof MagicMultiblockRecipeLogic
+                ? ((MagicMultiblockRecipeLogic) recipeMapWorkable).getActiveAmplification()
+                : MagicAmplificationResult.NONE;
+        MagicAmplificationResult tarotContribution = recipeMapWorkable instanceof MagicMultiblockRecipeLogic
+                ? ((MagicMultiblockRecipeLogic) recipeMapWorkable).getActiveTarotAmplification()
+                : MagicAmplificationResult.NONE;
+        boolean idlePreview = !result.isActive();
+        if (idlePreview) {
+            // There is no selected recipe while idle. Preview the machine's
+            // conservative fallback process profile so its installed wafer and
+            // tarot are still informative without claiming recipe-specific data.
+            AstralAmplifierSnapshot previewSnapshot = getAstralAmplifierSnapshot();
+            MagicAmplificationResult astralOnly = MagicAmplificationEngine.calculate(
+                    getMagicProcessTags(null), 0, previewSnapshot, null, 0, true);
+            result = MagicAmplificationEngine.calculate(getMagicProcessTags(null), 0, previewSnapshot,
+                    tarotHatch, 0, true);
+            tarotContribution = result.subtract(astralOnly);
+        }
+        // The hatch is the authoritative insertion state. The active recipe
+        // snapshot is empty while the machine is idle, so using only
+        // result.getTarot() made an inserted card look absent between crafts.
+        String insertedTarot = tarotHatch == null ? "" : tarotHatch.getActiveTarot();
+        String displayedTarot = insertedTarot.isEmpty() ? result.getTarot() : insertedTarot;
+        return constellation + "|" + baseStrength + "|" + skyMatched + "|" + distribution + "|"
+                + percent(result.getDurationReduction()) + "|" + percent(result.getEutReduction()) + "|"
+                + percent(result.getMagicCostReduction()) + "|" + result.getExtraParallel() + "|"
+                + percent(result.getOutputBonus()) + "|" + percent(result.getChanceExtraRoll()) + "|"
+                + percent(result.getCatalystSaveChance()) + "|" + result.getFurnaceTemperatureBonus() + "|"
+                + astralLensHatch.getOpticalCrystalQuality() + "|"
+                + percent(astralLensHatch.getOpticalCrystalStrengthBonus()) + "|"
+                + displayedTarot + "|" + percent(tarotContribution.getDurationReduction()) + "|"
+                + percent(tarotContribution.getEutReduction()) + "|"
+                + percent(tarotContribution.getMagicCostReduction()) + "|"
+                + tarotContribution.getExtraParallel() + "|"
+                + percent(tarotContribution.getOutputBonus()) + "|"
+                + percent(tarotContribution.getChanceExtraRoll()) + "|"
+                + percent(tarotContribution.getCatalystSaveChance()) + "|"
+                + tarotContribution.getFurnaceTemperatureBonus() + "|" + idlePreview;
+    }
+
+    private static int percent(double value) {
+        return (int) Math.round(value * 100.0D);
+    }
+
+    private static String formatTarotContribution(int duration, int eut, int magic, int parallel,
+                                                   int output, int chance, int catalyst, int temperature) {
+        StringBuilder text = new StringBuilder();
+        appendTarotContribution(text, "耗时 -", duration, "%");
+        appendTarotContribution(text, "EU/t -", eut, "%");
+        appendTarotContribution(text, "介质 -", magic, "%");
+        appendTarotContribution(text, "并行 +", parallel, "");
+        appendTarotContribution(text, "产物 +", output, "%");
+        appendTarotContribution(text, "重判 +", chance, "%");
+        appendTarotContribution(text, "催化 ", catalyst, "%");
+        appendTarotContribution(text, "炉温 +", temperature, "K");
+        return text.toString();
+    }
+
+    private static void appendTarotContribution(StringBuilder text, String label, int value, String suffix) {
+        if (value <= 0) return;
+        if (text.length() > 0) text.append(" / ");
+        text.append(label).append(value).append(suffix);
     }
 
     public int getVisCapacity() {
@@ -273,7 +509,54 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
         if (condition.isConfigured() && (astralLensHatch == null || !astralLensHatch.matches(condition))) return false;
 
         String tarot = recipe.getProperty(MagicRecipeProperties.TAROT, "");
-        return tarot.isEmpty() || tarotHatch != null && tarotHatch.hasTarot(tarot);
+        if (!tarot.isEmpty() && (tarotHatch == null || !tarotHatch.hasTarot(tarot))) return false;
+
+        long tags = getMagicProcessTags(recipe);
+        if (MagicProcessTag.hasAny(tags, MagicProcessTag.EXPERIMENTAL)
+                && !hasTarot("the_fool")) return false;
+        if (MagicProcessTag.hasAny(tags, MagicProcessTag.MAGIC_CONVERSION)
+                && !hasTarot("the_magician")) return false;
+        if (MagicProcessTag.hasAny(tags, MagicProcessTag.HIDDEN_RITUAL)
+                && !hasTarot("the_high_priestess")) return false;
+        if (MagicProcessTag.hasAny(tags, MagicProcessTag.RECYCLING)
+                && !hasTarot("death") && !hasTarot("judgement")) return false;
+        return !MagicProcessTag.hasAny(tags, MagicProcessTag.THREE_MAGIC_SYSTEMS) || hasTarot("the_world");
+    }
+
+    private boolean hasTarot(String tarotId) {
+        return tarotHatch != null && tarotHatch.hasTarot(tarotId);
+    }
+
+    /**
+     * Recipe tags override the conservative per-machine profile. Old recipes
+     * therefore receive only their machine's safe first-batch enhancement
+     * until a content patch declares their exact process domain.
+     */
+    public long getMagicProcessTags(Recipe recipe) {
+        if (recipe != null && recipe.hasProperty(MagicRecipeProperties.PROCESS_TAG_MASK)) {
+            return recipe.getProperty(MagicRecipeProperties.PROCESS_TAG_MASK, 0L);
+        }
+        return MagicMachineProfileRegistry.getFallbackTags(metaTileEntityId);
+    }
+
+    public AstralAmplifierSnapshot getAstralAmplifierSnapshot() {
+        return AstralAmplifierSnapshot.from(astralLensHatch);
+    }
+
+    public ITarotHatch getTarotHatch() {
+        return tarotHatch;
+    }
+
+    /** Preview used by temperature-gated machines before GT consumes recipe inputs. */
+    public MagicAmplificationResult getMagicAmplificationPreview(Recipe recipe, boolean singleParallel) {
+        return MagicAmplificationEngine.calculate(getMagicProcessTags(recipe), recipe.getDuration(),
+                getAstralAmplifierSnapshot(), tarotHatch, 0, singleParallel);
+    }
+
+    /** Keep the non-consumable wafer/card stable for one running recipe. */
+    public void setMagicFocusLocked(boolean locked) {
+        if (astralLensHatch != null) astralLensHatch.setFocusLocked(locked);
+        if (tarotHatch != null) tarotHatch.setFocusLocked(locked);
     }
 
     private <T> T getFirstAbility(MultiblockAbility<T> ability) {

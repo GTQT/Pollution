@@ -5,7 +5,6 @@ import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.pattern.FormedStructureView;
@@ -22,7 +21,11 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.POMultiblockAbility;
+import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
+import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -37,6 +40,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import gregtech.api.unification.material.Material;
 import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
@@ -44,7 +48,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 
-public class MetaTileEntityIndustrialInfusion extends RecipeMapMultiblockController {
+public class MetaTileEntityIndustrialInfusion extends MagicRecipeMapMultiblockController {
     private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
             "pollution:industrial_infusion", () -> DeclarativePatternBuilder.start()
                 .aisle("             ABA             ", "          BBBABABBB          ", "             ABA             ")
@@ -81,11 +85,20 @@ public class MetaTileEntityIndustrialInfusion extends RecipeMapMultiblockControl
                 .where('B', Elements.choice(Elements.block(getCasingState()),
                         Elements.abilities(MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_ITEMS,
                                 MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS,
-                                MultiblockAbility.EXPORT_FLUIDS)))
+                                MultiblockAbility.EXPORT_FLUIDS, POMultiblockAbility.VIS_HATCH,
+                                POMultiblockAbility.INFUSED_FLUID_HATCH, POMultiblockAbility.MANA_INPUT_POOL,
+                                POMultiblockAbility.BLOOD_MAGIC_HATCH, POMultiblockAbility.ASTRAL_LENS_HATCH,
+                                POMultiblockAbility.TAROT_HATCH)))
                 .block('C', getCasingState1()).block('D', getCasingState2()).block('E', getCasingState3())
                 .block('F', getCasingState4())
                 .tieredCasing('G', POTieredCasingGroups.glasses().group()).withChannel(POTieredCasingGroups.glasses().channel())
                 .any(' ')
+                .globalAbilityLimit(POMultiblockAbility.VIS_HATCH, 0, 1)
+                .globalAbilityLimit(POMultiblockAbility.INFUSED_FLUID_HATCH, 1, 1)
+                .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
+                .globalAbilityLimit(POMultiblockAbility.BLOOD_MAGIC_HATCH, 0, 1)
+                .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                 .buildStructureDefinition());
     int glass;
     int coil;
@@ -101,6 +114,11 @@ public class MetaTileEntityIndustrialInfusion extends RecipeMapMultiblockControl
     public MetaTileEntityIndustrialInfusion(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, PORecipeMaps.INDUSTRIAL_INFUSION_RECIPES);
         this.recipeMapWorkable = new IndustrialInfusionRecipeLogic(this);
+    }
+
+    @Override
+    public Material getMaterial() {
+        return PollutionMaterials.InfusedMagic;
     }
 
     private static IBlockState getCasingState() {
@@ -380,14 +398,14 @@ public class MetaTileEntityIndustrialInfusion extends RecipeMapMultiblockControl
         tooltip.add(I18n.format("pollution.machine.industrial_infusion.tooltip.4"));
     }
 
-    protected class IndustrialInfusionRecipeLogic extends MultiblockRecipeLogic {
-        public IndustrialInfusionRecipeLogic(RecipeMapMultiblockController tileEntity) {
+    protected class IndustrialInfusionRecipeLogic extends MagicMultiblockRecipeLogic {
+        public IndustrialInfusionRecipeLogic(MagicRecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
         @Override
         public int getParallelLimit() {
-            return (int) Math.pow(2, coil);
+            return Math.max(1, (int) Math.pow(2, coil) + getAmplificationBeingPrepared().getExtraParallel());
         }
 
         @Override

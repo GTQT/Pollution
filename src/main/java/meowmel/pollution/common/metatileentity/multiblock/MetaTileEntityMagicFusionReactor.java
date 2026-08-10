@@ -6,7 +6,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.ui.KeyManager;
 import gregtech.api.metatileentity.multiblock.ui.MultiblockUIBuilder;
 import gregtech.api.metatileentity.multiblock.ui.UISyncer;
@@ -26,7 +25,11 @@ import gregtech.client.shader.postprocessing.BloomType;
 import gregtech.client.utils.*;
 import gregtech.common.ConfigHolder;
 import meowmel.pollution.api.utils.POUtils;
+import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.api.pattern.POTieredCasingGroups;
+import meowmel.pollution.api.unification.PollutionMaterials;
+import gregtech.api.unification.material.Material;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -60,7 +63,7 @@ import static meowmel.pollution.api.unification.PollutionMaterials.RichAura;
 import static meowmel.gtqtcore.api.GTQTValues.REQUIRE_DATA_UPDATE;
 import static meowmel.gtqtcore.api.GTQTValues.UPDATE_TIER;
 
-public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockController implements IBloomEffect, IFastRenderMetaTileEntity {
+public class MetaTileEntityMagicFusionReactor extends MagicRecipeMapMultiblockController implements IBloomEffect, IFastRenderMetaTileEntity {
 
     private static final StructureDefinition<?> STRUCTURE_DEFINITION = StructureDefinition.getOrBuild(
             "pollution:magic_fusion_reactor", () -> {
@@ -83,7 +86,10 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
                                 Elements.abilities(MultiblockAbility.INPUT_ENERGY, MultiblockAbility.IMPORT_ITEMS,
                                         MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS,
                                         MultiblockAbility.EXPORT_FLUIDS, MultiblockAbility.MAINTENANCE_HATCH,
-                                        MultiblockAbility.MUFFLER_HATCH)))
+                                        MultiblockAbility.MUFFLER_HATCH, POMultiblockAbility.VIS_HATCH,
+                                        POMultiblockAbility.INFUSED_FLUID_HATCH, POMultiblockAbility.MANA_INPUT_POOL,
+                                        POMultiblockAbility.BLOOD_MAGIC_HATCH, POMultiblockAbility.ASTRAL_LENS_HATCH,
+                                        POMultiblockAbility.TAROT_HATCH)))
                         .tieredCasing('B', POTieredCasingGroups.coilCasings().group()).withChannel(POTieredCasingGroups.coilCasings().channel())
                         .tieredCasing('C', POTieredCasingGroups.compositionCasings().group()).withChannel(POTieredCasingGroups.compositionCasings().channel())
                         .tieredCasing('D', POTieredCasingGroups.glasses().group()).withChannel(POTieredCasingGroups.glasses().channel())
@@ -91,6 +97,12 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
                 return builder
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.MUFFLER_HATCH, 1, 1)
+                        .globalAbilityLimit(POMultiblockAbility.VIS_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.INFUSED_FLUID_HATCH, 1, 1)
+                        .globalAbilityLimit(POMultiblockAbility.MANA_INPUT_POOL, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.BLOOD_MAGIC_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                         .buildStructureDefinition();
             });
 
@@ -107,6 +119,11 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
 
     public MetaTileEntityMagicFusionReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, MAGIC_FUSION_REACTOR);
+    }
+
+    @Override
+    public Material getMaterial() {
+        return PollutionMaterials.InfusedEnergy;
     }
 
     private static BloomType getBloomType() {
@@ -131,6 +148,7 @@ public class MetaTileEntityMagicFusionReactor extends RecipeMapMultiblockControl
                 .addEnergyUsageLine(this.getEnergyContainer())
                 .addEnergyTierLine(GTUtility.getTierByVoltage(recipeMapWorkable.getMaxVoltage()))
                 .addCustom(this::addCustomText)
+                .addCustom(this::addCustomCapacity)
                 .addParallelsLine(recipeMapWorkable.getParallelLimit())
                 .addWorkingStatusLine()
                 .addProgressLine(recipeMapWorkable.getProgress(), recipeMapWorkable.getMaxProgress())

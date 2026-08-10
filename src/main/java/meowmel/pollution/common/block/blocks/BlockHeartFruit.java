@@ -72,19 +72,27 @@ public class BlockHeartFruit extends Block {
 
         // 未成熟时有20%概率生长
         if (age < 3 && random.nextInt(5) == 0) {
-            worldIn.setBlockState(pos, state.withProperty(AGE, age + 1));
+            int newAge = age + 1;
+            worldIn.setBlockState(pos, state.withProperty(AGE, newAge));
+            if (newAge == 3) {
+                worldIn.scheduleUpdate(pos, this, 20);
+            }
+        } else if (age == 3) {
+            // 兼容区块重新加载后没有待处理更新的成熟果实。
+            worldIn.scheduleUpdate(pos, this, 40 + random.nextInt(41));
         }
 
     }
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
-        if (worldIn.isRemote && state.getValue(AGE) == 3) {
+        if (!worldIn.isRemote && state.getValue(AGE) == 3) {
             worldIn.playSound(null, pos,
                     net.minecraft.init.SoundEvents.BLOCK_NOTE_BASEDRUM,
                     SoundCategory.BLOCKS,
                     0.12F,
                     0.6F); // 第二声稍微高一点
+            worldIn.scheduleUpdate(pos, this, 40 + random.nextInt(41));
         }
     }
 

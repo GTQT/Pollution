@@ -3,6 +3,8 @@ package meowmel.pollution.common.block.tile;
 
 
 import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.core.data.SoulNetwork;
+import WayofTime.bloodmagic.core.data.SoulTicket;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import meowmel.pollution.api.utils.FleshTreeGrowth;
 import net.minecraft.block.state.IBlockState;
@@ -54,6 +56,9 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
     /** 每次生长间隔（tick）= 约5分钟 */
     private static final int GROWTH_INTERVAL = 6000; // 5分钟 = 6000 ticks
 
+    /** LP 不足时的再次检查间隔，避免重置完整生长周期 */
+    private static final int GROWTH_RETRY_INTERVAL = 400;
+
     /** 心跳声计时器 */
     private int heartbeatTimer = 0;
 
@@ -64,24 +69,50 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        // === 心跳声效 === 客户端
-        if(getWorld().isRemote){
-            heartbeatTimer++;
-            if (heartbeatTimer >= getHeartbeatInterval()) {
-                heartbeatTimer = 0;
-                playHeartbeat();
-            }
-        }//服务端
         if (world == null || world.isRemote) return;
+
+        // 声音必须由服务端广播，客户端使用 player=null 不会向其他客户端发送声音包。
+        heartbeatTimer++;
+        if (heartbeatTimer >= getHeartbeatInterval()) {
+            heartbeatTimer = 0;
+            playHeartbeat();
+        }
+
         pushFluidToNeighbors();
         scanForInventory();
         // === 生长逻辑 ===
         if (level >= MAX_LEVEL) return; // 已满级不再生长
         growthTimer++;
-        if (growthTimer >= GROWTH_INTERVAL * (this.level*1.25)) {
-            growthTimer = 0;
-            growOnce();
+        int requiredTicks = getGrowthIntervalTicks();
+        if (growthTimer >= requiredTicks) {
+            if (growOnce()) {
+                growthTimer = 0;
+            } else {
+                growthTimer = Math.max(0, requiredTicks - GROWTH_RETRY_INTERVAL);
+            }
         }
+    }
+
+    private int getGrowthIntervalTicks() {
+        return (int) (GROWTH_INTERVAL * (level * 1.25D));
+    }
+
+    /**
+     * 生长到目标等级所需的灵魂网络 LP：100,000 * (目标等级 - 1)^2。
+     */
+    public int getGrowthLPCost(int targetLevel) {
+        if (targetLevel <= 1 || targetLevel > MAX_LEVEL) return 0;
+        int growthStep = targetLevel - 1;
+        return 100_000 * growthStep * growthStep;
+    }
+
+    public int getRequiredGrowthLP() {
+        return level >= MAX_LEVEL ? 0 : getGrowthLPCost(level + 1);
+    }
+
+    public int getCurrentNetworkLP() {
+        SoulNetwork network = getBoundSoulNetwork();
+        return network == null ? 0 : network.getCurrentEssence();
     }
     /** 流体输出间隔 (tick), 等级越高越快 */
     private int getFluidInterval() {
@@ -222,21 +253,31 @@ public class TileEntityFleshHeart extends TileEntity implements ITickable {
     /**
      * 执行一次生长
      */
-    private void growOnce() {
-        if (level >= MAX_LEVEL) return;
+    private boolean growOnce() {
+        if (level >= MAX_LEVEL) return false;
 
         int newLevel = level + 1;
+        int lpCost = getGrowthLPCost(newLevel);
+        SoulNetwork network = getBoundSoulNetwork();
+        if (network == null || network.getCurrentEssence() < lpCost) return false;
 
         // 委托给生长工具类执行实际的方块放置
         boolean success = FleshTreeGrowth.growToLevel(world, originPos, pos, newLevel);
 
         if (success) {
+            network.syphon(SoulTicket.block(world, pos, lpCost));
             level = newLevel;
             markDirty();
             // 同步到客户端
             IBlockState state = world.getBlockState(pos);
             world.notifyBlockUpdate(pos, state, state, 3);
         }
+        return success;
+    }
+
+    @Nullable
+    private SoulNetwork getBoundSoulNetwork() {
+        return boundPlayerUUID == null ? null : NetworkHelper.getSoulNetwork(boundPlayerUUID);
     }
 
     /**

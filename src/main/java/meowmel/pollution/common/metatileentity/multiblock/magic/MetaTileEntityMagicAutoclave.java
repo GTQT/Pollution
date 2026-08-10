@@ -13,6 +13,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
+import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMBeamCore;
@@ -35,7 +36,7 @@ public class MetaTileEntityMagicAutoclave extends MagicRecipeMapMultiblockContro
                             .aisle("XXX", "XSX", "XXX")
                             .self('S', MetaTileEntityMagicAutoclave.class),
                     'X', getCasingState(),
-                    RecipeMaps.AUTOCLAVE_RECIPES, 17)
+                    new RecipeMap<?>[]{RecipeMaps.AUTOCLAVE_RECIPES, PORecipeMaps.CRYSTAL_CULTIVATION_RECIPES}, 17)
                     .block('C', getCasingState2())
                     .block('Y', getCasingState3())
                     .air('A')
@@ -43,7 +44,8 @@ public class MetaTileEntityMagicAutoclave extends MagicRecipeMapMultiblockContro
                     .buildStructureDefinition());
 
     public MetaTileEntityMagicAutoclave(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.AUTOCLAVE_RECIPES});
+        super(metaTileEntityId, new RecipeMap[]{RecipeMaps.AUTOCLAVE_RECIPES,
+                PORecipeMaps.CRYSTAL_CULTIVATION_RECIPES});
     }
 
     private static IBlockState getCasingState() {

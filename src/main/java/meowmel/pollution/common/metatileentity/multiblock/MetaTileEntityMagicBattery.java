@@ -36,6 +36,8 @@ import gregtech.client.utils.IBloomEffect;
 import gregtech.client.utils.RenderBufferHelper;
 import gregtech.common.ConfigHolder;
 import meowmel.pollution.api.pattern.POTieredCasingGroups;
+import meowmel.pollution.api.amplification.MagicEnergyAmplification;
+import meowmel.pollution.api.metatileentity.POMultiblockAbility;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
@@ -94,10 +96,13 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
                         .where('A', Elements.choice(
                                 Elements.block(getCasingState()),
                                 Elements.abilities(0, 185, MultiblockAbility.MAINTENANCE_HATCH,
-                                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.OUTPUT_ENERGY)))
+                                        MultiblockAbility.INPUT_ENERGY, MultiblockAbility.OUTPUT_ENERGY,
+                                        POMultiblockAbility.ASTRAL_LENS_HATCH, POMultiblockAbility.TAROT_HATCH)))
                         .globalAbilityLimit(MultiblockAbility.MAINTENANCE_HATCH, 1, 1)
                         .globalAbilityLimit(MultiblockAbility.INPUT_ENERGY, 1, 16)
                         .globalAbilityLimit(MultiblockAbility.OUTPUT_ENERGY, 1, 16)
+                        .globalAbilityLimit(POMultiblockAbility.ASTRAL_LENS_HATCH, 0, 1)
+                        .globalAbilityLimit(POMultiblockAbility.TAROT_HATCH, 0, 1)
                         .buildStructureDefinition();
             });
     @Override
@@ -150,11 +155,21 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
     }
 
     public long euMax() {
-        return (long) coilLevel * beamCore * 250000;
+        long baseCapacity = (long) coilLevel * beamCore * 250000;
+        long amplifiedCapacity = (long) Math.floor(baseCapacity * (1.0D + getEnergyAmplification().getCapacityBonus()));
+        // Do not destroy stored energy merely because the sky changes after charging.
+        return Math.max(eu, amplifiedCapacity);
     }
 
     public int powerMax() {
-        return VA[beamCore * 2];
+        int basePower = VA[beamCore * 2];
+        return (int) Math.min(Integer.MAX_VALUE,
+                Math.floor(basePower * (1.0D + getEnergyAmplification().getTransferBonus())));
+    }
+
+    private MagicEnergyAmplification getEnergyAmplification() {
+        return MagicEnergyAmplification.read(getAbilities(POMultiblockAbility.ASTRAL_LENS_HATCH),
+                getAbilities(POMultiblockAbility.TAROT_HATCH), MagicEnergyAmplification.MachineKind.BATTERY);
     }
 
     @Override
@@ -211,6 +226,12 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
         textList.add(new TextComponentTranslation("pollution.eke.count", beamCore, coilLevel));
         textList.add(new TextComponentTranslation("pollution.eke.eu1", inputEu, outputEu));
         textList.add(new TextComponentTranslation("pollution.eke.eu2", eu, euMax(), rate));
+        MagicEnergyAmplification amplification = getEnergyAmplification();
+        if (amplification.isActive()) {
+            textList.add(new TextComponentTranslation("pollution.magic_energy_amplification",
+                    amplification.getAstral().getConstellation(), amplification.getTarot(),
+                    percent(amplification.getCapacityBonus()), percent(amplification.getTransferBonus()), 0));
+        }
         if (this.isWorkingEnabled) {
             if (euDelta > 0) {
                 textList.add(new TextComponentTranslation("pollution.eke.output1", euDelta, powerMax()));
@@ -228,6 +249,10 @@ public class MetaTileEntityMagicBattery extends MultiblockWithDisplayBase implem
             textList.add(new TextComponentTranslation("pollution.eke.output4", powerMax()));
         }
         textList.add(new TextComponentTranslation("======================="));
+    }
+
+    private static int percent(double value) {
+        return (int) Math.round(value * 100.0D);
     }
 
     //进度条

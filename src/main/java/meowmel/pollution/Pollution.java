@@ -5,6 +5,7 @@ import meowmel.pollution.api.recipes.builder.IndustrialInfusionBuilder;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.utils.PollutionLog;
 import meowmel.pollution.common.CommonProxy;
+import meowmel.pollution.common.command.CommandMagicAmplification;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.blocks.PollutionBlocksInit;
 import meowmel.pollution.common.entity.PoEntitiesRegistry;
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
@@ -114,6 +116,11 @@ public class Pollution {
         Botania.init();
         AstralSorcery.init();
         MeteorsHelper.init();
+    }
+
+    @Mod.EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandMagicAmplification());
     }
 
 

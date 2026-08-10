@@ -154,16 +154,12 @@ public class AlfheimBiome extends Biome {
      * The returned value is the number of blocks below the surface block.
      */
     public int getFillerDepth(Random rand) {
-        switch (decoration) {
-            case LOW_PLATEAU:
-            case MID_PLATEAU:
-            case HIGH_PLATEAU:
-            case HIGH_PLATEAU_FOREST:
-            case HIGH_PLATEAU_FIELD:
-                return rand.nextInt(3);
-            default:
-                return 4 + rand.nextInt(3);
-        }
+        boolean isPlateau = decoration == Decoration.LOW_PLATEAU
+                || decoration == Decoration.MID_PLATEAU
+                || decoration == Decoration.HIGH_PLATEAU
+                || decoration == Decoration.HIGH_PLATEAU_FOREST
+                || decoration == Decoration.HIGH_PLATEAU_FIELD;
+        return isPlateau ? rand.nextInt(3) : 4 + rand.nextInt(3);
     }
 
     /**
@@ -183,107 +179,95 @@ public class AlfheimBiome extends Biome {
         ChunkPos chunkPos = new ChunkPos(pos);
         MinecraftForge.TERRAIN_GEN_BUS.post(new DecorateBiomeEvent.Pre(worldIn, rand, chunkPos));
         try {
-            switch (decoration) {
-                case FIELD:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.0D);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.REED)) {
-                        generateReeds(worldIn, rand, pos, 32);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
-                        generateWhiteGrapes(worldIn, rand, pos, 4);
-                        generateIridescenceFallback(worldIn, rand, pos);
-                    }
-                    break;
-                case FLOWER_FIELD:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, true, false, false, 2.0D);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
-                        generateMutatedFlower(worldIn, rand, pos);
-                    }
-                    break;
-                case ISLAND_FOREST:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.TREE)) {
-                        WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
-                                WorldGenAlfheimProgramTrees.Set.ISLAND_FOREST);
-                        generateFixedTrees(worldIn, rand, pos, 1, 2);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, false, false, false, 2.5D);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
-                        generateWhiteGrapes(worldIn, rand, pos, 2);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.PUMPKIN)) {
-                        generateMelonsAndPumpkins(worldIn, rand, pos);
-                    }
-                    break;
-                case PIT_FOREST:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.TREE)) {
-                        WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
-                                WorldGenAlfheimProgramTrees.Set.FOREST);
-                        generateFixedTrees(worldIn, rand, pos, 1, 2);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, false, false, false, 2.5D);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
-                        generateWhiteGrapes(worldIn, rand, pos, 6);
-                    }
-                    break;
-                case LOW_PLATEAU:
-                case MID_PLATEAU:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.TREE)) {
-                        WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
-                                WorldGenAlfheimProgramTrees.Set.PLATEAU);
-                        generateFixedTrees(worldIn, rand, pos, 12, 20);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.2D);
-                    }
-                    break;
-                case HIGH_PLATEAU:
-                case HIGH_PLATEAU_FIELD:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.2D);
-                    }
-                    break;
-                case HIGH_PLATEAU_FOREST:
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.TREE)) {
-                        WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
-                                WorldGenAlfheimProgramTrees.Set.FOREST);
-                        generateFixedTrees(worldIn, rand, pos, 1, 2);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.GRASS)) {
-                        generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.2D);
-                    }
-                    if (canDecorate(worldIn, rand, chunkPos, pos,
-                            DecorateBiomeEvent.Decorate.EventType.LILYPAD)) {
-                        generateWaterLily(worldIn, rand, pos, 4);
-                    }
-                    break;
-                case NONE:
-                default:
-                    break;
+            if (decoration == Decoration.FIELD) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.0D);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.REED)) {
+                    generateReeds(worldIn, rand, pos, 32);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
+                    generateWhiteGrapes(worldIn, rand, pos, 4);
+                    generateIridescenceFallback(worldIn, rand, pos);
+                }
+            } else if (decoration == Decoration.FLOWER_FIELD) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, true, false, false, 2.0D);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
+                    generateMutatedFlower(worldIn, rand, pos);
+                }
+            } else if (decoration == Decoration.ISLAND_FOREST) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.TREE)) {
+                    WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
+                            WorldGenAlfheimProgramTrees.Set.ISLAND_FOREST);
+                    generateFixedTrees(worldIn, rand, pos, 1, 2);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, false, false, false, 2.5D);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
+                    generateWhiteGrapes(worldIn, rand, pos, 2);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.PUMPKIN)) {
+                    generateMelonsAndPumpkins(worldIn, rand, pos);
+                }
+            } else if (decoration == Decoration.PIT_FOREST) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.TREE)) {
+                    WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
+                            WorldGenAlfheimProgramTrees.Set.FOREST);
+                    generateFixedTrees(worldIn, rand, pos, 1, 2);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, false, false, false, 2.5D);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
+                    generateWhiteGrapes(worldIn, rand, pos, 6);
+                }
+            } else if (decoration == Decoration.LOW_PLATEAU || decoration == Decoration.MID_PLATEAU) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.TREE)) {
+                    WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
+                            WorldGenAlfheimProgramTrees.Set.PLATEAU);
+                    generateFixedTrees(worldIn, rand, pos, 12, 20);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.2D);
+                }
+            } else if (decoration == Decoration.HIGH_PLATEAU
+                    || decoration == Decoration.HIGH_PLATEAU_FIELD) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.2D);
+                }
+            } else if (decoration == Decoration.HIGH_PLATEAU_FOREST) {
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.TREE)) {
+                    WorldGenAlfheimProgramTrees.generate(worldIn, rand, pos,
+                            WorldGenAlfheimProgramTrees.Set.FOREST);
+                    generateFixedTrees(worldIn, rand, pos, 1, 2);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+                    generateSourceGrass(worldIn, rand, pos, true, true, true, true, 1.2D);
+                }
+                if (canDecorate(worldIn, rand, chunkPos, pos,
+                        DecorateBiomeEvent.Decorate.EventType.LILYPAD)) {
+                    generateWaterLily(worldIn, rand, pos, 4);
+                }
             }
         } finally {
             MinecraftForge.TERRAIN_GEN_BUS.post(new DecorateBiomeEvent.Post(worldIn, rand, chunkPos));
