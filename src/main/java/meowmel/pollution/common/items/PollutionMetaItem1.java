@@ -1,14 +1,18 @@
 package meowmel.pollution.common.items;
 
+import baubles.api.BaubleType;
 import gregtech.api.items.metaitem.StandardMetaItem;
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.items.behaviors.TooltipBehavior;
+import gregtech.integration.baubles.BaubleBehavior;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.items.behaviors.*;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import meowmel.pollution.common.items.behaviors.FilterBehavior;
 import meowmel.pollution.common.items.behaviors.Tarots;
 import meowmel.pollution.common.items.behaviors.VisCheckerBehavior;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -341,6 +345,17 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 						.setMaxStackSize(64)
 						.setCreativeTabs(Pollution_TAB);
 
-	}
+		//魔法扫帚（移植自 GregTech-Lite-Core PR #139）：持有/放在背包或饰品栏时获得飞行与免伤
+		PollutionMetaItems.MAGIC_SWEEP = this.addItem(570, "magic_sweep")
+				.setMaxStackSize(1)
+				.setRarity(EnumRarity.RARE)
+				.addComponents(
+						new BaubleBehavior(BaubleType.TRINKET),
+						new TooltipBehavior(lines -> {
+							lines.add(I18n.format("metaitem.magic_sweep.tooltip.1"));
+							lines.add(I18n.format("metaitem.magic_sweep.tooltip.2"));
+						}))
+				.setCreativeTabs(Pollution_TAB);
 
+	}
 }

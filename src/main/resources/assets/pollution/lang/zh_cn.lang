@@ -1563,6 +1563,9 @@ metaitem.living_magic_biofilm.tooltip=连接植物魔力、血液组织与天体
 metaitem.depleted_magic_core.name=耗竭魔导核心
 metaitem.depleted_magic_core.tooltip=失去催化活性的核心外壳，可净化并回收为空白催化核心
 
+metaitem.magic_sweep.name=魔法扫帚
+metaitem.magic_sweep.tooltip.1=乘骑这把扫帚，就能翱翔于天际
+metaitem.magic_sweep.tooltip.2=持有或穿戴时获得§c创造§e模式§a飞行§d能力§7，且不受§f任何来源的伤害§7
 # 星座NBT状态
 pollution.astral_data.unattuned=未写入星座数据
 pollution.astral_data.constellation=已写入星座：%s
@@ -1650,3 +1653,4 @@ pollution.machine.constellation_tower.gelu.name=寒冰座星宿塔
 pollution.machine.constellation_tower.ulteria.name=避焦座星宿塔
 pollution.machine.constellation_tower.alcara.name=振变座星宿塔
 pollution.machine.constellation_tower.vorux.name=贪狼座星宿塔
+
