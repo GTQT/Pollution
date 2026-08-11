@@ -26,6 +26,7 @@ import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityC
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialCrystalGrowthArray;
 import meowmel.pollution.common.metatileentity.multiblock.astral.ConstellationTowerDefinition;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityConstellationTower;
+import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityStarstreamNexusObelisk;
 import meowmel.pollution.common.metatileentity.multiblock.bot.*;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicLargeTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicMegaTurbine;
@@ -165,6 +166,7 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityCelestialCrystalGrowthArray CELESTIAL_CRYSTAL_GROWTH_ARRAY;
     public static final MetaTileEntityConstellationTower[] CONSTELLATION_TOWERS =
             new MetaTileEntityConstellationTower[ConstellationTowerDefinition.values().length];
+    public static MetaTileEntityStarstreamNexusObelisk STARSTREAM_NEXUS_OBELISK;
 
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
@@ -340,6 +342,8 @@ public class PollutionMetaTileEntities {
             CONSTELLATION_TOWERS[i] = registerMetaTileEntity(353 + i,
                     new MetaTileEntityConstellationTower(PollutionID(definition.getControllerPath()), definition));
         }
+        STARSTREAM_NEXUS_OBELISK = registerMetaTileEntity(369,
+                new MetaTileEntityStarstreamNexusObelisk(PollutionID("starstream_nexus_obelisk")));
 
         //仓口
         for (int i = 0; i < VIS_HATCH.length; i++) {

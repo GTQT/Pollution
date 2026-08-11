@@ -1,6 +1,7 @@
 package meowmel.pollution.common.block.blocks;
 
 import meowmel.pollution.Pollution;
+import meowmel.pollution.client.tesr.ItemMineralExtractorRenderer;
 import meowmel.pollution.common.block.tile.TileEntityMineralExtractor;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -42,6 +43,7 @@ public final class MineralExtractorRegistration {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void registerModel(ModelRegistryEvent event) {
+        MINERAL_EXTRACTOR_ITEM.setTileEntityItemStackRenderer(ItemMineralExtractorRenderer.INSTANCE);
         ModelLoader.setCustomModelResourceLocation(
                 MINERAL_EXTRACTOR_ITEM,
                 0,

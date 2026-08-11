@@ -6,12 +6,17 @@ import meowmel.pollution.Pollution;
 import meowmel.pollution.client.tesr.TesrMagicCircle;
 import meowmel.pollution.client.tesr.TesrMineralExtractor;
 import meowmel.pollution.client.tesr.TesrConstellationCrystal;
+import meowmel.pollution.client.tesr.TesrStarstreamObeliskCore;
+import meowmel.pollution.client.tesr.TesrStarstreamRelay;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.CommonProxy;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.tile.TileEntityMagicCircle;
 import meowmel.pollution.common.block.tile.TileEntityMineralExtractor;
 import meowmel.pollution.common.block.tile.TileEntityConstellationCrystal;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamObeliskCore;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamRelay;
+import meowmel.pollution.common.block.tile.TileEntityInterdimensionalStarstreamRelay;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -45,6 +50,12 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMineralExtractor.class, new TesrMineralExtractor());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityConstellationCrystal.class,
 				new TesrConstellationCrystal());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStarstreamObeliskCore.class,
+				new TesrStarstreamObeliskCore());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStarstreamRelay.class,
+				new TesrStarstreamRelay());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInterdimensionalStarstreamRelay.class,
+				new TesrStarstreamRelay());
 	}
 
 	@Override

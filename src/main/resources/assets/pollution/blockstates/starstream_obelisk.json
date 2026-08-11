@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "gregtech:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "starstream_casing": {
+        "textures": { "all": "pollution:blocks/starstream/starstream_casing" }
+      },
+      "starstream_runed_casing": {
+        "textures": { "all": "pollution:blocks/starstream/starstream_runed_casing" }
+      },
+      "constellation_anchor": {
+        "textures": { "all": "pollution:blocks/starstream/constellation_anchor" }
+      },
+      "obelisk_core": {
+        "textures": { "all": "pollution:blocks/starstream/obelisk_core" }
+      }
+    }
+  }
+}

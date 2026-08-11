@@ -24,6 +24,10 @@ public class PollutionMetaBlocks {
 	public static POHyper HYPER;
 	public static POComputerCasing COMPUTER_CASING;
 	public static POConstellationCrystal CONSTELLATION_CRYSTAL;
+	public static POStarstreamObelisk STARSTREAM_OBELISK;
+	public static POStarstreamRelay STARSTREAM_RELAY;
+	public static POStarstreamInterdimensionalRelay STARSTREAM_INTERDIMENSIONAL_RELAY;
+	public static POStarstreamChunkAnchor STARSTREAM_CHUNK_ANCHOR;
 
 	private PollutionMetaBlocks() {
 	}
@@ -60,6 +64,18 @@ public class PollutionMetaBlocks {
 
 		CONSTELLATION_CRYSTAL = new POConstellationCrystal();
 		CONSTELLATION_CRYSTAL.setRegistryName("constellation_crystal");
+
+		STARSTREAM_OBELISK = new POStarstreamObelisk();
+		STARSTREAM_OBELISK.setRegistryName("starstream_obelisk");
+
+		STARSTREAM_RELAY = new POStarstreamRelay();
+		STARSTREAM_RELAY.setRegistryName("starstream_relay");
+
+		STARSTREAM_INTERDIMENSIONAL_RELAY = new POStarstreamInterdimensionalRelay();
+		STARSTREAM_INTERDIMENSIONAL_RELAY.setRegistryName("starstream_interdimensional_relay");
+
+		STARSTREAM_CHUNK_ANCHOR = new POStarstreamChunkAnchor();
+		STARSTREAM_CHUNK_ANCHOR.setRegistryName("starstream_chunk_anchor");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -75,6 +91,10 @@ public class PollutionMetaBlocks {
 		registerItemModel(HYPER);
 		registerItemModel(COMPUTER_CASING);
 		registerItemModel(CONSTELLATION_CRYSTAL);
+		registerItemModel(STARSTREAM_OBELISK);
+		registerItemModel(STARSTREAM_RELAY);
+		registerItemModel(STARSTREAM_INTERDIMENSIONAL_RELAY);
+		registerItemModel(STARSTREAM_CHUNK_ANCHOR);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -5,6 +5,11 @@ import gregtech.api.block.VariantItemBlock;
 import meowmel.pollution.api.utils.PollutionLog;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.tile.TileEntityConstellationCrystal;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamObeliskCore;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamRelay;
+import meowmel.pollution.common.block.tile.TileEntityInterdimensionalStarstreamRelay;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamChunkAnchor;
+import meowmel.pollution.common.block.tile.StarstreamChunkLoadingManager;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.loaders.RecipeManger;
 import net.minecraft.block.Block;
@@ -63,8 +68,20 @@ public class CommonProxy {
         registry.register(PollutionMetaBlocks.HYPER);
         registry.register(PollutionMetaBlocks.COMPUTER_CASING);
         registry.register(PollutionMetaBlocks.CONSTELLATION_CRYSTAL);
+        registry.register(PollutionMetaBlocks.STARSTREAM_OBELISK);
+        registry.register(PollutionMetaBlocks.STARSTREAM_RELAY);
+        registry.register(PollutionMetaBlocks.STARSTREAM_INTERDIMENSIONAL_RELAY);
+        registry.register(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR);
         GameRegistry.registerTileEntity(TileEntityConstellationCrystal.class,
                 new ResourceLocation("pollution", "constellation_crystal"));
+        GameRegistry.registerTileEntity(TileEntityStarstreamObeliskCore.class,
+                new ResourceLocation("pollution", "starstream_obelisk_core"));
+        GameRegistry.registerTileEntity(TileEntityStarstreamRelay.class,
+                new ResourceLocation("pollution", "starstream_relay"));
+        GameRegistry.registerTileEntity(TileEntityInterdimensionalStarstreamRelay.class,
+                new ResourceLocation("pollution", "starstream_interdimensional_relay"));
+        GameRegistry.registerTileEntity(TileEntityStarstreamChunkAnchor.class,
+                new ResourceLocation("pollution", "starstream_chunk_anchor"));
     }
 
     @SubscribeEvent
@@ -88,6 +105,10 @@ public class CommonProxy {
         registry.register(createItemBlock(PollutionMetaBlocks.HYPER, VariantItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.COMPUTER_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.CONSTELLATION_CRYSTAL, VariantItemBlock::new));
+        registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_OBELISK, VariantItemBlock::new));
+        registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_RELAY, ItemBlock::new));
+        registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_INTERDIMENSIONAL_RELAY, ItemBlock::new));
+        registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR, ItemBlock::new));
 
     }
 
@@ -112,6 +133,6 @@ public class CommonProxy {
     }
 
     public void preLoad() {
-
+        StarstreamChunkLoadingManager.init();
     }
 }

@@ -344,6 +344,12 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 				this.addItem(563, "depleted_magic_core")
 						.setMaxStackSize(64)
 						.setCreativeTabs(Pollution_TAB);
+		PollutionMetaItems.STARSTREAM_LINKER =
+				this.addItem(571, "starstream_linker")
+						.setMaxStackSize(1)
+						.setRarity(EnumRarity.EPIC)
+						.addComponents(new StarstreamLinkerBehavior())
+						.setCreativeTabs(Pollution_TAB);
 
 		//魔法扫帚（移植自 GregTech-Lite-Core PR #139）：持有/放在背包或饰品栏时获得飞行与免伤
 		PollutionMetaItems.MAGIC_SWEEP = this.addItem(570, "magic_sweep")

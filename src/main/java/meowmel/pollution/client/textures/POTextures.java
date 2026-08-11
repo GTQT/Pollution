@@ -77,6 +77,7 @@ public class POTextures {
 
 	public static SimpleOverlayRenderer Livingrock_0;
 	public static SimpleOverlayRenderer ASTRAL_MARBLE;
+	public static SimpleOverlayRenderer STARSTREAM_CASING;
 
 	public static final SimpleOverlayRenderer QUANTUM_ASPECT_TANK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_q_aspect_tank");
 	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");
@@ -166,6 +167,7 @@ public class POTextures {
 
 		Livingrock_0 = new SimpleOverlayRenderer("botblock/livingrock0");
 		ASTRAL_MARBLE = new SimpleOverlayRenderer("astralsorcery:marble_bricks");
+		STARSTREAM_CASING = new SimpleOverlayRenderer("pollution:starstream/starstream_casing");
 
 		MANA_HATCH_INPUT_1A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_input_1a");
 		MANA_HATCH_INPUT_4A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_input_4a");

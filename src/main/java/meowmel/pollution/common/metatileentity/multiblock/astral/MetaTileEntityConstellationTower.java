@@ -27,6 +27,7 @@ import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POConstellationCrystal;
 import meowmel.pollution.common.block.tile.TileEntityConstellationCrystal;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamRelay;
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -51,8 +52,11 @@ import java.util.function.Function;
 /** A CHC-inspired open constellation tower with a permanently fixed identity. */
 public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithControl {
 
-    public static final long ENERGY_CAPACITY = TileEntityConstellationCrystal.ENERGY_CAPACITY;
+    public static final long NORMAL_ENERGY_CAPACITY = TileEntityConstellationCrystal.BASE_ENERGY_CAPACITY;
+    public static final long AMPLIFIED_ENERGY_CAPACITY = TileEntityConstellationCrystal.AMPLIFIED_ENERGY_CAPACITY;
     private static final long BASE_ENERGY_PER_TICK = 64L;
+    private static final long NORMAL_CORE_TRANSFER_PER_TICK = 512L;
+    private static final long AMPLIFIED_CORE_TRANSFER_PER_TICK = 2_048L;
     private static final int SAMPLE_INTERVAL = 20;
     private static final String NBT_ENERGY = "ConstellationEnergy";
     private static final String NBT_DIPPER_RITUAL_ACTIVE = "DipperResonanceRitualActive";
@@ -121,6 +125,14 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
         return core == null ? legacyStoredEnergy : core.getConstellationEnergyStored();
     }
 
+    public long getCoreTransferLimit() {
+        return dipperRitualActive ? AMPLIFIED_CORE_TRANSFER_PER_TICK : NORMAL_CORE_TRANSFER_PER_TICK;
+    }
+
+    public long getCoreCapacityLimit() {
+        return dipperRitualActive ? AMPLIFIED_ENERGY_CAPACITY : NORMAL_ENERGY_CAPACITY;
+    }
+
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityConstellationTower(metaTileEntityId, definition);
@@ -160,21 +172,24 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
             markDirty();
         }
 
-        if (!isWorkingEnabled()) {
-            currentGeneration = 0L;
-            setActive(false);
-            return;
-        }
-
         TileEntityConstellationCrystal core = getTowerCoreTile();
         if (core == null) {
             currentGeneration = 0L;
             setActive(false);
             return;
         }
+        core.bindTower(definition.getId(), getPos());
         if (legacyStoredEnergy > 0L) {
             legacyStoredEnergy -= core.receiveConstellationEnergy(legacyStoredEnergy);
             markDirty();
+        }
+        // Stored energy is routed even while generation is disabled. The
+        // core's normal/ritual extraction budget remains the link bandwidth.
+        core.transferToLinkedNexus();
+        if (!isWorkingEnabled()) {
+            currentGeneration = 0L;
+            setActive(false);
+            return;
         }
         if (getOffsetTimer() % SAMPLE_INTERVAL != 0L) return;
 
@@ -307,7 +322,8 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        legacyStoredEnergy = Math.max(0L, Math.min(ENERGY_CAPACITY, data.getLong(NBT_ENERGY)));
+        legacyStoredEnergy = Math.max(0L,
+                Math.min(AMPLIFIED_ENERGY_CAPACITY, data.getLong(NBT_ENERGY)));
         dipperRitualActive = data.hasKey(NBT_DIPPER_RITUAL_ACTIVE)
                 ? data.getBoolean(NBT_DIPPER_RITUAL_ACTIVE)
                 : data.getBoolean(NBT_LEGACY_TURBO_CHARGED);
@@ -319,7 +335,7 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
         textList.add(new TextComponentTranslation("pollution.machine.constellation_tower.display.constellation",
                 definition.getEnglishName()));
         textList.add(new TextComponentTranslation("pollution.machine.constellation_tower.display.storage",
-                getStoredEnergy(), ENERGY_CAPACITY));
+                getStoredEnergy(), getCoreCapacityLimit()));
         textList.add(new TextComponentTranslation("pollution.machine.constellation_tower.display.generation",
                 currentGeneration));
     }
@@ -337,7 +353,25 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
         int syncedDistribution = syncer.syncInt(distributionPermille);
         long syncedGeneration = syncer.syncLong(currentGeneration);
         long syncedStored = syncer.syncLong(getStoredEnergy());
+        long syncedCapacity = syncer.syncLong(getCoreCapacityLimit());
         boolean syncedRitual = syncer.syncBoolean(dipperRitualActive);
+        TileEntityConstellationCrystal core = getTowerCoreTile();
+        boolean syncedCoreBound = syncer.syncBoolean(core != null
+                && definition.getId().equals(core.getConstellationId()));
+        long syncedExtracted = syncer.syncLong(core == null ? 0L : core.getExtractedThisTick());
+        long syncedTransferLimit = syncer.syncLong(core == null ? 0L : core.getMaxExtractPerTick());
+        boolean syncedNetworkLinked = syncer.syncBoolean(core != null && core.hasNexusLink());
+        long syncedNetworkTransfer = syncer.syncLong(core == null ? 0L : core.getNetworkTransferThisTick());
+        long syncedNexusPos = syncer.syncLong(core == null || core.getLinkedNexusPos() == null
+                ? Long.MIN_VALUE : core.getLinkedNexusPos().toLong());
+        int syncedNexusDimension = syncer.syncInt(core == null ? Integer.MIN_VALUE
+                : core.getLinkedNexusDimension());
+        int syncedEndpointType = syncer.syncInt(core == null
+                ? TileEntityStarstreamRelay.EndpointType.NEXUS.getId()
+                : core.getLinkedEndpointType().getId());
+        String syncedNetworkStatus = syncer.syncString(core == null
+                ? "pollution.starstream_network.status.unlinked"
+                : core.getNetworkStatusTranslationKey());
 
         keyManager.add(KeyUtil.lang(TextFormatting.LIGHT_PURPLE,
                 "pollution.machine.constellation_tower.display.constellation", definition.getEnglishName()));
@@ -355,7 +389,31 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
                 syncedRitual ? "pollution.machine.constellation_tower.display.turbo_on"
                         : "pollution.machine.constellation_tower.display.turbo_off"));
         keyManager.add(KeyUtil.lang(TextFormatting.AQUA,
-                "pollution.machine.constellation_tower.display.storage", syncedStored, ENERGY_CAPACITY));
+                "pollution.machine.constellation_tower.display.storage", syncedStored, syncedCapacity));
+        if (syncedStored > syncedCapacity) {
+            keyManager.add(KeyUtil.lang(TextFormatting.RED,
+                    "pollution.machine.constellation_tower.display.storage_overflow",
+                    syncedStored - syncedCapacity));
+        }
+        keyManager.add(KeyUtil.lang(syncedCoreBound ? TextFormatting.GREEN : TextFormatting.RED,
+                syncedCoreBound ? "pollution.machine.constellation_tower.display.core_linked"
+                        : "pollution.machine.constellation_tower.display.core_unlinked"));
+        keyManager.add(KeyUtil.lang(TextFormatting.GOLD,
+                "pollution.machine.constellation_tower.display.core_transfer",
+                syncedExtracted, syncedTransferLimit));
+        keyManager.add(KeyUtil.lang(syncedNetworkLinked ? TextFormatting.GREEN : TextFormatting.GRAY,
+                syncedNetworkStatus));
+        if (syncedNetworkLinked && syncedNexusPos != Long.MIN_VALUE) {
+            BlockPos target = BlockPos.fromLong(syncedNexusPos);
+            keyManager.add(KeyUtil.lang(TextFormatting.DARK_AQUA,
+                    syncedEndpointType == TileEntityStarstreamRelay.EndpointType.RELAY.getId()
+                            ? "pollution.machine.constellation_tower.display.relay_target"
+                            : "pollution.machine.constellation_tower.display.nexus_target",
+                    syncedNexusDimension, target.getX(), target.getY(), target.getZ()));
+            keyManager.add(KeyUtil.lang(TextFormatting.AQUA,
+                    "pollution.machine.constellation_tower.display.network_transfer",
+                    syncedNetworkTransfer));
+        }
     }
 
     @Override
@@ -370,5 +428,6 @@ public class MetaTileEntityConstellationTower extends MetaTileEntityBaseWithCont
         tooltip.add(I18n.format("pollution.machine.constellation_tower.tooltip.2"));
         tooltip.add(I18n.format("pollution.machine.constellation_tower.tooltip.3"));
         tooltip.add(I18n.format("pollution.machine.constellation_tower.tooltip.4"));
+        tooltip.add(I18n.format("pollution.machine.constellation_tower.tooltip.5"));
     }
 }

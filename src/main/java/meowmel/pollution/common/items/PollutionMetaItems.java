@@ -186,6 +186,7 @@ public class PollutionMetaItems {
 	public static MetaItem<?>.MetaValueItem CONSTELLATION_DATA_WAFER;
 	public static MetaItem<?>.MetaValueItem LIVING_MAGIC_BIOFILM;
 	public static MetaItem<?>.MetaValueItem DEPLETED_MAGIC_CORE;
+	public static MetaItem<?>.MetaValueItem STARSTREAM_LINKER;
 
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_MV;
 	public static MetaItem<?>.MetaValueItem BLOOD_CIRCUIT_HV;

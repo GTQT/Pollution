@@ -17,6 +17,7 @@ public class RecipeManger {
         MaterialsLine.init();
         MagicIntegrationRecipes.init();
         ConstellationTowerRecipes.init();
+        StarstreamNexusRecipes.init();
         MagicGuideRecipes.init();
         ForgeAlchemyRecipes.init();
         CircuitManager.init();
