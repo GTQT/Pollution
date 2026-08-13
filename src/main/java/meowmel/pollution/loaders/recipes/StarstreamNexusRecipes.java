@@ -36,6 +36,7 @@ public final class StarstreamNexusRecipes {
         registerRelay();
         registerInterdimensionalRelay();
         registerChunkAnchor();
+        registerOperationCore();
     }
 
     private static void registerCasings() {
@@ -205,6 +206,26 @@ public final class StarstreamNexusRecipes {
                 .outputs(new ItemStack(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR))
                 .duration(900)
                 .EUt(GTValues.VA[GTValues.IV])
+                .buildAndRegister();
+    }
+
+    private static void registerOperationCore() {
+        RecipeMaps.ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .inputs(stack(POStarstreamObelisk.ObeliskBlockType.CONSTELLATION_ANCHOR))
+                .inputs(GTUtility.copy(4,
+                        stack(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_RUNED_CASING)))
+                .inputs(GTUtility.copy(8, ritualCrystal()))
+                .input(PollutionMetaItems.HARMONIZING_RUNE_CORE, 4)
+                .input(PollutionMetaItems.ASTRAL_RESONANCE_COIL, 16)
+                .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV, 4)
+                .input(MetaItems.FIELD_GENERATOR_UHV, 4)
+                .input(MetaItems.EMITTER_UHV, 4)
+                .input(MetaItems.SENSOR_UHV, 4)
+                .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 32000))
+                .fluidInputs(PollutionMaterials.starrymansus.getFluid(8000))
+                .outputs(new ItemStack(PollutionMetaBlocks.STARSTREAM_OPERATION_CORE))
+                .duration(2400)
+                .EUt(GTValues.VA[GTValues.UHV])
                 .buildAndRegister();
     }
 

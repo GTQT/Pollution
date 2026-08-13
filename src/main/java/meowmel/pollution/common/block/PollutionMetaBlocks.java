@@ -28,6 +28,7 @@ public class PollutionMetaBlocks {
 	public static POStarstreamRelay STARSTREAM_RELAY;
 	public static POStarstreamInterdimensionalRelay STARSTREAM_INTERDIMENSIONAL_RELAY;
 	public static POStarstreamChunkAnchor STARSTREAM_CHUNK_ANCHOR;
+	public static POStarstreamOperationCore STARSTREAM_OPERATION_CORE;
 
 	private PollutionMetaBlocks() {
 	}
@@ -76,6 +77,9 @@ public class PollutionMetaBlocks {
 
 		STARSTREAM_CHUNK_ANCHOR = new POStarstreamChunkAnchor();
 		STARSTREAM_CHUNK_ANCHOR.setRegistryName("starstream_chunk_anchor");
+
+		STARSTREAM_OPERATION_CORE = new POStarstreamOperationCore();
+		STARSTREAM_OPERATION_CORE.setRegistryName("starstream_operation_core");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -95,6 +99,7 @@ public class PollutionMetaBlocks {
 		registerItemModel(STARSTREAM_RELAY);
 		registerItemModel(STARSTREAM_INTERDIMENSIONAL_RELAY);
 		registerItemModel(STARSTREAM_CHUNK_ANCHOR);
+		registerItemModel(STARSTREAM_OPERATION_CORE);
 	}
 
 	@SideOnly(Side.CLIENT)

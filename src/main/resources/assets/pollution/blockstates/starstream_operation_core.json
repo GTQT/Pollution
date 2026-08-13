@@ -1,0 +1,7 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": { "model": "pollution:starstream_operation_core" },
+    "inventory": { "model": "pollution:starstream_operation_core" }
+  }
+}

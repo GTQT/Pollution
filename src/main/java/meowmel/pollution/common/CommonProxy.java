@@ -10,6 +10,7 @@ import meowmel.pollution.common.block.tile.TileEntityStarstreamRelay;
 import meowmel.pollution.common.block.tile.TileEntityInterdimensionalStarstreamRelay;
 import meowmel.pollution.common.block.tile.TileEntityStarstreamChunkAnchor;
 import meowmel.pollution.common.block.tile.StarstreamChunkLoadingManager;
+import meowmel.pollution.common.block.tile.TileEntityStarstreamOperationCore;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.loaders.RecipeManger;
 import net.minecraft.block.Block;
@@ -72,6 +73,7 @@ public class CommonProxy {
         registry.register(PollutionMetaBlocks.STARSTREAM_RELAY);
         registry.register(PollutionMetaBlocks.STARSTREAM_INTERDIMENSIONAL_RELAY);
         registry.register(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR);
+        registry.register(PollutionMetaBlocks.STARSTREAM_OPERATION_CORE);
         GameRegistry.registerTileEntity(TileEntityConstellationCrystal.class,
                 new ResourceLocation("pollution", "constellation_crystal"));
         GameRegistry.registerTileEntity(TileEntityStarstreamObeliskCore.class,
@@ -82,6 +84,8 @@ public class CommonProxy {
                 new ResourceLocation("pollution", "starstream_interdimensional_relay"));
         GameRegistry.registerTileEntity(TileEntityStarstreamChunkAnchor.class,
                 new ResourceLocation("pollution", "starstream_chunk_anchor"));
+        GameRegistry.registerTileEntity(TileEntityStarstreamOperationCore.class,
+                new ResourceLocation("pollution", "starstream_operation_core"));
     }
 
     @SubscribeEvent
@@ -109,6 +113,7 @@ public class CommonProxy {
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_RELAY, ItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_INTERDIMENSIONAL_RELAY, ItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR, ItemBlock::new));
+        registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_OPERATION_CORE, ItemBlock::new));
 
     }
 
