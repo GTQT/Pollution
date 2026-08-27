@@ -71,28 +71,21 @@ public class ElementMaterials {
                 .element(Elements.Ord)
                 .build();
 
-        PollutionMaterials.sunnarium = new Material.Builder(getMaterialsId(), pollutionId("sunnarium"))
-                .color(0xFAF20E)
-                .dust().fluid()
-                .iconSet(SHINY)
-                .element(Elements.Su)
-                .build();
-
-        PollutionMaterials.whitemansus = new Material.Builder(getMaterialsId(), pollutionId("whitemansus"))
+        PollutionMaterials.WhiteMansus = new Material.Builder(getMaterialsId(), pollutionId("whitemansus"))
                 .color(0xEFF0FF)
                 .fluid()
                 .iconSet(SHINY)
                 .element(Elements.Wma)
                 .build();
 
-        PollutionMaterials.blackmansus = new Material.Builder(getMaterialsId(), pollutionId("Blackmansus"))
+        PollutionMaterials.BlackMansus = new Material.Builder(getMaterialsId(), pollutionId("Blackmansus"))
                 .color(0x606060)
                 .fluid()
                 .iconSet(SHINY)
                 .element(Elements.Bma)
                 .build();
 
-        PollutionMaterials.elven = new Material.Builder(getMaterialsId(), pollutionId("Elven"))
+        PollutionMaterials.Elven = new Material.Builder(getMaterialsId(), pollutionId("Elven"))
                 .color(0xEE30A7)
                 .fluid()
                 .iconSet(SHINY)

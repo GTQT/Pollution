@@ -2,7 +2,6 @@ package meowmel.pollution.api.unification;
 
 import gregtech.api.unification.material.Material;
 import meowmel.pollution.api.unification.materials.*;
-import meowmel.pollution.api.unification.materials.*;
 
 public class PollutionMaterials {
 	//基础六要素
@@ -117,19 +116,18 @@ public class PollutionMaterials {
 
 	public static Material RichAura;
 	public static Material ErichAura;
-	public static Material sunnarium;
-	public static Material whitemansus;
-	public static Material blackmansus;
+	public static Material WhiteMansus;
+	public static Material BlackMansus;
 	public static Material Terrasteel;
 	public static Material Orichalcos;
 	public static Material ElvenElementium;
 	public static Material Dragonstone;
 	public static Material PixieDust;
 	public static Material ElvenQuartz;
-	public static Material elven;
-	public static Material basic_substrate;
-	public static Material advanced_substrate;
-	public static Material hyper_substrate;
+	public static Material Elven;
+	public static Material BasicSubstrate;
+	public static Material AdvancedSubstrate;
+	public static Material HyperSubstrate;
 
 	//血线
 	public static Material purified_blood;
