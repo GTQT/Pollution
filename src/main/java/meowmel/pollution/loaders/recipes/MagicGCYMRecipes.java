@@ -14,6 +14,7 @@ import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.*;
+import meowmel.pollution.common.block.metablocks.*;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
@@ -2104,8 +2105,8 @@ public class MagicGCYMRecipes {
 				.input(ModItems.overgrowthSeed,64)
 				.inputs(new ItemStack(ModBlocks.altGrass, 128, 4))
 				.input(dust, Terrasteel, 64)
-				.fluidInputs(BlackMansus.getFluid(6400))
-				.fluidInputs(WhiteMansus.getFluid(6400))
+				.fluidInputs(blackmansus.getFluid(6400))
+				.fluidInputs(whitemansus.getFluid(6400))
 				.outputs(new ItemStack(ModBlocks.enchantedSoil, 128))
 				.EUt(30720)
 				.duration(500)
@@ -2115,8 +2116,8 @@ public class MagicGCYMRecipes {
 				.inputs(new ItemStack(ModItems.grassSeeds, 64, 7))
 				.input(Blocks.GRASS,128)
 				.input(dust, Salismundus, 64)
-				.fluidInputs(BlackMansus.getFluid(3200))
-				.fluidInputs(WhiteMansus.getFluid(3200))
+				.fluidInputs(blackmansus.getFluid(3200))
+				.fluidInputs(whitemansus.getFluid(3200))
 				.outputs(new ItemStack(ModBlocks.altGrass, 128, 4))
 				.EUt(8192)
 				.duration(500)
@@ -2126,8 +2127,8 @@ public class MagicGCYMRecipes {
 				.inputs(new ItemStack(ModItems.grassSeeds, 4, 7))
 				.input(ModItems.manaResource,4,8)
 				.input(dust, GTQTMaterials.Infinity, 1)
-				.fluidInputs(BlackMansus.getFluid(3200))
-				.fluidInputs(WhiteMansus.getFluid(3200))
+				.fluidInputs(blackmansus.getFluid(3200))
+				.fluidInputs(whitemansus.getFluid(3200))
 				.fluidInputs(UUMatter.getFluid(12800))
 				.outputs(new ItemStack(ModItems.overgrowthSeed,4))
 				.EUt(32768)
@@ -2240,8 +2241,8 @@ public class MagicGCYMRecipes {
 				.input(MetaItems.ELECTRIC_PISTON_LuV, 2)
 				.input(MetaItems.ROBOT_ARM_LuV)
 				.fluidInputs(starrymansus.getFluid(2000))
-				.fluidInputs(BlackMansus.getFluid(8000))
-				.fluidInputs(WhiteMansus.getFluid(8000))
+				.fluidInputs(blackmansus.getFluid(8000))
+				.fluidInputs(whitemansus.getFluid(8000))
 				.output(AUTO_ELENCHUS_DEVICE)
 				.EUt(30720)
 				.duration(400),
@@ -2258,8 +2259,8 @@ public class MagicGCYMRecipes {
 				.input(ItemsTC.causalityCollapser, 4)
 				.input(MetaItems.ELECTRIC_PUMP_LuV, 2)
 				.fluidInputs(InfusedFire.getFluid(64000))
-				.fluidInputs(BlackMansus.getFluid(8000))
-				.fluidInputs(WhiteMansus.getFluid(8000))
+				.fluidInputs(blackmansus.getFluid(8000))
+				.fluidInputs(whitemansus.getFluid(8000))
 				.output(BOTTLE_OF_PHLOGISTONIC_ONENESS)
 				.EUt(30720)
 				.duration(400),
@@ -2276,8 +2277,8 @@ public class MagicGCYMRecipes {
 				.input(CORE_OF_IDEA, 2)
 				.input(AUTO_ELENCHUS_DEVICE)
 				.fluidInputs(dimensional_transforming_agent.getFluid(8000))
-				.fluidInputs(BlackMansus.getFluid(8000))
-				.fluidInputs(WhiteMansus.getFluid(8000))
+				.fluidInputs(blackmansus.getFluid(8000))
+				.fluidInputs(whitemansus.getFluid(8000))
 				.output(ELUCIDATOR_OF_FOUR_CAUSES)
 				.EUt(30720)
 				.duration(400),
@@ -2311,8 +2312,8 @@ public class MagicGCYMRecipes {
 				.input(MetaItems.SENSOR_LuV, 8)
 				.input(MetaItems.FIELD_GENERATOR_LuV, 4)
 				.fluidInputs(PollutionMaterials.ErichAura.getFluid(16000))
-				.fluidInputs(BlackMansus.getFluid(16000))
-				.fluidInputs(WhiteMansus.getFluid(16000))
+				.fluidInputs(blackmansus.getFluid(16000))
+				.fluidInputs(whitemansus.getFluid(16000))
 				.outputs(PollutionMetaTileEntities.CENTRAL_VIS_TOWER.getStackForm(1))
 				.EUt(30720)
 				.duration(4000)
@@ -2327,8 +2328,8 @@ public class MagicGCYMRecipes {
 				.input(frameGt, blood_of_avernus, 16)
 				.input(plate, ElvenElementium, 16)
 				.fluidInputs(PollutionMaterials.ErichAura.getFluid(16000))
-				.fluidInputs(BlackMansus.getFluid(16000))
-				.fluidInputs(WhiteMansus.getFluid(16000))
+				.fluidInputs(blackmansus.getFluid(16000))
+				.fluidInputs(whitemansus.getFluid(16000))
 				.outputs(PollutionMetaTileEntities.BOT_CIRCUIT_ASSEMBLER.getStackForm())
 				.EUt(30720)
 				.duration(4000)

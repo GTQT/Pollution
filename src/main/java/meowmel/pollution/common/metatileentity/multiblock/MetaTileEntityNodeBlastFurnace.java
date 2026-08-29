@@ -35,6 +35,7 @@ import meowmel.pollution.api.pattern.POTieredCasingGroups;
 import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.*;
+import meowmel.pollution.common.block.metablocks.*;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -340,8 +341,8 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 
         public void fillTanks() {
             if (!essence.isEmpty()) {
-                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.WhiteMansus.getFluid(essence.get(0) * this.maxProgressTime / 10)));
-                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.BlackMansus.getFluid(essence.get(1) * this.maxProgressTime / 10)));
+                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.whitemansus.getFluid(essence.get(0) * this.maxProgressTime / 10)));
+                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.blackmansus.getFluid(essence.get(1) * this.maxProgressTime / 10)));
             }
         }
 

@@ -8,7 +8,10 @@ import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
+import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.unification.Elements;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POHyper;
@@ -22,6 +25,7 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.material.Materials.*;
 
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.Mana;
 import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 
@@ -58,8 +62,8 @@ public class NodeFusionRecipes {
 				.input(OrePrefix.frameGt, PollutionMaterials.aetheric_dark_steel, 4)
 				.input(OrePrefix.frameGt, PollutionMaterials.iizunamaru_electrum, 4)
 				.fluidInputs(PollutionMaterials.KQGold.getFluid(576))
-				.fluidInputs(PollutionMaterials.WhiteMansus.getFluid(8000))
-				.fluidInputs(PollutionMaterials.BlackMansus.getFluid(8000))
+				.fluidInputs(PollutionMaterials.whitemansus.getFluid(8000))
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(8000))
 				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING, 4))
 				.EUt(VA[LuV])
 				.duration(400)

@@ -1,6 +1,7 @@
 package meowmel.pollution.api.unification.materials;
 
 import gregtech.api.GTValues;
+import gregtech.api.fluids.FluidBuilder;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.BlastProperty;
 import gregtech.api.unification.material.properties.MaterialToolProperty;
@@ -14,6 +15,7 @@ import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
+import static gregtech.api.util.GTUtility.gregtechId;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 import static meowmel.pollution.api.utils.POUtils.pollutionId;
 
@@ -195,7 +197,7 @@ public class FirstDegreeMaterials {
         PollutionMaterials.ElvenElementium = new Material.Builder(getMaterialsId(), pollutionId("elven_elementium"))
                 .color(0xEE6AA7)
                 .ingot().fluid().ore()
-                .components(Iron, 4, Elven, 1)
+                .components(Iron, 4, elven, 1)
                 .iconSet(SHINY)
                 .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
                 .build();

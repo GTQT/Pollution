@@ -59,11 +59,11 @@ import static gregtech.api.GTValues.UEV;
 import static gregtech.api.GTValues.UIV;
 import static gregtech.api.GTValues.UXV;
 import static gregtech.api.GTValues.OpV;
+import static gregtech.api.GTValues.MAX;
 import static gregtech.api.GTValues.UV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.GTValues.ZPM;
 import static gregtech.api.unification.material.Materials.*;
-import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.Sunnarium;
 
 /**
  * Recipe owner for the cross-mod integration layer.  Keep these recipes out of
@@ -417,7 +417,7 @@ public final class MagicIntegrationRecipes {
         registerTarotCard(17, PollutionMetaItems.TAROT_THE_TOWER, new ItemStack(Blocks.TNT), NaquadahAlloy);
         registerTarotCard(18, PollutionMetaItems.TAROT_THE_STAR, new ItemStack(Items.NETHER_STAR), PollutionMaterials.InfusedLight);
         registerTarotCard(19, PollutionMetaItems.TAROT_THE_MOON, new ItemStack(Items.GHAST_TEAR), PollutionMaterials.InfusedDark);
-        registerTarotCard(20, PollutionMetaItems.TAROT_THE_SUN, new ItemStack(Items.GLOWSTONE_DUST), Sunnarium);
+        registerTarotCard(20, PollutionMetaItems.TAROT_THE_SUN, new ItemStack(Items.GLOWSTONE_DUST), PollutionMaterials.sunnarium);
         registerTarotCard(21, PollutionMetaItems.TAROT_JUDGEMENT, new ItemStack(Items.TOTEM_OF_UNDYING), Iridium);
         registerTarotCard(22, PollutionMetaItems.TAROT_THE_WORLD, new ItemStack(Items.DRAGON_BREATH), NaquadahEnriched);
     }
@@ -453,7 +453,7 @@ public final class MagicIntegrationRecipes {
 
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ULV)
-                .input(OrePrefix.ingot, PollutionMaterials.BasicSubstrate)
+                .input(OrePrefix.ingot, PollutionMaterials.basic_substrate)
                 .input(OrePrefix.plate, PollutionMaterials.Manasteel, 2)
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .fluidInputs(GTQTMaterials.Mana.getFluid(500))

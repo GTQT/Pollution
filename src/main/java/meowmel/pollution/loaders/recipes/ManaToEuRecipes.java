@@ -19,13 +19,13 @@ public class ManaToEuRecipes {
                 .buildAndRegister();
 
         MANA_TO_EU.recipeBuilder()
-                .fluidInputs(PollutionMaterials.WhiteMansus.getFluid(100))
+                .fluidInputs(PollutionMaterials.whitemansus.getFluid(100))
                 .duration((int) (100* POConfig.MachineSettingSwitch.EuPerMbKqMagicGas/8192))
                 .EUt(8192)
                 .buildAndRegister();
 
         MANA_TO_EU.recipeBuilder()
-                .fluidInputs(PollutionMaterials.BlackMansus.getFluid(100))
+                .fluidInputs(PollutionMaterials.blackmansus.getFluid(100))
                 .duration((int) (100* POConfig.MachineSettingSwitch.EuPerMbKqMagicFas/8192))
                 .EUt(8192)
                 .buildAndRegister();

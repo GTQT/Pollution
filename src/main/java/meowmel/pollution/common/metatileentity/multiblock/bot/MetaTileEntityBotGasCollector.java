@@ -181,7 +181,7 @@ public class MetaTileEntityBotGasCollector extends MetaTileEntityBaseWithControl
         manaConsumptionSpeed = (int) (4 * Math.pow(2, (Math.max(0, tier - 2))));
         finalCollectionSpeed = manaConsumptionSpeed * 100;
         List<IFluidTank> fluidInputInventory = getAbilities(MultiblockAbility.IMPORT_FLUIDS);
-        FluidStack WHITE_MANSUS = PollutionMaterials.WhiteMansus.getFluid(essenceConsumptionSpeed * 10);
+        FluidStack WHITE_MANSUS = PollutionMaterials.whitemansus.getFluid(essenceConsumptionSpeed * 10);
 
         if (this.isWorkingEnabled() && !this.getWorld().isRemote) {
             if (WHITE_MANSUS.isFluidStackIdentical(this.inputFluidInventory.drain(WHITE_MANSUS, false))) {

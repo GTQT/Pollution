@@ -2,10 +2,12 @@ package meowmel.pollution.loaders.recipes;
 
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
+import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
@@ -29,6 +31,8 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.*;
+import static meowmel.pollution.api.unification.PollutionMaterials.*;
+import static meowmel.pollution.common.items.PollutionMetaItems.*;
 
 public class MagicChemicalRecipes {
 	public static void init() {
@@ -46,8 +50,8 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.input(OrePrefix.block, PollutionMaterials.iizunamaru_electrum)
-				.fluidInputs(PollutionMaterials.BlackMansus.getFluid(10000))
-				.fluidInputs(PollutionMaterials.WhiteMansus.getFluid(10000))
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(10000))
+				.fluidInputs(PollutionMaterials.whitemansus.getFluid(10000))
 				.outputs(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.duration(10000)
 				.EUt(7680)
@@ -108,7 +112,7 @@ public class MagicChemicalRecipes {
 				.inputs(new ItemStack(PollutionMetaItems.INTEGRATECORE.getMetaItem(), 1, 5))
 				.inputs(new ItemStack(PollutionMetaItems.SEGREGATECORE.getMetaItem(), 1, 6))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(999))
-				.fluidInputs(PollutionMaterials.BlackMansus.getFluid(9999))
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(9999))
 				.fluidInputs(GTQTMaterials.Mana.getFluid(99999))
 				.outputs(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
 				.duration(19980)
@@ -120,7 +124,7 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_1.getMetaItem(), 1, 150))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
-				.fluidInputs(PollutionMaterials.BasicSubstrate.getFluid(14400))
+				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(14400))
 				.chancedFluidOutput(Materials.Polyethylene.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Materials.Epoxy.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Materials.Polytetrafluoroethylene.getFluid(14400), 2500, 500)
@@ -133,7 +137,7 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_2.getMetaItem(), 1, 151))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
-				.fluidInputs(PollutionMaterials.AdvancedSubstrate.getFluid(14400))
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(14400))
 				.chancedFluidOutput(Materials.Polybenzimidazole.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(GTQTMaterials.Zylon.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(Polyetheretherketone.getFluid(14400), 2500, 500)
@@ -145,7 +149,7 @@ public class MagicChemicalRecipes {
 				.notConsumable(new ItemStack(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getMetaItem(), 1, 152))
 				.notConsumable(new ItemStack(PollutionMetaItems.EVOLUTIONCORE.getMetaItem(), 1, 8))
 				.fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
-				.fluidInputs(PollutionMaterials.HyperSubstrate.getFluid(14400))
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(14400))
 				.chancedFluidOutput(Kevlar.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(KaptonE.getFluid(14400), 2500, 500)
 				.chancedFluidOutput(KaptonK.getFluid(14400), 2500, 500)
@@ -853,7 +857,7 @@ public class MagicChemicalRecipes {
 		RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
 				.input(dust, PollutionMaterials.alchemical_residue_5, 1)
 				.chancedOutput(dust, PollutionMaterials.InfusedEarth, 1, 1000, 100)
-				.fluidOutputs(PollutionMaterials.WhiteMansus.getFluid(10))
+				.fluidOutputs(PollutionMaterials.whitemansus.getFluid(10))
 				.duration(1600)
 				.EUt(30)
 				.buildAndRegister();
@@ -895,7 +899,7 @@ public class MagicChemicalRecipes {
 				.output(dust, Materials.Redstone, 4)
 				.output(dust, Materials.EnderEye, 3)
 				.chancedOutput(new ItemStack(ItemsTC.voidSeed), 100, 10)
-				.fluidOutputs(PollutionMaterials.BlackMansus.getFluid(10))
+				.fluidOutputs(PollutionMaterials.blackmansus.getFluid(10))
 				.duration(6400)
 				.EUt(30)
 				.buildAndRegister();
@@ -914,8 +918,8 @@ public class MagicChemicalRecipes {
 		PORecipeMaps.MAGIC_CHEMICAL_REACTOR_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.alchemical_vapor_6.getFluid(890))
 				.fluidInputs(GTQTMaterials.Mana.getFluid(100))
-				.fluidInputs(PollutionMaterials.BlackMansus.getFluid(5))
-				.fluidInputs(PollutionMaterials.WhiteMansus.getFluid(5))
+				.fluidInputs(PollutionMaterials.blackmansus.getFluid(5))
+				.fluidInputs(PollutionMaterials.whitemansus.getFluid(5))
 				.fluidOutputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
 				.duration(100)
 				.EUt(7680)
@@ -971,7 +975,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		//超导
 		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.BasicSubstrate.getFluid(576))
+				.fluidInputs(PollutionMaterials.basic_substrate.getFluid(576))
 				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
 				.input(dust, PollutionMaterials.Mansussteel, 4)
 				.input(dust, GTQTMaterials.Thaumium, 4)
@@ -982,7 +986,7 @@ public class MagicChemicalRecipes {
 				.blastFurnaceTemp(2700)
 				.buildAndRegister();
 		PORecipeMaps.FORGE_ALCHEMY_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.AdvancedSubstrate.getFluid(576))
+				.fluidInputs(PollutionMaterials.advanced_substrate.getFluid(576))
 				.fluidInputs(PollutionMaterials.magical_superconductive_liquid.getFluid(500))
 				.input(dust, PollutionMaterials.KQGold, 4)
 				.input(dust, PollutionMaterials.hyperdimensional_silver, 4)
@@ -1277,7 +1281,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		//奇术凛冰液 搅拌机
 		RecipeMaps.LARGE_MIXER_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.HyperSubstrate.getFluid(1000))
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
 				.fluidInputs(GTQTMaterials.GelidCryotheum.getFluid(1000))
 				.fluidInputs(PollutionMaterials.InfusedCold.getFluid(1000))
 				.fluidOutputs(PollutionMaterials.arcane_gelid_fluid.getFluid(3000))
@@ -1295,7 +1299,7 @@ public class MagicChemicalRecipes {
 				.buildAndRegister();
 		//秘学运算液基底 魔法炖屎
 		PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-				.fluidInputs(PollutionMaterials.HyperSubstrate.getFluid(1000))
+				.fluidInputs(PollutionMaterials.hyper_substrate.getFluid(1000))
 				.fluidInputs(PollutionMaterials.InfusedThought.getFluid(1000))
 				.input(PollutionMetaItems.BLOOD_IPS_HUMAN_BRAIN)
 				.fluidOutputs(PollutionMaterials.arcane_computational_substrate.getFluid(2000))

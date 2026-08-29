@@ -132,7 +132,7 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
     }
 
     private void produceMansus(float fluxCleaned, float auraSupplemented, int goodChunkAmount) {
-        FluidStack BLACK_MANSUS = PollutionMaterials.BlackMansus.getFluid((int) (fluxCleaned * manaConsumptionSpeed * 10));
+        FluidStack BLACK_MANSUS = PollutionMaterials.blackmansus.getFluid((int) (fluxCleaned * manaConsumptionSpeed * 10));
         FluidStack STARRY_MANSUS = PollutionMaterials.starrymansus.getFluid(goodChunkAmount * manaConsumptionSpeed);
         GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(BLACK_MANSUS));
         //可生产漫宿的区块等于区块数量，即可生成
@@ -142,7 +142,7 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
             GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(STARRY_MANSUS));
         }
         if (auraSupplemented <= 0) {
-            FluidStack WHITE_MANSUS = PollutionMaterials.WhiteMansus.getFluid((int) (manaConsumptionSpeed * auraSupplemented * -10));
+            FluidStack WHITE_MANSUS = PollutionMaterials.whitemansus.getFluid((int) (manaConsumptionSpeed * auraSupplemented * -10));
             GTTransferUtils.addFluidsToFluidHandler(this.outputFluidInventory, false, Collections.singletonList(WHITE_MANSUS));
         }
     }

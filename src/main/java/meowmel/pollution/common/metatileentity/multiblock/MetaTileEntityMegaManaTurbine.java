@@ -249,8 +249,8 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
     }
 
     protected class MegaManaTurbineWorkable extends MultiblockRecipeLogic {
-        public static final FluidStack BlackManSusStack = PollutionMaterials.BlackMansus.getFluid(32);
-        public static final FluidStack WhiteManSusStack = PollutionMaterials.WhiteMansus.getFluid(32);
+        public static final FluidStack BlackManSusStack = PollutionMaterials.blackmansus.getFluid(32);
+        public static final FluidStack WhiteManSusStack = PollutionMaterials.whitemansus.getFluid(32);
         public static final FluidStack KeQinGoldStack = PollutionMaterials.KQGold.getFluid(32);
         public static final FluidStack ChaoCiYuanYinStack = PollutionMaterials.hyperdimensional_silver.getFluid(32);
         public static final FluidStack GanZhiStack = PollutionMaterials.sentient_metal.getFluid(32);
