@@ -22,6 +22,7 @@ import meowmel.pollution.loaders.loot.GregTechLootTable;
 import meowmel.pollution.loaders.recipes.MeteorsHelper;
 import meowmel.pollution.loaders.recipes.mods.AstralSorcery;
 import meowmel.pollution.loaders.recipes.mods.Botania;
+import meowmel.pollution.common.ModGuiHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
@@ -82,6 +84,8 @@ public class Pollution {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        // 注册 GUI 处理器（右键矿物提取器打开 GUI 的前提）
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
         PollutionLog.init(event.getModLog());
         try {
             PollutionOreVeins.init(event.getModConfigurationDirectory().toPath());

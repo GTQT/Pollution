@@ -108,17 +108,17 @@ public class SecondDegreeMaterials {
                 .build();
 
         //通用奇术基底，高阶奇术基底，用于锻炉
-        PollutionMaterials.BasicSubstrate = new Material.Builder(getMaterialsId(), pollutionId("basic_substrate"))
+        PollutionMaterials.basic_substrate = new Material.Builder(getMaterialsId(), pollutionId("basic_substrate"))
                 .color(0xFFFFD8)
                 .fluid().ingot()
                 .build();
 
-        PollutionMaterials.AdvancedSubstrate = new Material.Builder(getMaterialsId(), pollutionId("advanced_substrate"))
+        PollutionMaterials.advanced_substrate = new Material.Builder(getMaterialsId(), pollutionId("advanced_substrate"))
                 .color(0xD4FFF0)
                 .fluid().ingot()
                 .build();
 
-        PollutionMaterials.HyperSubstrate = new Material.Builder(getMaterialsId(), pollutionId("hyper_substrate"))
+        PollutionMaterials.hyper_substrate = new Material.Builder(getMaterialsId(), pollutionId("hyper_substrate"))
                 .color(0x8B87FF)
                 .fluid().ingot()
                 .build();
