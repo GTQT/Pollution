@@ -2,7 +2,7 @@ package meowmel.pollution.dimension.worldgen.ChunkGenerator;
 
 import gregtech.api.fluids.store.FluidStorageKeys;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenBloodBound;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenFleshMound;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
@@ -33,7 +33,7 @@ public class ChunkGeneratorBlood implements IChunkGenerator {
 
     private final Random rand;
     private final World world;
-    private final WorldGenBloodBound fleshFeatureGen;
+    private final WorldGenFleshMound fleshFeatureGen;
 
     private TerrainGenerator heightNoise;
     private NoiseGeneratorSimplex islandNoise;
@@ -43,7 +43,7 @@ public class ChunkGeneratorBlood implements IChunkGenerator {
     public ChunkGeneratorBlood(World world, long seed) {
         this.world = world;
         this.rand = new Random(seed);
-        this.fleshFeatureGen = new WorldGenBloodBound();
+        this.fleshFeatureGen = new WorldGenFleshMound();
         initializeNoiseGenerators(rand);
     }
 

@@ -1,4 +1,4 @@
-package meowmel.pollution.dimension.worldgen.mapGen;
+package meowmel.pollution.dimension.worldgen.feature;
 
 import meowmel.pollution.common.block.blocks.PollutionBlocksInit;
 import net.minecraft.block.state.IBlockState;
@@ -9,7 +9,10 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-public class WorldGenBloodBound extends WorldGenerator {
+/**
+ * 生成随高度收缩的血肉丘（血世界地表装饰）。
+ */
+public class WorldGenFleshMound extends WorldGenerator {
 
     private static final IBlockState FLESH_STATE = PollutionBlocksInit.FLESH_BLOCK.getDefaultState();
 
@@ -19,6 +22,7 @@ public class WorldGenBloodBound extends WorldGenerator {
         int height = random.nextInt(4) + 2;
 
         for (int y = 0; y < height; y++) {
+            // 高度越高半径越小，形成锥形丘体
             float shrink = (float) y / height;
             int currentRadius = MathHelper.ceil(radius * (1.0F - shrink * 0.5F));
 
@@ -30,7 +34,6 @@ public class WorldGenBloodBound extends WorldGenerator {
                 }
             }
         }
-
 
         return true;
     }

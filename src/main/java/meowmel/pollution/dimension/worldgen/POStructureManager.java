@@ -1,6 +1,6 @@
 package meowmel.pollution.dimension.worldgen;
 
-import meowmel.pollution.dimension.worldgen.mapGen.MapGenUndergroundBridge;
+import meowmel.pollution.dimension.worldgen.mapgen.MapGenUndergroundBridge;
 import meowmel.pollution.dimension.worldgen.structure.StructureUndergroundBridgePieces;
 
 import static net.minecraft.world.gen.structure.MapGenStructureIO.registerStructure;

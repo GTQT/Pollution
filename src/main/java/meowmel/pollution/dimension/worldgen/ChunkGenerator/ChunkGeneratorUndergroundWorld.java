@@ -2,20 +2,16 @@ package meowmel.pollution.dimension.worldgen.ChunkGenerator;
 
 import gregtech.api.fluids.store.FluidStorageKeys;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.dimension.worldgen.mapGen.MapGenCavesUnderground;
-import meowmel.pollution.dimension.worldgen.mapGen.MapGenUndergroundBridge;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenFluidPool;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenGarden;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenMushroom;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenOreStone1;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenOreStone2;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenSingle;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenStalactite;
-import meowmel.pollution.dimension.worldgen.mapGen.WorldGenUndergroundWater;
-import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
-import meowmel.gtqtcore.common.blocks.StoneVariantBlock;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenFluidPool;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenGarden;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenMushroomBlockCluster;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenScatteredBlock;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenStalactite;
+import meowmel.pollution.dimension.worldgen.feature.WorldGenUndergroundWater;
+import meowmel.pollution.dimension.worldgen.mapgen.MapGenCavesUnderground;
+import meowmel.pollution.dimension.worldgen.mapgen.MapGenUndergroundBridge;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.entity.EnumCreatureType;
@@ -51,33 +47,14 @@ import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.Ev
 import static meowmel.pollution.dimension.worldgen.terraingen.TerrainGen.getModdedMapGen;
 
 /**
- * 地下世界区块生成器：噪声地形 + 岩石变种层 + 洞穴 + 地下堡垒/废弃矿井。
+ * 地下世界区块生成器：噪声地形 + 洞穴 + 地下堡垒/废弃矿井。
  */
 public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
 
     // ===== 基础方块 =====
     private static final IBlockState STONE = Blocks.STONE.getDefaultState();
     private static final IBlockState SWAMP_WATER = Blocks.WATER.getDefaultState();
-
-    // ===== GT 石材变种 =====
-    private static final IBlockState LIMESTONE = gtStoneState(StoneVariantBlock.StoneType.LIMESTONE);
-    private static final IBlockState KOMATIITE = gtStoneState(StoneVariantBlock.StoneType.KOMATIITE);
-    private static final IBlockState GREEN_SCHIST = gtStoneState(StoneVariantBlock.StoneType.GREEN_SCHIST);
-    private static final IBlockState BLUE_SCHIST = gtStoneState(StoneVariantBlock.StoneType.BLUE_SCHIST);
-    private static final IBlockState KIMBERLITE = gtStoneState(StoneVariantBlock.StoneType.KIMBERLITE);
-    private static final IBlockState QUARTZITE = gtStoneState(StoneVariantBlock.StoneType.QUARTZITE);
-    private static final IBlockState SLATE = gtStoneState(StoneVariantBlock.StoneType.SLATE);
-    private static final IBlockState SHALE = gtStoneState(StoneVariantBlock.StoneType.SHALE);
-
-    // ===== 原版岩石变种 =====
-    private static final IBlockState ANDESITE = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
-    private static final IBlockState DIORITE = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE);
-    private static final IBlockState GRANITE = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE);
-
-    /** 可用于 surface 层的全部岩石变种（含 GT 石材与原版石材） */
-    private static final IBlockState[] ROCK_VARIANTS = {
-            ANDESITE, DIORITE, GRANITE, KOMATIITE, LIMESTONE, QUARTZITE, GREEN_SCHIST, SLATE, BLUE_SCHIST, SHALE
-    };
+    private static final IBlockState GRAVEL = Blocks.GRAVEL.getDefaultState();
 
     // ===== 噪声生成器（构造器中可能被 mod 事件替换，故非 final） =====
     private final World world;
@@ -98,6 +75,7 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
     private double[] lowFreqNoise1Data;
     private double[] lowFreqNoise2Data;
     private double[] heightNoiseBuffer;
+    private double[] gravelNoiseBuffer;
 
     // ===== 结构生成器 =====
     private final MapGenUndergroundBridge undergroundBridgeGen = new MapGenUndergroundBridge();
@@ -106,16 +84,16 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
 
     // ===== 装饰生成器 =====
     private final WorldGenStalactite stalactiteGen = new WorldGenStalactite();
-    private final WorldGenOreStone1 brownMushroomCluster = new WorldGenOreStone1();
-    private final WorldGenOreStone2 redMushroomCluster = new WorldGenOreStone2();
-    private final WorldGenerator gravelGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), 33, BlockMatcher.forBlock(Blocks.GRAVEL));
+    private final WorldGenMushroomBlockCluster brownMushroomCluster = new WorldGenMushroomBlockCluster(Blocks.BROWN_MUSHROOM_BLOCK);
+    private final WorldGenMushroomBlockCluster redMushroomCluster = new WorldGenMushroomBlockCluster(Blocks.RED_MUSHROOM_BLOCK);
+    private final WorldGenerator gravelGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), 33, BlockMatcher.forBlock(Blocks.STONE));
     private final WorldGenUndergroundWater stagnantWaterGen = new WorldGenUndergroundWater(Blocks.WATER, true);
     private final WorldGenUndergroundWater swampWaterGen = new WorldGenUndergroundWater(Blocks.WATER, false);
-    private final WorldGenMushroom redMushroomFeature = new WorldGenMushroom(Blocks.RED_MUSHROOM);
-    private final WorldGenMushroom brownMushroomFeature = new WorldGenMushroom(Blocks.BROWN_MUSHROOM);
+    private final WorldGenScatteredBlock redMushroomFeature = new WorldGenScatteredBlock(Blocks.RED_MUSHROOM, 64);
+    private final WorldGenScatteredBlock brownMushroomFeature = new WorldGenScatteredBlock(Blocks.BROWN_MUSHROOM, 64);
     private final WorldGenGarden gardenGen = new WorldGenGarden();
-    private final WorldGenSingle caveGrassGen = new WorldGenSingle(Blocks.TALLGRASS);
-    private final WorldGenSingle caveLeavesGen = new WorldGenSingle(Blocks.LEAVES);
+    private final WorldGenScatteredBlock caveGrassGen = new WorldGenScatteredBlock(Blocks.TALLGRASS, 48);
+    private final WorldGenScatteredBlock caveLeavesGen = new WorldGenScatteredBlock(Blocks.LEAVES, 48);
     private final WorldGenFluidPool waterPoolGen = new WorldGenFluidPool(Blocks.WATER);
     private final WorldGenFluidPool lavaPoolGen = new WorldGenFluidPool(Blocks.LAVA);
     private final WorldGenFluidPool tarPoolGen = new WorldGenFluidPool(PollutionMaterials.PureTar.getFluid(FluidStorageKeys.LIQUID).getBlock());
@@ -154,10 +132,6 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         getModdedMapGen(this.undergroundBridgeGen, UNDERGROUND);
     }
 
-    private static IBlockState gtStoneState(StoneVariantBlock.StoneType stoneType) {
-        return GTQTMetaBlocks.STONE_BLOCKS.get(StoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
-    }
-
     // ===== 地形高度 =====
 
     private void prepareHeights(int chunkX, int chunkZ, ChunkPrimer primer) {
@@ -193,15 +167,9 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                                 IBlockState blockState = null;
                                 int currentHeight = subYIndex + yIndex * 16;
 
-                                // 低于海平面-1 生成基性岩，高于海平面+5 生成石头，中间按噪声阈值混合
+                                // 噪声达到阈值则生成石头，否则保持空洞（低于海平面时填水）
                                 if (zInterpolated > -0.2D) {
-                                    if (currentHeight < waterLevel - 1) {
-                                        blockState = KIMBERLITE;
-                                    } else if (currentHeight > waterLevel + 5) {
-                                        blockState = STONE;
-                                    } else {
-                                        blockState = (zInterpolated > 0.6D) ? STONE : KIMBERLITE;
-                                    }
+                                    blockState = STONE;
                                 }
 
                                 // 噪声空洞且低于海平面：填充水
@@ -235,16 +203,6 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
             return;
         }
 
-        // 生成 10 个随机岩石变种层（高度 60-250，层厚 3-5）
-        int[] variantHeights = new int[10];
-        int[] variantLayers = new int[10];
-        IBlockState[] variantBlocks = new IBlockState[10];
-        for (int i = 0; i < 10; i++) {
-            variantHeights[i] = this.rand.nextInt(190) + 60;
-            variantLayers[i] = 3 + this.rand.nextInt(2);
-            variantBlocks[i] = ROCK_VARIANTS[this.rand.nextInt(ROCK_VARIANTS.length)];
-        }
-
         for (int localX = 0; localX < 16; ++localX) {
             for (int localZ = 0; localZ < 16; ++localZ) {
                 // 基岩层：底部 2 层 + 顶部 2 层
@@ -252,22 +210,71 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                 primer.setBlockState(localZ, 1, localX, Blocks.BEDROCK.getDefaultState());
                 primer.setBlockState(localZ, 254, localX, Blocks.BEDROCK.getDefaultState());
                 primer.setBlockState(localZ, 255, localX, Blocks.BEDROCK.getDefaultState());
+            }
+        }
+    }
 
-                // 应用岩石变种层（仅替换石头方块）
-                for (int i = 0; i < 10; i++) {
-                    int startY = variantHeights[i];
-                    int layerCount = variantLayers[i];
-                    IBlockState blockType = variantBlocks[i];
-                    int endY = Math.min(250, startY + layerCount - 1);
+    /**
+     * 水体附近的石头替换为沙砾：湖床覆盖 2-4 层沙砾，水面附近的湖岸石壁单层沙砾，
+     * 模拟真实湖泊的沉积效果。
+     */
+    private void replaceStoneNearWater(int chunkX, int chunkZ, ChunkPrimer primer) {
+        int waterLevel = this.world.getSeaLevel();
 
-                    for (int yPos = startY; yPos <= endY; yPos++) {
-                        if (primer.getBlockState(localZ, yPos, localX).getBlock() == Blocks.STONE) {
-                            primer.setBlockState(localZ, yPos, localX, blockType);
+        // 每列一个噪声值，决定湖床沙砾层厚度（2-4 层）
+        this.gravelNoiseBuffer = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.gravelNoiseBuffer,
+                chunkX * 16, 0, chunkZ * 16, 16, 1, 16, 0.125D, 1.0D, 0.125D);
+
+        for (int localX = 0; localX < 16; ++localX) {
+            for (int localZ = 0; localZ < 16; ++localZ) {
+                int gravelDepth = 2 + (int) (Math.abs(this.gravelNoiseBuffer[localX * 16 + localZ]) / 6.0D);
+                gravelDepth = Math.min(gravelDepth, 4);
+
+                // 湖床：自上而下穿过水体后遇到的第一层石头开始，向下替换为沙砾
+                boolean inWater = false;
+                for (int y = waterLevel - 1; y > 2; --y) {
+                    IBlockState state = primer.getBlockState(localZ, y, localX);
+                    if (state.getBlock() == Blocks.WATER) {
+                        inWater = true;
+                    } else if (state.getBlock() == Blocks.STONE) {
+                        if (inWater) {
+                            for (int d = 0; d < gravelDepth; ++d) {
+                                if (primer.getBlockState(localZ, y - d, localX).getBlock() != Blocks.STONE) {
+                                    break;
+                                }
+                                primer.setBlockState(localZ, y - d, localX, GRAVEL);
+                            }
                         }
+                        break;
+                    }
+                }
+
+                // 湖岸：水面附近紧邻水体或洞穴空气的石头替换为沙砾（边缘列无法做邻接检测，跳过）
+                if (localX == 0 || localX == 15 || localZ == 0 || localZ == 15) {
+                    continue;
+                }
+                for (int y = waterLevel - 4; y <= waterLevel + 3; ++y) {
+                    if (primer.getBlockState(localZ, y, localX).getBlock() != Blocks.STONE) {
+                        continue;
+                    }
+                    if (isAdjacentToWaterOrAir(primer, localZ, y, localX)) {
+                        primer.setBlockState(localZ, y, localX, GRAVEL);
                     }
                 }
             }
         }
+    }
+
+    private static boolean isAdjacentToWaterOrAir(ChunkPrimer primer, int primerX, int y, int primerZ) {
+        return isWaterOrAir(primer.getBlockState(primerX - 1, y, primerZ))
+                || isWaterOrAir(primer.getBlockState(primerX + 1, y, primerZ))
+                || isWaterOrAir(primer.getBlockState(primerX, y, primerZ - 1))
+                || isWaterOrAir(primer.getBlockState(primerX, y, primerZ + 1));
+    }
+
+    private static boolean isWaterOrAir(IBlockState state) {
+        Block block = state.getBlock();
+        return block == Blocks.WATER || block == Blocks.AIR;
     }
 
     // ===== 主生成入口 =====
@@ -278,6 +285,7 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         ChunkPrimer chunkPrimer = new ChunkPrimer();
         this.prepareHeights(x, z, chunkPrimer);
         this.buildSurfaces(x, z, chunkPrimer);
+        this.replaceStoneNearWater(x, z, chunkPrimer);
         this.caveGen.generate(this.world, x, z, chunkPrimer);
 
         if (this.generateStructures) {
