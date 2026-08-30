@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -37,13 +38,13 @@ public class CommonProxy {
 
     public static final CreativeTabs Pollution_TAB = new CreativeTabs("Pollution") {
         @Override
-        public ItemStack createIcon() {
+        public @NotNull ItemStack createIcon() {
             return PollutionMetaItems.STONE_OF_PHILOSOPHER_FINAL.getStackForm();
         }
     };
     public static final CreativeTabs Pollution_TAROT = new CreativeTabs("Tarot") {
         @Override
-        public ItemStack createIcon() {
+        public @NotNull ItemStack createIcon() {
             return PollutionMetaItems.TAROT_THE_FOOL.getStackForm();
         }
     };

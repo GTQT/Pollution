@@ -7,7 +7,6 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
-import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
@@ -32,6 +31,7 @@ import thaumcraft.api.items.ItemsTC;
 import vazkii.botania.common.item.ModItems;
 
 import static gregtech.api.unification.material.Materials.*;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.Sunnarium;
 
 
 public class ThaumcraftRecipes {
@@ -50,7 +50,7 @@ public class ThaumcraftRecipes {
                 .fluidInputs(PollutionMaterials.InfusedLight.getFluid(2304))
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 4)
                 .notConsumable(PollutionMetaItems.HOTCORE.getStackForm())
-                .output(OrePrefix.dust, PollutionMaterials.sunnarium, 1)
+                .output(OrePrefix.dust, Sunnarium, 1)
                 .duration(200)
                 .EUt(480)
                 .buildAndRegister();
@@ -364,18 +364,18 @@ public class ThaumcraftRecipes {
                 .input(OrePrefix.dust, Materials.Opal)
                 .input(OrePrefix.dust, Materials.Salt)
                 .input(OrePrefix.dust, Materials.Sulfur)
-                .output(OrePrefix.dust, PollutionMaterials.roughdraft, 6)
+                .output(OrePrefix.dust, PollutionMaterials.Roughdraft, 6)
                 .duration(600)
                 .EUt(120)
                 .buildAndRegister();
 
         //魔力催化剂基底，搅拌机
         RecipeMaps.MIXER_RECIPES.recipeBuilder()
-                .input(OrePrefix.dust, PollutionMaterials.roughdraft, 6)
+                .input(OrePrefix.dust, PollutionMaterials.Roughdraft, 6)
                 .input(OrePrefix.dust, PollutionMaterials.InfusedAir)
                 .input(OrePrefix.dust, PollutionMaterials.InfusedFire)
                 .input(OrePrefix.dust, PollutionMaterials.InfusedEntropy)
-                .output(OrePrefix.dust, PollutionMaterials.substrate, 9)
+                .output(OrePrefix.dust, PollutionMaterials.Substrate, 9)
                 .duration(600)
                 .EUt(120)
                 .buildAndRegister();
@@ -479,7 +479,7 @@ public class ThaumcraftRecipes {
                 .input(OrePrefix.dust, Salt, 2)
                 .input(OrePrefix.dust, Bismuth)
                 .fluidInputs(Mercury.getFluid(4000))
-                .fluidOutputs(PollutionMaterials.basic_substrate.getFluid(1440))
+                .fluidOutputs(PollutionMaterials.BasicSubstrate.getFluid(1440))
                 .blastFurnaceTemp(2700)
                 .circuitMeta(20)
                 .duration(1200)
@@ -490,29 +490,29 @@ public class ThaumcraftRecipes {
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, Bismuth)
                 .fluidInputs(Mercury.getFluid(4000))
-                .fluidOutputs(PollutionMaterials.basic_substrate.getFluid(5760))
+                .fluidOutputs(PollutionMaterials.BasicSubstrate.getFluid(5760))
                 .blastFurnaceTemp(2700)
                 .circuitMeta(20)
                 .duration(1200)
                 .EUt(480)
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
+                .input(OrePrefix.dust, PollutionMaterials.SulfoPlumbicSalt, 3)
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, Bismuth, 4)
                 .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
-                .fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(1440))
+                .fluidOutputs(PollutionMaterials.AdvancedSubstrate.getFluid(1440))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
                 .duration(1200)
                 .EUt(1920)
                 .buildAndRegister();
         PORecipeMaps.MAGIC_ALLOY_BLAST_RECIPES.recipeBuilder()
-                .input(OrePrefix.dust, PollutionMaterials.sulfo_plumbic_salt, 3)
+                .input(OrePrefix.dust, PollutionMaterials.SulfoPlumbicSalt, 3)
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, PollutionMaterials.Syrmorite, 4)
                 .fluidInputs(GTQTMaterials.Mana.getFluid(1000))
-                .fluidOutputs(PollutionMaterials.advanced_substrate.getFluid(5760))
+                .fluidOutputs(PollutionMaterials.AdvancedSubstrate.getFluid(5760))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
                 .duration(1200)
@@ -523,7 +523,7 @@ public class ThaumcraftRecipes {
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, Bismuth, 4)
                 .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
-                .fluidOutputs(PollutionMaterials.hyper_substrate.getFluid(1440))
+                .fluidOutputs(PollutionMaterials.HyperSubstrate.getFluid(1440))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
                 .duration(2400)
@@ -534,7 +534,7 @@ public class ThaumcraftRecipes {
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .input(OrePrefix.dust, PollutionMaterials.Syrmorite, 4)
                 .fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
-                .fluidOutputs(PollutionMaterials.hyper_substrate.getFluid(5760))
+                .fluidOutputs(PollutionMaterials.HyperSubstrate.getFluid(5760))
                 .blastFurnaceTemp(3600)
                 .circuitMeta(20)
                 .duration(2400)

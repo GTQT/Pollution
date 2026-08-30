@@ -23,6 +23,8 @@ import meowmel.pollution.loaders.recipes.MeteorsHelper;
 import meowmel.pollution.loaders.recipes.mods.AstralSorcery;
 import meowmel.pollution.loaders.recipes.mods.Botania;
 import meowmel.pollution.common.ModGuiHandler;
+import meowmel.pollution.common.warpevent.WarpEventHandler;
+import meowmel.pollution.common.warpevent.net.MeowmelNetwork;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -105,6 +107,8 @@ public class Pollution {
         buildPortalIngredient();
         PoEntitiesRegistry.init();
         WirelessManager.getInstance().init();
+        WarpEventHandler.init();
+        MeowmelNetwork.init();
     }
 
     @Mod.EventHandler

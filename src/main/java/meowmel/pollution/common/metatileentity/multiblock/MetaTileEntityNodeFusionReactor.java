@@ -72,9 +72,9 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
 
     private final int tier;
     //漫宿类型
-    private final FluidStack BLACK_MANSUS = PollutionMaterials.blackmansus.getFluid(1);
-    private final FluidStack WHITE_MANSUS = PollutionMaterials.whitemansus.getFluid(1);
-    private final FluidStack STARRY_MANSUS = PollutionMaterials.starrymansus.getFluid(1);
+    private final FluidStack BLACK_MANSUS = PollutionMaterials.BlackMansus.getFluid(1);
+    private final FluidStack WHITE_MANSUS = PollutionMaterials.WhiteMansus.getFluid(1);
+    private final FluidStack STARRY_MANSUS = PollutionMaterials.Starrymansus.getFluid(1);
     //机器节点因子相关
     private int overallParallelAmount = 1;
     private int overallProgressTimeAmount = 0;

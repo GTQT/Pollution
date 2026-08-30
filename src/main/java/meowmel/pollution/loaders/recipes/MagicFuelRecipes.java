@@ -40,13 +40,13 @@ public class MagicFuelRecipes {
                 .fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1152))
                 .input(OrePrefix.dust,Aluminium,8)
                 .notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
-                .fluidOutputs(PollutionMaterials.infernal_blaze_propellant.getFluid(16000))
+                .fluidOutputs(PollutionMaterials.InfernalBlazePropellant.getFluid(16000))
                 .duration(800)
                 .EUt(VA[HV])
                 .buildAndRegister();
 
         ROCKET_ENGINE_RECIPES.recipeBuilder()
-                .fluidInputs(infernal_blaze_propellant.getFluid(9))
+                .fluidInputs(InfernalBlazePropellant.getFluid(9))
                 .EUt(2048)
                 .duration(4 * SECOND)
                 .buildAndRegister();
@@ -86,13 +86,13 @@ public class MagicFuelRecipes {
                 .input(Items.DRAGON_BREATH, 4)
                 .fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1152))
                 .notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
-                .fluidOutputs(PollutionMaterials.dragon_pulse_fuel.getFluid(16000))
+                .fluidOutputs(PollutionMaterials.DragonPulseFuel.getFluid(16000))
                 .duration(800)
                 .EUt(VA[IV])
                 .buildAndRegister();
 
         ROCKET_ENGINE_RECIPES.recipeBuilder()
-                .fluidInputs(dragon_pulse_fuel.getFluid(6))
+                .fluidInputs(DragonPulseFuel.getFluid(6))
                 .EUt(2048)
                 .duration(8 * SECOND)
                 .buildAndRegister();
@@ -106,13 +106,13 @@ public class MagicFuelRecipes {
                 .fluidInputs(Materials.Nitrobenzene.getFluid(10000))
                 .fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(1152))
                 .notConsumable(new ItemStack(PollutionMetaItems.COKINGCORE.getMetaItem(), 1, 7))
-                .fluidOutputs(PollutionMaterials.magic_nitrobenzene.getFluid(16000))
+                .fluidOutputs(PollutionMaterials.MagicNitrobenzene.getFluid(16000))
                 .duration(200)
                 .EUt(480)
                 .buildAndRegister();
 
         RecipeMaps.COMBUSTION_GENERATOR_FUELS.recipeBuilder()
-                .fluidInputs(magic_nitrobenzene.getFluid(1))
+                .fluidInputs(MagicNitrobenzene.getFluid(1))
                 .duration(90)
                 .EUt(512)
                 .buildAndRegister();

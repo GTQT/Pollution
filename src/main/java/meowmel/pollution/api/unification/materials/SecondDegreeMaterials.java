@@ -32,7 +32,7 @@ public class SecondDegreeMaterials {
 
     public static void register() {
         //活性催化粗胚，作为催化剂系列的起始物品
-        PollutionMaterials.roughdraft = new Material.Builder(getMaterialsId(), pollutionId("roughdraft"))
+        PollutionMaterials.Roughdraft = new Material.Builder(getMaterialsId(), pollutionId("roughdraft"))
                 .dust()
                 .color(0xCDA5F7)
                 .iconSet(DULL)
@@ -41,60 +41,60 @@ public class SecondDegreeMaterials {
                 .build();
 
         //魔力催化场基底，作为和神秘相关设备合成的催化剂基底物质
-        PollutionMaterials.substrate = new Material.Builder(getMaterialsId(), pollutionId("substrate"))
+        PollutionMaterials.Substrate = new Material.Builder(getMaterialsId(), pollutionId("substrate"))
                 .ingot()
                 .color(0xCDA5F7)
                 .iconSet(SHINY)
                 .flags(DECOMPOSITION_BY_CENTRIFUGING)
                 .blast(2700)
-                .components(roughdraft, 6, InfusedFire, 1, InfusedAir, 1, InfusedEntropy, 1)
+                .components(Roughdraft, 6, InfusedFire, 1, InfusedAir, 1, InfusedEntropy, 1)
                 .build();
 
         //魔法催化线材料
         //荷叶粉 硅酸乙酯 LLP@SiO2粗胚 超亲疏水LLP@SiO2 含LLP原油
-        PollutionMaterials.lotus_dust = new Material.Builder(getMaterialsId(), pollutionId("lotus_dust"))
+        PollutionMaterials.LotusDust = new Material.Builder(getMaterialsId(), pollutionId("lotus_dust"))
                 .color(0x008B45)
                 .dust()
                 .iconSet(DULL)
                 .build();
 
-        PollutionMaterials.ethyl_silicate = new Material.Builder(getMaterialsId(), pollutionId("ethyl_silicate"))
+        PollutionMaterials.EthylSilicate = new Material.Builder(getMaterialsId(), pollutionId("ethyl_silicate"))
                 .color(0x708090)
                 .fluid()
                 .build()
                 .setFormula("(C2H5O)4Si", true);
 
-        PollutionMaterials.rough_llp = new Material.Builder(getMaterialsId(), pollutionId("rough_llp"))
+        PollutionMaterials.RoughLlp = new Material.Builder(getMaterialsId(), pollutionId("rough_llp"))
                 .color(0xB4EEB4)
                 .dust()
                 .iconSet(DULL)
                 .build();
 
-        PollutionMaterials.llp = new Material.Builder(getMaterialsId(), pollutionId("llp"))
+        PollutionMaterials.Llp = new Material.Builder(getMaterialsId(), pollutionId("llp"))
                 .color(0xB4EEB4)
                 .dust()
                 .iconSet(SHINY)
                 .build();
 
-        PollutionMaterials.oil_with_llp = new Material.Builder(getMaterialsId(), pollutionId("oil_with_llp"))
+        PollutionMaterials.OilWithLlp = new Material.Builder(getMaterialsId(), pollutionId("oil_with_llp"))
                 .color(0x698B69)
                 .fluid()
                 .build();
 
         //超粘稠焦油 魔力抗爆焦化硝基苯 纯化焦油
-        PollutionMaterials.super_sticky_tar = new Material.Builder(getMaterialsId(), pollutionId("super_sticky_tar"))
+        PollutionMaterials.SuperStickyTar = new Material.Builder(getMaterialsId(), pollutionId("super_sticky_tar"))
                 .color(0x4F4F4F)
                 .fluid()
                 .iconSet(SHINY)
                 .build();
 
-        PollutionMaterials.magic_nitrobenzene = new Material.Builder(getMaterialsId(), pollutionId("magic_nitrobenzene"))
+        PollutionMaterials.MagicNitrobenzene = new Material.Builder(getMaterialsId(), pollutionId("magic_nitrobenzene"))
                 .color(0x8B1A1A)
                 .fluid()
                 .iconSet(SHINY)
                 .build();
 
-        PollutionMaterials.pure_tar = new Material.Builder(getMaterialsId(), pollutionId("pure_tar"))
+        PollutionMaterials.PureTar = new Material.Builder(getMaterialsId(), pollutionId("pure_tar"))
                 .liquid(new FluidBuilder()
                         .block())
                 .color(0x4F4F4F)
@@ -108,172 +108,172 @@ public class SecondDegreeMaterials {
                 .build();
 
         //通用奇术基底，高阶奇术基底，用于锻炉
-        PollutionMaterials.basic_substrate = new Material.Builder(getMaterialsId(), pollutionId("basic_substrate"))
+        PollutionMaterials.BasicSubstrate = new Material.Builder(getMaterialsId(), pollutionId("basic_substrate"))
                 .color(0xFFFFD8)
                 .fluid().ingot()
                 .build();
 
-        PollutionMaterials.advanced_substrate = new Material.Builder(getMaterialsId(), pollutionId("advanced_substrate"))
+        PollutionMaterials.AdvancedSubstrate = new Material.Builder(getMaterialsId(), pollutionId("advanced_substrate"))
                 .color(0xD4FFF0)
                 .fluid().ingot()
                 .build();
 
-        PollutionMaterials.hyper_substrate = new Material.Builder(getMaterialsId(), pollutionId("hyper_substrate"))
+        PollutionMaterials.HyperSubstrate = new Material.Builder(getMaterialsId(), pollutionId("hyper_substrate"))
                 .color(0x8B87FF)
                 .fluid().ingot()
                 .build();
 
-        PollutionMaterials.sulfo_plumbic_salt = new Material.Builder(getMaterialsId(), pollutionId("sulfo_plumbic_salt"))
+        PollutionMaterials.SulfoPlumbicSalt = new Material.Builder(getMaterialsId(), pollutionId("sulfo_plumbic_salt"))
                 .color(0x5A286F)
                 .iconSet(METALLIC)
                 .dust()
                 .build();
 
-        PollutionMaterials.magical_sulfo_plumbic_salt = new Material.Builder(getMaterialsId(), pollutionId("magical_sulfo_plumbic_salt"))
+        PollutionMaterials.MagicalSulfoPlumbicSalt = new Material.Builder(getMaterialsId(), pollutionId("magical_sulfo_plumbic_salt"))
                 .color(0x5A286F)
                 .iconSet(SHINY)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_residue_1 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_1"))
+        PollutionMaterials.AlchemicalResidue1 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_1"))
                 .color(0x401751)
                 .iconSet(DULL)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_vapor_1 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_1"))
+        PollutionMaterials.AlchemicalVapor1 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_1"))
                 .color(0x9159A9)
                 .fluid()
                 .build();
 
-        PollutionMaterials.alchemical_residue_2 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_2"))
+        PollutionMaterials.AlchemicalResidue2 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_2"))
                 .color(0x647080)
                 .iconSet(DULL)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_vapor_2 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_2"))
+        PollutionMaterials.AlchemicalVapor2 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_2"))
                 .color(0x99CCFF)
                 .fluid()
                 .build();
 
-        PollutionMaterials.alchemical_residue_3 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_3"))
+        PollutionMaterials.AlchemicalResidue3 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_3"))
                 .color(0x494949)
                 .iconSet(DULL)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_vapor_3 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_3"))
+        PollutionMaterials.AlchemicalVapor3 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_3"))
                 .color(0xD7D7D7)
                 .fluid()
                 .build();
 
-        PollutionMaterials.alchemical_residue_4 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_4"))
+        PollutionMaterials.AlchemicalResidue4 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_4"))
                 .color(0x759F8A)
                 .iconSet(DULL)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_vapor_4 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_4"))
+        PollutionMaterials.AlchemicalVapor4 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_4"))
                 .color(0x86FCC1)
                 .fluid()
                 .build();
 
-        PollutionMaterials.alchemical_residue_5 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_5"))
+        PollutionMaterials.AlchemicalResidue5 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_5"))
                 .color(0x1F447C)
                 .iconSet(DULL)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_vapor_5 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_5"))
+        PollutionMaterials.AlchemicalVapor5 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_5"))
                 .color(0x3385FF)
                 .fluid()
                 .build();
 
-        PollutionMaterials.alchemical_residue_6 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_6"))
+        PollutionMaterials.AlchemicalResidue6 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_residue_6"))
                 .color(0x6B4B6F)
                 .iconSet(DULL)
                 .dust()
                 .build();
 
-        PollutionMaterials.alchemical_vapor_6 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_6"))
+        PollutionMaterials.AlchemicalVapor6 = new Material.Builder(getMaterialsId(), pollutionId("alchemical_vapor_6"))
                 .color(0xFCDBF)
                 .fluid()
                 .build();
 
-        PollutionMaterials.magical_tin_solution = new Material.Builder(getMaterialsId(), pollutionId("magical_tin_solution"))
+        PollutionMaterials.MagicalTinSolution = new Material.Builder(getMaterialsId(), pollutionId("magical_tin_solution"))
                 .color(0xB9B9B9)
                 .fluid()
                 .build();
 
-        PollutionMaterials.magical_stannous_sulfate_solution = new Material.Builder(getMaterialsId(), pollutionId("magical_stannous_sulfate_solution"))
+        PollutionMaterials.MagicalStannousSulfateSolution = new Material.Builder(getMaterialsId(), pollutionId("magical_stannous_sulfate_solution"))
                 .color(0xF1FF97)
                 .fluid()
                 .build();
 
-        PollutionMaterials.highmana_stannous_sulfate = new Material.Builder(getMaterialsId(), pollutionId("highmana_stannous_sulfate"))
+        PollutionMaterials.HighmanaStannousSulfate = new Material.Builder(getMaterialsId(), pollutionId("highmana_stannous_sulfate"))
                 .color(0xCCFF33)
                 .iconSet(SHINY)
                 .dust()
                 .build();
 
-        PollutionMaterials.impure_mercuric_salt_solution = new Material.Builder(getMaterialsId(), pollutionId("impure_mercuric_salt_solution"))
+        PollutionMaterials.ImpureMercuricSaltSolution = new Material.Builder(getMaterialsId(), pollutionId("impure_mercuric_salt_solution"))
                 .color(0x95978E)
                 .fluid()
                 .build();
 
-        PollutionMaterials.mercuric_salt_solution = new Material.Builder(getMaterialsId(), pollutionId("mercuric_salt_solution"))
+        PollutionMaterials.MercuricSaltSolution = new Material.Builder(getMaterialsId(), pollutionId("mercuric_salt_solution"))
                 .color(0xDBDCD8)
                 .fluid()
                 .build();
 
-        PollutionMaterials.magic_activated_iron_chloride_solution = new Material.Builder(getMaterialsId(), pollutionId("magic_activated_iron_chloride_solution"))
+        PollutionMaterials.MagicActivatedIronChlorideSolution = new Material.Builder(getMaterialsId(), pollutionId("magic_activated_iron_chloride_solution"))
                 .color(0x394320)
                 .fluid()
                 .build();
 
-        PollutionMaterials.magic_activated_ferrous_chloride_ethanol_solution = new Material.Builder(getMaterialsId(), pollutionId("magic_activated_ferrous_chloride_ethanol_solution"))
+        PollutionMaterials.MagicActivatedFerrousChlorideEthanolSolution = new Material.Builder(getMaterialsId(), pollutionId("magic_activated_ferrous_chloride_ethanol_solution"))
                 .color(0x80FF66)
                 .fluid()
                 .build();
 
-        PollutionMaterials.purified_activated_ferrous_chloride_ethanol_solution = new Material.Builder(getMaterialsId(), pollutionId("purified_activated_ferrous_chloride_ethanol_solution"))
+        PollutionMaterials.PurifiedActivatedFerrousChlorideEthanolSolution = new Material.Builder(getMaterialsId(), pollutionId("purified_activated_ferrous_chloride_ethanol_solution"))
                 .color(0xACFF9B)
                 .fluid()
                 .build();
 
-        PollutionMaterials.purified_activated_ferrous_chloride = new Material.Builder(getMaterialsId(), pollutionId("purified_activated_ferrous_chloride"))
+        PollutionMaterials.PurifiedActivatedFerrousChloride = new Material.Builder(getMaterialsId(), pollutionId("purified_activated_ferrous_chloride"))
                 .color(0xDEFFD7)
                 .iconSet(SHINY)
                 .dust()
                 .build();
 
-        PollutionMaterials.syrmorite_doped_magic_water_solution = new Material.Builder(getMaterialsId(), pollutionId("syrmorite_doped_magic_water_solution"))
+        PollutionMaterials.SyrmoriteDopedMagicWaterSolution = new Material.Builder(getMaterialsId(), pollutionId("syrmorite_doped_magic_water_solution"))
                 .color(0x1D4FDA)
                 .fluid()
                 .build();
 
-        PollutionMaterials.unformed_embryo_magic_water = new Material.Builder(getMaterialsId(), pollutionId("unformed_embryo_magic_water"))
+        PollutionMaterials.UnformedEmbryoMagicWater = new Material.Builder(getMaterialsId(), pollutionId("unformed_embryo_magic_water"))
                 .color(0x537EF2)
                 .fluid()
                 .build();
 
-        PollutionMaterials.embryo_magic_water = new Material.Builder(getMaterialsId(), pollutionId("embryo_magic_water"))
+        PollutionMaterials.EmbryoMagicWater = new Material.Builder(getMaterialsId(), pollutionId("embryo_magic_water"))
                 .color(0xA5BDFF)
                 .fluid()
                 .build();
 
-        PollutionMaterials.unstable_dimensional_silver = new Material.Builder(getMaterialsId(), pollutionId("unstable_dimensional_silver"))
+        PollutionMaterials.UnstableDimensionalSilver = new Material.Builder(getMaterialsId(), pollutionId("unstable_dimensional_silver"))
                 .color(0x7D989C)
                 .dust()
                 .build();
 
-        PollutionMaterials.impure_hyperdimensional_silver = new Material.Builder(getMaterialsId(), pollutionId("impure_hyperdimensional_silver"))
+        PollutionMaterials.ImpureHyperdimensionalSilver = new Material.Builder(getMaterialsId(), pollutionId("impure_hyperdimensional_silver"))
                 .color(0x9AD4DC)
                 .fluid()
                 .build();
 
-        PollutionMaterials.hyperdimensional_silver = new Material.Builder(getMaterialsId(), pollutionId("hyperdimensional_silver"))
+        PollutionMaterials.HyperdimensionalSilver = new Material.Builder(getMaterialsId(), pollutionId("hyperdimensional_silver"))
                 .color(0xD1FAFF)
                 .ingot().fluid().plasma()
                 .iconSet(SHINY)
@@ -282,13 +282,13 @@ public class SecondDegreeMaterials {
                 .build()
                 .setFormula("Ag50(RnMa)m(AeIgAqTerOrdPe)n", true);
 
-        PollutionMaterials.dimensional_transforming_agent = new Material.Builder(getMaterialsId(), pollutionId("dimensional_transforming_agent"))
+        PollutionMaterials.DimensionalTransformingAgent = new Material.Builder(getMaterialsId(), pollutionId("dimensional_transforming_agent"))
                 .color(0xFFC7F7)
                 .fluid()
                 .build();
 
         //氯化亚铁
-        PollutionMaterials.ferrous_chloride = new Material.Builder(getMaterialsId(), pollutionId("ferrous_chloride"))
+        PollutionMaterials.FerrousChloride = new Material.Builder(getMaterialsId(), pollutionId("ferrous_chloride"))
                 .color(0x86FF8E)
                 .dust()
                 .iconSet(BRIGHT)
@@ -297,32 +297,32 @@ public class SecondDegreeMaterials {
                 .build();
 
         //污秽之物化工线
-        PollutionMaterials.filth = new Material.Builder(getMaterialsId(), pollutionId("filth"))
+        PollutionMaterials.Filth = new Material.Builder(getMaterialsId(), pollutionId("filth"))
                 .color(0x5C0101)
                 .dust()
                 .iconSet(DULL)
                 .components(Netherrack, 6, Endstone, 1, Stone, 1, InfusedTaint, 1)
                 .build();
 
-        PollutionMaterials.filth_water = new Material.Builder(getMaterialsId(), pollutionId("filth_water"))
+        PollutionMaterials.FilthWater = new Material.Builder(getMaterialsId(), pollutionId("filth_water"))
                 .color(0x392323)
                 .fluid()
-                .components(filth, 9, InfusedDeath, 1, InfusedDark, 1)
+                .components(Filth, 9, InfusedDeath, 1, InfusedDark, 1)
                 .build();
 
-        PollutionMaterials.void_water = new Material.Builder(getMaterialsId(), pollutionId("void_water"))
+        PollutionMaterials.VoidWater = new Material.Builder(getMaterialsId(), pollutionId("void_water"))
                 .color(0x837D7D)
                 .fluid()
                 .build();
 
-        PollutionMaterials.void_material = new Material.Builder(getMaterialsId(), pollutionId("void_material"))
+        PollutionMaterials.VoidMaterial = new Material.Builder(getMaterialsId(), pollutionId("void_material"))
                 .color(0xC3C3C3)
                 .dust()
                 .iconSet(SHINY)
                 .build();
 
         //电池相关
-        PollutionMaterials.basic_battery_hull_alloy = new Material.Builder(getMaterialsId(), pollutionId("basic_battery_hull_alloy"))
+        PollutionMaterials.BasicBatteryHullAlloy = new Material.Builder(getMaterialsId(), pollutionId("basic_battery_hull_alloy"))
                 .color(0x877886)
                 .ingot().fluid()
                 .iconSet(METALLIC)
@@ -332,17 +332,17 @@ public class SecondDegreeMaterials {
                 .blast(2700, LOW)
                 .build();
 
-        PollutionMaterials.advanced_battery_hull_alloy = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_hull_alloy"))
+        PollutionMaterials.AdvancedBatteryHullAlloy = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_hull_alloy"))
                 .color(0xA4D4CD)
                 .ingot().fluid()
                 .iconSet(METALLIC)
                 .flags(DECOMPOSITION_BY_ELECTROLYZING)
-                .components(hyperdimensional_silver, 4, Valonite, 1)
+                .components(HyperdimensionalSilver, 4, Valonite, 1)
                 .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND)
                 .blast(5400, MID)
                 .build();
 
-        PollutionMaterials.basic_battery_content = new Material.Builder(getMaterialsId(), pollutionId("basic_battery_content"))
+        PollutionMaterials.BasicBatteryContent = new Material.Builder(getMaterialsId(), pollutionId("basic_battery_content"))
                 .color(0x687D9F)
                 .dust()
                 .iconSet(DULL)
@@ -350,7 +350,7 @@ public class SecondDegreeMaterials {
                 .components(Lithium, 6, GTQTMaterials.Thaumium, 2, InfusedEnergy, 1, InfusedMotion, 1)
                 .build();
 
-        PollutionMaterials.advanced_battery_content = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_content"))
+        PollutionMaterials.AdvancedBatteryContent = new Material.Builder(getMaterialsId(), pollutionId("advanced_battery_content"))
                 .color(0xFFFFE2)
                 .dust()
                 .iconSet(BRIGHT)
@@ -359,7 +359,7 @@ public class SecondDegreeMaterials {
                 .build();
 
         //龙脉星轨燃剂
-        PollutionMaterials.dragon_pulse_fuel = new Material.Builder(getMaterialsId(), pollutionId("dragon_pulse_fuel"))
+        PollutionMaterials.DragonPulseFuel = new Material.Builder(getMaterialsId(), pollutionId("dragon_pulse_fuel"))
                 .color(0xFFFFE2)
                 .fluid()
                 .iconSet(BRIGHT)
@@ -368,7 +368,7 @@ public class SecondDegreeMaterials {
                 .setFormula("DrAg50(RnMa)m(AeIgAqTerOrdPe)n");
 
         //焚天烈焰推进剂 烈焰之炽焰+ 肼硫酸盐 + 硝酸 + 铝粉
-        PollutionMaterials.infernal_blaze_propellant = new Material.Builder(getMaterialsId(), pollutionId("infernal_blaze_propellant"))
+        PollutionMaterials.InfernalBlazePropellant = new Material.Builder(getMaterialsId(), pollutionId("infernal_blaze_propellant"))
                 .fluid()
                 .color(0xFF4500) // 橙红色，象征高温与爆炸性
                 .iconSet(FLUID)
@@ -377,7 +377,7 @@ public class SecondDegreeMaterials {
 
         //耄耋哈基米线
         //叠氮酸
-        PollutionMaterials.hydrazoic_acid = new Material.Builder(getMaterialsId(), pollutionId("hydrazoic_acid"))
+        PollutionMaterials.HydrazoicAcid = new Material.Builder(getMaterialsId(), pollutionId("hydrazoic_acid"))
                 .color(0xFAF0AF)
                 .fluid()
                 .iconSet(DULL)
@@ -385,7 +385,7 @@ public class SecondDegreeMaterials {
                 .build();
 
         //叠氮化钠
-        PollutionMaterials.sodium_azide = new Material.Builder(getMaterialsId(), pollutionId("sodium_azide"))
+        PollutionMaterials.SodiumAzide = new Material.Builder(getMaterialsId(), pollutionId("sodium_azide"))
                 .color(0xFAF0AF)
                 .dust()
                 .iconSet(DULL)
@@ -393,7 +393,7 @@ public class SecondDegreeMaterials {
                 .build();
 
         //环戊二烯基钠
-        PollutionMaterials.sodium_cyclopentadienide = new Material.Builder(getMaterialsId(), pollutionId("sodium_cyclopentadienide"))
+        PollutionMaterials.SodiumCyclopentadienide = new Material.Builder(getMaterialsId(), pollutionId("sodium_cyclopentadienide"))
                 .color(0xF0BB74)
                 .dust()
                 .iconSet(DULL)

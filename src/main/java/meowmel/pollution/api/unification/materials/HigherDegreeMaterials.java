@@ -28,7 +28,7 @@ public class HigherDegreeMaterials {
 
     public static void register() {
         //牢大 想你了
-        PollutionMaterials.kobemetal = new Material.Builder(getMaterialsId(), pollutionId("kobemetal"))
+        PollutionMaterials.Kobemetal = new Material.Builder(getMaterialsId(), pollutionId("kobemetal"))
                 .color(0xFFD700)
                 .ingot().fluid()
                 .components(Helium, 1, Lithium, 1, Cobalt, 1, Platinum, 1, Erbium, 1)
@@ -39,7 +39,7 @@ public class HigherDegreeMaterials {
 
         //高级合金
         //太虚玄钢、阿弗纳斯之血、光风霁月琥珀金
-        PollutionMaterials.aetheric_dark_steel = new Material.Builder(getMaterialsId(), pollutionId("aetheric_dark_steel"))
+        PollutionMaterials.AethericDarkSteel = new Material.Builder(getMaterialsId(), pollutionId("aetheric_dark_steel"))
                 .color(0x041B4E)
                 .ingot().fluid()
                 .iconSet(SHINY)
@@ -48,7 +48,7 @@ public class HigherDegreeMaterials {
                 .build()
                 .setFormula("䷜", true);
 
-        PollutionMaterials.blood_of_avernus = new Material.Builder(getMaterialsId(), pollutionId("blood_of_avernus"))
+        PollutionMaterials.BloodOfAvernus = new Material.Builder(getMaterialsId(), pollutionId("blood_of_avernus"))
                 .color(0x5E0000)
                 .ingot().fluid()
                 .iconSet(BRIGHT)
@@ -57,7 +57,7 @@ public class HigherDegreeMaterials {
                 .build()
                 .setFormula("♆", true);
 
-        PollutionMaterials.iizunamaru_electrum = new Material.Builder(getMaterialsId(), pollutionId("iizunamaru_electrum"))
+        PollutionMaterials.IizunamaruElectrum = new Material.Builder(getMaterialsId(), pollutionId("iizunamaru_electrum"))
                 .color(0xF2FF2C)
                 .ingot().fluid()
                 .iconSet(SHINY)

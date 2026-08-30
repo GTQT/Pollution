@@ -59,11 +59,11 @@ import static gregtech.api.GTValues.UEV;
 import static gregtech.api.GTValues.UIV;
 import static gregtech.api.GTValues.UXV;
 import static gregtech.api.GTValues.OpV;
-import static gregtech.api.GTValues.MAX;
 import static gregtech.api.GTValues.UV;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.GTValues.ZPM;
 import static gregtech.api.unification.material.Materials.*;
+import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.Sunnarium;
 
 /**
  * Recipe owner for the cross-mod integration layer.  Keep these recipes out of
@@ -354,7 +354,7 @@ public final class MagicIntegrationRecipes {
                 .input(PollutionMetaItems.BLOOD_CIRCUIT_ULTIMATE)
                 .inputs(ItemCraftingComponent.MetaType.STARDUST.asStack())
                 .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
-                .fluidInputs(PollutionMaterials.infused_purified_blood.getFluid(1000))
+                .fluidInputs(PollutionMaterials.InfusedPurifiedBlood.getFluid(1000))
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 1000))
                 .output(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
                 .duration(800)
@@ -417,7 +417,7 @@ public final class MagicIntegrationRecipes {
         registerTarotCard(17, PollutionMetaItems.TAROT_THE_TOWER, new ItemStack(Blocks.TNT), NaquadahAlloy);
         registerTarotCard(18, PollutionMetaItems.TAROT_THE_STAR, new ItemStack(Items.NETHER_STAR), PollutionMaterials.InfusedLight);
         registerTarotCard(19, PollutionMetaItems.TAROT_THE_MOON, new ItemStack(Items.GHAST_TEAR), PollutionMaterials.InfusedDark);
-        registerTarotCard(20, PollutionMetaItems.TAROT_THE_SUN, new ItemStack(Items.GLOWSTONE_DUST), PollutionMaterials.sunnarium);
+        registerTarotCard(20, PollutionMetaItems.TAROT_THE_SUN, new ItemStack(Items.GLOWSTONE_DUST), Sunnarium);
         registerTarotCard(21, PollutionMetaItems.TAROT_JUDGEMENT, new ItemStack(Items.TOTEM_OF_UNDYING), Iridium);
         registerTarotCard(22, PollutionMetaItems.TAROT_THE_WORLD, new ItemStack(Items.DRAGON_BREATH), NaquadahEnriched);
     }
@@ -453,7 +453,7 @@ public final class MagicIntegrationRecipes {
 
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_ULV)
-                .input(OrePrefix.ingot, PollutionMaterials.basic_substrate)
+                .input(OrePrefix.ingot, PollutionMaterials.BasicSubstrate)
                 .input(OrePrefix.plate, PollutionMaterials.Manasteel, 2)
                 .input(OrePrefix.dust, PollutionMaterials.Salismundus, 2)
                 .fluidInputs(GTQTMaterials.Mana.getFluid(500))
@@ -635,8 +635,8 @@ public final class MagicIntegrationRecipes {
                     .input(GTQTMetaItems.OPTICAL_SMD_RESISTOR, 8)
                     .input(GTQTMetaItems.OPTICAL_SMD_DIODE, 8)
                     .input(GTQTMetaItems.OPTICAL_SMD_CAPACITOR, 8)
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(2000))
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(500))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(500))
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UEV)
                     .duration(1400).EUt(VA[UHV]);
             MagicRecipeProperties.astralCondition(uev, condition);
@@ -656,8 +656,8 @@ public final class MagicIntegrationRecipes {
                     .input(GTQTMetaItems.SPINTRONIC_SMD_RESISTOR, 8)
                     .input(GTQTMetaItems.SPINTRONIC_SMD_DIODE, 8)
                     .input(GTQTMetaItems.SPINTRONIC_SMD_CAPACITOR, 8)
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(4000))
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(4000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(1000))
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UIV)
                     .duration(1600).EUt(VA[UEV]);
             MagicRecipeProperties.astralCondition(uiv, condition);
@@ -675,8 +675,8 @@ public final class MagicIntegrationRecipes {
                     .input(GTQTMetaItems.COSMIC_SMD_RESISTOR, 8)
                     .input(GTQTMetaItems.COSMIC_SMD_DIODE, 8)
                     .input(GTQTMetaItems.COSMIC_SMD_CAPACITOR, 8)
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(8000))
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(8000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(2000))
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UXV)
                     .duration(1800).EUt(VA[UIV]);
             MagicRecipeProperties.astralCondition(uxv, condition);
@@ -694,8 +694,8 @@ public final class MagicIntegrationRecipes {
                     .input(GTQTMetaItems.SUPRACAUSAL_SMD_RESISTOR, 16)
                     .input(GTQTMetaItems.SUPRACAUSAL_SMD_DIODE, 16)
                     .input(GTQTMetaItems.SUPRACAUSAL_SMD_CAPACITOR, 16)
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(16000))
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(4000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(16000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(4000))
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_OpV)
                     .duration(2000).EUt(VA[UXV]);
             MagicRecipeProperties.astralCondition(opv, condition);
@@ -715,8 +715,8 @@ public final class MagicIntegrationRecipes {
                     .input(GTQTMetaItems.SUPRACAUSAL_SMD_TRANSISTOR, 32)
                     .input(GTQTMetaItems.SUPRACAUSAL_SMD_DIODE, 32)
                     .input(GTQTMetaItems.SUPRACAUSAL_SMD_CAPACITOR, 32)
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(32000))
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(8000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(32000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(8000))
                     .output(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_MAX)
                     .duration(2400).EUt(VA[OpV]);
             MagicRecipeProperties.astralCondition(max, condition);
@@ -763,7 +763,7 @@ public final class MagicIntegrationRecipes {
                 .notConsumable(PollutionMetaItems.CULTIVATED_CRYSTAL)
                 .input(MetaItems.ADVANCED_SMD_TRANSISTOR, 8)
                 .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(500))
-                .fluidInputs(PollutionMaterials.synthetic_computational_blood.getFluid(500))
+                .fluidInputs(PollutionMaterials.SyntheticComputationalBlood.getFluid(500))
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
                 .output(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE, 2)
                 .duration(800)
@@ -787,7 +787,7 @@ public final class MagicIntegrationRecipes {
                     .input(PollutionMetaItems.BLOOD_CIRCUIT_SUPREME)
                     .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE, 2)
                     .inputs(withCount(ItemCraftingComponent.MetaType.STARDUST.asStack(), 4))
-                    .fluidInputs(PollutionMaterials.infused_purified_blood.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.InfusedPurifiedBlood.getFluid(2000))
                     .fluidInputs(PollutionMaterials.CelestialBiologicalMedium.getFluid(1000))
                     .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 2000))
                     .output(PollutionMetaItems.ASTRAL_BLOOD_CATALYST, 2)
@@ -803,7 +803,7 @@ public final class MagicIntegrationRecipes {
                     .input(PollutionMetaItems.BLACK_RUNE)
                     .input(PollutionMetaItems.STARRY_RUNE)
                     .input(MetaItems.FIELD_GENERATOR_UV)
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(2000))
                     .fluidInputs(GTQTMaterials.Mana.getFluid(4000))
                     .output(PollutionMetaItems.HARMONIZING_RUNE_CORE)
                     .duration(1400).EUt(VA[UHV]);
@@ -818,7 +818,7 @@ public final class MagicIntegrationRecipes {
                     .input(PollutionMetaItems.BALL_IN_ITSELF)
                     .input(ItemsAS.celestialCrystal)
                     .input(MetaItems.FIELD_GENERATOR_UHV)
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(2000))
                     .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 4000))
                     .output(PollutionMetaItems.PRIMORDIAL_STAR_BLOOD_CRYSTAL)
                     .duration(1800).EUt(VA[UHV]);
@@ -837,8 +837,8 @@ public final class MagicIntegrationRecipes {
                     .input(PollutionMetaItems.BALL_IN_ITSELF)
                     .input(PollutionMetaItems.SYMPTOMATIC_VIS_DATA_LINK)
                     .input(MetaItems.FIELD_GENERATOR_UIV)
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(8000))
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(16000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(8000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(16000))
                     .output(PollutionMetaItems.CAUSALITY_CATALYST)
                     .duration(2200).EUt(VA[UIV]);
             MagicRecipeProperties.astralCondition(causality, condition);
@@ -945,7 +945,7 @@ public final class MagicIntegrationRecipes {
                 .input(PollutionMetaItems.LIVING_MAGIC_BIOFILM)
                 .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE)
                 .inputNBT(PollutionMetaItems.CONSTELLATION_DATA_WAFER, NBTMatcher.ANY, NBTCondition.ANY)
-                .fluidInputs(PollutionMaterials.synthetic_computational_blood.getFluid(1000))
+                .fluidInputs(PollutionMaterials.SyntheticComputationalBlood.getFluid(1000))
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
                 .output(PollutionMetaItems.NEEDLE_OF_MYSTIC_INTERPELLATION)
                 .duration(800)
@@ -959,7 +959,7 @@ public final class MagicIntegrationRecipes {
                 .input(PollutionMetaItems.ASTRAL_NEURAL_BUNDLE)
                 .input(PollutionMetaItems.BLOOD_CIRCUIT_ULTIMATE)
                 .input(PollutionMetaItems.ASTRAL_LENS_ADVANCED)
-                .fluidInputs(PollutionMaterials.synthetic_computational_blood.getFluid(1000))
+                .fluidInputs(PollutionMaterials.SyntheticComputationalBlood.getFluid(1000))
                 .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 500))
                 .output(PollutionMetaItems.COGITO_AED)
                 .duration(800)

@@ -3,8 +3,6 @@ package meowmel.pollution.common.entity;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.client.entity.*;
 import meowmel.pollution.common.entity.moster.*;
-import meowmel.pollution.client.entity.*;
-import meowmel.pollution.common.entity.moster.*;
 import meowmel.pollution.common.entity.shoot.EntityBasalzBolt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;

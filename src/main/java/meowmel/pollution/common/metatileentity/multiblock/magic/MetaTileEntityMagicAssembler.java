@@ -17,7 +17,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.MetaBlocks;
 
-import gregtech.common.metatileentities.multi.electric.MetaTileEntityCrackingUnit;
 import meowmel.pollution.api.capability.ipml.MagicMultiblockRecipeLogic;
 import meowmel.pollution.api.metatileentity.MagicRecipeMapMultiblockController;
 import meowmel.pollution.api.recipes.PORecipeMaps;
@@ -85,7 +84,7 @@ public class MetaTileEntityMagicAssembler extends MagicRecipeMapMultiblockContro
     }
 
     private static IBlockState getCasingState3() {
-        return MetaBlocks.FRAMES.get(PollutionMaterials.hyperdimensional_silver).getBlock(PollutionMaterials.hyperdimensional_silver);
+        return MetaBlocks.FRAMES.get(PollutionMaterials.HyperdimensionalSilver).getBlock(PollutionMaterials.HyperdimensionalSilver);
     }
 
     private static IBlockState getCasingState4() {

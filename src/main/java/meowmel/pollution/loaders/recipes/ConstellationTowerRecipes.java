@@ -51,8 +51,8 @@ public final class ConstellationTowerRecipes {
                             NBTCondition.create(NBTTagType.STRING,
                                     AstralNbtHelper.POLLUTION_CONSTELLATION, definition.getId()))
                     .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 32000))
-                    .fluidInputs(PollutionMaterials.starrymansus.getFluid(8000))
-                    .fluidInputs(PollutionMaterials.dimensional_transforming_agent.getFluid(2000))
+                    .fluidInputs(PollutionMaterials.Starrymansus.getFluid(8000))
+                    .fluidInputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(2000))
                     .output(PollutionMetaTileEntities.CONSTELLATION_TOWERS[i])
                     .duration(2400)
                     .EUt(GTValues.VA[GTValues.UHV])

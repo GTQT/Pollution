@@ -1,7 +1,6 @@
 package meowmel.pollution.api.unification.materials;
 
 import gregtech.api.GTValues;
-import gregtech.api.fluids.FluidBuilder;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.BlastProperty;
 import gregtech.api.unification.material.properties.MaterialToolProperty;
@@ -15,7 +14,6 @@ import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.LOW;
 import static gregtech.api.unification.material.properties.BlastProperty.GasTier.MID;
-import static gregtech.api.util.GTUtility.gregtechId;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 import static meowmel.pollution.api.utils.POUtils.pollutionId;
 
@@ -197,14 +195,14 @@ public class FirstDegreeMaterials {
         PollutionMaterials.ElvenElementium = new Material.Builder(getMaterialsId(), pollutionId("elven_elementium"))
                 .color(0xEE6AA7)
                 .ingot().fluid().ore()
-                .components(Iron, 4, elven, 1)
+                .components(Iron, 4, Elven, 1)
                 .iconSet(SHINY)
                 .flags(GENERATE_DENSE, GENERATE_FRAME, GENERATE_PLATE, GENERATE_ROTOR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_FRAME, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROUND, DECOMPOSITION_BY_CENTRIFUGING)
                 .build();
 
         //魔法超导线路
         //LK-99粗胚粉、灌魔超导液、初阶神秘超导体、高阶神秘超导体
-        PollutionMaterials.crude_lk_99 = new Material.Builder(getMaterialsId(), pollutionId("crude_lk_99"))
+        PollutionMaterials.CrudeLk99 = new Material.Builder(getMaterialsId(), pollutionId("crude_lk_99"))
                 .color(0x808080)
                 .ingot().fluid()
                 .components(Lead, 6, Copper, 4, Phosphate, 6, Oxygen, 1)
@@ -213,19 +211,19 @@ public class FirstDegreeMaterials {
                 .blast(2700)
                 .build();
 
-        PollutionMaterials.magical_superconductive_liquid = new Material.Builder(getMaterialsId(), pollutionId("magical_superconductive_liquid"))
+        PollutionMaterials.MagicalSuperconductiveLiquid = new Material.Builder(getMaterialsId(), pollutionId("magical_superconductive_liquid"))
                 .color(0x9C039C)
                 .fluid()
                 .build();
 
-        PollutionMaterials.basic_thaumic_superconductor = new Material.Builder(getMaterialsId(), pollutionId("basic_thaumic_superconductor"))
+        PollutionMaterials.BasicThaumicSuperconductor = new Material.Builder(getMaterialsId(), pollutionId("basic_thaumic_superconductor"))
                 .color(0xC6B3C6)
                 .ingot().fluid()
                 .iconSet(BRIGHT)
                 .cableProperties(GTValues.V[4], 8, 0, true)
                 .build();
 
-        PollutionMaterials.advanced_thaumic_superconductor = new Material.Builder(getMaterialsId(), pollutionId("advanced_thaumic_superconductor"))
+        PollutionMaterials.AdvancedThaumicSuperconductor = new Material.Builder(getMaterialsId(), pollutionId("advanced_thaumic_superconductor"))
                 .color(0xDDFF6E)
                 .ingot().fluid()
                 .iconSet(BRIGHT)
@@ -263,37 +261,37 @@ public class FirstDegreeMaterials {
 
         //血魔法 血线
         //除杂血
-        PollutionMaterials.purified_blood = new Material.Builder(getMaterialsId(), pollutionId("purified_blood"))
+        PollutionMaterials.PurifiedBlood = new Material.Builder(getMaterialsId(), pollutionId("purified_blood"))
                 .fluid()
                 .color(0xFF6B6B)
                 .build();
 
         //注魔除杂血
-        PollutionMaterials.infused_purified_blood = new Material.Builder(getMaterialsId(), pollutionId("infused_purified_blood"))
+        PollutionMaterials.InfusedPurifiedBlood = new Material.Builder(getMaterialsId(), pollutionId("infused_purified_blood"))
                 .fluid()
                 .color(0xFF6B6B)
                 .build();
 
         //奇术凛冰液
-        PollutionMaterials.arcane_gelid_fluid = new Material.Builder(getMaterialsId(), pollutionId("arcane_gelid_fluid"))
+        PollutionMaterials.ArcaneGelidFluid = new Material.Builder(getMaterialsId(), pollutionId("arcane_gelid_fluid"))
                 .fluid()
                 .color(0x66FFFF)
                 .build();
 
         //极寒人造血
-        PollutionMaterials.cryogenic_synthetic_blood = new Material.Builder(getMaterialsId(), pollutionId("cryogenic_synthetic_blood"))
+        PollutionMaterials.CryogenicSyntheticBlood = new Material.Builder(getMaterialsId(), pollutionId("cryogenic_synthetic_blood"))
                 .fluid()
                 .color(0x003366)
                 .build();
 
         //秘学运算液基底
-        PollutionMaterials.arcane_computational_substrate = new Material.Builder(getMaterialsId(), pollutionId("arcane_computational_substrate"))
+        PollutionMaterials.ArcaneComputationalSubstrate = new Material.Builder(getMaterialsId(), pollutionId("arcane_computational_substrate"))
                 .fluid()
                 .color(0x4B0082)
                 .build();
 
         //运算人造血
-        PollutionMaterials.synthetic_computational_blood = new Material.Builder(getMaterialsId(), pollutionId("synthetic_computational_blood"))
+        PollutionMaterials.SyntheticComputationalBlood = new Material.Builder(getMaterialsId(), pollutionId("synthetic_computational_blood"))
                 .fluid()
                 .color(0x8A2BE2)
                 .build();

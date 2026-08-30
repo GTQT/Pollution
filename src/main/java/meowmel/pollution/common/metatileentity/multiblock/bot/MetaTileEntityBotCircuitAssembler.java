@@ -46,7 +46,7 @@ public class MetaTileEntityBotCircuitAssembler extends ManaMultiblockController 
     }
 
     private static IBlockState getCasingState() {
-        return MetaBlocks.FRAMES.get(PollutionMaterials.blood_of_avernus).getBlock(PollutionMaterials.blood_of_avernus);
+        return MetaBlocks.FRAMES.get(PollutionMaterials.BloodOfAvernus).getBlock(PollutionMaterials.BloodOfAvernus);
     }
 
     private static IBlockState getCasingState2() {

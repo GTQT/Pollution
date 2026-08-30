@@ -181,7 +181,6 @@ pollution.material.rich_aura=Rich Aura Fluid
 pollution.material.erich_aura=Enriched Aura Fluid
 pollution.material.whitemansus=White Mansus
 pollution.material.blackmansus=Black Mansus
-pollution.material.sunnarium=Sunnarium Compound
 pollution.material.elven=Elven
 #Item Tooltips
 metaitem.ingotAertitanium.tooltip=Rhythm of the Breeze
@@ -1806,3 +1805,27 @@ pollution.machine.starstream_nexus.button.label.channels=16 CE
 pollution.machine.starstream_nexus.button.label.cleanup=CLEAR
 pollution.machine.starstream_nexus.tooltip.5=Interdimensional relays open a 96-block wireless gateway in another dimension; keep the nexus-core chunk loaded with a Starstream Chunk Anchor
 metaitem.starstream_linker.tooltip.5=After selecting a network, use an interdimensional relay in another dimension to create a remote gateway
+
+#Warp Event System
+chat.pollution.warp.poison=Warp flux corrodes your body!
+chat.pollution.warp.nausea=Warp flux churns in your gut. You feel sick.
+chat.pollution.warp.blind=Warp flux blinds your eyes.
+chat.pollution.warp.wither=Warp flux decays your flesh.
+chat.pollution.warp.jump=Warp flux fills your legs. You leap uncontrollably!
+chat.pollution.warp.lightning=Warp flux summons thunder!
+chat.pollution.warp.rain=Corrosive warp rain falls...
+chat.pollution.warp.wind=Warp winds hurl you around!
+chat.pollution.warp.mushrooms=Warp flux sprouts a patch of mushrooms.
+chat.pollution.warp.swamp=Warp flux corrupts the ground around you.
+chat.pollution.warp.fakerain=A foul warp stench fills the air...
+chat.pollution.warp.blink=Warp flux hurls you somewhere else!
+chat.pollution.warp.blood=Dark red liquid seeps from the ground...
+chat.pollution.warp.obsidian=Warp flux solidifies, trapping you in obsidian!
+chat.pollution.warp.fall=The ground beneath you is ripped away!
+chat.pollution.warp.fakeexplosion=BOOM!!! ...Just a false alarm.
+chat.pollution.warp.siege=Snarls echo from the warp. A horde of zombies pours out!
+chat.pollution.warp.countdownbomb=Tick... tick... Something on you is beeping.
+chat.pollution.warp.countdownbomb.tick=%s...
+chat.pollution.warp.countdownbomb.end=BOOM!!! ...The bomb on you went off. Or did it?
+chat.pollution.warp.junk=Warp flux vomits out junk from the void.
+chat.pollution.warp.inventoryscramble=Warp flux scrambles your inventory!

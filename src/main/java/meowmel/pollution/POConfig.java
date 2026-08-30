@@ -10,6 +10,7 @@ public class POConfig {
     public static PollutionSystemSwitch PollutionSystemSwitch = new PollutionSystemSwitch();
     public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
     public static AspectsCache AspectsCache = new AspectsCache();
+    public static WarpEventSwitch WarpEventSwitch = new WarpEventSwitch();
 
     public static class AspectsCache {
 
@@ -83,5 +84,34 @@ public class POConfig {
         public double EuPerMbMagicKq = 8192.0;
         @Config.Comment("富集自然魔力每mb的EU燃值")
         public double EuPerMbRichMagicKq = 32768.0;
+    }
+
+    /**
+     * 扭曲事件系统（污染→扭曲→事件联动）。
+     * 玩家身处高咒波(flux)区块时持续累积临时扭曲，扭曲值达到阈值后按概率触发扭曲事件。
+     */
+    public static class WarpEventSwitch {
+        @Config.Comment("扭曲事件总开关")
+        public boolean enableWarpEvents = true;
+        @Config.Comment("佛系模式：开启后扭曲事件永不触发")
+        public boolean wussMode = false;
+        @Config.Comment("污染累积扭曲的区块咒波阈值（低于此值不累积）")
+        public float fluxThreshold = 10.0F;
+        @Config.Comment("污染累积速率：每秒每超过阈值1点咒波获得的临时扭曲量")
+        public double fluxWarpRate = 0.05;
+        @Config.Comment("事件触发判定间隔（tick，默认2000=100秒）")
+        public int checkInterval = 2000;
+        @Config.Comment("事件出队执行间隔（tick，默认20=1秒）")
+        public int dequeueInterval = 20;
+        @Config.Comment("各事件启用开关，顺序与 WarpEvents 枚举一致：" +
+                "poison,nausea,blind,wither,jump,lightning,rain,wind,mushrooms,swamp," +
+                "fakerain,blink,blood,obsidian,fall,fakeexplosion,siege,countdownbomb,junk,inventoryscramble")
+        public boolean[] eventEnabled = new boolean[]{
+                true, true, true, true, true, true, true, true, true, true,
+                true, true, true, true, true, true, true, true, true, true};
+        @Config.Comment("各事件最低扭曲值覆盖（-1 使用默认值），顺序同上")
+        public int[] eventMinWarp = new int[]{
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
     }
 }

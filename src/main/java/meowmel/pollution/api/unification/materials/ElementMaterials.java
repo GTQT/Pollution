@@ -71,42 +71,35 @@ public class ElementMaterials {
                 .element(Elements.Ord)
                 .build();
 
-        PollutionMaterials.sunnarium = new Material.Builder(getMaterialsId(), pollutionId("sunnarium"))
-                .color(0xFAF20E)
-                .dust().fluid()
-                .iconSet(SHINY)
-                .element(Elements.Su)
-                .build();
-
-        PollutionMaterials.whitemansus = new Material.Builder(getMaterialsId(), pollutionId("whitemansus"))
+        PollutionMaterials.WhiteMansus = new Material.Builder(getMaterialsId(), pollutionId("whitemansus"))
                 .color(0xEFF0FF)
                 .fluid()
                 .iconSet(SHINY)
                 .element(Elements.Wma)
                 .build();
 
-        PollutionMaterials.blackmansus = new Material.Builder(getMaterialsId(), pollutionId("Blackmansus"))
+        PollutionMaterials.BlackMansus = new Material.Builder(getMaterialsId(), pollutionId("Blackmansus"))
                 .color(0x606060)
                 .fluid()
                 .iconSet(SHINY)
                 .element(Elements.Bma)
                 .build();
 
-        PollutionMaterials.elven = new Material.Builder(getMaterialsId(), pollutionId("Elven"))
+        PollutionMaterials.Elven = new Material.Builder(getMaterialsId(), pollutionId("Elven"))
                 .color(0xEE30A7)
                 .fluid()
                 .iconSet(SHINY)
                 .element(Elements.El)
                 .build();
 
-        PollutionMaterials.starrymansus = new Material.Builder(getMaterialsId(), pollutionId("starrymansus"))
+        PollutionMaterials.Starrymansus = new Material.Builder(getMaterialsId(), pollutionId("starrymansus"))
                 .color(0xFFF6FF)
                 .fluid()
                 .iconSet(BRIGHT)
                 .element(Elements.St)
                 .build();
 
-        PollutionMaterials.sentient_metal = new Material.Builder(getMaterialsId(), pollutionId("sentient_metal"))
+        PollutionMaterials.SentientMetal = new Material.Builder(getMaterialsId(), pollutionId("sentient_metal"))
                 .color(0x55FFFA)
                 .ingot().fluid()
                 .iconSet(BRIGHT)
@@ -114,7 +107,7 @@ public class ElementMaterials {
                 .element(Elements.Sen)
                 .build();
 
-        PollutionMaterials.binding_metal = new Material.Builder(getMaterialsId(), pollutionId("binding_metal"))
+        PollutionMaterials.BindingMetal = new Material.Builder(getMaterialsId(), pollutionId("binding_metal"))
                 .color(0xDA1D0F)
                 .ingot().fluid()
                 .iconSet(SHINY)
@@ -122,7 +115,7 @@ public class ElementMaterials {
                 .element(Elements.Bin)
                 .build();
 
-        PollutionMaterials.existing_nexus = new Material.Builder(getMaterialsId(), pollutionId("existing_nexus"))
+        PollutionMaterials.ExistingNexus = new Material.Builder(getMaterialsId(), pollutionId("existing_nexus"))
                 .color(0xC0C0C0)
                 .ingot().fluid()
                 .iconSet(BRIGHT)
@@ -130,7 +123,7 @@ public class ElementMaterials {
                 .element(Elements.Exn)
                 .build();
 
-        PollutionMaterials.fading_nexus = new Material.Builder(getMaterialsId(), pollutionId("fading_nexus"))
+        PollutionMaterials.FadingNexus = new Material.Builder(getMaterialsId(), pollutionId("fading_nexus"))
                 .color(0x404040)
                 .ingot().fluid()
                 .iconSet(SHINY)

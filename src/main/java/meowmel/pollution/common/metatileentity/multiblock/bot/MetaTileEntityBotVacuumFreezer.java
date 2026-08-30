@@ -105,7 +105,7 @@ public class MetaTileEntityBotVacuumFreezer extends ManaMultiblockController {
     }
 
     private static IBlockState getCasingState() {
-        return MetaBlocks.FRAMES.get(PollutionMaterials.hyperdimensional_silver).getBlock(PollutionMaterials.hyperdimensional_silver);
+        return MetaBlocks.FRAMES.get(PollutionMaterials.HyperdimensionalSilver).getBlock(PollutionMaterials.HyperdimensionalSilver);
     }
 
     private static IBlockState getCasingState2() {

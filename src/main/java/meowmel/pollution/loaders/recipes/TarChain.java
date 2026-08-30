@@ -49,13 +49,13 @@ public class TarChain {
         RecipeMaps.FERMENTING_RECIPES.recipeBuilder()
                 .fluidInputs(CoalTar.getFluid(1000))
                 .input(dust,Redstone)
-                .fluidOutputs(PollutionMaterials.pure_tar.getFluid(1000))
+                .fluidOutputs(PollutionMaterials.PureTar.getFluid(1000))
                 .duration(200)
                 .EUt(120)
                 .buildAndRegister();
 
-        lightlyCrack(PollutionMaterials.pure_tar, LightlyHydroCrackedHeavyFuel, LightlySteamCrackedHeavyFuel);
-        severelyCrack(PollutionMaterials.pure_tar, SeverelyHydroCrackedHeavyFuel, SeverelySteamCrackedHeavyFuel);
+        lightlyCrack(PollutionMaterials.PureTar, LightlyHydroCrackedHeavyFuel, LightlySteamCrackedHeavyFuel);
+        severelyCrack(PollutionMaterials.PureTar, SeverelyHydroCrackedHeavyFuel, SeverelySteamCrackedHeavyFuel);
 
     }
 }

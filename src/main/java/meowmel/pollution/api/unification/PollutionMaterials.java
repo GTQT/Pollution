@@ -2,7 +2,6 @@ package meowmel.pollution.api.unification;
 
 import gregtech.api.unification.material.Material;
 import meowmel.pollution.api.unification.materials.*;
-import meowmel.pollution.api.unification.materials.*;
 
 public class PollutionMaterials {
 	//基础六要素
@@ -76,115 +75,114 @@ public class PollutionMaterials {
 	public static Material Salismundus;
 	public static Material Mansussteel;
 	public static Material KQGold;
-	public static Material sentient_metal;
-	public static Material starrymansus;
-	public static Material blood_of_avernus;
-	public static Material iizunamaru_electrum;
-	public static Material aetheric_dark_steel;
+	public static Material SentientMetal;
+	public static Material Starrymansus;
+	public static Material BloodOfAvernus;
+	public static Material IizunamaruElectrum;
+	public static Material AethericDarkSteel;
 	//污秽线
-	public static Material filth;
-	public static Material filth_water;
-	public static Material void_water;
-	public static Material void_material;
+	public static Material Filth;
+	public static Material FilthWater;
+	public static Material VoidWater;
+	public static Material VoidMaterial;
 	//超导线
-	public static Material crude_lk_99;
-	public static Material magical_superconductive_liquid;
-	public static Material basic_thaumic_superconductor;
-	public static Material advanced_thaumic_superconductor;
+	public static Material CrudeLk99;
+	public static Material MagicalSuperconductiveLiquid;
+	public static Material BasicThaumicSuperconductor;
+	public static Material AdvancedThaumicSuperconductor;
 
 	public static Material TetraethylLead;
 	public static Material ChlorineTrifluoride;
 	public static Material hydrazine_sulfate;
 	public static Material SodiumLeadAlloy;
-	public static Material infernal_blaze_propellant;
+	public static Material InfernalBlazePropellant;
 	//man what can I say
-	public static Material kobemetal;
+	public static Material Kobemetal;
 	//催化剂
-	public static Material roughdraft;
-	public static Material substrate;
+	public static Material Roughdraft;
+	public static Material Substrate;
 	//魔法催化线路材料
-	public static Material lotus_dust;
-	public static Material ethyl_silicate;
-	public static Material rough_llp;
-	public static Material llp;
-	public static Material oil_with_llp;
-	public static Material super_sticky_tar;
-	public static Material magic_nitrobenzene;
-	public static Material pure_tar;
+	public static Material LotusDust;
+	public static Material EthylSilicate;
+	public static Material RoughLlp;
+	public static Material Llp;
+	public static Material OilWithLlp;
+	public static Material SuperStickyTar;
+	public static Material MagicNitrobenzene;
+	public static Material PureTar;
     public static Material BloodPlasma;
 
-	public static Material dragon_pulse_fuel;
+	public static Material DragonPulseFuel;
 
 	public static Material RichAura;
 	public static Material ErichAura;
-	public static Material sunnarium;
-	public static Material whitemansus;
-	public static Material blackmansus;
+	public static Material WhiteMansus;
+	public static Material BlackMansus;
 	public static Material Terrasteel;
 	public static Material Orichalcos;
 	public static Material ElvenElementium;
 	public static Material Dragonstone;
 	public static Material PixieDust;
 	public static Material ElvenQuartz;
-	public static Material elven;
-	public static Material basic_substrate;
-	public static Material advanced_substrate;
-	public static Material hyper_substrate;
+	public static Material Elven;
+	public static Material BasicSubstrate;
+	public static Material AdvancedSubstrate;
+	public static Material HyperSubstrate;
 
 	//血线
-	public static Material purified_blood;
-	public static Material infused_purified_blood;
-	public static Material arcane_gelid_fluid;
-	public static Material cryogenic_synthetic_blood;
-	public static Material arcane_computational_substrate;
-	public static Material synthetic_computational_blood;
+	public static Material PurifiedBlood;
+	public static Material InfusedPurifiedBlood;
+	public static Material ArcaneGelidFluid;
+	public static Material CryogenicSyntheticBlood;
+	public static Material ArcaneComputationalSubstrate;
+	public static Material SyntheticComputationalBlood;
 
 	//刻金线
-	public static Material sulfo_plumbic_salt;
-	public static Material magical_sulfo_plumbic_salt;
-	public static Material alchemical_residue_1;
-	public static Material alchemical_vapor_1;
-	public static Material alchemical_residue_2;
-	public static Material alchemical_vapor_2;
-	public static Material alchemical_residue_3;
-	public static Material alchemical_vapor_3;
-	public static Material alchemical_residue_4;
-	public static Material alchemical_vapor_4;
-	public static Material alchemical_residue_5;
-	public static Material alchemical_vapor_5;
-	public static Material alchemical_residue_6;
-	public static Material alchemical_vapor_6;
-	public static Material magical_tin_solution;
-	public static Material magical_stannous_sulfate_solution;
-	public static Material highmana_stannous_sulfate;
-	public static Material impure_mercuric_salt_solution;
-	public static Material mercuric_salt_solution;
-	public static Material magic_activated_iron_chloride_solution;
-	public static Material magic_activated_ferrous_chloride_ethanol_solution;
-	public static Material purified_activated_ferrous_chloride_ethanol_solution;
-	public static Material purified_activated_ferrous_chloride;
-	public static Material syrmorite_doped_magic_water_solution;
-	public static Material unformed_embryo_magic_water;
-	public static Material embryo_magic_water;
-	public static Material unstable_dimensional_silver;
-	public static Material impure_hyperdimensional_silver;
-	public static Material hyperdimensional_silver;
-	public static Material dimensional_transforming_agent;
-	public static Material ferrous_chloride;
-	public static Material binding_metal;
-	public static Material existing_nexus;
-	public static Material fading_nexus;
+	public static Material SulfoPlumbicSalt;
+	public static Material MagicalSulfoPlumbicSalt;
+	public static Material AlchemicalResidue1;
+	public static Material AlchemicalVapor1;
+	public static Material AlchemicalResidue2;
+	public static Material AlchemicalVapor2;
+	public static Material AlchemicalResidue3;
+	public static Material AlchemicalVapor3;
+	public static Material AlchemicalResidue4;
+	public static Material AlchemicalVapor4;
+	public static Material AlchemicalResidue5;
+	public static Material AlchemicalVapor5;
+	public static Material AlchemicalResidue6;
+	public static Material AlchemicalVapor6;
+	public static Material MagicalTinSolution;
+	public static Material MagicalStannousSulfateSolution;
+	public static Material HighmanaStannousSulfate;
+	public static Material ImpureMercuricSaltSolution;
+	public static Material MercuricSaltSolution;
+	public static Material MagicActivatedIronChlorideSolution;
+	public static Material MagicActivatedFerrousChlorideEthanolSolution;
+	public static Material PurifiedActivatedFerrousChlorideEthanolSolution;
+	public static Material PurifiedActivatedFerrousChloride;
+	public static Material SyrmoriteDopedMagicWaterSolution;
+	public static Material UnformedEmbryoMagicWater;
+	public static Material EmbryoMagicWater;
+	public static Material UnstableDimensionalSilver;
+	public static Material ImpureHyperdimensionalSilver;
+	public static Material HyperdimensionalSilver;
+	public static Material DimensionalTransformingAgent;
+	public static Material FerrousChloride;
+	public static Material BindingMetal;
+	public static Material ExistingNexus;
+	public static Material FadingNexus;
 
 	//电池线
-	public static Material basic_battery_hull_alloy;
-	public static Material advanced_battery_hull_alloy;
-	public static Material basic_battery_content;
-	public static Material advanced_battery_content;
+	public static Material BasicBatteryHullAlloy;
+	public static Material AdvancedBatteryHullAlloy;
+	public static Material BasicBatteryContent;
+	public static Material AdvancedBatteryContent;
 
 	//哈基米
-	public static Material hydrazoic_acid;
-	public static Material sodium_azide;
-	public static Material sodium_cyclopentadienide;
+	public static Material HydrazoicAcid;
+	public static Material SodiumAzide;
+	public static Material SodiumCyclopentadienide;
 	public static Material HafnoceneDichloride;
 	public static Material uOxoBisHafnoceneAzide;
 

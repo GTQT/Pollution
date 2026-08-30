@@ -78,7 +78,7 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
     //洞穴水集群
     private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(Blocks.WATER);
     private final WorldGenFluidPool worldGenLavaPool = new WorldGenFluidPool(Blocks.LAVA);
-    private final WorldGenFluidPool worldGenTarPool = new WorldGenFluidPool(PollutionMaterials.pure_tar.getFluid(FluidStorageKeys.LIQUID).getBlock());
+    private final WorldGenFluidPool worldGenTarPool = new WorldGenFluidPool(PollutionMaterials.PureTar.getFluid(FluidStorageKeys.LIQUID).getBlock());
     // 新增字段
     private final MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     public NoiseGeneratorOctaves scaleNoise;

@@ -8,10 +8,7 @@ import gregtech.common.blocks.BlockFusionCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
-import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
-import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.api.recipes.PORecipeMaps;
-import meowmel.pollution.api.unification.Elements;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POHyper;
@@ -25,7 +22,6 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.GTValues.VA;
 import static gregtech.api.unification.material.Materials.*;
 
-import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.Mana;
 import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
 import static meowmel.pollution.api.unification.PollutionMaterials.*;
 
@@ -38,8 +34,8 @@ public class NodeFusionRecipes {
 	}
 	private static void fuels(){
 		RecipeMaps.PLASMA_GENERATOR_FUELS.recipeBuilder()
-				.fluidInputs(new FluidStack[]{PollutionMaterials.hyperdimensional_silver.getPlasma(1)})
-				.fluidOutputs(new FluidStack[]{PollutionMaterials.hyperdimensional_silver.getFluid(1)})
+				.fluidInputs(new FluidStack[]{PollutionMaterials.HyperdimensionalSilver.getPlasma(1)})
+				.fluidOutputs(new FluidStack[]{PollutionMaterials.HyperdimensionalSilver.getFluid(1)})
 				.duration(400)
 				.EUt(VA[EV])
 				.buildAndRegister();
@@ -58,12 +54,12 @@ public class NodeFusionRecipes {
 				.input(PollutionMetaItems.CORE_OF_IDEA, 2)
 				.input(ItemsTC.morphicResonator, 32)
 				.input(MetaItems.ELECTRIC_MOTOR_LuV, 1)
-				.input(OrePrefix.screw, PollutionMaterials.blood_of_avernus, 8)
-				.input(OrePrefix.frameGt, PollutionMaterials.aetheric_dark_steel, 4)
-				.input(OrePrefix.frameGt, PollutionMaterials.iizunamaru_electrum, 4)
+				.input(OrePrefix.screw, PollutionMaterials.BloodOfAvernus, 8)
+				.input(OrePrefix.frameGt, PollutionMaterials.AethericDarkSteel, 4)
+				.input(OrePrefix.frameGt, PollutionMaterials.IizunamaruElectrum, 4)
 				.fluidInputs(PollutionMaterials.KQGold.getFluid(576))
-				.fluidInputs(PollutionMaterials.whitemansus.getFluid(8000))
-				.fluidInputs(PollutionMaterials.blackmansus.getFluid(8000))
+				.fluidInputs(PollutionMaterials.WhiteMansus.getFluid(8000))
+				.fluidInputs(PollutionMaterials.BlackMansus.getFluid(8000))
 				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_1_CASING, 4))
 				.EUt(VA[LuV])
 				.duration(400)
@@ -76,9 +72,9 @@ public class NodeFusionRecipes {
 				.input(MetaItems.ELECTRIC_MOTOR_ZPM, 1)
 				.input(OrePrefix.screw, Duranium, 4)
 				.input(OrePrefix.frameGt, Europium, 2)
-				.fluidInputs(binding_metal.getFluid(576))
-				.fluidInputs(sentient_metal.getFluid(576))
-				.fluidInputs(PollutionMaterials.starrymansus.getFluid(2000))
+				.fluidInputs(BindingMetal.getFluid(576))
+				.fluidInputs(SentientMetal.getFluid(576))
+				.fluidInputs(PollutionMaterials.Starrymansus.getFluid(2000))
 				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_2_CASING, 1))
 				.EUt(VA[ZPM])
 				.duration(400)
@@ -90,9 +86,9 @@ public class NodeFusionRecipes {
 				.input(MetaItems.ELECTRIC_MOTOR_UV, 1)
 				.input(OrePrefix.screw, Americium, 4)
 				.input(OrePrefix.frameGt, Darmstadtium, 2)
-				.fluidInputs(existing_nexus.getFluid(576))
-				.fluidInputs(fading_nexus.getFluid(576))
-				.fluidInputs(PollutionMaterials.starrymansus.getFluid(4000))
+				.fluidInputs(ExistingNexus.getFluid(576))
+				.fluidInputs(FadingNexus.getFluid(576))
+				.fluidInputs(PollutionMaterials.Starrymansus.getFluid(4000))
 				.outputs(PollutionMetaBlocks.HYPER.getItemVariant(POHyper.HyperType.HYPER_3_CASING, 1))
 				.EUt(VA[UV])
 				.duration(400)
@@ -109,9 +105,9 @@ public class NodeFusionRecipes {
 				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 4))
 				.input(OrePrefix.plate, Materials.Osmiridium, 32)
 				.input(OrePrefix.dust, Materials.Neutronium, 16)
-				.fluidInputs(PollutionMaterials.aetheric_dark_steel.getFluid(36000))
+				.fluidInputs(PollutionMaterials.AethericDarkSteel.getFluid(36000))
 				.fluidInputs(PollutionMaterials.KQGold.getFluid(36000))
-				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
+				.fluidInputs(PollutionMaterials.Starrymansus.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[0].getStackForm())
 				.EUt(VA[ZPM])
 				.duration(40000)
@@ -126,9 +122,9 @@ public class NodeFusionRecipes {
 				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 8))
 				.input(OrePrefix.plate, Duranium, 32)
 				.inputs(PollutionMetaItems.STONE_OF_PHILOSOPHER_3.getStackForm())
-				.fluidInputs(binding_metal.getFluid(36000))
-				.fluidInputs(sentient_metal.getFluid(36000))
-				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
+				.fluidInputs(BindingMetal.getFluid(36000))
+				.fluidInputs(SentientMetal.getFluid(36000))
+				.fluidInputs(PollutionMaterials.Starrymansus.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[1].getStackForm())
 				.EUt(VA[UV])
 				.duration(40000)
@@ -141,9 +137,9 @@ public class NodeFusionRecipes {
 				.inputs(MetaBlocks.FUSION_CASING.getItemVariant(BlockFusionCasing.CasingType.SUPERCONDUCTOR_COIL, 16))
 				.input(OrePrefix.plate, Darmstadtium, 32)
 				.inputs(PollutionMetaItems.STONE_OF_PHILOSOPHER_4.getStackForm())
-				.fluidInputs(existing_nexus.getFluid(36000))
-				.fluidInputs(fading_nexus.getFluid(36000))
-				.fluidInputs(PollutionMaterials.starrymansus.getFluid(10000))
+				.fluidInputs(ExistingNexus.getFluid(36000))
+				.fluidInputs(FadingNexus.getFluid(36000))
+				.fluidInputs(PollutionMaterials.Starrymansus.getFluid(10000))
 				.outputs(PollutionMetaTileEntities.NODE_FUSION_REACTOR[2].getStackForm())
 				.EUt(VA[UHV])
 				.duration(40000)
@@ -153,15 +149,15 @@ public class NodeFusionRecipes {
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.InfusedSense.getFluid(1000))
 				.fluidInputs(PollutionMaterials.KQGold.getFluid(288))
-				.fluidOutputs(PollutionMaterials.sentient_metal.getFluid(144))
+				.fluidOutputs(PollutionMaterials.SentientMetal.getFluid(144))
 				.EUToStart(120000000L)
 				.EUt(VA[LuV])
 				.duration(400)
 				.buildAndRegister();
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.InfusedSoul.getFluid(1000))
-				.fluidInputs(PollutionMaterials.hyperdimensional_silver.getFluid(288))
-				.fluidOutputs(PollutionMaterials.binding_metal.getFluid(144))
+				.fluidInputs(PollutionMaterials.HyperdimensionalSilver.getFluid(288))
+				.fluidOutputs(PollutionMaterials.BindingMetal.getFluid(144))
 				.EUToStart(120000000L)
 				.EUt(VA[LuV])
 				.duration(400)
@@ -170,7 +166,7 @@ public class NodeFusionRecipes {
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.fluidInputs(Materials.Silver.getFluid(144))
-				.fluidOutputs(PollutionMaterials.hyperdimensional_silver.getPlasma(144))
+				.fluidOutputs(PollutionMaterials.HyperdimensionalSilver.getPlasma(144))
 				.EUToStart(80000000L)
 				.EUt(VA[LuV])
 				.duration(90)
@@ -186,7 +182,7 @@ public class NodeFusionRecipes {
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(PollutionMaterials.ErichAura.getFluid(1000))
 				.fluidInputs(Materials.Water.getFluid(1000))
-				.fluidOutputs(PollutionMaterials.dimensional_transforming_agent.getFluid(1000))
+				.fluidOutputs(PollutionMaterials.DimensionalTransformingAgent.getFluid(1000))
 				.EUToStart(60000000L)
 				.EUt(VA[IV])
 				.duration(200)
@@ -212,7 +208,7 @@ public class NodeFusionRecipes {
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
 				.fluidInputs(Terrasteel.getFluid(288))
-				.fluidOutputs(existing_nexus.getFluid(144))
+				.fluidOutputs(ExistingNexus.getFluid(144))
 				.EUToStart(200000000L)
 				.EUt(VA[ZPM])
 				.duration(200)
@@ -220,7 +216,7 @@ public class NodeFusionRecipes {
 		PORecipeMaps.NODE_MAGIC_FUSION_RECIPES.recipeBuilder()
 				.fluidInputs(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000))
 				.fluidInputs(VoidMetal.getFluid(288))
-				.fluidOutputs(fading_nexus.getFluid(144))
+				.fluidOutputs(FadingNexus.getFluid(144))
 				.EUToStart(200000000L)
 				.EUt(VA[ZPM])
 				.duration(200)
