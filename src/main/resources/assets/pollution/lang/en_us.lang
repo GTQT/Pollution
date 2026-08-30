@@ -1806,6 +1806,14 @@ pollution.machine.starstream_nexus.button.label.cleanup=CLEAR
 pollution.machine.starstream_nexus.tooltip.5=Interdimensional relays open a 96-block wireless gateway in another dimension; keep the nexus-core chunk loaded with a Starstream Chunk Anchor
 metaitem.starstream_linker.tooltip.5=After selecting a network, use an interdimensional relay in another dimension to create a remote gateway
 
+#Underground Biomes
+biome.Deep Cave Basic=Deep Cave Basic
+biome.Stalactite Pillar=Stalactite Pillar
+biome.Mycelium Forest=Mycelium Forest
+biome.Crystal Cavern=Crystal Cavern
+biome.Lava Basin=Lava Basin
+biome.Underground River=Underground River
+
 #Warp Event System
 chat.pollution.warp.poison=Warp flux corrodes your body!
 chat.pollution.warp.nausea=Warp flux churns in your gut. You feel sick.

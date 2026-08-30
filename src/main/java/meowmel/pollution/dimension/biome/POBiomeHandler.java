@@ -18,7 +18,7 @@ public class POBiomeHandler {
 
 	// 创建一个静态实例
 	public static final Biome DEMIPLANE_BIOME = new POBiomeDemiplane(); // 替换为你的自定义生物群系类
-	public static final Biome UNDERGROUND_BIOME = new POBiomeUnderground();
+	public static final Biome UNDERGROUND_BIOME = UndergroundBiomes.DEEP_CAVE;
     public static final Biome BLOOD_BIOME = new POBiomeBlood();
 
 	@SubscribeEvent
@@ -30,10 +30,25 @@ public class POBiomeHandler {
 		registry.register(DEMIPLANE_BIOME);
 		BiomeManager.addSpawnBiome(DEMIPLANE_BIOME);
 
-		// 交错地狱 主维度
-		UNDERGROUND_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.2"));
+		// 地下世界 深窟基础（兜底）
+		UNDERGROUND_BIOME.setRegistryName(new ResourceLocation("pollution", "underground_deep_cave"));
 		registry.register(UNDERGROUND_BIOME);
 		BiomeManager.addSpawnBiome(UNDERGROUND_BIOME);
+        BiomeDictionary.addTypes(UNDERGROUND_BIOME, BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY);
+
+        // 地下世界 其余风格群系
+        registerUndergroundBiome(registry, UndergroundBiomes.STALACTITE_PILLAR, "stalactite_pillar",
+                BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
+        registerUndergroundBiome(registry, UndergroundBiomes.MYCELIUM_FOREST, "mushroom_forest",
+                BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.DENSE,
+                BiomeDictionary.Type.LUSH);
+        registerUndergroundBiome(registry, UndergroundBiomes.CRYSTAL_CAVERN, "crystal_cavern",
+                BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DRY);
+        registerUndergroundBiome(registry, UndergroundBiomes.LAVA_BASIN, "lava_basin",
+                BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.NETHER, BiomeDictionary.Type.HOT,
+                BiomeDictionary.Type.DRY);
+        registerUndergroundBiome(registry, UndergroundBiomes.UNDERGROUND_RIVER, "underground_river",
+                BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.RIVER, BiomeDictionary.Type.WET);
 
         // 血色
         BLOOD_BIOME.setRegistryName(new ResourceLocation("Pollution", "pollution_biome.3"));
@@ -68,6 +83,13 @@ public class POBiomeHandler {
                 BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS,
                 BiomeDictionary.Type.DENSE, BiomeDictionary.Type.LUSH);
 	}
+
+    private static void registerUndergroundBiome(IForgeRegistry<Biome> registry, Biome biome, String name,
+                                                 BiomeDictionary.Type... types) {
+        biome.setRegistryName(new ResourceLocation("pollution", name));
+        registry.register(biome);
+        BiomeDictionary.addTypes(biome, types);
+    }
 
     private static void registerAlfheimBiome(IForgeRegistry<Biome> registry, Biome biome, String name,
                                              BiomeDictionary.Type... sourceTypes) {
