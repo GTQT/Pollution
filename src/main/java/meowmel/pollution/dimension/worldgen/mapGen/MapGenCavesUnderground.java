@@ -9,7 +9,7 @@ import net.minecraft.world.gen.MapGenBase;
 
 import java.util.Random;
 
-public class MapGenCavesBTN extends MapGenBase {
+public class MapGenCavesUnderground extends MapGenBase {
     protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
 
     protected void addRoom(long p_180705_1_, int p_180705_3_, int p_180705_4_, ChunkPrimer p_180705_5_, double p_180705_6_, double p_180705_8_, double p_180705_10_) {

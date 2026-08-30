@@ -2,7 +2,16 @@ package meowmel.pollution.dimension.worldgen.ChunkGenerator;
 
 import gregtech.api.fluids.store.FluidStorageKeys;
 import meowmel.pollution.api.unification.PollutionMaterials;
-import meowmel.pollution.dimension.worldgen.mapGen.*;
+import meowmel.pollution.dimension.worldgen.mapGen.MapGenCavesUnderground;
+import meowmel.pollution.dimension.worldgen.mapGen.MapGenUndergroundBridge;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenFluidPool;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenGarden;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenMushroom;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenOreStone1;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenOreStone2;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenSingle;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenStalactite;
+import meowmel.pollution.dimension.worldgen.mapGen.WorldGenUndergroundWater;
 import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
 import meowmel.gtqtcore.common.blocks.StoneVariantBlock;
 import net.minecraft.block.BlockFalling;
@@ -25,254 +34,233 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkGeneratorEvent;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.EventType.BTN;
-import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.EventType.BTN_CAVE;
+import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.EventType.UNDERGROUND;
+import static meowmel.pollution.dimension.worldgen.terraingen.InitMapGenEvent.EventType.UNDERGROUND_CAVE;
 import static meowmel.pollution.dimension.worldgen.terraingen.TerrainGen.getModdedMapGen;
 
+/**
+ * 地下世界区块生成器：噪声地形 + 岩石变种层 + 洞穴 + 地下堡垒/废弃矿井。
+ */
 public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
-    protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
-    protected static final IBlockState Stone = Blocks.STONE.getDefaultState();
-    protected static final IBlockState SwampWater = Blocks.WATER.getDefaultState();
 
-    private static final IBlockState Limestone = gtStoneState(StoneVariantBlock.StoneType.LIMESTONE);
-    private static final IBlockState komatiite = gtStoneState(StoneVariantBlock.StoneType.KOMATIITE);
-    private static final IBlockState GSchist = gtStoneState(StoneVariantBlock.StoneType.GREEN_SCHIST);
-    private static final IBlockState BSchist = gtStoneState(StoneVariantBlock.StoneType.BLUE_SCHIST);
-    private static final IBlockState Kimberlite = gtStoneState(StoneVariantBlock.StoneType.KIMBERLITE);
-    private static final IBlockState Quartzite = gtStoneState(StoneVariantBlock.StoneType.QUARTZITE);
-    private static final IBlockState Slate = gtStoneState(StoneVariantBlock.StoneType.SLATE);
-    private static final IBlockState Shale = gtStoneState(StoneVariantBlock.StoneType.SHALE);
+    // ===== 基础方块 =====
+    private static final IBlockState STONE = Blocks.STONE.getDefaultState();
+    private static final IBlockState SWAMP_WATER = Blocks.WATER.getDefaultState();
 
-    private static final IBlockState Andesite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
-    private static final IBlockState Diorite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE);
-    private static final IBlockState Granite = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE);
+    // ===== GT 石材变种 =====
+    private static final IBlockState LIMESTONE = gtStoneState(StoneVariantBlock.StoneType.LIMESTONE);
+    private static final IBlockState KOMATIITE = gtStoneState(StoneVariantBlock.StoneType.KOMATIITE);
+    private static final IBlockState GREEN_SCHIST = gtStoneState(StoneVariantBlock.StoneType.GREEN_SCHIST);
+    private static final IBlockState BLUE_SCHIST = gtStoneState(StoneVariantBlock.StoneType.BLUE_SCHIST);
+    private static final IBlockState KIMBERLITE = gtStoneState(StoneVariantBlock.StoneType.KIMBERLITE);
+    private static final IBlockState QUARTZITE = gtStoneState(StoneVariantBlock.StoneType.QUARTZITE);
+    private static final IBlockState SLATE = gtStoneState(StoneVariantBlock.StoneType.SLATE);
+    private static final IBlockState SHALE = gtStoneState(StoneVariantBlock.StoneType.SHALE);
+
+    // ===== 原版岩石变种 =====
+    private static final IBlockState ANDESITE = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
+    private static final IBlockState DIORITE = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE);
+    private static final IBlockState GRANITE = Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE);
+
+    /** 可用于 surface 层的全部岩石变种（含 GT 石材与原版石材） */
+    private static final IBlockState[] ROCK_VARIANTS = {
+            ANDESITE, DIORITE, GRANITE, KOMATIITE, LIMESTONE, QUARTZITE, GREEN_SCHIST, SLATE, BLUE_SCHIST, SHALE
+    };
+
+    // ===== 噪声生成器（构造器中可能被 mod 事件替换，故非 final） =====
     private final World world;
     private final boolean generateStructures;
     private final Random rand;
-    //钟乳石集群
-    private final WorldGenStalactite stalactite = new WorldGenStalactite();
-    //蘑菇灯集群
-    private final WorldGenOreStone1 worldGenOreStone1 = new WorldGenOreStone1();
-    private final WorldGenOreStone2 worldGenOreStone2 = new WorldGenOreStone2();
-    //矿物集群
-    private final WorldGenerator mudGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), 14, BlockMatcher.forBlock(Blocks.DIRT));
-    private final WorldGenerator siltGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), 33, BlockMatcher.forBlock(Blocks.GRAVEL));
-    //流体集群
-    private final WorldGenBNTWater StagnantWaterGen = new WorldGenBNTWater(Blocks.WATER, true);
-    private final WorldGenBNTWater SwampWaterGen = new WorldGenBNTWater(Blocks.WATER, false);
-    //小蘑菇集群
-    private final WorldGenMushroom MushroomFeature1 = new WorldGenMushroom(Blocks.RED_MUSHROOM);
-    private final WorldGenMushroom MushroomFeature2 = new WorldGenMushroom(Blocks.BROWN_MUSHROOM);
-    private final WorldGenGarden garden = new WorldGenGarden();
-    //洞穴草集群
-    private final WorldGenSingle worldGenCaveGrass = new WorldGenSingle(Blocks.TALLGRASS);
-    //洞穴落叶集群
-    private final WorldGenSingle worldGenNesting = new WorldGenSingle(Blocks.LEAVES);
-    //洞穴水集群
-    private final WorldGenFluidPool worldGenFluidPool = new WorldGenFluidPool(Blocks.WATER);
-    private final WorldGenFluidPool worldGenLavaPool = new WorldGenFluidPool(Blocks.LAVA);
-    private final WorldGenFluidPool worldGenTarPool = new WorldGenFluidPool(PollutionMaterials.PureTar.getFluid(FluidStorageKeys.LIQUID).getBlock());
-    // 新增字段
-    private final MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
-    public NoiseGeneratorOctaves scaleNoise;
-    public NoiseGeneratorOctaves depthNoise;
-    double[] pnr;
-    double[] ar;
-    double[] br;
-    double[] noiseData4;
-    double[] dr;
-    /**
-     * Holds the noise used to determine whether slowsand can be generated at a location
-     */
-    private double[] buffer;
-    private NoiseGeneratorOctaves lperlinNoise1;
-    private NoiseGeneratorOctaves lperlinNoise2;
+    private NoiseGeneratorOctaves lowFreqNoise1;
+    private NoiseGeneratorOctaves lowFreqNoise2;
     private NoiseGeneratorOctaves perlinNoise1;
-    /**
-     * Determines whether slowsand or gravel can be generated at a location
-     */
     private NoiseGeneratorOctaves slowsandGravelNoiseGen;
-    /**
-     * Determines whether something other than nettherack can be generated at a location
-     */
-    private NoiseGeneratorOctaves BTLStoneExculsivityNoiseGen;
-    //生物集群
-    private MapGenBTNBridge mapGenBTNBridge = new MapGenBTNBridge();
-    //洞穴集群
-    private MapGenBase mapGenCavesBTN = new MapGenCavesBTN();
+    private NoiseGeneratorOctaves stoneExclusivityNoiseGen;
+    private NoiseGeneratorOctaves scaleNoise;
+    private NoiseGeneratorOctaves depthNoise;
 
-    public ChunkGeneratorUndergroundWorld(World worldIn, boolean p_i45637_2_, long seed) {
+    // 噪声输出 buffer（跨 chunk 复用，避免反复分配）
+    private double[] scaleNoiseData;
+    private double[] depthNoiseData;
+    private double[] mainNoiseData;
+    private double[] lowFreqNoise1Data;
+    private double[] lowFreqNoise2Data;
+    private double[] heightNoiseBuffer;
+
+    // ===== 结构生成器 =====
+    private final MapGenUndergroundBridge undergroundBridgeGen = new MapGenUndergroundBridge();
+    private final MapGenMineshaft mineshaftGen = new MapGenMineshaft();
+    private final MapGenBase caveGen;
+
+    // ===== 装饰生成器 =====
+    private final WorldGenStalactite stalactiteGen = new WorldGenStalactite();
+    private final WorldGenOreStone1 brownMushroomCluster = new WorldGenOreStone1();
+    private final WorldGenOreStone2 redMushroomCluster = new WorldGenOreStone2();
+    private final WorldGenerator gravelGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), 33, BlockMatcher.forBlock(Blocks.GRAVEL));
+    private final WorldGenUndergroundWater stagnantWaterGen = new WorldGenUndergroundWater(Blocks.WATER, true);
+    private final WorldGenUndergroundWater swampWaterGen = new WorldGenUndergroundWater(Blocks.WATER, false);
+    private final WorldGenMushroom redMushroomFeature = new WorldGenMushroom(Blocks.RED_MUSHROOM);
+    private final WorldGenMushroom brownMushroomFeature = new WorldGenMushroom(Blocks.BROWN_MUSHROOM);
+    private final WorldGenGarden gardenGen = new WorldGenGarden();
+    private final WorldGenSingle caveGrassGen = new WorldGenSingle(Blocks.TALLGRASS);
+    private final WorldGenSingle caveLeavesGen = new WorldGenSingle(Blocks.LEAVES);
+    private final WorldGenFluidPool waterPoolGen = new WorldGenFluidPool(Blocks.WATER);
+    private final WorldGenFluidPool lavaPoolGen = new WorldGenFluidPool(Blocks.LAVA);
+    private final WorldGenFluidPool tarPoolGen = new WorldGenFluidPool(PollutionMaterials.PureTar.getFluid(FluidStorageKeys.LIQUID).getBlock());
+
+    private static final int WATER_LEVEL = 63;
+
+    public ChunkGeneratorUndergroundWorld(World worldIn, boolean generateStructures, long seed) {
         this.world = worldIn;
-        this.generateStructures = p_i45637_2_;
+        this.generateStructures = generateStructures;
         this.rand = new Random(seed);
-        this.lperlinNoise1 = new NoiseGeneratorOctaves(this.rand, 16);
-        this.lperlinNoise2 = new NoiseGeneratorOctaves(this.rand, 16);
+
+        this.lowFreqNoise1 = new NoiseGeneratorOctaves(this.rand, 16);
+        this.lowFreqNoise2 = new NoiseGeneratorOctaves(this.rand, 16);
         this.perlinNoise1 = new NoiseGeneratorOctaves(this.rand, 8);
         this.slowsandGravelNoiseGen = new NoiseGeneratorOctaves(this.rand, 4);
-        this.BTLStoneExculsivityNoiseGen = new NoiseGeneratorOctaves(this.rand, 4);
+        this.stoneExclusivityNoiseGen = new NoiseGeneratorOctaves(this.rand, 4);
         this.scaleNoise = new NoiseGeneratorOctaves(this.rand, 10);
         this.depthNoise = new NoiseGeneratorOctaves(this.rand, 16);
-        worldIn.setSeaLevel(63);
 
-        net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextHell ctx =
-                new net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextHell(lperlinNoise1, lperlinNoise2, perlinNoise1, slowsandGravelNoiseGen, BTLStoneExculsivityNoiseGen, scaleNoise, depthNoise);
-        ctx = net.minecraftforge.event.terraingen.TerrainGen.getModdedNoiseGenerators(worldIn, this.rand, ctx);
-        this.lperlinNoise1 = ctx.getLPerlin1();
-        this.lperlinNoise2 = ctx.getLPerlin2();
+        worldIn.setSeaLevel(WATER_LEVEL);
+
+        // 允许其他模组通过事件替换噪声生成器与地图生成器
+        InitNoiseGensEvent.ContextHell ctx = new InitNoiseGensEvent.ContextHell(
+                lowFreqNoise1, lowFreqNoise2, perlinNoise1, slowsandGravelNoiseGen,
+                stoneExclusivityNoiseGen, scaleNoise, depthNoise);
+        ctx = TerrainGen.getModdedNoiseGenerators(worldIn, this.rand, ctx);
+        this.lowFreqNoise1 = ctx.getLPerlin1();
+        this.lowFreqNoise2 = ctx.getLPerlin2();
         this.perlinNoise1 = ctx.getPerlin();
         this.slowsandGravelNoiseGen = ctx.getPerlin2();
-        this.BTLStoneExculsivityNoiseGen = ctx.getPerlin3();
+        this.stoneExclusivityNoiseGen = ctx.getPerlin3();
         this.scaleNoise = ctx.getScale();
         this.depthNoise = ctx.getDepth();
-        this.mapGenBTNBridge = (MapGenBTNBridge) getModdedMapGen(mapGenBTNBridge, BTN);
-        this.mapGenCavesBTN = getModdedMapGen(mapGenCavesBTN, BTN_CAVE);
+
+        this.caveGen = getModdedMapGen(new MapGenCavesUnderground(), UNDERGROUND_CAVE);
+        getModdedMapGen(this.undergroundBridgeGen, UNDERGROUND);
     }
 
     private static IBlockState gtStoneState(StoneVariantBlock.StoneType stoneType) {
         return GTQTMetaBlocks.STONE_BLOCKS.get(StoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
     }
 
-    public void prepareHeights(int chunkX, int chunkZ, ChunkPrimer primer) {
-        int waterLevel = this.world.getSeaLevel();
+    // ===== 地形高度 =====
 
-        // 获取高度数据（使用优化后的噪声）
-        this.buffer = this.getHeights(this.buffer, chunkX * 4, 0, chunkZ * 4, 5, 17, 5);
+    private void prepareHeights(int chunkX, int chunkZ, ChunkPrimer primer) {
+        int waterLevel = this.world.getSeaLevel();
+        this.heightNoiseBuffer = this.getHeights(this.heightNoiseBuffer, chunkX * 4, 0, chunkZ * 4, 5, 17, 5);
+
+        final double interpolationFactorY = 0.0625D; // 1/16，垂直插值步长
 
         for (int xIndex = 0; xIndex < 4; ++xIndex) {
             for (int zIndex = 0; zIndex < 4; ++zIndex) {
                 for (int yIndex = 0; yIndex < 16; ++yIndex) {
-                    // 关键修复1：修正垂直插值步长
-                    double interpolationFactorY = 0.0625D; // 1/16 (原0.125D)
+                    double cornerNoise1 = this.heightNoiseBuffer[((xIndex) * 5 + zIndex) * 17 + yIndex];
+                    double cornerNoise2 = this.heightNoiseBuffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex];
+                    double cornerNoise3 = this.heightNoiseBuffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex];
+                    double cornerNoise4 = this.heightNoiseBuffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex];
 
-                    double cornerNoiseValue1 = this.buffer[((xIndex) * 5 + zIndex) * 17 + yIndex];
-                    double cornerNoiseValue2 = this.buffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex];
-                    double cornerNoiseValue3 = this.buffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex];
-                    double cornerNoiseValue4 = this.buffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex];
-
-                    // 关键修复2：使用正确的插值步长
-                    double deltaY1 = (this.buffer[((xIndex) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoiseValue1) * interpolationFactorY;
-                    double deltaY2 = (this.buffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoiseValue2) * interpolationFactorY;
-                    double deltaY3 = (this.buffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoiseValue3) * interpolationFactorY;
-                    double deltaY4 = (this.buffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoiseValue4) * interpolationFactorY;
+                    double deltaY1 = (this.heightNoiseBuffer[((xIndex) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoise1) * interpolationFactorY;
+                    double deltaY2 = (this.heightNoiseBuffer[((xIndex) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoise2) * interpolationFactorY;
+                    double deltaY3 = (this.heightNoiseBuffer[((xIndex + 1) * 5 + zIndex) * 17 + yIndex + 1] - cornerNoise3) * interpolationFactorY;
+                    double deltaY4 = (this.heightNoiseBuffer[((xIndex + 1) * 5 + zIndex + 1) * 17 + yIndex + 1] - cornerNoise4) * interpolationFactorY;
 
                     for (int subYIndex = 0; subYIndex < 16; ++subYIndex) {
-                        double xInterpolatedValue1 = cornerNoiseValue1;
-                        double xInterpolatedValue2 = cornerNoiseValue2;
-                        double xDeltaValue1 = (cornerNoiseValue3 - cornerNoiseValue1) * 0.25D;
-                        double xDeltaValue2 = (cornerNoiseValue4 - cornerNoiseValue2) * 0.25D;
+                        double xInterpolated1 = cornerNoise1;
+                        double xInterpolated2 = cornerNoise2;
+                        double xDelta1 = (cornerNoise3 - cornerNoise1) * 0.25D;
+                        double xDelta2 = (cornerNoise4 - cornerNoise2) * 0.25D;
 
                         for (int subXIndex = 0; subXIndex < 4; ++subXIndex) {
-                            double zInterpolatedValue = xInterpolatedValue1;
-                            double zDeltaValue = (xInterpolatedValue2 - xInterpolatedValue1) * 0.25D;
+                            double zInterpolated = xInterpolated1;
+                            double zDelta = (xInterpolated2 - xInterpolated1) * 0.25D;
 
                             for (int subZIndex = 0; subZIndex < 4; ++subZIndex) {
-                                IBlockState iblockstate = null;
+                                IBlockState blockState = null;
                                 int currentHeight = subYIndex + yIndex * 16;
 
-                                // 关键优化3：逻辑顺序调整
-                                if (zInterpolatedValue > -0.2D) { // 增加负值缓冲
+                                // 低于海平面-1 生成基性岩，高于海平面+5 生成石头，中间按噪声阈值混合
+                                if (zInterpolated > -0.2D) {
                                     if (currentHeight < waterLevel - 1) {
-                                        iblockstate = Kimberlite;
+                                        blockState = KIMBERLITE;
                                     } else if (currentHeight > waterLevel + 5) {
-                                        iblockstate = Stone;
+                                        blockState = STONE;
                                     } else {
-                                        iblockstate = (zInterpolatedValue > 0.6D) ? Stone : Kimberlite; // 调整阈值
+                                        blockState = (zInterpolated > 0.6D) ? STONE : KIMBERLITE;
                                     }
                                 }
 
-                                // 仅在非石头区域生成水
-                                if (iblockstate == null && currentHeight < waterLevel) {
-                                    iblockstate = SwampWater;
+                                // 噪声空洞且低于海平面：填充水
+                                if (blockState == null && currentHeight < waterLevel) {
+                                    blockState = SWAMP_WATER;
                                 }
 
-                                int finalX = subXIndex + xIndex * 4;
-                                int finalY = currentHeight;
-                                int finalZ = subZIndex + zIndex * 4;
-
-                                if (iblockstate != null) {
-                                    primer.setBlockState(finalX, finalY, finalZ, iblockstate);
+                                if (blockState != null) {
+                                    primer.setBlockState(subXIndex + xIndex * 4, currentHeight, subZIndex + zIndex * 4, blockState);
                                 }
 
-                                zInterpolatedValue += zDeltaValue;
+                                zInterpolated += zDelta;
                             }
 
-                            xInterpolatedValue1 += xDeltaValue1;
-                            xInterpolatedValue2 += xDeltaValue2;
+                            xInterpolated1 += xDelta1;
+                            xInterpolated2 += xDelta2;
                         }
 
-                        cornerNoiseValue1 += deltaY1;
-                        cornerNoiseValue2 += deltaY2;
-                        cornerNoiseValue3 += deltaY3;
-                        cornerNoiseValue4 += deltaY4;
+                        cornerNoise1 += deltaY1;
+                        cornerNoise2 += deltaY2;
+                        cornerNoise3 += deltaY3;
+                        cornerNoise4 += deltaY4;
                     }
                 }
             }
         }
     }
 
-    public void buildSurfaces(int chunkX, int chunkZ, ChunkPrimer primer) {
-        if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, chunkX, chunkZ, primer, this.world))
+    private void buildSurfaces(int chunkX, int chunkZ, ChunkPrimer primer) {
+        if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, chunkX, chunkZ, primer, this.world)) {
             return;
+        }
 
-        // 生成10个随机高度位置（0-255）及其配置
+        // 生成 10 个随机岩石变种层（高度 60-250，层厚 3-5）
         int[] variantHeights = new int[10];
         int[] variantLayers = new int[10];
         IBlockState[] variantBlocks = new IBlockState[10];
-
         for (int i = 0; i < 10; i++) {
-            // 随机高度（60-250）
             variantHeights[i] = this.rand.nextInt(190) + 60;
-            // 随机层数（3-5层）
             variantLayers[i] = 3 + this.rand.nextInt(2);
-            // 随机选择石头变种
-            int variant = this.rand.nextInt(9);
-            variantBlocks[i] = switch (variant) {
-                case 0 -> Andesite;
-                case 1 -> Diorite;
-                case 2 -> Granite;
-                case 3 -> komatiite;
-                case 4 -> Limestone;
-                case 5 -> Quartzite;
-                case 6 -> GSchist;
-                case 7 -> Slate;
-                case 8 -> BSchist;
-                default -> Shale;
-            };
+            variantBlocks[i] = ROCK_VARIANTS[this.rand.nextInt(ROCK_VARIANTS.length)];
         }
-        for (int localX = 0; localX < 16; ++localX) {
-            for (int localZ = 0; localZ < 16; ++localZ) {
-                for (int yPos = 255; yPos >= 0; --yPos) {
-                    // 基岩层处理（保持不变）
-                    if (yPos <= 1 || yPos >= 254) {
-                        primer.setBlockState(localZ, yPos, localX, Blocks.BEDROCK.getDefaultState());
-                    }
-                }
-            }
-        }
-        for (int localX = 0; localX < 16; ++localX) {
-            for (int localZ = 0; localZ < 16; ++localZ) {
-                primer.setBlockState(localZ, 254, localX, Blocks.BEDROCK.getDefaultState());
-                primer.setBlockState(localZ, 1, localX, Blocks.BEDROCK.getDefaultState());
 
-                // 应用岩石变种层
+        for (int localX = 0; localX < 16; ++localX) {
+            for (int localZ = 0; localZ < 16; ++localZ) {
+                // 基岩层：底部 2 层 + 顶部 2 层
+                primer.setBlockState(localZ, 0, localX, Blocks.BEDROCK.getDefaultState());
+                primer.setBlockState(localZ, 1, localX, Blocks.BEDROCK.getDefaultState());
+                primer.setBlockState(localZ, 254, localX, Blocks.BEDROCK.getDefaultState());
+                primer.setBlockState(localZ, 255, localX, Blocks.BEDROCK.getDefaultState());
+
+                // 应用岩石变种层（仅替换石头方块）
                 for (int i = 0; i < 10; i++) {
                     int startY = variantHeights[i];
-                    int layers = variantLayers[i];
+                    int layerCount = variantLayers[i];
                     IBlockState blockType = variantBlocks[i];
+                    int endY = Math.min(250, startY + layerCount - 1);
 
-                    for (int layer = 0; layer < layers; layer++) {
-                        int yPos = startY + layer;
-                        if (yPos > 250) continue; // 确保不超出上限
-                        if (yPos < 60) continue; // 确保不超出上限
-
-                        // 仅替换石头方块（不影响基岩/沙子/沙砾等）
+                    for (int yPos = startY; yPos <= endY; yPos++) {
                         if (primer.getBlockState(localZ, yPos, localX).getBlock() == Blocks.STONE) {
                             primer.setBlockState(localZ, yPos, localX, blockType);
                         }
@@ -282,32 +270,30 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         }
     }
 
+    // ===== 主生成入口 =====
 
-    /**
-     * Generates the chunk at the specified position, from scratch
-     */
-    public Chunk generateChunk(int x, int z) {
+    @Override
+    public @NotNull Chunk generateChunk(int x, int z) {
         this.rand.setSeed((long) x * 341873128712L + (long) z * 132897987541L);
-        ChunkPrimer chunkprimer = new ChunkPrimer();
-        this.prepareHeights(x, z, chunkprimer);
-        this.buildSurfaces(x, z, chunkprimer);
-        this.mapGenCavesBTN.generate(this.world, x, z, chunkprimer);
+        ChunkPrimer chunkPrimer = new ChunkPrimer();
+        this.prepareHeights(x, z, chunkPrimer);
+        this.buildSurfaces(x, z, chunkPrimer);
+        this.caveGen.generate(this.world, x, z, chunkPrimer);
 
         if (this.generateStructures) {
-            Random rand = new Random();
-            if (rand.nextBoolean()) {
-                this.mapGenBTNBridge.generate(this.world, x, z, chunkprimer);
+            // 每个区块随机决定生成地下堡垒或废弃矿井（与 populate 阶段的结构生成配合）
+            if (this.rand.nextBoolean()) {
+                this.undergroundBridgeGen.generate(this.world, x, z, chunkPrimer);
             } else {
-                this.mineshaftGenerator.generate(this.world, x, z, chunkprimer);
+                this.mineshaftGen.generate(this.world, x, z, chunkPrimer);
             }
         }
 
-        Chunk chunk = new Chunk(this.world, chunkprimer, x, z);
-        Biome[] abiome = this.world.getBiomeProvider().getBiomes(null, x * 16, z * 16, 16, 16);
-        byte[] abyte = chunk.getBiomeArray();
-
-        for (int i = 0; i < abyte.length; ++i) {
-            abyte[i] = (byte) Biome.getIdForBiome(abiome[i]);
+        Chunk chunk = new Chunk(this.world, chunkPrimer, x, z);
+        Biome[] biomes = this.world.getBiomeProvider().getBiomes(null, x * 16, z * 16, 16, 16);
+        byte[] biomeArray = chunk.getBiomeArray();
+        for (int i = 0; i < biomeArray.length; ++i) {
+            biomeArray[i] = (byte) Biome.getIdForBiome(biomes[i]);
         }
 
         chunk.resetRelightChecks();
@@ -319,7 +305,6 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
             noiseData = new double[width * height * depth];
         }
 
-        // 事件处理（保持不变）
         ChunkGeneratorEvent.InitNoiseField event = new ChunkGeneratorEvent.InitNoiseField(this, noiseData, startX, startY, startZ, width, height, depth);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Event.Result.DENY) {
@@ -333,77 +318,66 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         double amplitude1 = 684.412D;
         double amplitude2 = 2053.236D;
 
-        this.noiseData4 = this.scaleNoise.generateNoiseOctaves(this.noiseData4, startX, startY, startZ, width, 1, depth, 1.0D, 0.0D, 1.0D);
-        this.dr = this.depthNoise.generateNoiseOctaves(this.dr, startX, startY, startZ, width, 1, depth, 100.0D, 0.0D, 100.0D);
-        this.pnr = this.perlinNoise1.generateNoiseOctaves(this.pnr, startX, startY, startZ, width, height, depth, 8.555150000000001D, 34.2206D, 8.555150000000001D);
-        this.ar = this.lperlinNoise1.generateNoiseOctaves(this.ar, startX, startY, startZ, width, height, depth, amplitude1, amplitude2, amplitude1);
-        this.br = this.lperlinNoise2.generateNoiseOctaves(this.br, startX, startY, startZ, width, height, depth, amplitude1, amplitude2, amplitude1);
+        this.scaleNoiseData = this.scaleNoise.generateNoiseOctaves(this.scaleNoiseData, startX, startY, startZ, width, 1, depth, 1.0D, 0.0D, 1.0D);
+        this.depthNoiseData = this.depthNoise.generateNoiseOctaves(this.depthNoiseData, startX, startY, startZ, width, 1, depth, 100.0D, 0.0D, 100.0D);
+        this.mainNoiseData = this.perlinNoise1.generateNoiseOctaves(this.mainNoiseData, startX, startY, startZ, width, height, depth, 8.555150000000001D, 34.2206D, 8.555150000000001D);
+        this.lowFreqNoise1Data = this.lowFreqNoise1.generateNoiseOctaves(this.lowFreqNoise1Data, startX, startY, startZ, width, height, depth, amplitude1, amplitude2, amplitude1);
+        this.lowFreqNoise2Data = this.lowFreqNoise2.generateNoiseOctaves(this.lowFreqNoise2Data, startX, startY, startZ, width, height, depth, amplitude1, amplitude2, amplitude1);
 
-        int currentIndex = 0;
+        // 垂直权重：中间平滑、顶部收窄，保证 256 格高度连续
         double[] cosineWeights = new double[height];
-
-        // 调整权重计算适应256格高度
         for (int yIndex = 0; yIndex < height; ++yIndex) {
-            // 使用(height-1)作为分母（16个区间对应17个采样点）
             cosineWeights[yIndex] = Math.cos(yIndex * Math.PI * 6.0D / (height - 1)) * 2.0D;
             double distanceFromCenter = yIndex;
-
-            // 对称处理（中点索引 = (height-1)/2 = 8）
             if (yIndex > (height - 1) / 2) {
                 distanceFromCenter = (height - 1) - yIndex;
             }
-
-            // 边界平滑（保持4格缓冲）
             if (distanceFromCenter < 4.0D) {
                 distanceFromCenter = 4.0D - distanceFromCenter;
                 cosineWeights[yIndex] -= distanceFromCenter * distanceFromCenter * distanceFromCenter * 10.0D;
             }
         }
 
+        int currentIndex = 0;
         for (int xIndex = 0; xIndex < width; ++xIndex) {
             for (int zIndex = 0; zIndex < depth; ++zIndex) {
                 for (int yIndex = 0; yIndex < height; ++yIndex) {
                     double weight = cosineWeights[yIndex];
-                    double arValue = this.ar[currentIndex] / 512.0D;
-                    double brValue = this.br[currentIndex] / 512.0D;
-                    double blendFactor = (this.pnr[currentIndex] / 10.0D + 1.0D) / 2.0D;
-                    double finalHeightValue;
+                    double lowFreq1 = this.lowFreqNoise1Data[currentIndex] / 512.0D;
+                    double lowFreq2 = this.lowFreqNoise2Data[currentIndex] / 512.0D;
+                    double blendFactor = (this.mainNoiseData[currentIndex] / 10.0D + 1.0D) / 2.0D;
 
+                    double heightValue;
                     if (blendFactor < 0.0D) {
-                        finalHeightValue = arValue;
+                        heightValue = lowFreq1;
                     } else if (blendFactor > 1.0D) {
-                        finalHeightValue = brValue;
+                        heightValue = lowFreq2;
                     } else {
-                        finalHeightValue = arValue + (brValue - arValue) * blendFactor;
+                        heightValue = lowFreq1 + (lowFreq2 - lowFreq1) * blendFactor;
                     }
+                    heightValue -= weight;
 
-                    finalHeightValue -= weight;
-
-                    // 顶部平滑（保持最后4个采样点）
+                    // 顶部 4 个采样点平滑收窄
                     if (yIndex > height - 4) {
                         double edgeBlendFactor = (yIndex - (height - 4)) / 3.0F;
-                        finalHeightValue = finalHeightValue * (1.0D - edgeBlendFactor) - 10.0D * edgeBlendFactor;
+                        heightValue = heightValue * (1.0D - edgeBlendFactor) - 10.0D * edgeBlendFactor;
                     }
 
-                    noiseData[currentIndex] = finalHeightValue;
+                    noiseData[currentIndex] = heightValue;
                     ++currentIndex;
                 }
             }
         }
-
         return noiseData;
     }
 
+    // ===== 装饰阶段 =====
 
-    /**
-     * Generate initial structures in this chunk, e.g. mineshafts, temples, lakes, and dungeons
-     *
-     * @param chunkX Chunk x coordinate
-     * @param chunkZ Chunk z coordinate
-     */
+    @Override
     public void populate(int chunkX, int chunkZ) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         BlockFalling.fallInstantly = true;
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false);
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, random, chunkX, chunkZ, false);
 
         int blockX = chunkX * 16;
         int blockZ = chunkZ * 16;
@@ -411,174 +385,143 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         Biome currentBiome = this.world.getBiome(chunkOrigin.add(16, 0, 16));
         ChunkPos chunkPosition = new ChunkPos(chunkX, chunkZ);
 
-        this.mapGenBTNBridge.generateStructure(this.world, ThreadLocalRandom.current(), chunkPosition);
-        this.mineshaftGenerator.generateStructure(this.world, ThreadLocalRandom.current(), chunkPosition);
+        this.undergroundBridgeGen.generateStructure(this.world, random, chunkPosition);
+        this.mineshaftGen.generateStructure(this.world, random, chunkPosition);
 
-        // Nether Lava Generation
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.NETHER_LAVA)) {
-            for (int featureIndex = 0; featureIndex < 8; ++featureIndex) {
-                generateFeature(this.SwampWaterGen, chunkOrigin, ThreadLocalRandom.current());
+        // 地下湖泊（水体集群）
+        if (TerrainGen.populate(this, this.world, random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.NETHER_LAVA)) {
+            for (int i = 0; i < 8; ++i) {
+                generateFeature(this.swampWaterGen, chunkOrigin, random);
             }
         }
 
-        // Fire Generation
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.FIRE)) {
-            int featureCount = ThreadLocalRandom.current().nextInt(ThreadLocalRandom.current().nextInt(10) + 1) + 1;
-            for (int loopIndex = 0; loopIndex < featureCount; ++loopIndex) {
-                switch (ThreadLocalRandom.current().nextInt(7)) {
-                    case 0:
-                        generateFeature(this.worldGenCaveGrass, chunkOrigin, ThreadLocalRandom.current());
-                        break;
-                    case 1:
-                        generateFeature(this.stalactite, chunkOrigin, ThreadLocalRandom.current());
-                        break;
-                    case 2:
-                        generateFeature(this.worldGenNesting, chunkOrigin, ThreadLocalRandom.current());
-                        break;
-                    case 3:
-                        generateFeature(this.worldGenFluidPool, chunkOrigin, ThreadLocalRandom.current());
-                        break;
-                    case 4:
-                        generateFeature(this.worldGenLavaPool, chunkOrigin, ThreadLocalRandom.current());
-                        break;
-                    case 5:
-                        generateFeature(this.worldGenTarPool, chunkOrigin, ThreadLocalRandom.current());
-                        break;
-                    default:
-                        generateFeature(this.garden, chunkOrigin, ThreadLocalRandom.current());
-                        break;
+        // 洞穴装饰（钟乳石/树叶/水池/岩浆池/焦油池/花园等随机一种）
+        if (TerrainGen.populate(this, this.world, random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.FIRE)) {
+            int featureCount = random.nextInt(random.nextInt(10) + 1) + 1;
+            for (int i = 0; i < featureCount; ++i) {
+                switch (random.nextInt(7)) {
+                    case 0 -> generateFeature(this.caveGrassGen, chunkOrigin, random);
+                    case 1 -> generateFeature(this.stalactiteGen, chunkOrigin, random);
+                    case 2 -> generateFeature(this.caveLeavesGen, chunkOrigin, random);
+                    case 3 -> generateFeature(this.waterPoolGen, chunkOrigin, random);
+                    case 4 -> generateFeature(this.lavaPoolGen, chunkOrigin, random);
+                    case 5 -> generateFeature(this.tarPoolGen, chunkOrigin, random);
+                    default -> generateFeature(this.gardenGen, chunkOrigin, random);
                 }
             }
         }
 
-        // Glowstone Generation
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.GLOWSTONE)) {
-            int oreCount = ThreadLocalRandom.current().nextInt(ThreadLocalRandom.current().nextInt(10) + 1);
-            for (int loopIndex = 0; loopIndex < oreCount; ++loopIndex) {
-                generateFeature(this.worldGenOreStone1, chunkOrigin, ThreadLocalRandom.current());
+        // 蘑菇灯集群
+        if (TerrainGen.populate(this, this.world, random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.GLOWSTONE)) {
+            int clusterCount = random.nextInt(random.nextInt(10) + 1);
+            for (int i = 0; i < clusterCount; ++i) {
+                generateFeature(this.brownMushroomCluster, chunkOrigin, random);
             }
-
-            for (int fixedOreCount = 0; fixedOreCount < 10; ++fixedOreCount) {
-                generateFeature(this.worldGenOreStone2, chunkOrigin, ThreadLocalRandom.current());
-            }
-        }
-
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.terraingen.DecorateBiomeEvent.Pre(this.world, ThreadLocalRandom.current(), chunkPosition));
-
-        // Shroom Generation
-        if (net.minecraftforge.event.terraingen.TerrainGen.decorate(this.world, ThreadLocalRandom.current(), chunkPosition, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
-            generateMushroomFeatures(chunkOrigin, ThreadLocalRandom.current());
-        }
-
-        // Nether Magma Generation
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.NETHER_MAGMA)) {
-            for (int magmaIndex = 0; magmaIndex < 4; ++magmaIndex) {
-                generateFeature(this.siltGen, chunkOrigin, ThreadLocalRandom.current(), 120 + ThreadLocalRandom.current().nextInt(100));
+            for (int i = 0; i < 10; ++i) {
+                generateFeature(this.redMushroomCluster, chunkOrigin, random);
             }
         }
 
-        // Nether Lava2 Generation
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, ThreadLocalRandom.current(), chunkX, chunkZ, false, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.NETHER_LAVA2)) {
-            for (int lavaIndex = 0; lavaIndex < 16; ++lavaIndex) {
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, random, chunkX, chunkZ, false);
+        MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(this.world, random, chunkPosition));
+
+        // 蘑菇特征
+        if (TerrainGen.decorate(this.world, random, chunkPosition, DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
+            generateMushroomFeatures(chunkOrigin, random);
+        }
+
+        // 沙砾集群
+        if (TerrainGen.populate(this, this.world, random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.NETHER_MAGMA)) {
+            for (int i = 0; i < 4; ++i) {
+                generateFeature(this.gravelGen, chunkOrigin, random, 120 + random.nextInt(100));
+            }
+        }
+
+        // 死水集群
+        if (TerrainGen.populate(this, this.world, random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.NETHER_LAVA2)) {
+            for (int i = 0; i < 16; ++i) {
                 int yOffset = net.minecraftforge.common.ForgeModContainer.fixVanillaCascading ? 8 : 0;
-                generateFeature(this.StagnantWaterGen, chunkOrigin, ThreadLocalRandom.current(), yOffset);
+                generateFeature(this.stagnantWaterGen, chunkOrigin, random, yOffset);
             }
         }
 
-        currentBiome.decorate(this.world, ThreadLocalRandom.current(), new BlockPos(blockX, 0, blockZ));
-
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.terraingen.DecorateBiomeEvent.Post(this.world, ThreadLocalRandom.current(), chunkOrigin));
+        currentBiome.decorate(this.world, random, new BlockPos(blockX, 0, blockZ));
+        MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(this.world, random, chunkOrigin));
 
         BlockFalling.fallInstantly = false;
     }
 
-
-    private void generateFeature(WorldGenerator generator, BlockPos basePos, ThreadLocalRandom random) {
+    private void generateFeature(WorldGenerator generator, BlockPos basePos, Random random) {
         generator.generate(this.world, random, basePos.add(random.nextInt(16) + 8, random.nextInt(240) + 4, random.nextInt(16) + 8));
     }
 
-    private void generateFeature(WorldGenerator generator, BlockPos basePos, ThreadLocalRandom random, int yOffset) {
+    private void generateFeature(WorldGenerator generator, BlockPos basePos, Random random, int yOffset) {
         generator.generate(this.world, random, basePos.add(random.nextInt(16), yOffset, random.nextInt(16)));
     }
 
-    private void generateMushroomFeatures(BlockPos basePos, ThreadLocalRandom random) {
-        for (int i = 0; i < 2; ++i) {
-            if (random.nextBoolean()) {
-                WorldGenerator mushroomGenerator = switch (i) {
-                    case 0 -> this.MushroomFeature1;
-                    case 1 -> this.MushroomFeature2;
-                    default -> null;
-                };
-                generateFeature(mushroomGenerator, basePos, random);
-            }
+    private void generateMushroomFeatures(BlockPos basePos, Random random) {
+        if (random.nextBoolean()) {
+            generateFeature(this.redMushroomFeature, basePos, random);
+        }
+        if (random.nextBoolean()) {
+            generateFeature(this.brownMushroomFeature, basePos, random);
         }
     }
 
-    /**
-     * Called to generate additional structures after initial worldgen, used by ocean monuments
-     */
-    public boolean generateStructures(Chunk chunkIn, int x, int z) {
+    // ===== 结构查询 =====
+
+    @Override
+    public boolean generateStructures(@NotNull Chunk chunkIn, int x, int z) {
         boolean generated = false;
 
-        // 生成废弃矿井（原版逻辑）
+        // 废弃矿井（原版逻辑）
         if (this.rand.nextInt(80) == 0) {
-            this.mineshaftGenerator.generateStructure(this.world, this.rand, new ChunkPos(x, z));
+            this.mineshaftGen.generateStructure(this.world, this.rand, new ChunkPos(x, z));
             generated = true;
         }
 
-        // 原有结构生成
-        if (this.mapGenBTNBridge != null && this.mapGenBTNBridge.generateStructure(this.world, this.rand, new ChunkPos(x, z))) {
+        if (this.undergroundBridgeGen.generateStructure(this.world, this.rand, new ChunkPos(x, z))) {
             generated = true;
         }
-
         return generated;
     }
 
-    public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
+    @Override
+    public @NotNull List<Biome.SpawnListEntry> getPossibleCreatures(@NotNull EnumCreatureType creatureType, @NotNull BlockPos pos) {
         if (creatureType == EnumCreatureType.MONSTER) {
-            if (this.mapGenBTNBridge.isInsideStructure(pos)) {
-                return this.mapGenBTNBridge.getSpawnList();
-            }
-
-            if (this.mapGenBTNBridge.isPositionInStructure(this.world, pos) && this.world.getBlockState(pos.down()).getBlock() == Blocks.STONEBRICK) {
-                return this.mapGenBTNBridge.getSpawnList();
+            if (this.undergroundBridgeGen.isInsideStructure(pos)
+                    || (this.undergroundBridgeGen.isPositionInStructure(this.world, pos)
+                    && this.world.getBlockState(pos.down()).getBlock() == Blocks.STONEBRICK)) {
+                return this.undergroundBridgeGen.getSpawnList();
             }
         }
-
-        Biome biome = this.world.getBiome(pos);
-        return biome.getSpawnableList(creatureType);
+        return this.world.getBiome(pos).getSpawnableList(creatureType);
     }
 
+    @Override
     @Nullable
-    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
-        if ("BTNFortress".equals(structureName) && this.mapGenBTNBridge != null) {
-            return this.mapGenBTNBridge.getNearestStructurePos(worldIn, position, findUnexplored);
+    public BlockPos getNearestStructurePos(@NotNull World worldIn, @NotNull String structureName, @NotNull BlockPos position, boolean findUnexplored) {
+        if ("UndergroundFortress".equals(structureName)) {
+            return this.undergroundBridgeGen.getNearestStructurePos(worldIn, position, findUnexplored);
         } else if ("Mineshaft".equals(structureName)) {
-            return this.mineshaftGenerator.getNearestStructurePos(worldIn, position, findUnexplored);
+            return this.mineshaftGen.getNearestStructurePos(worldIn, position, findUnexplored);
         }
         return null;
     }
 
+    @Override
     public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) {
-        if ("BTNFortress".equals(structureName) && this.mapGenBTNBridge != null) {
-            return this.mapGenBTNBridge.isInsideStructure(pos);
-        }
-        // 新增：矿井判断
-        else if ("Mineshaft".equals(structureName)) {
-            return this.mineshaftGenerator.isInsideStructure(pos);
+        if ("UndergroundFortress".equals(structureName)) {
+            return this.undergroundBridgeGen.isInsideStructure(pos);
+        } else if ("Mineshaft".equals(structureName)) {
+            return this.mineshaftGen.isInsideStructure(pos);
         }
         return false;
     }
 
-    /**
-     * Recreates data about structures intersecting given chunk (used for example by getPossibleCreatures), without
-     * placing any blocks. When called for the first time before any chunk is generated - also initializes the internal
-     * state needed by getPossibleCreatures.
-     */
-    // 在recreateStructures方法中重建结构数据
-    public void recreateStructures(Chunk chunkIn, int x, int z) {
-        this.mapGenBTNBridge.generate(this.world, x, z, null);
-        this.mineshaftGenerator.generate(this.world, x, z, null);
+    @Override
+    public void recreateStructures(@NotNull Chunk chunkIn, int x, int z) {
+        this.undergroundBridgeGen.generate(this.world, x, z, null);
+        this.mineshaftGen.generate(this.world, x, z, null);
     }
 }

@@ -9,11 +9,11 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-public class WorldGenBNTWater extends WorldGenerator {
+public class WorldGenUndergroundWater extends WorldGenerator {
     private final Block block;
     private final boolean insideRock;
 
-    public WorldGenBNTWater(Block blockIn, boolean insideRockIn) {
+    public WorldGenUndergroundWater(Block blockIn, boolean insideRockIn) {
         this.block = blockIn;
         this.insideRock = insideRockIn;
     }

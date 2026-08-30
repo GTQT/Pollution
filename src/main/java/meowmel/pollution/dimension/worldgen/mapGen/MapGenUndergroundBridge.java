@@ -1,7 +1,7 @@
 package meowmel.pollution.dimension.worldgen.mapGen;
 
 import com.google.common.collect.Lists;
-import meowmel.pollution.dimension.worldgen.structure.StructureBTNBridgePieces;
+import meowmel.pollution.dimension.worldgen.structure.StructureUndergroundBridgePieces;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.monster.EntityZombie;
@@ -15,17 +15,17 @@ import net.minecraft.world.gen.structure.StructureStart;
 import java.util.List;
 import java.util.Random;
 
-public class MapGenBTNBridge extends MapGenStructure {
+public class MapGenUndergroundBridge extends MapGenStructure {
     private final List<Biome.SpawnListEntry> spawnList = Lists.newArrayList();
 
-    public MapGenBTNBridge() {
+    public MapGenUndergroundBridge() {
         this.spawnList.add(new Biome.SpawnListEntry(EntityZombie.class, 8, 5, 5));
         this.spawnList.add(new Biome.SpawnListEntry(EntityShulker.class, 2, 5, 5));
         this.spawnList.add(new Biome.SpawnListEntry(EntityCreeper.class, 3, 4, 4));
     }
 
     public String getStructureName() {
-        return "BTNFortress";
+        return "UndergroundFortress";
     }
 
     public List<Biome.SpawnListEntry> getSpawnList() {
@@ -48,7 +48,7 @@ public class MapGenBTNBridge extends MapGenStructure {
     }
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ) {
-        return new MapGenBTNBridge.Start(this.world, this.rand, chunkX, chunkZ);
+        return new MapGenUndergroundBridge.Start(this.world, this.rand, chunkX, chunkZ);
     }
 
     public BlockPos getNearestStructurePos(World worldIn, BlockPos pos, boolean findUnexplored) {
@@ -84,7 +84,7 @@ public class MapGenBTNBridge extends MapGenStructure {
 
         public Start(World worldIn, Random random, int chunkX, int chunkZ) {
             super(chunkX, chunkZ);
-            StructureBTNBridgePieces.Start structureBTNbridgepieces$start = new StructureBTNBridgePieces.Start(random, (chunkX << 4) + 2, (chunkZ << 4) + 2);
+            StructureUndergroundBridgePieces.Start structureBTNbridgepieces$start = new StructureUndergroundBridgePieces.Start(random, (chunkX << 4) + 2, (chunkZ << 4) + 2);
             this.components.add(structureBTNbridgepieces$start);
             structureBTNbridgepieces$start.buildComponent(structureBTNbridgepieces$start, this.components, random);
             List<StructureComponent> list = structureBTNbridgepieces$start.pendingChildren;

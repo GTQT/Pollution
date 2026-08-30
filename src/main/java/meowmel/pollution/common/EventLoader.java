@@ -64,7 +64,7 @@ public class EventLoader {
 
     private static void checkForPortalCreation(EntityPlayer player, World world, float rangeToCheck) {
         if (world.provider.getDimension() == POConfig.WorldSettingSwitch.originDimension
-                || world.provider.getDimension() == POConfig.WorldSettingSwitch.BTNetherDimensionID
+                || world.provider.getDimension() == POConfig.WorldSettingSwitch.UndergroundDimensionID
                 || POConfig.WorldSettingSwitch.allowPortalsInOtherDimensions) {
 
             List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, player.getEntityBoundingBox().grow(rangeToCheck));

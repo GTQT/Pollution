@@ -1,6 +1,7 @@
 package meowmel.pollution.common.warpevent;
 
 import meowmel.pollution.POConfig;
+import meowmel.pollution.POConfig.WarpEventSwitch;
 import meowmel.pollution.common.warpevent.events.WarpBlind;
 import meowmel.pollution.common.warpevent.events.WarpBlink;
 import meowmel.pollution.common.warpevent.events.WarpBlood;
@@ -19,45 +20,51 @@ import meowmel.pollution.common.warpevent.events.WarpPoison;
 import meowmel.pollution.common.warpevent.events.WarpRain;
 import meowmel.pollution.common.warpevent.events.WarpSwamp;
 import meowmel.pollution.common.warpevent.events.WarpWind;
-import meowmel.pollution.common.warpevent.events.WarpZombieSiege;
 import meowmel.pollution.common.warpevent.events.WarpWither;
+import meowmel.pollution.common.warpevent.events.WarpZombieSiege;
 
 import java.util.function.Function;
 
 /**
- * 扭曲事件注册表。枚举常量的顺序同时也是 POConfig.WarpEventSwitch 中
- * eventEnabled / eventMinWarp 数组的下标，改动顺序需同步更新配置注释。
+ * 扭曲事件注册表。每个常量携带独立的配置访问器，
+ * 对应 POConfig.WarpEventSwitch 中该事件的独立开关与扭曲阈值字段。
  */
 public enum WarpEvents {
-    POISON("poison", 65, WarpPoison::new),
-    NAUSEA("nausea", 45, WarpNausea::new),
-    BLIND("blind", 60, WarpBlind::new),
-    WITHER("wither", 100, WarpWither::new),
-    JUMP("jump", 55, WarpJump::new),
-    LIGHTNING("lightning", 80, WarpLightning::new),
-    RAIN("rain", 90, WarpRain::new),
-    WIND("wind", 70, WarpWind::new),
-    MUSHROOMS("mushrooms", 40, WarpMushrooms::new),
-    SWAMP("swamp", 85, WarpSwamp::new),
-    FAKE_RAIN("fakerain", 50, WarpFakeRain::new),
-    BLINK("blink", 95, WarpBlink::new),
-    BLOOD("blood", 75, WarpBlood::new),
-    OBSIDIAN("obsidian", 110, WarpObsidian::new),
-    FALL("fall", 100, WarpFall::new),
-    FAKE_EXPLOSION("fakeexplosion", 60, WarpFakeExplosion::new),
-    SIEGE("siege", 120, WarpZombieSiege::new),
-    COUNTDOWN_BOMB("countdownbomb", 90, WarpCountdownBomb::new),
-    JUNK("junk", 30, WarpJunk::new),
-    INVENTORY_SCRAMBLE("inventoryscramble", 105, WarpInventoryScramble::new);
+    POISON("poison", 65, WarpPoison::new, c -> c.poisonEnabled, c -> c.poisonMinWarp),
+    NAUSEA("nausea", 45, WarpNausea::new, c -> c.nauseaEnabled, c -> c.nauseaMinWarp),
+    BLIND("blind", 60, WarpBlind::new, c -> c.blindEnabled, c -> c.blindMinWarp),
+    WITHER("wither", 100, WarpWither::new, c -> c.witherEnabled, c -> c.witherMinWarp),
+    JUMP("jump", 55, WarpJump::new, c -> c.jumpEnabled, c -> c.jumpMinWarp),
+    LIGHTNING("lightning", 80, WarpLightning::new, c -> c.lightningEnabled, c -> c.lightningMinWarp),
+    RAIN("rain", 90, WarpRain::new, c -> c.rainEnabled, c -> c.rainMinWarp),
+    WIND("wind", 70, WarpWind::new, c -> c.windEnabled, c -> c.windMinWarp),
+    MUSHROOMS("mushrooms", 40, WarpMushrooms::new, c -> c.mushroomsEnabled, c -> c.mushroomsMinWarp),
+    SWAMP("swamp", 85, WarpSwamp::new, c -> c.swampEnabled, c -> c.swampMinWarp),
+    FAKE_RAIN("fakerain", 50, WarpFakeRain::new, c -> c.fakerainEnabled, c -> c.fakerainMinWarp),
+    BLINK("blink", 95, WarpBlink::new, c -> c.blinkEnabled, c -> c.blinkMinWarp),
+    BLOOD("blood", 75, WarpBlood::new, c -> c.bloodEnabled, c -> c.bloodMinWarp),
+    OBSIDIAN("obsidian", 110, WarpObsidian::new, c -> c.obsidianEnabled, c -> c.obsidianMinWarp),
+    FALL("fall", 100, WarpFall::new, c -> c.fallEnabled, c -> c.fallMinWarp),
+    FAKE_EXPLOSION("fakeexplosion", 60, WarpFakeExplosion::new, c -> c.fakeexplosionEnabled, c -> c.fakeexplosionMinWarp),
+    SIEGE("siege", 120, WarpZombieSiege::new, c -> c.siegeEnabled, c -> c.siegeMinWarp),
+    COUNTDOWN_BOMB("countdownbomb", 90, WarpCountdownBomb::new, c -> c.countdownbombEnabled, c -> c.countdownbombMinWarp),
+    JUNK("junk", 30, WarpJunk::new, c -> c.junkEnabled, c -> c.junkMinWarp),
+    INVENTORY_SCRAMBLE("inventoryscramble", 105, WarpInventoryScramble::new,
+            c -> c.inventoryscrambleEnabled, c -> c.inventoryscrambleMinWarp);
 
     private final String name;
     private final int defaultMinWarp;
     private final Function<Integer, IEventWarp> constructor;
+    private final Function<WarpEventSwitch, Boolean> enabledGetter;
+    private final Function<WarpEventSwitch, Integer> minWarpGetter;
 
-    WarpEvents(String name, int defaultMinWarp, Function<Integer, IEventWarp> constructor) {
+    WarpEvents(String name, int defaultMinWarp, Function<Integer, IEventWarp> constructor,
+               Function<WarpEventSwitch, Boolean> enabledGetter, Function<WarpEventSwitch, Integer> minWarpGetter) {
         this.name = name;
         this.defaultMinWarp = defaultMinWarp;
         this.constructor = constructor;
+        this.enabledGetter = enabledGetter;
+        this.minWarpGetter = minWarpGetter;
     }
 
     public String getName() {
@@ -70,12 +77,12 @@ public enum WarpEvents {
 
     /** 配置覆盖后的最低扭曲值（-1 表示用默认） */
     public int getMinWarp() {
-        int override = POConfig.WarpEventSwitch.eventMinWarp[ordinal()];
+        int override = minWarpGetter.apply(POConfig.WarpEventSwitch);
         return override >= 0 ? override : defaultMinWarp;
     }
 
     public boolean isEnabled() {
-        return POConfig.WarpEventSwitch.eventEnabled[ordinal()];
+        return enabledGetter.apply(POConfig.WarpEventSwitch);
     }
 
     public IEventWarp instantiate() {

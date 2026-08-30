@@ -115,8 +115,8 @@ public class BlockPOPortal extends BlockBreakable {
     }
 
     private static int getDestination(Entity entity) {
-        return entity.dimension != POConfig.WorldSettingSwitch.BTNetherDimensionID
-                ? POConfig.WorldSettingSwitch.BTNetherDimensionID : POConfig.WorldSettingSwitch.originDimension;
+        return entity.dimension != POConfig.WorldSettingSwitch.UndergroundDimensionID
+                ? POConfig.WorldSettingSwitch.UndergroundDimensionID : POConfig.WorldSettingSwitch.originDimension;
     }
 
     public static void attemptSendPlayer(Entity entity, boolean forcedEntry) {
@@ -140,9 +140,9 @@ public class BlockPOPortal extends BlockBreakable {
 
         entity.changeDimension(destination, POTeleporter.getTeleporterForDim(entity.getServer(), destination));
 
-        if (destination == POConfig.WorldSettingSwitch.BTNetherDimensionID && entity instanceof EntityPlayerMP playerMP) {
+        if (destination == POConfig.WorldSettingSwitch.UndergroundDimensionID && entity instanceof EntityPlayerMP playerMP) {
             // set respawn point for TF dimension to near the arrival portal
-            playerMP.setSpawnChunk(new BlockPos(playerMP), true, POConfig.WorldSettingSwitch.BTNetherDimensionID);
+            playerMP.setSpawnChunk(new BlockPos(playerMP), true, POConfig.WorldSettingSwitch.UndergroundDimensionID);
         }
     }
 
@@ -210,7 +210,7 @@ public class BlockPOPortal extends BlockBreakable {
                     if (!teleporter.isSafeAround(pos, catalyst, checkProgression)) {
                         // TODO: "failure" effect - particles?
                         if (player != null) {
-                            player.sendStatusMessage(new TextComponentTranslation(POConfig.WorldSettingSwitch.BTNetherDimensionID + ".pollution.unsafe"), true);
+                            player.sendStatusMessage(new TextComponentTranslation(POConfig.WorldSettingSwitch.UndergroundDimensionID + ".pollution.unsafe"), true);
                         }
                         return false;
                     }

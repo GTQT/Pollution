@@ -9,14 +9,8 @@ public class POConfig {
     public static MachineSettingSwitch MachineSettingSwitch = new MachineSettingSwitch();
     public static PollutionSystemSwitch PollutionSystemSwitch = new PollutionSystemSwitch();
     public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
-    public static AspectsCache AspectsCache = new AspectsCache();
     public static WarpEventSwitch WarpEventSwitch = new WarpEventSwitch();
 
-    public static class AspectsCache {
-
-        @Config.Comment("在运行时计算的项目方面的保存间隔（以秒为单位）。如果您不想定期保存，请将其设为 -1，尽管我不建议这样做。")
-        public int saveInterval = 300;
-    }
     public static class OBJRenderSwitch {
         @Config.Comment({"节点聚变反应堆OBJ模型渲染开启"})
         @Config.RequiresMcRestart
@@ -25,16 +19,16 @@ public class POConfig {
     }
     public static class WorldSettingSwitch {
         @Config.RequiresMcRestart
-        @Config.Comment("为交错底世界维度分配的ID号。如果与其他模组冲突，请更改。")
-        public int BTNetherDimensionID = 41;
+        @Config.Comment("为地下世界维度分配的ID号。如果与其他模组冲突，请更改。")
+        public int UndergroundDimensionID = 41;
         @Config.RequiresMcRestart
         @Config.Comment("Dimension ID used by the terrain-only Alfheim port.")
         public int AlfheimDimensionID = 43;
         @Config.Comment("Allow players to respawn in the terrain-only Alfheim dimension.")
         public boolean enableAlfheimRespawn = true;
-        @Config.Comment("可以始终前往交错底世界的维度，以及返回的维度。默认为交错次元。")
+        @Config.Comment("可以始终前往地下世界的维度，以及返回的维度。默认为交错次元。")
         public int originDimension = 0;
-        @Config.Comment("允许在“主世界”维度之外创建前往交错底世界的传送门。这可能被视为作弊。")
+        @Config.Comment("允许在“主世界”维度之外创建前往地下世界的传送门。这可能被视为作弊。")
         public boolean allowPortalsInOtherDimensions = false;
         @Config.Comment("如果为假，则返回传送门需要激活物品。")
         public boolean shouldReturnPortalBeUsable = true;
@@ -47,9 +41,7 @@ public class POConfig {
         @Config.Comment("机器污染开关")
         public boolean enablePollution = true;
         @Config.Comment("机器爆炸污染")
-        public boolean ExplosionPollution = true;
-        @Config.Comment("玩家污染DEBUFF(包括泥土变沙子，药水效果)")
-        public boolean EntityPollutionEvent = true;
+        public boolean enableExplosionPollution = true;
         @Config.Comment("设备污染倍率(0为无污染)")
         public float mufflerPollutionMultiplier = 1.0F;
         @Config.Comment("是否开启消声仓污染特效")
@@ -103,15 +95,65 @@ public class POConfig {
         public int checkInterval = 2000;
         @Config.Comment("事件出队执行间隔（tick，默认20=1秒）")
         public int dequeueInterval = 20;
-        @Config.Comment("各事件启用开关，顺序与 WarpEvents 枚举一致：" +
-                "poison,nausea,blind,wither,jump,lightning,rain,wind,mushrooms,swamp," +
-                "fakerain,blink,blood,obsidian,fall,fakeexplosion,siege,countdownbomb,junk,inventoryscramble")
-        public boolean[] eventEnabled = new boolean[]{
-                true, true, true, true, true, true, true, true, true, true,
-                true, true, true, true, true, true, true, true, true, true};
-        @Config.Comment("各事件最低扭曲值覆盖（-1 使用默认值），顺序同上")
-        public int[] eventMinWarp = new int[]{
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        @Config.Comment({"中毒事件：启用开关", "最低扭曲值（-1 使用默认值 65）"})
+        public boolean poisonEnabled = true;
+        public int poisonMinWarp = -1;
+        @Config.Comment({"反胃事件：启用开关", "最低扭曲值（-1 使用默认值 45）"})
+        public boolean nauseaEnabled = true;
+        public int nauseaMinWarp = -1;
+        @Config.Comment({"失明事件：启用开关", "最低扭曲值（-1 使用默认值 60）"})
+        public boolean blindEnabled = true;
+        public int blindMinWarp = -1;
+        @Config.Comment({"凋零事件：启用开关", "最低扭曲值（-1 使用默认值 100）"})
+        public boolean witherEnabled = true;
+        public int witherMinWarp = -1;
+        @Config.Comment({"跳跃失控事件：启用开关", "最低扭曲值（-1 使用默认值 55）"})
+        public boolean jumpEnabled = true;
+        public int jumpMinWarp = -1;
+        @Config.Comment({"落雷事件：启用开关", "最低扭曲值（-1 使用默认值 80）"})
+        public boolean lightningEnabled = true;
+        public int lightningMinWarp = -1;
+        @Config.Comment({"红色咒波雨事件：启用开关", "最低扭曲值（-1 使用默认值 90）"})
+        public boolean rainEnabled = true;
+        public int rainMinWarp = -1;
+        @Config.Comment({"咒波狂风事件：启用开关", "最低扭曲值（-1 使用默认值 70）"})
+        public boolean windEnabled = true;
+        public int windMinWarp = -1;
+        @Config.Comment({"蘑菇滋生事件：启用开关", "最低扭曲值（-1 使用默认值 40）"})
+        public boolean mushroomsEnabled = true;
+        public int mushroomsMinWarp = -1;
+        @Config.Comment({"沼泽腐化事件：启用开关", "最低扭曲值（-1 使用默认值 85）"})
+        public boolean swampEnabled = true;
+        public int swampMinWarp = -1;
+        @Config.Comment({"蓝色假雨事件：启用开关", "最低扭曲值（-1 使用默认值 50）"})
+        public boolean fakerainEnabled = true;
+        public int fakerainMinWarp = -1;
+        @Config.Comment({"咒波闪现事件：启用开关", "最低扭曲值（-1 使用默认值 95）"})
+        public boolean blinkEnabled = true;
+        public int blinkMinWarp = -1;
+        @Config.Comment({"血腥滴落事件：启用开关", "最低扭曲值（-1 使用默认值 75）"})
+        public boolean bloodEnabled = true;
+        public int bloodMinWarp = -1;
+        @Config.Comment({"黑曜石围困事件：启用开关", "最低扭曲值（-1 使用默认值 110）"})
+        public boolean obsidianEnabled = true;
+        public int obsidianMinWarp = -1;
+        @Config.Comment({"世界破洞事件：启用开关", "最低扭曲值（-1 使用默认值 100）"})
+        public boolean fallEnabled = true;
+        public int fallMinWarp = -1;
+        @Config.Comment({"假爆炸事件：启用开关", "最低扭曲值（-1 使用默认值 60）"})
+        public boolean fakeexplosionEnabled = true;
+        public int fakeexplosionMinWarp = -1;
+        @Config.Comment({"僵尸围城事件：启用开关", "最低扭曲值（-1 使用默认值 120）"})
+        public boolean siegeEnabled = true;
+        public int siegeMinWarp = -1;
+        @Config.Comment({"倒计时炸弹事件：启用开关", "最低扭曲值（-1 使用默认值 90）"})
+        public boolean countdownbombEnabled = true;
+        public int countdownbombMinWarp = -1;
+        @Config.Comment({"咒波呕物事件：启用开关", "最低扭曲值（-1 使用默认值 30）"})
+        public boolean junkEnabled = true;
+        public int junkMinWarp = -1;
+        @Config.Comment({"背包乱序事件：启用开关", "最低扭曲值（-1 使用默认值 105）"})
+        public boolean inventoryscrambleEnabled = true;
+        public int inventoryscrambleMinWarp = -1;
     }
 }

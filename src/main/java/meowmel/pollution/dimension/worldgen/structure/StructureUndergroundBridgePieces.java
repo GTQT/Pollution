@@ -21,91 +21,91 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class StructureBTNBridgePieces {
-    private static final StructureBTNBridgePieces.PieceWeight[] PRIMARY_COMPONENTS = new StructureBTNBridgePieces.PieceWeight[] {new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Straight.class, 30, 0, true), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Crossing3.class, 10, 4), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Crossing.class, 10, 4), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Stairs.class, 10, 3), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Throne.class, 5, 2), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Entrance.class, 5, 1)};
-    private static final StructureBTNBridgePieces.PieceWeight[] SECONDARY_COMPONENTS = new StructureBTNBridgePieces.PieceWeight[] {new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Corridor5.class, 25, 0, true), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Crossing2.class, 15, 5), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Corridor2.class, 5, 10), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Corridor.class, 5, 10), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Corridor3.class, 10, 3, true), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.Corridor4.class, 7, 2), new StructureBTNBridgePieces.PieceWeight(StructureBTNBridgePieces.NetherStalkRoom.class, 5, 2)};
+public class StructureUndergroundBridgePieces {
+    private static final StructureUndergroundBridgePieces.PieceWeight[] PRIMARY_COMPONENTS = new StructureUndergroundBridgePieces.PieceWeight[] {new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Straight.class, 30, 0, true), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Crossing3.class, 10, 4), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Crossing.class, 10, 4), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Stairs.class, 10, 3), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Throne.class, 5, 2), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Entrance.class, 5, 1)};
+    private static final StructureUndergroundBridgePieces.PieceWeight[] SECONDARY_COMPONENTS = new StructureUndergroundBridgePieces.PieceWeight[] {new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Corridor5.class, 25, 0, true), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Crossing2.class, 15, 5), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Corridor2.class, 5, 10), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Corridor.class, 5, 10), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Corridor3.class, 10, 3, true), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.Corridor4.class, 7, 2), new StructureUndergroundBridgePieces.PieceWeight(StructureUndergroundBridgePieces.NetherStalkRoom.class, 5, 2)};
 
-    public static void registerBTNFortressPieces()
+    public static void registerUndergroundFortressPieces()
     {
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Crossing3.class, "BnTBCr");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.End.class, "BnTBEF");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Straight.class, "BnTBS");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Corridor3.class, "BnTCCS");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Corridor4.class, "BnTCTB");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Entrance.class, "BnTCE");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Crossing2.class, "BnTSCSC");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Corridor.class, "BnTSCLT");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Corridor5.class, "BnTSC");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Corridor2.class, "BnTSCRT");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.NetherStalkRoom.class, "BnTCSR");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Throne.class, "BnTMT");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Crossing.class, "BnTRC");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Stairs.class, "BnTSR");
-        MapGenStructureIO.registerStructureComponent(StructureBTNBridgePieces.Start.class, "BnTStart");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Crossing3.class, "UGBCr");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.End.class, "UGBEF");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Straight.class, "UGBS");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Corridor3.class, "UGCCS");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Corridor4.class, "UGCTB");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Entrance.class, "UGCE");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Crossing2.class, "UGSCSC");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Corridor.class, "UGSCLT");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Corridor5.class, "UGSC");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Corridor2.class, "UGSCRT");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.NetherStalkRoom.class, "UGCSR");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Throne.class, "UGMT");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Crossing.class, "UGRC");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Stairs.class, "UGSR");
+        MapGenStructureIO.registerStructureComponent(StructureUndergroundBridgePieces.Start.class, "UGStart");
     }
 
-    private static StructureBTNBridgePieces.Piece findAndCreateBridgePieceFactory(StructureBTNBridgePieces.PieceWeight p_175887_0_, List<StructureComponent> p_175887_1_, Random p_175887_2_, int p_175887_3_, int p_175887_4_, int p_175887_5_, EnumFacing p_175887_6_, int p_175887_7_)
+    private static StructureUndergroundBridgePieces.Piece findAndCreateBridgePieceFactory(StructureUndergroundBridgePieces.PieceWeight p_175887_0_, List<StructureComponent> p_175887_1_, Random p_175887_2_, int p_175887_3_, int p_175887_4_, int p_175887_5_, EnumFacing p_175887_6_, int p_175887_7_)
     {
-        Class <? extends StructureBTNBridgePieces.Piece > oclass = p_175887_0_.weightClass;
-        StructureBTNBridgePieces.Piece StructureBTNBridgePieces$piece = null;
+        Class <? extends StructureUndergroundBridgePieces.Piece > oclass = p_175887_0_.weightClass;
+        StructureUndergroundBridgePieces.Piece StructureUndergroundBridgePieces$piece = null;
 
-        if (oclass == StructureBTNBridgePieces.Straight.class)
+        if (oclass == StructureUndergroundBridgePieces.Straight.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Straight.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Straight.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Crossing3.class)
+        else if (oclass == StructureUndergroundBridgePieces.Crossing3.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Crossing3.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Crossing3.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Crossing.class)
+        else if (oclass == StructureUndergroundBridgePieces.Crossing.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Crossing.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Crossing.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Stairs.class)
+        else if (oclass == StructureUndergroundBridgePieces.Stairs.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Stairs.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_7_, p_175887_6_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Stairs.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_7_, p_175887_6_);
         }
-        else if (oclass == StructureBTNBridgePieces.Throne.class)
+        else if (oclass == StructureUndergroundBridgePieces.Throne.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Throne.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_7_, p_175887_6_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Throne.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_7_, p_175887_6_);
         }
-        else if (oclass == StructureBTNBridgePieces.Entrance.class)
+        else if (oclass == StructureUndergroundBridgePieces.Entrance.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Entrance.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Entrance.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Corridor5.class)
+        else if (oclass == StructureUndergroundBridgePieces.Corridor5.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Corridor5.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Corridor5.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Corridor2.class)
+        else if (oclass == StructureUndergroundBridgePieces.Corridor2.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Corridor2.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Corridor2.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Corridor.class)
+        else if (oclass == StructureUndergroundBridgePieces.Corridor.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Corridor.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Corridor.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Corridor3.class)
+        else if (oclass == StructureUndergroundBridgePieces.Corridor3.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Corridor3.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Corridor3.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Corridor4.class)
+        else if (oclass == StructureUndergroundBridgePieces.Corridor4.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Corridor4.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Corridor4.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.Crossing2.class)
+        else if (oclass == StructureUndergroundBridgePieces.Crossing2.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.Crossing2.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.Crossing2.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
-        else if (oclass == StructureBTNBridgePieces.NetherStalkRoom.class)
+        else if (oclass == StructureUndergroundBridgePieces.NetherStalkRoom.class)
         {
-            StructureBTNBridgePieces$piece = StructureBTNBridgePieces.NetherStalkRoom.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
+            StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.NetherStalkRoom.createPiece(p_175887_1_, p_175887_2_, p_175887_3_, p_175887_4_, p_175887_5_, p_175887_6_, p_175887_7_);
         }
 
-        return StructureBTNBridgePieces$piece;
+        return StructureUndergroundBridgePieces$piece;
     }
 
-    public static class Corridor extends StructureBTNBridgePieces.Piece
+    public static class Corridor extends StructureUndergroundBridgePieces.Piece
     {
         private boolean chest;
 
@@ -144,13 +144,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentX((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
+            this.getNextComponentX((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
         }
 
-        public static StructureBTNBridgePieces.Corridor createPiece(List<StructureComponent> p_175879_0_, Random p_175879_1_, int p_175879_2_, int p_175879_3_, int p_175879_4_, EnumFacing p_175879_5_, int p_175879_6_)
+        public static StructureUndergroundBridgePieces.Corridor createPiece(List<StructureComponent> p_175879_0_, Random p_175879_1_, int p_175879_2_, int p_175879_3_, int p_175879_4_, EnumFacing p_175879_5_, int p_175879_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175879_2_, p_175879_3_, p_175879_4_, -1, 0, 0, 5, 7, 5, p_175879_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175879_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Corridor(p_175879_6_, p_175879_1_, structureboundingbox, p_175879_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175879_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Corridor(p_175879_6_, p_175879_1_, structureboundingbox, p_175879_5_) : null;
         }
 
         /**
@@ -189,7 +189,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Corridor2 extends StructureBTNBridgePieces.Piece
+    public static class Corridor2 extends StructureUndergroundBridgePieces.Piece
     {
         private boolean chest;
 
@@ -228,13 +228,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentZ((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
+            this.getNextComponentZ((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
         }
 
-        public static StructureBTNBridgePieces.Corridor2 createPiece(List<StructureComponent> p_175876_0_, Random p_175876_1_, int p_175876_2_, int p_175876_3_, int p_175876_4_, EnumFacing p_175876_5_, int p_175876_6_)
+        public static StructureUndergroundBridgePieces.Corridor2 createPiece(List<StructureComponent> p_175876_0_, Random p_175876_1_, int p_175876_2_, int p_175876_3_, int p_175876_4_, EnumFacing p_175876_5_, int p_175876_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175876_2_, p_175876_3_, p_175876_4_, -1, 0, 0, 5, 7, 5, p_175876_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175876_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Corridor2(p_175876_6_, p_175876_1_, structureboundingbox, p_175876_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175876_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Corridor2(p_175876_6_, p_175876_1_, structureboundingbox, p_175876_5_) : null;
         }
 
         /**
@@ -273,7 +273,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Corridor3 extends StructureBTNBridgePieces.Piece
+    public static class Corridor3 extends StructureUndergroundBridgePieces.Piece
     {
         public Corridor3()
         {
@@ -291,13 +291,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 1, 0, true);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 1, 0, true);
         }
 
-        public static StructureBTNBridgePieces.Corridor3 createPiece(List<StructureComponent> p_175883_0_, Random p_175883_1_, int p_175883_2_, int p_175883_3_, int p_175883_4_, EnumFacing p_175883_5_, int p_175883_6_)
+        public static StructureUndergroundBridgePieces.Corridor3 createPiece(List<StructureComponent> p_175883_0_, Random p_175883_1_, int p_175883_2_, int p_175883_3_, int p_175883_4_, EnumFacing p_175883_5_, int p_175883_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175883_2_, p_175883_3_, p_175883_4_, -1, -7, 0, 5, 14, 10, p_175883_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175883_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Corridor3(p_175883_6_, p_175883_1_, structureboundingbox, p_175883_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175883_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Corridor3(p_175883_6_, p_175883_1_, structureboundingbox, p_175883_5_) : null;
         }
 
         /**
@@ -343,7 +343,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Corridor4 extends StructureBTNBridgePieces.Piece
+    public static class Corridor4 extends StructureUndergroundBridgePieces.Piece
     {
         public Corridor4()
         {
@@ -369,14 +369,14 @@ public class StructureBTNBridgePieces {
                 i = 5;
             }
 
-            this.getNextComponentX((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, i, rand.nextInt(8) > 0);
-            this.getNextComponentZ((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, i, rand.nextInt(8) > 0);
+            this.getNextComponentX((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, i, rand.nextInt(8) > 0);
+            this.getNextComponentZ((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, i, rand.nextInt(8) > 0);
         }
 
-        public static StructureBTNBridgePieces.Corridor4 createPiece(List<StructureComponent> p_175880_0_, Random p_175880_1_, int p_175880_2_, int p_175880_3_, int p_175880_4_, EnumFacing p_175880_5_, int p_175880_6_)
+        public static StructureUndergroundBridgePieces.Corridor4 createPiece(List<StructureComponent> p_175880_0_, Random p_175880_1_, int p_175880_2_, int p_175880_3_, int p_175880_4_, EnumFacing p_175880_5_, int p_175880_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175880_2_, p_175880_3_, p_175880_4_, -3, 0, 0, 9, 7, 9, p_175880_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175880_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Corridor4(p_175880_6_, p_175880_1_, structureboundingbox, p_175880_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175880_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Corridor4(p_175880_6_, p_175880_1_, structureboundingbox, p_175880_5_) : null;
         }
 
         /**
@@ -417,7 +417,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Corridor5 extends StructureBTNBridgePieces.Piece
+    public static class Corridor5 extends StructureUndergroundBridgePieces.Piece
     {
         public Corridor5()
         {
@@ -435,13 +435,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 1, 0, true);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 1, 0, true);
         }
 
-        public static StructureBTNBridgePieces.Corridor5 createPiece(List<StructureComponent> p_175877_0_, Random p_175877_1_, int p_175877_2_, int p_175877_3_, int p_175877_4_, EnumFacing p_175877_5_, int p_175877_6_)
+        public static StructureUndergroundBridgePieces.Corridor5 createPiece(List<StructureComponent> p_175877_0_, Random p_175877_1_, int p_175877_2_, int p_175877_3_, int p_175877_4_, EnumFacing p_175877_5_, int p_175877_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175877_2_, p_175877_3_, p_175877_4_, -1, 0, 0, 5, 7, 5, p_175877_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175877_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Corridor5(p_175877_6_, p_175877_1_, structureboundingbox, p_175877_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175877_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Corridor5(p_175877_6_, p_175877_1_, structureboundingbox, p_175877_5_) : null;
         }
 
         /**
@@ -472,7 +472,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Crossing extends StructureBTNBridgePieces.Piece
+    public static class Crossing extends StructureUndergroundBridgePieces.Piece
     {
         public Crossing()
         {
@@ -490,15 +490,15 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 2, 0, false);
-            this.getNextComponentX((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, 2, false);
-            this.getNextComponentZ((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, 2, false);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 2, 0, false);
+            this.getNextComponentX((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, 2, false);
+            this.getNextComponentZ((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, 2, false);
         }
 
-        public static StructureBTNBridgePieces.Crossing createPiece(List<StructureComponent> p_175873_0_, Random p_175873_1_, int p_175873_2_, int p_175873_3_, int p_175873_4_, EnumFacing p_175873_5_, int p_175873_6_)
+        public static StructureUndergroundBridgePieces.Crossing createPiece(List<StructureComponent> p_175873_0_, Random p_175873_1_, int p_175873_2_, int p_175873_3_, int p_175873_4_, EnumFacing p_175873_5_, int p_175873_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175873_2_, p_175873_3_, p_175873_4_, -2, 0, 0, 7, 9, 7, p_175873_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175873_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Crossing(p_175873_6_, p_175873_1_, structureboundingbox, p_175873_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175873_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Crossing(p_175873_6_, p_175873_1_, structureboundingbox, p_175873_5_) : null;
         }
 
         /**
@@ -538,7 +538,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Crossing2 extends StructureBTNBridgePieces.Piece
+    public static class Crossing2 extends StructureUndergroundBridgePieces.Piece
     {
         public Crossing2()
         {
@@ -556,15 +556,15 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 1, 0, true);
-            this.getNextComponentX((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
-            this.getNextComponentZ((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 1, 0, true);
+            this.getNextComponentX((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
+            this.getNextComponentZ((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 0, 1, true);
         }
 
-        public static StructureBTNBridgePieces.Crossing2 createPiece(List<StructureComponent> p_175878_0_, Random p_175878_1_, int p_175878_2_, int p_175878_3_, int p_175878_4_, EnumFacing p_175878_5_, int p_175878_6_)
+        public static StructureUndergroundBridgePieces.Crossing2 createPiece(List<StructureComponent> p_175878_0_, Random p_175878_1_, int p_175878_2_, int p_175878_3_, int p_175878_4_, EnumFacing p_175878_5_, int p_175878_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175878_2_, p_175878_3_, p_175878_4_, -1, 0, 0, 5, 7, 5, p_175878_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175878_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Crossing2(p_175878_6_, p_175878_1_, structureboundingbox, p_175878_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175878_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Crossing2(p_175878_6_, p_175878_1_, structureboundingbox, p_175878_5_) : null;
         }
 
         /**
@@ -593,7 +593,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Crossing3 extends StructureBTNBridgePieces.Piece
+    public static class Crossing3 extends StructureUndergroundBridgePieces.Piece
     {
         public Crossing3()
         {
@@ -626,15 +626,15 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 8, 3, false);
-            this.getNextComponentX((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 3, 8, false);
-            this.getNextComponentZ((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 3, 8, false);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 8, 3, false);
+            this.getNextComponentX((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 3, 8, false);
+            this.getNextComponentZ((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 3, 8, false);
         }
 
-        public static StructureBTNBridgePieces.Crossing3 createPiece(List<StructureComponent> p_175885_0_, Random p_175885_1_, int p_175885_2_, int p_175885_3_, int p_175885_4_, EnumFacing p_175885_5_, int p_175885_6_)
+        public static StructureUndergroundBridgePieces.Crossing3 createPiece(List<StructureComponent> p_175885_0_, Random p_175885_1_, int p_175885_2_, int p_175885_3_, int p_175885_4_, EnumFacing p_175885_5_, int p_175885_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175885_2_, p_175885_3_, p_175885_4_, -8, -3, 0, 19, 10, 19, p_175885_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175885_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Crossing3(p_175885_6_, p_175885_1_, structureboundingbox, p_175885_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175885_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Crossing3(p_175885_6_, p_175885_1_, structureboundingbox, p_175885_5_) : null;
         }
 
         /**
@@ -687,7 +687,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class End extends StructureBTNBridgePieces.Piece
+    public static class End extends StructureUndergroundBridgePieces.Piece
     {
         private int fillSeed;
 
@@ -703,10 +703,10 @@ public class StructureBTNBridgePieces {
             this.fillSeed = p_i45621_2_.nextInt();
         }
 
-        public static StructureBTNBridgePieces.End createPiece(List<StructureComponent> p_175884_0_, Random p_175884_1_, int p_175884_2_, int p_175884_3_, int p_175884_4_, EnumFacing p_175884_5_, int p_175884_6_)
+        public static StructureUndergroundBridgePieces.End createPiece(List<StructureComponent> p_175884_0_, Random p_175884_1_, int p_175884_2_, int p_175884_3_, int p_175884_4_, EnumFacing p_175884_5_, int p_175884_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175884_2_, p_175884_3_, p_175884_4_, -1, -3, 0, 5, 10, 8, p_175884_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175884_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.End(p_175884_6_, p_175884_1_, structureboundingbox, p_175884_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175884_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.End(p_175884_6_, p_175884_1_, structureboundingbox, p_175884_5_) : null;
         }
 
         /**
@@ -768,7 +768,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Entrance extends StructureBTNBridgePieces.Piece
+    public static class Entrance extends StructureUndergroundBridgePieces.Piece
     {
         public Entrance()
         {
@@ -786,13 +786,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 5, 3, true);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 5, 3, true);
         }
 
-        public static StructureBTNBridgePieces.Entrance createPiece(List<StructureComponent> p_175881_0_, Random p_175881_1_, int p_175881_2_, int p_175881_3_, int p_175881_4_, EnumFacing p_175881_5_, int p_175881_6_)
+        public static StructureUndergroundBridgePieces.Entrance createPiece(List<StructureComponent> p_175881_0_, Random p_175881_1_, int p_175881_2_, int p_175881_3_, int p_175881_4_, EnumFacing p_175881_5_, int p_175881_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175881_2_, p_175881_3_, p_175881_4_, -5, -3, 0, 13, 14, 13, p_175881_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175881_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Entrance(p_175881_6_, p_175881_1_, structureboundingbox, p_175881_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175881_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Entrance(p_175881_6_, p_175881_1_, structureboundingbox, p_175881_5_) : null;
         }
 
         /**
@@ -882,7 +882,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class NetherStalkRoom extends StructureBTNBridgePieces.Piece
+    public static class NetherStalkRoom extends StructureUndergroundBridgePieces.Piece
     {
         public NetherStalkRoom()
         {
@@ -900,14 +900,14 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 5, 3, true);
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 5, 11, true);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 5, 3, true);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 5, 11, true);
         }
 
-        public static StructureBTNBridgePieces.NetherStalkRoom createPiece(List<StructureComponent> p_175875_0_, Random p_175875_1_, int p_175875_2_, int p_175875_3_, int p_175875_4_, EnumFacing p_175875_5_, int p_175875_6_)
+        public static StructureUndergroundBridgePieces.NetherStalkRoom createPiece(List<StructureComponent> p_175875_0_, Random p_175875_1_, int p_175875_2_, int p_175875_3_, int p_175875_4_, EnumFacing p_175875_5_, int p_175875_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175875_2_, p_175875_3_, p_175875_4_, -5, -3, 0, 13, 14, 13, p_175875_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175875_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.NetherStalkRoom(p_175875_6_, p_175875_1_, structureboundingbox, p_175875_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175875_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.NetherStalkRoom(p_175875_6_, p_175875_1_, structureboundingbox, p_175875_5_) : null;
         }
 
         /**
@@ -1061,25 +1061,25 @@ public class StructureBTNBridgePieces {
         {
         }
 
-        private int getTotalWeight(List<StructureBTNBridgePieces.PieceWeight> p_74960_1_)
+        private int getTotalWeight(List<StructureUndergroundBridgePieces.PieceWeight> p_74960_1_)
         {
             boolean flag = false;
             int i = 0;
 
-            for (StructureBTNBridgePieces.PieceWeight StructureBTNBridgePieces$pieceweight : p_74960_1_)
+            for (StructureUndergroundBridgePieces.PieceWeight StructureUndergroundBridgePieces$pieceweight : p_74960_1_)
             {
-                if (StructureBTNBridgePieces$pieceweight.maxPlaceCount > 0 && StructureBTNBridgePieces$pieceweight.placeCount < StructureBTNBridgePieces$pieceweight.maxPlaceCount)
+                if (StructureUndergroundBridgePieces$pieceweight.maxPlaceCount > 0 && StructureUndergroundBridgePieces$pieceweight.placeCount < StructureUndergroundBridgePieces$pieceweight.maxPlaceCount)
                 {
                     flag = true;
                 }
 
-                i += StructureBTNBridgePieces$pieceweight.weight;
+                i += StructureUndergroundBridgePieces$pieceweight.weight;
             }
 
             return flag ? i : -1;
         }
 
-        private StructureBTNBridgePieces.Piece generatePiece(StructureBTNBridgePieces.Start p_175871_1_, List<StructureBTNBridgePieces.PieceWeight> p_175871_2_, List<StructureComponent> p_175871_3_, Random p_175871_4_, int p_175871_5_, int p_175871_6_, int p_175871_7_, EnumFacing p_175871_8_, int p_175871_9_)
+        private StructureUndergroundBridgePieces.Piece generatePiece(StructureUndergroundBridgePieces.Start p_175871_1_, List<StructureUndergroundBridgePieces.PieceWeight> p_175871_2_, List<StructureComponent> p_175871_3_, Random p_175871_4_, int p_175871_5_, int p_175871_6_, int p_175871_7_, EnumFacing p_175871_8_, int p_175871_9_)
         {
             int i = this.getTotalWeight(p_175871_2_);
             boolean flag = i > 0 && p_175871_9_ <= 30;
@@ -1090,43 +1090,43 @@ public class StructureBTNBridgePieces {
                 ++j;
                 int k = p_175871_4_.nextInt(i);
 
-                for (StructureBTNBridgePieces.PieceWeight StructureBTNBridgePieces$pieceweight : p_175871_2_)
+                for (StructureUndergroundBridgePieces.PieceWeight StructureUndergroundBridgePieces$pieceweight : p_175871_2_)
                 {
-                    k -= StructureBTNBridgePieces$pieceweight.weight;
+                    k -= StructureUndergroundBridgePieces$pieceweight.weight;
 
                     if (k < 0)
                     {
-                        if (!StructureBTNBridgePieces$pieceweight.doPlace(p_175871_9_) || StructureBTNBridgePieces$pieceweight == p_175871_1_.lastPlaced && !StructureBTNBridgePieces$pieceweight.allowInRow)
+                        if (!StructureUndergroundBridgePieces$pieceweight.doPlace(p_175871_9_) || StructureUndergroundBridgePieces$pieceweight == p_175871_1_.lastPlaced && !StructureUndergroundBridgePieces$pieceweight.allowInRow)
                         {
                             break;
                         }
 
-                        StructureBTNBridgePieces.Piece StructureBTNBridgePieces$piece = StructureBTNBridgePieces.findAndCreateBridgePieceFactory(StructureBTNBridgePieces$pieceweight, p_175871_3_, p_175871_4_, p_175871_5_, p_175871_6_, p_175871_7_, p_175871_8_, p_175871_9_);
+                        StructureUndergroundBridgePieces.Piece StructureUndergroundBridgePieces$piece = StructureUndergroundBridgePieces.findAndCreateBridgePieceFactory(StructureUndergroundBridgePieces$pieceweight, p_175871_3_, p_175871_4_, p_175871_5_, p_175871_6_, p_175871_7_, p_175871_8_, p_175871_9_);
 
-                        if (StructureBTNBridgePieces$piece != null)
+                        if (StructureUndergroundBridgePieces$piece != null)
                         {
-                            ++StructureBTNBridgePieces$pieceweight.placeCount;
-                            p_175871_1_.lastPlaced = StructureBTNBridgePieces$pieceweight;
+                            ++StructureUndergroundBridgePieces$pieceweight.placeCount;
+                            p_175871_1_.lastPlaced = StructureUndergroundBridgePieces$pieceweight;
 
-                            if (!StructureBTNBridgePieces$pieceweight.isValid())
+                            if (!StructureUndergroundBridgePieces$pieceweight.isValid())
                             {
-                                p_175871_2_.remove(StructureBTNBridgePieces$pieceweight);
+                                p_175871_2_.remove(StructureUndergroundBridgePieces$pieceweight);
                             }
 
-                            return StructureBTNBridgePieces$piece;
+                            return StructureUndergroundBridgePieces$piece;
                         }
                     }
                 }
             }
 
-            return StructureBTNBridgePieces.End.createPiece(p_175871_3_, p_175871_4_, p_175871_5_, p_175871_6_, p_175871_7_, p_175871_8_, p_175871_9_);
+            return StructureUndergroundBridgePieces.End.createPiece(p_175871_3_, p_175871_4_, p_175871_5_, p_175871_6_, p_175871_7_, p_175871_8_, p_175871_9_);
         }
 
-        private StructureComponent generateAndAddPiece(StructureBTNBridgePieces.Start p_175870_1_, List<StructureComponent> p_175870_2_, Random p_175870_3_, int p_175870_4_, int p_175870_5_, int p_175870_6_, @Nullable EnumFacing p_175870_7_, int p_175870_8_, boolean p_175870_9_)
+        private StructureComponent generateAndAddPiece(StructureUndergroundBridgePieces.Start p_175870_1_, List<StructureComponent> p_175870_2_, Random p_175870_3_, int p_175870_4_, int p_175870_5_, int p_175870_6_, @Nullable EnumFacing p_175870_7_, int p_175870_8_, boolean p_175870_9_)
         {
             if (Math.abs(p_175870_4_ - p_175870_1_.getBoundingBox().minX) <= 112 && Math.abs(p_175870_6_ - p_175870_1_.getBoundingBox().minZ) <= 112)
             {
-                List<StructureBTNBridgePieces.PieceWeight> list = p_175870_1_.primaryWeights;
+                List<StructureUndergroundBridgePieces.PieceWeight> list = p_175870_1_.primaryWeights;
 
                 if (p_175870_9_)
                 {
@@ -1145,7 +1145,7 @@ public class StructureBTNBridgePieces {
             }
             else
             {
-                return StructureBTNBridgePieces.End.createPiece(p_175870_2_, p_175870_3_, p_175870_4_, p_175870_5_, p_175870_6_, p_175870_7_, p_175870_8_);
+                return StructureUndergroundBridgePieces.End.createPiece(p_175870_2_, p_175870_3_, p_175870_4_, p_175870_5_, p_175870_6_, p_175870_7_, p_175870_8_);
             }
         }
 
@@ -1153,7 +1153,7 @@ public class StructureBTNBridgePieces {
          * Gets the next component in any cardinal direction
          */
         @Nullable
-        protected StructureComponent getNextComponentNormal(StructureBTNBridgePieces.Start p_74963_1_, List<StructureComponent> p_74963_2_, Random p_74963_3_, int p_74963_4_, int p_74963_5_, boolean p_74963_6_)
+        protected StructureComponent getNextComponentNormal(StructureUndergroundBridgePieces.Start p_74963_1_, List<StructureComponent> p_74963_2_, Random p_74963_3_, int p_74963_4_, int p_74963_5_, boolean p_74963_6_)
         {
             EnumFacing enumfacing = this.getCoordBaseMode();
 
@@ -1179,7 +1179,7 @@ public class StructureBTNBridgePieces {
          * Gets the next component in the +/- X direction
          */
         @Nullable
-        protected StructureComponent getNextComponentX(StructureBTNBridgePieces.Start p_74961_1_, List<StructureComponent> p_74961_2_, Random p_74961_3_, int p_74961_4_, int p_74961_5_, boolean p_74961_6_)
+        protected StructureComponent getNextComponentX(StructureUndergroundBridgePieces.Start p_74961_1_, List<StructureComponent> p_74961_2_, Random p_74961_3_, int p_74961_4_, int p_74961_5_, boolean p_74961_6_)
         {
             EnumFacing enumfacing = this.getCoordBaseMode();
 
@@ -1205,7 +1205,7 @@ public class StructureBTNBridgePieces {
          * Gets the next component in the +/- Z direction
          */
         @Nullable
-        protected StructureComponent getNextComponentZ(StructureBTNBridgePieces.Start p_74965_1_, List<StructureComponent> p_74965_2_, Random p_74965_3_, int p_74965_4_, int p_74965_5_, boolean p_74965_6_)
+        protected StructureComponent getNextComponentZ(StructureUndergroundBridgePieces.Start p_74965_1_, List<StructureComponent> p_74965_2_, Random p_74965_3_, int p_74965_4_, int p_74965_5_, boolean p_74965_6_)
         {
             EnumFacing enumfacing = this.getCoordBaseMode();
 
@@ -1238,13 +1238,13 @@ public class StructureBTNBridgePieces {
 
     static class PieceWeight
     {
-        public Class <? extends StructureBTNBridgePieces.Piece > weightClass;
+        public Class <? extends StructureUndergroundBridgePieces.Piece > weightClass;
         public final int weight;
         public int placeCount;
         public int maxPlaceCount;
         public boolean allowInRow;
 
-        public PieceWeight(Class <? extends StructureBTNBridgePieces.Piece > p_i2055_1_, int p_i2055_2_, int p_i2055_3_, boolean p_i2055_4_)
+        public PieceWeight(Class <? extends StructureUndergroundBridgePieces.Piece > p_i2055_1_, int p_i2055_2_, int p_i2055_3_, boolean p_i2055_4_)
         {
             this.weightClass = p_i2055_1_;
             this.weight = p_i2055_2_;
@@ -1252,7 +1252,7 @@ public class StructureBTNBridgePieces {
             this.allowInRow = p_i2055_4_;
         }
 
-        public PieceWeight(Class <? extends StructureBTNBridgePieces.Piece > p_i2056_1_, int p_i2056_2_, int p_i2056_3_)
+        public PieceWeight(Class <? extends StructureUndergroundBridgePieces.Piece > p_i2056_1_, int p_i2056_2_, int p_i2056_3_)
         {
             this(p_i2056_1_, p_i2056_2_, p_i2056_3_, false);
         }
@@ -1268,7 +1268,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Stairs extends StructureBTNBridgePieces.Piece
+    public static class Stairs extends StructureUndergroundBridgePieces.Piece
     {
         public Stairs()
         {
@@ -1286,13 +1286,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentZ((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 6, 2, false);
+            this.getNextComponentZ((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 6, 2, false);
         }
 
-        public static StructureBTNBridgePieces.Stairs createPiece(List<StructureComponent> p_175872_0_, Random p_175872_1_, int p_175872_2_, int p_175872_3_, int p_175872_4_, int p_175872_5_, EnumFacing p_175872_6_)
+        public static StructureUndergroundBridgePieces.Stairs createPiece(List<StructureComponent> p_175872_0_, Random p_175872_1_, int p_175872_2_, int p_175872_3_, int p_175872_4_, int p_175872_5_, EnumFacing p_175872_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175872_2_, p_175872_3_, p_175872_4_, -2, 0, 0, 7, 11, 7, p_175872_6_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175872_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Stairs(p_175872_5_, p_175872_1_, structureboundingbox, p_175872_6_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175872_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Stairs(p_175872_5_, p_175872_1_, structureboundingbox, p_175872_6_) : null;
         }
 
         /**
@@ -1333,12 +1333,12 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Start extends StructureBTNBridgePieces.Crossing3
+    public static class Start extends StructureUndergroundBridgePieces.Crossing3
     {
         /** Instance of StructureNetherBridgePieceWeight. */
-        public StructureBTNBridgePieces.PieceWeight lastPlaced;
-        public List<StructureBTNBridgePieces.PieceWeight> primaryWeights;
-        public List<StructureBTNBridgePieces.PieceWeight> secondaryWeights;
+        public StructureUndergroundBridgePieces.PieceWeight lastPlaced;
+        public List<StructureUndergroundBridgePieces.PieceWeight> primaryWeights;
+        public List<StructureUndergroundBridgePieces.PieceWeight> secondaryWeights;
         public List<StructureComponent> pendingChildren = Lists.<StructureComponent>newArrayList();
 
         public Start()
@@ -1348,25 +1348,25 @@ public class StructureBTNBridgePieces {
         public Start(Random p_i2059_1_, int p_i2059_2_, int p_i2059_3_)
         {
             super(p_i2059_1_, p_i2059_2_, p_i2059_3_);
-            this.primaryWeights = Lists.<StructureBTNBridgePieces.PieceWeight>newArrayList();
+            this.primaryWeights = Lists.<StructureUndergroundBridgePieces.PieceWeight>newArrayList();
 
-            for (StructureBTNBridgePieces.PieceWeight StructureBTNBridgePieces$pieceweight : StructureBTNBridgePieces.PRIMARY_COMPONENTS)
+            for (StructureUndergroundBridgePieces.PieceWeight StructureUndergroundBridgePieces$pieceweight : StructureUndergroundBridgePieces.PRIMARY_COMPONENTS)
             {
-                StructureBTNBridgePieces$pieceweight.placeCount = 0;
-                this.primaryWeights.add(StructureBTNBridgePieces$pieceweight);
+                StructureUndergroundBridgePieces$pieceweight.placeCount = 0;
+                this.primaryWeights.add(StructureUndergroundBridgePieces$pieceweight);
             }
 
-            this.secondaryWeights = Lists.<StructureBTNBridgePieces.PieceWeight>newArrayList();
+            this.secondaryWeights = Lists.<StructureUndergroundBridgePieces.PieceWeight>newArrayList();
 
-            for (StructureBTNBridgePieces.PieceWeight StructureBTNBridgePieces$pieceweight1 : StructureBTNBridgePieces.SECONDARY_COMPONENTS)
+            for (StructureUndergroundBridgePieces.PieceWeight StructureUndergroundBridgePieces$pieceweight1 : StructureUndergroundBridgePieces.SECONDARY_COMPONENTS)
             {
-                StructureBTNBridgePieces$pieceweight1.placeCount = 0;
-                this.secondaryWeights.add(StructureBTNBridgePieces$pieceweight1);
+                StructureUndergroundBridgePieces$pieceweight1.placeCount = 0;
+                this.secondaryWeights.add(StructureUndergroundBridgePieces$pieceweight1);
             }
         }
     }
 
-    public static class Straight extends StructureBTNBridgePieces.Piece
+    public static class Straight extends StructureUndergroundBridgePieces.Piece
     {
         public Straight()
         {
@@ -1384,13 +1384,13 @@ public class StructureBTNBridgePieces {
          */
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            this.getNextComponentNormal((StructureBTNBridgePieces.Start)componentIn, listIn, rand, 1, 3, false);
+            this.getNextComponentNormal((StructureUndergroundBridgePieces.Start)componentIn, listIn, rand, 1, 3, false);
         }
 
-        public static StructureBTNBridgePieces.Straight createPiece(List<StructureComponent> p_175882_0_, Random p_175882_1_, int p_175882_2_, int p_175882_3_, int p_175882_4_, EnumFacing p_175882_5_, int p_175882_6_)
+        public static StructureUndergroundBridgePieces.Straight createPiece(List<StructureComponent> p_175882_0_, Random p_175882_1_, int p_175882_2_, int p_175882_3_, int p_175882_4_, EnumFacing p_175882_5_, int p_175882_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175882_2_, p_175882_3_, p_175882_4_, -1, -3, 0, 5, 10, 19, p_175882_5_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175882_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Straight(p_175882_6_, p_175882_1_, structureboundingbox, p_175882_5_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175882_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Straight(p_175882_6_, p_175882_1_, structureboundingbox, p_175882_5_) : null;
         }
 
         /**
@@ -1429,7 +1429,7 @@ public class StructureBTNBridgePieces {
         }
     }
 
-    public static class Throne extends StructureBTNBridgePieces.Piece
+    public static class Throne extends StructureUndergroundBridgePieces.Piece
     {
         private boolean hasSpawner;
 
@@ -1462,10 +1462,10 @@ public class StructureBTNBridgePieces {
             tagCompound.setBoolean("Mob", this.hasSpawner);
         }
 
-        public static StructureBTNBridgePieces.Throne createPiece(List<StructureComponent> p_175874_0_, Random p_175874_1_, int p_175874_2_, int p_175874_3_, int p_175874_4_, int p_175874_5_, EnumFacing p_175874_6_)
+        public static StructureUndergroundBridgePieces.Throne createPiece(List<StructureComponent> p_175874_0_, Random p_175874_1_, int p_175874_2_, int p_175874_3_, int p_175874_4_, int p_175874_5_, EnumFacing p_175874_6_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175874_2_, p_175874_3_, p_175874_4_, -2, 0, 0, 7, 8, 9, p_175874_6_);
-            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175874_0_, structureboundingbox) == null ? new StructureBTNBridgePieces.Throne(p_175874_5_, p_175874_1_, structureboundingbox, p_175874_6_) : null;
+            return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(p_175874_0_, structureboundingbox) == null ? new StructureUndergroundBridgePieces.Throne(p_175874_5_, p_175874_1_, structureboundingbox, p_175874_6_) : null;
         }
 
         /**
