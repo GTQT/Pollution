@@ -30,7 +30,9 @@ public class WorldGenScatteredBlock extends WorldGenerator {
                     rand.nextInt(4) - rand.nextInt(4),
                     rand.nextInt(8) - rand.nextInt(8));
 
-            if (worldIn.isAirBlock(candidate) && worldIn.getBlockState(candidate.down()).getBlock() == Blocks.STONE) {
+            // 下方为任意实心方块（石头/草方块/菌丝/沙子等群系地表）即可放置
+            if (worldIn.isAirBlock(candidate)
+                    && worldIn.getBlockState(candidate.down()).getMaterial().isSolid()) {
                 worldIn.setBlockState(candidate, this.block.getDefaultState(), 2);
             }
         }

@@ -89,11 +89,6 @@ public class Pollution {
         // 注册 GUI 处理器（右键矿物提取器打开 GUI 的前提）
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
         PollutionLog.init(event.getModLog());
-        try {
-            PollutionOreVeins.init(event.getModConfigurationDirectory().toPath());
-        } catch (Exception exception) {
-            LOGGER.error("Failed to install GTCEu ore veins for Alfheim dimension 43", exception);
-        }
         MagicRecipeProperties.init();
         PollutionMetaBlocks.init();
         POAPI.init();
@@ -124,6 +119,12 @@ public class Pollution {
         Botania.init();
         AstralSorcery.init();
         MeteorsHelper.init();
+        try {
+            PollutionOreVeins.registerVeins();
+            PollutionOreVeins.registerOrbs();
+        } catch (Exception exception) {
+            LOGGER.error("Failed to register GTCEu ore veins", exception);
+        }
     }
 
     @Mod.EventHandler

@@ -25,8 +25,8 @@ public class WorldGenStalactite extends WorldGenerator {
                     rand.nextInt(4) - rand.nextInt(4),
                     rand.nextInt(8) - rand.nextInt(8));
 
-            // 起始位置必须是空气且下方为石头（石柱从地面长起）
-            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.STONE) {
+            // 起始位置必须是空气且下方为实心方块（石柱从任何地表长起）
+            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getMaterial().isSolid()) {
                 // 生成随机高度（3-10 格）的石柱
                 int height = rand.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1) + MIN_HEIGHT;
 

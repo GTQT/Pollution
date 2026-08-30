@@ -25,11 +25,11 @@ public class WorldGenMushroomBlockCluster extends WorldGenerator {
 
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-        // 生成点必须是空气，且上方紧邻石头（悬挂在洞穴顶部）
+        // 生成点必须是空气，且上方紧邻实心方块（悬挂在任何洞顶下）
         if (!worldIn.isAirBlock(position)) {
             return false;
         }
-        if (worldIn.getBlockState(position.up()).getBlock() != Blocks.STONE) {
+        if (!worldIn.getBlockState(position.up()).getMaterial().isSolid()) {
             return false;
         }
 

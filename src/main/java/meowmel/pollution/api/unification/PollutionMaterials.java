@@ -61,6 +61,7 @@ public class PollutionMaterials {
     public static Material AuthorityLead;
     public static Material Pyrargyrite;
     public static Material PlutoZinc;
+    public static Material Amber;
 
 	//材料
 	public static Material Thaummix;

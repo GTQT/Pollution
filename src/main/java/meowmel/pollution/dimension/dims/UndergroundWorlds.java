@@ -1,11 +1,10 @@
 package meowmel.pollution.dimension.dims;
 
-import meowmel.pollution.dimension.biome.POBiomeHandler;
+import meowmel.pollution.dimension.biome.BiomeProviderUnderground;
 import meowmel.pollution.dimension.worldgen.ChunkGenerator.ChunkGeneratorUndergroundWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,8 +19,8 @@ public class UndergroundWorlds extends WorldProvider {
 
     @Override
     public void init() {
-        // Initialize the biome provider for this dimension (初始化该维度的生物群系提供器)
-        this.biomeProvider = new BiomeProviderSingle(POBiomeHandler.UNDERGROUND_BIOME);
+        // 群系驱动：GenLayer 分布 8 群系（深窟兜底 + 7 风格），表面/装饰按群系，地形骨架不变
+        this.biomeProvider = new BiomeProviderUnderground(this.world.getSeed(), this.world.getWorldType());
     }
 
     @SideOnly(Side.CLIENT)

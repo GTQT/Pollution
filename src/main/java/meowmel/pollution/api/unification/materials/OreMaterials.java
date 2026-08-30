@@ -149,6 +149,7 @@ public class OreMaterials {
                 .components(Zinc, 2, Antimony, 1, Oxygen, 1, InfusedWater, 5, InfusedEarth, 7)
                 .build()
                 .setTooltips("你无法移开视线");
+
         PollutionMaterials.Dragonstone = new Material.Builder(getMaterialsId(), pollutionId("dragonstone"))
                 .gem().ore()
                 .color(0xF274D3)
@@ -168,6 +169,13 @@ public class OreMaterials {
                 .color(0xB8F1EA)
                 .iconSet(SHINY)
                 .flags(DISABLE_DECOMPOSITION)
+                .build();
+
+        PollutionMaterials.Amber = new Material.Builder(getMaterialsId(), pollutionId("amber"))
+                .gem().ore()
+                .color(0xE8A62D)
+                .iconSet(SHINY)
+                .components(Carbon, 10, Hydrogen, 16, Oxygen, 1)
                 .build();
     }
 }

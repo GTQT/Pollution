@@ -135,9 +135,8 @@ pollution.material.elven_elementium=源质钢
 pollution.material.dragonstone=龙石
 pollution.material.pixie_dust=精灵尘
 pollution.material.elven_quartz=精灵石英
-pollution.vein.elementium=源质钢矿脉
-pollution.vein.dragonstone=龙石矿脉
-pollution.vein.pixie_quartz=精灵尘与精灵石英矿脉
+pollution.material.amber=琥珀
+
 pollution.material.mud=沼泽泥浆
 pollution.material.salismundus=世界盐
 pollution.material.mansussteel=漫宿钢
@@ -1100,6 +1099,20 @@ pollution.machine.aspect_tank.uv.name=量子源质缸 IV
 pollution.machine.aspect_tank.uhv.name=量子源质缸 V
 
 ##矿脉
+pollution.vein.sphere.black_granite=黑色花岗岩球
+pollution.vein.sphere.red_granite=红色花岗岩球
+pollution.vein.sphere.marble=大理石球
+pollution.vein.sphere.basalt=玄武岩球
+pollution.vein.sphere.concrete_light=浅色混凝土球
+pollution.vein.sphere.concrete_dark=深色混凝土球
+pollution.vein.sphere.limestone=石灰岩球
+pollution.vein.sphere.komatiite=科马提岩球
+pollution.vein.sphere.green_schist=绿色片岩球
+pollution.vein.sphere.blue_schist=蓝色片岩球
+pollution.vein.sphere.quartzite=石英岩球
+pollution.vein.sphere.slate=板岩球
+pollution.vein.sphere.shale=页岩球
+
 pollution.veins.ore.flame_coal=地下固焰煤矿脉
 pollution.veins.ore.octine=地下炽焰铁矿脉
 pollution.veins.ore.syrmorite=地下赛摩铜矿脉
@@ -1565,6 +1578,7 @@ metaitem.depleted_magic_core.tooltip=失去催化活性的核心外壳，可净�
 metaitem.magic_sweep.name=魔法扫帚
 metaitem.magic_sweep.tooltip.1=随身携带这把扫帚，就能翱翔于天际
 metaitem.magic_sweep.tooltip.2=随身携带或装备时获得§c创造§e模式§a飞行§d能力§7，并免疫伤害§7
+
 # 星座NBT状态
 pollution.astral_data.unattuned=未写入星座数据
 pollution.astral_data.constellation=已写入星座：%s
@@ -1745,8 +1759,6 @@ pollution.machine.constellation_tower.vorux.name=贪狼座星宿塔
 
 metaitem.starstream_linker.mode.network=当前模式：组网（方尖碑/在线中继器 → 新中继器）
 metaitem.starstream_linker.pending.network=待扩展网络节点：%s，坐标%s、%s、%s
-metaitem.starstream_linker.tooltip.1=潜行右击空气切换星塔汇入/无线组网模式；每段最大距离：%s格
-metaitem.starstream_linker.tooltip.2=汇入模式连接星宿塔；组网模式先选择方尖碑或在线中继器，再依次点击新中继器
 pollution.starstream_linker.mode.network=星流链接器已切换为无线组网模式。
 pollution.starstream_linker.network_source_nexus=已选择方尖碑无线网络作为扩展起点：坐标%s、%s、%s。
 pollution.starstream_linker.network_source_relay=已选择在线中继器作为扩展起点：坐标%s、%s、%s。
@@ -1754,12 +1766,10 @@ pollution.starstream_linker.network_extended=无线网络扩展成功，骨干�
 pollution.starstream_linker.error.tower_producer_only=星宿塔只能向网络汇入能量，不能作为无线输出目标。
 pollution.starstream_linker.error.relay_not_online=该中继器尚未连接到已成型的方尖碑无线网络。
 pollution.starstream_linker.error.no_network_source=请先选择已成型的方尖碑核心或在线中继器。
-pollution.starstream_relay.info=星流中继器：输入%s路，父节点%s，汇入%s CE/t，无线输出%s CE/t；%s
 pollution.machine.starstream_nexus.display.wireless_online=无线网络：在线；活跃终端%s，输出%s / %s CE/t
 pollution.machine.starstream_nexus.display.wireless_offline=无线网络：离线；活跃终端%s，输出%s / %s CE/t
 pollution.machine.starstream_nexus.display.relay_network=根中继器：%s / %s在线；核心覆盖%s格，中继覆盖%s格
 pollution.starstream_linker.error.relay_depth_limit=无线网络最多允许%s级中继，无法继续向外扩展。
-pollution.machine.starstream_nexus.tooltip.3=不使用星宿能量仓；方尖碑开启128格无线网络，中继器将覆盖扩展到64格半径的远端区域。
 metaitem.starstream_linker.tooltip.3=组网模式手持链接器可预览覆盖范围与临时拓扑：青色在线、红色离线、紫色为其他网络
 pollution.machine.starstream_nexus.button.wireless_off=无线输出已关闭；点击开启
 pollution.machine.starstream_nexus.button.wireless_on=无线输出已开启；点击暂停
@@ -1767,11 +1777,6 @@ pollution.machine.starstream_nexus.button.limit_25=无线输出上限：25%（13
 pollution.machine.starstream_nexus.button.limit_50=无线输出上限：50%（262144 CE/t）
 pollution.machine.starstream_nexus.button.limit_75=无线输出上限：75%（393216 CE/t）
 pollution.machine.starstream_nexus.button.limit_100=无线输出上限：100%（524288 CE/t）
-pollution.machine.starstream_nexus.display.relay_network=中继网络：%s / %s在线；根节点%s / %s在线；最大深度%s；核心覆盖%s格，中继覆盖%s格
-metaitem.starstream_linker.mode.network=当前模式：组网（方尖碑/已连接中继器 → 新中继器）
-metaitem.starstream_linker.tooltip.2=汇入模式连接星宿塔；组网模式先选择方尖碑或已接入网络的中继器，再依次点击新中继器
-pollution.starstream_linker.network_source_relay=已选择网络中继器作为扩展起点：坐标%s、%s、%s。
-pollution.starstream_linker.error.no_network_source=请先选择已成型的方尖碑核心或已接入网络的中继器。
 pollution.starstream_terminal.status.unbound=无线终端：未绑定网络
 pollution.starstream_terminal.status.discovering=无线终端：正在搜索附近节点
 pollution.starstream_terminal.status.online=无线终端：在线
@@ -1813,6 +1818,16 @@ pollution.machine.starstream_nexus.button.label.channels=频道
 pollution.machine.starstream_nexus.button.label.cleanup=清理
 pollution.machine.starstream_nexus.tooltip.5=维度星流中继器可在其他维度建立96格无线网关；方尖碑核心区块必须由星流区块锚保持加载
 metaitem.starstream_linker.tooltip.5=选择网络后可在其他维度点击维度星流中继器建立远端网关
+
+#地下世界群系
+biome.Deep Cave Basic=深窟基础
+biome.Stalactite Cluster=钟乳石群
+biome.Crystal Cluster=水晶簇落
+biome.Mushroom Forest=蘑菇林
+biome.Lush Cave=繁茂洞穴
+biome.Primordial Cave=原始洞穴
+biome.Desert Cave=沙漠洞穴
+biome.Magma Cave=岩浆洞穴
 
 #扭曲事件系统
 chat.pollution.warp.poison=咒波侵蚀了你的身体！

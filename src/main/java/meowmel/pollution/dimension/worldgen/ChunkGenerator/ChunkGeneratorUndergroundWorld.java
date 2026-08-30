@@ -1,7 +1,10 @@
 package meowmel.pollution.dimension.worldgen.ChunkGenerator;
 
 import gregtech.api.fluids.store.FluidStorageKeys;
+import meowmel.gtqtcore.common.blocks.GTQTMetaBlocks;
+import meowmel.gtqtcore.common.blocks.StoneVariantBlock;
 import meowmel.pollution.api.unification.PollutionMaterials;
+import meowmel.pollution.dimension.biome.IUndergroundBiome;
 import meowmel.pollution.dimension.worldgen.feature.WorldGenFluidPool;
 import meowmel.pollution.dimension.worldgen.feature.WorldGenGarden;
 import meowmel.pollution.dimension.worldgen.feature.WorldGenMushroomBlockCluster;
@@ -53,8 +56,14 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
 
     // ===== 基础方块 =====
     private static final IBlockState STONE = Blocks.STONE.getDefaultState();
+    private static final IBlockState KIMBERLITE = gtStoneState(StoneVariantBlock.StoneType.KIMBERLITE);
     private static final IBlockState SWAMP_WATER = Blocks.WATER.getDefaultState();
     private static final IBlockState GRAVEL = Blocks.GRAVEL.getDefaultState();
+
+    /** 取 GTQT 平滑变种石材的方块状态 */
+    private static IBlockState gtStoneState(StoneVariantBlock.StoneType stoneType) {
+        return GTQTMetaBlocks.STONE_BLOCKS.get(StoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
+    }
 
     // ===== 噪声生成器（构造器中可能被 mod 事件替换，故非 final） =====
     private final World world;
@@ -81,6 +90,9 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
     private final MapGenUndergroundBridge undergroundBridgeGen = new MapGenUndergroundBridge();
     private final MapGenMineshaft mineshaftGen = new MapGenMineshaft();
     private final MapGenBase caveGen;
+
+    /** 当前 chunk 的群系数组（generateChunk 提前获取，供 buildSurface 逐格分发） */
+    private Biome[] biomesForGeneration = new Biome[0];
 
     // ===== 装饰生成器 =====
     private final WorldGenStalactite stalactiteGen = new WorldGenStalactite();
@@ -167,9 +179,9 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                                 IBlockState blockState = null;
                                 int currentHeight = subYIndex + yIndex * 16;
 
-                                // 噪声达到阈值则生成石头，否则保持空洞（低于海平面时填水）
+                                // 噪声达到阈值则生成石头（水面下改用金伯利岩），否则保持空洞（低于海平面时填水）
                                 if (zInterpolated > -0.2D) {
-                                    blockState = STONE;
+                                    blockState = currentHeight < waterLevel ? KIMBERLITE : STONE;
                                 }
 
                                 // 噪声空洞且低于海平面：填充水
@@ -212,6 +224,16 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                 primer.setBlockState(localZ, 255, localX, Blocks.BEDROCK.getDefaultState());
             }
         }
+
+        // 群系表面分发（参考 Nether-API：逐格调群系 buildSurface，深窟等非接口群系保持原样）
+        for (int posX = 0; posX < 16; ++posX) {
+            for (int posZ = 0; posZ < 16; ++posZ) {
+                Biome biome = biomesForGeneration[posZ << 4 | posX];
+                if (biome instanceof IUndergroundBiome) {
+                    ((IUndergroundBiome) biome).buildSurface(this, chunkX, chunkZ, primer, posX, posZ, 0.0D);
+                }
+            }
+        }
     }
 
     /**
@@ -230,16 +252,16 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                 int gravelDepth = 2 + (int) (Math.abs(this.gravelNoiseBuffer[localX * 16 + localZ]) / 6.0D);
                 gravelDepth = Math.min(gravelDepth, 4);
 
-                // 湖床：自上而下穿过水体后遇到的第一层石头开始，向下替换为沙砾
+                // 湖床：自上而下穿过水体后遇到的第一层石头开始，向下替换为沙砾（水面下为金伯利岩）
                 boolean inWater = false;
                 for (int y = waterLevel - 1; y > 2; --y) {
                     IBlockState state = primer.getBlockState(localZ, y, localX);
                     if (state.getBlock() == Blocks.WATER) {
                         inWater = true;
-                    } else if (state.getBlock() == Blocks.STONE) {
+                    } else if (isStoneOrKimberlite(state)) {
                         if (inWater) {
                             for (int d = 0; d < gravelDepth; ++d) {
-                                if (primer.getBlockState(localZ, y - d, localX).getBlock() != Blocks.STONE) {
+                                if (!isStoneOrKimberlite(primer.getBlockState(localZ, y - d, localX))) {
                                     break;
                                 }
                                 primer.setBlockState(localZ, y - d, localX, GRAVEL);
@@ -254,7 +276,7 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                     continue;
                 }
                 for (int y = waterLevel - 4; y <= waterLevel + 3; ++y) {
-                    if (primer.getBlockState(localZ, y, localX).getBlock() != Blocks.STONE) {
+                    if (!isStoneOrKimberlite(primer.getBlockState(localZ, y, localX))) {
                         continue;
                     }
                     if (isAdjacentToWaterOrAir(primer, localZ, y, localX)) {
@@ -263,6 +285,12 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
                 }
             }
         }
+    }
+
+    /** 判断是否为可被沙砾替换的石头（原版石头或水面下的金伯利岩） */
+    private static boolean isStoneOrKimberlite(IBlockState state) {
+        Block block = state.getBlock();
+        return block == Blocks.STONE || block == KIMBERLITE.getBlock();
     }
 
     private static boolean isAdjacentToWaterOrAir(ChunkPrimer primer, int primerX, int y, int primerZ) {
@@ -282,6 +310,10 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
     @Override
     public @NotNull Chunk generateChunk(int x, int z) {
         this.rand.setSeed((long) x * 341873128712L + (long) z * 132897987541L);
+
+        // 提前获取群系数组（供 buildSurface 逐格分发与 biomeArray 填充）
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomes(null, x * 16, z * 16, 16, 16);
+
         ChunkPrimer chunkPrimer = new ChunkPrimer();
         this.prepareHeights(x, z, chunkPrimer);
         this.buildSurfaces(x, z, chunkPrimer);
@@ -298,10 +330,9 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         }
 
         Chunk chunk = new Chunk(this.world, chunkPrimer, x, z);
-        Biome[] biomes = this.world.getBiomeProvider().getBiomes(null, x * 16, z * 16, 16, 16);
         byte[] biomeArray = chunk.getBiomeArray();
         for (int i = 0; i < biomeArray.length; ++i) {
-            biomeArray[i] = (byte) Biome.getIdForBiome(biomes[i]);
+            biomeArray[i] = (byte) Biome.getIdForBiome(this.biomesForGeneration[i]);
         }
 
         chunk.resetRelightChecks();
@@ -384,6 +415,27 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
     @Override
     public void populate(int chunkX, int chunkZ) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
+        int blockX = chunkX * 16;
+        int blockZ = chunkZ * 16;
+        BlockPos chunkOrigin = new BlockPos(blockX, 0, blockZ);
+        ChunkPos chunkPosition = new ChunkPos(chunkX, chunkZ);
+
+        // 结构生成（维度级，所有群系共享）
+        this.undergroundBridgeGen.generateStructure(this.world, random, chunkPosition);
+        this.mineshaftGen.generateStructure(this.world, random, chunkPosition);
+
+        // 群系接管装饰（参考 Nether-API）：中心群系实现 IUndergroundBiome → 群系 populate；否则维度级原版装饰
+        Biome centerBiome = this.world.getBiome(chunkOrigin.add(16, 0, 16));
+        if (centerBiome instanceof IUndergroundBiome) {
+            ((IUndergroundBiome) centerBiome).populate(this, chunkX, chunkZ);
+        } else {
+            this.populateWithVanilla(chunkX, chunkZ);
+        }
+    }
+
+    /** 维度级原版装饰（深窟基础/非群系接口 biome 的默认装饰，亦可被群系 populate 复用） */
+    public void populateWithVanilla(int chunkX, int chunkZ) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         BlockFalling.fallInstantly = true;
         net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, random, chunkX, chunkZ, false);
 
@@ -392,9 +444,6 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         BlockPos chunkOrigin = new BlockPos(blockX, 0, blockZ);
         Biome currentBiome = this.world.getBiome(chunkOrigin.add(16, 0, 16));
         ChunkPos chunkPosition = new ChunkPos(chunkX, chunkZ);
-
-        this.undergroundBridgeGen.generateStructure(this.world, random, chunkPosition);
-        this.mineshaftGen.generateStructure(this.world, random, chunkPosition);
 
         // 地下湖泊（水体集群）
         if (TerrainGen.populate(this, this.world, random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.NETHER_LAVA)) {
@@ -457,6 +506,16 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(this.world, random, chunkOrigin));
 
         BlockFalling.fallInstantly = false;
+    }
+
+    /** 供群系接口访问（IUndergroundBiome 的 populate 需要） */
+    public World getWorld() {
+        return world;
+    }
+
+    /** 供群系接口访问（IUndergroundBiome 的 populate 需要） */
+    public Random getRand() {
+        return rand;
     }
 
     private void generateFeature(WorldGenerator generator, BlockPos basePos, Random random) {
