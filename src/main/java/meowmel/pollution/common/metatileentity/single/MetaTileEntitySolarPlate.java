@@ -3,140 +3,107 @@ package meowmel.pollution.common.metatileentity.single;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
+import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.util.tooltips.InformationHandler;
 import gregtech.client.renderer.ICubeRenderer;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 import static gregtech.api.GTValues.VA;
-import static meowmel.pollution.client.textures.POTextures.*;
 
 public class MetaTileEntitySolarPlate extends TieredMetaTileEntity {
-    protected final ICubeRenderer renderer;
-    int kind;
-    boolean isActive = true;
-    boolean isWorkingEnabled = true;
 
-    public MetaTileEntitySolarPlate(ResourceLocation metaTileEntityId, int tier, int kind, ICubeRenderer renderer) {
+    /** 发电量按对应电压的 1/3 计算 */
+    private static final int ENERGY_DIVISOR = 3;
+
+    private final SolarPlateType type;
+    private final ICubeRenderer renderer;
+    private boolean isActive;
+
+    public MetaTileEntitySolarPlate(ResourceLocation metaTileEntityId, int tier, SolarPlateType type,
+                                    ICubeRenderer renderer) {
         super(metaTileEntityId, tier);
-        this.kind = kind;
+        this.type = type;
         this.renderer = renderer;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
-        return new MetaTileEntitySolarPlate(metaTileEntityId, getTier(), kind, renderer);
+        return new MetaTileEntitySolarPlate(metaTileEntityId, getTier(), type, renderer);
+    }
+
+    /**
+     * @return 太阳能板的种类
+     */
+    public SolarPlateType getSolarPlateType() {
+        return type;
+    }
+
+    /**
+     * 发电量：满足增产条件时按高一档电压计算
+     *
+     * @param tier    机器等级
+     * @param boosted 是否满足增产条件
+     * @return 每 tick 发电量
+     */
+    public static long getEnergyOutput(int tier, boolean boosted) {
+        return VA[tier + (boosted ? 1 : 0)] / ENERGY_DIVISOR;
     }
 
     @Override
     public void update() {
         super.update();
-        isActive = checkNaturalLighting();
-        isWorkingEnabled = isActive;
-        if (!getWorld().isRemote && isWorkingEnabled) {
-            energyContainer.changeEnergy(VA[getTier() + (checkBooster(kind) ? 1 : 0)] / 3);
-        }
-    }
 
-    private boolean checkBooster(int kind) {
-        if (kind == 1) {
-            return this.getPos().getY() > 160;
+        // 工作条件由种类提供，客户端同样计算，贴图/能量状态保持一致
+        this.isActive = type.meetsWorkCondition(getWorld(), getPos(), getFrontFacing());
+        if (!getWorld().isRemote && this.isActive) {
+            energyContainer.changeEnergy(getEnergyOutput(getTier(),
+                    type.isBoosted(getWorld(), getPos(), getFrontFacing())));
         }
-        if (kind == 2) {
-            return !this.getWorld().isDaytime();
-        }
-        if (kind == 3) {
-            return this.getPos().getY() < 10;
-        }
-        if (kind == 4) {
-            return this.getWorld().provider.getDimension() == -1;
-        }
-        if (kind == 5) {
-            return this.getWorld().isDaytime();
-        }
-        return this.getWorld().getBlockState(this.getPos().add(0, -1, 0)) == Blocks.WATER.getDefaultState();
     }
 
     @Override
-    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
-        String key = this.metaTileEntityId.getPath().split("\\.")[0];
-        String mainKey = String.format("gregtech.machine.%s.tooltip", key);
-        if (I18n.hasKey(mainKey)) {
-            tooltip.add(1, I18n.format(mainKey));
-        }
-        tooltip.add(I18n.format("等级：%s 种类：%s", getTier(), kind));
-        tooltip.add(I18n.format("期望发电：%s EU/t 满足增产条件后发电：%s EU/t", VA[getTier()] / 3, VA[getTier() + 1] / 3));
-        if (kind == 1) tooltip.add(I18n.format("增产条件：高度大于160"));
-        if (kind == 2) tooltip.add(I18n.format("增产条件：只能在夜晚工作"));
-        if (kind == 3) tooltip.add(I18n.format("增产条件：高度小于10"));
-        if (kind == 4) tooltip.add(I18n.format("增产条件：只能在地狱工作"));
-        if (kind == 5) tooltip.add(I18n.format("增产条件：只能在白天工作"));
-        if (kind == 6) tooltip.add(I18n.format("增产条件：正下方有水"));
-    }
-
-    @Override
-    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        super.renderMetaTileEntity(renderState, translation, pipeline);
-        this.renderOverlays(renderState, translation, pipeline);
-        OVERLAY(kind).renderSided(EnumFacing.NORTH, renderState, translation, pipeline);
-        OVERLAY(kind).renderSided(EnumFacing.SOUTH, renderState, translation, pipeline);
-        OVERLAY(kind).renderSided(EnumFacing.EAST, renderState, translation, pipeline);
-        OVERLAY(kind).renderSided(EnumFacing.WEST, renderState, translation, pipeline);
-
-    }
-
-    public SimpleOverlayRenderer OVERLAY(int kind) {
-        if (kind == 1) return AIR;
-        if (kind == 2) return DARK;
-        if (kind == 3) return EARTH;
-        if (kind == 4) return FIRE;
-        if (kind == 5) return ORDER;
-        return WATER;
-    }
-
-
-    protected void renderOverlays(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        this.renderer.renderOrientedState(renderState, translation, pipeline, this.getFrontFacing(), isActive(), isWorkingEnabled());
-    }
-
-
     public boolean isActive() {
         return isActive;
     }
 
     public boolean isWorkingEnabled() {
-        return isWorkingEnabled;
+        return isActive;
     }
 
-    public boolean checkNaturalLighting() {
+    @Override
+    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+        InformationHandler.topTooltips("来自魔法的免费能源", tooltip);
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format(type.getBoostTooltipKey()));
+        tooltip.add(I18n.format("pollution.machine.solar_plate.tooltip.level",
+                getTier(), I18n.format(type.getNameKey())));
+        tooltip.add(I18n.format("pollution.machine.solar_plate.tooltip.output",
+                getEnergyOutput(getTier(), false), getEnergyOutput(getTier(), true)));
+    }
 
-        if (kind == 2 || kind == 4) return true;
-        if (!this.getWorld().isDaytime())
-            return false;
-        if (kind == 3) return true;
-        for (BlockPos pos : BlockPos.getAllInBox(this.getPos().up(8).offset(this.frontFacing.rotateY(), 3),
-                this.getPos().up(8).offset(this.getFrontFacing().rotateYCCW(), 3).offset(this.getFrontFacing().getOpposite(), 6))) {
-            if (!this.getWorld().canSeeSky(pos.up())) {
-                return false;
-            }
+    @Override
+    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
+        this.renderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(),
+                isActive(), isWorkingEnabled());
+
+        // 四个水平面渲染对应元素的贴图
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+            type.getOverlay().renderSided(facing, renderState, translation, pipeline);
         }
-        return true;
     }
 
     @Override
     protected boolean isEnergyEmitter() {
         return true;
     }
-
 }

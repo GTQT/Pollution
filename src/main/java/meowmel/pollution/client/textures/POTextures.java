@@ -7,7 +7,6 @@ import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SidedCubeRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
-import meowmel.pollution.client.gui.QuantumAspectTank.AspectImage;
 import net.minecraft.client.renderer.texture.TextureMap;
 
 public class POTextures {
@@ -32,6 +31,10 @@ public class POTextures {
 	public static OrientedOverlayRenderer SOLAR_PLATE_I = new OrientedOverlayRenderer("machines/solar_i");
 	public static OrientedOverlayRenderer SOLAR_PLATE_II = new OrientedOverlayRenderer("machines/solar_ii");
 	public static OrientedOverlayRenderer SOLAR_PLATE_III = new OrientedOverlayRenderer("machines/solar_iii");
+
+	public static final OrientedOverlayRenderer FLUX_CLEAR_OVERLAY = new OrientedOverlayRenderer(
+			"machines/flux_clear");
+
 	public static SimpleOverlayRenderer AIR;
 	public static SimpleOverlayRenderer DARK;
 	public static SimpleOverlayRenderer EARTH;
@@ -196,6 +199,5 @@ public class POTextures {
 
 	public static void preInit() {
 		TextureUtils.addIconRegister(POTextures::register);
-		AspectImage.create();
 	}
 }

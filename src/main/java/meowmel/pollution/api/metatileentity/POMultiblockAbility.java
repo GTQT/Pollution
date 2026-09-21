@@ -4,6 +4,7 @@ import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import meowmel.pollution.api.capability.IAstralHatch;
 import meowmel.pollution.api.capability.IBloodMagicHatch;
+import meowmel.pollution.api.capability.IFilterHatch;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.capability.ITarotHatch;
 import meowmel.pollution.api.capability.IVisHatch;
@@ -12,6 +13,9 @@ import net.minecraftforge.fluids.IFluidTank;
 @SuppressWarnings("InstantiationOfUtilityClass")
 public final class POMultiblockAbility {
     public static final MultiblockAbility<IVisHatch> VIS_HATCH = new MultiblockAbility<>("vis_hatch", IVisHatch.class);
+
+    // 为大型空气过滤机提供滤芯的仓室
+    public static final MultiblockAbility<IFilterHatch> FILTER_HATCH = new MultiblockAbility<>("filter_hatch", IFilterHatch.class);
 
     public static final MultiblockAbility<IFluidTank> INFUSED_FLUID_HATCH = new MultiblockAbility<>("infused_fluid_hatch", IFluidTank.class);
 

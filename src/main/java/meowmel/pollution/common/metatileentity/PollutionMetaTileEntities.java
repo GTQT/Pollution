@@ -1,14 +1,10 @@
 package meowmel.pollution.common.metatileentity;
 
 import gregtech.api.GTValues;
-import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
-import gregtech.api.metatileentity.TieredMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
-import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.client.textures.POTextures;
@@ -17,7 +13,6 @@ import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
 import meowmel.pollution.common.block.metablocks.POTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.*;
-import meowmel.pollution.common.metatileentity.multiblock.MetaTileEntityFluxClear;
 import meowmel.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEntityBMHPCA;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialStarlightInfuser;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialLightwell;
@@ -38,9 +33,9 @@ import meowmel.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEnt
 import meowmel.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCACooler;
 import meowmel.pollution.common.metatileentity.multiblockpart.BMHPCA.MetaTileEntityBMHPCAEmpty;
 import meowmel.pollution.common.metatileentity.single.*;
-import meowmel.pollution.common.metatileentity.storage.MetaTileEntityAspectTank;
+import meowmel.pollution.common.metatileentity.storage.MetaTileEntityQuantumAspectTank;
+import meowmel.pollution.common.metatileentity.storage.MetaTileEntityQuantumManaTank;
 import meowmel.gtqtcore.client.textures.GTQTTextures;
-import meowmel.gtqtcore.common.metatileentities.multi.electric.generator.MetaTileEntityMegaTurbine;
 import net.minecraft.util.ResourceLocation;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
@@ -48,17 +43,29 @@ import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_TURBINE_FUELS;
 import static meowmel.pollution.client.textures.POTextures.*;
 
 public class PollutionMetaTileEntities {
-   // public static final MetaTileEntityMultiblockPart[] FLUX_MUFFLERS = new MetaTileEntityMultiblockPart[9];
-    public static final TieredMetaTileEntity[] AURA_GENERATORS = new TieredMetaTileEntity[6];
-    public static final MetaTileEntityVisProvider[] VIS_PROVIDERS = new MetaTileEntityVisProvider[9];
-    public static final MetaTileEntityFluxClear[] VIS_CLEAR = new MetaTileEntityFluxClear[4];
-    public static final MetaTileEntityMultiblockPart[] FLUX_MUFFLERS = new MetaTileEntityMultiblockPart[9];
-    public static final MetaTileEntityFluxClear[] FLUX_CLEARS = new MetaTileEntityFluxClear[3];
-    public static final MetaTileEntity[] ASPECT_TANK = new MetaTileEntity[10];
-    public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[3];
+
+    // 单方块
+    // 单方块发电机
+    public static final SimpleGeneratorMetaTileEntity[] MAGIC_TURBINE = new SimpleGeneratorMetaTileEntity[5];
+    public static final MetaTileEntityAuraGenerator[] AURA_GENERATORS = new MetaTileEntityAuraGenerator[5];
+    public static final MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
+    public static final SimpleGeneratorMetaTileEntity[] MANA_GENERATOR = new SimpleGeneratorMetaTileEntity[5];
     public static final WorkableTieredMetaTileEntity[] FLUX_PROMOTED_FUEL_CELL = new WorkableTieredMetaTileEntity[5];
-    public static final TieredMetaTileEntity[] MAGIC_ENERGY_ABSORBER = new TieredMetaTileEntity[5];
-    public static final TieredMetaTileEntity[] SMALL_NODE_GENERATOR = new TieredMetaTileEntity[4];
+    public static final MetaTileEntityMagicEnergyAbsorber[] MAGIC_ENERGY_ABSORBER = new MetaTileEntityMagicEnergyAbsorber[5];
+    public static final MetaTileEntitySmallNodeGenerator[] SMALL_NODE_GENERATOR = new MetaTileEntitySmallNodeGenerator[5];
+
+    // 单方块机器
+    public static final MetaTileEntityFluxClear[] VIS_CLEAR = new MetaTileEntityFluxClear[3];
+    public static final MetaTileEntityVisProvider[] VIS_PROVIDERS = new MetaTileEntityVisProvider[3];
+
+    // 多方块
+    // 多方块发电机
+    public static MetaTileEntityMagicLargeTurbine LARGE_MAGIC_TURBINE;
+    public static MetaTileEntityMagicLargeTurbine LARGE_MANA_TURBINE;
+    public static MetaTileEntityMagicMegaTurbine MEGA_MAGIC_TURBINE;
+    public static MetaTileEntityMagicMegaTurbine MEGA_MANA_TURBINE;
+
+    // 多方块机器
     public static MetaTileEntityInfusedExchange INFUSED_EXCHANGE;
     public static MetaTileEntityMagicBender MAGIC_BENDER;
     public static MetaTileEntityMagicCentrifuge MAGIC_CENTRIFUGE;
@@ -85,12 +92,56 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityNodeProducer NODE_PRODUCER;
     public static MetaTileEntityLargeNodeGenerator LARGE_NODE_GENERATOR;
     public static MetaTileEntityNodeWasher NODE_WASHER;
+    public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
+    public static MetaTileEntityBotDistillery BOT_DISTILLERY;
+    public static MetaTileEntityManaPlate Mana_PLATE;
+    public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
+    public static MetaTileEntityNodeBlastFurnace NODE_BLAST_FURNACE;
+    public static MetaTileEntitySmallChemicalPlant SMALL_CHEMICAL_PLANT;
+    public static MetaTileEntityEssenceSmelter ESSENCE_SMELTER;
+    public static MetaTileEntityBotGasCollector BOT_GAS_COLLECTOR;
+    public static MetaTileEntityGtEssenceSmelter GT_ESSENCE_SMELTER;
+    public static MetaTileEntityBotVacuumFreezer BOT_VACUUM_FREEZER;
+
+    public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
+    public static MetaTileEntityCentralVisTower CENTRAL_VIS_TOWER;
+    public static MetaTileEntityManaInfusionReactor MANA_INFUSION_REACTOR;
+    public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
+    public static MetaTileEntityNodeFusionReactor[] NODE_FUSION_REACTOR = new MetaTileEntityNodeFusionReactor[3];
+
+    public static MetaTileEntityManaPetalApothecary MANA_PETAL_APOTHECARY;
+    public static MetaTileEntityManaRuneAltar MANA_RUNE_ALTAR;
+    public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
+    public static MetaTileEntityIndustrialStarlightInfuser INDUSTRIAL_STARLIGHT_INFUSER;
+    public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
+    public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
+    public static MetaTileEntityCelestialCalibrationMatrix CELESTIAL_CALIBRATION_MATRIX;
+    public static MetaTileEntityCelestialCrystalGrowthArray CELESTIAL_CRYSTAL_GROWTH_ARRAY;
+    public static final MetaTileEntityConstellationTower[] CONSTELLATION_TOWERS =
+            new MetaTileEntityConstellationTower[ConstellationTowerDefinition.values().length];
+    public static MetaTileEntityStarstreamNexusObelisk STARSTREAM_NEXUS_OBELISK;
+
+    // 杂项
+    public static final MetaTileEntityLargeFluxClear[] FLUX_CLEARS = new MetaTileEntityLargeFluxClear[3];
+
+    // 血魔法HPCA
+    public static MetaTileEntityBMHPCAEmpty BMHPCA_EMPTY_COMPONENT;
+    public static MetaTileEntityBMHPCAComputation BMHPCA_COMPUTATION_COMPONENT;
+    public static MetaTileEntityBMHPCAComputation BMHPCA_ADVANCED_COMPUTATION_COMPONENT;
+    public static MetaTileEntityBMHPCACooler BMHPCA_ADVANCED_COOLER_COMPONENT;
+    public static MetaTileEntityBMHPCACooler BMHPCA_SUPER_COOLER_COMPONENT;
+    public static MetaTileEntityBMHPCACooler BMHPCA_ULTIMATE_COOLER_COMPONENT;
+    public static MetaTileEntityBMHPCABridge BMHPCA_BRIDGE_COMPONENT;
+    public static MetaTileEntityBMHPCA BMHPCA;
+
+
+    // 杂项
+    public static MetaTileEntitySourceCharge SOURCE_CHARGE;
+
+    // 仓室
+    public static final MetaTileEntityFluxMuffler[] FLUX_MUFFLERS = new MetaTileEntityFluxMuffler[9];
     public static MetaTileEntityVisHatch[] VIS_HATCH = new MetaTileEntityVisHatch[14];
     public static MetaTileEntityInfusedFluidHatch[] INFUSED_FLUID_HATCH = new MetaTileEntityInfusedFluidHatch[14];
-    public static MetaTileEntityBloodMagicHatch BLOOD_MAGIC_HATCH;
-    public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH;
-    public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH_ADVANCED;
-    public static MetaTileEntityTarotHatch TAROT_HATCH;
 
     public static MetaTileEntityManaHatch[] MANA_INPUT_HATCH_1A = new MetaTileEntityManaHatch[14];
     public static MetaTileEntityManaHatch[] MANA_INPUT_HATCH_4A = new MetaTileEntityManaHatch[14];
@@ -118,301 +169,191 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityWirelessManaPoolHatch[] WIRELESS_MANA_POOL_INPUT_HATCH = new MetaTileEntityWirelessManaPoolHatch[3];
     public static MetaTileEntityWirelessManaPoolHatch[] WIRELESS_MANA_POOL_OUTPUT_HATCH = new MetaTileEntityWirelessManaPoolHatch[3];
 
-    public static MetaTileEntityMagicLargeTurbine LARGE_MAGIC_TURBINE;
-    public static MetaTileEntityMagicLargeTurbine LARGE_MANA_TURBINE;
-    public static MetaTileEntityMagicMegaTurbine MEGA_MAGIC_TURBINE;
-    public static MetaTileEntityMagicMegaTurbine MEGA_MANA_TURBINE;
+    public static MetaTileEntityFilterHatch FILTER_HATCH;
+    public static MetaTileEntityTarotHatch TAROT_HATCH;
+    public static MetaTileEntityBloodMagicHatch BLOOD_MAGIC_HATCH;
+    public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH;
+    public static MetaTileEntityAstralLensHatch ASTRAL_LENS_HATCH_ADVANCED;
 
-
-    public static MetaTileEntitySolarPlate[] SOLAR_PLATE = new MetaTileEntitySolarPlate[18];
-    public static SimpleGeneratorMetaTileEntity[] MANA_GENERATOR = new SimpleGeneratorMetaTileEntity[6];
-
-    //高阶机器，植魔系列
-    public static MetaTileEntityEndoflameArray ENDOFLAME_ARRAY;
-    public static MetaTileEntityBotDistillery BOT_DISTILLERY;
-    public static MetaTileEntityManaPlate Mana_PLATE;
-    public static MetaTileEntityMagicAssembler MAGIC_ASSEMBLER;
-    public static MetaTileEntityNodeBlastFurnace NODE_BLAST_FURNACE;
-    public static MetaTileEntitySmallChemicalPlant SMALL_CHEMICAL_PLANT;
-    public static MetaTileEntityEssenceSmelter ESSENCE_SMELTER;
-    public static MetaTileEntityBotGasCollector BOT_GAS_COLLECTOR;
-    public static MetaTileEntityGtEssenceSmelter GT_ESSENCE_SMELTER;
-    public static MetaTileEntityBotVacuumFreezer BOT_VACUUM_FREEZER;
-
-    public static MetaTileEntityMultiDanDeLifeOn Muti_Dan_De_Life_On;
-    public static MetaTileEntityCentralVisTower CENTRAL_VIS_TOWER;
-    public static MetaTileEntityManaInfusionReactor MANA_INFUSION_REACTOR;
-    public static MetaTileEntityBotCircuitAssembler BOT_CIRCUIT_ASSEMBLER;
-    public static MetaTileEntityNodeFusionReactor[] NODE_FUSION_REACTOR = new MetaTileEntityNodeFusionReactor[3];
-    //
-    public static MetaTileEntitySourceCharge SOURCE_CHARGE;
-    //BMHPCA
-    public static MetaTileEntityBMHPCAEmpty BMHPCA_EMPTY_COMPONENT;
-    public static MetaTileEntityBMHPCAComputation BMHPCA_COMPUTATION_COMPONENT;
-    public static MetaTileEntityBMHPCAComputation BMHPCA_ADVANCED_COMPUTATION_COMPONENT;
-    public static MetaTileEntityBMHPCACooler BMHPCA_ADVANCED_COOLER_COMPONENT;
-    public static MetaTileEntityBMHPCACooler BMHPCA_SUPER_COOLER_COMPONENT;
-    public static MetaTileEntityBMHPCACooler BMHPCA_ULTIMATE_COOLER_COMPONENT;
-    public static MetaTileEntityBMHPCABridge BMHPCA_BRIDGE_COMPONENT;
-    public static MetaTileEntityBMHPCA BMHPCA;
-
-    public static MetaTileEntityManaPetalApothecary MANA_PETAL_APOTHECARY;
-    public static MetaTileEntityManaRuneAltar MANA_RUNE_ALTAR;
-    public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
-    public static MetaTileEntityIndustrialStarlightInfuser INDUSTRIAL_STARLIGHT_INFUSER;
-    public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
-    public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
-    public static MetaTileEntityCelestialCalibrationMatrix CELESTIAL_CALIBRATION_MATRIX;
-    public static MetaTileEntityCelestialCrystalGrowthArray CELESTIAL_CRYSTAL_GROWTH_ARRAY;
-    public static final MetaTileEntityConstellationTower[] CONSTELLATION_TOWERS =
-            new MetaTileEntityConstellationTower[ConstellationTowerDefinition.values().length];
-    public static MetaTileEntityStarstreamNexusObelisk STARSTREAM_NEXUS_OBELISK;
+    // 存储
+    public static final MetaTileEntityQuantumAspectTank[] QUANTUM_ASPECT_TANKS = new MetaTileEntityQuantumAspectTank[9];
+    public static final MetaTileEntityQuantumManaTank[] QUANTUM_MANA_TANKS = new MetaTileEntityQuantumManaTank[9];
 
     public static ResourceLocation PollutionID(String id) {
         return new ResourceLocation(Pollution.MODID, id);
     }
 
     public static void initialization() {
-        //单方块发电
+        // ===== 单方块发电机 =====
+        // MAGIC_TURBINE 0-10
+        for (int i = 0; i < MAGIC_TURBINE.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            MAGIC_TURBINE[i] = registerMetaTileEntity(i, new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine." + tierName), MAGIC_TURBINE_FUELS,
+                            GTQTTextures.ROCKET_ENGINE_OVERLAY, i + 1, GTUtility.genericGeneratorTankSizeFunction,1));
+        }
+
+        // AURA_GENERATORS 10-19
         for (int i = 0; i < AURA_GENERATORS.length; i++) {
             String tierName = GTValues.VN[i + 1].toLowerCase();
-            AURA_GENERATORS[i] = registerMetaTileEntity(i, new MetaTileEntityVisGenerator(PollutionID("vis." + tierName), i + 1));
+            AURA_GENERATORS[i] = registerMetaTileEntity(10 + i, new MetaTileEntityAuraGenerator(PollutionID("aura_generator." + tierName), i + 1));
         }
 
-        MAGIC_TURBINE[0] = registerMetaTileEntity(10,
-                new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine.lv"), MAGIC_TURBINE_FUELS,
-                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction,1));
-        MAGIC_TURBINE[1] = registerMetaTileEntity(11,
-                new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine.mv"), MAGIC_TURBINE_FUELS,
-                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction,1));
-        MAGIC_TURBINE[2] = registerMetaTileEntity(12,
-                new SimpleGeneratorMetaTileEntity(PollutionID("magic_turbine.hv"), MAGIC_TURBINE_FUELS,
-                        GTQTTextures.ROCKET_ENGINE_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction,1));
+        // SOLAR_PLATE 20-38
+        for (SolarPlateType type : SolarPlateType.values()) {
+            int kind = type.getKind();
+            SOLAR_PLATE[kind * 3 - 3] = registerMetaTileEntity(20 + kind * 3 - 3, new MetaTileEntitySolarPlate(
+                    PollutionID(String.format("solar_plate_%s.%s", 1, kind)), 1, type, SOLAR_PLATE_I));
+            SOLAR_PLATE[kind * 3 - 2] = registerMetaTileEntity(20 + kind * 3 - 2, new MetaTileEntitySolarPlate(
+                    PollutionID(String.format("solar_plate_%s.%s", 2, kind)), 2, type, SOLAR_PLATE_II));
+            SOLAR_PLATE[kind * 3 - 1] = registerMetaTileEntity(20 + kind * 3 - 1, new MetaTileEntitySolarPlate(
+                    PollutionID(String.format("solar_plate_%s.%s", 3, kind)), 3, type, SOLAR_PLATE_III));
+        }
 
-        MANA_GENERATOR[1] = registerMetaTileEntity(15, new ManaGeneratorTileEntity(PollutionID("mana_gen_lv"), 1));
-        MANA_GENERATOR[2] = registerMetaTileEntity(16, new ManaGeneratorTileEntity(PollutionID("mana_gen_mv"), 2));
-        MANA_GENERATOR[3] = registerMetaTileEntity(17, new ManaGeneratorTileEntity(PollutionID("mana_gen_hv"), 3));
-        MANA_GENERATOR[4] = registerMetaTileEntity(18, new ManaGeneratorTileEntity(PollutionID("mana_gen_ev"), 4));
-        MANA_GENERATOR[5] = registerMetaTileEntity(19, new ManaGeneratorTileEntity(PollutionID("mana_gen_iv"), 5));
+        // MANA_GENERATOR 40-50
+        for (int i = 0; i < MANA_GENERATOR.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            MANA_GENERATOR[i] = registerMetaTileEntity(40 + i, new ManaGeneratorTileEntity(PollutionID("mana_generator." + tierName), i + 1));
+        }
 
-        //FluxPromotedGenerator
+        // FLUX_PROMOTED_FUEL_CELL 50-60
         /*
-        FLUX_PROMOTED_FUEL_CELL[0] = registerMetaTileEntity(20, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.lv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 1, GTUtility.genericGeneratorTankSizeFunction));
-        FLUX_PROMOTED_FUEL_CELL[1] = registerMetaTileEntity(21, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.mv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 2, GTUtility.genericGeneratorTankSizeFunction));
-        FLUX_PROMOTED_FUEL_CELL[2] = registerMetaTileEntity(22, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.hv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 3, GTUtility.genericGeneratorTankSizeFunction));
-        FLUX_PROMOTED_FUEL_CELL[3] = registerMetaTileEntity(23, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.ev"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 4, GTUtility.genericGeneratorTankSizeFunction));
-        FLUX_PROMOTED_FUEL_CELL[4] = registerMetaTileEntity(24, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell.iv"), GTQTcoreRecipeMaps.FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, 5, GTUtility.genericGeneratorTankSizeFunction));
-*/
+        for (int i = 0; i < FLUX_PROMOTED_FUEL_CELL.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            FLUX_PROMOTED_FUEL_CELL[i] = registerMetaTileEntity(40 + i, new MetaTileEntityFluxPromotedFuelCell(PollutionID("flux_promoted_fuel_cell." + tierName), FUEL_CELL, Textures.POWER_SUBSTATION_OVERLAY, i+1, GTUtility.genericGeneratorTankSizeFunction));
+        }
+         */
 
-        //微缩节点反应堆
-        SMALL_NODE_GENERATOR[0] = registerMetaTileEntity(20, new MetaTileEntitySmallNodeGenerator(PollutionID("pollution_small_node_generator.luv"), 6));
-        SMALL_NODE_GENERATOR[1] = registerMetaTileEntity(21, new MetaTileEntitySmallNodeGenerator(PollutionID("pollution_small_node_generator.zpm"), 7));
-        SMALL_NODE_GENERATOR[2] = registerMetaTileEntity(22, new MetaTileEntitySmallNodeGenerator(PollutionID("pollution_small_node_generator.uv"), 8));
-        SMALL_NODE_GENERATOR[3] = registerMetaTileEntity(23, new MetaTileEntitySmallNodeGenerator(PollutionID("pollution_small_node_generator.uhv"), 9));
-
-
-        //蛋鸡
-        MAGIC_ENERGY_ABSORBER[0] = registerMetaTileEntity(25, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.lv"), 1));
-        MAGIC_ENERGY_ABSORBER[1] = registerMetaTileEntity(26, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.mv"), 2));
-        MAGIC_ENERGY_ABSORBER[2] = registerMetaTileEntity(27, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.hv"), 3));
-        MAGIC_ENERGY_ABSORBER[3] = registerMetaTileEntity(28, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.ev"), 4));
-        MAGIC_ENERGY_ABSORBER[4] = registerMetaTileEntity(29, new MetaTileEntityMagicEnergyAbsorber(PollutionID("pollution_magic_energy_absorber.iv"), 5));
-
-
-        // 太阳能
-        int kind;
-        for (kind = 1; kind <= 6; kind++) {
-            SOLAR_PLATE[kind * 3 - 3] = registerMetaTileEntity(30 + kind * 3 - 3, new MetaTileEntitySolarPlate(
-                    PollutionID(String.format("solar_plate_%s.%s", 1, kind)), 1, kind, SOLAR_PLATE_I));
-            SOLAR_PLATE[kind * 3 - 2] = registerMetaTileEntity(30 + kind * 3 - 2, new MetaTileEntitySolarPlate(
-                    PollutionID(String.format("solar_plate_%s.%s", 2, kind)), 2, kind, SOLAR_PLATE_II));
-            SOLAR_PLATE[kind * 3 - 1] = registerMetaTileEntity(30 + kind * 3 - 1, new MetaTileEntitySolarPlate(
-                    PollutionID(String.format("solar_plate_%s.%s", 3, kind)), 3, kind, SOLAR_PLATE_III));
+        // MAGIC_ENERGY_ABSORBER 60-70
+        for (int i = 0; i < MAGIC_ENERGY_ABSORBER.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            MAGIC_ENERGY_ABSORBER[i] = registerMetaTileEntity(60 + i, new MetaTileEntityMagicEnergyAbsorber(PollutionID("magic_energy_absorber." + tierName), i + 1));
         }
 
-        //多方块发电
-        LARGE_MAGIC_TURBINE = registerMetaTileEntity(100, new MetaTileEntityMagicLargeTurbine(PollutionID("large_turbine.magic"),
+        // SMALL_NODE_GENERATOR 70-80
+        for (int i = 0; i < SMALL_NODE_GENERATOR.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            SMALL_NODE_GENERATOR[i] = registerMetaTileEntity(70 + i, new MetaTileEntitySmallNodeGenerator(PollutionID("small_node_generator." + tierName), i + 5));
+        }
+
+        // ===== 单方块机器 =====
+        // VIS_CLEAR 100
+        for (int i = 0; i < VIS_CLEAR.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            VIS_CLEAR[i] = registerMetaTileEntity(100 + i, new MetaTileEntityFluxClear(PollutionID("flux_clear." + tierName), i + 1));
+        }
+
+        // VIS_PROVIDERS
+        for (int i = 0; i < VIS_PROVIDERS.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            VIS_PROVIDERS[i] = registerMetaTileEntity(110 + i, new MetaTileEntityVisProvider(PollutionID("vis_provider." + tierName), i + 1));
+        }
+
+        // ===== 多方块发电机 =====
+        // LARGE_MAGIC_TURBINE
+        LARGE_MAGIC_TURBINE = registerMetaTileEntity(500, new MetaTileEntityMagicLargeTurbine(PollutionID("large_turbine.magic"),
                 MAGIC_TURBINE_FUELS, GTValues.EV,
                 PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT),
                 PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.STAINLESS_STEEL_GEARBOX),
                 POTextures.SPELL_PRISM_HOT, true, Textures.HPCA_OVERLAY));
 
-        MEGA_MAGIC_TURBINE = registerMetaTileEntity(101, new MetaTileEntityMagicMegaTurbine(PollutionID("mega_turbine.magic"),
-                MAGIC_TURBINE_FUELS, GTValues.IV,
-                PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT),
-                PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.STAINLESS_STEEL_GEARBOX),
-                POTextures.SPELL_PRISM_HOT, true, Textures.HPCA_OVERLAY));
-
-        //大型魔力轮机
-        LARGE_MANA_TURBINE = registerMetaTileEntity(102, new MetaTileEntityMagicLargeTurbine(PollutionID("pollution_large_mana_turbine"),
+        // LARGE_MANA_TURBINE
+        LARGE_MANA_TURBINE = registerMetaTileEntity(501, new MetaTileEntityMagicLargeTurbine(PollutionID("large_turbine.mana"),
                 PORecipeMaps.MANA_TO_EU, GTValues.LuV,
                 PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_3),
                 PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
                 POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
-        //巨型魔力轮机
-        MEGA_MANA_TURBINE = registerMetaTileEntity(103, new MetaTileEntityMagicMegaTurbine(PollutionID("pollution_large_mana_turbine"),
+        // MEGA_MAGIC_TURBINE
+        MEGA_MAGIC_TURBINE = registerMetaTileEntity(502, new MetaTileEntityMagicMegaTurbine(PollutionID("mega_turbine.magic"),
+                MAGIC_TURBINE_FUELS, GTValues.IV,
+                PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT),
+                PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.STAINLESS_STEEL_GEARBOX),
+                POTextures.SPELL_PRISM_HOT, true, Textures.HPCA_OVERLAY));
+
+        // MEGA_MANA_TURBINE
+        MEGA_MANA_TURBINE = registerMetaTileEntity(503, new MetaTileEntityMagicMegaTurbine(PollutionID("mega_turbine.mana"),
                 PORecipeMaps.MANA_TO_EU, GTValues.ZPM,
                 PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_3),
                 PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
                 POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
-        //启命英机
-        Muti_Dan_De_Life_On = registerMetaTileEntity(130, new MetaTileEntityMultiDanDeLifeOn(PollutionID("pollution_multi_dan_de_life_on")));
+        // ===== 多方块机器 =====
+        INFUSED_EXCHANGE = registerMetaTileEntity(504, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
+        MAGIC_BENDER = registerMetaTileEntity(505, new MetaTileEntityMagicBender(PollutionID("magic_bender")));
+        MAGIC_CENTRIFUGE = registerMetaTileEntity(506, new MetaTileEntityMagicCentrifuge(PollutionID("magic_centrifuge")));
+        MAGIC_ELECTRIC_BLAST_FURNACE = registerMetaTileEntity(507, new MetaTileEntityMagicElectricBlastFurnace(PollutionID("magic_electric_blast_furnace")));
+        MAGIC_ELECTROLYZER = registerMetaTileEntity(508, new MetaTileEntityMagicElectrolyzer(PollutionID("magic_electrolyzer")));
+        MAGIC_MIXER = registerMetaTileEntity(509, new MetaTileEntityMagicMixer(PollutionID("magic_mixer")));
+        MAGIC_MACERATOR = registerMetaTileEntity(510, new MetaTileEntityMagicMacerator(PollutionID("magic_macerator")));
+        MAGIC_CHEMICAL_BATH = registerMetaTileEntity(511, new MetaTileEntityMagicChemicalBath(PollutionID("magic_chemical_bath")));
+        MAGIC_SIFTER = registerMetaTileEntity(512, new MetaTileEntityMagicSifter(PollutionID("magic_sifter")));
+        MAGIC_CUTTER = registerMetaTileEntity(513, new MetaTileEntityMagicCutter(PollutionID("magic_cutter")));
+        MAGIC_WIREMILL = registerMetaTileEntity(514, new MetaTileEntityMagicWireMill(PollutionID("magic_wiremill")));
+        MAGIC_SOLIDIFIER = registerMetaTileEntity(515, new MetaTileEntityMagicSolidifier(PollutionID("magic_solidifier")));
+        MAGIC_BREWERY = registerMetaTileEntity(516, new MetaTileEntityMagicBrewery(PollutionID("magic_brewery")));
+        INDUSTRIAL_INFUSION = registerMetaTileEntity(517, new MetaTileEntityIndustrialInfusion(PollutionID("industrial_infusion")));
+        MAGIC_BATTERY = registerMetaTileEntity(518, new MetaTileEntityMagicBattery(PollutionID("magic_battery")));
+        MAGIC_CHEMICAL_REACTOR = registerMetaTileEntity(519, new MetaTileEntityMagicChemicalReactor(PollutionID("magic_chemical_reactor")));
+        MAGIC_AUTOCLAVE = registerMetaTileEntity(520, new MetaTileEntityMagicAutoclave(PollutionID("magic_autoclave")));
+        MAGIC_EXTRUDER = registerMetaTileEntity(521, new MetaTileEntityMagicExtruder(PollutionID("magic_extruder")));
+        MAGIC_GREEN_HOUSE = registerMetaTileEntity(522, new MetaTileEntityMagicGreenHouse(PollutionID("magic_green_house")));
+        MAGIC_DISTILLERY = registerMetaTileEntity(523, new MetaTileEntityMagicDistillery(PollutionID("magic_distillery")));
+        MAGIC_ALLOY_BLAST = registerMetaTileEntity(524, new MetaTileEntityMagicAlloyBlastSmelter(PollutionID("magic_alloy_blast")));
+        ESSENCE_COLLECTOR = registerMetaTileEntity(525, new MetaTileEntityEssenceCollector(PollutionID("essence_collector")));
+        MAGIC_FUSION_REACTOR = registerMetaTileEntity(526, new MetaTileEntityMagicFusionReactor(PollutionID("magic_fusion_reactor")));
+        NODE_PRODUCER = registerMetaTileEntity(527, new MetaTileEntityNodeProducer(PollutionID("node_producer")));
+        LARGE_NODE_GENERATOR = registerMetaTileEntity(258, new MetaTileEntityLargeNodeGenerator(PollutionID("large_node_generator")));
+        NODE_WASHER = registerMetaTileEntity(529, new MetaTileEntityNodeWasher(PollutionID("node_washer")));
+        ENDOFLAME_ARRAY = registerMetaTileEntity(530, new MetaTileEntityEndoflameArray(PollutionID("endoflame_array")));
+        BOT_DISTILLERY = registerMetaTileEntity(531, new MetaTileEntityBotDistillery(PollutionID("bot_distillery")));
+        Mana_PLATE = registerMetaTileEntity(532, new MetaTileEntityManaPlate(PollutionID("mana_plate")));
+        MAGIC_ASSEMBLER = registerMetaTileEntity(533, new MetaTileEntityMagicAssembler(PollutionID("magic_assembler")));
+        NODE_BLAST_FURNACE = registerMetaTileEntity(534, new MetaTileEntityNodeBlastFurnace(PollutionID("node_blast_furnace")));
+        SMALL_CHEMICAL_PLANT = registerMetaTileEntity(535, new MetaTileEntitySmallChemicalPlant(PollutionID("small_chemical_plant")));
+        ESSENCE_SMELTER = registerMetaTileEntity(536, new MetaTileEntityEssenceSmelter(PollutionID("essence_smelter")));
+        BOT_GAS_COLLECTOR = registerMetaTileEntity(537, new MetaTileEntityBotGasCollector(PollutionID("bot_gas_collector")));
+        GT_ESSENCE_SMELTER = registerMetaTileEntity(538, new MetaTileEntityGtEssenceSmelter(PollutionID("gt_essence_smelter")));
+        BOT_VACUUM_FREEZER = registerMetaTileEntity(539, new MetaTileEntityBotVacuumFreezer(PollutionID("bot_vacuum_freezer")));
 
-        //单方块
-        for (int i = 0; i < VIS_PROVIDERS.length; i++) {
-            String tierName = GTValues.VN[i + 1].toLowerCase();
-            VIS_PROVIDERS[i] = registerMetaTileEntity(200 + i - 1, new MetaTileEntityVisProvider(PollutionID("vis_provider." + tierName), i + 1));
-        }
+        Muti_Dan_De_Life_On = registerMetaTileEntity(550, new MetaTileEntityMultiDanDeLifeOn(PollutionID("pollution_multi_dan_de_life_on")));
+        CENTRAL_VIS_TOWER = registerMetaTileEntity(551, new MetaTileEntityCentralVisTower(PollutionID("central_vis_tower")));
+        MANA_INFUSION_REACTOR = registerMetaTileEntity(552, new MetaTileEntityManaInfusionReactor(PollutionID("mana_infusion_reactor")));
+        BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(553, new MetaTileEntityBotCircuitAssembler(PollutionID("bot_circuit_assembler")));
+        NODE_FUSION_REACTOR[0] = registerMetaTileEntity(554, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.luv"), 6));
+        NODE_FUSION_REACTOR[1] = registerMetaTileEntity(555, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.zpm"), 7));
+        NODE_FUSION_REACTOR[2] = registerMetaTileEntity(556, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.uv"), 8));
 
-        for (int i = 0; i < VIS_CLEAR.length; i++) {
-            String tierName = GTValues.VN[i + 1].toLowerCase();
-            VIS_CLEAR[i] = registerMetaTileEntity(210 + i - 1, new MetaTileEntityFluxClear(PollutionID("flux_clear." + tierName), i + 1));
-        }
-
-        for (int i = 0; i < FLUX_MUFFLERS.length; i++) {
-            String tierName = GTValues.VN[i + 1].toLowerCase();
-            FLUX_MUFFLERS[i] = registerMetaTileEntity(220 + i, new MetaTileEntityFluxMuffler(PollutionID("pollution_muffler_hatch." + tierName), i + 1));
-        }
-
-        //多方块
-        FLUX_CLEARS[0] = registerMetaTileEntity(300, new MetaTileEntityFluxClear(PollutionID("flux_clear.ev"), GTValues.EV));
-        FLUX_CLEARS[1] = registerMetaTileEntity(301, new MetaTileEntityFluxClear(PollutionID("flux_clear.iv"), GTValues.IV));
-
-        INFUSED_EXCHANGE = registerMetaTileEntity(302, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
-        MAGIC_BENDER = registerMetaTileEntity(303, new MetaTileEntityMagicBender(PollutionID("magic_bender")));
-        MAGIC_ELECTRIC_BLAST_FURNACE = registerMetaTileEntity(304, new MetaTileEntityMagicElectricBlastFurnace(PollutionID("magic_electric_blast_furnace")));
-        MAGIC_CENTRIFUGE = registerMetaTileEntity(305, new MetaTileEntityMagicCentrifuge(PollutionID("magic_centrifuge")));
-        MAGIC_ELECTROLYZER = registerMetaTileEntity(306, new MetaTileEntityMagicElectrolyzer(PollutionID("magic_electrolyzer")));
-        MAGIC_MIXER = registerMetaTileEntity(307, new MetaTileEntityMagicMixer(PollutionID("magic_mixer")));
-        MAGIC_MACERATOR = registerMetaTileEntity(308, new MetaTileEntityMagicMacerator(PollutionID("magic_macerator")));
-        MAGIC_CHEMICAL_BATH = registerMetaTileEntity(309, new MetaTileEntityMagicChemicalBath(PollutionID("magic_chemical_bath")));
-        MAGIC_SIFTER = registerMetaTileEntity(310, new MetaTileEntityMagicSifter(PollutionID("magic_sifter")));
-        MAGIC_CUTTER = registerMetaTileEntity(311, new MetaTileEntityMagicCutter(PollutionID("magic_cutter")));
-        MAGIC_WIREMILL = registerMetaTileEntity(312, new MetaTileEntityMagicWireMill(PollutionID("magic_wiremill")));
-        MAGIC_SOLIDIFIER = registerMetaTileEntity(313, new MetaTileEntityMagicSolidifier(PollutionID("magic_solidifier")));
-        MAGIC_BREWERY = registerMetaTileEntity(314, new MetaTileEntityMagicBrewery(PollutionID("magic_brewery")));
-        MAGIC_DISTILLERY = registerMetaTileEntity(315, new MetaTileEntityMagicDistillery(PollutionID("magic_distillery")));
-        INDUSTRIAL_INFUSION = registerMetaTileEntity(316, new MetaTileEntityIndustrialInfusion(PollutionID("industrial_infusion")));
-        MAGIC_BATTERY = registerMetaTileEntity(317, new MetaTileEntityMagicBattery(PollutionID("magic_battery")));
-        MAGIC_ALLOY_BLAST = registerMetaTileEntity(318, new MetaTileEntityMagicAlloyBlastSmelter(PollutionID("magic_alloy_blast")));
-        MAGIC_CHEMICAL_REACTOR = registerMetaTileEntity(319, new MetaTileEntityMagicChemicalReactor(PollutionID("magic_chemical_reactor")));
-        MAGIC_AUTOCLAVE = registerMetaTileEntity(320, new MetaTileEntityMagicAutoclave(PollutionID("magic_autoclave")));
-        MAGIC_EXTRUDER = registerMetaTileEntity(321, new MetaTileEntityMagicExtruder(PollutionID("magic_extruder")));
-        MAGIC_GREEN_HOUSE = registerMetaTileEntity(322, new MetaTileEntityMagicGreenHouse(PollutionID("magic_green_house")));
-        ESSENCE_COLLECTOR = registerMetaTileEntity(323, new MetaTileEntityEssenceCollector(PollutionID("essence_collector")));
-        MAGIC_FUSION_REACTOR = registerMetaTileEntity(324, new MetaTileEntityMagicFusionReactor(PollutionID("magic_fusion_reactor")));
-        SOURCE_CHARGE = registerMetaTileEntity(325, new MetaTileEntitySourceCharge(PollutionID("source_charge")));
-        ENDOFLAME_ARRAY = registerMetaTileEntity(326, new MetaTileEntityEndoflameArray(PollutionID("endoflame_array")));
-        BOT_DISTILLERY = registerMetaTileEntity(327, new MetaTileEntityBotDistillery(PollutionID("bot_distillery")));
-        Mana_PLATE = registerMetaTileEntity(328, new MetaTileEntityManaPlate(PollutionID("mana_plate")));
-        MAGIC_ASSEMBLER = registerMetaTileEntity(329, new MetaTileEntityMagicAssembler(PollutionID("magic_assembler")));
-        NODE_BLAST_FURNACE = registerMetaTileEntity(330, new MetaTileEntityNodeBlastFurnace(PollutionID("node_blast_furnace")));
-        SMALL_CHEMICAL_PLANT = registerMetaTileEntity(331, new MetaTileEntitySmallChemicalPlant(PollutionID("small_chemical_plant")));
-        ESSENCE_SMELTER = registerMetaTileEntity(332, new MetaTileEntityEssenceSmelter(PollutionID("essence_smelter")));
-        BOT_GAS_COLLECTOR = registerMetaTileEntity(333, new MetaTileEntityBotGasCollector(PollutionID("bot_gas_collector")));
-        GT_ESSENCE_SMELTER = registerMetaTileEntity(334, new MetaTileEntityGtEssenceSmelter(PollutionID("gt_essence_smelter")));
-        BOT_VACUUM_FREEZER = registerMetaTileEntity(335, new MetaTileEntityBotVacuumFreezer(PollutionID("bot_vacuum_freezer")));
-        CENTRAL_VIS_TOWER = registerMetaTileEntity(336, new MetaTileEntityCentralVisTower(PollutionID("central_vis_tower")));
-        BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(337, new MetaTileEntityBotCircuitAssembler(PollutionID("bot_circuit_assembler")));
-        NODE_FUSION_REACTOR[0] = registerMetaTileEntity(338, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.luv"), 6));
-        NODE_FUSION_REACTOR[1] = registerMetaTileEntity(339, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.zpm"), 7));
-        NODE_FUSION_REACTOR[2] = registerMetaTileEntity(340, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.uv"), 8));
-        MANA_INFUSION_REACTOR = registerMetaTileEntity(341, new MetaTileEntityManaInfusionReactor(PollutionID("mana_infusion_reactor")));
-        NODE_PRODUCER = registerMetaTileEntity(342, new MetaTileEntityNodeProducer(PollutionID("node_producer")));
-        LARGE_NODE_GENERATOR = registerMetaTileEntity(343, new MetaTileEntityLargeNodeGenerator(PollutionID("large_node_generator")));
-        NODE_WASHER = registerMetaTileEntity(344, new MetaTileEntityNodeWasher(PollutionID("node_washer")));
-        INDUSTRIAL_PURE_DAISY = registerMetaTileEntity(345, new MetaTileEntityIndustrialPureDaisy(PollutionID("industial_pure_daisy")));
-        MANA_PETAL_APOTHECARY = registerMetaTileEntity(346, new MetaTileEntityManaPetalApothecary(PollutionID("mana_petal_apothecary")));
-        MANA_RUNE_ALTAR = registerMetaTileEntity(347, new MetaTileEntityManaRuneAltar(PollutionID("mana_rune_altar")));
-        INDUSTRIAL_STARLIGHT_INFUSER = registerMetaTileEntity(348,
+        MANA_PETAL_APOTHECARY = registerMetaTileEntity(600, new MetaTileEntityManaPetalApothecary(PollutionID("mana_petal_apothecary")));
+        MANA_RUNE_ALTAR = registerMetaTileEntity(601, new MetaTileEntityManaRuneAltar(PollutionID("mana_rune_altar")));
+        INDUSTRIAL_PURE_DAISY = registerMetaTileEntity(602, new MetaTileEntityIndustrialPureDaisy(PollutionID("industial_pure_daisy")));
+        INDUSTRIAL_STARLIGHT_INFUSER = registerMetaTileEntity(603,
                 new MetaTileEntityIndustrialStarlightInfuser(PollutionID("industrial_starlight_infuser")));
-        INDUSTRIAL_LIGHTWELL = registerMetaTileEntity(349,
+        INDUSTRIAL_LIGHTWELL = registerMetaTileEntity(604,
                 new MetaTileEntityIndustrialLightwell(PollutionID("industrial_lightwell")));
-        CELESTIAL_OBSERVATION_ARRAY = registerMetaTileEntity(350,
+        CELESTIAL_OBSERVATION_ARRAY = registerMetaTileEntity(605,
                 new MetaTileEntityCelestialObservationArray(PollutionID("celestial_observation_array")));
-        CELESTIAL_CALIBRATION_MATRIX = registerMetaTileEntity(351,
+        CELESTIAL_CALIBRATION_MATRIX = registerMetaTileEntity(606,
                 new MetaTileEntityCelestialCalibrationMatrix(PollutionID("celestial_calibration_matrix")));
-        CELESTIAL_CRYSTAL_GROWTH_ARRAY = registerMetaTileEntity(352,
+        CELESTIAL_CRYSTAL_GROWTH_ARRAY = registerMetaTileEntity(607,
                 new MetaTileEntityCelestialCrystalGrowthArray(PollutionID("celestial_crystal_growth_array")));
+
         ConstellationTowerDefinition[] constellationTowers = ConstellationTowerDefinition.values();
         for (int i = 0; i < constellationTowers.length; i++) {
             ConstellationTowerDefinition definition = constellationTowers[i];
-            CONSTELLATION_TOWERS[i] = registerMetaTileEntity(353 + i,
+            CONSTELLATION_TOWERS[i] = registerMetaTileEntity(610 + i,
                     new MetaTileEntityConstellationTower(PollutionID(definition.getControllerPath()), definition));
         }
-        STARSTREAM_NEXUS_OBELISK = registerMetaTileEntity(369,
+
+        STARSTREAM_NEXUS_OBELISK = registerMetaTileEntity(630,
                 new MetaTileEntityStarstreamNexusObelisk(PollutionID("starstream_nexus_obelisk")));
 
-        //仓口
-        for (int i = 0; i < VIS_HATCH.length; i++) {
-            int tier = GTValues.LV + i;
-            VIS_HATCH[i] = registerMetaTileEntity(400 + i, new MetaTileEntityVisHatch(
-                    PollutionID(String.format("vis_hatch.%s", GTValues.VN[tier])), tier));
-        }
+        // ===== 杂项 =====
+        // FLUX_CLEARS
+        FLUX_CLEARS[0] = registerMetaTileEntity(800, new MetaTileEntityLargeFluxClear(PollutionID("large_flux_clear.ev"), FluxClearType.EV));
+        FLUX_CLEARS[1] = registerMetaTileEntity(801, new MetaTileEntityLargeFluxClear(PollutionID("large_flux_clear.iv"), FluxClearType.IV));
+        FLUX_CLEARS[2] = registerMetaTileEntity(802, new MetaTileEntityLargeFluxClear(PollutionID("large_flux_clear.luv"), FluxClearType.LuV));
 
-        BLOOD_MAGIC_HATCH = registerMetaTileEntity(760,
-                new MetaTileEntityBloodMagicHatch(PollutionID("blood_magic_hatch"), GTValues.MV));
-        ASTRAL_LENS_HATCH = registerMetaTileEntity(761,
-                new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch"), GTValues.MV));
-        TAROT_HATCH = registerMetaTileEntity(762,
-                new MetaTileEntityTarotHatch(PollutionID("tarot_hatch"), GTValues.LV));
-
-        for (int i = 0; i < INFUSED_FLUID_HATCH.length; i++) {
-            int tier = GTValues.LV + i;
-            INFUSED_FLUID_HATCH[i] = registerMetaTileEntity(763 + i,
-                    new MetaTileEntityInfusedFluidHatch(
-                            PollutionID("infused_fluid_hatch." + GTValues.VN[tier].toLowerCase()), tier));
-        }
-        ASTRAL_LENS_HATCH_ADVANCED = registerMetaTileEntity(777,
-                new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch_advanced"), GTValues.LuV));
-        // 普通
-        for (int i = 0; i < MANA_INPUT_HATCH_1A.length; i++) {
-            int tier = GTValues.LV + i;
-            MANA_INPUT_HATCH_1A[i] = registerMetaTileEntity(415 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_1a.%s", GTValues.VN[tier])), tier,1,false));
-            MANA_INPUT_HATCH_4A[i] = registerMetaTileEntity(430 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_4a.%s", GTValues.VN[tier])), tier,4,false));
-            MANA_INPUT_HATCH_16A[i] = registerMetaTileEntity(445 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_16a.%s", GTValues.VN[tier])), tier,16,false));
-            MANA_INPUT_HATCH_64A[i] = registerMetaTileEntity(460 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_64a.%s", GTValues.VN[tier])), tier,64,false));
-
-            MANA_OUTPUT_HATCH_1A[i] = registerMetaTileEntity(475 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_1a.%s", GTValues.VN[tier])), tier,1,true));
-            MANA_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(490 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_4a.%s", GTValues.VN[tier])), tier,4,true));
-            MANA_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(505 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_16a.%s", GTValues.VN[tier])), tier,16,true));
-            MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(520 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
-        }
-
-        MetaTileEntityManaPoolHatch.PoolType[] poolTypes = MetaTileEntityManaPoolHatch.PoolType.values();
-        for (int i = 0; i < poolTypes.length; i++) {
-            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
-            MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(535 + i, new MetaTileEntityManaPoolHatch(
-                    PollutionID("mana_pool_input_hatch." + poolType.getName()), poolType, false));
-            MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(550 + i, new MetaTileEntityManaPoolHatch(
-                    PollutionID("mana_pool_output_hatch." + poolType.getName()), poolType, true));
-        }
-
-        // 无线
-        for (int i = 0; i < WIRELESS_MANA_INPUT_HATCH_1A.length; i++) {
-            int tier = GTValues.LV + i;
-            WIRELESS_MANA_INPUT_HATCH_1A[i] = registerMetaTileEntity(600 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_1a.%s", GTValues.VN[tier])), tier,1,false));
-            WIRELESS_MANA_INPUT_HATCH_4A[i] = registerMetaTileEntity(615 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_4a.%s", GTValues.VN[tier])), tier,4,false));
-            WIRELESS_MANA_INPUT_HATCH_16A[i] = registerMetaTileEntity(630 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_16a.%s", GTValues.VN[tier])), tier,16,false));
-            WIRELESS_MANA_INPUT_HATCH_64A[i] = registerMetaTileEntity(645 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_64a.%s", GTValues.VN[tier])), tier,64,false));
-
-            WIRELESS_MANA_OUTPUT_HATCH_1A[i] = registerMetaTileEntity(660 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_1a.%s", GTValues.VN[tier])), tier,1,true));
-            WIRELESS_MANA_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(675 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_4a.%s", GTValues.VN[tier])), tier,4,true));
-            WIRELESS_MANA_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(690 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_16a.%s", GTValues.VN[tier])), tier,16,true));
-            WIRELESS_MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(705 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
-        }
-
-        for (int i = 0; i < poolTypes.length; i++) {
-            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
-            WIRELESS_MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(720 + i, new MetaTileEntityWirelessManaPoolHatch(
-                    PollutionID("wireless.mana_pool_input_hatch." + poolType.getName()), poolType, false));
-            WIRELESS_MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(735 + i, new MetaTileEntityWirelessManaPoolHatch(
-                    PollutionID("wireless.mana_pool_output_hatch." + poolType.getName()), poolType, true));
-        }
-
-        // HPCA
+        // ===== 血魔法HPCA =====
         BMHPCA_EMPTY_COMPONENT = registerMetaTileEntity(900,
                 new MetaTileEntityBMHPCAEmpty(PollutionID("bm_hpca.empty_component")));
         BMHPCA_COMPUTATION_COMPONENT = registerMetaTileEntity(901,
@@ -429,14 +370,186 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityBMHPCABridge(PollutionID("bm_hpca.bridge_component")));
         BMHPCA = registerMetaTileEntity(907, new MetaTileEntityBMHPCA(PollutionID("bm_hpca")));
 
-        ASPECT_TANK[0] = registerMetaTileEntity(1000, new MetaTileEntityAspectTank(PollutionID("aspect_tank.lv"), 1, 10000));
-        ASPECT_TANK[1] = registerMetaTileEntity(1001, new MetaTileEntityAspectTank(PollutionID("aspect_tank.mv"), 2, 20000));
-        ASPECT_TANK[2] = registerMetaTileEntity(1002, new MetaTileEntityAspectTank(PollutionID("aspect_tank.hv"), 3, 40000));
-        ASPECT_TANK[3] = registerMetaTileEntity(1003, new MetaTileEntityAspectTank(PollutionID("aspect_tank.ev"), 4, 80000));
-        ASPECT_TANK[4] = registerMetaTileEntity(1004, new MetaTileEntityAspectTank(PollutionID("aspect_tank.iv"), 5, 160000));
-        ASPECT_TANK[5] = registerMetaTileEntity(1005, new MetaTileEntityAspectTank(PollutionID("aspect_tank.luv"), 6, 320000));
-        ASPECT_TANK[6] = registerMetaTileEntity(1006, new MetaTileEntityAspectTank(PollutionID("aspect_tank.zpm"), 7, 640000));
-        ASPECT_TANK[7] = registerMetaTileEntity(1007, new MetaTileEntityAspectTank(PollutionID("aspect_tank.uv"), 8, 1280000));
-        ASPECT_TANK[8] = registerMetaTileEntity(1008, new MetaTileEntityAspectTank(PollutionID("aspect_tank.uhv"), 9, 2560000));
+        // ===== 杂项 =====
+        // SOURCE_CHARGE
+        SOURCE_CHARGE = registerMetaTileEntity(1000, new MetaTileEntitySourceCharge(PollutionID("source_charge")));
+
+        // ===== 仓室 =====
+        // FLUX_MUFFLERS
+        for (int i = 0; i < FLUX_MUFFLERS.length; i++) {
+            String tierName = GTValues.VN[i + 1].toLowerCase();
+            FLUX_MUFFLERS[i] = registerMetaTileEntity(1100 + i, new MetaTileEntityFluxMuffler(PollutionID("pollution_muffler_hatch." + tierName), i + 1));
+        }
+
+        // VIS_HATCH
+        for (int i = 0; i < VIS_HATCH.length; i++) {
+            int tier = GTValues.LV + i;
+            VIS_HATCH[i] = registerMetaTileEntity(1115 + i, new MetaTileEntityVisHatch(
+                    PollutionID(String.format("vis_hatch.%s", GTValues.VN[tier])), tier));
+        }
+
+        // INFUSED_FLUID_HATCH
+        for (int i = 0; i < INFUSED_FLUID_HATCH.length; i++) {
+            int tier = GTValues.LV + i;
+            INFUSED_FLUID_HATCH[i] = registerMetaTileEntity(1130 + i,
+                    new MetaTileEntityInfusedFluidHatch(
+                            PollutionID("infused_fluid_hatch." + GTValues.VN[tier].toLowerCase()), tier));
+        }
+
+        // MANA_INPUT_HATCH_1A
+        for (int i = 0; i < MANA_INPUT_HATCH_1A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_INPUT_HATCH_1A[i] = registerMetaTileEntity(1145 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_1a.%s", GTValues.VN[tier])), tier,1,false));
+        }
+
+        // MANA_INPUT_HATCH_4A
+        for (int i = 0; i < MANA_INPUT_HATCH_4A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_INPUT_HATCH_4A[i] = registerMetaTileEntity(1160 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_4a.%s", GTValues.VN[tier])), tier,4,false));
+        }
+
+        // MANA_INPUT_HATCH_16A
+        for (int i = 0; i < MANA_INPUT_HATCH_16A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_INPUT_HATCH_16A[i] = registerMetaTileEntity(1175 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_16a.%s", GTValues.VN[tier])), tier,16,false));
+        }
+
+        // MANA_INPUT_HATCH_64A
+        for (int i = 0; i < MANA_INPUT_HATCH_64A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_INPUT_HATCH_64A[i] = registerMetaTileEntity(1190 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_input_hatch_64a.%s", GTValues.VN[tier])), tier,64,false));
+        }
+
+        // MANA_OUTPUT_HATCH_1A
+        for (int i = 0; i < MANA_OUTPUT_HATCH_1A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_OUTPUT_HATCH_1A[i] = registerMetaTileEntity(1205 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_1a.%s", GTValues.VN[tier])), tier,1,true));
+        }
+
+        // MANA_OUTPUT_HATCH_4A
+        for (int i = 0; i < MANA_OUTPUT_HATCH_4A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(1220 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_4a.%s", GTValues.VN[tier])), tier,4,true));
+        }
+
+        // MANA_OUTPUT_HATCH_16A
+        for (int i = 0; i < MANA_OUTPUT_HATCH_16A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(1235 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_16a.%s", GTValues.VN[tier])), tier,16,true));
+        }
+
+        // MANA_OUTPUT_HATCH_64A
+        for (int i = 0; i < MANA_OUTPUT_HATCH_64A.length; i++) {
+            int tier = GTValues.LV + i;
+            MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(1250 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
+        }
+
+        // MANA_POOL_INPUT_HATCH / MANA_POOL_OUTPUT_HATCH
+        MetaTileEntityManaPoolHatch.PoolType[] poolTypes = MetaTileEntityManaPoolHatch.PoolType.values();
+        for (int i = 0; i < poolTypes.length; i++) {
+            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
+            MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(1300 + i, new MetaTileEntityManaPoolHatch(
+                    PollutionID("mana_pool_input_hatch." + poolType.getName()), poolType, false));
+        }
+        for (int i = 0; i < poolTypes.length; i++) {
+            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
+            MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(1315 + i, new MetaTileEntityManaPoolHatch(
+                    PollutionID("mana_pool_output_hatch." + poolType.getName()), poolType, true));
+        }
+
+        // WIRELESS_MANA_INPUT_HATCH_1A
+        for (int i = 0; i < WIRELESS_MANA_INPUT_HATCH_1A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_INPUT_HATCH_1A[i] = registerMetaTileEntity(1400 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_1a.%s", GTValues.VN[tier])), tier,1,false));
+        }
+
+        // WIRELESS_MANA_INPUT_HATCH_4A
+        for (int i = 0; i < WIRELESS_MANA_INPUT_HATCH_4A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_INPUT_HATCH_4A[i] = registerMetaTileEntity(1415 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_4a.%s", GTValues.VN[tier])), tier,4,false));
+        }
+
+        // WIRELESS_MANA_INPUT_HATCH_16A
+        for (int i = 0; i < WIRELESS_MANA_INPUT_HATCH_16A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_INPUT_HATCH_16A[i] = registerMetaTileEntity(1430 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_16a.%s", GTValues.VN[tier])), tier,16,false));
+        }
+
+        // WIRELESS_MANA_INPUT_HATCH_64A
+        for (int i = 0; i < WIRELESS_MANA_INPUT_HATCH_64A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_INPUT_HATCH_64A[i] = registerMetaTileEntity(1445 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_input_hatch_64a.%s", GTValues.VN[tier])), tier,64,false));
+        }
+
+        // WIRELESS_MANA_OUTPUT_HATCH_1A
+        for (int i = 0; i < WIRELESS_MANA_OUTPUT_HATCH_1A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_OUTPUT_HATCH_1A[i] = registerMetaTileEntity(1460 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_1a.%s", GTValues.VN[tier])), tier,1,true));
+        }
+
+        // WIRELESS_MANA_OUTPUT_HATCH_4A
+        for (int i = 0; i < WIRELESS_MANA_OUTPUT_HATCH_4A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(1475 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_4a.%s", GTValues.VN[tier])), tier,4,true));
+        }
+
+        // WIRELESS_MANA_OUTPUT_HATCH_16A
+        for (int i = 0; i < WIRELESS_MANA_OUTPUT_HATCH_16A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(1490 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_16a.%s", GTValues.VN[tier])), tier,16,true));
+        }
+
+        // WIRELESS_MANA_OUTPUT_HATCH_64A
+        for (int i = 0; i < WIRELESS_MANA_OUTPUT_HATCH_64A.length; i++) {
+            int tier = GTValues.LV + i;
+            WIRELESS_MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(1505 + i, new MetaTileEntityWirelessManaHatch(PollutionID(String.format("wireless.mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
+        }
+
+        // WIRELESS_MANA_POOL_INPUT_HATCH / WIRELESS_MANA_POOL_OUTPUT_HATCH
+        for (int i = 0; i < poolTypes.length; i++) {
+            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
+            WIRELESS_MANA_POOL_INPUT_HATCH[i] = registerMetaTileEntity(1520 + i, new MetaTileEntityWirelessManaPoolHatch(
+                    PollutionID("wireless.mana_pool_input_hatch." + poolType.getName()), poolType, false));
+        }
+        for (int i = 0; i < poolTypes.length; i++) {
+            MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
+            WIRELESS_MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(1535 + i, new MetaTileEntityWirelessManaPoolHatch(
+                    PollutionID("wireless.mana_pool_output_hatch." + poolType.getName()), poolType, true));
+        }
+
+        // FILTER_HATCH
+        FILTER_HATCH = registerMetaTileEntity(1600,
+                new MetaTileEntityFilterHatch(PollutionID("filter_hatch"), GTValues.EV));
+
+        // TAROT_HATCH
+        TAROT_HATCH = registerMetaTileEntity(1601,
+                new MetaTileEntityTarotHatch(PollutionID("tarot_hatch"), GTValues.LV));
+
+        // BLOOD_MAGIC_HATCH
+        BLOOD_MAGIC_HATCH = registerMetaTileEntity(1602,
+                new MetaTileEntityBloodMagicHatch(PollutionID("blood_magic_hatch"), GTValues.MV));
+
+        // ASTRAL_LENS_HATCH
+        ASTRAL_LENS_HATCH = registerMetaTileEntity(1603,
+                new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch"), GTValues.MV));
+
+        // ASTRAL_LENS_HATCH_ADVANCED
+        ASTRAL_LENS_HATCH_ADVANCED = registerMetaTileEntity(1604,
+                new MetaTileEntityAstralLensHatch(PollutionID("astral_lens_hatch_advanced"), GTValues.LuV));
+
+        // ===== 存储 =====
+        // QUANTUM_ASPECT_TANKS
+        for (int i = 0; i < QUANTUM_ASPECT_TANKS.length; i++) {
+            String name = GTValues.VN[GTValues.LV + i].toLowerCase();
+            QUANTUM_ASPECT_TANKS[i] = registerMetaTileEntity(1700 + i, new MetaTileEntityQuantumAspectTank(
+                    PollutionID("quantum_aspect_tank." + name), 1 + i, 10000 * (1 << i)));
+        }
+
+        // QUANTUM_MANA_TANKS
+        for (int i = 0; i < QUANTUM_MANA_TANKS.length; i++) {
+            String name = GTValues.VN[GTValues.LV + i].toLowerCase();
+            QUANTUM_MANA_TANKS[i] = registerMetaTileEntity(1710 + i, new MetaTileEntityQuantumManaTank(
+                    PollutionID("quantum_mana_tank." + name), 1 + i, 10000 * (1 << i)));
+        }
     }
 }

@@ -643,17 +643,17 @@ pollution.machine.flux_promoted_fuel_cell.ev.tooltip=Promoting combustion with p
 pollution.machine.flux_promoted_fuel_cell.iv.name=Blast Flux Promoted Fuel Cell
 pollution.machine.flux_promoted_fuel_cell.iv.tooltip=Promoting combustion with power of chao in aura/nIt has 4 times output and efficiency than normal energy cell in certain condition/nOnly work when flux>10, efficiency and output will grow with flux gradually/nGenerator will §5explode when flux is over FluxCeiling/nFluxCeiling= 60 + 5*4^tier of generator
 
-pollution.machine.mana_gen_lv.name=Basic Mana Generator
-pollution.machine.mana_gen_mv.name=Advanced Mana Generator
-pollution.machine.mana_gen_hv.name=Turbo Mana Generator
-pollution.machine.mana_gen_ev.name=Pulse Mana Generator
-pollution.machine.mana_gen_iv.name=Blast Mana Generator
+pollution.machine.mana_generator.lv.name=Basic Mana Generator
+pollution.machine.mana_generator.mv.name=Advanced Mana Generator
+pollution.machine.mana_generator.hv.name=Turbo Mana Generator
+pollution.machine.mana_generator.ev.name=Pulse Mana Generator
+pollution.machine.mana_generator.iv.name=Blast Mana Generator
 
-pollution.machine.vis.lv.name=Basic Vis Generator (§7LV§r)
-pollution.machine.vis.mv.name=Advanced Vis Generator (§bMV§r)
-pollution.machine.vis.hv.name=Turbo Vis Generator (§6HV§r)
-pollution.machine.vis.ev.name=Detonating Vis Generator (§5EV§r)
-pollution.machine.vis.iv.name=Blast Vis Generator (§1IV§r)
+pollution.machine.aura_generator.lv.name=Basic Vis Generator (§7LV§r)
+pollution.machine.aura_generator.mv.name=Advanced Vis Generator (§bMV§r)
+pollution.machine.aura_generator.hv.name=Turbo Vis Generator (§6HV§r)
+pollution.machine.aura_generator.ev.name=Detonating Vis Generator (§5EV§r)
+pollution.machine.aura_generator.iv.name=Blast Vis Generator (§1IV§r)
 gregtech.universal.tooltip.consume=§6Vis Conversion: Pollution (1:0.1) Ratio: %s Vis Produced per EU: %s EU
 
 pollution.muffler.pollution_tooltip1=§6Generates pollution once per tick based on pollution rate (base pollution is 0.1)
@@ -703,6 +703,8 @@ pollution.machine.tank_hatch.lv.tooltip=Soul Extraction
 pollution.machine.magic_turbine.lv.name=Essence Turbine (§7LV§r)
 pollution.machine.magic_turbine.mv.name=Essence Turbine (§bMV§r)
 pollution.machine.magic_turbine.hv.name=Essence Turbine (§6HV§r)
+pollution.machine.magic_turbine.ev.name=Essence Turbine (§5EV§r)
+pollution.machine.magic_turbine.iv.name=Essence Turbine (§1IV§r)
 pollution.machine.large_turbine.magic.name=Large Essence Turbine (§5EV§r)
 pollution.machine.mega_turbine.magic.name=Extra Large Essence Turbine（§1IV§r）
 
@@ -720,8 +722,21 @@ pollution.vis.provider=§6Vis Replenishment (per 100 cycles): %s Vis
 pollution.machine.flux_clear.lv.name=Air Purifier (§7LV§r)
 pollution.machine.flux_clear.mv.name=Air Purifier (§bMV§r)
 pollution.machine.flux_clear.hv.name=Air Purifier (§6HV§r)
-pollution.machine.flux_clear.ev.name=Large Air Purifier (§5EV§r)
-pollution.machine.flux_clear.iv.name=Large Air Purifier (§1IV§r)
+pollution.machine.flux_clear.ev.name=Air Purifier (§5EV§r)
+pollution.machine.flux_clear.iv.name=Air Purifier (§1IV§r)
+pollution.machine.large_flux_clear.ev.name=Large Air Purifier (§5EV§r)
+pollution.machine.large_flux_clear.iv.name=Large Air Purifier (§1IV§r)
+pollution.machine.large_flux_clear.luv.name=Large Air Purifier (§dLuV§r)
+pollution.machine.filter_hatch.name=Filter Hatch
+pollution.machine.filter_hatch.tooltip=Supplies filters to the Large Air Purifier; filters wear out while working
+pollution.machine.large_flux_clear.display.radius=§bCleaning Radius: %s Chunks
+pollution.machine.large_flux_clear.display.flux=§7Current Pollution: %s Vis
+pollution.machine.large_flux_clear.display.rate=§aCleaning Rate: %s Vis
+pollution.machine.large_flux_clear.display.energy=§7Energy per Chunk: %s EU
+pollution.machine.large_flux_clear.display.filter=§7Filter Durability: %s / %s
+pollution.machine.large_flux_clear.display.work_time=§7Worked: %s
+pollution.machine.large_flux_clear.display.durability=§7Until Broken: %s
+pollution.machine.large_flux_clear.display.no_filter=§cNo Filter Installed
 pollution.flux_clear.tire=§5Structure Level: %s Pollution Cleaned per Tick: %s Vis
 pollution.flux_clear.amount=§5Cleaning Radius: %sChunks
 pollution.flux_clear.tire1=%s
@@ -753,19 +768,53 @@ pollution.machine.solar_plate_3.5.name=§dOrder Enchanted Solar Panel (Tier 3)§
 pollution.machine.solar_plate_1.6.name=§1Water Enchanted Solar Panel (Tier 1)§r
 pollution.machine.solar_plate_2.6.name=§1Water Enchanted Solar Panel (Tier 2)§r
 pollution.machine.solar_plate_3.6.name=§1Water Enchanted Solar Panel (Tier 3)§r
+pollution.machine.solar_plate.tooltip.level=Tier: %s Type: %s
+pollution.machine.solar_plate.tooltip.output=Output: %s EU/t Boosted Output: %s EU/t
+pollution.machine.solar_plate.type.wind=Wind
+pollution.machine.solar_plate.type.chaos=Chaos
+pollution.machine.solar_plate.type.earth=Earth
+pollution.machine.solar_plate.type.fire=Fire
+pollution.machine.solar_plate.type.order=Order
+pollution.machine.solar_plate.type.water=Water
+pollution.machine.solar_plate.boost.wind=Boost: Y > 160
+pollution.machine.solar_plate.boost.chaos=Boost: night time only
+pollution.machine.solar_plate.boost.earth=Boost: Y < 10
+pollution.machine.solar_plate.boost.fire=Boost: Nether only
+pollution.machine.solar_plate.boost.order=Boost: day time only
+pollution.machine.solar_plate.boost.water=Boost: water directly below
 #设备多方块
 pollution.modeChanged.message=Switch machine mode
+pollution.machine.quantum_mana_tank.lv.name=Quantum Mana Tank (§7LV§r)
+pollution.machine.quantum_mana_tank.mv.name=Quantum Mana Tank (§bMV§r)
+pollution.machine.quantum_mana_tank.hv.name=Quantum Mana Tank (§6HV§r)
+pollution.machine.quantum_mana_tank.ev.name=Quantum Mana Tank (§5EV§r)
+pollution.machine.quantum_mana_tank.iv.name=Quantum Mana Tank (§1IV§r)
+pollution.machine.quantum_mana_tank.luv.name=Quantum Mana Tank (§dLuV§r)
+pollution.machine.quantum_mana_tank.zpm.name=Quantum Mana Tank (§cZPM§r)
+pollution.machine.quantum_mana_tank.uv.name=Quantum Mana Tank (§3UV§r)
+pollution.machine.quantum_mana_tank.uhv.name=Quantum Mana Tank (§4UHV§r)
+pollution.machine.quantum_mana_tank.tooltip.1=Stores Botania mana
+pollution.machine.quantum_mana_tank.tooltip.2=Mana bursts from spreaders can be absorbed directly
+pollution.machine.quantum_mana_tank.tooltip.3=With auto output enabled, mana is pushed into adjacent receivers (mana pools, ...)
+pollution.machine.quantum_mana_tank.tooltip.4=Use a wrench to set the output side
+pollution.machine.quantum_mana_tank.mana=Mana: %s / %s
+pollution.machine.quantum_mana_tank.auto_output=Auto output mana
+pollution.machine.quantum_mana_tank.display_amount=Mana:
+pollution.machine.quantum_mana_tank.display_name=Botania Mana
+pollution.universal.tooltip.mana_storage_capacity=Mana capacity: %s
+pollution.universal.tooltip.mana_transfer_rate=Output rate: %s /t
+pollution.universal.tooltip.mana_stored=Mana stored: %s
 
 pollution.machine.pollution_multi_dan_de_life_on.name=§lLife Activation Garden§r
 pollution.machine.pollution_multi_dan_de_life_on.mode0=Output Energy
 pollution.machine.pollution_multi_dan_de_life_on.mode1=Output Fluid
 pollution.machine.pollution_multi_dan_de_life_on.tooltip=§dDraw power from the cycle of prosperity and decline§r/n§cLike Life Activation Ying, it plays Conway's Game of Life on a larger board with greater rewards/n§eEach dead cell generates energy, depending on the cell's §dLifespan§r/n§eUpgrading runes increases the energy produced by each dead cell/nThe garden runs the game once per second, consuming one fairy dust per execution/nIt has an internal energy buffer to store energy that cannot be output in time/nThe machine has two output modes, which can be toggled using a screwdriver right-click/nBy default, the garden operates in energy output mode, directly outputting energy/nFluid output mode frees up the garden's ability to convert vis into energy for production, providing 25%% extra energy output/n§eThis machine supports laser output!
 
-pollution.machine.pollution_mega_mana_turbine.name=Mega Mana Power Converter
-pollution.machine.pollution_mega_mana_turbine.tooltip=Converts a torrent of natural mana into electrical energy/nBase generation is 64A IV, §eand providing catalysts can achieve higher output levels§r/n§dBlack and White Mansus —— 64A LuV/n§dLiquid Hyperdimensional Silver and Engraved Gold —— 128A ZPM/n§dLiquid Constraint, Perception —— 256A UV/nPrioritizes consumption of advanced catalysts/n§cThe machine needs to run continuously for a period to reach maximum output efficiency§r, requiring 3000s/coil level/nThis machine supports laser output
+pollution.machine.mega_turbine.mana.name=Mega Mana Power Converter
+pollution.machine.mega_turbine.mana.tooltip=Converts a torrent of natural mana into electrical energy/nBase generation is 64A IV, §eand providing catalysts can achieve higher output levels§r/n§dBlack and White Mansus —— 64A LuV/n§dLiquid Hyperdimensional Silver and Engraved Gold —— 128A ZPM/n§dLiquid Constraint, Perception —— 256A UV/nPrioritizes consumption of advanced catalysts/n§cThe machine needs to run continuously for a period to reach maximum output efficiency§r, requiring 3000s/coil level/nThis machine supports laser output
 
-pollution.machine.pollution_large_mana_turbine.name=Large Mana Power Converter
-pollution.machine.pollution_large_mana_turbine.tooltip=Converts natural mana into electrical energy
+pollution.machine.large_turbine.mana.name=Large Mana Power Converter
+pollution.machine.large_turbine.mana.tooltip=Converts natural mana into electrical energy
 
 pollution.machine.tank_test.name=Essence Disperser
 
@@ -1108,21 +1157,23 @@ pollution.flux_clear.tier1=%spollution.machine.mana_pool_hatch.max.name=ManaPool
 
 pollution.gui.aspect_amount=Aspect Total:
 
-pollution.machine.aspect_tank.tooltip=Shenbi's GT
+pollution.machine.quantum_aspect_tank.tooltip=§bQuantum tank storing Thaumcraft aspects§r/n§eThe top side inputs/outputs essentia, wrench sets the output side/n§ePut filled aspect containers in the input slot and empty ones in the output slot
 pollution.universal.tooltip.aspect_storage_capacity=§5Aspect Capacity: §f%,d Mana Crystal Shards
 pollution.universal.tooltip.aspect_storage=§9Contains Aspect: §f%2$,d Mana Crystal Shards %1$s
 pollution.universal.tooltip.aspect_locked=§f%1$s §cLocked!
-pollution.machine.aspect_tank.help=You can place §dAspect Ampoules§r or §bAspect Canisters§r that can §6store aspects§r into the input slot to store aspects
+pollution.machine.quantum_aspect_tank.help=You can place §dAspect Ampoules§r or §bAspect Canisters§r that can §6store aspects§r into the input slot to store aspects
 
-pollution.machine.aspect_tank.lv.name=Super Aspect Tank I
-pollution.machine.aspect_tank.mv.name=Super Aspect Tank II
-pollution.machine.aspect_tank.hv.name=Super Aspect Tank III
-pollution.machine.aspect_tank.ev.name=Super Aspect Tank IV
-pollution.machine.aspect_tank.iv.name=Quantum Aspect Tank I
-pollution.machine.aspect_tank.luv.name=Quantum Aspect Tank II
-pollution.machine.aspect_tank.zpm.name=Quantum Aspect Tank III
-pollution.machine.aspect_tank.uv.name=Quantum Aspect Tank IV
-pollution.machine.aspect_tank.uhv.name=Quantum Aspect Tank V
+pollution.machine.quantum_aspect_tank.lv.name=Quantum Aspect Tank I
+pollution.machine.quantum_aspect_tank.mv.name=Quantum Aspect Tank II
+pollution.machine.quantum_aspect_tank.hv.name=Quantum Aspect Tank III
+pollution.machine.quantum_aspect_tank.ev.name=Quantum Aspect Tank IV
+pollution.machine.quantum_aspect_tank.iv.name=Quantum Aspect Tank V
+pollution.machine.quantum_aspect_tank.luv.name=Quantum Aspect Tank VI
+pollution.machine.quantum_aspect_tank.zpm.name=Quantum Aspect Tank VII
+pollution.machine.quantum_aspect_tank.uv.name=Quantum Aspect Tank VIII
+pollution.machine.quantum_aspect_tank.uhv.name=Quantum Aspect Tank IX
+pollution.machine.quantum_aspect_tank.display_amount=Aspect:
+pollution.machine.quantum_aspect_tank.filter=Aspect Filter
 
 ##矿脉
 pollution.vein.sphere.black_granite=Black Granite Sphere

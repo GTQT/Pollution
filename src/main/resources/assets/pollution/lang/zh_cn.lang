@@ -590,11 +590,11 @@ pollution.machine.flux_promoted_fuel_cell.ev.tooltip=利用咒波中的无序魔
 pollution.machine.flux_promoted_fuel_cell.iv.name=爆喷咒波促燃发电机
 pollution.machine.flux_promoted_fuel_cell.iv.tooltip=利用咒波中的无序魔力促燃/n条件合适时具有普通促燃发电机四倍的输出(输出四安电流）和燃烧效率/n区块咒波超过10时才会开始工作，效率将逐渐上升/n在咒波量为50时到达峰值/n咒波值超过FluxCeiling时机器将会§5爆炸!/nFluxCeiling计算公式为60 + 5*4^发电机电压等级
 
-pollution.machine.mana_gen_lv.name=基础魔力发电机
-pollution.machine.mana_gen_mv.name=进阶魔力发电机
-pollution.machine.mana_gen_hv.name=涡轮魔力发电机
-pollution.machine.mana_gen_ev.name=脉冲魔力发电机
-pollution.machine.mana_gen_iv.name=爆喷魔力发电机
+pollution.machine.mana_generator.lv.name=基础魔力发电机
+pollution.machine.mana_generator.mv.name=进阶魔力发电机
+pollution.machine.mana_generator.hv.name=涡轮魔力发电机
+pollution.machine.mana_generator.ev.name=脉冲魔力发电机
+pollution.machine.mana_generator.iv.name=爆喷魔力发电机
 
 # 血肉计算阵列组件
 tile.bm_computer_casing.computer_casing.name=血肉计算阵列-混沌外壳
@@ -622,11 +622,11 @@ pollution.machine.bm_hpca.bridge_component.name=血肉计算阵列-联结甬道
 pollution.machine.bm_hpca.bridge_component.tooltip=活体组织构成的███连接腔室（建议佩戴██防护
 pollution.machine.bm_hpca.name=血肉计算阵列
 
-pollution.machine.vis.lv.name=基础灵气发电机（§7LV§r）
-pollution.machine.vis.mv.name=进阶灵气发电机（§bMV§r）
-pollution.machine.vis.hv.name=涡轮灵气发电机（§6HV§r）
-pollution.machine.vis.ev.name=爆燃灵气发电机（§5EV§r）
-pollution.machine.vis.iv.name=爆喷灵气发电机（§1IV§r）
+pollution.machine.aura_generator.lv.name=基础灵气发电机（§7LV§r）
+pollution.machine.aura_generator.mv.name=进阶灵气发电机（§bMV§r）
+pollution.machine.aura_generator.hv.name=涡轮灵气发电机（§6HV§r）
+pollution.machine.aura_generator.ev.name=爆燃灵气发电机（§5EV§r）
+pollution.machine.aura_generator.iv.name=爆喷灵气发电机（§1IV§r）
 gregtech.universal.tooltip.consume=§6灵气转换:污染(1:0.1)量:%s Vis 单位灵气产值:%s EU
 
 pollution.muffler.pollution_tooltip1=§6每10秒会根据污染率产生一次污染（基础污染为0.1）
@@ -677,6 +677,8 @@ pollution.machine.tank_hatch.lv.tooltip=灵魂汲取
 pollution.machine.magic_turbine.lv.name=源质要素轮机（§7LV§r）
 pollution.machine.magic_turbine.mv.name=源质要素轮机（§bMV§r）
 pollution.machine.magic_turbine.hv.name=源质要素轮机（§6HV§r）
+pollution.machine.magic_turbine.ev.name=源质要素轮机（§5EV§r）
+pollution.machine.magic_turbine.iv.name=源质要素轮机（§1IV§r）
 pollution.machine.large_turbine.magic.name=大型源质要素轮机（§5EV§r）
 pollution.machine.mega_turbine.magic.name=特大源质要素轮机（§1IV§r）
 
@@ -694,8 +696,21 @@ pollution.vis.provider=§6灵气补充量:%s Vis/tick
 pollution.machine.flux_clear.lv.name=空气过滤机（§7LV§r）
 pollution.machine.flux_clear.mv.name=空气过滤机（§bMV§r）
 pollution.machine.flux_clear.hv.name=空气过滤机（§6HV§r）
-pollution.machine.flux_clear.ev.name=大型空气过滤机（§5EV§r）
-pollution.machine.flux_clear.iv.name=大型空气过滤机（§1IV§r）
+pollution.machine.flux_clear.ev.name=空气过滤机（§5EV§r）
+pollution.machine.flux_clear.iv.name=空气过滤机（§1IV§r）
+pollution.machine.large_flux_clear.ev.name=大型空气过滤机（§5EV§r）
+pollution.machine.large_flux_clear.iv.name=大型空气过滤机（§1IV§r）
+pollution.machine.large_flux_clear.luv.name=大型空气过滤机（§dLuV§r）
+pollution.machine.filter_hatch.name=滤芯仓
+pollution.machine.filter_hatch.tooltip=为大型空气过滤机提供滤芯，工作时会消耗滤芯耐久
+pollution.machine.large_flux_clear.display.radius=§b清理半径:%s 区块
+pollution.machine.large_flux_clear.display.flux=§7当前污染:%s Vis
+pollution.machine.large_flux_clear.display.rate=§a清理速率:%s Vis
+pollution.machine.large_flux_clear.display.energy=§7单区块耗能:%s EU
+pollution.machine.large_flux_clear.display.filter=§7滤芯耐久:%s / %s
+pollution.machine.large_flux_clear.display.work_time=§7已经工作:%s
+pollution.machine.large_flux_clear.display.durability=§7距离损坏:%s
+pollution.machine.large_flux_clear.display.no_filter=§c未安装滤芯
 pollution.flux_clear.tire=§5结构等级:%s 单次(tick)污染清洁量:%s Vis
 pollution.flux_clear.amount=§5清理范围半径：%s 区块
 pollution.flux_clear.tire1=%s
@@ -727,19 +742,53 @@ pollution.machine.solar_plate_3.5.name=§d秩序注魔太阳能(3级)§r
 pollution.machine.solar_plate_1.6.name=§1水注魔太阳能(1级)§r
 pollution.machine.solar_plate_2.6.name=§1水注魔太阳能(2级)§r
 pollution.machine.solar_plate_3.6.name=§1水注魔太阳能(3级)§r
+pollution.machine.solar_plate.tooltip.level=等级：%s 种类：%s
+pollution.machine.solar_plate.tooltip.output=期望发电：%s EU/t 满足增产条件后发电：%s EU/t
+pollution.machine.solar_plate.type.wind=风
+pollution.machine.solar_plate.type.chaos=混沌
+pollution.machine.solar_plate.type.earth=地
+pollution.machine.solar_plate.type.fire=火
+pollution.machine.solar_plate.type.order=秩序
+pollution.machine.solar_plate.type.water=水
+pollution.machine.solar_plate.boost.wind=增产条件：高度大于160
+pollution.machine.solar_plate.boost.chaos=增产条件：只能在夜晚工作
+pollution.machine.solar_plate.boost.earth=增产条件：高度小于10
+pollution.machine.solar_plate.boost.fire=增产条件：只能在地狱工作
+pollution.machine.solar_plate.boost.order=增产条件：只能在白天工作
+pollution.machine.solar_plate.boost.water=增产条件：正下方有水
 #设备多方块
 pollution.modeChanged.message=切换机器模式
+pollution.machine.quantum_mana_tank.lv.name=超级魔力缸（§7LV§r）
+pollution.machine.quantum_mana_tank.mv.name=超级魔力缸（§bMV§r）
+pollution.machine.quantum_mana_tank.hv.name=超级魔力缸（§6HV§r）
+pollution.machine.quantum_mana_tank.ev.name=超级魔力缸（§5EV§r）
+pollution.machine.quantum_mana_tank.iv.name=量子魔力缸（§1IV§r）
+pollution.machine.quantum_mana_tank.luv.name=量子魔力缸（§dLuV§r）
+pollution.machine.quantum_mana_tank.zpm.name=量子魔力缸（§cZPM§r）
+pollution.machine.quantum_mana_tank.uv.name=量子魔力缸（§3UV§r）
+pollution.machine.quantum_mana_tank.uhv.name=量子魔力缸（§4UHV§r）
+pollution.machine.quantum_mana_tank.tooltip.1=存储植物魔法的魔力
+pollution.machine.quantum_mana_tank.tooltip.2=魔力发射器的脉冲可以直接打入
+pollution.machine.quantum_mana_tank.tooltip.3=开启自动输出后会把魔力推给输出面相邻的魔力池等接收方
+pollution.machine.quantum_mana_tank.tooltip.4=扳手右键以设置输出面
+pollution.machine.quantum_mana_tank.mana=魔力:%s / %s
+pollution.machine.quantum_mana_tank.auto_output=自动输出魔力
+pollution.machine.quantum_mana_tank.display_amount=魔力：
+pollution.machine.quantum_mana_tank.display_name=植物魔法魔力
+pollution.universal.tooltip.mana_storage_capacity=魔力存储容量:%s
+pollution.universal.tooltip.mana_transfer_rate=输出速率:%s /t
+pollution.universal.tooltip.mana_stored=已存魔力:%s
 
 pollution.machine.pollution_multi_dan_de_life_on.name=§l启命花园§r
 pollution.machine.pollution_multi_dan_de_life_on.mode0=输出能量
 pollution.machine.pollution_multi_dan_de_life_on.mode1=输出流体
 pollution.machine.pollution_multi_dan_de_life_on.tooltip=§d从枯荣中获取力量§r/n§c像启命英那样进行康威生命游戏，但棋盘更大，回报也更多/n§e每个死去的细胞都会进行产能，细胞产能量取决于细胞的§d寿命§r/n§e升级符文会增加每个死亡细胞所产生的能量/n花园每秒执行一次游戏，每执行一次游戏需要消耗一份精灵尘/n内部具有额外的能量缓存，来不及输出的能量会被存储在花园内部/n机器具有两种输出模式，使用螺丝刀右键来切换输出模式/n默认情况下花园为能量输出模式，直接输出能量/n流体输出模式可以解放花园用于将自然魔力转换能量的性能用于产能，带来25%%额外能量输出/n§e该机器支持激光输出!
 
-pollution.machine.pollution_mega_mana_turbine.name=巨型魔力导能器
-pollution.machine.pollution_mega_mana_turbine.tooltip=将洪流般的自然魔力转换为电能/n基础发电64A IV，§e提供催化剂以获得更高的输出水平§r/n§d黑白漫宿——64A LuV/n§d液态超次元秘银和刻金——128A ZPM/n§d液态约束，感知——256A UV/n优先消耗高级催化剂/n§c机器需要持续工作一段时间来达到最高输出效率§r，所需时间为3000s/线圈等级/n该机器支持激光输出
+pollution.machine.mega_turbine.mana.name=巨型魔力导能器
+pollution.machine.mega_turbine.mana.tooltip=将洪流般的自然魔力转换为电能/n基础发电64A IV，§e提供催化剂以获得更高的输出水平§r/n§d黑白漫宿——64A LuV/n§d液态超次元秘银和刻金——128A ZPM/n§d液态约束，感知——256A UV/n优先消耗高级催化剂/n§c机器需要持续工作一段时间来达到最高输出效率§r，所需时间为3000s/线圈等级/n该机器支持激光输出
 
-pollution.machine.pollution_large_mana_turbine.name=大型魔力导能器
-pollution.machine.pollution_large_mana_turbine.tooltip=将自然魔力转换为电能
+pollution.machine.large_turbine.mana.name=大型魔力导能器
+pollution.machine.large_turbine.mana.tooltip=将自然魔力转换为电能
 pollution.machine.tank_test.name=源质离散器
 
 pollution.machine.magic_bender.name=魔导批量辊压机
@@ -1082,21 +1131,23 @@ pollution.flux_clear.tier1=%s
 
 pollution.gui.aspect_amount=源质总量：
 
-pollution.machine.aspect_tank.tooltip=申必的GT
+pollution.machine.quantum_aspect_tank.tooltip=§b存储神秘要素的量子罐§r/n§e顶部可输入/输出要素，扳手设置输出面/n§e输入槽放装满的要素容器可倒入，输出槽放空容器可装出
 pollution.universal.tooltip.aspect_storage_capacity=§5源质容量：§f%,d 魔力水晶碎片
 pollution.universal.tooltip.aspect_storage=§9内含源质：§f%2$,d 魔力水晶碎片 %1$s
 pollution.universal.tooltip.aspect_locked=§f%1$s §c已被锁定！
-pollution.machine.aspect_tank.help=可以将§d源质安瓿§r或§b源质罐子§r等能§6储存源质的容器§r放入输入槽来存储源质
+pollution.machine.quantum_aspect_tank.help=可以将§d源质安瓿§r或§b源质罐子§r等能§6储存源质的容器§r放入输入槽来存储源质
 
-pollution.machine.aspect_tank.lv.name=超级源质缸 I
-pollution.machine.aspect_tank.mv.name=超级源质缸 II
-pollution.machine.aspect_tank.hv.name=超级源质缸 III
-pollution.machine.aspect_tank.ev.name=超级源质缸 IV
-pollution.machine.aspect_tank.iv.name=量子源质缸 I
-pollution.machine.aspect_tank.luv.name=量子源质缸 II
-pollution.machine.aspect_tank.zpm.name=量子源质缸 III
-pollution.machine.aspect_tank.uv.name=量子源质缸 IV
-pollution.machine.aspect_tank.uhv.name=量子源质缸 V
+pollution.machine.quantum_aspect_tank.lv.name=超级源质缸 I
+pollution.machine.quantum_aspect_tank.mv.name=超级源质缸 II
+pollution.machine.quantum_aspect_tank.hv.name=超级源质缸 III
+pollution.machine.quantum_aspect_tank.ev.name=超级源质缸 IV
+pollution.machine.quantum_aspect_tank.iv.name=量子源质缸 V
+pollution.machine.quantum_aspect_tank.luv.name=量子源质缸 VI
+pollution.machine.quantum_aspect_tank.zpm.name=量子源质缸 VII
+pollution.machine.quantum_aspect_tank.uv.name=量子源质缸 VIII
+pollution.machine.quantum_aspect_tank.uhv.name=量子源质缸 IX
+pollution.machine.quantum_aspect_tank.display_amount=源质：
+pollution.machine.quantum_aspect_tank.filter=要素过滤
 
 ##矿脉
 pollution.vein.sphere.black_granite=黑色花岗岩球

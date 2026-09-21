@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,9 +35,21 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainerItemProvider, IItemBehaviour, SourceMaterialItem, ICosmeticAttachable, IPhantomInkable {
-    int MaxSource;
-    Material material;
+@Mod.EventBusSubscriber(modid = "pollution")
+public class ItemBaubleBehavior extends BaubleBehavior
+        implements IItemContainerItemProvider, IItemBehaviour, SourceMaterialItem, ICosmeticAttachable, IPhantomInkable {
+
+    /** 饰品内存储源质的 NBT 键 */
+    private static final String SOURCE_KEY = "source";
+
+    private final int maxSource;
+    private final Material material;
+
+    public ItemBaubleBehavior(int maxSource, Material material, BaubleType type) {
+        super(type);
+        this.maxSource = maxSource;
+        this.material = material;
+    }
 
     @Nullable
     public static ItemBaubleBehavior getInstanceFor(@Nonnull ItemStack itemStack) {
@@ -45,31 +58,29 @@ public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainer
         MetaItem<?>.MetaValueItem valueItem = ((MetaItem<?>) itemStack.getItem()).getItem(itemStack);
         if (valueItem == null) return null;
 
-        IItemContainerItemProvider durabilityManager = valueItem.getContainerItemProvider();
-        if (!(durabilityManager instanceof ItemBaubleBehavior)) return null;
+        IItemContainerItemProvider provider = valueItem.getContainerItemProvider();
+        if (!(provider instanceof ItemBaubleBehavior behavior)) return null;
 
-        return (ItemBaubleBehavior) durabilityManager;
+        return behavior;
     }
 
-    public ItemBaubleBehavior(int MaxSource, Material material, BaubleType type) {
-        super(type);
-        this.MaxSource = MaxSource;
-        this.material = material;
-    }
-
+    /**
+     * 死亡时清理饰品带来的效果（例如水之戒给予的夜视）
+     */
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent evt) {
-        if (!evt.getEntityLiving().world.isRemote && evt.getEntityLiving() instanceof EntityPlayer && !evt.getEntityLiving().world.getGameRules().getBoolean("keepInventory") && !((EntityPlayer) evt.getEntityLiving()).isSpectator()) {
-            IItemHandler inv = BaublesApi.getBaublesHandler((EntityPlayer) evt.getEntityLiving());
+        EntityLivingBase entity = evt.getEntityLiving();
+        if (entity.world.isRemote || !(entity instanceof EntityPlayer player)) return;
+        if (entity.world.getGameRules().getBoolean("keepInventory") || player.isSpectator()) return;
 
-            for (int i = 0; i < inv.getSlots(); ++i) {
-                ItemStack stack = inv.getStackInSlot(i);
-                if (!stack.isEmpty() && stack.getItem().getRegistryName().getNamespace().equals("pollution")) {
-                    ((vazkii.botania.common.item.equipment.bauble.ItemBauble) stack.getItem()).onUnequipped(stack, evt.getEntityLiving());
-                }
+        IItemHandler inv = BaublesApi.getBaublesHandler(player);
+        for (int i = 0; i < inv.getSlots(); ++i) {
+            ItemStack stack = inv.getStackInSlot(i);
+            ItemBaubleBehavior behavior = getInstanceFor(stack);
+            if (behavior != null) {
+                behavior.onUnequipped(stack, player);
             }
         }
-
     }
 
     public static UUID getBaubleUUID(ItemStack stack) {
@@ -95,64 +106,39 @@ public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainer
 
     @Override
     public int getMaxSourceStore() {
-        return MaxSource;
+        return maxSource;
     }
 
     @Override
     public int getSourceStore(ItemStack item) {
-        NBTTagCompound tag = item.getTagCompound();
-
-        if (tag != null) return tag.getInteger("source");
-        return 0;
+        return ItemNBTHelper.getInt(item, SOURCE_KEY, 0);
     }
 
     @Override
-    public boolean addSource(int n, boolean simulate, ItemStack item) {
-        NBTTagCompound tag = item.getTagCompound();
-        if (tag != null) {
-            int amount = tag.getInteger("source");
+    public boolean addSource(int amount, boolean simulate, ItemStack item) {
+        int currentSource = getSourceStore(item);
+        if (amount <= 0 || currentSource >= maxSource) return false;
+        if (simulate) return currentSource + amount <= maxSource;
 
-            if(simulate)
-            {
-                 return (amount + n )< getMaxSourceStore();
-
-            }
-            else {
-                if (amount + n < getMaxSourceStore()) {
-                    tag.setInteger("source", Math.min(amount + n, getMaxSourceStore()));
-                } else {
-                    tag.setInteger("source", getMaxSourceStore());
-                }
-                return true;
-            }
-        }
-        return false;
+        setSourceStore(currentSource + amount, item);
+        return true;
     }
 
     @Override
     public boolean consumeSource(int amount, boolean simulate, ItemStack item) {
         int currentSource = getSourceStore(item);
-        if (currentSource < 0 || amount < 0) return false;
+        if (amount < 0 || currentSource < amount) return false;
 
-        // 检查当前源存储量是否足够
-        if (currentSource < amount) {
-            return false; // 不够消耗
-        }
         if (!simulate) {
-            // 实际消耗资源
             setSourceStore(currentSource - amount, item);
         }
-        return true; // 可以消耗
+        return true;
     }
 
     @Override
     public void setSourceStore(int source, ItemStack item) {
-        NBTTagCompound tag = item.getTagCompound();
-        if (tag != null) {
-            tag.setInteger("source", source);
-        }
+        ItemNBTHelper.setInt(item, SOURCE_KEY, Math.max(0, Math.min(source, maxSource)));
     }
-
 
     @Override
     public Material getMaterial() {
@@ -164,36 +150,30 @@ public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainer
         lines.add(I18n.format("储量") + ": " + getSourceStore(stack) + "/" + getMaxSourceStore());
         lines.add(I18n.format("源质") + ": " + getMaterial().getLocalizedName());
         if (GuiScreen.isShiftKeyDown()) {
-            this.addHiddenTooltip(stack, lines);
+            addHiddenTooltip(stack, lines);
         } else {
-            this.addStringToTooltip(I18n.format("botaniamisc.shiftinfo"), lines);
+            addStringToTooltip(I18n.format("botaniamisc.shiftinfo"), lines);
         }
-    }
-
-    @Override
-    public BaubleType getBaubleType(ItemStack itemStack) {
-        return BaubleType.RING;
     }
 
     @SideOnly(Side.CLIENT)
     public void addHiddenTooltip(ItemStack par1ItemStack, List<String> stacks) {
         String key = RenderHelper.getKeyDisplayString("Baubles Inventory");
         if (key != null) {
-            this.addStringToTooltip(I18n.format("botania.baubletooltip", key), stacks);
+            addStringToTooltip(I18n.format("botania.baubletooltip", key), stacks);
         }
 
-        ItemStack cosmetic = this.getCosmeticItem(par1ItemStack);
+        ItemStack cosmetic = getCosmeticItem(par1ItemStack);
         if (!cosmetic.isEmpty()) {
-            this.addStringToTooltip(I18n.format("botaniamisc.hasCosmetic", cosmetic.getDisplayName()), stacks);
+            addStringToTooltip(I18n.format("botaniamisc.hasCosmetic", cosmetic.getDisplayName()), stacks);
         }
 
-        if (this.hasPhantomInk(par1ItemStack)) {
-            this.addStringToTooltip(I18n.format("botaniamisc.hasPhantomInk"), stacks);
+        if (hasPhantomInk(par1ItemStack)) {
+            addStringToTooltip(I18n.format("botaniamisc.hasPhantomInk"), stacks);
         }
-
     }
 
-    void addStringToTooltip(String s, List<String> tooltip) {
+    private void addStringToTooltip(String s, List<String> tooltip) {
         tooltip.add(s.replaceAll("&", "§"));
     }
 
@@ -207,23 +187,25 @@ public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainer
 
     public void onWornTick(ItemStack stack, EntityLivingBase player) {
         if (getLastPlayerHashcode(stack) != player.hashCode()) {
-            this.onEquippedOrLoadedIntoWorld(stack, player);
+            onEquippedOrLoadedIntoWorld(stack, player);
             setLastPlayerHashcode(stack, player.hashCode());
         }
-
     }
 
     public void onEquipped(ItemStack stack, EntityLivingBase player) {
-        if (player != null) {
-            if (!player.world.isRemote) {
-                player.world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.equipBauble, SoundCategory.PLAYERS, 0.1F, 1.3F);
-                PlayerHelper.grantCriterion((EntityPlayerMP) player, new ResourceLocation("pollution", "main/bauble_wear"), "code_triggered");
-            }
+        if (player == null) return;
 
-            this.onEquippedOrLoadedIntoWorld(stack, player);
-            setLastPlayerHashcode(stack, player.hashCode());
+        if (!player.world.isRemote) {
+            player.world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.equipBauble,
+                    SoundCategory.PLAYERS, 0.1F, 1.3F);
+            if (player instanceof EntityPlayerMP serverPlayer) {
+                PlayerHelper.grantCriterion(serverPlayer,
+                        new ResourceLocation("pollution", "main/bauble_wear"), "code_triggered");
+            }
         }
 
+        onEquippedOrLoadedIntoWorld(stack, player);
+        setLastPlayerHashcode(stack, player.hashCode());
     }
 
     public void onEquippedOrLoadedIntoWorld(ItemStack stack, EntityLivingBase player) {
@@ -232,11 +214,13 @@ public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainer
     public void onUnequipped(ItemStack stack, EntityLivingBase player) {
     }
 
+    @Override
     public ItemStack getCosmeticItem(ItemStack stack) {
         NBTTagCompound cmp = ItemNBTHelper.getCompound(stack, "cosmeticItem", true);
         return cmp == null ? ItemStack.EMPTY : new ItemStack(cmp);
     }
 
+    @Override
     public void setCosmeticItem(ItemStack stack, ItemStack cosmetic) {
         NBTTagCompound cmp = new NBTTagCompound();
         if (!cosmetic.isEmpty()) {
@@ -247,18 +231,20 @@ public class ItemBaubleBehavior extends BaubleBehavior implements IItemContainer
     }
 
     public boolean hasContainerItem(ItemStack stack) {
-        return !this.getContainerItem(stack).isEmpty();
+        return !getContainerItem(stack).isEmpty();
     }
 
-    @Nonnull
-    public ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
-        return this.getCosmeticItem(itemStack);
+    @Override
+    public @Nonnull ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
+        return getCosmeticItem(itemStack);
     }
 
+    @Override
     public boolean hasPhantomInk(ItemStack stack) {
         return ItemNBTHelper.getBoolean(stack, "phantomInk", false);
     }
 
+    @Override
     public void setPhantomInk(ItemStack stack, boolean ink) {
         ItemNBTHelper.setBoolean(stack, "phantomInk", ink);
     }

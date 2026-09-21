@@ -5,6 +5,7 @@ import gregtech.api.capability.impl.EnergyContainerHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.util.tooltips.InformationHandler;
 import gregtech.client.renderer.texture.Textures;
 import meowmel.pollution.api.capability.IManaHatch;
 import meowmel.pollution.api.recipes.PORecipeMaps;
@@ -12,6 +13,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -34,19 +36,15 @@ public class ManaGeneratorTileEntity extends SimpleGeneratorMetaTileEntity imple
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player,  List<String> tooltip, boolean advanced) {
-        tooltip.add(1, I18n.format("花花草草的力量！"));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out", this.energyContainer.getOutputVoltage(), GTValues.VNF[this.getTier()]));
-        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", this.energyContainer.getEnergyCapacity()));
+    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
+        InformationHandler.topTooltips("花花草草的力量", tooltip);
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_out",
+                energyContainer.getOutputVoltage(), GTValues.VNF[getTier()]));
+        tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity",
+                energyContainer.getEnergyCapacity()));
     }
 
-    @Override
-    public void addToolUsages(ItemStack stack, @Nullable World world, List<String> tooltip, boolean advanced) {
-        super.addToolUsages(stack, world, tooltip, advanced);
-        tooltip.add(I18n.format("gregtech.tool_action.screwdriver.access_covers"));
-        tooltip.add(I18n.format("gregtech.tool_action.wrench.set_facing"));
-        tooltip.add(I18n.format("gregtech.tool_action.soft_mallet.reset"));
-    }
 
     @Override
     public long getMaxMana() {

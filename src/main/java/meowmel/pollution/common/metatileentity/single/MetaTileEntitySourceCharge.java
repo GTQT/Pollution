@@ -13,33 +13,43 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.mui.GTGuiTextures;
 import gregtech.api.mui.GTGuis;
-import gregtech.api.unification.material.Material;
 import gregtech.common.mui.widget.GTFluidSlot;
 import meowmel.pollution.common.items.bauble.ItemBaubleBehavior;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidTank;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import static meowmel.pollution.api.utils.infusedFluidStack.STACK_MAP;
 
+/**
+ * 源质充能器：消耗与饰品材质匹配的源质流体，为饰品补充源质储量
+ */
 public class MetaTileEntitySourceCharge extends MetaTileEntity {
+
+    private static final String ITEM_INVENTORY_TAG = "BaubleInventory";
+
+    /** 饰品槽位，基类字段是 IItemHandler，这里保留具体类型以便存档 */
+    private GTItemStackHandler baubleInventory;
 
     public MetaTileEntitySourceCharge(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
-        this.initializeInventory();
     }
 
+    @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntitySourceCharge(this.metaTileEntityId);
     }
 
+    @Override
     protected void initializeInventory() {
         super.initializeInventory();
-        this.itemInventory = new GTItemStackHandler(this, 1);
+        this.baubleInventory = new GTItemStackHandler(this, 1);
+        this.itemInventory = this.baubleInventory;
     }
 
     @Override
@@ -47,48 +57,48 @@ public class MetaTileEntitySourceCharge extends MetaTileEntity {
         return new FluidTankList(false, new FluidTank(4000));
     }
 
+    @Override
     public void update() {
         super.update();
 
-        if (this.getWorld().isRemote || this.itemInventory.getStackInSlot(0).isEmpty()) {
-            return;
-        }
+        if (this.getWorld().isRemote) return;
 
         ItemStack stack = this.itemInventory.getStackInSlot(0);
-        // 确保行为对象不为 null
-        ItemBaubleBehavior behavior = getItemBaubleBehavior();
-        if (behavior == null) {
-            return;
-        }
-        if (isItemValid(stack)) {
-            Material material = behavior.getMaterial();
-            FluidStack fluidStack = STACK_MAP.get(material);
-            FluidStack currentFluid = this.importFluids.getTankAt(0).getFluid();
-            if (currentFluid != null && currentFluid.equals(fluidStack) && currentFluid.amount >= 1) {
-                if (behavior.addSource(1, true, stack)) {
-                    behavior.addSource(1, false, stack);
-                    this.importFluids.getTankAt(0).drain(1, true);
-                }
-            }
-        }
+        ItemBaubleBehavior behavior = ItemBaubleBehavior.getInstanceFor(stack);
+        if (behavior == null) return;
+
+        // 只有与饰品材质匹配的源质流体才能充能
+        FluidStack requiredFluid = STACK_MAP.get(behavior.getMaterial());
+        IFluidTank tank = this.importFluids.getTankAt(0);
+        FluidStack currentFluid = tank.getFluid();
+        if (requiredFluid == null || currentFluid == null || !currentFluid.isFluidEqual(requiredFluid)) return;
+        if (currentFluid.amount < 1 || !behavior.addSource(1, true, stack)) return;
+
+        behavior.addSource(1, false, stack);
+        tank.drain(1, true);
     }
 
     public boolean isItemValid(@Nonnull ItemStack stack) {
         return ItemBaubleBehavior.getInstanceFor(stack) != null;
     }
 
-    @Nullable
-    private ItemBaubleBehavior getItemBaubleBehavior() {
-        ItemStack stack = itemInventory.getStackInSlot(0);
-        if (stack.isEmpty()) return null;
-
-        return ItemBaubleBehavior.getInstanceFor(stack);
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound data) {
+        super.writeToNBT(data);
+        data.setTag(ITEM_INVENTORY_TAG, this.baubleInventory.serializeNBT());
+        return data;
     }
 
+    @Override
+    public void readFromNBT(NBTTagCompound data) {
+        super.readFromNBT(data);
+        this.baubleInventory.deserializeNBT(data.getCompoundTag(ITEM_INVENTORY_TAG));
+    }
+
+    @Override
     public boolean showToolUsages() {
         return false;
     }
-
 
     @Override
     public boolean usesMui2() {
@@ -111,6 +121,7 @@ public class MetaTileEntitySourceCharge extends MetaTileEntity {
                         .pos(80, 25)
                         .background(GTGuiTextures.SLOT)
                         .slot(new ModularSlot(itemInventory, 0)
+                                .filter(this::isItemValid)
                                 .accessibility(true, true)))
 
                 .child(new GTFluidSlot()
@@ -120,13 +131,5 @@ public class MetaTileEntitySourceCharge extends MetaTileEntity {
                         .syncHandler(fluidSyncHandler))
 
                 .bindPlayerInventory();
-    }
-
-    public int getItemStackLimit(ItemStack stack) {
-        return super.getItemStackLimit(stack);
-    }
-
-    protected boolean shouldSerializeInventories() {
-        return false;
     }
 }

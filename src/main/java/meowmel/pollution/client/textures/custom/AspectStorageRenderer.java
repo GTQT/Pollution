@@ -87,35 +87,38 @@ public class AspectStorageRenderer extends QuantumStorageRenderer {
 
     @SideOnly(Side.CLIENT)
     public static void renderTankAspect(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline, Aspect aspect, int maxCap, int amount, IBlockAccess world, BlockPos pos, EnumFacing frontFacing) {
+        if (aspect == null || amount == 0) return;
 
-        if (aspect != null && amount != 0 && ConfigHolder.client.enableFancyChestRender)
-        {
-            Color co = new Color(0);
-            if (aspect != null) {
-                co = new Color(aspect.getColor());
-            }
-            if (world != null) {
-                renderState.setBrightness(world, pos);
-            }
+        renderTankFill(renderState, translation, pipeline, aspect.getColor(), maxCap, amount, world, pos, frontFacing);
+    }
 
-            Cuboid6 partialFluidBox = new Cuboid6(0.06640625, 0.12890625, 0.06640625, 0.93359375, 0.93359375, 0.93359375);
-            double fillFraction = (double)amount / (double)maxCap;
+    /**
+     * 通用罐体填充渲染：按颜色与填充比例画一块发光体（要素罐 / 魔力罐共用）
+     *
+     * @param color 填充颜色 RGB
+     */
+    @SideOnly(Side.CLIENT)
+    public static void renderTankFill(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline,
+                                      int color, long maxCap, long amount, IBlockAccess world, BlockPos pos,
+                                      EnumFacing frontFacing) {
+        if (amount <= 0 || maxCap <= 0 || !ConfigHolder.client.enableFancyChestRender) return;
 
-            partialFluidBox.max.y = Math.min(11.875 * fillFraction + 2.0625, 14.0) / 16.0;
-
-            renderState.baseColour = aspect.getColor() << 8 | 255;
-//            renderState.setColour(new ColourRGBA(255, 255, 126, 255));
-            TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("thaumcraft:blocks/animatedglow");
-
-            Textures.renderFace(renderState, translation, pipeline, frontFacing, partialFluidBox, icon, BlockRenderLayer.CUTOUT_MIPPED);
-            Textures.renderFace(renderState, translation, pipeline, EnumFacing.UP, partialFluidBox, icon, BlockRenderLayer.CUTOUT_MIPPED);
-            GlStateManager.resetColor();
-            renderState.reset();
+        if (world != null) {
+            renderState.setBrightness(world, pos);
         }
-//        Textures.renderFace(renderState, translation, pipeline, frontFacing, partialFluidBox, fluidStillSprite, BlockRenderLayer.CUTOUT_MIPPED);
-//        Textures.renderFace(renderState, translation, pipeline, gas ? EnumFacing.DOWN : EnumFacing.UP, partialFluidBox, fluidStillSprite, BlockRenderLayer.CUTOUT_MIPPED);
-//        GlStateManager.resetColor();
-//        renderState.reset();
+
+        Cuboid6 partialFluidBox = new Cuboid6(0.06640625, 0.12890625, 0.06640625, 0.93359375, 0.93359375, 0.93359375);
+        double fillFraction = (double) amount / (double) maxCap;
+
+        partialFluidBox.max.y = Math.min(11.875 * fillFraction + 2.0625, 14.0) / 16.0;
+
+        renderState.baseColour = color << 8 | 255;
+        TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("thaumcraft:blocks/animatedglow");
+
+        Textures.renderFace(renderState, translation, pipeline, frontFacing, partialFluidBox, icon, BlockRenderLayer.CUTOUT_MIPPED);
+        Textures.renderFace(renderState, translation, pipeline, EnumFacing.UP, partialFluidBox, icon, BlockRenderLayer.CUTOUT_MIPPED);
+        GlStateManager.resetColor();
+        renderState.reset();
     }
 
     public static void renderAspectAmount(double x, double y, double z, EnumFacing frontFacing, long amount) {

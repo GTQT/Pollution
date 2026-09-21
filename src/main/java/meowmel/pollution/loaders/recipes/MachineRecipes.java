@@ -15,6 +15,7 @@ import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import net.minecraft.init.Items;
 
 import static gregtech.api.GTValues.VA;
+import static gregtech.api.unification.material.Materials.HSSE;
 import static gregtech.api.unification.material.Materials.Titanium;
 import static gregtech.api.unification.material.Materials.TungstenSteel;
 import static gregtech.loaders.recipe.CraftingComponent.*;
@@ -132,6 +133,13 @@ public class MachineRecipes {
                 'B', PIPE_NORMAL,
                 'C', CIRCUIT);
 
+        ModHandler.addShapedRecipe(true, "filter_hatch", FILTER_HATCH.getStackForm(),
+                "ABA", "CHC", "ABA",
+                'H', MetaTileEntities.HULL[GTValues.EV].getStackForm(),
+                'A', MetaItems.CONVEYOR_MODULE_EV,
+                'B', MetaItems.ELECTRIC_PUMP_EV,
+                'C', MetaItems.EMITTER_EV);
+
         registerMachineRecipe(PollutionMetaTileEntities.FLUX_PROMOTED_FUEL_CELL,
                 "PBP", "EHE", "MCM",
                 'H', HULL,
@@ -178,6 +186,12 @@ public class MachineRecipes {
                 'B', new UnificationEntry(OrePrefix.rotor, TungstenSteel),
                 'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.IV),
                 'F', MetaItems.ELECTRIC_PUMP_IV);
+
+        ModHandler.addShapedRecipe(true, "flux_clear3", FLUX_CLEARS[2].getStackForm(),
+                "CBC", "FMF", "CBC", 'M', MetaTileEntities.HULL[GTValues.LuV].getStackForm(),
+                'B', new UnificationEntry(OrePrefix.rotor, HSSE),
+                'C', new UnificationEntry(OrePrefix.circuit, MarkerMaterials.Tier.LuV),
+                'F', MetaItems.ELECTRIC_PUMP_LuV);
 
         ModHandler.addShapedRecipe(true, "industrial_starlight_infuser",
                 INDUSTRIAL_STARLIGHT_INFUSER.getStackForm(),
