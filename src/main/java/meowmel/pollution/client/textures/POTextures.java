@@ -105,7 +105,7 @@ public class POTextures {
 	public static SimpleOverlayRenderer BLOOD_MAGIC_HATCH;
 	public static SimpleOverlayRenderer ASTRAL_LENS_HATCH;
 	public static SimpleOverlayRenderer TAROT_HATCH;
-
+	public static SimpleOverlayRenderer ADVANCED_MUFFLER_OVERLAY;
 
 	static {
 		BMCOMPUTER_CASING = new SidedCubeRenderer("casings/bm_computer/computer_casing");
@@ -191,6 +191,7 @@ public class POTextures {
 		BLOOD_MAGIC_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/blood_magic_hatch");
 		ASTRAL_LENS_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/astral_lens_hatch");
 		TAROT_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/tarot_hatch");
+		ADVANCED_MUFFLER_OVERLAY = new SimpleOverlayRenderer("overlay/machine/magic_hatch/overlay_advanced_muffler");
 	}
 
 	public static void register(TextureMap textureMap) {

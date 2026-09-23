@@ -5,6 +5,7 @@ import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.client.textures.POTextures;
@@ -38,6 +39,8 @@ import meowmel.pollution.common.metatileentity.storage.MetaTileEntityQuantumMana
 import meowmel.gtqtcore.client.textures.GTQTTextures;
 import net.minecraft.util.ResourceLocation;
 
+import static gregtech.api.util.GTUtility.gregtechId;
+import static gregtech.common.metatileentities.MetaTileEntities.MUFFLER_HATCH;
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
 import static meowmel.pollution.api.recipes.PORecipeMaps.MAGIC_TURBINE_FUELS;
 import static meowmel.pollution.client.textures.POTextures.*;
@@ -155,6 +158,8 @@ public class PollutionMetaTileEntities {
 
     public static MetaTileEntityManaPoolHatch[] MANA_POOL_INPUT_HATCH = new MetaTileEntityManaPoolHatch[3];
     public static MetaTileEntityManaPoolHatch[] MANA_POOL_OUTPUT_HATCH = new MetaTileEntityManaPoolHatch[3];
+
+    public static final MetaTileEntityAdvancedMufflerHatch[] ADVANCED_MUFFLER_HATCH = new MetaTileEntityAdvancedMufflerHatch[GTValues.UHV +1]; // LV-UHV
 
     public static MetaTileEntityWirelessManaHatch[] WIRELESS_MANA_INPUT_HATCH_1A = new MetaTileEntityWirelessManaHatch[14];
     public static MetaTileEntityWirelessManaHatch[] WIRELESS_MANA_INPUT_HATCH_4A = new MetaTileEntityWirelessManaHatch[14];
@@ -378,7 +383,7 @@ public class PollutionMetaTileEntities {
         // FLUX_MUFFLERS
         for (int i = 0; i < FLUX_MUFFLERS.length; i++) {
             String tierName = GTValues.VN[i + 1].toLowerCase();
-            FLUX_MUFFLERS[i] = registerMetaTileEntity(1100 + i, new MetaTileEntityFluxMuffler(PollutionID("pollution_muffler_hatch." + tierName), i + 1));
+            FLUX_MUFFLERS[i] = registerMetaTileEntity(1100 + i, new MetaTileEntityFluxMuffler(PollutionID("flux_muffler_hatch." + tierName), i + 1));
         }
 
         // VIS_HATCH
@@ -455,6 +460,14 @@ public class PollutionMetaTileEntities {
             MetaTileEntityManaPoolHatch.PoolType poolType = poolTypes[i];
             MANA_POOL_OUTPUT_HATCH[i] = registerMetaTileEntity(1315 + i, new MetaTileEntityManaPoolHatch(
                     PollutionID("mana_pool_output_hatch." + poolType.getName()), poolType, true));
+        }
+
+        // ADVANCED_MUFFLER_HATCH
+        for (int i = 0; i < ADVANCED_MUFFLER_HATCH.length - 1; i++) {
+            int tier = i + 1;
+            String voltageName = GTValues.VN[tier].toLowerCase();
+            ADVANCED_MUFFLER_HATCH[i] = registerMetaTileEntity(1350 + i,
+                    new MetaTileEntityAdvancedMufflerHatch(gregtechId("advanced_muffler_hatch." + voltageName), tier));
         }
 
         // WIRELESS_MANA_INPUT_HATCH_1A

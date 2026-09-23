@@ -13,6 +13,7 @@ import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.*;
+import gregtech.api.util.tooltips.InformationHandler;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
@@ -84,6 +85,7 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
+        InformationHandler.topTooltips("天地精华", tooltip);
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.capacity", getMaxVisStore()));
         tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.drain"));
