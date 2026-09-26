@@ -58,8 +58,8 @@ public class CompoundAspectRecipes {
         registerAspect(InfusedOrder, InfusedAir, InfusedMotion);
         // 腐化
         registerAspect(InfusedEntropy, InfusedMagic, InfusedTaint);
-        // 黑暗
-        registerAspect(InfusedEntropy, InfusedLight, InfusedDark);
+        // 黑暗（与材料组分一致：虚空+光明）
+        registerAspect(InfusedVoid, InfusedLight, InfusedDark);
         // 异域
         registerAspect(InfusedVoid, InfusedDark, InfusedAlien);
         // 飞行
@@ -70,8 +70,6 @@ public class CompoundAspectRecipes {
         registerAspect(InfusedMotion, InfusedInstrument, InfusedMechanics);
         // 陷阱
         registerAspect(InfusedEntropy, InfusedMotion, InfusedTrap);
-        // 亡灵
-        registerAspect(InfusedEarth, InfusedLife, InfusedPlant);
         // 思维
         registerAspect(InfusedFire, InfusedSoul, InfusedThought);
         // 感知
@@ -109,7 +107,8 @@ public class CompoundAspectRecipes {
                 .EUt(VA[amount/4])
                 .buildAndRegister();
 
-        registerGenerator(output, 80, 40*amount,amount/3);
+        // 发电档位随复杂度单调递增（amount/2），封顶 IV(tier5) 以匹配单方块涡轮上限
+        registerGenerator(output, 80, 40 * amount, Math.min(amount / 2, 5));
     }
     public static int countAllNestedComponents(Material material) {
         return countNestedComponents(material.getMaterialComponents());
@@ -125,7 +124,8 @@ public class CompoundAspectRecipes {
         return count;
     }
     public static void registerGenerator(Material input) {
-        registerGenerator(input, 80, 80, 1);
+        // 基础原始要素作为最弱的入门燃料（V[0]=8），保证化合物永远优于其原料
+        registerGenerator(input, 80, 80, 0);
     }
 
     public static void registerGenerator(Material input, int amount, int duration, int tier) {

@@ -5,6 +5,9 @@ import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.WorkableTieredMetaTileEntity;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.blocks.BlockBoilerCasing;
+import gregtech.common.blocks.BlockTurbineCasing;
+import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.PORecipeMaps;
@@ -12,7 +15,7 @@ import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POMagicBlock;
 import meowmel.pollution.common.block.metablocks.POManaPlate;
-import meowmel.pollution.common.block.metablocks.POTurbine;
+
 import meowmel.pollution.common.metatileentity.multiblock.*;
 import meowmel.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEntityBMHPCA;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialStarlightInfuser;
@@ -25,6 +28,7 @@ import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityC
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityStarstreamNexusObelisk;
 import meowmel.pollution.common.metatileentity.multiblock.bot.*;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicLargeTurbine;
+import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityLargeEssentiaGenerator;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMagicMegaTurbine;
 import meowmel.pollution.common.metatileentity.multiblock.generator.MetaTileEntityMultiDanDeLifeOn;
 import meowmel.pollution.common.metatileentity.multiblock.magic.*;
@@ -64,6 +68,8 @@ public class PollutionMetaTileEntities {
     // 多方块
     // 多方块发电机
     public static MetaTileEntityMagicLargeTurbine LARGE_MAGIC_TURBINE;
+    public static MetaTileEntityLargeEssentiaGenerator LARGE_ESSENTIA_GENERATOR;
+
     public static MetaTileEntityMagicLargeTurbine LARGE_MANA_TURBINE;
     public static MetaTileEntityMagicMegaTurbine MEGA_MAGIC_TURBINE;
     public static MetaTileEntityMagicMegaTurbine MEGA_MANA_TURBINE;
@@ -155,6 +161,8 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityManaHatch[] MANA_OUTPUT_HATCH_4A = new MetaTileEntityManaHatch[14];
     public static MetaTileEntityManaHatch[] MANA_OUTPUT_HATCH_16A = new MetaTileEntityManaHatch[14];
     public static MetaTileEntityManaHatch[] MANA_OUTPUT_HATCH_64A = new MetaTileEntityManaHatch[14];
+
+    public static MetaTileEntityEssentiaHatch[] ESSENTIA_HATCH = new MetaTileEntityEssentiaHatch[14];
 
     public static MetaTileEntityManaPoolHatch[] MANA_POOL_INPUT_HATCH = new MetaTileEntityManaPoolHatch[3];
     public static MetaTileEntityManaPoolHatch[] MANA_POOL_OUTPUT_HATCH = new MetaTileEntityManaPoolHatch[3];
@@ -258,75 +266,79 @@ public class PollutionMetaTileEntities {
         LARGE_MAGIC_TURBINE = registerMetaTileEntity(500, new MetaTileEntityMagicLargeTurbine(PollutionID("large_turbine.magic"),
                 MAGIC_TURBINE_FUELS, GTValues.EV,
                 PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT),
-                PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.STAINLESS_STEEL_GEARBOX),
+                MetaBlocks.TURBINE_CASING.getState(BlockTurbineCasing.TurbineCasingType.STAINLESS_STEEL_GEARBOX),
                 POTextures.SPELL_PRISM_HOT, true, Textures.HPCA_OVERLAY));
 
         // LARGE_MANA_TURBINE
         LARGE_MANA_TURBINE = registerMetaTileEntity(501, new MetaTileEntityMagicLargeTurbine(PollutionID("large_turbine.mana"),
                 PORecipeMaps.MANA_TO_EU, GTValues.LuV,
                 PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_3),
-                PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
+                MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.TUNGSTENSTEEL_PIPE),
                 POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
         // MEGA_MAGIC_TURBINE
         MEGA_MAGIC_TURBINE = registerMetaTileEntity(502, new MetaTileEntityMagicMegaTurbine(PollutionID("mega_turbine.magic"),
                 MAGIC_TURBINE_FUELS, GTValues.IV,
                 PollutionMetaBlocks.MAGIC_BLOCK.getState(POMagicBlock.MagicBlockType.SPELL_PRISM_HOT),
-                PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.STAINLESS_STEEL_GEARBOX),
+                MetaBlocks.TURBINE_CASING.getState(BlockTurbineCasing.TurbineCasingType.STAINLESS_STEEL_GEARBOX),
                 POTextures.SPELL_PRISM_HOT, true, Textures.HPCA_OVERLAY));
 
         // MEGA_MANA_TURBINE
         MEGA_MANA_TURBINE = registerMetaTileEntity(503, new MetaTileEntityMagicMegaTurbine(PollutionID("mega_turbine.mana"),
                 PORecipeMaps.MANA_TO_EU, GTValues.ZPM,
                 PollutionMetaBlocks.MANA_PLATE.getState(POManaPlate.ManaBlockType.MANA_3),
-                PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
+                MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.TUNGSTENSTEEL_PIPE),
                 POTextures.MANA_3, false, Textures.HPCA_OVERLAY));
 
-        // ===== 多方块机器 =====
-        INFUSED_EXCHANGE = registerMetaTileEntity(504, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
-        MAGIC_BENDER = registerMetaTileEntity(505, new MetaTileEntityMagicBender(PollutionID("magic_bender")));
-        MAGIC_CENTRIFUGE = registerMetaTileEntity(506, new MetaTileEntityMagicCentrifuge(PollutionID("magic_centrifuge")));
-        MAGIC_ELECTRIC_BLAST_FURNACE = registerMetaTileEntity(507, new MetaTileEntityMagicElectricBlastFurnace(PollutionID("magic_electric_blast_furnace")));
-        MAGIC_ELECTROLYZER = registerMetaTileEntity(508, new MetaTileEntityMagicElectrolyzer(PollutionID("magic_electrolyzer")));
-        MAGIC_MIXER = registerMetaTileEntity(509, new MetaTileEntityMagicMixer(PollutionID("magic_mixer")));
-        MAGIC_MACERATOR = registerMetaTileEntity(510, new MetaTileEntityMagicMacerator(PollutionID("magic_macerator")));
-        MAGIC_CHEMICAL_BATH = registerMetaTileEntity(511, new MetaTileEntityMagicChemicalBath(PollutionID("magic_chemical_bath")));
-        MAGIC_SIFTER = registerMetaTileEntity(512, new MetaTileEntityMagicSifter(PollutionID("magic_sifter")));
-        MAGIC_CUTTER = registerMetaTileEntity(513, new MetaTileEntityMagicCutter(PollutionID("magic_cutter")));
-        MAGIC_WIREMILL = registerMetaTileEntity(514, new MetaTileEntityMagicWireMill(PollutionID("magic_wiremill")));
-        MAGIC_SOLIDIFIER = registerMetaTileEntity(515, new MetaTileEntityMagicSolidifier(PollutionID("magic_solidifier")));
-        MAGIC_BREWERY = registerMetaTileEntity(516, new MetaTileEntityMagicBrewery(PollutionID("magic_brewery")));
-        INDUSTRIAL_INFUSION = registerMetaTileEntity(517, new MetaTileEntityIndustrialInfusion(PollutionID("industrial_infusion")));
-        MAGIC_BATTERY = registerMetaTileEntity(518, new MetaTileEntityMagicBattery(PollutionID("magic_battery")));
-        MAGIC_CHEMICAL_REACTOR = registerMetaTileEntity(519, new MetaTileEntityMagicChemicalReactor(PollutionID("magic_chemical_reactor")));
-        MAGIC_AUTOCLAVE = registerMetaTileEntity(520, new MetaTileEntityMagicAutoclave(PollutionID("magic_autoclave")));
-        MAGIC_EXTRUDER = registerMetaTileEntity(521, new MetaTileEntityMagicExtruder(PollutionID("magic_extruder")));
-        MAGIC_GREEN_HOUSE = registerMetaTileEntity(522, new MetaTileEntityMagicGreenHouse(PollutionID("magic_green_house")));
-        MAGIC_DISTILLERY = registerMetaTileEntity(523, new MetaTileEntityMagicDistillery(PollutionID("magic_distillery")));
-        MAGIC_ALLOY_BLAST = registerMetaTileEntity(524, new MetaTileEntityMagicAlloyBlastSmelter(PollutionID("magic_alloy_blast")));
-        ESSENCE_COLLECTOR = registerMetaTileEntity(525, new MetaTileEntityEssenceCollector(PollutionID("essence_collector")));
-        MAGIC_FUSION_REACTOR = registerMetaTileEntity(526, new MetaTileEntityMagicFusionReactor(PollutionID("magic_fusion_reactor")));
-        NODE_PRODUCER = registerMetaTileEntity(527, new MetaTileEntityNodeProducer(PollutionID("node_producer")));
-        LARGE_NODE_GENERATOR = registerMetaTileEntity(258, new MetaTileEntityLargeNodeGenerator(PollutionID("large_node_generator")));
-        NODE_WASHER = registerMetaTileEntity(529, new MetaTileEntityNodeWasher(PollutionID("node_washer")));
-        ENDOFLAME_ARRAY = registerMetaTileEntity(530, new MetaTileEntityEndoflameArray(PollutionID("endoflame_array")));
-        BOT_DISTILLERY = registerMetaTileEntity(531, new MetaTileEntityBotDistillery(PollutionID("bot_distillery")));
-        Mana_PLATE = registerMetaTileEntity(532, new MetaTileEntityManaPlate(PollutionID("mana_plate")));
-        MAGIC_ASSEMBLER = registerMetaTileEntity(533, new MetaTileEntityMagicAssembler(PollutionID("magic_assembler")));
-        NODE_BLAST_FURNACE = registerMetaTileEntity(534, new MetaTileEntityNodeBlastFurnace(PollutionID("node_blast_furnace")));
-        SMALL_CHEMICAL_PLANT = registerMetaTileEntity(535, new MetaTileEntitySmallChemicalPlant(PollutionID("small_chemical_plant")));
-        ESSENCE_SMELTER = registerMetaTileEntity(536, new MetaTileEntityEssenceSmelter(PollutionID("essence_smelter")));
-        BOT_GAS_COLLECTOR = registerMetaTileEntity(537, new MetaTileEntityBotGasCollector(PollutionID("bot_gas_collector")));
-        GT_ESSENCE_SMELTER = registerMetaTileEntity(538, new MetaTileEntityGtEssenceSmelter(PollutionID("gt_essence_smelter")));
-        BOT_VACUUM_FREEZER = registerMetaTileEntity(539, new MetaTileEntityBotVacuumFreezer(PollutionID("bot_vacuum_freezer")));
+        // LARGE_ESSENTIA_GENERATOR
+        LARGE_ESSENTIA_GENERATOR = registerMetaTileEntity(510,
+                new MetaTileEntityLargeEssentiaGenerator(PollutionID("large_essentia_generator")));
 
-        Muti_Dan_De_Life_On = registerMetaTileEntity(550, new MetaTileEntityMultiDanDeLifeOn(PollutionID("pollution_multi_dan_de_life_on")));
-        CENTRAL_VIS_TOWER = registerMetaTileEntity(551, new MetaTileEntityCentralVisTower(PollutionID("central_vis_tower")));
-        MANA_INFUSION_REACTOR = registerMetaTileEntity(552, new MetaTileEntityManaInfusionReactor(PollutionID("mana_infusion_reactor")));
-        BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(553, new MetaTileEntityBotCircuitAssembler(PollutionID("bot_circuit_assembler")));
-        NODE_FUSION_REACTOR[0] = registerMetaTileEntity(554, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.luv"), 6));
-        NODE_FUSION_REACTOR[1] = registerMetaTileEntity(555, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.zpm"), 7));
-        NODE_FUSION_REACTOR[2] = registerMetaTileEntity(556, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.uv"), 8));
+        // ===== 多方块机器 =====
+        INFUSED_EXCHANGE = registerMetaTileEntity(520, new MetaTileEntityInfusedExchange(PollutionID("infused_exchange")));
+        MAGIC_BENDER = registerMetaTileEntity(521, new MetaTileEntityMagicBender(PollutionID("magic_bender")));
+        MAGIC_CENTRIFUGE = registerMetaTileEntity(522, new MetaTileEntityMagicCentrifuge(PollutionID("magic_centrifuge")));
+        MAGIC_ELECTRIC_BLAST_FURNACE = registerMetaTileEntity(523, new MetaTileEntityMagicElectricBlastFurnace(PollutionID("magic_electric_blast_furnace")));
+        MAGIC_ELECTROLYZER = registerMetaTileEntity(524, new MetaTileEntityMagicElectrolyzer(PollutionID("magic_electrolyzer")));
+        MAGIC_MIXER = registerMetaTileEntity(525, new MetaTileEntityMagicMixer(PollutionID("magic_mixer")));
+        MAGIC_MACERATOR = registerMetaTileEntity(526, new MetaTileEntityMagicMacerator(PollutionID("magic_macerator")));
+        MAGIC_CHEMICAL_BATH = registerMetaTileEntity(527, new MetaTileEntityMagicChemicalBath(PollutionID("magic_chemical_bath")));
+        MAGIC_SIFTER = registerMetaTileEntity(528, new MetaTileEntityMagicSifter(PollutionID("magic_sifter")));
+        MAGIC_CUTTER = registerMetaTileEntity(529, new MetaTileEntityMagicCutter(PollutionID("magic_cutter")));
+        MAGIC_WIREMILL = registerMetaTileEntity(530, new MetaTileEntityMagicWireMill(PollutionID("magic_wiremill")));
+        MAGIC_SOLIDIFIER = registerMetaTileEntity(531, new MetaTileEntityMagicSolidifier(PollutionID("magic_solidifier")));
+        MAGIC_BREWERY = registerMetaTileEntity(532, new MetaTileEntityMagicBrewery(PollutionID("magic_brewery")));
+        INDUSTRIAL_INFUSION = registerMetaTileEntity(533, new MetaTileEntityIndustrialInfusion(PollutionID("industrial_infusion")));
+        MAGIC_BATTERY = registerMetaTileEntity(534, new MetaTileEntityMagicBattery(PollutionID("magic_battery")));
+        MAGIC_CHEMICAL_REACTOR = registerMetaTileEntity(535, new MetaTileEntityMagicChemicalReactor(PollutionID("magic_chemical_reactor")));
+        MAGIC_AUTOCLAVE = registerMetaTileEntity(536, new MetaTileEntityMagicAutoclave(PollutionID("magic_autoclave")));
+        MAGIC_EXTRUDER = registerMetaTileEntity(537, new MetaTileEntityMagicExtruder(PollutionID("magic_extruder")));
+        MAGIC_GREEN_HOUSE = registerMetaTileEntity(538, new MetaTileEntityMagicGreenHouse(PollutionID("magic_green_house")));
+        MAGIC_DISTILLERY = registerMetaTileEntity(539, new MetaTileEntityMagicDistillery(PollutionID("magic_distillery")));
+        MAGIC_ALLOY_BLAST = registerMetaTileEntity(540, new MetaTileEntityMagicAlloyBlastSmelter(PollutionID("magic_alloy_blast")));
+        ESSENCE_COLLECTOR = registerMetaTileEntity(541, new MetaTileEntityEssenceCollector(PollutionID("essence_collector")));
+        MAGIC_FUSION_REACTOR = registerMetaTileEntity(542, new MetaTileEntityMagicFusionReactor(PollutionID("magic_fusion_reactor")));
+        NODE_PRODUCER = registerMetaTileEntity(543, new MetaTileEntityNodeProducer(PollutionID("node_producer")));
+        LARGE_NODE_GENERATOR = registerMetaTileEntity(544, new MetaTileEntityLargeNodeGenerator(PollutionID("large_node_generator")));
+        NODE_WASHER = registerMetaTileEntity(545, new MetaTileEntityNodeWasher(PollutionID("node_washer")));
+        ENDOFLAME_ARRAY = registerMetaTileEntity(546, new MetaTileEntityEndoflameArray(PollutionID("endoflame_array")));
+        BOT_DISTILLERY = registerMetaTileEntity(547, new MetaTileEntityBotDistillery(PollutionID("bot_distillery")));
+        Mana_PLATE = registerMetaTileEntity(548, new MetaTileEntityManaPlate(PollutionID("mana_plate")));
+        MAGIC_ASSEMBLER = registerMetaTileEntity(549, new MetaTileEntityMagicAssembler(PollutionID("magic_assembler")));
+        NODE_BLAST_FURNACE = registerMetaTileEntity(550, new MetaTileEntityNodeBlastFurnace(PollutionID("node_blast_furnace")));
+        SMALL_CHEMICAL_PLANT = registerMetaTileEntity(551, new MetaTileEntitySmallChemicalPlant(PollutionID("small_chemical_plant")));
+        ESSENCE_SMELTER = registerMetaTileEntity(552, new MetaTileEntityEssenceSmelter(PollutionID("essence_smelter")));
+        BOT_GAS_COLLECTOR = registerMetaTileEntity(553, new MetaTileEntityBotGasCollector(PollutionID("bot_gas_collector")));
+        GT_ESSENCE_SMELTER = registerMetaTileEntity(554, new MetaTileEntityGtEssenceSmelter(PollutionID("gt_essence_smelter")));
+        BOT_VACUUM_FREEZER = registerMetaTileEntity(555, new MetaTileEntityBotVacuumFreezer(PollutionID("bot_vacuum_freezer")));
+
+        Muti_Dan_De_Life_On = registerMetaTileEntity(570, new MetaTileEntityMultiDanDeLifeOn(PollutionID("pollution_multi_dan_de_life_on")));
+        CENTRAL_VIS_TOWER = registerMetaTileEntity(571, new MetaTileEntityCentralVisTower(PollutionID("central_vis_tower")));
+        MANA_INFUSION_REACTOR = registerMetaTileEntity(572, new MetaTileEntityManaInfusionReactor(PollutionID("mana_infusion_reactor")));
+        BOT_CIRCUIT_ASSEMBLER = registerMetaTileEntity(573, new MetaTileEntityBotCircuitAssembler(PollutionID("bot_circuit_assembler")));
+        NODE_FUSION_REACTOR[0] = registerMetaTileEntity(574, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.luv"), 6));
+        NODE_FUSION_REACTOR[1] = registerMetaTileEntity(575, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.zpm"), 7));
+        NODE_FUSION_REACTOR[2] = registerMetaTileEntity(576, new MetaTileEntityNodeFusionReactor(PollutionID("node_fusion_reactor.uv"), 8));
 
         MANA_PETAL_APOTHECARY = registerMetaTileEntity(600, new MetaTileEntityManaPetalApothecary(PollutionID("mana_petal_apothecary")));
         MANA_RUNE_ALTAR = registerMetaTileEntity(601, new MetaTileEntityManaRuneAltar(PollutionID("mana_rune_altar")));
@@ -447,6 +459,14 @@ public class PollutionMetaTileEntities {
         for (int i = 0; i < MANA_OUTPUT_HATCH_64A.length; i++) {
             int tier = GTValues.LV + i;
             MANA_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(1250 + i, new MetaTileEntityManaHatch(PollutionID(String.format("mana_output_hatch_64a.%s", GTValues.VN[tier])), tier,64,true));
+        }
+
+        // ESSENTIA_HATCH
+        for (int i = 0; i < ESSENTIA_HATCH.length; i++) {
+            int tier = GTValues.LV + i;
+            ESSENTIA_HATCH[i] = registerMetaTileEntity(1265 + i,
+                    new MetaTileEntityEssentiaHatch(
+                            PollutionID("essentia_hatch." + GTValues.VN[tier].toLowerCase()), tier));
         }
 
         // MANA_POOL_INPUT_HATCH / MANA_POOL_OUTPUT_HATCH

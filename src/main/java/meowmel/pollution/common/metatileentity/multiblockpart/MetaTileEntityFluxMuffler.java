@@ -84,7 +84,8 @@ public class MetaTileEntityFluxMuffler extends MetaTileEntityMufflerHatch {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World world, @NotNull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.flux_muffler_hatch.tooltip.1"));
         tooltip.add(I18n.format("pollution.machine.flux_muffler_hatch.tooltip.3"));
         tooltip.add(I18n.format("pollution.machine.flux_muffler_hatch.tooltip.4"));

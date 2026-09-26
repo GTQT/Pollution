@@ -19,6 +19,8 @@ import gregtech.api.util.RelativeDirection;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.common.blocks.BlockTurbineCasing;
+import gregtech.common.blocks.MetaBlocks;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.api.pattern.POTieredCasingGroups;
@@ -102,7 +104,7 @@ public class MetaTileEntityNodeProducer extends MetaTileEntityBaseWithControl {
     }
 
     private static IBlockState getCasingState7() {
-        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
+        return MetaBlocks.TURBINE_CASING.getState(BlockTurbineCasing.TurbineCasingType.TUNGSTENSTEEL_GEARBOX);
     }
 
     private static IBlockState getCasingState8() {

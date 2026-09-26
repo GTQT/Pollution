@@ -3,6 +3,7 @@ package meowmel.pollution.api;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import meowmel.pollution.common.block.PollutionMetaBlocks;
+import meowmel.pollution.common.block.metablocks.POEssentiaCell;
 import meowmel.gtqtcore.api.blocks.impl.IBlockTier;
 import meowmel.gtqtcore.api.blocks.impl.WrappedIntTired;
 import net.minecraft.block.state.IBlockState;
@@ -23,6 +24,8 @@ public class POAPI {
     public static final Object2ObjectOpenHashMap<IBlockState, IBlockTier> MAP_CP_GLASS= new Object2ObjectOpenHashMap<>();
     public static final Object2ObjectOpenHashMap<IBlockState, IBlockTier> MAP_CP_COMPOSE= new Object2ObjectOpenHashMap<>();
     public static final Object2ObjectOpenHashMap<IBlockState, IBlockTier> MAP_CP_FRAME= new Object2ObjectOpenHashMap<>();
+    /** Essentia Diffusion Cells: tier 1..4, used by the Large Essentia Generator. */
+    public static final Object2ObjectOpenHashMap<IBlockState, IBlockTier> MAP_ESSENTIA_CELL = new Object2ObjectOpenHashMap<>();
     public static void init() {
 
         
@@ -84,6 +87,14 @@ public class POAPI {
         MAP_CP_FRAME.put(PollutionMetaBlocks.FUSION_REACTOR.getState(FRAME_V),
                 new WrappedIntTired(FRAME_V, 4));
 
+        MAP_ESSENTIA_CELL.put(PollutionMetaBlocks.ESSENTIA_CELL.getState(POEssentiaCell.CellType.ESSENTIA_CELL_T1),
+                new WrappedIntTired(POEssentiaCell.CellType.ESSENTIA_CELL_T1, 1));
+        MAP_ESSENTIA_CELL.put(PollutionMetaBlocks.ESSENTIA_CELL.getState(POEssentiaCell.CellType.ESSENTIA_CELL_T2),
+                new WrappedIntTired(POEssentiaCell.CellType.ESSENTIA_CELL_T2, 2));
+        MAP_ESSENTIA_CELL.put(PollutionMetaBlocks.ESSENTIA_CELL.getState(POEssentiaCell.CellType.ESSENTIA_CELL_T3),
+                new WrappedIntTired(POEssentiaCell.CellType.ESSENTIA_CELL_T3, 3));
+        MAP_ESSENTIA_CELL.put(PollutionMetaBlocks.ESSENTIA_CELL.getState(POEssentiaCell.CellType.ESSENTIA_CELL_T4),
+                new WrappedIntTired(POEssentiaCell.CellType.ESSENTIA_CELL_T4, 4));
 
     }
 }

@@ -14,6 +14,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,8 +66,9 @@ public class MetaTileEntityTarotHatch extends MetaTileEntityMagicItemHatch
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, World world, @NotNull List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.tarot_hatch.tooltip.1"));
         tooltip.add(I18n.format("pollution.machine.tarot_hatch.tooltip.2"));
         tooltip.add(I18n.format("pollution.machine.tarot_hatch.tooltip.3"));

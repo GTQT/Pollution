@@ -27,6 +27,8 @@ import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.common.blocks.BlockBoilerCasing;
+import gregtech.common.blocks.BlockTurbineCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
 import meowmel.pollution.api.recipes.PORecipeMaps;
@@ -100,7 +102,7 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
     }
 
     private static IBlockState getCasingState() {
-        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX);
+        return MetaBlocks.TURBINE_CASING.getState(BlockTurbineCasing.TurbineCasingType.TUNGSTENSTEEL_GEARBOX);
     }
 
     private static IBlockState getCasingState2() {
@@ -120,7 +122,7 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
     }
 
     private static IBlockState getCasingState6() {
-        return PollutionMetaBlocks.TURBINE.getState(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE);
+        return MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.TUNGSTENSTEEL_PIPE);
     }
 
     private static IBlockState getCasingState7() {

@@ -1,12 +1,10 @@
 package meowmel.pollution.client.textures;
 
 import codechicken.lib.texture.TextureUtils;
-import gregtech.api.GTValues;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.client.renderer.texture.cube.SidedCubeRenderer;
 import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
-import gregtech.client.renderer.texture.cube.SimpleSidedCubeRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 
 public class POTextures {
@@ -65,6 +63,8 @@ public class POTextures {
 	public static SimpleOverlayRenderer TERRA_5_CASING;
 	public static SimpleOverlayRenderer TERRA_6_CASING;
 
+	public static SimpleOverlayRenderer ESSENTIA_CELL;
+
 	public static SimpleOverlayRenderer MANA_BASIC;
 	public static SimpleOverlayRenderer MANA_1;
 	public static SimpleOverlayRenderer MANA_2;
@@ -101,6 +101,8 @@ public class POTextures {
 	public static SimpleOverlayRenderer WIRELESS_MANA_POOL_HATCH_INPUT;
 	public static SimpleOverlayRenderer WIRELESS_MANA_POOL_HATCH_OUTPUT;
 	public static SimpleOverlayRenderer VIS_HATCH;
+	public static SimpleOverlayRenderer ESSENTIA_INPUT_HATCH;
+	public static SimpleOverlayRenderer ESSENTIA_OUTPUT_HATCH;
 	public static SimpleOverlayRenderer INFUSED_FLUID_HATCH;
 	public static SimpleOverlayRenderer BLOOD_MAGIC_HATCH;
 	public static SimpleOverlayRenderer ASTRAL_LENS_HATCH;
@@ -162,6 +164,9 @@ public class POTextures {
 		TERRA_4_CASING = new SimpleOverlayRenderer("botblock/terra_4_casing");
 		TERRA_5_CASING = new SimpleOverlayRenderer("botblock/terra_5_casing");
 		TERRA_6_CASING = new SimpleOverlayRenderer("botblock/terra_6_casing");
+
+		ESSENTIA_CELL = new SimpleOverlayRenderer("essentia/essentia_cell_1");
+
 		HYPER_1 = new SimpleOverlayRenderer("hyper/hyper_1");
 		HYPER_2 = new SimpleOverlayRenderer("hyper/hyper_2");
 		HYPER_3 = new SimpleOverlayRenderer("hyper/hyper_3");
@@ -180,13 +185,18 @@ public class POTextures {
 		MANA_HATCH_OUTPUT_4A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_4a");
 		MANA_HATCH_OUTPUT_16A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_16a");
 		MANA_HATCH_OUTPUT_64A = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_output_64a");
+
 		WIRELESS_MANA_HATCH_INPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_input");
 		WIRELESS_MANA_HATCH_OUTPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_output");
 		MANA_POOL_HATCH_INPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_pool_input");
 		MANA_POOL_HATCH_OUTPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/mana_pool_output");
 		WIRELESS_MANA_POOL_HATCH_INPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_pool_input");
 		WIRELESS_MANA_POOL_HATCH_OUTPUT = new SimpleOverlayRenderer("overlay/machine/magic_hatch/wireless_mana_pool_output");
+
 		VIS_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/vis_hatch");
+		ESSENTIA_INPUT_HATCH = new SimpleOverlayRenderer("essentia/essentia_input_hatch");
+		ESSENTIA_OUTPUT_HATCH = new SimpleOverlayRenderer("essentia/essentia_output_hatch");
+
 		INFUSED_FLUID_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/infused_fluid_hatch");
 		BLOOD_MAGIC_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/blood_magic_hatch");
 		ASTRAL_LENS_HATCH = new SimpleOverlayRenderer("overlay/machine/magic_hatch/astral_lens_hatch");

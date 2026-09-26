@@ -149,8 +149,9 @@ public class MetaTileEntityMagicEnergyAbsorber extends TieredMetaTileEntity {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World player, @NotNull List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
+    public void addInformation(ItemStack stack, @Nullable World world, @NotNull List<String> tooltip,
+                               boolean advanced) {
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("tooltip.ender_power_generator.voltage", V[getTier()], VOCNF[getTier()]));
         tooltip.add(I18n.format("pollution.machine.pollution_magic_energy_absorber.tooltip"));
         tooltip.add(I18n.format("tooltip.ender_power_generator.current_output", V[getTier()-1]));

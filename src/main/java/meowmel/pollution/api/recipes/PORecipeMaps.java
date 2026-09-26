@@ -214,7 +214,7 @@ public class PORecipeMaps {
     /** The open-sky celestial growth array is the only controller for this map. */
     public static final RecipeMap<SimpleRecipeBuilder> CELESTIAL_CRYSTAL_GROWTH_RECIPES =
             new RecipeMapBuilder<>("celestial_crystal_growth", new SimpleRecipeBuilder())
-                    .itemInputs(4)
+                    .itemInputs(5)
                     .itemOutputs(1)
                     .fluidInputs(3)
                     .fluidOutputs(0)

@@ -402,18 +402,6 @@ tile.beam_core.filter_3.name=Tier 3 Thaumaturgic Beam Energy Aggregation Rune Co
 tile.beam_core.filter_4.name=Tier 4 Thaumaturgic Beam Energy Aggregation Rune Core
 tile.beam_core.filter_5.name=Tier 5 Thaumaturgic Beam Energy Aggregation Rune Core
 
-tile.turbine.bronze_gearbox.name=Alchemy Bronze Mechanism Box
-tile.turbine.steel_gearbox.name=Alchemy Steel Mechanism Box
-tile.turbine.stainless_steel_gearbox.name=Alchemy Stainless Steel Mechanism Box
-tile.turbine.titanium_gearbox.name=Alchemy Titanium Mechanism Box
-tile.turbine.tungstensteel_gearbox.name=Alchemy Tungsten Steel Mechanism Box
-
-tile.turbine.bronze_pipe.name=Alchemy Bronze Vis Conduit Component
-tile.turbine.steel_pipe.name=Alchemy Steel Vis Conduit Component
-tile.turbine.titanium_pipe.name=Alchemy Titanium Vis Conduit Component
-tile.turbine.tungstensteel_pipe.name=Alchemy Tungsten Steel Vis Conduit Component
-tile.turbine.polytetrafluoroethylene_pipe.name=Alchemy PTFE Vis Conduit Component
-
 tile.glass.laminated_glass.name=Enchanted Lambdaton Thaumaturgy Glass
 tile.glass.aaminated_glass.name=Enchanted Asmodeus Thaumaturgy Glass
 tile.glass.baminated_glass.name=Enchanted Brighton Thaumaturgy Glass
@@ -699,6 +687,20 @@ pollution.machine.magic_turbine.iv.name=Essence Turbine (§1IV§r)
 pollution.machine.large_turbine.magic.name=Large Essence Turbine (§5EV§r)
 pollution.machine.mega_turbine.magic.name=Extra Large Essence Turbine（§1IV§r）
 
+pollution.machine.large_essentia_generator.name=Large Essentia Generator
+pollution.machine.large_essentia_generator.tooltip.1=A multiblock that burns Thaumcraft essentia directly into EU.
+pollution.machine.large_essentia_generator.tooltip.2=Feed essentia through an Essentia Input Hatch; each aspect category needs its matching upgrade module.
+pollution.machine.large_essentia_generator.tooltip.3=The whole shell must use one diffusion cell tier; higher tiers multiply output.
+pollution.machine.large_essentia_generator.tooltip.4=Several categories need a catalyst fluid to reach full efficiency.
+pollution.machine.large_essentia_generator.cell_tier=Diffusion cell tier: %s
+pollution.machine.large_essentia_generator.multiplier=Output multiplier: x%s
+pollution.machine.large_essentia_generator.essentia=Essentia buffer: %,d / %,d
+pollution.machine.large_essentia_generator.output=Last cycle: %,d EU
+pollution.machine.large_essentia_generator.burning=Now burning: %s
+pollution.machine.large_essentia_generator.warning.no_hatch=Missing Essentia Input Hatch
+pollution.machine.large_essentia_generator.upgrade.installed=Essentia generator upgrade installed
+pollution.machine.large_essentia_generator.upgrade.duplicate=That category is already unlocked
+
 pollution.machine.vis_provider.lv.name=Vis Regenerator (§7LV§r)
 pollution.machine.vis_provider.mv.name=Vis Regenerator (§bMV§r)
 pollution.machine.vis_provider.hv.name=Vis Regenerator (§6HV§r)
@@ -719,7 +721,7 @@ pollution.machine.large_flux_clear.ev.name=Large Air Purifier (§5EV§r)
 pollution.machine.large_flux_clear.iv.name=Large Air Purifier (§1IV§r)
 pollution.machine.large_flux_clear.luv.name=Large Air Purifier (§dLuV§r)
 pollution.machine.filter_hatch.name=Filter Hatch
-pollution.machine.filter_hatch.tooltip=Supplies filters to the Large Air Purifier; filters wear out while working
+pollution.machine.filter_hatch.tooltip.1=Supplies filters to the Large Air Purifier; filters wear out while working
 pollution.machine.large_flux_clear.display.radius=§bCleaning Radius: %s Chunks
 pollution.machine.large_flux_clear.display.flux=§7Current Pollution: %s Vis
 pollution.machine.large_flux_clear.display.rate=§aCleaning Rate: %s Vis
@@ -1235,6 +1237,23 @@ pollution.machine.astral_lens_hatch.name=Astral Lens Hatch
 pollution.machine.astral_lens_hatch_advanced.name=Advanced Astral Lens Hatch
 pollution.machine.tarot_hatch.name=Tarot Hatch
 
+#Large Essentia Generator
+tile.essentia_cell.essentia_cell_1.name=Novice Essentia Diffusion Cell
+tile.essentia_cell.essentia_cell_2.name=Apprentice Essentia Diffusion Cell
+tile.essentia_cell.essentia_cell_3.name=Master Essentia Diffusion Cell
+tile.essentia_cell.essentia_cell_4.name=Grandmaster Essentia Diffusion Cell
+
+item.pollution.essentia_upgrade.null=Essentia Generator Upgrade: Empty
+item.pollution.essentia_upgrade.air=Essentia Generator Upgrade: Air
+item.pollution.essentia_upgrade.thermal=Essentia Generator Upgrade: Thermal
+item.pollution.essentia_upgrade.unstable=Essentia Generator Upgrade: Unstable
+item.pollution.essentia_upgrade.victus=Essentia Generator Upgrade: Life
+item.pollution.essentia_upgrade.tainted=Essentia Generator Upgrade: Tainted
+item.pollution.essentia_upgrade.mechanics=Essentia Generator Upgrade: Mechanics
+item.pollution.essentia_upgrade.spirit=Essentia Generator Upgrade: Spirit
+item.pollution.essentia_upgrade.radiation=Essentia Generator Upgrade: Radiation
+item.pollution.essentia_upgrade.electric=Essentia Generator Upgrade: Electric
+
 # Magic integration materials
 pollution.material.optical_grade_aquamarine=Optical-Grade Aquamarine
 pollution.material.starlight_pollen=Starlight Pollen
@@ -1409,6 +1428,27 @@ pollution.machine.mana_output_hatch_64a.uiv.name=64A Mana Output Hatch (§2UIV§
 pollution.machine.mana_output_hatch_64a.uxv.name=64A Mana Output Hatch (§eUXV§r)
 pollution.machine.mana_output_hatch_64a.opv.name=64A Mana Output Hatch (§9OpV§r)
 pollution.machine.mana_output_hatch_64a.max.name=64A Mana Output Hatch (§c§lMAX§r)
+
+pollution.machine.essentia_hatch.lv.name=§7LV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.mv.name=§bMV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.hv.name=§6HV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.ev.name=§5EV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.iv.name=§1IV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.luv.name=§dLuV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.zpm.name=§cZPM§r Essentia Input Hatch
+pollution.machine.essentia_hatch.uv.name=§3UV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.uhv.name=§4UHV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.uev.name=§aUEV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.uiv.name=§2UIV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.uxv.name=§eUXV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.opv.name=§9OpV§r Essentia Input Hatch
+pollution.machine.essentia_hatch.max.name=§c§lMAX§r Essentia Input Hatch
+pollution.machine.essentia_hatch.tooltip.capacity=Essentia buffer: %,d
+pollution.machine.essentia_hatch.tooltip.input=Input only: connect Thaumcraft essentia tubes to feed it
+pollution.machine.essentia_hatch.amount=Essentia: %,d / %,d
+pollution.machine.essentia_hatch.empty=(empty)
+pollution.machine.essentia_hatch.lock.set=Locked to %s
+pollution.machine.essentia_hatch.lock.cleared=Lock cleared
 
 # Mana pool input/output hatches
 pollution.machine.mana_pool_input_hatch.diluted.name=Diluted Mana Pool Input Hatch

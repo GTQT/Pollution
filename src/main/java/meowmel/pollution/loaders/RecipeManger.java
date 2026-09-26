@@ -26,6 +26,7 @@ public class RecipeManger {
         MagicFuelRecipes.init();
         MagicGCYMRecipes.init();
         MagicHatchRecipes.init();
+        EssentiaGeneratorRecipes.init();
         InfusedManager.init();
         CompoundAspectRecipes.init();
         MagicChemicalRecipes.init();

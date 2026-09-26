@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -66,9 +67,9 @@ public class MetaTileEntityVisProvider extends TieredMetaTileEntity {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World player, @NotNull List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World world, @NotNull List<String> tooltip, boolean advanced) {
         InformationHandler.topTooltips("末法时代", tooltip);
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("pollution.vis.provider", visProviderLogic.getVisPerTick()));
         tooltip.add(I18n.format("gregtech.universal.tooltip.voltage_in", this.energyContainer.getInputVoltage(), GTValues.VNF[this.getTier()]));
         tooltip.add(I18n.format("gregtech.universal.tooltip.energy_storage_capacity", energyContainer.getEnergyCapacity()));

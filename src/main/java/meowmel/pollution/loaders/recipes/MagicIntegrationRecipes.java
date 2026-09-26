@@ -246,6 +246,7 @@ public final class MagicIntegrationRecipes {
                     // Static JEI output; MagicMultiblockRecipeLogic replaces it with the embryo's
                     // quality-bearing independent cultivated-crystal NBT before reserving output space.
                     .output(PollutionMetaItems.CULTIVATED_CRYSTAL)
+                    .circuitMeta(growthRecipes + 1)
                     .duration(1200)
                     .EUt(VA[LuV]);
             MagicRecipeProperties.crystalCelestialGrowth(growth);

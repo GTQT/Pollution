@@ -41,6 +41,14 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomMeshDefinition(
 				Item.getItemFromBlock(GregTechAPI.mteManager.getRegistry(Pollution.MODID).getBlock()),
 				stack -> MetaTileEntityRenderer.MODEL_LOCATION);
+		// Essentia input hatch parts are MetaTileEntities, so their item models are registered here
+		// rather than through the block-model helper above.
+		for (meowmel.pollution.common.metatileentity.multiblockpart.MetaTileEntityEssentiaHatch hatch
+				: meowmel.pollution.common.metatileentity.PollutionMetaTileEntities.ESSENTIA_HATCH) {
+			if (hatch == null) continue;
+			Item item = hatch.getStackForm().getItem();
+			ModelLoader.setCustomModelResourceLocation(item, 0, MetaTileEntityRenderer.MODEL_LOCATION);
+		}
 	}
 
 	public void preLoad() {

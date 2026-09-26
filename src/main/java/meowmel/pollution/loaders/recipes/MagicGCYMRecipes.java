@@ -1416,140 +1416,6 @@ public class MagicGCYMRecipes {
 				new ItemStack(MetaItems.FIELD_GENERATOR_IV.getMetaItem(), 1, 206),
 				new ItemStack(ItemsTC.visResonator),
 				new ItemStack(ItemsTC.morphicResonator)));
-		//管道
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-bronze"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.BRONZE_PIPE),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateBronze",
-				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.BRONZE_PIPE)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-steel"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.STEEL_PIPE),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateSteel",
-				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.STEEL_PIPE)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-polytetrafluoroethylene"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.POLYTETRAFLUOROETHYLENE_PIPE),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "platePolytetrafluoroethylene",
-				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.POLYTETRAFLUOROETHYLENE_PIPE)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-titanium"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.TITANIUM_PIPE),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateTitanium",
-				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.TITANIUM_PIPE)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "pipe-tungstensteel"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.TUNGSTENSTEEL_PIPE),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateTungstenSteel",
-				'C', MetaBlocks.BOILER_CASING.getItemVariant(BlockBoilerCasing.BoilerCasingType.TUNGSTENSTEEL_PIPE)));
-		//齿轮
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_bronze"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.BRONZE_GEARBOX),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateBronze",
-				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.BRONZE_GEARBOX)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_steel"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.STEEL_GEARBOX),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateSteel",
-				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.STEEL_GEARBOX)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_bronze"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.BRONZE_GEARBOX),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateBronze",
-				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.BRONZE_GEARBOX)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_stainless"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.STAINLESS_STEEL_GEARBOX),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateStainlessSteel",
-				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.STEEL_GEARBOX)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_titanium"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.TITANIUM_GEARBOX),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateTitanium",
-				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.TITANIUM_GEARBOX)));
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "gearbox_tungstensteel"), new ShapedArcaneRecipe(
-				new ResourceLocation(""),
-				"FIRSTSTEPS@2",
-				25,
-				new AspectList().add(Aspect.EARTH, 1).add(Aspect.ORDER, 1),
-				PollutionMetaBlocks.TURBINE.getItemVariant(POTurbine.MagicBlockType.TUNGSTENSTEEL_GEARBOX),
-				"BBB",
-				"ACA",
-				"BBB",
-				'A', "plateMansussteel",
-				'B', "plateTungstenSteel",
-				'C', MetaBlocks.TURBINE_CASING.getItemVariant(BlockTurbineCasing.TurbineCasingType.TUNGSTENSTEEL_GEARBOX)));
 		//蕴魔引导外壳，电池外壳
 		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(Thaumcraft.MODID, "battery_casing"), new ShapedArcaneRecipe(
 				new ResourceLocation(""),
@@ -2399,7 +2265,7 @@ public class MagicGCYMRecipes {
 		//四个升级
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0))
 				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2409,7 +2275,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1))
 				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2419,7 +2285,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2))
 				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2429,7 +2295,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3))
 				.input(MAGIC_CIRCUIT_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2441,7 +2307,7 @@ public class MagicGCYMRecipes {
 		//魔法电路板与蕴魔电路板是同级并列路线，升级核心提供等价配方。
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_0))
 				.input(MAGIC_CIRCUIT_BOARD_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2451,7 +2317,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_1))
 				.input(MAGIC_CIRCUIT_BOARD_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2461,7 +2327,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_2))
 				.input(MAGIC_CIRCUIT_BOARD_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)
@@ -2471,7 +2337,7 @@ public class MagicGCYMRecipes {
 				.buildAndRegister();
 		RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
 				.input(frameGt, Mansussteel)
-				.input(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3).getItem())
+				.inputs(PollutionMetaBlocks.BEAM_CORE.getItemVariant(POMBeamCore.MagicBlockType.BEAM_CORE_3))
 				.input(MAGIC_CIRCUIT_BOARD_MV)
 				.input(ItemsTC.morphicResonator, 4)
 				.input(gem, Scabyst, 4)

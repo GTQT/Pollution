@@ -3,6 +3,7 @@ package meowmel.pollution.common.block.blocks;
 import meowmel.pollution.Pollution;
 import meowmel.pollution.common.block.tile.TileEntityFleshHeart;
 import meowmel.pollution.common.block.tile.TileEntityMagicCircle;
+import meowmel.pollution.common.items.ItemEssentiaUpgrade;
 import meowmel.pollution.common.items.PollutionItemsInit;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -92,9 +93,20 @@ public class PollutionBlocksInit {
 		}
 		// 独立物品模型
 		for (Item item : PollutionItemsInit.ITEMS) {
+			// 带子类型的物品在下面单独注册，它们每个 metadata 对应不同模型
+			if (item == PollutionItemsInit.ESSENTIA_UPGRADE) continue;
 			ModelLoader.setCustomModelResourceLocation(
 					item, 0,
 					new ModelResourceLocation(item.getRegistryName(), "inventory")
+			);
+		}
+		// 源质发电机升级：每个 metadata 一个模型
+		for (int damage = 0; damage < ItemEssentiaUpgrade.ListUpgrade.length; damage++) {
+			ModelLoader.setCustomModelResourceLocation(
+					PollutionItemsInit.ESSENTIA_UPGRADE, damage,
+					new ModelResourceLocation(
+							Pollution.MODID + ":" + ItemEssentiaUpgrade.ListUpgrade[damage] + "_upgrade",
+							"inventory")
 			);
 		}
 	}

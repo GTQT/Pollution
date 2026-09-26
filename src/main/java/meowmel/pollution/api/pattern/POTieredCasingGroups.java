@@ -11,6 +11,7 @@ import static meowmel.pollution.api.POAPI.MAP_CP_BEAM;
 import static meowmel.pollution.api.POAPI.MAP_CP_COMPOSE;
 import static meowmel.pollution.api.POAPI.MAP_CP_FRAME;
 import static meowmel.pollution.api.POAPI.MAP_CP_GLASS;
+import static meowmel.pollution.api.POAPI.MAP_ESSENTIA_CELL;
 
 /**
  * V3 structure-system registrations for Pollution's tiered multiblock casings.
@@ -26,6 +27,7 @@ public final class POTieredCasingGroups {
     private static CasingRegistration glasses;
     private static CasingRegistration compositionCasings;
     private static CasingRegistration frames;
+    private static CasingRegistration essentiaCells;
 
     private POTieredCasingGroups() {}
 
@@ -62,6 +64,17 @@ public final class POTieredCasingGroups {
             frames = register("pollution_frame", MAP_CP_FRAME);
         }
         return frames;
+    }
+
+    /**
+     * Essentia Diffusion Cells (tier 1..4) used as the shell of the Large Essentia Generator.
+     * The matched tier is the generator's global output multiplier: 1x / 2x / 5x / 10x.
+     */
+    public static CasingRegistration essentiaCells() {
+        if (essentiaCells == null) {
+            essentiaCells = register("pollution_essentia_cell", MAP_ESSENTIA_CELL);
+        }
+        return essentiaCells;
     }
 
     private static CasingRegistration register(String id, Map<net.minecraft.block.state.IBlockState, IBlockTier> casings) {

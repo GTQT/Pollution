@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PollutionMetaBlocks {
 	public static POMagicBlock MAGIC_BLOCK;
-	public static POTurbine TURBINE;
+	public static POEssentiaCell ESSENTIA_CELL;
 	public static POMBeamCore BEAM_CORE;
 	public static POCoilBlock WIRE_COIL;
 	public static POFusionReactor FUSION_REACTOR;
@@ -37,9 +37,8 @@ public class PollutionMetaBlocks {
 		MAGIC_BLOCK = new POMagicBlock();
 		MAGIC_BLOCK.setRegistryName("magic_block");
 
-		TURBINE = new POTurbine();
-		TURBINE.setRegistryName("turbine");
-
+		ESSENTIA_CELL = new POEssentiaCell();
+		ESSENTIA_CELL.setRegistryName("essentia_cell");
 
 		BEAM_CORE = new POMBeamCore();
 		BEAM_CORE.setRegistryName("beam_core");
@@ -85,7 +84,7 @@ public class PollutionMetaBlocks {
 	@SideOnly(Side.CLIENT)
 	public static void registerItemModels() {
 		registerItemModel(MAGIC_BLOCK);
-		registerItemModel(TURBINE);
+		registerItemModel(ESSENTIA_CELL);
 		registerItemModel(BEAM_CORE);
 		registerItemModel(WIRE_COIL);
 		registerItemModel(FUSION_REACTOR);

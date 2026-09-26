@@ -92,6 +92,7 @@ public class Pollution {
         MagicRecipeProperties.init();
         PollutionMetaBlocks.init();
         POAPI.init();
+        meowmel.pollution.common.data.EssentiaFuelData.init();
         PollutionMetaItems.initialization();
         POStructureManager.init();
         PODimensionType.init();

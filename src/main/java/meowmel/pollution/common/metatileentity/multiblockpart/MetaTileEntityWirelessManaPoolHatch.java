@@ -36,6 +36,7 @@ public class MetaTileEntityWirelessManaPoolHatch extends MetaTileEntityManaPoolH
     public void addInformation(ItemStack stack, @Nullable World world, @NotNull List<String> tooltip,
                                boolean advanced) {
         super.addInformation(stack, world, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.wireless_mana_pool_hatch.tooltip"));
     }
 

@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -80,9 +82,10 @@ public class MetaTileEntitySolarPlate extends TieredMetaTileEntity {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World world, @NotNull List<String> tooltip,
+                               boolean advanced) {
         InformationHandler.topTooltips("来自魔法的免费能源", tooltip);
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format(type.getBoostTooltipKey()));
         tooltip.add(I18n.format("pollution.machine.solar_plate.tooltip.level",
                 getTier(), I18n.format(type.getNameKey())));

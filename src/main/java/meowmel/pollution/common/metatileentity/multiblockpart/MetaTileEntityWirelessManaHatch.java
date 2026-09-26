@@ -9,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class MetaTileEntityWirelessManaHatch extends MetaTileEntityManaHatch {
     }
 
     @Override
-    protected SimpleOverlayRenderer getOverlay() {
+    protected @NotNull SimpleOverlayRenderer getOverlay() {
         return isExportHatch
                 ? POTextures.WIRELESS_MANA_HATCH_OUTPUT
                 : POTextures.WIRELESS_MANA_HATCH_INPUT;

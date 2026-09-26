@@ -84,9 +84,10 @@ public class MetaTileEntityVisHatch extends MetaTileEntityMultiblockPart
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, @NotNull List<String> tooltip, boolean advanced) {
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, World world, @NotNull List<String> tooltip, boolean advanced) {
         InformationHandler.topTooltips("天地精华", tooltip);
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, advanced);
         tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.capacity", getMaxVisStore()));
         tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.drain"));
         tooltip.add(I18n.format("pollution.machine.vis_hatch.tooltip.buffer", getTier()));

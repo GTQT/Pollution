@@ -398,18 +398,6 @@ tile.beam_core.filter_3.name=三级魔导束能聚合符文核心
 tile.beam_core.filter_4.name=四级魔导束能聚合符文核心
 tile.beam_core.filter_5.name=五级魔导束能聚合符文核心
 
-tile.turbine.bronze_gearbox.name=炼金青铜机关盒
-tile.turbine.steel_gearbox.name=炼金玄钢机关盒
-tile.turbine.stainless_steel_gearbox.name=炼金精钢机关盒
-tile.turbine.titanium_gearbox.name=炼金钛铁机关盒
-tile.turbine.tungstensteel_gearbox.name=炼金钨钢机关盒
-
-tile.turbine.bronze_pipe.name=炼金青铜源质输送构件
-tile.turbine.steel_pipe.name=炼金玄钢源质输送构件
-tile.turbine.titanium_pipe.name=炼金钛铁源质输送构件
-tile.turbine.tungstensteel_pipe.name=炼金钨钢源质输送构件
-tile.turbine.polytetrafluoroethylene_pipe.name=炼金特氟龙源质输送构件
-
 tile.glass.laminated_glass.name=蕴魔蓝波顿魔导术玻璃
 tile.glass.aaminated_glass.name=蕴魔阿斯麦魔导术玻璃
 tile.glass.baminated_glass.name=蕴魔伯明顿魔导术玻璃
@@ -672,6 +660,20 @@ pollution.machine.magic_turbine.iv.name=§1IV§r源质要素轮机
 pollution.machine.large_turbine.magic.name=§5EV§r大型源质要素轮机
 pollution.machine.mega_turbine.magic.name=§1IV§r特大源质要素轮机
 
+pollution.machine.large_essentia_generator.name=大型源质发电机
+pollution.machine.large_essentia_generator.tooltip.1=将源质要素直接转化为电能的多方块发电机
+pollution.machine.large_essentia_generator.tooltip.2=用源质输入仓接收管道中的源质，不同类别的源质需要安装对应升级
+pollution.machine.large_essentia_generator.tooltip.3=整机必须由同级源质扩散单元构成，等级越高发电倍率越高
+pollution.machine.large_essentia_generator.tooltip.4=部分类别的源质需要配合流体催化才能发挥全部效率
+pollution.machine.large_essentia_generator.cell_tier=扩散单元等级：%s
+pollution.machine.large_essentia_generator.multiplier=发电倍率：x%s
+pollution.machine.large_essentia_generator.essentia=源质缓存：%,d / %,d
+pollution.machine.large_essentia_generator.output=上一周期发电：%,d EU
+pollution.machine.large_essentia_generator.burning=当前燃烧：%s
+pollution.machine.large_essentia_generator.warning.no_hatch=缺失源质输入仓
+pollution.machine.large_essentia_generator.upgrade.installed=已安装源质发电机升级
+pollution.machine.large_essentia_generator.upgrade.duplicate=该类别已经解锁
+
 pollution.machine.vis_provider.lv.name=§7LV§r灵气再生机
 pollution.machine.vis_provider.mv.name=§bMV§r灵气再生机
 pollution.machine.vis_provider.hv.name=§6HV§r灵气再生机
@@ -692,7 +694,7 @@ pollution.machine.large_flux_clear.ev.name=§5EV§r大型空气过滤机
 pollution.machine.large_flux_clear.iv.name=§1IV§r大型空气过滤机
 pollution.machine.large_flux_clear.luv.name=§dLuV§r大型空气过滤机
 pollution.machine.filter_hatch.name=滤芯仓
-pollution.machine.filter_hatch.tooltip=为大型空气过滤机提供滤芯，工作时会消耗滤芯耐久
+pollution.machine.filter_hatch.tooltip.1=为大型空气过滤机提供滤芯，工作时会消耗滤芯耐久
 pollution.machine.large_flux_clear.display.radius=§b清理半径:%s 区块
 pollution.machine.large_flux_clear.display.flux=§7当前污染:%s Vis
 pollution.machine.large_flux_clear.display.rate=§a清理速率:%s Vis
@@ -1205,6 +1207,23 @@ tile.pollution.alfheim_red_grape_0.name=红葡萄藤
 tile.pollution.alfheim_red_grape_1.name=红葡萄藤
 tile.pollution.alfheim_red_grape_2.name=红葡萄藤
 
+#Large Essentia Generator
+tile.essentia_cell.essentia_cell_1.name=新手源质扩散单元
+tile.essentia_cell.essentia_cell_2.name=学徒源质扩散单元
+tile.essentia_cell.essentia_cell_3.name=大师源质扩散单元
+tile.essentia_cell.essentia_cell_4.name=宗师源质扩散单元
+
+item.pollution.essentia_upgrade.null=源质发电机升级：空
+item.pollution.essentia_upgrade.air=源质发电机升级：风
+item.pollution.essentia_upgrade.thermal=源质发电机升级：热力
+item.pollution.essentia_upgrade.unstable=源质发电机升级：不稳定
+item.pollution.essentia_upgrade.victus=源质发电机升级：生命
+item.pollution.essentia_upgrade.tainted=源质发电机升级：腐化
+item.pollution.essentia_upgrade.mechanics=源质发电机升级：机械
+item.pollution.essentia_upgrade.spirit=源质发电机升级：灵魂
+item.pollution.essentia_upgrade.radiation=源质发电机升级：辐射
+item.pollution.essentia_upgrade.electric=源质发电机升级：电力
+
 metaitem.plateMansussteel.tooltip=§7采集漫宿之梦，压制为板材§r
 item.material.oreprefix.frameGtMansussteel.tooltip=§7收集散落的漫宿之魂，铸成框架（此行尚未生效）§r
 
@@ -1405,6 +1424,27 @@ pollution.machine.mana_output_hatch_64a.uiv.name=64A 魔力输出仓（§2UIV§r
 pollution.machine.mana_output_hatch_64a.uxv.name=64A 魔力输出仓（§eUXV§r）
 pollution.machine.mana_output_hatch_64a.opv.name=64A 魔力输出仓（§9OpV§r）
 pollution.machine.mana_output_hatch_64a.max.name=64A 魔力输出仓（§c§lMAX§r）
+
+pollution.machine.essentia_hatch.lv.name=§7LV§r源质输入仓
+pollution.machine.essentia_hatch.mv.name=§bMV§r源质输入仓
+pollution.machine.essentia_hatch.hv.name=§6HV§r源质输入仓
+pollution.machine.essentia_hatch.ev.name=§5EV§r源质输入仓
+pollution.machine.essentia_hatch.iv.name=§1IV§r源质输入仓
+pollution.machine.essentia_hatch.luv.name=§dLuV§r源质输入仓
+pollution.machine.essentia_hatch.zpm.name=§cZPM§r源质输入仓
+pollution.machine.essentia_hatch.uv.name=§3UV§r源质输入仓
+pollution.machine.essentia_hatch.uhv.name=§4UHV§r源质输入仓
+pollution.machine.essentia_hatch.uev.name=§aUEV§r源质输入仓
+pollution.machine.essentia_hatch.uiv.name=§2UIV§r源质输入仓
+pollution.machine.essentia_hatch.uxv.name=§eUXV§r源质输入仓
+pollution.machine.essentia_hatch.opv.name=§9OpV§r源质输入仓
+pollution.machine.essentia_hatch.max.name=§c§lMAX§r源质输入仓
+pollution.machine.essentia_hatch.tooltip.capacity=源质缓存容量：%,d
+pollution.machine.essentia_hatch.tooltip.input=只进不出：用源质管道向此仓输入要素
+pollution.machine.essentia_hatch.amount=源质：%,d / %,d
+pollution.machine.essentia_hatch.empty=（空）
+pollution.machine.essentia_hatch.lock.set=已锁定为 %s
+pollution.machine.essentia_hatch.lock.cleared=已清除锁定
 
 # 魔力池输入/输出仓
 pollution.machine.mana_pool_input_hatch.diluted.name=稀释魔力池输入仓
