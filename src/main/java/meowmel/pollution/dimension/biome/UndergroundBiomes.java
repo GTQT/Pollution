@@ -161,10 +161,13 @@ public final class UndergroundBiomes {
             new Biome.SpawnListEntry(EntitySlimeignis.class, 5, 2, 4));
 
     /**
-     * 全部地下世界群系（GenLayer 区间分布用，顺序即分布索引）。
-     * 排列原则：相邻区间避免"装饰组与表面方块群系错配"——蘑菇林(菌丝)夹在水晶(石英岩)
-     * 和钟乳石(石头)之间，不与草方块群系（繁茂/原始）相邻；
-     * 草方块群系（繁茂/原始）也互相隔开。
+     * 全部地下世界群系：**下标即 {@code UndergroundBiomeLayout} 的槽位**（0..6 = 7 个风格群系，
+     * 7 = {@code DEEP_CAVE} 兜底），{@code GenLayerUndergroundBiomes} 直接按它取群系。
+     *
+     * <p>⚠ 顺序**不再**影响"谁挨着谁"：分布已改成抖动网格胞（每个胞独立抽群系），
+     * 任意两个群系都可能相邻，旧实现那套"按值域区间排列以避免错配"的技巧已经没有作用了
+     * （见 {@link meowmel.pollution.dimension.worldgen.UndergroundBiomeLayout}）。
+     * 这里保留原有顺序只是为了槽位↔群系的对应关系不变。
      */
     public static final Biome[] ALL = {
             MAGMA_CAVE, DESERT_CAVE, PRIMORDIAL_CAVE, CRYSTAL_CLUSTER,

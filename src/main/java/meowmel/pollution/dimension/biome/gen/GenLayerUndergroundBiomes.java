@@ -1,37 +1,34 @@
 package meowmel.pollution.dimension.biome.gen;
 
 import meowmel.pollution.dimension.biome.UndergroundBiomes;
-import meowmel.pollution.dimension.worldgen.WorldEngineNoise;
+import meowmel.pollution.dimension.worldgen.UndergroundBiomeLayout;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 /**
- * 地下世界群系分布层（GenLayer 标准机制）。
+ * 地下世界群系分布层（{@link GenLayer} 标准机制）。
  *
- * 分布结构：7 个特殊群系是噪声值域上的"窗口岛屿"（每个窗口宽 WINDOW），
- * 窗口之间全部是深窟基础群系——特殊群系彼此远离，中间用基础洞穴过渡。
+ * <p>本类现在是**薄适配器**：只做「槽位 → {@link Biome}」的翻译，
+ * 分布本身（抖动网格 / Voronoi 胞）在 {@link UndergroundBiomeLayout}，那里与 Minecraft 无关，
+ * 可被 {@code tools/biome-probe} 离线复现与标定。
  *
- * 控制参数：
- * - SCALE：噪声尺度，越大群系越大（世界距离 = 噪声窗口 × SCALE 比例）
- * - WINDOW：特殊群系窗口宽度（噪声值域单位），决定群系直径
- * - SLOT_SPACING：7 个槽位均分 [-AMPLITUDE, +AMPLITUDE]，决定群系间距
+ * <p>🔴 <b>旧实现为什么是一片片长条</b>（已修，详见 {@link UndergroundBiomeLayout} 的类注释）：
+ * 它按**单个二维噪声的数值**是否落在某个窄区间来选群系，而"数值落在窄区间"解出来的是该场的
+ * **等值线** —— 沿等高线蜿蜒的细长条带（实测平均宽 9–12 格、单斑块形状因子 71–155）。
+ * 团块必须用**二维**选择，现在是抖动网格胞（实测平均宽 40–42 格、形状因子 6.0–8.6）。
+ *
+ * <p>⚠ 另外记一笔：改成团块后一度出现"整个世界只有一个群系"，那不是本类的问题，
+ * 而是胞太大（256 格）+ 兜底群系渗流（占比 &gt; 0.593）导致玩家活动范围常常整个落在同一个胞里。
+ * 现在 {@link UndergroundBiomeLayout} 用 CELL=128、兜底 55–61%（低于渗流阈值）。
  */
 public class GenLayerUndergroundBiomes extends GenLayer {
 
-    private static final WorldEngineNoise.NoiseProfile BIOME_NOISE = WorldEngineNoise.profile(1.2D, 6);
-    private static final double SCALE = 4000.0D;
-    private static final double NOISE_AMPLITUDE = 0.4D;
-    /** 特殊群系窗口宽度（全宽）——约 240~300 格直径 */
-    private static final double WINDOW = 0.06D;
-    /** 7 个特殊群系槽位均分噪声值域 */
-    private static final double SLOT_SPACING = NOISE_AMPLITUDE * 2.0D / 7.0D;
-
-    private final long noiseSeed;
+    private final long seed;
 
     public GenLayerUndergroundBiomes(long seed) {
         super(0);
-        this.noiseSeed = (long) Math.pow((double) (seed * 84L), 6.0D);
+        this.seed = seed;
     }
 
     @Override
@@ -39,23 +36,8 @@ public class GenLayerUndergroundBiomes extends GenLayer {
         int[] result = IntCache.getIntCache(areaWidth * areaHeight);
         for (int z = 0; z < areaHeight; ++z) {
             for (int x = 0; x < areaWidth; ++x) {
-                double value = WorldEngineNoise.perlinNoise2D(
-                        noiseSeed, (areaX + x) / SCALE, (areaZ + z) / SCALE, BIOME_NOISE) * NOISE_AMPLITUDE;
-
-                int biomeId;
-                int slot = (int) Math.floor((value + NOISE_AMPLITUDE) / SLOT_SPACING);
-                if (slot < 0 || slot >= 7) {
-                    biomeId = Biome.getIdForBiome(UndergroundBiomes.DEEP_CAVE);
-                } else {
-                    // 槽位中心（窗口中心）
-                    double center = -NOISE_AMPLITUDE + SLOT_SPACING * (slot + 0.5);
-                    if (Math.abs(value - center) <= WINDOW / 2.0D) {
-                        biomeId = Biome.getIdForBiome(UndergroundBiomes.ALL[slot]);
-                    } else {
-                        biomeId = Biome.getIdForBiome(UndergroundBiomes.DEEP_CAVE);
-                    }
-                }
-                result[x + z * areaWidth] = biomeId;
+                int slot = UndergroundBiomeLayout.slotAt(seed, areaX + x, areaZ + z);
+                result[x + z * areaWidth] = Biome.getIdForBiome(UndergroundBiomes.ALL[slot]);
             }
         }
         return result;

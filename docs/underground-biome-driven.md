@@ -118,6 +118,21 @@ public interface IUndergroundBiome {
 
 **推荐：仿 `BiomeProviderNetherAPI` 的 GenLayer 方案**（标准机制，支持 BiomeCache 与将来子/边缘群系）：
 - `GenLayerUndergroundBiomes extends GenLayer`：一维噪声 → 群系 ID（区间映射，同旧方案数值）
+
+> ⚠ **实现修正（2026-10，已落地）**：上面这条"一维噪声区间映射"**是错的**——实测出来是一片片长条而不是团块。
+> 原因："噪声**数值**落在窄区间"解出来的是该噪声场的**等值线**，也就是沿等高线蜿蜒的细长条带
+> （实测平均宽 9–12 格、单斑块形状因子 71–155；团块应为 4–9）。
+> 现在改成**抖动网格胞（Voronoi）**：按**位置**取最近胞心，胞属于哪个群系由胞坐标哈希决定。
+> 分布逻辑抽到纯计算类 `dimension/worldgen/UndergroundBiomeLayout.java`（可被 `tools/biome-probe`
+> 离线复现与标定），`GenLayerUndergroundBiomes` 只剩"槽位 → Biome"的翻译。
+>
+> **第二处修正（同批）**：改成团块后一度"整个世界只有一个群系" —— 根因是**胞太大 + 兜底群系渗流**，
+> 不是占比问题。方形格点渗流阈值 0.593：兜底占比高于它时深窟会连成一整片"海"，
+> 玩家活动范围常常整个落在同一个胞里（实测真实存档：出生点附近 4×4 区块整块只有一个群系，
+> 最长"只有深窟"走廊 2537 格）。现在 **CELL=128、风格群系占比 0.42**（兜底 55–61%，低于阈值）
+> ⇒ 斑块宽约 69 格、中位数走 16 格就能遇到另一个群系、最长走廊降到 ~1221 格。
+> 存档核对工具（`BiomeSaveCheck`）把已生成区块的群系数组与离线布局逐格对照，**一致率 100%**。
+> 深窟仍是**单个占比最大的群系**，设计上"深窟兜底 + 风格群系点缀"不变。
 - provider 持 `genBiomes`（生成用）+ `biomeIndexLayer`（查询用，带边缘平滑可选）+ `BiomeCache`
 - `getBiomesToSpawnIn` 返回深窟基础
 
@@ -135,7 +150,7 @@ public interface IUndergroundBiome {
 
 > 地形骨架（噪声/洞顶 84/岩石变种层）全部群系共享、不变。
 > 全部 7 个风格群系 = **表面方块 + 装饰** 两个维度的差异，无任何地形形状变化。
-> 深窟基础保留为兜底群系（噪声不落入其它区间时）。
+> 深窟基础保留为兜底群系（约占 55–61%，仍是单个占比最大的群系；由胞坐标哈希决定，**不是**"噪声不落入其它区间"——见 §3.4 的修正）。
 
 | 群系 | 表面（buildSurface） | 装饰（populate） | 刷怪 |
 |---|---|---|---|
@@ -191,7 +206,8 @@ public interface IUndergroundBiome {
 **新增**：
 - `dimension/biome/IUndergroundBiome.java`（群系接口）
 - `dimension/biome/BiomeProviderUnderground.java`（GenLayer 群系提供器）
-- `dimension/biome/gen/GenLayerUndergroundBiomes.java`（群系分布层）
+- `dimension/biome/gen/GenLayerUndergroundBiomes.java`（群系分布层；2026-10 修正后只剩"槽位 → Biome"翻译）
+- `dimension/worldgen/UndergroundBiomeLayout.java`（群系分布的纯计算实现，2026-10 修正时抽出；`tools/biome-probe` 直接量它）
 - `dimension/biome/biomes/POBiomeUndergroundStyle.java`（参数化群系，implements IUndergroundBiome）
 - `dimension/biome/UndergroundBiomes.java`（6 群系工厂：表面/流体类型/装饰组/刷怪表）
 

@@ -13,6 +13,7 @@ import meowmel.pollution.dimension.worldgen.feature.WorldGenStalactite;
 import meowmel.pollution.dimension.worldgen.feature.WorldGenUndergroundWater;
 import meowmel.pollution.dimension.worldgen.mapgen.MapGenCavesUnderground;
 import meowmel.pollution.dimension.worldgen.mapgen.MapGenUndergroundBridge;
+import meowmel.pollution.dimension.worldgen.UndergroundRivers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
@@ -317,6 +318,9 @@ public class ChunkGeneratorUndergroundWorld implements IChunkGenerator {
         ChunkPrimer chunkPrimer = new ChunkPrimer();
         this.prepareHeights(x, z, chunkPrimer);
         this.buildSurfaces(x, z, chunkPrimer);
+        // 地下河：把水面以下互不相通的洞窟沿一条噪声河道凿穿并灌水，水面以上凿出峡谷。
+        // 必须放在 replaceStoneNearWater 之前（河道床/两岸才会被刷上沙砾）、caveGen 之前（洞穴可与河道打通）。
+        UndergroundRivers.carve(this.world.getSeed(), WATER_LEVEL - 1, chunkPrimer, x, z);
         this.replaceStoneNearWater(x, z, chunkPrimer);
         this.caveGen.generate(this.world, x, z, chunkPrimer);
 
