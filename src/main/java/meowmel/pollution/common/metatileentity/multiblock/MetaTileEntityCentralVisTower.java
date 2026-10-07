@@ -40,6 +40,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.aura.AuraHelper;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.PylonVariant;
@@ -210,8 +211,8 @@ public class MetaTileEntityCentralVisTower extends MetaTileEntityBaseWithControl
         }
     }
 
-        @Override
-    protected StructureDefinition<?> createStructureDefinition() {
+    @Override
+    protected @NotNull StructureDefinition<?> createStructureDefinition() {
         return DeclarativePatternBuilder.start()
                 .aisle("AB           BA", "C             C", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "       D       ", "       E       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")
                 .aisle("BAB         BAB", " C           C ", " C           C ", " C           C ", "               ", "               ", "               ", "               ", "               ", "       A       ", "    DDDFDDD    ", "       G       ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ", "               ")

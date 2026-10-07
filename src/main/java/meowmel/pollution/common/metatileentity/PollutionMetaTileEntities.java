@@ -133,6 +133,8 @@ public class PollutionMetaTileEntities {
     // 杂项
     public static final MetaTileEntityLargeFluxClear[] FLUX_CLEARS = new MetaTileEntityLargeFluxClear[3];
 
+    public static MetaTileEntityBeneathTrans BENEATH_TRANS;
+
     // 血魔法HPCA
     public static MetaTileEntityBMHPCAEmpty BMHPCA_EMPTY_COMPONENT;
     public static MetaTileEntityBMHPCAComputation BMHPCA_COMPUTATION_COMPONENT;
@@ -369,6 +371,8 @@ public class PollutionMetaTileEntities {
         FLUX_CLEARS[0] = registerMetaTileEntity(800, new MetaTileEntityLargeFluxClear(PollutionID("large_flux_clear.ev"), FluxClearType.EV));
         FLUX_CLEARS[1] = registerMetaTileEntity(801, new MetaTileEntityLargeFluxClear(PollutionID("large_flux_clear.iv"), FluxClearType.IV));
         FLUX_CLEARS[2] = registerMetaTileEntity(802, new MetaTileEntityLargeFluxClear(PollutionID("large_flux_clear.luv"), FluxClearType.LuV));
+
+        BENEATH_TRANS = registerMetaTileEntity(803, new MetaTileEntityBeneathTrans(PollutionID("beneath_trans")));
 
         // ===== 血魔法HPCA =====
         BMHPCA_EMPTY_COMPONENT = registerMetaTileEntity(900,

@@ -1,6 +1,7 @@
 package meowmel.pollution.common.block.blocks;
 
 import meowmel.pollution.Pollution;
+import meowmel.pollution.common.block.tile.TileEntityBeneathReturnPad;
 import meowmel.pollution.common.block.tile.TileEntityFleshHeart;
 import meowmel.pollution.common.block.tile.TileEntityMagicCircle;
 import meowmel.pollution.common.items.ItemEssentiaUpgrade;
@@ -28,7 +29,8 @@ public class PollutionBlocksInit {
 	public static final Item ITEM_BLOCK_FLESH_FLOWER = new ItemBlock(BLOCK_FLESH_FLOWER).setRegistryName(BLOCK_FLESH_FLOWER.getRegistryName().getPath());
 	public static final Item ITEM_BLOCK_FLESH_PLANT = new ItemBlock(BLOCK_FLESH_PLANT).setRegistryName(BLOCK_FLESH_PLANT.getRegistryName().getPath());
 
-	public static final BlockPOPortal BLOCK_TF_PORTAL = new BlockPOPortal();
+	/** 地下世界落点平台中央的返程传送器，只由 POBeneathTeleporter 在运行时生成，不进创造模式物品栏。 */
+	public static final BlockBeneathReturn BLOCK_BENEATH_RETURN = new BlockBeneathReturn();
 	//血肉树相关
 	public static final BlockFlesh FLESH_BLOCK = new BlockFlesh();
 	public static final BlockFleshLeaves FLESH_LEAVES = new BlockFleshLeaves();
@@ -50,13 +52,15 @@ public class PollutionBlocksInit {
 	public static void registerBlock(RegistryEvent.Register<Block> event) {
 		// 和物品一样，每一个方块都有唯一一个注册名，不能使用大写字母。
 		event.getRegistry().register(BLOCK_MAGIC_CIRCLE);
-		event.getRegistry().register(BLOCK_TF_PORTAL);
+		event.getRegistry().register(BLOCK_BENEATH_RETURN);
 		event.getRegistry().register(BLOCK_FLESH_FLOWER);
 		event.getRegistry().register(BLOCK_FLESH_PLANT);
 		event.getRegistry().registerAll(BLOCKS);
 		// 注册tile entity
 		GameRegistry.registerTileEntity(TileEntityMagicCircle.class, new ResourceLocation(Pollution.MODID, "magic_circle"));
 		GameRegistry.registerTileEntity(TileEntityFleshHeart.class, new ResourceLocation(Pollution.MODID, "flesh_heart"));
+		GameRegistry.registerTileEntity(TileEntityBeneathReturnPad.class,
+				new ResourceLocation(Pollution.MODID, "beneath_return_pad"));
 	}
 
 	@SubscribeEvent

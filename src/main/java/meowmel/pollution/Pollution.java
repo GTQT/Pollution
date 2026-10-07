@@ -41,8 +41,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-import static meowmel.pollution.api.utils.POTeleporter.buildPortalIngredient;
-
 
 @Mod(
         modid = "pollution",
@@ -100,7 +98,6 @@ public class Pollution {
         proxy.preLoad();
         MinecraftForge.EVENT_BUS.register(new PollutionBlocksInit());
         PollutionMetaTileEntities.initialization();
-        buildPortalIngredient();
         PoEntitiesRegistry.init();
         WirelessManager.getInstance().init();
         WarpEventHandler.init();

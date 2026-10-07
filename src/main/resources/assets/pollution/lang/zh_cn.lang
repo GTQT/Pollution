@@ -710,6 +710,21 @@ pollution.flux_clear.flux=污染剩余:%s Vis
 pollution.flux_clear.tooltip=§b专业空气清洁
 
 pollution.vis.product=§6每秒污染产生%s Vis
+
+#盾构传送
+pollution.machine.beneath_trans.name=地下盾构传送阵
+pollution.machine.beneath_trans.panel.title=地下世界传送
+pollution.machine.beneath_trans.button.tooltip=打开盾构面板
+pollution.machine.beneath_trans.button.teleport=前往地下世界
+pollution.machine.beneath_trans.button.teleport.tooltip=在落点生成平台，平台中央的传送器可返回这里
+pollution.beneath_trans.arrived=你被盾构机送入了地下世界。
+pollution.beneath_trans.already_there=你已经在下面了。
+pollution.beneath_trans.dimension_missing=地下世界维度 %s 未加载，暂时无法前往。
+pollution.beneath_trans.returned=你回到了出发的地方。
+pollution.beneath_trans.return_unset=这台返程传送器还没有记录返程坐标。
+pollution.beneath_trans.return_dimension_missing=返程维度 %s 未加载。
+pollution.beneath_trans.return_unsafe=返程坐标附近没有安全的落脚点。
+
 #注魔太阳能
 pollution.machine.solar_plate_1.1.name=§e风注魔太阳能(1级)§r
 pollution.machine.solar_plate_2.1.name=§e风注魔太阳能(2级)§r

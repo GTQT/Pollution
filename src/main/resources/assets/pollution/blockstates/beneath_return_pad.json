@@ -1,0 +1,8 @@
+{
+  "forge_marker": 1,
+  "defaults": { "model": "pollution:beneath_return_pad" },
+  "variants": {
+    "normal": [ {} ],
+    "inventory": [ {} ]
+  }
+}

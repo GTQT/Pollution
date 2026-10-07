@@ -26,15 +26,6 @@ public class POConfig {
         public int AlfheimDimensionID = 43;
         @Config.Comment("Allow players to respawn in the terrain-only Alfheim dimension.")
         public boolean enableAlfheimRespawn = true;
-        @Config.Comment("可以始终前往地下世界的维度，以及返回的维度。默认为交错次元。")
-        public int originDimension = 0;
-        @Config.Comment("允许在“主世界”维度之外创建前往地下世界的传送门。这可能被视为作弊。")
-        public boolean allowPortalsInOtherDimensions = false;
-        @Config.Comment("如果为假，则返回传送门需要激活物品。")
-        public boolean shouldReturnPortalBeUsable = true;
-        @Config.Comment("确定新传送门是否应预先检查安全性。如果启用，传送门将失败形成，而不是重定向到安全的替代目的地。" +
-                "\n请注意，启用此功能也会降低传送门形成检查的频率。")
-        public boolean checkPortalDestination = false;
     }
 
     public static class PollutionSystemSwitch {

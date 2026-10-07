@@ -737,6 +737,21 @@ pollution.flux_clear.flux=Remaining Pollution: %s Vis
 pollution.flux_clear.tooltip=§bProfessional Air Cleaning
 
 pollution.vis.product=§6Pollution Generated per Second: %s Vis
+
+#Beneath teleport
+pollution.machine.beneath_trans.name=Underground Boring Translocator
+pollution.machine.beneath_trans.panel.title=Underground Transfer
+pollution.machine.beneath_trans.button.tooltip=Open the boring panel
+pollution.machine.beneath_trans.button.teleport=Descend to the Beneath
+pollution.machine.beneath_trans.button.teleport.tooltip=Builds a landing platform; the pad at its center returns you here
+pollution.beneath_trans.arrived=The boring machine has delivered you into the Beneath.
+pollution.beneath_trans.already_there=You are already down there.
+pollution.beneath_trans.dimension_missing=The Beneath dimension %s is not loaded; the transfer is unavailable.
+pollution.beneath_trans.returned=You are back where you started.
+pollution.beneath_trans.return_unset=This return pad has no recorded destination yet.
+pollution.beneath_trans.return_dimension_missing=The return dimension %s is not loaded.
+pollution.beneath_trans.return_unsafe=No safe spot was found near the recorded destination.
+
 #Enchanted Solar Panels
 pollution.machine.solar_plate_1.1.name=§eWind Enchanted Solar Panel (Tier 1)§r
 pollution.machine.solar_plate_2.1.name=§eWind Enchanted Solar Panel (Tier 2)§r
