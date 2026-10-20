@@ -11,8 +11,8 @@ import meowmel.pollution.dimension.worldgen.feature.WorldGenMushroomBlockCluster
 import meowmel.pollution.dimension.worldgen.feature.WorldGenScatteredBlock;
 import meowmel.pollution.dimension.worldgen.feature.WorldGenStalactite;
 import meowmel.pollution.dimension.worldgen.feature.WorldGenUndergroundWater;
-import meowmel.pollution.dimension.worldgen.mapgen.MapGenCavesUnderground;
-import meowmel.pollution.dimension.worldgen.mapgen.MapGenUndergroundBridge;
+import meowmel.pollution.dimension.worldgen.mapGen.MapGenCavesUnderground;
+import meowmel.pollution.dimension.worldgen.mapGen.MapGenUndergroundBridge;
 import meowmel.pollution.dimension.worldgen.UndergroundRivers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;

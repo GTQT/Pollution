@@ -1,4 +1,4 @@
-package meowmel.pollution.dimension.worldgen.mapgen;
+package meowmel.pollution.dimension.worldgen.mapGen;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

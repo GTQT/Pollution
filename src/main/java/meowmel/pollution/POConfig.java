@@ -10,6 +10,42 @@ public class POConfig {
     public static PollutionSystemSwitch PollutionSystemSwitch = new PollutionSystemSwitch();
     public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
     public static WarpEventSwitch WarpEventSwitch = new WarpEventSwitch();
+    public static DragonSettings DragonSettings = new DragonSettings();
+
+    public static class DragonSettings {
+        @Config.Comment("Enable hatching vanilla dragon eggs into Pollution ender dragons.")
+        public boolean enableHatching = true;
+
+        @Config.Comment("Require sneaking to activate a vanilla dragon egg.")
+        public boolean sneakToHatch = true;
+
+        @Config.Comment("Allow Pollution dragon eggs to hatch in The End.")
+        public boolean allowHatchingInEnd = false;
+
+        @Config.Comment("Minimum incubation time in ticks; hatching still uses a random check after this time.")
+        @Config.RangeInt(min = 1, max = 24000000)
+        public int minimumIncubationTicks = 24000;
+
+        @Config.Comment("Hatchling stage duration in ticks.")
+        @Config.RangeInt(min = 1, max = 24000000)
+        public int hatchlingDurationTicks = 48000;
+
+        @Config.Comment("Infant stage duration in ticks.")
+        @Config.RangeInt(min = 1, max = 24000000)
+        public int infantDurationTicks = 24000;
+
+        @Config.Comment("Fledgling stage duration in ticks.")
+        @Config.RangeInt(min = 1, max = 24000000)
+        public int fledglingDurationTicks = 32000;
+
+        @Config.Comment("Juvenile stage duration in ticks.")
+        @Config.RangeInt(min = 1, max = 24000000)
+        public int juvenileDurationTicks = 60000;
+
+        @Config.Comment("Adult-sized scale multiplier for all Pollution ender dragons.")
+        @Config.RangeDouble(min = 0.1D, max = 2.0D)
+        public double dragonScale = 1.0D;
+    }
 
     public static class OBJRenderSwitch {
         @Config.Comment({"节点聚变反应堆OBJ模型渲染开启"})

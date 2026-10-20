@@ -116,7 +116,6 @@ dependencies {
     implementation rfg.deobf(files("libs/gtqtcore-1.9.0.jar"))
     implementation rfg.deobf(files("libs/gregtech-gtqt-1.12.2-1.9.0.jar"))
     implementation rfg.deobf(files("libs/gregtechfoodoption-gtqt-1.12.2-1.9.0.jar"))
-    implementation rfg.deobf(files("libs/gtsteam-1.9.0.jar"))
     implementation rfg.deobf(files("libs/modelloader-1.0.0.jar"))
 
 

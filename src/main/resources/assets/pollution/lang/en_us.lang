@@ -2,6 +2,16 @@
 tile.pollution.rainbow_leaves.name=Magical Rainbow Leaves
 tile.pollution.rainbow_sapling.name=Magical Rainbow Sapling
 
+# Pollution Ender Dragon
+entity.pollution.ender_dragon.name=Pollution Ender Dragon
+entity.pollution.ender_dragon.stage_name=%1$s (%2$s)
+entity.pollution.ender_dragon.stage.egg=Egg
+entity.pollution.ender_dragon.stage.hatchling=Hatchling
+entity.pollution.ender_dragon.stage.infant=Infant
+entity.pollution.ender_dragon.stage.fledgling=Fledgling
+entity.pollution.ender_dragon.stage.juvenile=Juvenile
+entity.pollution.ender_dragon.stage.adult=Adult
+
 # Tarot Items
 metaitem.the_world.name=The World (Upright)
 metaitem.the_world.tooltip=Wish you the universe in your grasp

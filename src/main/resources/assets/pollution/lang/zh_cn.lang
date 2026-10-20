@@ -2,6 +2,16 @@
 tile.pollution.rainbow_leaves.name=魔法彩虹树叶
 tile.pollution.rainbow_sapling.name=魔法彩虹树苗
 
+# Pollution Ender Dragon
+entity.pollution.ender_dragon.name=污染末影龙
+entity.pollution.ender_dragon.stage_name=%1$s（%2$s）
+entity.pollution.ender_dragon.stage.egg=龙蛋
+entity.pollution.ender_dragon.stage.hatchling=初生
+entity.pollution.ender_dragon.stage.infant=幼年
+entity.pollution.ender_dragon.stage.fledgling=初飞期
+entity.pollution.ender_dragon.stage.juvenile=青年
+entity.pollution.ender_dragon.stage.adult=成年
+
 #材料注册
 metaitem.the_world.name=世界（正位）
 metaitem.the_world.tooltip=三系或多魔法工序：时间缩短10%%、介质-10%%、并行+1

@@ -4,6 +4,8 @@ import meowmel.pollution.Pollution;
 import meowmel.pollution.client.entity.*;
 import meowmel.pollution.common.entity.moster.*;
 import meowmel.pollution.common.entity.shoot.EntityBasalzBolt;
+import meowmel.pollution.common.entity.dragon.EntityPollutionDragon;
+import meowmel.pollution.client.entity.dragon.RenderPollutionDragon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -35,6 +37,8 @@ public class PoEntitiesRegistry {
         EntityBasalz.initialize(10);
         EntityBlitz.initialize(11);
         EntityBlizz.initialize(12);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "ender_dragon"), EntityPollutionDragon.class,
+                "Pollution Ender Dragon", 13, Pollution.instance, 96, 3, true);
     }
     @SideOnly(Side.CLIENT)
     public static void initRenderers() {
@@ -47,5 +51,6 @@ public class PoEntitiesRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntityBasalz.class, RenderEntityBasalz::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBlitz.class,  RenderEntityBlitz::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBlizz.class, RenderEntityBlizz::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityPollutionDragon.class, RenderPollutionDragon::new);
     }
 }

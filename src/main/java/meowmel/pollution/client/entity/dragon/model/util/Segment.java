@@ -1,0 +1,15 @@
+package meowmel.pollution.client.entity.dragon.model.util;
+
+/**
+ * Encapsulates the Position and Rotation of a model segment.
+ */
+public class Segment {
+    // NaN means the value is not initialized.
+    public float posX = Float.NaN;
+    public float posY = Float.NaN;
+    public float posZ = Float.NaN;
+    public float rotX = Float.NaN;
+    public float rotY = Float.NaN;
+    public float rotZ = Float.NaN;
+}
+

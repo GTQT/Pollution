@@ -1,4 +1,4 @@
-package meowmel.pollution.dimension.worldgen.mapgen;
+package meowmel.pollution.dimension.worldgen.mapGen;
 
 import com.google.common.collect.Lists;
 import meowmel.pollution.dimension.worldgen.structure.StructureUndergroundBridgePieces;

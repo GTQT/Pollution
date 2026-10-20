@@ -25,8 +25,10 @@ import meowmel.pollution.loaders.recipes.mods.Botania;
 import meowmel.pollution.common.ModGuiHandler;
 import meowmel.pollution.common.warpevent.WarpEventHandler;
 import meowmel.pollution.common.warpevent.net.MeowmelNetwork;
+import meowmel.pollution.common.entity.dragon.net.DragonNetwork;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
@@ -84,6 +86,9 @@ public class Pollution {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        if (Loader.isModLoaded("dragonmounts")) {
+            LOGGER.warn("DragonMounts detected; Pollution will leave vanilla dragon egg interaction to that mod.");
+        }
         // 注册 GUI 处理器（右键矿物提取器打开 GUI 的前提）
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
         PollutionLog.init(event.getModLog());
@@ -102,6 +107,7 @@ public class Pollution {
         WirelessManager.getInstance().init();
         WarpEventHandler.init();
         MeowmelNetwork.init();
+        DragonNetwork.init();
     }
 
     @Mod.EventHandler
