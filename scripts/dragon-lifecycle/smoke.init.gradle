@@ -1,0 +1,31 @@
+// Run with: gradlew.bat -I scripts/dragon-lifecycle/smoke.init.gradle dragonLifecycleSmoke
+gradle.projectsEvaluated {
+    def p = gradle.rootProject
+    def outputDir = p.layout.buildDirectory.dir('dragon-lifecycle-smoke/classes')
+    def compileSmoke = p.tasks.register('compileDragonLifecycleSmoke', JavaCompile) {
+        dependsOn p.tasks.named('classes')
+        source = p.fileTree('scripts/dragon-lifecycle') { include '*.java' }
+        classpath = p.sourceSets.main.runtimeClasspath
+        destinationDirectory.set(outputDir)
+        sourceCompatibility = '8'
+        targetCompatibility = '8'
+        options.compilerArgs.add('-proc:none')
+        javaCompiler.set(p.javaToolchains.compilerFor(p.java.toolchain))
+    }
+    p.tasks.register('dragonLifecycleSmoke', JavaExec) {
+        dependsOn compileSmoke
+        classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath
+        mainClass.set('DragonLifecycleSmoke')
+        javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        workingDir = p.file('build/dragon-lifecycle-smoke')
+        doFirst { workingDir.mkdirs() }
+    }
+    p.tasks.register('dragonIncubatorSmoke', JavaExec) {
+        dependsOn compileSmoke
+        classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath
+        mainClass.set('DragonIncubatorSmoke')
+        javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        workingDir = p.file('build/dragon-lifecycle-smoke')
+        doFirst { workingDir.mkdirs() }
+    }
+}

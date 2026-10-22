@@ -37,6 +37,7 @@ public final class StarstreamNexusRecipes {
         registerInterdimensionalRelay();
         registerChunkAnchor();
         registerOperationCore();
+        registerDragonEggIncubator();
     }
 
     private static void registerCasings() {
@@ -227,6 +228,19 @@ public final class StarstreamNexusRecipes {
                 .duration(2400)
                 .EUt(GTValues.VA[GTValues.UHV])
                 .buildAndRegister();
+    }
+
+    private static void registerDragonEggIncubator() {
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .inputs(GTUtility.copy(4, stack(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_RUNED_CASING)))
+                .inputs(stack(POStarstreamObelisk.ObeliskBlockType.CONSTELLATION_ANCHOR))
+                .input(PollutionMetaItems.HARMONIZING_RUNE_CORE, 2)
+                .input(PollutionMetaItems.ASTRAL_RESONANCE_COIL, 8)
+                .input(MetaItems.FIELD_GENERATOR_UV, 2)
+                .input(PollutionMetaItems.MAGIC_CIRCUIT_BOARD_UHV, 2)
+                .fluidInputs(new FluidStack(BlocksAS.fluidLiquidStarlight, 8000))
+                .outputs(PollutionMetaTileEntities.DRAGON_EGG_INCUBATOR.getStackForm())
+                .duration(1200).EUt(GTValues.VA[GTValues.UV]).buildAndRegister();
     }
 
     private static ItemStack ritualCrystal() {

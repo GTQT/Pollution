@@ -19,8 +19,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -35,8 +38,11 @@ public class EntityPollutionDragon extends EntityCreature {
     private static final DataParameter<Integer> WOBBLE_AXIS = EntityDataManager.createKey(EntityPollutionDragon.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> CRACK_LEVEL = EntityDataManager.createKey(EntityPollutionDragon.class, DataSerializers.VARINT);
     private static final DataParameter<Float> BASE_SCALE = EntityDataManager.createKey(EntityPollutionDragon.class, DataSerializers.FLOAT);
+    private static final DataParameter<Boolean> MANAGED_INCUBATION = EntityDataManager.createKey(EntityPollutionDragon.class, DataSerializers.BOOLEAN);
+    private BlockPos incubatorPos;
 
     private int ticksInStage;
+    private int clientTicksSinceSync;
     private float lastAppliedSize = -1.0F;
     private boolean lastAppliedEggStage;
     private int wobbleStartedAt;
@@ -63,6 +69,7 @@ public class EntityPollutionDragon extends EntityCreature {
         dataManager.register(WOBBLE_AXIS, 0);
         dataManager.register(CRACK_LEVEL, 0);
         dataManager.register(BASE_SCALE, 1.0F);
+        dataManager.register(MANAGED_INCUBATION, false);
     }
 
     @Override
@@ -107,37 +114,54 @@ public class EntityPollutionDragon extends EntityCreature {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        applyStageSize();
         if (isEgg()) {
             getNavigator().clearPath();
             motionX = 0.0D;
             motionY = 0.0D;
             motionZ = 0.0D;
         }
+        tickGrowth();
+        applyStageSize();
+    }
 
+    private void tickGrowth() {
+        if (!isEntityAlive()) {
+            return;
+        }
+        if (!world.isRemote && dataManager.get(WOBBLE_TICKS) > 0 && getWobbleTicks() == 0) {
+            // Do not replay an expired wobble when a new player starts tracking the egg.
+            dataManager.set(WOBBLE_TICKS, 0);
+        }
+        if (isEgg() && world.provider.getDimension() == 1 && !POConfig.DragonSettings.allowHatchingInEnd) {
+            return;
+        }
+        if (isEgg() && dataManager.get(MANAGED_INCUBATION)) return;
         if (world.isRemote) {
-            if (getLifeStage() != DragonLifeStage.ADULT && ticksInStage < getStageDuration()) {
+            // Extrapolate only until the next expected server checkpoint.
+            if (getLifeStage() != DragonLifeStage.ADULT && ticksInStage < getStageDuration()
+                    && clientTicksSinceSync < 20) {
                 ticksInStage++;
+                clientTicksSinceSync++;
             }
             return;
         }
-        if (isEgg()) {
-            tickIncubation();
-        } else if (getLifeStage() != DragonLifeStage.ADULT) {
-            ticksInStage++;
-            if (ticksInStage % 20 == 0) {
-                dataManager.set(STAGE_TICKS, ticksInStage);
-            }
-            if (ticksInStage >= getStageDuration()) {
-                advanceStage();
+        int steps = getLifeStage() == DragonLifeStage.ADULT ? 0 : DragonGrowthAura.multiplier(world, getPosition());
+        boolean startedAsEgg = isEgg();
+        for (int step = 0; step < steps; step++) {
+            if (startedAsEgg) {
+                if (!isEgg()) break;
+                tickIncubation();
+            } else if (getLifeStage() != DragonLifeStage.ADULT) {
+                ticksInStage++;
+                if (ticksInStage % 20 == 0) dataManager.set(STAGE_TICKS, ticksInStage);
+                if (ticksInStage >= getStageDuration()) advanceStage();
             }
         }
+        // Keep accelerated growth visually authoritative, including clients entering the aura.
+        if (steps > 1) dataManager.set(STAGE_TICKS, ticksInStage);
     }
 
     private void tickIncubation() {
-        if (world.provider.getDimension() == 1 && !POConfig.DragonSettings.allowHatchingInEnd) {
-            return;
-        }
         ticksInStage++;
         if (ticksInStage % 20 == 0) {
             dataManager.set(STAGE_TICKS, ticksInStage);
@@ -161,13 +185,41 @@ public class EntityPollutionDragon extends EntityCreature {
         }
     }
 
+    public void bindIncubator(BlockPos controller) {
+        if (world.isRemote || !isEgg()) return;
+        incubatorPos = controller.toImmutable();
+        dataManager.set(MANAGED_INCUBATION, true);
+    }
+
+    public boolean isBoundToIncubator(BlockPos controller) {
+        return isEgg() && dataManager.get(MANAGED_INCUBATION) && controller.equals(incubatorPos);
+    }
+
+    /** Advances only the egg lifecycle, never entity AI, movement, or juvenile growth. */
+    public boolean advanceIncubation(BlockPos controller) {
+        if (!isEntityAlive() || !isBoundToIncubator(controller) || !DragonEggHatching.isAllowed(world)) return false;
+        int steps = DragonGrowthAura.multiplier(world, getPosition());
+        for (int step = 0; step < steps && isEgg(); step++) tickIncubation();
+        dataManager.set(STAGE_TICKS, ticksInStage);
+        return true;
+    }
+
+    /** Explicit debug action; normal machines must use paid advanceIncubation instead. */
+    public boolean debugAdvanceGrowth(boolean adult) {
+        if (world.isRemote || !isEntityAlive() || getLifeStage() == DragonLifeStage.ADULT) return false;
+        if (isEgg()) hatch();
+        else if (!adult) advanceStage();
+        if (adult) setStage(DragonLifeStage.ADULT);
+        return true;
+    }
+
     private void hatch() {
         setCrackLevel(3);
         world.playSound(null, getPosition(), SoundEvents.BLOCK_GLASS_BREAK, getSoundCategory(), 0.8F, 0.7F + rand.nextFloat() * 0.3F);
-        for (int i = 0; i < 12; i++) {
-            world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX + (rand.nextDouble() - 0.5D) * 0.8D,
-                    posY + rand.nextDouble() * 0.8D, posZ + (rand.nextDouble() - 0.5D) * 0.8D,
-                    0.0D, 0.08D, 0.0D, net.minecraft.block.Block.getStateId(net.minecraft.init.Blocks.DRAGON_EGG.getDefaultState()));
+        if (world instanceof WorldServer) {
+            ((WorldServer) world).spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY + 0.4D, posZ,
+                    12, 0.3D, 0.3D, 0.3D, 0.08D,
+                    net.minecraft.block.Block.getStateId(net.minecraft.init.Blocks.DRAGON_EGG.getDefaultState()));
         }
         setStage(DragonLifeStage.HATCHLING);
         world.playSound(null, getPosition(), SoundEvents.ENTITY_ENDERDRAGON_GROWL, getSoundCategory(), 0.6F, 1.3F);
@@ -207,16 +259,21 @@ public class EntityPollutionDragon extends EntityCreature {
     }
 
     public void setStage(DragonLifeStage stage) {
-        ticksInStage = 0;
         dataManager.set(STAGE, stage.ordinal());
         dataManager.set(STAGE_TICKS, 0);
+        ticksInStage = 0;
+        clientTicksSinceSync = 0;
         dataManager.set(STAGE_DURATION, stage.getDurationTicks());
         setNoAI(stage == DragonLifeStage.EGG);
+        if (stage != DragonLifeStage.EGG) {
+            incubatorPos = null;
+            dataManager.set(MANAGED_INCUBATION, false);
+        }
         applyStageSize();
     }
 
     public int getTicksInStage() {
-        return Math.max(ticksInStage, dataManager.get(STAGE_TICKS));
+        return ticksInStage;
     }
 
     public int getStageDuration() {
@@ -267,7 +324,13 @@ public class EntityPollutionDragon extends EntityCreature {
             width = 0.75F;
             height = 0.75F;
         }
-        setSize(width, height);
+        // Entity.setSize moves growing entities and anchors the expanded box at its old corner.
+        // Growth must preserve the dragon's position and keep its collision box centered.
+        this.width = width;
+        this.height = height;
+        double halfWidth = width / 2.0D;
+        setEntityBoundingBox(new AxisAlignedBB(posX - halfWidth, posY, posZ - halfWidth,
+                posX + halfWidth, posY + height, posZ + halfWidth));
         stepHeight = Math.max(0.1F, scale);
     }
 
@@ -318,8 +381,10 @@ public class EntityPollutionDragon extends EntityCreature {
             wobbleStartedAt = ticksExisted;
         } else if (WOBBLE_AXIS.equals(key)) {
             clientWobbleAxis = dataManager.get(WOBBLE_AXIS);
-        } else if (STAGE.equals(key)) {
-            ticksInStage = 0;
+        } else if (world.isRemote && (STAGE.equals(key) || STAGE_TICKS.equals(key))) {
+            // Metadata entries may arrive in either order. Never reset the server's NBT-loaded timer.
+            ticksInStage = dataManager.get(STAGE_TICKS);
+            clientTicksSinceSync = 0;
         }
     }
 
@@ -370,6 +435,11 @@ public class EntityPollutionDragon extends EntityCreature {
         compound.setInteger("DragonCrackLevel", getCrackLevel());
         compound.setInteger("DragonWobbleTicks", getWobbleTicks());
         compound.setInteger("DragonWobbleAxis", getWobbleAxis());
+        if (incubatorPos != null && dataManager.get(MANAGED_INCUBATION)) {
+            compound.setLong("DragonIncubatorPos", incubatorPos.toLong());
+        } else {
+            compound.removeTag("DragonIncubatorPos");
+        }
     }
 
     @Override
@@ -383,9 +453,13 @@ public class EntityPollutionDragon extends EntityCreature {
                 stage = DragonLifeStage.EGG;
             }
         }
-        ticksInStage = Math.max(0, compound.getInteger("DragonStageTicks"));
         dataManager.set(STAGE, stage.ordinal());
+        ticksInStage = Math.max(0, compound.getInteger("DragonStageTicks"));
         dataManager.set(STAGE_TICKS, ticksInStage);
+        clientTicksSinceSync = 0;
+        incubatorPos = stage == DragonLifeStage.EGG && compound.hasKey("DragonIncubatorPos")
+                ? BlockPos.fromLong(compound.getLong("DragonIncubatorPos")) : null;
+        dataManager.set(MANAGED_INCUBATION, incubatorPos != null);
         int minimumStageDuration = stage == DragonLifeStage.ADULT ? 0 : 1;
         dataManager.set(STAGE_DURATION, compound.hasKey("DragonStageDuration")
                 ? Math.max(minimumStageDuration, compound.getInteger("DragonStageDuration")) : stage.getDurationTicks());

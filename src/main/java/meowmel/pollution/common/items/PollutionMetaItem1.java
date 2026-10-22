@@ -344,6 +344,12 @@ public class PollutionMetaItem1 extends StandardMetaItem {
 				this.addItem(563, "depleted_magic_core")
 						.setMaxStackSize(64)
 						.setCreativeTabs(Pollution_TAB);
+        PollutionMetaItems.DRAGON_DEBUGGER = this.addItem(572, "dragon_debugger")
+                .setMaxStackSize(1).setRarity(EnumRarity.EPIC)
+                .addComponents(new TooltipBehavior(lines -> {
+                    lines.add(I18n.format("metaitem.dragon_debugger.tooltip.1"));
+                    lines.add(I18n.format("metaitem.dragon_debugger.tooltip.2"));
+                })).setCreativeTabs(Pollution_TAB);
 		PollutionMetaItems.STARSTREAM_LINKER =
 				this.addItem(571, "starstream_linker")
 						.setMaxStackSize(1)

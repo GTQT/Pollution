@@ -16,8 +16,29 @@ public class POConfig {
         @Config.Comment("Enable hatching vanilla dragon eggs into Pollution ender dragons.")
         public boolean enableHatching = true;
 
-        @Config.Comment("Require sneaking to activate a vanilla dragon egg.")
-        public boolean sneakToHatch = true;
+        @Config.Comment("Paid awakening progress ticks needed before incubator-managed incubation begins.")
+        @Config.RangeInt(min = 1, max = 24000000)
+        public int incubatorAwakeningTicks = 1200;
+
+        @Config.Comment("Aevitas CE consumed per progress tick during awakening and incubation.")
+        @Config.RangeInt(min = 1, max = 1000000)
+        public int incubatorAevitasPerTick = 128;
+
+        @Config.Comment("Horologium CE per additional incubation progress tick. Optional acceleration.")
+        @Config.RangeInt(min = 1, max = 1000000)
+        public int incubatorHorologiumPerTick = 64;
+
+        @Config.Comment("Maximum paid progress ticks per world tick when Horologium energy is available.")
+        @Config.RangeInt(min = 1, max = 16)
+        public int incubatorAcceleration = 4;
+
+        @Config.Comment("Radius in blocks of a level-10 flesh heart's dragon growth aura. 0 disables it.")
+        @Config.RangeInt(min = 0, max = 128)
+        public int fleshHeartDragonRadius = 32;
+
+        @Config.Comment("Dragon growth multiplier near a level-10 flesh heart; multiple hearts do not stack.")
+        @Config.RangeInt(min = 1, max = 16)
+        public int fleshHeartDragonMultiplier = 2;
 
         @Config.Comment("Allow Pollution dragon eggs to hatch in The End.")
         public boolean allowHatchingInEnd = false;

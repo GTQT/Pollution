@@ -121,6 +121,7 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityManaPetalApothecary MANA_PETAL_APOTHECARY;
     public static MetaTileEntityManaRuneAltar MANA_RUNE_ALTAR;
     public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
+    public static MetaTileEntityDragonEggIncubator DRAGON_EGG_INCUBATOR;
     public static MetaTileEntityIndustrialStarlightInfuser INDUSTRIAL_STARLIGHT_INFUSER;
     public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
     public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
@@ -355,6 +356,8 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityCelestialCalibrationMatrix(PollutionID("celestial_calibration_matrix")));
         CELESTIAL_CRYSTAL_GROWTH_ARRAY = registerMetaTileEntity(607,
                 new MetaTileEntityCelestialCrystalGrowthArray(PollutionID("celestial_crystal_growth_array")));
+        DRAGON_EGG_INCUBATOR = registerMetaTileEntity(608,
+                new MetaTileEntityDragonEggIncubator(PollutionID("dragon_egg_incubator")));
 
         ConstellationTowerDefinition[] constellationTowers = ConstellationTowerDefinition.values();
         for (int i = 0; i < constellationTowers.length; i++) {

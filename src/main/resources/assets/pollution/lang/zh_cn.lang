@@ -1106,6 +1106,25 @@ pollution.machine.bot_circuit_assembler.tooltip=§a假如殉道者的鲜血将�
 
 pollution.machine.industial_pure_daisy.name=秘学新植白菊之塔
 pollution.machine.mana_petal_apothecary.name=秘学新植花药之杯
+pollution.machine.dragon_egg_incubator.name=生息龙蛋孵化器
+pollution.machine.dragon_egg_incubator.tooltip.1=11×7×11 星流花冠多方块，星流外壳、符文外壳、大理石柱与星座锚构成。
+pollution.machine.dragon_egg_incubator.tooltip.2=用组网模式的星流链接器将背面的星宿运转核心接入方尖碑网络；无需魔力池仓或 EU。
+pollution.machine.dragon_egg_incubator.tooltip.3=生息座能量持续驱动唤醒与孵化；时钟座能量为可选加速，默认最高 4 倍。
+pollution.machine.dragon_egg_incubator.tooltip.4=默认每步 128 生息 CE；额外每步另需 64 时钟 CE。不足时钟能量则降速，缺生息能量则暂停。
+pollution.machine.dragon_egg_incubator.tooltip.5=受控龙蛋必须留在原机器花心，断能/拆机暂停并保留蛋进度；破壳后正常成长，不再耗能。
+pollution.machine.dragon_egg_incubator.progress=当前阶段进度：%s / %s tick（蛋阶段达到下限后随机破壳）
+pollution.machine.dragon_egg_incubator.energy=每步生息：%s CE｜额外每步时钟：%s CE｜本刻推进：%s 步
+pollution.machine.dragon_egg_incubator.nest=蛋位：向后 4、向上 4；接收核心：底座向后 8 格。
+pollution.machine.dragon_egg_incubator.status.waiting=等待花心上的原版龙蛋；幼龙破壳后不再受机器加速。
+pollution.machine.dragon_egg_incubator.status.paused=工作已暂停，保留进度。
+pollution.machine.dragon_egg_incubator.status.disabled=当前配置、维度或 Dragon Mounts 兼容规则禁止孵化。
+pollution.machine.dragon_egg_incubator.status.blocked=花心空间未加载或有其他方块、生物占用。
+pollution.machine.dragon_egg_incubator.status.no_energy=等待生息座能量，请检查星流绑定、节点范围和可用带宽。
+pollution.machine.dragon_egg_incubator.status.charging=生息星流正在唤醒龙蛋。
+pollution.machine.dragon_egg_incubator.status.incubating=生息星流维持普通速度孵化；时钟座不足时不会停机。
+pollution.machine.dragon_egg_incubator.status.accelerating=时钟座正在加速当前蛋阶段。
+pollution.machine.dragon_egg_incubator.status.spawn_failed=实体生成失败，保留原蛋与已付进度，自动重试。
+pollution.machine.dragon_egg_incubator.status.complete=当前阶段完成；机器将根据花心目标继续运行。
 pollution.machine.mana_rune_altar.name=秘学新植符文之台
 pollution.machine.mana_infusion_reactor.name=秘学新植注魔之坛
 
@@ -1982,3 +2001,10 @@ chat.pollution.warp.countdownbomb.tick=%s……
 chat.pollution.warp.countdownbomb.end=轰！！！——你身上的炸弹炸了……但好像只是虚惊。
 chat.pollution.warp.junk=咒波从虚空中呕出了杂物。
 chat.pollution.warp.inventoryscramble=咒波扰乱了你的背包！
+
+metaitem.dragon_debugger.name=龙孵化与成长调试杖
+metaitem.dragon_debugger.tooltip.1=仅创造模式、主手使用；右键龙蛋立即孵化，右键龙推进一个阶段
+metaitem.dragon_debugger.tooltip.2=潜行右键直接成年；跳过时间与星座能量，无合成配方
+pollution.dragon_debug.creative=龙调试杖仅限创造模式使用
+pollution.dragon_debug.blocked=孵化失败：检查孵化配置、维度和蛋周围 3×3×3 空间（含玩家）
+pollution.dragon_debug.stage=调试成长：%s

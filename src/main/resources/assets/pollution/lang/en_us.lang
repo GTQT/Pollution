@@ -1134,6 +1134,25 @@ pollution.machine.bot_circuit_assembler.tooltip=§aIf the blood of martyrs is to
 
 pollution.machine.industial_pure_daisy.name=秘学新植白菊之塔
 pollution.machine.mana_petal_apothecary.name=秘学新植花药之杯
+pollution.machine.dragon_egg_incubator.name=Life-Bloom Dragon Egg Incubator
+pollution.machine.dragon_egg_incubator.tooltip.1=An 11x7x11 Starstream flower made from casings, runed casings, marble pillars and constellation anchors.
+pollution.machine.dragon_egg_incubator.tooltip.2=Bind the rear Operation Core to a Nexus network with a Starstream Linker in Network mode. No mana hatch or EU.
+pollution.machine.dragon_egg_incubator.tooltip.3=Aevitas powers awakening and incubation continuously. Optional Horologium accelerates both, up to 4x by default.
+pollution.machine.dragon_egg_incubator.tooltip.4=Default: 128 Aevitas CE per step; each extra step also costs 64 Horologium CE. No Aevitas means paused.
+pollution.machine.dragon_egg_incubator.tooltip.5=Managed eggs must remain in the original nest. Power loss or dismantling pauses the egg. Hatched dragons grow normally.
+pollution.machine.dragon_egg_incubator.progress=Stage progress: %s / %s ticks (eggs hatch randomly after the minimum)
+pollution.machine.dragon_egg_incubator.energy=Aevitas/step: %s CE | Horologium/extra step: %s CE | Steps this tick: %s
+pollution.machine.dragon_egg_incubator.nest=Nest: 4 behind, 4 above. Receiver: 8 behind at base level.
+pollution.machine.dragon_egg_incubator.status.waiting=Waiting for a vanilla egg. Hatched dragons are no longer accelerated.
+pollution.machine.dragon_egg_incubator.status.paused=Work paused. Progress retained.
+pollution.machine.dragon_egg_incubator.status.disabled=Disabled by configuration, dimension or Dragon Mounts compatibility.
+pollution.machine.dragon_egg_incubator.status.blocked=Nest unloaded or occupied by other blocks or creatures.
+pollution.machine.dragon_egg_incubator.status.no_energy=Waiting for Aevitas. Check network binding, provider range and bandwidth.
+pollution.machine.dragon_egg_incubator.status.charging=Aevitas is awakening the egg.
+pollution.machine.dragon_egg_incubator.status.incubating=Aevitas incubation at normal speed. Horologium is optional.
+pollution.machine.dragon_egg_incubator.status.accelerating=Horologium is accelerating the current egg phase.
+pollution.machine.dragon_egg_incubator.status.spawn_failed=Spawn failed. Original egg and paid progress retained; retrying.
+pollution.machine.dragon_egg_incubator.status.complete=Phase complete. Continuing according to the nest contents.
 pollution.machine.mana_rune_altar.name=秘学新植符文之台
 pollution.machine.mana_infusion_reactor.name=秘学新植注魔之坛
 
@@ -1985,3 +2004,10 @@ chat.pollution.warp.countdownbomb.tick=%s...
 chat.pollution.warp.countdownbomb.end=BOOM!!! ...The bomb on you went off. Or did it?
 chat.pollution.warp.junk=Warp flux vomits out junk from the void.
 chat.pollution.warp.inventoryscramble=Warp flux scrambles your inventory!
+
+metaitem.dragon_debugger.name=Dragon Growth Debug Wand
+metaitem.dragon_debugger.tooltip.1=Creative mode, main hand only; right-click an egg to hatch or a dragon to advance one stage
+metaitem.dragon_debugger.tooltip.2=Sneak-right-click to become adult; skips time and constellation costs; no recipe
+pollution.dragon_debug.creative=The dragon debug wand requires Creative mode
+pollution.dragon_debug.blocked=Cannot hatch: check configuration, dimension and the 3x3x3 chamber (including players)
+pollution.dragon_debug.stage=Debug growth: %s
