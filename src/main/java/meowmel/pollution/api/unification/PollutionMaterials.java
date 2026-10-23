@@ -195,6 +195,7 @@ public class PollutionMaterials {
 	public static Material StarlightPollen;
 	public static Material MoonlightResin;
 	public static Material AstralBloodPlasma;
+    public static Material DragonBlood;
 	public static Material CelestialBiologicalMedium;
 	public static Material ArcaneInk;
 	public static Material StarryArcaneAlloy;

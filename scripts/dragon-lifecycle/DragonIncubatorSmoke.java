@@ -4,6 +4,9 @@ import meowmel.pollution.POConfig;
 import meowmel.pollution.api.capability.IStarstreamOperationCore;
 import meowmel.pollution.api.capability.StarstreamWirelessBinding;
 import meowmel.pollution.common.entity.dragon.EntityPollutionDragon;
+import meowmel.pollution.common.entity.dragon.DragonGrowthAura;
+import meowmel.pollution.common.block.tile.TileEntityFleshHeart;
+import net.minecraft.tileentity.TileEntity;
 import meowmel.pollution.common.metatileentity.multiblock.bot.DragonEggAwakening;
 import meowmel.pollution.common.metatileentity.multiblock.bot.DragonIncubatorShape;
 
@@ -48,6 +51,7 @@ public final class DragonIncubatorSmoke {
             rollback();
             blockedAndDisabled();
             accelerationAndManagedEgg();
+            fleshHeartStacksWithHorologium();
             System.out.println("PASS: flower geometry, orientation, constellation accounting, save/reload, conversion, rollback, blocked/disabled nests");
             System.exit(0);
         } catch (Throwable failure) {
@@ -120,6 +124,50 @@ public final class DragonIncubatorSmoke {
         legacy.setInteger("Progress", 999);
         logic.readFromNBT(legacy);
         check(logic.getProgress() == 0, "Legacy mana charge cannot be redeemed");
+    }
+
+    private static void fleshHeartStacksWithHorologium() {
+        int oldRadius = POConfig.DragonSettings.fleshHeartDragonRadius;
+        int oldMultiplier = POConfig.DragonSettings.fleshHeartDragonMultiplier;
+        POConfig.DragonSettings.fleshHeartDragonRadius = 32;
+        POConfig.DragonSettings.fleshHeartDragonMultiplier = 2;
+        try {
+            POConfig.DragonSettings.incubatorAwakeningTicks = 20;
+            POConfig.DragonSettings.incubatorAcceleration = 4;
+            TestWorld world = new TestWorld(false);
+            TileEntityFleshHeart heart = world.addHeart(NEST.add(1, 0, 0), 9);
+            Core core = new Core(5000, 2000);
+            DragonEggAwakening logic = new DragonEggAwakening();
+            tick(logic, world, core, true);
+            check(logic.getProgress() == 4, "Sub-max heart does not boost awakening");
+            heart.setLevel(TileEntityFleshHeart.MAX_LEVEL);
+            tick(logic, world, core, true);
+            check(logic.getProgress() == 12 && logic.getLastAdvance() == 8,
+                    "Level 10 aura doubles each paid awakening step");
+            DragonEggAwakening.Status completion = tick(logic, world, core, true);
+            check(completion == DragonEggAwakening.Status.COMPLETE && world.liveCount() == 1,
+                    "Awakening completes at 2x with Horologium available: " + completion + ", entities=" + world.liveCount());
+            EntityPollutionDragon egg = (EntityPollutionDragon) world.entities.get(0);
+            int before = egg.getTicksInStage();
+            check(tick(logic, world, core, true) == DragonEggAwakening.Status.ACCELERATING,
+                    "Flesh heart and Horologium report accelerated incubation");
+            check(egg.getTicksInStage() - before == 8,
+                    "Horologium 4x and heart 2x combine to 8x incubation progress");
+            check(core.aevitas == 5000 - 16 * 128
+                    && core.clock == 2000 - 12 * 64,
+                    "Aura adds progress without additional energy charges");
+
+            TestWorld noClockWorld = new TestWorld(false);
+            noClockWorld.addHeart(NEST, TileEntityFleshHeart.MAX_LEVEL);
+            Core noClock = new Core(128, 0);
+            DragonEggAwakening slow = new DragonEggAwakening();
+            tick(slow, noClockWorld, noClock, true);
+            check(slow.getProgress() == 2 && noClock.aevitas == 0 && noClock.clock == 0,
+                    "Heart boost works at base speed without Horologium");
+        } finally {
+            POConfig.DragonSettings.fleshHeartDragonRadius = oldRadius;
+            POConfig.DragonSettings.fleshHeartDragonMultiplier = oldMultiplier;
+        }
     }
 
     private static void rollback() {
@@ -238,8 +286,13 @@ public final class DragonIncubatorSmoke {
         }
     }
 
+    private static final class TestHeart extends TileEntityFleshHeart {
+        @Override public void markDirty() { }
+    }
+
     private static final class TestWorld extends World {
         final Map<BlockPos, IBlockState> blocks = new HashMap<>();
+        final Map<BlockPos, TileEntity> tiles = new HashMap<>();
         final List<Entity> entities = new ArrayList<>();
         boolean allowSpawn = true;
         boolean allowRemoval = true;
@@ -250,6 +303,17 @@ public final class DragonIncubatorSmoke {
         int liveCount() { return (int) entities.stream().filter(e -> !e.isDead).count(); }
         @Override protected IChunkProvider createChunkProvider() { return null; }
         @Override protected boolean isChunkLoaded(int x, int z, boolean allowEmpty) { return true; }
+        TileEntityFleshHeart addHeart(BlockPos pos, int level) {
+            TileEntityFleshHeart heart = new TestHeart();
+            heart.setLevel(level);
+            heart.setWorld(this);
+            heart.setPos(pos);
+            tiles.put(pos, heart);
+            loadedTileEntityList.add(heart);
+            return heart;
+        }
+        @Override public TileEntity getTileEntity(BlockPos pos) { return tiles.get(pos); }
+        @Override public boolean isBlockLoaded(BlockPos pos) { return true; }
         @Override public boolean isAirBlock(BlockPos pos) { return getBlockState(pos).getBlock() == Blocks.AIR; }
         @Override public IBlockState getBlockState(BlockPos pos) { return blocks.getOrDefault(pos, Blocks.AIR.getDefaultState()); }
         @Override public boolean setBlockToAir(BlockPos pos) {

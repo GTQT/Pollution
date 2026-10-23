@@ -22,6 +22,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(modid = Pollution.MODID)
 public class PollutionBlocksInit {
+	public static final BlockBloodyStarlightContainer BLOODY_STARLIGHT_CONTAINER = new BlockBloodyStarlightContainer();
+	public static final Item ITEM_BLOODY_STARLIGHT_CONTAINER =
+			new meowmel.pollution.common.items.ItemBlockBloodyStarlightContainer(BLOODY_STARLIGHT_CONTAINER);
 	public static final BlockMagicCircle BLOCK_MAGIC_CIRCLE = new BlockMagicCircle();
 	public static final BlockFleshFlower BLOCK_FLESH_FLOWER = new BlockFleshFlower();
 	public static final BlockFleshPlant BLOCK_FLESH_PLANT = new BlockFleshPlant();
@@ -50,6 +53,9 @@ public class PollutionBlocksInit {
 	};
 	@SubscribeEvent
 	public static void registerBlock(RegistryEvent.Register<Block> event) {
+		event.getRegistry().register(BLOODY_STARLIGHT_CONTAINER);
+		GameRegistry.registerTileEntity(meowmel.pollution.common.block.tile.TileEntityBloodyStarlightContainer.class,
+				new ResourceLocation(Pollution.MODID, "bloody_starlight_container"));
 		// 和物品一样，每一个方块都有唯一一个注册名，不能使用大写字母。
 		event.getRegistry().register(BLOCK_MAGIC_CIRCLE);
 		event.getRegistry().register(BLOCK_BENEATH_RETURN);
@@ -65,6 +71,7 @@ public class PollutionBlocksInit {
 
 	@SubscribeEvent
 	public static void registerItem(RegistryEvent.Register<Item> event) {
+		event.getRegistry().register(ITEM_BLOODY_STARLIGHT_CONTAINER);
 		// 注意这个 ItemBlock 使用了和它对应的方块一样的注册名。
 		// 对于所有有物品形态的方块，其物品的注册名和它自己的注册名需要保持一致。
 		event.getRegistry().register(ITEM_BLOCK_MAGIC_CIRCLE);
@@ -84,6 +91,10 @@ public class PollutionBlocksInit {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onModelReg(ModelRegistryEvent event) {
+		ITEM_BLOODY_STARLIGHT_CONTAINER.setTileEntityItemStackRenderer(
+				new meowmel.pollution.client.tesr.ItemBloodyStarlightContainerRenderer());
+		ModelLoader.setCustomModelResourceLocation(ITEM_BLOODY_STARLIGHT_CONTAINER, 0,
+				new ModelResourceLocation(BLOODY_STARLIGHT_CONTAINER.getRegistryName(), "inventory"));
 		// 材质注册
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(BLOCK_MAGIC_CIRCLE), 0, new ModelResourceLocation(BLOCK_MAGIC_CIRCLE.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(BLOCK_FLESH_FLOWER), 0, new ModelResourceLocation(BLOCK_FLESH_FLOWER.getRegistryName(), "inventory"));

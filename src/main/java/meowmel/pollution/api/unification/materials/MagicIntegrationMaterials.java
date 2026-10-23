@@ -1,6 +1,7 @@
 package meowmel.pollution.api.unification.materials;
 
 import gregtech.api.unification.material.Material;
+import gregtech.api.fluids.FluidBuilder;
 import meowmel.pollution.api.unification.PollutionMaterials;
 
 import static gregtech.api.unification.material.info.MaterialFlags.GENERATE_BOLT_SCREW;
@@ -102,6 +103,13 @@ public final class MagicIntegrationMaterials {
                                 GENERATE_RING,
                                 GENERATE_BOLT_SCREW)
                         .blast(7200, HIGH)
+                        .build();
+
+        PollutionMaterials.DragonBlood =
+                new Material.Builder(getMaterialId(), pollutionId("dragon_blood"))
+                        .color(0xA30B32)
+                        .liquid(new FluidBuilder().temperature(310))
+                        .iconSet(SHINY)
                         .build();
     }
 }

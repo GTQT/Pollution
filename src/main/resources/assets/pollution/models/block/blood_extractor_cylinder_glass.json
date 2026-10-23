@@ -1,0 +1,28 @@
+{
+  "parent": "block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "minecraft:blocks/glass_red",
+    "glass": "minecraft:blocks/glass_red",
+    "blood": "minecraft:blocks/redstone_block"
+  },
+  "elements": [
+    {"from":[0,0,0],"to":[16,16,16],"faces":{
+      "down":{"texture":"#glass","cullface":"down"},"up":{"texture":"#glass","cullface":"up"},
+      "north":{"texture":"#glass","cullface":"north"},"south":{"texture":"#glass","cullface":"south"},
+      "west":{"texture":"#glass","cullface":"west"},"east":{"texture":"#glass","cullface":"east"}
+    }},
+    {"from":[0,0,-0.01],"to":[16,0.6,16.01],"faces":{
+      "north":{"texture":"#blood"},"south":{"texture":"#blood"}
+    }},
+    {"from":[-0.01,0,0],"to":[16.01,0.6,16],"faces":{
+      "west":{"texture":"#blood"},"east":{"texture":"#blood"}
+    }},
+    {"from":[1,7,-0.02],"to":[5,7.5,16.02],"faces":{
+      "north":{"texture":"#blood"},"south":{"texture":"#blood"}
+    }},
+    {"from":[-0.02,7,1],"to":[16.02,7.5,5],"faces":{
+      "west":{"texture":"#blood"},"east":{"texture":"#blood"}
+    }}
+  ]
+}

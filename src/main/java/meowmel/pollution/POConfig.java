@@ -11,6 +11,32 @@ public class POConfig {
     public static OBJRenderSwitch OBJRenderSwitch = new OBJRenderSwitch();
     public static WarpEventSwitch WarpEventSwitch = new WarpEventSwitch();
     public static DragonSettings DragonSettings = new DragonSettings();
+    public static DragonBloodExtractorSettings DragonBloodExtractorSettings = new DragonBloodExtractorSettings();
+
+    public static class DragonBloodExtractorSettings {
+        @Config.Comment("Maximum Aevitas speed multiplier, multiplied by the nearby level-10 flesh heart aura.")
+        @Config.RangeInt(min = 1, max = 4)
+        public int aevitasMultiplier = 2;
+        @Config.Comment("Aevitas CE per dragon per additional extraction progress step. Base/aura steps need only EU.")
+        @Config.RangeInt(min = 1, max = 1000000)
+        public int aevitasPerExtraProgress = 128;
+        @Config.Comment("Base EU/t for the UHV dragon blood extractor. Does not change its UHV voltage requirement.")
+        @Config.RangeInt(min = 1, max = 8388608)
+        public int baseEUt = 524288;
+        @Config.RangeInt(min = 1, max = 8388608)
+        public int perDragonEUt = 131072;
+        @Config.Comment("Dragon blood mB per dragon per 100 progress units. Each value is limited to 1600 mB.")
+        @Config.RangeInt(min = 1, max = 1600)
+        public int hatchlingYield = 25;
+        @Config.RangeInt(min = 1, max = 1600)
+        public int infantYield = 50;
+        @Config.RangeInt(min = 1, max = 1600)
+        public int fledglingYield = 100;
+        @Config.RangeInt(min = 1, max = 1600)
+        public int juvenileYield = 250;
+        @Config.RangeInt(min = 1, max = 1600)
+        public int adultYield = 500;
+    }
 
     public static class DragonSettings {
         @Config.Comment("Enable hatching vanilla dragon eggs into Pollution ender dragons.")

@@ -5,7 +5,7 @@ gradle.projectsEvaluated {
     def compileSmoke = p.tasks.register('compileDragonLifecycleSmoke', JavaCompile) {
         dependsOn p.tasks.named('classes')
         source = p.fileTree('scripts/dragon-lifecycle') { include '*.java' }
-        classpath = p.sourceSets.main.runtimeClasspath
+        classpath = p.sourceSets.main.runtimeClasspath + p.sourceSets.main.compileClasspath
         destinationDirectory.set(outputDir)
         sourceCompatibility = '8'
         targetCompatibility = '8'
@@ -25,6 +25,42 @@ gradle.projectsEvaluated {
         classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath
         mainClass.set('DragonIncubatorSmoke')
         javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        workingDir = p.file('build/dragon-lifecycle-smoke')
+        doFirst { workingDir.mkdirs() }
+    }
+    p.tasks.register('dragonContainmentSmoke', JavaExec) {
+        dependsOn compileSmoke
+        classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath
+        mainClass.set('DragonContainmentSmoke')
+        javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        workingDir = p.file('build/dragon-lifecycle-smoke')
+        doFirst { workingDir.mkdirs() }
+    }
+    p.tasks.register('dragonBloodExtractorSmoke', JavaExec) {
+        dependsOn compileSmoke
+        classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath
+        mainClass.set('DragonBloodExtractorSmoke')
+        javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        workingDir = p.file('build/dragon-lifecycle-smoke')
+        doFirst { workingDir.mkdirs() }
+    }
+    p.tasks.register('dragonContainmentRenderSmoke', JavaExec) {
+        dependsOn compileSmoke, p.tasks.named('extractNatives2')
+        classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath + p.sourceSets.main.compileClasspath
+        mainClass.set('DragonContainmentRenderSmoke')
+        javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        systemProperty 'java.library.path', p.file('run/natives/lwjgl2').absolutePath
+        args p.projectDir.absolutePath
+        workingDir = p.file('build/dragon-lifecycle-smoke')
+        doFirst { workingDir.mkdirs() }
+    }
+    p.tasks.register('dragonBloodExtractorRenderSmoke', JavaExec) {
+        dependsOn compileSmoke, p.tasks.named('extractNatives2')
+        classpath = p.files(outputDir) + p.sourceSets.main.runtimeClasspath + p.sourceSets.main.compileClasspath
+        mainClass.set('DragonBloodExtractorRenderSmoke')
+        javaLauncher.set(p.javaToolchains.launcherFor(p.java.toolchain))
+        systemProperty 'java.library.path', p.file('run/natives/lwjgl2').absolutePath
+        args p.projectDir.absolutePath
         workingDir = p.file('build/dragon-lifecycle-smoke')
         doFirst { workingDir.mkdirs() }
     }

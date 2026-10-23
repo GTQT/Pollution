@@ -68,11 +68,18 @@ public interface IModelFactory {
 
     default BodyPart makeBody(ModelBase base) {
         BodyPart body = new BodyPart(base, "body", new ModelRenderer(base, "body")
-                .addBox("scale", -1, -6, -10, 2, 6, 12)
+                .setTextureOffset(0, 32)
+                .addBox("scale", -1.5F, -5, -14, 3, 8, 14)
         );
-        body.addBox("body", -12, 0, -16, 24, 24, 64)
-                .addBox("scale", -1, -6, 10, 2, 6, 12)
-                .addBox("scale", -1, -6, 30, 2, 6, 12)
+        // Keep the original 64-block length, but slim the torso vertically and
+        // slightly across the shoulders so it reads as a long dragon trunk rather
+        // than a deep, square trunk. The center stays at the original height.
+        body.addBox("body", -11, 3, -16, 22, 18, 64)
+                .setTextureOffset(0, 32)
+                .addBox("scale", -1.5F, -5, 0, 3, 8, 14)
+                .addBox("scale", -1.5F, -5, 14, 3, 8, 14)
+                .addBox("scale", -1.5F, -5, 28, 3, 8, 14)
+                .addBox("scale", -1.5F, -5, 42, 3, 8, 14)
                 .setRotationPoint(0, 4, 8);
         return body;
     }

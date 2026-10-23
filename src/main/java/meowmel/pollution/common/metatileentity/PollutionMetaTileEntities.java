@@ -18,6 +18,7 @@ import meowmel.pollution.common.block.metablocks.POManaPlate;
 
 import meowmel.pollution.common.metatileentity.multiblock.*;
 import meowmel.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEntityBMHPCA;
+import meowmel.pollution.common.metatileentity.multiblock.bloodMagic.MetaTileEntityBloodyBloodExtractor;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialStarlightInfuser;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityIndustrialLightwell;
 import meowmel.pollution.common.metatileentity.multiblock.astral.MetaTileEntityCelestialObservationArray;
@@ -122,6 +123,7 @@ public class PollutionMetaTileEntities {
     public static MetaTileEntityManaRuneAltar MANA_RUNE_ALTAR;
     public static MetaTileEntityIndustrialPureDaisy INDUSTRIAL_PURE_DAISY;
     public static MetaTileEntityDragonEggIncubator DRAGON_EGG_INCUBATOR;
+    public static MetaTileEntityBloodyBloodExtractor BLOODY_BLOOD_EXTRACTOR;
     public static MetaTileEntityIndustrialStarlightInfuser INDUSTRIAL_STARLIGHT_INFUSER;
     public static MetaTileEntityIndustrialLightwell INDUSTRIAL_LIGHTWELL;
     public static MetaTileEntityCelestialObservationArray CELESTIAL_OBSERVATION_ARRAY;
@@ -358,6 +360,8 @@ public class PollutionMetaTileEntities {
                 new MetaTileEntityCelestialCrystalGrowthArray(PollutionID("celestial_crystal_growth_array")));
         DRAGON_EGG_INCUBATOR = registerMetaTileEntity(608,
                 new MetaTileEntityDragonEggIncubator(PollutionID("dragon_egg_incubator")));
+        BLOODY_BLOOD_EXTRACTOR = registerMetaTileEntity(609,
+                new MetaTileEntityBloodyBloodExtractor(PollutionID("bloody_blood_extractor")));
 
         ConstellationTowerDefinition[] constellationTowers = ConstellationTowerDefinition.values();
         for (int i = 0; i < constellationTowers.length; i++) {

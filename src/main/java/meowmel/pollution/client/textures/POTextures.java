@@ -81,6 +81,8 @@ public class POTextures {
 	public static SimpleOverlayRenderer Livingrock_0;
 	public static SimpleOverlayRenderer ASTRAL_MARBLE;
 	public static SimpleOverlayRenderer STARSTREAM_CASING;
+    public static final SimpleOverlayRenderer BLOOD_EXTRACTOR_CASING =
+            new SimpleOverlayRenderer("pollution:starstream/starstream_runed_casing");
 
 	public static final SimpleOverlayRenderer QUANTUM_ASPECT_TANK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_q_aspect_tank");
 	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");

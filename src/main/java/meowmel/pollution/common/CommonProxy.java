@@ -71,6 +71,7 @@ public class CommonProxy {
         registry.register(PollutionMetaBlocks.COMPUTER_CASING);
         registry.register(PollutionMetaBlocks.CONSTELLATION_CRYSTAL);
         registry.register(PollutionMetaBlocks.STARSTREAM_OBELISK);
+        registry.register(PollutionMetaBlocks.BLOOD_EXTRACTOR_CASING);
         registry.register(PollutionMetaBlocks.STARSTREAM_RELAY);
         registry.register(PollutionMetaBlocks.STARSTREAM_INTERDIMENSIONAL_RELAY);
         registry.register(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR);
@@ -111,6 +112,7 @@ public class CommonProxy {
         registry.register(createItemBlock(PollutionMetaBlocks.COMPUTER_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.CONSTELLATION_CRYSTAL, VariantItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_OBELISK, VariantItemBlock::new));
+        registry.register(createItemBlock(PollutionMetaBlocks.BLOOD_EXTRACTOR_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_RELAY, ItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_INTERDIMENSIONAL_RELAY, ItemBlock::new));
         registry.register(createItemBlock(PollutionMetaBlocks.STARSTREAM_CHUNK_ANCHOR, ItemBlock::new));

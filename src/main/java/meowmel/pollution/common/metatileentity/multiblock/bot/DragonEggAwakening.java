@@ -56,12 +56,16 @@ public final class DragonEggAwakening {
         if (egg != null && !world.isAirBlock(nest)) return Status.BLOCKED;
         if (!DragonEggHatching.isNestClear(world, nest, egg)) return Status.BLOCKED;
         if (egg != null) {
+            int paidSteps = 0;
             for (int step = 0; step < configuredAcceleration() && egg.isEgg(); step++) {
                 if (!pay(core, world, receiver, configuredAevitas(), configuredHorologium(), step > 0)) break;
-                if (egg.advanceIncubation(controller)) lastAdvance++;
+                if (egg.advanceIncubation(controller)) {
+                    paidSteps++;
+                    lastAdvance += DragonGrowthAura.multiplier(world, nest);
+                }
             }
             displayedProgress = egg.getTicksInStage();
-            if (lastAdvance == 0) return Status.NO_ENERGY;
+            if (paidSteps == 0) return Status.NO_ENERGY;
             if (!egg.isEgg()) return Status.COMPLETE;
             return lastAdvance > 1 ? Status.ACCELERATING : Status.INCUBATING;
         }
@@ -72,13 +76,16 @@ public final class DragonEggAwakening {
             acceleration = configuredAcceleration();
             target = nest.toImmutable();
         }
+        int paidSteps = 0;
         for (int step = 0; step < acceleration && progress < duration; step++) {
             if (!pay(core, world, receiver, aevitasPerTick, horologiumPerTick, step > 0)) break;
-            progress = Math.min(duration, progress + DragonGrowthAura.multiplier(world, nest));
-            lastAdvance++;
+            paidSteps++;
+            int aura = DragonGrowthAura.multiplier(world, nest);
+            progress = Math.min(duration, progress + aura);
+            lastAdvance += aura;
         }
         if (progress < duration) {
-            return lastAdvance == 0 ? Status.NO_ENERGY : lastAdvance > 1 ? Status.ACCELERATING : Status.CHARGING;
+            return paidSteps == 0 ? Status.NO_ENERGY : lastAdvance > 1 ? Status.ACCELERATING : Status.CHARGING;
         }
         // Completed awakening retries conversion for free, retaining the original block on failure.
         if (!DragonEggHatching.tryActivate(world, nest, controller)) return Status.SPAWN_FAILED;

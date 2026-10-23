@@ -53,6 +53,9 @@ public class ClientProxy extends CommonProxy {
 
 	public void preLoad() {
 		super.preLoad();
+		ClientRegistry.bindTileEntitySpecialRenderer(
+				meowmel.pollution.common.block.tile.TileEntityBloodyStarlightContainer.class,
+				new meowmel.pollution.client.tesr.TesrBloodyStarlightContainer());
 		OBJLoader.INSTANCE.addDomain(Pollution.MODID);
 		POTextures.init();
 		POTextures.preInit();

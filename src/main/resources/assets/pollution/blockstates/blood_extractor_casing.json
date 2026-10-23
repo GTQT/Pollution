@@ -1,0 +1,9 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "variant": {
+      "sealed_casing": { "model": "pollution:blood_extractor_sealed_casing" },
+      "cylinder_glass": { "model": "pollution:blood_extractor_cylinder_glass" }
+    }
+  }
+}

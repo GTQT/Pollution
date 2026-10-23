@@ -2,6 +2,9 @@ import com.mojang.authlib.GameProfile;
 import meowmel.pollution.POConfig;
 import meowmel.pollution.common.entity.dragon.DragonEggInteractionHandler;
 import meowmel.pollution.common.entity.dragon.DragonLifeStage;
+import meowmel.pollution.common.entity.dragon.DragonGrowthAura;
+import meowmel.pollution.common.block.tile.TileEntityFleshHeart;
+import net.minecraft.tileentity.TileEntity;
 import meowmel.pollution.common.entity.dragon.EntityPollutionDragon;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.init.Bootstrap;
@@ -51,6 +54,7 @@ public final class DragonLifecycleSmoke {
             stoppedLifecycle();
             returnToEgg();
             debugGrowth();
+            fleshHeartAura();
             System.out.println("PASS: persistence, stage boundaries, incubation, metadata, size, stopped lifecycle, return-to-egg");
             System.exit(0);
         } catch (Throwable failure) {
@@ -78,6 +82,44 @@ public final class DragonLifecycleSmoke {
         TestDragon dead = loaded(false, DragonLifeStage.EGG, 0, 24000);
         dead.setDead();
         check(!dead.debugAdvanceGrowth(true), "Dead dragon cannot debug-grow");
+    }
+
+    private static void fleshHeartAura() throws Exception {
+        int oldRadius = POConfig.DragonSettings.fleshHeartDragonRadius;
+        int oldMultiplier = POConfig.DragonSettings.fleshHeartDragonMultiplier;
+        POConfig.DragonSettings.fleshHeartDragonRadius = 32;
+        POConfig.DragonSettings.fleshHeartDragonMultiplier = 2;
+        try {
+            TestWorld world = new TestWorld(false);
+            BlockPos heartPos = new BlockPos(0, 64, 0);
+            TileEntityFleshHeart heart = world.addHeart(heartPos, 9);
+            check(DragonGrowthAura.multiplier(world, heartPos) == 1, "Level 9 heart gives no aura");
+            heart.setLevel(TileEntityFleshHeart.MAX_LEVEL);
+            check(DragonGrowthAura.multiplier(world, heartPos) == 2, "Level 10 heart gives 2x aura");
+            world.addHeart(new BlockPos(1, 64, 0), TileEntityFleshHeart.MAX_LEVEL);
+            check(DragonGrowthAura.multiplier(world, heartPos) == 2, "Heart auras do not stack");
+            check(DragonGrowthAura.multiplier(world, new BlockPos(33, 64, 0)) == 1, "Aura ends beyond configured radius");
+
+            TestDragon dragon = new TestDragon(world);
+            dragon.setPosition(2.0D, 64.0D, 0.0D);
+            dragon.setStage(DragonLifeStage.HATCHLING);
+            Field ticks = EntityPollutionDragon.class.getDeclaredField("ticksInStage");
+            ticks.setAccessible(true);
+            ticks.setInt(dragon, 10);
+            TICK.invoke(dragon);
+            check(dragon.getTicksInStage() == 12, "Natural dragon growth doubles near max heart");
+
+            TestWorld clientWorld = new TestWorld(true);
+            clientWorld.addHeart(heartPos, TileEntityFleshHeart.MAX_LEVEL);
+            TestDragon client = new TestDragon(clientWorld);
+            client.setStage(DragonLifeStage.HATCHLING);
+            ticks.setInt(client, 10);
+            TICK.invoke(client);
+            check(client.getTicksInStage() == 11, "Client displays server-authoritative single-step prediction");
+        } finally {
+            POConfig.DragonSettings.fleshHeartDragonRadius = oldRadius;
+            POConfig.DragonSettings.fleshHeartDragonMultiplier = oldMultiplier;
+        }
     }
 
     private static void savedProgress() throws Exception {
@@ -213,17 +255,17 @@ public final class DragonLifecycleSmoke {
             PlayerInteractEvent.EntityInteract event = interaction(player, EnumHand.MAIN_HAND, dragon);
             DragonEggInteractionHandler.onRightClickDragon(event);
             check(event.isCanceled() && event.getCancellationResult() == EnumActionResult.SUCCESS, "Return consumes interaction");
-            check(dragon.isDead && world.blocks.size() == 1, "Return creates exactly one egg");
+            check(!dragon.isDead && world.blocks.isEmpty(), "Old return shortcut preserves dragon and redirects to containment");
             PlayerInteractEvent.EntityInteract duplicate = interaction(player, EnumHand.OFF_HAND, dragon);
             DragonEggInteractionHandler.onRightClickDragon(duplicate);
-            check(!duplicate.isCanceled() && world.blocks.size() == 1, "Repeated request cannot duplicate egg");
+            check(world.blocks.isEmpty() && !dragon.isDead, "Repeated request cannot discard growth or duplicate egg");
 
             TestDragon blocked = new TestDragon(world);
             blocked.setStage(DragonLifeStage.INFANT);
             blocked.setPosition(5.5D, 64.0D, 5.5D);
             world.allowPlacement = false;
             DragonEggInteractionHandler.onRightClickDragon(interaction(player, EnumHand.MAIN_HAND, blocked));
-            check(!blocked.isDead && world.blocks.size() == 1, "Failed placement keeps dragon");
+            check(!blocked.isDead && world.blocks.isEmpty(), "Shortcut never converts dragon to egg");
         } finally {
             POConfig.DragonSettings.enableHatching = enabled;
         }
@@ -288,14 +330,30 @@ public final class DragonLifecycleSmoke {
         @Override public void startWobble(int ticks, int axis) { wobbles++; }
     }
 
+    private static final class TestHeart extends TileEntityFleshHeart {
+        @Override public void markDirty() { }
+    }
+
     private static final class TestWorld extends World {
         final Map<BlockPos, IBlockState> blocks = new HashMap<>();
+        final Map<BlockPos, TileEntity> tiles = new HashMap<>();
         boolean allowPlacement = true;
         TestWorld(boolean client) {
             super(new SaveHandlerMP(), new WorldInfo(new NBTTagCompound()), new WorldProviderSurface(), new Profiler(), client);
         }
         @Override protected IChunkProvider createChunkProvider() { return null; }
-        @Override protected boolean isChunkLoaded(int x, int z, boolean allowEmpty) { return false; }
+        @Override protected boolean isChunkLoaded(int x, int z, boolean allowEmpty) { return true; }
+        TileEntityFleshHeart addHeart(BlockPos pos, int level) {
+            TileEntityFleshHeart heart = new TestHeart();
+            heart.setLevel(level);
+            heart.setWorld(this);
+            heart.setPos(pos);
+            tiles.put(pos, heart);
+            loadedTileEntityList.add(heart);
+            return heart;
+        }
+        @Override public TileEntity getTileEntity(BlockPos pos) { return tiles.get(pos); }
+        @Override public boolean isBlockLoaded(BlockPos pos) { return true; }
         @Override public void playSound(EntityPlayer player, BlockPos pos, SoundEvent sound, SoundCategory category, float volume, float pitch) { }
         @Override public BlockPos getSpawnPoint() { return new BlockPos(0, 64, 0); }
         @Override public boolean isAirBlock(BlockPos pos) { return getBlockState(pos).getBlock() == Blocks.AIR; }

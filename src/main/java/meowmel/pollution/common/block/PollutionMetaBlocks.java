@@ -29,11 +29,14 @@ public class PollutionMetaBlocks {
 	public static POStarstreamInterdimensionalRelay STARSTREAM_INTERDIMENSIONAL_RELAY;
 	public static POStarstreamChunkAnchor STARSTREAM_CHUNK_ANCHOR;
 	public static POStarstreamOperationCore STARSTREAM_OPERATION_CORE;
+    public static POBloodExtractorCasing BLOOD_EXTRACTOR_CASING;
 
 	private PollutionMetaBlocks() {
 	}
 
 	public static void init() {
+        BLOOD_EXTRACTOR_CASING = new POBloodExtractorCasing();
+        BLOOD_EXTRACTOR_CASING.setRegistryName("blood_extractor_casing");
 		MAGIC_BLOCK = new POMagicBlock();
 		MAGIC_BLOCK.setRegistryName("magic_block");
 
@@ -83,6 +86,7 @@ public class PollutionMetaBlocks {
 
 	@SideOnly(Side.CLIENT)
 	public static void registerItemModels() {
+        registerItemModel(BLOOD_EXTRACTOR_CASING);
 		registerItemModel(MAGIC_BLOCK);
 		registerItemModel(ESSENTIA_CELL);
 		registerItemModel(BEAM_CORE);
