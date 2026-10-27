@@ -9,6 +9,7 @@ import java.util.UUID;
 public final class DragonContainmentData {
     public static final String KEY = "DragonContainment";
     public static final String TYPE = "pollution:ender_dragon";
+    public static final String HIDE_BASE = "HideContainerBase";
 
     private DragonContainmentData() {}
 
@@ -30,6 +31,18 @@ public final class DragonContainmentData {
         NBTTagCompound root = stack.getTagCompound() != null ? stack.getTagCompound().copy() : new NBTTagCompound();
         if (payload.isEmpty()) root.removeTag(KEY);
         else root.setTag(KEY, payload.copy());
+        stack.setTagCompound(root.isEmpty() ? null : root);
+    }
+
+    public static boolean isBaseHidden(ItemStack stack) {
+        return stack.hasTagCompound() && stack.getTagCompound().getBoolean(HIDE_BASE);
+    }
+
+    /** Cosmetic data lives beside the dragon snapshot, so releasing a dragon keeps its display preference. */
+    public static void setBaseHidden(ItemStack stack, boolean hidden) {
+        NBTTagCompound root = stack.getTagCompound() == null ? new NBTTagCompound() : stack.getTagCompound().copy();
+        if (hidden) root.setBoolean(HIDE_BASE, true);
+        else root.removeTag(HIDE_BASE);
         stack.setTagCompound(root.isEmpty() ? null : root);
     }
 

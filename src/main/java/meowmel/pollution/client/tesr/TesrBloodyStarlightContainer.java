@@ -17,7 +17,7 @@ public class TesrBloodyStarlightContainer extends TileEntitySpecialRenderer<Tile
                     && tile.getDistanceSq(Minecraft.getMinecraft().player.posX,
                     Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ) < 256;
             BloodyStarlightContainerVisual.render(tile.getPayload(),
-                    tile.getWorld().getTotalWorldTime() + partialTicks, partialTicks, detailed);
+                    tile.getWorld().getTotalWorldTime() + partialTicks, partialTicks, detailed, tile.isBaseHidden());
         } finally {
             GlStateManager.popMatrix();
         }

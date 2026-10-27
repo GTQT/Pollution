@@ -3,6 +3,7 @@ package meowmel.pollution.common.block.blocks;
 import meowmel.pollution.common.block.tile.TileEntityBloodyStarlightContainer;
 import meowmel.pollution.common.entity.dragon.DragonContainmentData;
 import meowmel.pollution.common.entity.dragon.DragonContainmentService;
+import gregtech.api.items.toolitem.ToolClasses;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
@@ -17,6 +18,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -29,6 +31,7 @@ import static meowmel.pollution.common.CommonProxy.Pollution_TAB;
 
 public class BlockBloodyStarlightContainer extends Block {
     private static final AxisAlignedBB BOX = new AxisAlignedBB(0.08, 0, 0.08, 0.92, 0.95, 0.92);
+    private static final AxisAlignedBB SPHERE_BOX = new AxisAlignedBB(0.08, 0.12, 0.08, 0.92, 0.95, 0.92);
 
     public BlockBloodyStarlightContainer() {
         super(Material.IRON);
@@ -45,7 +48,11 @@ public class BlockBloodyStarlightContainer extends Block {
     @Override public boolean isOpaqueCube(IBlockState state) { return false; }
     @Override public boolean isFullCube(IBlockState state) { return false; }
     @Override public EnumBlockRenderType getRenderType(IBlockState state) { return EnumBlockRenderType.INVISIBLE; }
-    @Override public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) { return BOX; }
+    @Override public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        return tile instanceof TileEntityBloodyStarlightContainer
+                && ((TileEntityBloodyStarlightContainer) tile).isBaseHidden() ? SPHERE_BOX : BOX;
+    }
     @Override public EnumPushReaction getPushReaction(IBlockState state) { return EnumPushReaction.BLOCK; }
 
     @Override
@@ -58,6 +65,22 @@ public class BlockBloodyStarlightContainer extends Block {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
                                     EnumHand hand, EnumFacing side, float x, float y, float z) {
+        ItemStack held = player.getHeldItem(hand);
+        if (!held.isEmpty() && held.getItem().getToolClasses(held).contains(ToolClasses.WRENCH)) {
+            if (!world.isRemote) {
+                if (!DragonContainmentService.canEdit(player, pos, player.getHeldItem(hand))) {
+                    DragonContainmentService.message(player, "permission");
+                } else {
+                    TileEntity tile = world.getTileEntity(pos);
+                    if (tile instanceof TileEntityBloodyStarlightContainer) {
+                        TileEntityBloodyStarlightContainer container = (TileEntityBloodyStarlightContainer) tile;
+                        container.setBaseHidden(!container.isBaseHidden());
+                        DragonContainmentService.message(player, container.isBaseHidden() ? "base_hidden" : "base_visible");
+                    }
+                }
+            }
+            return true;
+        }
         if (!player.getHeldItem(hand).isEmpty()) return false;
         if (world.isRemote) return true;
         TileEntity tile = world.getTileEntity(pos);
@@ -105,7 +128,7 @@ public class BlockBloodyStarlightContainer extends Block {
         ItemStack stack = new ItemStack(this);
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityBloodyStarlightContainer) {
-            DragonContainmentData.set(stack, ((TileEntityBloodyStarlightContainer) tile).getPayload());
+            ((TileEntityBloodyStarlightContainer) tile).writeItemData(stack);
         }
         drops.add(stack);
     }
@@ -127,13 +150,23 @@ public class BlockBloodyStarlightContainer extends Block {
         if (!world.isRemote && !world.restoringBlockSnapshots && tile instanceof TileEntityBloodyStarlightContainer
                 && ((TileEntityBloodyStarlightContainer) tile).isOccupied()) {
             ItemStack stack = new ItemStack(this);
-            DragonContainmentData.set(stack, ((TileEntityBloodyStarlightContainer) tile).takePayload());
+            ((TileEntityBloodyStarlightContainer) tile).writeItemData(stack);
+            ((TileEntityBloodyStarlightContainer) tile).takePayload();
             spawnAsEntity(world, pos, stack);
         }
         super.breakBlock(world, pos, state);
     }
 
     @Override public boolean canDropFromExplosion(Explosion explosion) { return false; }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        ItemStack stack = new ItemStack(this);
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileEntityBloodyStarlightContainer)
+            DragonContainmentData.setBaseHidden(stack, ((TileEntityBloodyStarlightContainer) tile).isBaseHidden());
+        return stack;
+    }
 
     @Override
     public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {

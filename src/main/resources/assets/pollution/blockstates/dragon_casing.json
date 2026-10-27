@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "variant": {
+      "blood_extraction_casing": {"model": "pollution:dragon_blood_extraction_casing"},
+      "incubator_casing": {"model": "pollution:dragon_incubator_casing"},
+      "incubator_runed_casing": {"model": "pollution:dragon_incubator_runed_casing"}
+    }
+  }
+}

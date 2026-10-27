@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public class TileEntityBloodyStarlightContainer extends TileEntity {
     private DragonContainmentData.ExtractionSnapshot extractionSnapshot;
     private boolean extractionCached;
     private boolean persistContentId;
+    private boolean baseHidden;
     private WeakReference<ExtractionOwner> extractionOwner = new WeakReference<>(null);
 
     public interface ExtractionOwner {
@@ -53,12 +55,35 @@ public class TileEntityBloodyStarlightContainer extends TileEntity {
 
     public NBTTagCompound getPayload() { return payload.copy(); }
 
+    public boolean isBaseHidden() { return baseHidden; }
+
+    public void setBaseHidden(boolean hidden) {
+        if (baseHidden == hidden) return;
+        baseHidden = hidden;
+        // Changing the pedestal must not invalidate a paid extraction batch or its content identity.
+        markDirtyAndSync();
+    }
+
+    public void applyItemData(ItemStack stack) {
+        baseHidden = DragonContainmentData.isBaseHidden(stack);
+        setPayload(DragonContainmentData.get(stack));
+    }
+
+    public void writeItemData(ItemStack stack) {
+        DragonContainmentData.set(stack, getPayload());
+        DragonContainmentData.setBaseHidden(stack, baseHidden);
+    }
+
     public void setPayload(NBTTagCompound value) {
         payload = value.copy();
         contentId = UUID.randomUUID();
         persistContentId = false;
         extractionCached = false;
         extractionSnapshot = null;
+        markDirtyAndSync();
+    }
+
+    private void markDirtyAndSync() {
         markDirty();
         if (world != null && !world.isRemote) {
             IBlockState state = world.getBlockState(pos);
@@ -76,6 +101,7 @@ public class TileEntityBloodyStarlightContainer extends TileEntity {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
+        tag.setBoolean(DragonContainmentData.HIDE_BASE, baseHidden);
         tag.setUniqueId("ExtractionContentId", contentId);
         if (isOccupied()) tag.setTag(DragonContainmentData.KEY, payload.copy());
         return tag;
@@ -85,6 +111,7 @@ public class TileEntityBloodyStarlightContainer extends TileEntity {
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         payload = tag.getCompoundTag(DragonContainmentData.KEY).copy();
+        baseHidden = tag.getBoolean(DragonContainmentData.HIDE_BASE);
         persistContentId = !tag.hasUniqueId("ExtractionContentId");
         contentId = persistContentId ? UUID.randomUUID() : tag.getUniqueId("ExtractionContentId");
         extractionCached = false;
@@ -95,6 +122,7 @@ public class TileEntityBloodyStarlightContainer extends TileEntity {
     @Override
     public NBTTagCompound getUpdateTag() {
         NBTTagCompound tag = super.writeToNBT(new NBTTagCompound());
+        tag.setBoolean(DragonContainmentData.HIDE_BASE, baseHidden);
         tag.setTag(DragonContainmentData.KEY, DragonContainmentData.displayOnly(payload));
         return tag;
     }

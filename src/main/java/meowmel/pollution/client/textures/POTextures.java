@@ -82,7 +82,9 @@ public class POTextures {
 	public static SimpleOverlayRenderer ASTRAL_MARBLE;
 	public static SimpleOverlayRenderer STARSTREAM_CASING;
     public static final SimpleOverlayRenderer BLOOD_EXTRACTOR_CASING =
-            new SimpleOverlayRenderer("pollution:starstream/starstream_runed_casing");
+            new SimpleOverlayRenderer("pollution:dragon_machines/blood_extraction_casing");
+    public static final SimpleOverlayRenderer DRAGON_INCUBATOR_CASING =
+            new SimpleOverlayRenderer("pollution:dragon_machines/incubator_casing");
 
 	public static final SimpleOverlayRenderer QUANTUM_ASPECT_TANK_OVERLAY = new SimpleOverlayRenderer("overlay/machine/overlay_q_aspect_tank");
 	public static final SimpleOverlayRenderer PIPE_ASPECT_OUT_OVERLAY  = new SimpleOverlayRenderer("overlay/machine/overlay_pipe_aspect_out");

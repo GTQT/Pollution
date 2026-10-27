@@ -67,8 +67,8 @@ public final class DragonContainmentRenderSmoke {
             dragon.setStage(DragonLifeStage.ADULT);
             dragon.setAppearance(2);
             NBTTagCompound payload = DragonContainmentData.capture(dragon);
-            draw(new NBTTagCompound(), -0.58, 0.75, 60, true);
-            draw(payload, 0.48, 1.05, 60, true);
+            draw(payload, -0.62, 0.95, 60, true, false);
+            draw(payload, 0.62, 0.95, 60, true, true);
             int error = GL11.glGetError();
             if (error != GL11.GL_NO_ERROR) throw new AssertionError("OpenGL error: " + error);
             if (!GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK)) throw new AssertionError("Renderer leaked depth mask");
@@ -84,10 +84,10 @@ public final class DragonContainmentRenderSmoke {
             text.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             text.setColor(new Color(36, 31, 49));
             text.setFont(new Font("Microsoft YaHei", Font.BOLD, 30));
-            text.drawString("血腥星光收容器 · 实际渲染预览", 45, 63);
+            text.drawString("血腥星光收容器 · 底座显示切换", 45, 63);
             text.setFont(new Font("Microsoft YaHei", Font.PLAIN, 22));
-            text.drawString("空置", 325, 700);
-            text.drawString("已收容 · 末影龙", 735, 700);
+            text.drawString("显示底座", 270, 700);
+            text.drawString("隐藏底座 · 仅球体", 780, 700);
             text.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
             text.drawString("使用项目模型、贴图与 OpenGL 渲染器离屏生成；不是游戏场景截图。", 45, 755);
             text.dispose();
@@ -104,14 +104,14 @@ public final class DragonContainmentRenderSmoke {
         }
     }
 
-    private static void draw(NBTTagCompound data, double x, double scale, double time, boolean detailed) {
+    private static void draw(NBTTagCompound data, double x, double scale, double time, boolean detailed, boolean hideBase) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, -0.04, 0);
         GlStateManager.rotate(16, 1, 0, 0);
         GlStateManager.rotate(-12, 0, 1, 0);
         GlStateManager.scale(scale, scale, scale);
         GlStateManager.translate(-0.5, -0.5, -0.5);
-        BloodyStarlightContainerVisual.render(data, time, 0, detailed);
+        BloodyStarlightContainerVisual.render(data, time, 0, detailed, hideBase);
         GlStateManager.popMatrix();
     }
 }

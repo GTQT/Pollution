@@ -46,6 +46,10 @@ public final class BloodyStarlightContainerVisual {
     }
 
     public static void render(NBTTagCompound payload, double time, float partialTicks, boolean detailed) {
+        render(payload, time, partialTicks, detailed, false);
+    }
+
+    public static void render(NBTTagCompound payload, double time, float partialTicks, boolean detailed, boolean hideBase) {
         boolean lighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
         boolean texture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
         boolean blend = GL11.glIsEnabled(GL11.GL_BLEND);
@@ -69,7 +73,7 @@ public final class BloodyStarlightContainerVisual {
             GlStateManager.disableCull();
             GlStateManager.disableBlend();
             GlStateManager.depthMask(true);
-            pedestal();
+            if (!hideBase) pedestal();
             GlStateManager.translate(0, 0.56, 0);
             if (!payload.isEmpty()) renderDragon(payload, time, partialTicks);
             GlStateManager.disableTexture2D();

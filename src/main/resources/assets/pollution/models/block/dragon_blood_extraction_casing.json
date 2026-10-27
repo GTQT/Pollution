@@ -1,0 +1,7 @@
+{
+  "parent": "pollution:block/dragon_casing_panel",
+  "textures": {
+    "particle": "pollution:blocks/dragon_machines/blood_extraction_casing",
+    "casing": "pollution:blocks/dragon_machines/blood_extraction_casing"
+  }
+}

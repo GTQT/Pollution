@@ -20,6 +20,7 @@ import gregtech.common.metatileentities.MetaTileEntities;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.metablocks.POBloodExtractorCasing;
+import meowmel.pollution.common.block.metablocks.PODragonCasing;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.ThaumcraftApi;
@@ -35,6 +36,7 @@ public final class FleshTreeRecipes {
 
     public static void init() {
         registerBloodExtractor();
+        registerDragonCasings();
         ThaumcraftApi.addInfusionCraftingRecipe(
                 new ResourceLocation(Pollution.MODID, "bloody_starlight_container"),
                 new InfusionRecipe("INFUSION@2",
@@ -87,7 +89,7 @@ public final class FleshTreeRecipes {
                 .input(MetaItems.FIELD_GENERATOR_UHV, 2)
                 .input(PollutionMetaItems.ASTRAL_BLOOD_CATALYST, 8)
                 .input(PollutionMetaItems.STARRY_RUNE, 8)
-                .inputs(PollutionMetaBlocks.BLOOD_EXTRACTOR_CASING.getItemVariant(POBloodExtractorCasing.Type.SEALED_CASING, 8))
+                .inputs(PollutionMetaBlocks.DRAGON_CASING.getItemVariant(PODragonCasing.Type.BLOOD_EXTRACTION_CASING, 8))
                 .fluidInputs(PollutionMaterials.AstralBloodPlasma.getFluid(8000))
                 .fluidInputs(PollutionMaterials.StarryArcaneAlloy.getFluid(2304))
                 .output(PollutionMetaTileEntities.BLOODY_BLOOD_EXTRACTOR)
@@ -107,6 +109,30 @@ public final class FleshTreeRecipes {
                 .input(PollutionMetaItems.STARRY_RUNE)
                 .fluidInputs(PollutionMaterials.AstralBloodPlasma.getFluid(250))
                 .outputs(PollutionMetaBlocks.BLOOD_EXTRACTOR_CASING.getItemVariant(POBloodExtractorCasing.Type.CYLINDER_GLASS, 4))
+                .duration(200).EUt(GTValues.VA[GTValues.UV]).buildAndRegister();
+    }
+
+    private static void registerDragonCasings() {
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.frameGt, Materials.StainlessSteel)
+                .input(OrePrefix.plate, PollutionMaterials.StarryArcaneAlloy, 4)
+                .input(PollutionMetaItems.ASTRAL_BLOOD_CATALYST)
+                .fluidInputs(PollutionMaterials.AstralBloodPlasma.getFluid(250))
+                .outputs(PollutionMetaBlocks.DRAGON_CASING.getItemVariant(PODragonCasing.Type.BLOOD_EXTRACTION_CASING, 2))
+                .duration(200).EUt(GTValues.VA[GTValues.UV]).buildAndRegister();
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.frameGt, Materials.StainlessSteel)
+                .input(Blocks.QUARTZ_BLOCK, 4)
+                .input(OrePrefix.foil, PollutionMaterials.StarryArcaneAlloy, 2)
+                .fluidInputs(PollutionMaterials.InfusedLife.getFluid(144))
+                .outputs(PollutionMetaBlocks.DRAGON_CASING.getItemVariant(PODragonCasing.Type.INCUBATOR_CASING, 4))
+                .duration(200).EUt(GTValues.VA[GTValues.UV]).buildAndRegister();
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .inputs(PollutionMetaBlocks.DRAGON_CASING.getItemVariant(PODragonCasing.Type.INCUBATOR_CASING, 4))
+                .input(PollutionMetaItems.STARRY_RUNE, 2)
+                .input(PollutionMetaItems.ASTRAL_RESONANCE_COIL)
+                .fluidInputs(PollutionMaterials.InfusedLife.getFluid(144))
+                .outputs(PollutionMetaBlocks.DRAGON_CASING.getItemVariant(PODragonCasing.Type.INCUBATOR_RUNED_CASING, 4))
                 .duration(200).EUt(GTValues.VA[GTValues.UV]).buildAndRegister();
     }
 }

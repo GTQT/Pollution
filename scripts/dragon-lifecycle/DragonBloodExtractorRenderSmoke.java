@@ -55,14 +55,27 @@ public final class DragonBloodExtractorRenderSmoke {
             mc.renderEngine = new TextureManager(resources);
             mc.world = new WorldClient(null, new WorldSettings(0, GameType.CREATIVE, false, false, WorldType.FLAT),
                     0, EnumDifficulty.PEACEFUL, new Profiler());
-            sealed = model(project, "blood_extractor_sealed_casing");
+            sealed = model(project, "dragon_blood_extraction_casing");
+            JsonObject legacySealed = model(project, "blood_extractor_sealed_casing");
+            if (!legacySealed.get("textures").equals(sealed.get("textures"))
+                    || !legacySealed.get("elements").equals(sealed.get("elements")))
+                throw new AssertionError("Legacy bloody starstream casing must use the redrawn dragon-blood material");
             glass = model(project, "blood_extractor_cylinder_glass");
             metal = new JsonParser().parse("{\"textures\":{\"all\":\"minecraft:blocks/iron_block\"},\"elements\":[{\"from\":[0,0,0],\"to\":[16,16,16],\"faces\":{\"north\":{\"texture\":\"#all\"},\"south\":{\"texture\":\"#all\"},\"west\":{\"texture\":\"#all\"},\"east\":{\"texture\":\"#all\"},\"up\":{\"texture\":\"#all\"},\"down\":{\"texture\":\"#all\"}}}]}").getAsJsonObject();
             // Validate every referenced texture before drawing; missing textures must fail this check.
-            for (JsonObject model : Arrays.asList(sealed, glass, metal)) {
+            for (JsonObject model : Arrays.asList(sealed, legacySealed, glass, metal,
+                    model(project, "dragon_incubator_casing"), model(project, "dragon_incubator_runed_casing"))) {
                 for (Map.Entry<String, JsonElement> texture : model.getAsJsonObject("textures").entrySet()) {
                     ResourceLocation id = textureId(texture.getValue().getAsString());
                     resources.getResource(id).getInputStream().close();
+                    if (id.getPath().startsWith("textures/blocks/dragon_machines/")) {
+                        BufferedImage tile;
+                        try (InputStream stream = resources.getResource(id).getInputStream()) { tile = ImageIO.read(stream); }
+                        if (tile == null || tile.getWidth() != 64 || tile.getHeight() != 64)
+                            throw new AssertionError("Casing texture must be 64x64: " + id);
+                        for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++)
+                            if ((tile.getRGB(x, y) >>> 24) != 255) throw new AssertionError("Opaque casing has transparent pixels: " + id);
+                    }
                 }
             }
             GlStateManager.viewport(0, 0, width, height);
@@ -124,6 +137,7 @@ public final class DragonBloodExtractorRenderSmoke {
             File image = new File(project, "docs/images/bloody-blood-extractor.png");
             image.getParentFile().mkdirs();
             ImageIO.write(result, "png", image);
+            casingPreview(project);
             System.out.println("PASS: extractor optics GL/state restoration, source model textures, ten containers. " + image);
             context.destroy();
             System.exit(0);
@@ -132,7 +146,18 @@ public final class DragonBloodExtractorRenderSmoke {
     private static JsonObject model(File project, String name) throws IOException {
         try (Reader input = new InputStreamReader(new FileInputStream(new File(project,
                 "src/main/resources/assets/pollution/models/block/" + name + ".json")), StandardCharsets.UTF_8)) {
-            return new JsonParser().parse(input).getAsJsonObject();
+            JsonObject result = new JsonParser().parse(input).getAsJsonObject();
+            if (result.has("parent") && result.get("parent").getAsString().startsWith("pollution:block/")) {
+                JsonObject parent = model(project, result.get("parent").getAsString().substring("pollution:block/".length()));
+                JsonObject textures = new JsonObject();
+                for (Map.Entry<String, JsonElement> entry : parent.getAsJsonObject("textures").entrySet())
+                    textures.add(entry.getKey(), entry.getValue());
+                for (Map.Entry<String, JsonElement> entry : result.getAsJsonObject("textures").entrySet())
+                    textures.add(entry.getKey(), entry.getValue());
+                result.add("textures", textures);
+                if (!result.has("elements")) result.add("elements", parent.get("elements"));
+            }
+            return result;
         }
     }
     private static ResourceLocation textureId(String name) {
@@ -158,7 +183,54 @@ public final class DragonBloodExtractorRenderSmoke {
         }
         GlStateManager.depthMask(true);
     }
-    private static void draw(JsonObject model) {
+    private static void casingPreview(File project) throws IOException {
+        int width = 1000, height = 600;
+        GlStateManager.viewport(0, 0, width, height);
+        GlStateManager.matrixMode(GL11.GL_PROJECTION);
+        GlStateManager.loadIdentity();
+        GlStateManager.ortho(-3.7, 3.7, -1.8, 2.5, -10, 10);
+        GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+        GlStateManager.loadIdentity();
+        GlStateManager.clearColor(0.07F, 0.085F, 0.13F, 1);
+        GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+        GlStateManager.disableBlend();
+        GlStateManager.enableDepth();
+        GlStateManager.enableCull();
+        String[] models = {"dragon_blood_extraction_casing", "dragon_incubator_casing", "dragon_incubator_runed_casing"};
+        for (int i = 0; i < models.length; i++) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translate((i - 1) * 2.3, 0.2, 0);
+            GlStateManager.rotate(22, 1, 0, 0);
+            GlStateManager.rotate(-32, 0, 1, 0);
+            GlStateManager.scale(1.2, 1.2, 1.2);
+            GlStateManager.translate(-0.5, -0.5, -0.5);
+            draw(model(project, models[i]), true);
+            GlStateManager.popMatrix();
+        }
+        if (GL11.glGetError() != GL11.GL_NO_ERROR) throw new AssertionError("Casing preview GL error");
+        ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
+        GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, pixels);
+        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++) for (int x = 0; x < width; x++) {
+            int p = (y * width + x) * 4;
+            output.setRGB(x, height - 1 - y, (pixels.get(p) & 255) << 16 | (pixels.get(p + 1) & 255) << 8 | pixels.get(p + 2) & 255);
+        }
+        Graphics2D labels = output.createGraphics();
+        labels.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        labels.setColor(new Color(245, 223, 233));
+        labels.setFont(new Font("Microsoft YaHei", Font.BOLD, 28));
+        labels.drawString("龙系机器专用外壳 · 重绘材质", 40, 55);
+        labels.setFont(new Font("Microsoft YaHei", Font.PLAIN, 19));
+        labels.drawString("龙血提取密封外壳", 100, 465);
+        labels.drawString("生息孵化外壳", 435, 465);
+        labels.drawString("生息符文外壳", 745, 465);
+        labels.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
+        labels.drawString("使用实际 64×64 PNG 与模型离屏绘制；不是游戏场景截图。", 40, 555);
+        labels.dispose();
+        ImageIO.write(output, "png", new File(project, "docs/images/dragon-casings.png"));
+    }
+    private static void draw(JsonObject model) { draw(model, false); }
+    private static void draw(JsonObject model, boolean shaded) {
         JsonObject textures = model.getAsJsonObject("textures");
         for (JsonElement element : model.getAsJsonArray("elements")) {
             JsonObject cube = element.getAsJsonObject();
@@ -168,6 +240,10 @@ public final class DragonBloodExtractorRenderSmoke {
             for (Map.Entry<String, JsonElement> face : cube.getAsJsonObject("faces").entrySet()) {
                 String name = face.getValue().getAsJsonObject().get("texture").getAsString().substring(1);
                 mc.renderEngine.bindTexture(textureId(textures.get(name).getAsString()));
+                float shade = !shaded || face.getKey().equals("up") ? 1.0F
+                        : face.getKey().equals("down") ? 0.5F
+                        : face.getKey().equals("east") || face.getKey().equals("west") ? 0.65F : 0.85F;
+                GlStateManager.color(shade, shade, shade, 1);
                 double[][] vertices;
                 switch (face.getKey()) {
                     case "north": vertices = new double[][]{{x0,y1,z0},{x1,y1,z0},{x1,y0,z0},{x0,y0,z0}}; break;
@@ -185,5 +261,6 @@ public final class DragonBloodExtractorRenderSmoke {
                 GL11.glEnd();
             }
         }
+        GlStateManager.color(1, 1, 1, 1);
     }
 }

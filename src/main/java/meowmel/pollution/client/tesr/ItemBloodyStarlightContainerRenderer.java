@@ -10,6 +10,7 @@ public class ItemBloodyStarlightContainerRenderer extends TileEntityItemStackRen
     public void renderByItem(ItemStack stack, float partialTicks) {
         double time = Minecraft.getMinecraft().world == null ? 0
                 : Minecraft.getMinecraft().world.getTotalWorldTime() + partialTicks;
-        BloodyStarlightContainerVisual.render(DragonContainmentData.get(stack), time, partialTicks, false);
+        BloodyStarlightContainerVisual.render(DragonContainmentData.get(stack), time, partialTicks, false,
+                DragonContainmentData.isBaseHidden(stack));
     }
 }

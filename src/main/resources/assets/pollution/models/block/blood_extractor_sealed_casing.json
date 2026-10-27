@@ -1,21 +1,4 @@
 {
-  "parent": "block/block",
-  "textures": {
-    "particle": "pollution:blocks/starstream/starstream_runed_casing",
-    "casing": "pollution:blocks/starstream/starstream_runed_casing",
-    "blood": "minecraft:blocks/redstone_block"
-  },
-  "elements": [
-    { "from": [0,0,0], "to": [16,16,16], "faces": {
-      "down": {"texture":"#casing","cullface":"down"}, "up":{"texture":"#casing","cullface":"up"},
-      "north":{"texture":"#casing","cullface":"north"}, "south":{"texture":"#casing","cullface":"south"},
-      "east":{"texture":"#casing","cullface":"east"}, "west":{"texture":"#casing","cullface":"west"}
-    }},
-    { "from": [0,3,-0.01], "to": [16,4,16.01], "faces": {
-      "north":{"texture":"#blood","uv":[0,7,16,8]}, "south":{"texture":"#blood","uv":[0,7,16,8]}
-    }},
-    { "from": [-0.01,3,0], "to": [16.01,4,16], "faces": {
-      "west":{"texture":"#blood","uv":[0,7,16,8]}, "east":{"texture":"#blood","uv":[0,7,16,8]}
-    }}
-  ]
+  "parent": "pollution:block/dragon_blood_extraction_casing",
+  "textures": {}
 }

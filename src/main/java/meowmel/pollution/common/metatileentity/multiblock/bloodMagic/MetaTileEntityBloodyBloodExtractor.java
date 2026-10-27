@@ -36,6 +36,8 @@ import meowmel.pollution.client.textures.POTextures;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.blocks.PollutionBlocksInit;
 import meowmel.pollution.common.block.metablocks.POBloodExtractorCasing;
+import meowmel.pollution.common.block.metablocks.PODragonCasing;
+import gregtech.api.pattern.element.Elements;
 import meowmel.pollution.common.block.tile.TileEntityBloodyStarlightContainer;
 import meowmel.pollution.common.entity.dragon.DragonContainmentData;
 import meowmel.pollution.common.entity.dragon.DragonGrowthAura;
@@ -87,6 +89,9 @@ public class MetaTileEntityBloodyBloodExtractor extends MultiblockWithDisplayBas
     }
 
     public static IBlockState casing() {
+        return PollutionMetaBlocks.DRAGON_CASING.getState(PODragonCasing.Type.BLOOD_EXTRACTION_CASING);
+    }
+    public static IBlockState legacyCasing() {
         return PollutionMetaBlocks.BLOOD_EXTRACTOR_CASING.getState(POBloodExtractorCasing.Type.SEALED_CASING);
     }
     public static IBlockState glass() {
@@ -101,11 +106,12 @@ public class MetaTileEntityBloodyBloodExtractor extends MultiblockWithDisplayBas
                     .air('#').block('G', glass())
                     .block('N', MetaBlocks.FRAMES.get(Materials.StainlessSteel).getDefaultState())
                     .block('P', MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STAINLESS_CLEAN))
-                    .block('H', casing())
+                    .blocks('H', casing(), legacyCasing())
                     .blockPredicate('D', state -> state.getBlock() == Blocks.AIR
                                     || state.getBlock() == PollutionBlocksInit.BLOODY_STARLIGHT_CONTAINER,
                             () -> new BlockInfo[]{BlockInfo.EMPTY})
                     .casing('X', casing())
+                    .custom(Elements.block(legacyCasing()), 59)
                     .hatch(MultiblockAbility.MAINTENANCE_HATCH, 1, 1, () -> MetaTileEntities.MAINTENANCE_HATCH)
                     .hatch(MultiblockAbility.INPUT_ENERGY, 1, 2, () -> MetaTileEntities.ENERGY_INPUT_HATCH[GTValues.UHV])
                     .fluidOutput(1, 2)

@@ -31,6 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import meowmel.pollution.api.capability.IStarstreamOperationCore;
 import meowmel.pollution.common.block.metablocks.POStarstreamObelisk;
+import meowmel.pollution.common.block.metablocks.PODragonCasing;
 import hellfirepvp.astralsorcery.common.block.BlockMarble;
 import hellfirepvp.astralsorcery.common.lib.BlocksAS;
 import net.minecraft.network.PacketBuffer;
@@ -55,10 +56,12 @@ public class MetaTileEntityDragonEggIncubator extends MetaTileEntityBaseWithCont
             DeclarativePatternBuilder builder = DeclarativePatternBuilder.start();
             for (String[] aisle : DragonIncubatorShape.createAisles()) builder.aisle(aisle);
             return builder.self('S', MetaTileEntityDragonEggIncubator.class)
-                    .block('C', PollutionMetaBlocks.STARSTREAM_OBELISK.getState(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_CASING))
+                    .blocks('C', PollutionMetaBlocks.DRAGON_CASING.getState(PODragonCasing.Type.INCUBATOR_CASING),
+                            PollutionMetaBlocks.STARSTREAM_OBELISK.getState(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_CASING))
                     .block('W', BlocksAS.blockMarble.getDefaultState().withProperty(BlockMarble.MARBLE_TYPE, BlockMarble.MarbleBlockType.PILLAR))
                     .block('L', PollutionMetaBlocks.STARSTREAM_OBELISK.getState(POStarstreamObelisk.ObeliskBlockType.CONSTELLATION_ANCHOR))
-                    .block('P', PollutionMetaBlocks.STARSTREAM_OBELISK.getState(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_RUNED_CASING))
+                    .blocks('P', PollutionMetaBlocks.DRAGON_CASING.getState(PODragonCasing.Type.INCUBATOR_RUNED_CASING),
+                            PollutionMetaBlocks.STARSTREAM_OBELISK.getState(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_RUNED_CASING))
                     .block('K', PollutionMetaBlocks.STARSTREAM_OBELISK.getState(POStarstreamObelisk.ObeliskBlockType.CONSTELLATION_ANCHOR))
                     .block('H', PollutionMetaBlocks.STARSTREAM_OPERATION_CORE.getDefaultState())
                     // Empty and occupied nests both form; preview/build must not consume a dragon egg.
@@ -233,7 +236,7 @@ public class MetaTileEntityDragonEggIncubator extends MetaTileEntityBaseWithCont
     @SideOnly(Side.CLIENT)
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart part) {
-        return POTextures.STARSTREAM_CASING;
+        return POTextures.DRAGON_INCUBATOR_CASING;
     }
 
     @SideOnly(Side.CLIENT)

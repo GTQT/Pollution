@@ -46,6 +46,7 @@ public final class DragonContainmentSmoke {
             roundTrips();
             rejectedActions();
             itemAndBlockTransfers();
+            displayPreferences();
             System.out.println("PASS: " + checks + " containment checks (all stages/skins, identity, health, NBT, drops, creative, rollback, collision)");
             System.exit(0);
         } catch (Throwable failure) {
@@ -198,6 +199,64 @@ public final class DragonContainmentSmoke {
         if (!condition) throw new AssertionError(message);
     }
 
+    private static void displayPreferences() {
+        TestWorld world = new TestWorld();
+        TestPlayer player = new TestPlayer(world);
+        ItemStack held = new ItemStack(item);
+        player.setHeldItem(EnumHand.MAIN_HAND, held);
+        player.setSneaking(true);
+        item.onItemRightClick(world, player, EnumHand.MAIN_HAND);
+        check(DragonContainmentData.isBaseHidden(held) && !DragonContainmentData.isOccupied(held), "Air click hides empty orb base");
+        item.onItemRightClick(world, player, EnumHand.MAIN_HAND);
+        check(!held.hasTagCompound(), "Showing the base removes only the cosmetic tag");
+        DragonContainmentData.setBaseHidden(held, true);
+        EntityPollutionDragon source = dragon(world, DragonLifeStage.ADULT, 1);
+        check(DragonContainmentService.capture(player, EnumHand.MAIN_HAND, source), "Hidden orb captures dragon");
+        check(DragonContainmentData.isBaseHidden(player.getHeldItemMainhand()), "Capture preserves style");
+        NBTTagCompound payload = DragonContainmentData.get(player.getHeldItemMainhand()).copy();
+        player.setSneaking(false);
+        BlockPos pos = new BlockPos(8, 64, 0);
+        check(item.onItemUse(player, world, pos.down(), EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 1, 0.5F)
+                == EnumActionResult.SUCCESS, "Hidden occupied item places normally");
+        TileEntityBloodyStarlightContainer tile = (TileEntityBloodyStarlightContainer) world.getTileEntity(pos);
+        check(tile.isBaseHidden() && tile.getPayload().equals(payload), "Placement transfers style and full snapshot");
+        UUID identity = tile.getContentId();
+        DragonContainmentData.ExtractionSnapshot cached = tile.getExtractionSnapshot();
+        Item wrench = new Item() {
+            @Override public Set<String> getToolClasses(ItemStack stack) { return Collections.singleton("wrench"); }
+        };
+        player.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(wrench));
+        block.onBlockActivated(world, pos, block.getDefaultState(), player, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 1, 0.5F);
+        check(!tile.isBaseHidden() && identity.equals(tile.getContentId()) && cached == tile.getExtractionSnapshot(),
+                "Wrench changes style without invalidating extraction identity or snapshot");
+        player.allowEdit = false;
+        block.onBlockActivated(world, pos, block.getDefaultState(), player, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 1, 0.5F);
+        check(!tile.isBaseHidden(), "Denied wrench interaction leaves style unchanged");
+        player.allowEdit = true;
+        block.onBlockActivated(world, pos, block.getDefaultState(), player, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 1, 0.5F);
+        TileEntityBloodyStarlightContainer loaded = new TileEntityBloodyStarlightContainer();
+        loaded.readFromNBT(tile.writeToNBT(new NBTTagCompound()));
+        check(loaded.isBaseHidden() && loaded.getPayload().equals(payload), "World save preserves hidden base and dragon");
+        TileEntityBloodyStarlightContainer client = new TileEntityBloodyStarlightContainer();
+        client.readFromNBT(tile.getUpdateTag());
+        check(client.isBaseHidden() && !client.getPayload().hasKey("Dragon"), "Client receives style and summary without full dragon");
+        NBTTagCompound legacy = tile.writeToNBT(new NBTTagCompound());
+        legacy.removeTag(DragonContainmentData.HIDE_BASE);
+        loaded.readFromNBT(legacy);
+        check(!loaded.isBaseHidden() && loaded.isOccupied(), "Old saves keep their visible base");
+        ItemStack picked = block.getPickBlock(block.getDefaultState(), null, world, pos, player);
+        check(DragonContainmentData.isBaseHidden(picked) && !DragonContainmentData.isOccupied(picked), "Pick block copies style only");
+        check(block.getBoundingBox(block.getDefaultState(), world, pos).minY > 0, "Hidden base is excluded from selection box");
+        world.destroyBlock(pos, true);
+        check(world.drops.size() == 1 && DragonContainmentData.isBaseHidden(world.drops.get(0))
+                && DragonContainmentData.get(world.drops.get(0)).equals(payload), "Single drop retains hidden base and contents");
+        player.setHeldItem(EnumHand.MAIN_HAND, world.drops.get(0));
+        player.setSneaking(true);
+        item.onItemUseFirst(player, world, new BlockPos(16, 63, 0), EnumFacing.UP, 0.5F, 1, 0.5F, EnumHand.MAIN_HAND);
+        check(!DragonContainmentData.isOccupied(player.getHeldItemMainhand())
+                && DragonContainmentData.isBaseHidden(player.getHeldItemMainhand()), "Releasing dragon preserves hidden-base setting");
+    }
+
     private static final class TestPlayer extends EntityPlayer {
         boolean allowEdit = true;
         TestPlayer(World world) {
@@ -208,6 +267,7 @@ public final class DragonContainmentSmoke {
         @Override public boolean isCreative() { return capabilities.isCreativeMode; }
         @Override public boolean canPlayerEdit(BlockPos pos, EnumFacing side, ItemStack stack) { return allowEdit; }
         @Override public void sendStatusMessage(ITextComponent message, boolean actionBar) { }
+        @Override public net.minecraft.util.math.RayTraceResult rayTrace(double distance, float partialTicks) { return null; }
     }
 
     private static final class TestWorld extends World {

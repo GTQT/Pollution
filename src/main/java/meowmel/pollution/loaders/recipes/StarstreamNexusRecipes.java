@@ -232,7 +232,8 @@ public final class StarstreamNexusRecipes {
 
     private static void registerDragonEggIncubator() {
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-                .inputs(GTUtility.copy(4, stack(POStarstreamObelisk.ObeliskBlockType.STARSTREAM_RUNED_CASING)))
+                .inputs(PollutionMetaBlocks.DRAGON_CASING.getItemVariant(
+                        meowmel.pollution.common.block.metablocks.PODragonCasing.Type.INCUBATOR_RUNED_CASING, 4))
                 .inputs(stack(POStarstreamObelisk.ObeliskBlockType.CONSTELLATION_ANCHOR))
                 .input(PollutionMetaItems.HARMONIZING_RUNE_CORE, 2)
                 .input(PollutionMetaItems.ASTRAL_RESONANCE_COIL, 8)

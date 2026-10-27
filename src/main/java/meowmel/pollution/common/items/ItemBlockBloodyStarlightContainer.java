@@ -15,6 +15,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,6 +31,22 @@ public class ItemBlockBloodyStarlightContainer extends ItemBlock {
         super(block);
         setRegistryName(block.getRegistryName());
         setMaxStackSize(1);
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack held = player.getHeldItem(hand);
+        if (!player.isSneaking() || player.isSpectator()) return new ActionResult<>(EnumActionResult.PASS, held);
+        RayTraceResult target = player.rayTrace(5.0D, 1.0F);
+        if (target != null && target.typeOfHit == RayTraceResult.Type.BLOCK)
+            return new ActionResult<>(EnumActionResult.PASS, held);
+        if (!world.isRemote) {
+            boolean hidden = !DragonContainmentData.isBaseHidden(held);
+            DragonContainmentData.setBaseHidden(held, hidden);
+            player.inventory.markDirty();
+            DragonContainmentService.message(player, hidden ? "base_hidden" : "base_visible");
+        }
+        return new ActionResult<>(EnumActionResult.SUCCESS, held);
     }
 
     @Override
@@ -81,7 +99,7 @@ public class ItemBlockBloodyStarlightContainer extends ItemBlock {
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileEntityBloodyStarlightContainer) {
-                ((TileEntityBloodyStarlightContainer) tile).setPayload(DragonContainmentData.get(stack));
+                ((TileEntityBloodyStarlightContainer) tile).applyItemData(stack);
             } else return false;
         }
         return true;
@@ -104,6 +122,9 @@ public class ItemBlockBloodyStarlightContainer extends ItemBlock {
             lines.add(I18n.format("pollution.containment.capture_hint"));
         }
         lines.add(I18n.format("pollution.containment.use_hint"));
+        lines.add(I18n.format(DragonContainmentData.isBaseHidden(stack)
+                ? "pollution.containment.base_hidden" : "pollution.containment.base_visible"));
+        lines.add(I18n.format("pollution.containment.base_hint"));
         lines.add(I18n.format("pollution.containment.loss_hint"));
     }
 }
