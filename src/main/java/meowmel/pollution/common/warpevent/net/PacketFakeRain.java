@@ -37,9 +37,8 @@ public class PacketFakeRain implements IMessage {
     public static class Handler implements IMessageHandler<PacketFakeRain, IMessage> {
         @Override
         public IMessage onMessage(PacketFakeRain message, MessageContext ctx) {
-            if (ctx.side.isClient()) {
-                ClientWarpEffects.scheduleFakeRain(message.level, message.ticks);
-            }
+            net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(
+                    () -> ClientWarpEffects.setFakeRain(message.level, message.ticks));
             return null;
         }
     }
