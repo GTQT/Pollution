@@ -3,9 +3,7 @@ package meowmel.pollution.client.warpevent;
 import meowmel.pollution.Pollution;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,57 +29,6 @@ public class ClientWarpEffects {
     private static int fakeRainTicks = 0;
 
     private ClientWarpEffects() {
-    }
-
-    public static void scheduleBlink(double x, double y, double z) {
-        Minecraft.getMinecraft().addScheduledTask(() -> {
-            World world = Minecraft.getMinecraft().world;
-            if (world == null) {
-                return;
-            }
-            for (int i = 0; i < 32; i++) {
-                double px = x + world.rand.nextDouble() * 1.5 - 0.75;
-                double py = y + world.rand.nextDouble() * 2.0 - 1.0;
-                double pz = z + world.rand.nextDouble() * 1.5 - 0.75;
-                world.spawnParticle(EnumParticleTypes.PORTAL, px, py, pz, 0, 0, 0);
-            }
-            world.playSound(x, y, z,
-                    SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-        });
-    }
-
-    public static void scheduleBlood(double x, double y, double z, boolean clear) {
-        Minecraft.getMinecraft().addScheduledTask(() -> {
-            if (clear) {
-                clearBlood();
-            } else {
-                addBloodSpot(x, y, z);
-            }
-        });
-    }
-
-    public static void scheduleFakeRain(int level, int ticks) {
-        Minecraft.getMinecraft().addScheduledTask(
-                () -> setFakeRain(level, ticks));
-    }
-
-    public static void scheduleFakeExplosion(double x, double y, double z) {
-        Minecraft.getMinecraft().addScheduledTask(() -> {
-            World world = Minecraft.getMinecraft().world;
-            if (world == null) {
-                return;
-            }
-            world.playSound(x, y, z,
-                    SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 2.0F,
-                    (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F, false);
-            for (int i = 0; i < 24; i++) {
-                world.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
-                        x + world.rand.nextDouble() * 2.0 - 1.0,
-                        y + world.rand.nextDouble() * 1.5,
-                        z + world.rand.nextDouble() * 2.0 - 1.0,
-                        world.rand.nextDouble() * 0.1, world.rand.nextDouble() * 0.1, world.rand.nextDouble() * 0.1);
-            }
-        });
     }
 
     public static void addBloodSpot(double x, double y, double z) {
