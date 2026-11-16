@@ -288,6 +288,7 @@ public class MagicChemicalRecipes {
 				.duration(200)
 				.EUt(120)
 				.buildAndRegister();
+		/*
 		//史莱姆产出：焦油、糖、甘油、胶水、橡胶、燃油（特殊）
 		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
 				.fluidInputs(Materials.Biomass.getFluid(200))
@@ -332,6 +333,7 @@ public class MagicChemicalRecipes {
 				.duration(120)
 				.EUt(120)
 				.buildAndRegister();
+		*/
 
 
 		//纯化焦油+粘液球 搅拌

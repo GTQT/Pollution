@@ -22,7 +22,7 @@ import static gregtech.api.recipes.RecipeMaps.CANNER_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.MACERATOR_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static meowmel.gtqtcore.api.recipes.GTQTRecipeMaps.BACTERIAL_VAT_RECIPES;
+// import static meowmel.gtqtcore.api.recipes.GTQTRecipeMaps.BACTERIAL_VAT_RECIPES;
 import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
 import static net.minecraft.init.Blocks.RED_FLOWER;
 import static vazkii.botania.common.block.ModBlocks.mushroom;
@@ -84,6 +84,7 @@ public class BotaniaRecipes {
     //"puredaisy", "manastar", "endoflame", "hydroangeas", "thermalily", "arcanerose", "munchdew", "entropinnyum", "kekimurus", "gourmaryllis", "narslimmus", "spectrolus", "rafflowsia", "shulk_me_not", "dandelifeon", "jadedAmaranthus", "bellethorn", "dreadthorn", "heiseiDream", "tigerseye", "marimorphosis", "orechid", "orechidIgnem", "fallenKanade", "exoflame", "agricarnation", "hopperhock", "rannuncarpus", "tangleberrie", "jiyuulia", "hyacidus", "medumone", "pollidisiac", "clayconia", "loonium", "daffomill", "vinculotus", "spectranthemum", "bubbell", "solegnolia", "bergamute"
     private static void flower() {
 
+        /*
         //白雏菊诱变改造
         BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 8))
@@ -110,6 +111,7 @@ public class BotaniaRecipes {
                 .chancedOutput(ItemBlockSpecialFlower.ofType("hydroangeas"), 5000, 0)
                 .cleanroom(CleanroomType.CLEANROOM)
                 .buildAndRegister();
+        */
 
         //瓶装末地空气
         CANNER_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
@@ -122,6 +124,7 @@ public class BotaniaRecipes {
         //染料线
         int min;
         for (min = 0; min < 16; ++min) {
+            /*
             BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                     .fluidInputs(Water.getFluid(500))
                     .input(RED_FLOWER)
@@ -161,6 +164,7 @@ public class BotaniaRecipes {
                     .outputs(new ItemStack(petal, 4, min))
                     .cleanroom(CleanroomType.CLEANROOM)
                     .buildAndRegister();
+            */
 
             MACERATOR_RECIPES.recipeBuilder().EUt(VA[LV]).duration(40)
                     .outputs(new ItemStack(dye, 2, min))
