@@ -42,13 +42,9 @@ public class PacketBlood implements IMessage {
     public static class Handler implements IMessageHandler<PacketBlood, IMessage> {
         @Override
         public IMessage onMessage(PacketBlood message, MessageContext ctx) {
-            net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(() -> {
-                if (message.clear) {
-                    ClientWarpEffects.clearBlood();
-                } else {
-                    ClientWarpEffects.addBloodSpot(message.x, message.y, message.z);
-                }
-            });
+            if (ctx.side.isClient()) {
+                ClientWarpEffects.scheduleBlood(message.x, message.y, message.z, message.clear);
+            }
             return null;
         }
     }
