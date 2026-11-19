@@ -1,7 +1,7 @@
 package meowmel.pollution.common.warpevent.net;
 
 import io.netty.buffer.ByteBuf;
-import meowmel.pollution.client.warpevent.ClientWarpEffects;
+import meowmel.pollution.Pollution;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -37,8 +37,9 @@ public class PacketFakeRain implements IMessage {
     public static class Handler implements IMessageHandler<PacketFakeRain, IMessage> {
         @Override
         public IMessage onMessage(PacketFakeRain message, MessageContext ctx) {
-            net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(
-                    () -> ClientWarpEffects.setFakeRain(message.level, message.ticks));
+            if (ctx.side.isClient()) {
+                Pollution.proxy.scheduleWarpFakeRain(message.level, message.ticks);
+            }
             return null;
         }
     }
