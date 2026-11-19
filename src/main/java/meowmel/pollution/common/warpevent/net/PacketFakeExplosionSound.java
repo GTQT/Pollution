@@ -1,7 +1,7 @@
 package meowmel.pollution.common.warpevent.net;
 
 import io.netty.buffer.ByteBuf;
-import meowmel.pollution.client.warpevent.ClientWarpEffects;
+import meowmel.pollution.Pollution;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -39,7 +39,7 @@ public class PacketFakeExplosionSound implements IMessage {
         @Override
         public IMessage onMessage(PacketFakeExplosionSound message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                ClientWarpEffects.scheduleFakeExplosion(message.x, message.y, message.z);
+                Pollution.proxy.scheduleWarpFakeExplosion(message.x, message.y, message.z);
             }
             return null;
         }

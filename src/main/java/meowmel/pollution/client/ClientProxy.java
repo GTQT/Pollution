@@ -10,6 +10,7 @@ import meowmel.pollution.client.tesr.TesrStarstreamObeliskCore;
 import meowmel.pollution.client.tesr.TesrStarstreamRelay;
 import meowmel.pollution.client.tesr.TesrStarstreamOperationCore;
 import meowmel.pollution.client.textures.POTextures;
+import meowmel.pollution.client.warpevent.ClientWarpEffects;
 import meowmel.pollution.common.CommonProxy;
 import meowmel.pollution.common.block.PollutionMetaBlocks;
 import meowmel.pollution.common.block.tile.TileEntityMagicCircle;
@@ -76,5 +77,25 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init() {
 		super.init();
+	}
+
+	@Override
+	public void scheduleWarpBlink(double x, double y, double z) {
+		ClientWarpEffects.scheduleBlink(x, y, z);
+	}
+
+	@Override
+	public void scheduleWarpBlood(double x, double y, double z, boolean clear) {
+		ClientWarpEffects.scheduleBlood(x, y, z, clear);
+	}
+
+	@Override
+	public void scheduleWarpFakeRain(int level, int ticks) {
+		ClientWarpEffects.scheduleFakeRain(level, ticks);
+	}
+
+	@Override
+	public void scheduleWarpFakeExplosion(double x, double y, double z) {
+		ClientWarpEffects.scheduleFakeExplosion(x, y, z);
 	}
 }

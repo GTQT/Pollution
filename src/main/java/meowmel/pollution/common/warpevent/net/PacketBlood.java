@@ -1,7 +1,7 @@
 package meowmel.pollution.common.warpevent.net;
 
 import io.netty.buffer.ByteBuf;
-import meowmel.pollution.client.warpevent.ClientWarpEffects;
+import meowmel.pollution.Pollution;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -43,7 +43,7 @@ public class PacketBlood implements IMessage {
         @Override
         public IMessage onMessage(PacketBlood message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                ClientWarpEffects.scheduleBlood(message.x, message.y, message.z, message.clear);
+                Pollution.proxy.scheduleWarpBlood(message.x, message.y, message.z, message.clear);
             }
             return null;
         }

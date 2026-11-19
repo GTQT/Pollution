@@ -145,4 +145,16 @@ public class CommonProxy {
     public void preLoad() {
         StarstreamChunkLoadingManager.init();
     }
+
+    public void scheduleWarpBlink(double x, double y, double z) {
+    }
+
+    public void scheduleWarpBlood(double x, double y, double z, boolean clear) {
+    }
+
+    public void scheduleWarpFakeRain(int level, int ticks) {
+    }
+
+    public void scheduleWarpFakeExplosion(double x, double y, double z) {
+    }
 }

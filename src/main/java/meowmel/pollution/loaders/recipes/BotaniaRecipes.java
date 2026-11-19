@@ -10,7 +10,6 @@ import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.common.item.ModItems;
@@ -80,7 +79,6 @@ public class BotaniaRecipes {
     //"puredaisy", "manastar", "endoflame", "hydroangeas", "thermalily", "arcanerose", "munchdew", "entropinnyum", "kekimurus", "gourmaryllis", "narslimmus", "spectrolus", "rafflowsia", "shulk_me_not", "dandelifeon", "jadedAmaranthus", "bellethorn", "dreadthorn", "heiseiDream", "tigerseye", "marimorphosis", "orechid", "orechidIgnem", "fallenKanade", "exoflame", "agricarnation", "hopperhock", "rannuncarpus", "tangleberrie", "jiyuulia", "hyacidus", "medumone", "pollidisiac", "clayconia", "loonium", "daffomill", "vinculotus", "spectranthemum", "bubbell", "solegnolia", "bergamute"
     private static void flower() {
 
-
         //瓶装末地空气
         CANNER_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .fluidInputs(LiquidEnderAir.getFluid(1000))
@@ -92,7 +90,6 @@ public class BotaniaRecipes {
         //染料线
         int min;
         for (min = 0; min < 16; ++min) {
-
             MACERATOR_RECIPES.recipeBuilder().EUt(VA[LV]).duration(40)
                     .outputs(new ItemStack(dye, 2, min))
                     .inputs(new ItemStack(petal, 1, min))

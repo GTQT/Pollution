@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
