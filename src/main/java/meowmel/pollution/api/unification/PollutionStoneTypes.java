@@ -12,9 +12,6 @@ import vazkii.botania.common.block.ModBlocks;
  */
 public final class PollutionStoneTypes {
 
-    private static final int FIRST_ADDON_STONE_TYPE_ID = 12;
-    private static final int MAX_STONE_TYPE_ID = 128;
-
     public static StoneType LIVINGROCK;
 
     private PollutionStoneTypes() {}
@@ -23,7 +20,8 @@ public final class PollutionStoneTypes {
         if (LIVINGROCK != null) return;
 
         // Material events run before GTQTCore normally initializes its stone types during block registration.
-        // Initialize both registries now so livingrock cannot claim one of GTQTCore's reserved IDs (12-19).
+        // Initialize them now so GTQTCore keeps the ids it had before Pollution claimed one, then let
+        // StoneType#getStoneTypeID() hand out the next free id for livingrock.
         StoneType.init();
         GTQTStoneTypes.init();
 
@@ -33,7 +31,7 @@ public final class PollutionStoneTypes {
             return;
         }
 
-        LIVINGROCK = StoneType.Builder.create(findFreeId(), "livingrock")
+        LIVINGROCK = StoneType.Builder.create("livingrock")
                 .soundType(SoundType.STONE)
                 .processingPrefix(OrePrefix.ore)
                 .stoneMaterial(Materials.Stone)
@@ -41,12 +39,5 @@ public final class PollutionStoneTypes {
                 .predicate(state -> state.getBlock() == ModBlocks.livingrock)
                 .shouldBeDroppedAsItem(true)
                 .build();
-    }
-
-    private static int findFreeId() {
-        for (int id = FIRST_ADDON_STONE_TYPE_ID; id < MAX_STONE_TYPE_ID; id++) {
-            if (StoneType.STONE_TYPE_REGISTRY.getObjectById(id) == null) return id;
-        }
-        throw new IllegalStateException("No free GTCEu stone type ID is available for Botania livingrock");
     }
 }
