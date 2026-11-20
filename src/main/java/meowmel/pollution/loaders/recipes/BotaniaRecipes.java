@@ -5,26 +5,21 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
-import meowmel.gtqtcore.common.items.GTQTMetaItems;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.common.items.PollutionMetaItems;
 import meowmel.pollution.common.metatileentity.PollutionMetaTileEntities;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.CANNER_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.MACERATOR_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
-import static meowmel.gtqtcore.api.recipes.GTQTRecipeMaps.BACTERIAL_VAT_RECIPES;
 import static meowmel.gtqtcore.api.unification.material.GTQTMaterials.VoidMetal;
-import static net.minecraft.init.Blocks.RED_FLOWER;
 import static vazkii.botania.common.block.ModBlocks.mushroom;
 import static vazkii.botania.common.item.ModItems.*;
 
@@ -84,33 +79,6 @@ public class BotaniaRecipes {
     //"puredaisy", "manastar", "endoflame", "hydroangeas", "thermalily", "arcanerose", "munchdew", "entropinnyum", "kekimurus", "gourmaryllis", "narslimmus", "spectrolus", "rafflowsia", "shulk_me_not", "dandelifeon", "jadedAmaranthus", "bellethorn", "dreadthorn", "heiseiDream", "tigerseye", "marimorphosis", "orechid", "orechidIgnem", "fallenKanade", "exoflame", "agricarnation", "hopperhock", "rannuncarpus", "tangleberrie", "jiyuulia", "hyacidus", "medumone", "pollidisiac", "clayconia", "loonium", "daffomill", "vinculotus", "spectranthemum", "bubbell", "solegnolia", "bergamute"
     private static void flower() {
 
-        //白雏菊诱变改造
-        BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 8))
-                .input(dust, NetherStar)
-                .fluidInputs(SterileGrowthMedium.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("puredaisy"), 5000, 0)
-                .cleanroom(CleanroomType.CLEANROOM)
-                .buildAndRegister();
-
-        //火红莲诱变改造
-        BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 0))
-                .input(dust, Blaze)
-                .fluidInputs(SterileGrowthMedium.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("endoflame"), 5000, 0)
-                .cleanroom(CleanroomType.CLEANROOM)
-                .buildAndRegister();
-
-        //火红莲诱变改造
-        BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                .inputs(new ItemStack(Blocks.RED_FLOWER, 1, 0))
-                .input(OrePrefix.dust, PollutionMaterials.Llp, 1)
-                .fluidInputs(SterileGrowthMedium.getFluid(100))
-                .chancedOutput(ItemBlockSpecialFlower.ofType("hydroangeas"), 5000, 0)
-                .cleanroom(CleanroomType.CLEANROOM)
-                .buildAndRegister();
-
         //瓶装末地空气
         CANNER_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
                 .fluidInputs(LiquidEnderAir.getFluid(1000))
@@ -122,46 +90,6 @@ public class BotaniaRecipes {
         //染料线
         int min;
         for (min = 0; min < 16; ++min) {
-            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                    .fluidInputs(Water.getFluid(500))
-                    .input(RED_FLOWER)
-                    .inputs(new ItemStack(dye, 1, min))
-                    .outputs(new ItemStack(petal, 4, min))
-                    .cleanroom(CleanroomType.CLEANROOM)
-                    .buildAndRegister();
-
-            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                    .fluidInputs(Water.getFluid(500))
-                    .input(Blocks.YELLOW_FLOWER)
-                    .inputs(new ItemStack(dye, 1, min))
-                    .outputs(new ItemStack(petal, 4, min))
-                    .cleanroom(CleanroomType.CLEANROOM)
-                    .buildAndRegister();
-
-            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                    .fluidInputs(Water.getFluid(500))
-                    .input(Blocks.BROWN_MUSHROOM)
-                    .inputs(new ItemStack(dye, 1, min))
-                    .outputs(new ItemStack(petal, 4, min))
-                    .cleanroom(CleanroomType.CLEANROOM)
-                    .buildAndRegister();
-
-            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                    .fluidInputs(Water.getFluid(500))
-                    .input(Blocks.RED_MUSHROOM)
-                    .inputs(new ItemStack(dye, 1, min))
-                    .outputs(new ItemStack(petal, 4, min))
-                    .cleanroom(CleanroomType.CLEANROOM)
-                    .buildAndRegister();
-
-            BACTERIAL_VAT_RECIPES.recipeBuilder().EUt(VA[HV]).duration(200)
-                    .fluidInputs(Water.getFluid(500))
-                    .input(GTQTMetaItems.ORDINARY_ALGAE)
-                    .inputs(new ItemStack(dye, 1, min))
-                    .outputs(new ItemStack(petal, 4, min))
-                    .cleanroom(CleanroomType.CLEANROOM)
-                    .buildAndRegister();
-
             MACERATOR_RECIPES.recipeBuilder().EUt(VA[LV]).duration(40)
                     .outputs(new ItemStack(dye, 2, min))
                     .inputs(new ItemStack(petal, 1, min))

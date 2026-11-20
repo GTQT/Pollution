@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.block.BlockLifeEssence;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import meowmel.gtqtcore.api.recipes.GTQTRecipeMaps;
 import meowmel.gtqtcore.api.unification.material.GTQTMaterials;
 import meowmel.pollution.api.recipes.PORecipeMaps;
 import meowmel.pollution.api.unification.PollutionMaterials;
@@ -286,50 +285,6 @@ public class MagicChemicalRecipes {
 				.input(ItemsTC.alumentum)
 				.output(ItemsTC.causalityCollapser)
 				.duration(200)
-				.EUt(120)
-				.buildAndRegister();
-		//史莱姆产出：焦油、糖、甘油、胶水、橡胶、燃油（特殊）
-		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
-				.fluidInputs(Materials.Biomass.getFluid(200))
-				.notConsumable(new ItemStack(PollutionMetaItems.TARSLIME.getMetaItem(), 1, 20))
-				.fluidOutputs(Materials.OilHeavy.getFluid(1000))
-				.duration(60)
-				.EUt(120)
-				.buildAndRegister();
-		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
-				.fluidInputs(Materials.Biomass.getFluid(200))
-				.notConsumable(new ItemStack(PollutionMetaItems.SUGARSLIME.getMetaItem(), 1, 21))
-				.output(Items.SUGAR, 16)
-				.duration(60)
-				.EUt(120)
-				.buildAndRegister();
-		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
-				.fluidInputs(Materials.Biomass.getFluid(200))
-				.notConsumable(new ItemStack(PollutionMetaItems.GLYCEROLSLIME.getMetaItem(), 1, 23))
-				.fluidOutputs(Materials.Glycerol.getFluid(1000))
-				.duration(60)
-				.EUt(120)
-				.buildAndRegister();
-		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
-				.fluidInputs(Materials.Biomass.getFluid(200))
-				.notConsumable(new ItemStack(PollutionMetaItems.GLUESLIME.getMetaItem(), 1, 22))
-				.fluidOutputs(Materials.Glue.getFluid(1000))
-				.duration(60)
-				.EUt(120)
-				.buildAndRegister();
-		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
-				.fluidInputs(Materials.Biomass.getFluid(200))
-				.notConsumable(new ItemStack(PollutionMetaItems.RUBBERSLIME.getMetaItem(), 1, 24))
-				.fluidOutputs(Materials.Rubber.getFluid(1000))
-				.duration(60)
-				.EUt(120)
-				.buildAndRegister();
-		GTQTRecipeMaps.BACTERIAL_VAT_RECIPES.recipeBuilder()
-				.fluidInputs(Materials.Biomass.getFluid(1000))
-				.notConsumable(new ItemStack(PollutionMetaItems.TARSLIME.getMetaItem(), 1, 20))
-				.fluidInputs(PollutionMaterials.InfusedEnergy.getFluid(144))
-				.fluidOutputs(Materials.Diesel.getFluid(1000))
-				.duration(120)
 				.EUt(120)
 				.buildAndRegister();
 

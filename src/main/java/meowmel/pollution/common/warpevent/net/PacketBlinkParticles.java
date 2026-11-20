@@ -1,11 +1,7 @@
 package meowmel.pollution.common.warpevent.net;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.world.World;
+import meowmel.pollution.Pollution;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -42,20 +38,9 @@ public class PacketBlinkParticles implements IMessage {
     public static class Handler implements IMessageHandler<PacketBlinkParticles, IMessage> {
         @Override
         public IMessage onMessage(PacketBlinkParticles message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
-                World world = Minecraft.getMinecraft().world;
-                if (world == null) {
-                    return;
-                }
-                for (int i = 0; i < 32; i++) {
-                    double px = message.x + world.rand.nextDouble() * 1.5 - 0.75;
-                    double py = message.y + world.rand.nextDouble() * 2.0 - 1.0;
-                    double pz = message.z + world.rand.nextDouble() * 1.5 - 0.75;
-                    world.spawnParticle(EnumParticleTypes.PORTAL, px, py, pz, 0, 0, 0);
-                }
-                world.playSound(message.x, message.y, message.z,
-                        SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-            });
+            if (ctx.side.isClient()) {
+                Pollution.proxy.scheduleWarpBlink(message.x, message.y, message.z);
+            }
             return null;
         }
     }
