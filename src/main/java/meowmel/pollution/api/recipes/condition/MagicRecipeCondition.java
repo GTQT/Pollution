@@ -50,6 +50,10 @@ public class MagicRecipeCondition implements IRecipeCondition {
 
     private final MagicMultiblockRecipeLogic logic;
     private final MagicRecipeMapMultiblockController controller;
+    private int reservedInfusedFluid;
+    private long reservedMana;
+    private int reservedLifeEssence;
+    private int reservedVis;
 
     public MagicRecipeCondition(@NotNull MagicMultiblockRecipeLogic logic,
                                 @NotNull MagicRecipeMapMultiblockController controller) {
@@ -150,6 +154,14 @@ public class MagicRecipeCondition implements IRecipeCondition {
     }
 
     @Override
+    public void beginTick() {
+        reservedInfusedFluid = 0;
+        reservedMana = 0L;
+        reservedLifeEssence = 0;
+        reservedVis = 0;
+    }
+
+    @Override
     public boolean testTick(@NotNull RecipeExecutionContext context) {
         NBTTagCompound tag = context.getConditionData(CONDITION_ID);
         if (!checkRequirements(tag)) {
@@ -158,14 +170,34 @@ public class MagicRecipeCondition implements IRecipeCondition {
         int infusedFluidPerTick = tag.getInteger(KEY_INFUSED_FLUID_PER_TICK);
         long manaPerTick = tag.getLong(KEY_MANA_PER_TICK);
         int lifeEssencePerTick = tag.getInteger(KEY_LIFE_ESSENCE_PER_TICK);
-        int visPerCraft = tag.getInteger(KEY_VIS_PER_CRAFT);
-        boolean hasExplicitVis = tag.getBoolean(KEY_HAS_EXPLICIT_VIS);
-        boolean explicitVisPaid = tag.getBoolean(KEY_EXPLICIT_VIS_PAID);
+        int visCost = getVisCostForTick(tag);
 
-        return controller.drainInfusedFluid(infusedFluidPerTick, true)
-                && controller.consumeMana(manaPerTick, true)
-                && controller.consumeLifeEssence(lifeEssencePerTick, true)
-                && (!hasExplicitVis || explicitVisPaid || controller.consumeVis(visPerCraft, true));
+        return (infusedFluidPerTick <= 0 || controller.drainInfusedFluid(saturatingAddInt(reservedInfusedFluid, infusedFluidPerTick), true))
+                && (manaPerTick <= 0L || controller.consumeMana(saturatingAddLong(reservedMana, manaPerTick), true))
+                && (lifeEssencePerTick <= 0 || controller.consumeLifeEssence(saturatingAddInt(reservedLifeEssence, lifeEssencePerTick), true))
+                && (visCost <= 0 || controller.consumeVis(saturatingAddInt(reservedVis, visCost), true));
+    }
+
+    @Override
+    public void reserveTick(@NotNull RecipeExecutionContext context) {
+        NBTTagCompound tag = context.getConditionData(CONDITION_ID);
+        int infusedFluidPerTick = tag.getInteger(KEY_INFUSED_FLUID_PER_TICK);
+        long manaPerTick = tag.getLong(KEY_MANA_PER_TICK);
+        int lifeEssencePerTick = tag.getInteger(KEY_LIFE_ESSENCE_PER_TICK);
+        int visCost = getVisCostForTick(tag);
+
+        if (infusedFluidPerTick > 0) {
+            reservedInfusedFluid = saturatingAddInt(reservedInfusedFluid, infusedFluidPerTick);
+        }
+        if (manaPerTick > 0L) {
+            reservedMana = saturatingAddLong(reservedMana, manaPerTick);
+        }
+        if (lifeEssencePerTick > 0) {
+            reservedLifeEssence = saturatingAddInt(reservedLifeEssence, lifeEssencePerTick);
+        }
+        if (visCost > 0) {
+            reservedVis = saturatingAddInt(reservedVis, visCost);
+        }
     }
 
     @Override
@@ -181,8 +213,9 @@ public class MagicRecipeCondition implements IRecipeCondition {
         controller.consumeMana(manaPerTick, false);
         controller.consumeLifeEssence(lifeEssencePerTick, false);
         if (hasExplicitVis && !tag.getBoolean(KEY_EXPLICIT_VIS_PAID)) {
-            controller.consumeVis(visPerCraft, false);
-            tag.setBoolean(KEY_EXPLICIT_VIS_PAID, true);
+            if (controller.consumeVis(visPerCraft, false)) {
+                tag.setBoolean(KEY_EXPLICIT_VIS_PAID, true);
+            }
         }
         tag.setInteger(KEY_RETENTION_TICKS, 0);
 
@@ -256,6 +289,24 @@ public class MagicRecipeCondition implements IRecipeCondition {
                 : AstralCondition.NONE;
         return controller.checkMagicRequirements(manaPerTick, lifeEssencePerTick, hasExplicitVis,
                 astralCondition, requiredTarot, processTags);
+    }
+
+    private static int getVisCostForTick(@NotNull NBTTagCompound tag) {
+        if (!tag.getBoolean(KEY_HAS_EXPLICIT_VIS) || tag.getBoolean(KEY_EXPLICIT_VIS_PAID)) {
+            return 0;
+        }
+        return Math.max(0, tag.getInteger(KEY_VIS_PER_CRAFT));
+    }
+
+    private static int saturatingAddInt(int a, int b) {
+        if (b <= 0) return a;
+        long sum = (long) a + (long) b;
+        return sum >= Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) sum;
+    }
+
+    private static long saturatingAddLong(long a, long b) {
+        if (b <= 0L) return a;
+        return a > Long.MAX_VALUE - b ? Long.MAX_VALUE : a + b;
     }
 
     private static int scaleInt(int amount, int multiplier) {

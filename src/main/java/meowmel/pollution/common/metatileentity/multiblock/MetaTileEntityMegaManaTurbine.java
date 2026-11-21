@@ -272,6 +272,11 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
                 }
 
                 @Override
+                public boolean testTick(@NotNull RecipeExecutionContext context) {
+                    return megaManaTurbine.isEnergyOverFlow() || !megaManaTurbine.isDynamoFull();
+                }
+
+                @Override
                 public void consumeTick(@NotNull RecipeExecutionContext context) {
                     drainCatalyst();
                     totalContinuousRunningTime++;
@@ -354,11 +359,6 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         @Override
         protected boolean hasEnoughPower(long eut, int duration) {
             return true;
-        }
-
-        @Override
-        public boolean shouldWorking() {
-            return super.shouldWorking() && (megaManaTurbine.isEnergyOverFlow() || !megaManaTurbine.isDynamoFull());
         }
 
         @Override
