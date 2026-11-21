@@ -53,6 +53,7 @@ import gregtech.api.unification.material.Material;
 import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -415,27 +416,41 @@ public class MetaTileEntityIndustrialInfusion extends MagicRecipeMapMultiblockCo
         @Override
         public void deserializeNBT(NBTTagCompound data) {
             super.deserializeNBT(data);
-            if (!crossRecipeSchedulerActive || crossRecipeScheduler == null) return;
+            if (!data.hasKey("crossRecipeScheduler", Constants.NBT.TAG_COMPOUND)) {
+                crossRecipeScheduler = null;
+                crossRecipeSchedulerActive = false;
+                return;
+            }
             NBTTagCompound saved = data.getCompoundTag("crossRecipeScheduler");
-            NBTTagList originalSlots = saved.getTagList("slots", Constants.NBT.TAG_COMPOUND);
-            NBTTagCompound loadable = saved.copy();
-            NBTTagList loadableSlots = loadable.getTagList("slots", Constants.NBT.TAG_COMPOUND);
-            boolean hasCompleted = false;
-            for (int i = 0; i < loadableSlots.tagCount(); i++) {
-                NBTTagCompound slot = loadableSlots.getCompoundTagAt(i);
-                if (slot.getInteger("state") == RecipeSlot.State.COMPLETED.ordinal()) {
-                    slot.setInteger("state", RecipeSlot.State.RUNNING.ordinal());
-                    hasCompleted = true;
-                }
+            NBTTagList savedSlots = saved.getTagList("slots", Constants.NBT.TAG_COMPOUND);
+            NBTTagList loadableSlots = new NBTTagList();
+            List<NBTTagCompound> paidSlots = new ArrayList<>(savedSlots.tagCount());
+            int running = RecipeSlot.State.RUNNING.ordinal();
+            int completed = RecipeSlot.State.COMPLETED.ordinal();
+            for (int i = 0; i < savedSlots.tagCount(); i++) {
+                NBTTagCompound original = savedSlots.getCompoundTagAt(i);
+                int state = original.getInteger("state");
+                if (state != running && state != completed) continue;
+                NBTTagCompound loadableSlot = original.copy();
+                loadableSlot.setInteger("slotIndex", paidSlots.size());
+                loadableSlot.setInteger("state", running);
+                loadableSlots.appendTag(loadableSlot);
+                paidSlots.add(original);
             }
-            if (!hasCompleted) return;
 
-            // GregTech only restores running entries. Load completed entries too, then
-            // restore their original state so they can deliver the saved output without a second charge.
-            crossRecipeScheduler.deserializeNBT(loadable);
-            for (RecipeSlot slot : crossRecipeScheduler.getActiveSlots()) {
-                slot.deserializeNBT(originalSlots.getCompoundTagAt(slot.getSlotIndex()));
+            // GregTech assigns fresh indices in list order and only loads running slots.
+            // Load the compact list in order, then restore completed slots for free delivery.
+            NBTTagCompound loadable = saved.copy();
+            loadable.setTag("slots", loadableSlots);
+            CrossRecipeParallelScheduler restored = new CrossRecipeParallelScheduler(getParallelLimit());
+            restored.deserializeNBT(loadable);
+            List<RecipeSlot> restoredSlots = restored.getActiveSlots();
+            for (int i = 0; i < restoredSlots.size(); i++) {
+                NBTTagCompound original = paidSlots.get(i);
+                if (original.getInteger("state") == completed) restoredSlots.get(i).deserializeNBT(original);
             }
+            crossRecipeScheduler = restored;
+            crossRecipeSchedulerActive = restored.hasActiveSlots();
         }
 
         @Override
@@ -453,7 +468,8 @@ public class MetaTileEntityIndustrialInfusion extends MagicRecipeMapMultiblockCo
         @Override
         protected void decreaseProgress() {
             // Keep a paid batch resumable when the dedicated magic supply runs out.
-            if (canRecipeProgress && drawEnergy(recipeEUt, true) && !drainInfusedFluid(getInfusedFluidPerTick(), true)) {
+            if (canRecipeProgress && drawEnergy(recipeEUt, true)
+                    && !MetaTileEntityIndustrialInfusion.this.drainInfusedFluid(getInfusedFluidPerTick(), true)) {
                 progressTime = ConfigHolder.machines.recipeProgressLowEnergy ? 1 : Math.max(1, progressTime - 2);
                 return;
             }
@@ -467,12 +483,19 @@ public class MetaTileEntityIndustrialInfusion extends MagicRecipeMapMultiblockCo
                 return;
             }
             World world = getWorld();
-            if (world == null || world.isRemote || !isStructureFormed() || !shouldWorking() || !canProgressRecipe()) return;
+            if (world == null || world.isRemote) return;
+            if (!isStructureFormed() || !shouldWorking() || !canProgressRecipe()) {
+                setActive(false);
+                return;
+            }
 
             // Saved slots already own their inputs and rolled outputs. Charge the legacy
             // infusion cost of one mB of infused magic per advancing machine tick.
             boolean running = crossRecipeScheduler.getRunningParallelCount() > 0;
-            if (running && !drainInfusedFluid(1, true)) return;
+            if (running && !drainInfusedFluid(1, true)) {
+                setActive(false);
+                return;
+            }
             int completed = crossRecipeScheduler.tickSlots(getOutputInventory(), getOutputTank(), this::drawEnergy,
                     false, false);
             hasNotEnoughEnergy = running && crossRecipeScheduler.isHasNotEnoughEnergy();
@@ -481,7 +504,7 @@ public class MetaTileEntityIndustrialInfusion extends MagicRecipeMapMultiblockCo
             if (!crossRecipeScheduler.hasActiveSlots()) {
                 super.invalidate();
             } else {
-                setActive(true);
+                setActive(!hasNotEnoughEnergy && crossRecipeScheduler.getRunningParallelCount() > 0);
                 recipeEUt = crossRecipeScheduler.getTotalEnergyConsumption();
                 parallelRecipesPerformed = crossRecipeScheduler.getTotalParallelCount();
             }
