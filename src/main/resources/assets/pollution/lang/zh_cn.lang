@@ -270,7 +270,7 @@ pollution.material.impure_hyperdimensional_silver=超次元含杂秘银流
 pollution.material.hyperdimensional_silver=超次元秘银
 metaitem.ingotHyperdimensionalSilver.tooltip=§7与我演一场超次元游戏，直到漫宿尽头...§r
 pollution.material.dimensional_transforming_agent=次元改造剂
-pollution.material.ferrous_chloride=氯化亚铁
+pollution.material.ferrous_chloride_salt=氯化亚铁
 
 # 哈基米
 pollution.material.hydrazoic_acid=叠氮酸

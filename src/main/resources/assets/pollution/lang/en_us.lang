@@ -273,7 +273,7 @@ pollution.material.impure_hyperdimensional_silver=Impure Hyperdimensional Silver
 pollution.material.hyperdimensional_silver=Hyperdimensional Silver
 metaitem.ingotHyperdimensionalSilver.tooltip=§7Play a hyperdimensional game with me, until the end of Mansus...§r
 pollution.material.dimensional_transforming_agent=Dimensional Transforming Agent
-pollution.material.ferrous_chloride=Ferrous Chloride
+pollution.material.ferrous_chloride_salt=Ferrous Chloride
 
 # 哈基米
 pollution.material.hydrazoic_acid=Azidozoic acid
