@@ -14,12 +14,15 @@ import gregtech.api.pattern.element.Elements;
 import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.ingredients.GTRecipeInput;
+import gregtech.api.recipes.logic.CrossRecipeParallelScheduler;
 import gregtech.api.recipes.logic.OCResult;
+import gregtech.api.recipes.logic.RecipeSlot;
 import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
+import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockBoilerCasing;
 import gregtech.common.blocks.BlockTurbineCasing;
 import gregtech.common.blocks.MetaBlocks;
@@ -39,9 +42,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 import gregtech.api.unification.material.Material;
 import org.jetbrains.annotations.NotNull;
@@ -404,6 +410,94 @@ public class MetaTileEntityIndustrialInfusion extends MagicRecipeMapMultiblockCo
     protected class IndustrialInfusionRecipeLogic extends MagicMultiblockRecipeLogic {
         public IndustrialInfusionRecipeLogic(MagicRecipeMapMultiblockController tileEntity) {
             super(tileEntity);
+        }
+
+        @Override
+        public void deserializeNBT(NBTTagCompound data) {
+            super.deserializeNBT(data);
+            if (!crossRecipeSchedulerActive || crossRecipeScheduler == null) return;
+            NBTTagCompound saved = data.getCompoundTag("crossRecipeScheduler");
+            NBTTagList originalSlots = saved.getTagList("slots", Constants.NBT.TAG_COMPOUND);
+            NBTTagCompound loadable = saved.copy();
+            NBTTagList loadableSlots = loadable.getTagList("slots", Constants.NBT.TAG_COMPOUND);
+            boolean hasCompleted = false;
+            for (int i = 0; i < loadableSlots.tagCount(); i++) {
+                NBTTagCompound slot = loadableSlots.getCompoundTagAt(i);
+                if (slot.getInteger("state") == RecipeSlot.State.COMPLETED.ordinal()) {
+                    slot.setInteger("state", RecipeSlot.State.RUNNING.ordinal());
+                    hasCompleted = true;
+                }
+            }
+            if (!hasCompleted) return;
+
+            // GregTech only restores running entries. Load completed entries too, then
+            // restore their original state so they can deliver the saved output without a second charge.
+            crossRecipeScheduler.deserializeNBT(loadable);
+            for (RecipeSlot slot : crossRecipeScheduler.getActiveSlots()) {
+                slot.deserializeNBT(originalSlots.getCompoundTagAt(slot.getSlotIndex()));
+            }
+        }
+
+        @Override
+        public boolean usesParallelScheduler() {
+            // New work uses the normal recipe path to run multiple copies of one infusion as a batch.
+            return crossRecipeSchedulerActive && crossRecipeScheduler != null && crossRecipeScheduler.hasActiveSlots();
+        }
+
+        @Override
+        protected void trySearchNewRecipe() {
+            // External recipe rechecks must also wait for the saved slots to finish.
+            if (!usesParallelScheduler()) super.trySearchNewRecipe();
+        }
+
+        @Override
+        protected void decreaseProgress() {
+            // Keep a paid batch resumable when the dedicated magic supply runs out.
+            if (canRecipeProgress && drawEnergy(recipeEUt, true) && !drainInfusedFluid(getInfusedFluidPerTick(), true)) {
+                progressTime = ConfigHolder.machines.recipeProgressLowEnergy ? 1 : Math.max(1, progressTime - 2);
+                return;
+            }
+            super.decreaseProgress();
+        }
+
+        @Override
+        public void updateWorkable() {
+            if (!usesParallelScheduler()) {
+                super.updateWorkable();
+                return;
+            }
+            World world = getWorld();
+            if (world == null || world.isRemote || !isStructureFormed() || !shouldWorking() || !canProgressRecipe()) return;
+
+            // Saved slots already own their inputs and rolled outputs. Charge the legacy
+            // infusion cost of one mB of infused magic per advancing machine tick.
+            boolean running = crossRecipeScheduler.getRunningParallelCount() > 0;
+            if (running && !drainInfusedFluid(1, true)) return;
+            int completed = crossRecipeScheduler.tickSlots(getOutputInventory(), getOutputTank(), this::drawEnergy,
+                    false, false);
+            hasNotEnoughEnergy = running && crossRecipeScheduler.isHasNotEnoughEnergy();
+            if (running && !hasNotEnoughEnergy) drainInfusedFluid(1, false);
+            if (completed > 0) onCrossRecipeSlotsCompleted(completed);
+            if (!crossRecipeScheduler.hasActiveSlots()) {
+                super.invalidate();
+            } else {
+                setActive(true);
+                recipeEUt = crossRecipeScheduler.getTotalEnergyConsumption();
+                parallelRecipesPerformed = crossRecipeScheduler.getTotalParallelCount();
+            }
+            if (completed > 0 || running && !hasNotEnoughEnergy) markDirty();
+        }
+
+        @Override
+        public void invalidate() {
+            // A temporary loss of structure must preserve any already paid slots.
+            CrossRecipeParallelScheduler pending = usesParallelScheduler() ? crossRecipeScheduler : null;
+            if (pending != null) crossRecipeScheduler = null;
+            super.invalidate();
+            if (pending != null) {
+                crossRecipeScheduler = pending;
+                crossRecipeSchedulerActive = true;
+            }
         }
 
         @Override
