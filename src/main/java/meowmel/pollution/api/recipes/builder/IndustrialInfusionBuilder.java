@@ -7,6 +7,10 @@ import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.utils.POAspectToGtFluidList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -21,7 +25,11 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
+import java.util.TreeSet;
 
+import static gregtech.api.GTValues.HV;
+import static gregtech.api.GTValues.VA;
 import static meowmel.pollution.api.recipes.PORecipeMaps.INDUSTRIAL_INFUSION_RECIPES;
 
 public class IndustrialInfusionBuilder {
@@ -31,18 +39,41 @@ public class IndustrialInfusionBuilder {
     private static final Comparator<ItemStack> ALTERNATIVE_ORDER = Comparator
             .comparing((ItemStack stack) -> String.valueOf(stack.getItem().getRegistryName()))
             .thenComparingInt(ItemStack::getMetadata)
-            .thenComparing(stack -> String.valueOf(stack.getTagCompound()));
+            .thenComparing(stack -> nbtSortKey(stack.getTagCompound()));
 
     public static void init() {
-        ThaumcraftApi.getCraftingRecipes().forEach((id, recipe) -> {
-            if (recipe instanceof InfusionRecipe infusion) {
-                if (infusion.recipeOutput instanceof ItemStack output && !output.isEmpty()) {
-                    register(id, infusion, output);
-                } else {
-                    Pollution.LOGGER.warn("Skipping industrial infusion {}: no fixed item output", id);
-                }
+        ThaumcraftApi.getCraftingRecipes().entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.nullsLast(Comparator.comparing(ResourceLocation::toString))))
+                .forEachOrdered(entry -> {
+                    if (entry.getValue() instanceof InfusionRecipe infusion) {
+                        ResourceLocation id = entry.getKey();
+                        if (id == null) {
+                            Pollution.LOGGER.warn("Skipping industrial infusion: missing recipe ID");
+                        } else if (infusion.recipeOutput instanceof ItemStack output && !output.isEmpty()) {
+                            register(id, infusion, output);
+                        } else {
+                            Pollution.LOGGER.warn("Skipping industrial infusion {}: no fixed item output", id);
+                        }
+                    }
+                });
+    }
+
+    private static String nbtSortKey(NBTBase tag) {
+        if (tag instanceof NBTTagCompound compound) {
+            StringJoiner entries = new StringJoiner(",", "{", "}");
+            for (String key : new TreeSet<>(compound.getKeySet())) {
+                entries.add(NBTTagString.quoteAndEscape(key) + ":" + nbtSortKey(compound.getTag(key)));
             }
-        });
+            return entries.toString();
+        }
+        if (tag instanceof NBTTagList list) {
+            StringJoiner entries = new StringJoiner(",", "[", "]");
+            for (int i = 0; i < list.tagCount(); i++) {
+                entries.add(nbtSortKey(list.get(i)));
+            }
+            return entries.toString();
+        }
+        return tag == null ? "" : tag.toString();
     }
 
     private static void register(ResourceLocation id, InfusionRecipe infusion, ItemStack output) {
@@ -52,13 +83,24 @@ public class IndustrialInfusionBuilder {
             return;
         }
 
-        List<Ingredient> ingredients = new ArrayList<>();
+        List<Ingredient> components = infusion.getComponents();
+        if (components == null) {
+            Pollution.LOGGER.warn("Skipping industrial infusion {}: missing components", id);
+            return;
+        }
+        List<Ingredient> ingredients = new ArrayList<>(components.size() + 1);
         ingredients.add(infusion.getRecipeInput());
-        ingredients.addAll(infusion.getComponents());
+        ingredients.addAll(components);
         Map<GTRecipeItemInput, Integer> items = new LinkedHashMap<>();
         for (int slot = 0; slot < ingredients.size(); slot++) {
             Ingredient ingredient = ingredients.get(slot);
-            ItemStack[] alternatives = ingredient == null ? new ItemStack[0] : Arrays.stream(ingredient.getMatchingStacks())
+            ItemStack[] matches = ingredient == null ? null : ingredient.getMatchingStacks();
+            if (matches == null || Arrays.asList(matches).contains(null)) {
+                Pollution.LOGGER.warn("Skipping industrial infusion {}: ingredient {} has missing item matches (0 is the center)",
+                        id, slot);
+                return;
+            }
+            ItemStack[] alternatives = Arrays.stream(matches)
                     .filter(stack -> !stack.isEmpty())
                     .sorted(ALTERNATIVE_ORDER)
                     .toArray(ItemStack[]::new);
@@ -86,8 +128,17 @@ public class IndustrialInfusionBuilder {
 
         Map<Fluid, Long> fluids = new LinkedHashMap<>();
         AspectList aspects = infusion.getAspects();
+        Aspect[] requiredAspects = aspects == null ? null : aspects.getAspects();
+        if (requiredAspects == null) {
+            Pollution.LOGGER.warn("Skipping industrial infusion {}: missing aspects", id);
+            return;
+        }
         long duration = 0;
-        for (Aspect aspect : aspects.getAspects()) {
+        for (Aspect aspect : requiredAspects) {
+            if (aspect == null) {
+                Pollution.LOGGER.warn("Skipping industrial infusion {}: missing aspect in aspect list", id);
+                return;
+            }
             Material material = POAspectToGtFluidList.aspectToGtFluidList.get(aspect);
             Fluid fluid = material != null && material.hasFluid() ? material.getFluid() : null;
             if (fluid == null) {
@@ -129,6 +180,6 @@ public class IndustrialInfusionBuilder {
                 .forEach(input -> builder.input(input.getKey().copyWithAmount(input.getValue())));
         fluids.forEach((fluid, amount) -> builder.fluidInputs(new FluidStack(fluid, amount.intValue())));
         MagicRecipeProperties.thaumcraftResearch(builder, infusion.getResearch());
-        builder.outputs(output.copy()).duration((int) duration).EUt(480).buildAndRegister();
+        builder.outputs(output.copy()).duration((int) duration).EUt(VA[HV]).buildAndRegister();
     }
 }
