@@ -18,6 +18,8 @@ import gregtech.api.pattern.element.IStructureElement;
 import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.logic.OCResult;
+import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
@@ -40,6 +42,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,8 +196,9 @@ public class MetaTileEntitySmallChemicalPlant extends MultiMapMultiblockControll
         }
 
         @Override
-        public void setMaxProgress(int maxProgress) {
-            this.maxProgressTime = (int) (maxProgress * (1 - 0.05 * CoilLevel));
+        protected void modifyOverclockPost(@NotNull OCResult ocResult, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPost(ocResult, storage);
+            ocResult.setDuration(Math.max(1, (int) (ocResult.duration() * (1 - 0.05 * CoilLevel))));
         }
 
     }

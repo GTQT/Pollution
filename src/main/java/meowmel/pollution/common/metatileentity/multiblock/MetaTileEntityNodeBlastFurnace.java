@@ -20,6 +20,10 @@ import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.logic.IRecipeCondition;
+import gregtech.api.recipes.logic.OCResult;
+import gregtech.api.recipes.logic.RecipeExecutionContext;
+import gregtech.api.recipes.properties.RecipePropertyStorage;
 import gregtech.api.recipes.properties.impl.TemperatureProperty;
 import gregtech.api.util.GTTransferUtils;
 import gregtech.api.util.GTUtility;
@@ -45,6 +49,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -338,12 +343,37 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
 
         public NodeBlastFurnaceRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
+            addRecipeCondition(new IRecipeCondition() {
+                @Override
+                @NotNull
+                public String getConditionId() {
+                    return "pollution:node_blast_furnace";
+                }
+
+                @Override
+                public boolean testTick(@NotNull RecipeExecutionContext context) {
+                    return getRecipeMap() != PORecipeMaps.FORGE_ALCHEMY_RECIPES || timerSwitch;
+                }
+
+                @Override
+                @NotNull
+                public TickFailureAction onTickFailed(@NotNull RecipeExecutionContext context, boolean energyShortage) {
+                    return energyShortage ? TickFailureAction.DECREASE_PROGRESS : TickFailureAction.PAUSE;
+                }
+
+                @Override
+                public void onRecipeComplete(@NotNull RecipeExecutionContext context) {
+                    if (getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
+                        fillTanks(context.getMaxProgressTime());
+                    }
+                }
+            });
         }
 
-        public void fillTanks() {
+        public void fillTanks(int recipeMaxProgress) {
             if (!essence.isEmpty()) {
-                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.WhiteMansus.getFluid(essence.get(0) * this.maxProgressTime / 10)));
-                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.BlackMansus.getFluid(essence.get(1) * this.maxProgressTime / 10)));
+                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.WhiteMansus.getFluid(essence.get(0) * recipeMaxProgress / 10)));
+                GTTransferUtils.addFluidsToFluidHandler(MetaTileEntityNodeBlastFurnace.this.outputFluidInventory, false, Collections.singletonList(PollutionMaterials.BlackMansus.getFluid(essence.get(1) * recipeMaxProgress / 10)));
             }
         }
 
@@ -357,8 +387,9 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
         }
 
         @Override
-        public void setMaxProgress(int maxProgress) {
-            this.maxProgressTime = (int) (maxProgress * (1 - 0.05 * CoilLevel));
+        protected void modifyOverclockPost(@NotNull OCResult ocResult, @NotNull RecipePropertyStorage storage) {
+            super.modifyOverclockPost(ocResult, storage);
+            ocResult.setDuration(Math.max(1, (int) (ocResult.duration() * (1 - 0.05 * CoilLevel))));
         }
 
         @Override
@@ -376,35 +407,12 @@ public class MetaTileEntityNodeBlastFurnace extends MultiMapMultiblockController
             }
         }
 
-        //如果配方成功且输出仓有空位，输出漫宿物质
         @Override
-        protected void updateRecipeProgress() {
-            this.drawEnergy(this.recipeEUt, false);
-            if (!timerSwitch) {
-                return;
-            }
-            if (++this.progressTime > this.maxProgressTime) {
-                if (this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
-                    this.fillTanks();
-                }
-                this.completeRecipe();
-            }
-        }
-
-        @Override
-        public boolean checkRecipe( Recipe recipe) {
-            if (!timerSwitch && this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
-                return false;
-            } else if (timerSwitch && this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
-                return true;
+        public boolean checkRecipe(@NotNull Recipe recipe) {
+            if (this.getRecipeMap() == PORecipeMaps.FORGE_ALCHEMY_RECIPES) {
+                return timerSwitch && super.checkRecipe(recipe);
             } else if (this.getRecipeMap() == RecipeMaps.BLAST_RECIPES) {
-                RecipeMapMultiblockController controller = (RecipeMapMultiblockController) this.metaTileEntity;
-                if (controller.checkRecipe(recipe, false)) {
-                    controller.checkRecipe(recipe, true);
-                    return super.checkRecipe(recipe);
-                }
-            } else {
-                return false;
+                return super.checkRecipe(recipe);
             }
             return false;
         }
