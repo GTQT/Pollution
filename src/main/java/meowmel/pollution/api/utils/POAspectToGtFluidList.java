@@ -10,6 +10,7 @@ public class POAspectToGtFluidList {
 		{
 			put(Aspect.AIR, InfusedAir);
 			put(Aspect.AURA, InfusedAura);
+			put(Aspect.AVERSION, InfusedWeapon);
 			put(Aspect.ALCHEMY, InfusedAlchemy);
 			put(Aspect.BEAST, InfusedAnimal);
 			put(Aspect.COLD, InfusedCold);
@@ -19,6 +20,7 @@ public class POAspectToGtFluidList {
 			put(Aspect.DEATH, InfusedDeath);
 			put(Aspect.DESIRE, InfusedGreed);
 			put(Aspect.EARTH, InfusedEarth);
+			put(Aspect.ELDRITCH, InfusedAlien);
 			put(Aspect.ENERGY, InfusedEnergy);
 			put(Aspect.ENTROPY, InfusedEntropy);
 			put(Aspect.EXCHANGE, InfusedExchange);

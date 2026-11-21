@@ -143,7 +143,7 @@ public class PORecipeMaps {
     public static final RecipeMap<SimpleRecipeBuilder> INDUSTRIAL_INFUSION_RECIPES = new RecipeMapBuilder<>("industrial_infusion_recipes", new SimpleRecipeBuilder())
             .itemInputs(25)
             .itemOutputs(1)
-            .fluidInputs(8)
+            .fluidInputs(10)
             .fluidOutputs(0)
             .ui(IndustrialInfusionUI::new)
             .build();

@@ -1,76 +1,134 @@
 package meowmel.pollution.api.recipes.builder;
 
+import gregtech.api.recipes.ingredients.GTRecipeItemInput;
+import gregtech.api.unification.material.Material;
+import meowmel.pollution.Pollution;
 import meowmel.pollution.api.recipes.properties.MagicRecipeProperties;
 import meowmel.pollution.api.utils.POAspectToGtFluidList;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.InfusionRecipe;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static meowmel.pollution.api.recipes.PORecipeMaps.INDUSTRIAL_INFUSION_RECIPES;
 
 public class IndustrialInfusionBuilder {
-    public static void init()
-    {
-        Iterator var3 = ThaumcraftApi.getCraftingRecipes().values().iterator();
-        Object recipe;
-        while (var3.hasNext())
-        {
-            recipe = var3.next();
-            if((recipe != null && recipe instanceof InfusionRecipe) )
-            {
-                InfusionRecipe read = (InfusionRecipe)recipe;
-                if(read.recipeOutput instanceof ItemStack)
-                {
+    private static final int MAX_ITEM_AMOUNT = 64;
+    private static final int MILLIBUCKETS_PER_ASPECT = 144;
+    private static final int TICKS_PER_ASPECT = 5;
+    private static final Comparator<ItemStack> ALTERNATIVE_ORDER = Comparator
+            .comparing((ItemStack stack) -> String.valueOf(stack.getItem().getRegistryName()))
+            .thenComparingInt(ItemStack::getMetadata)
+            .thenComparing(stack -> String.valueOf(stack.getTagCompound()));
 
-                    var list = read.getRecipeInput().getMatchingStacks();
-                    var listin = read.getComponents();
-                    var out = ((ItemStack) read.recipeOutput).copy();
-                    var aspectList = read.getAspects();
-                    var aspect = read.getAspects().getAspects();
-                    FluidStack[] fluids = new FluidStack[aspect.length];
-                    int during = 0;
-                    for (int i=0; i<aspect.length;i++)
-                    {
-                        during+=aspectList.getAmount(aspect[i])*5;
-                        if(POAspectToGtFluidList.aspectToGtFluidList.get(aspect[i])!=null)
-                            fluids[i] = POAspectToGtFluidList.aspectToGtFluidList.get(aspect[i]).getFluid(aspectList.getAmount(aspect[i])*144);
-                    }
-                    var brec = INDUSTRIAL_INFUSION_RECIPES.recipeBuilder()
-                            .inputs(list)
-                            .outputs(out)
-                            .fluidInputs(fluids)
-                            .duration(during)
-                            .EUt(480);
-
-                    MagicRecipeProperties.thaumcraftResearch(brec, read.getResearch());
-
-
-
-                    for (var iii:listin)
-                    {
-                        ItemStack[] itemStacks = iii.getMatchingStacks().clone();
-
-                        if(itemStacks.length == 0)continue;
-                        if (itemStacks.length == 1){
-                            brec.inputs(itemStacks[0]);
-                        }
-                        else {
-                            int[] ids = OreDictionary.getOreIDs(iii.getMatchingStacks()[0]);
-                            if (ids.length > 0) {
-                                brec.input(OreDictionary.getOreName(ids[0]));
-                            }
-                            else brec.inputs(itemStacks[0]);
-                        }
-
-                    }
-                    brec.buildAndRegister();
+    public static void init() {
+        ThaumcraftApi.getCraftingRecipes().forEach((id, recipe) -> {
+            if (recipe instanceof InfusionRecipe infusion) {
+                if (infusion.recipeOutput instanceof ItemStack output && !output.isEmpty()) {
+                    register(id, infusion, output);
+                } else {
+                    Pollution.LOGGER.warn("Skipping industrial infusion {}: no fixed item output", id);
                 }
+            }
+        });
+    }
 
+    private static void register(ResourceLocation id, InfusionRecipe infusion, ItemStack output) {
+        if (output.getCount() > MAX_ITEM_AMOUNT) {
+            Pollution.LOGGER.error("Skipping industrial infusion {}: output {} count {} exceeds limit {}",
+                    id, output.getItem().getRegistryName(), output.getCount(), MAX_ITEM_AMOUNT);
+            return;
+        }
+
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(infusion.getRecipeInput());
+        ingredients.addAll(infusion.getComponents());
+        Map<GTRecipeItemInput, Integer> items = new LinkedHashMap<>();
+        for (int slot = 0; slot < ingredients.size(); slot++) {
+            Ingredient ingredient = ingredients.get(slot);
+            ItemStack[] alternatives = ingredient == null ? new ItemStack[0] : Arrays.stream(ingredient.getMatchingStacks())
+                    .filter(stack -> !stack.isEmpty())
+                    .sorted(ALTERNATIVE_ORDER)
+                    .toArray(ItemStack[]::new);
+            if (alternatives.length == 0) {
+                Pollution.LOGGER.warn("Skipping industrial infusion {}: ingredient {} has no matching items (0 is the center)",
+                        id, slot);
+                return;
+            }
+            // The original altar consumes one item from each pedestal.
+            items.merge(new GTRecipeItemInput(alternatives, 1), 1, Integer::sum);
+        }
+        int itemLimit = INDUSTRIAL_INFUSION_RECIPES.getMaxInputs();
+        if (items.size() > itemLimit) {
+            Pollution.LOGGER.error("Skipping industrial infusion {}: item input types {} exceed limit {}",
+                    id, items.size(), itemLimit);
+            return;
+        }
+        for (var input : items.entrySet()) {
+            if (input.getValue() > MAX_ITEM_AMOUNT) {
+                Pollution.LOGGER.error("Skipping industrial infusion {}: item input {} count {} exceeds limit {}",
+                        id, input.getKey(), input.getValue(), MAX_ITEM_AMOUNT);
+                return;
             }
         }
+
+        Map<Fluid, Long> fluids = new LinkedHashMap<>();
+        AspectList aspects = infusion.getAspects();
+        long duration = 0;
+        for (Aspect aspect : aspects.getAspects()) {
+            Material material = POAspectToGtFluidList.aspectToGtFluidList.get(aspect);
+            Fluid fluid = material != null && material.hasFluid() ? material.getFluid() : null;
+            if (fluid == null) {
+                Pollution.LOGGER.warn("Skipping industrial infusion {}: no fluid for aspect {}", id, aspect.getTag());
+                return;
+            }
+            int amount = aspects.getAmount(aspect);
+            if (amount <= 0) {
+                Pollution.LOGGER.error("Skipping industrial infusion {}: aspect {} has invalid amount {}",
+                        id, aspect.getTag(), amount);
+                return;
+            }
+            fluids.merge(fluid, (long) amount * MILLIBUCKETS_PER_ASPECT, Long::sum);
+            duration += (long) amount * TICKS_PER_ASPECT;
+        }
+
+        int fluidLimit = INDUSTRIAL_INFUSION_RECIPES.getMaxFluidInputs();
+        if (fluids.size() > fluidLimit) {
+            Pollution.LOGGER.error("Skipping industrial infusion {}: fluid input types {} exceed limit {}",
+                    id, fluids.size(), fluidLimit);
+            return;
+        }
+        for (var input : fluids.entrySet()) {
+            if (input.getValue() > Integer.MAX_VALUE) {
+                Pollution.LOGGER.error("Skipping industrial infusion {}: fluid {} amount {} exceeds limit {}",
+                        id, input.getKey().getName(), input.getValue(), Integer.MAX_VALUE);
+                return;
+            }
+        }
+        if (duration <= 0 || duration > Integer.MAX_VALUE) {
+            Pollution.LOGGER.error("Skipping industrial infusion {}: invalid duration {} ticks", id, duration);
+            return;
+        }
+
+        var builder = INDUSTRIAL_INFUSION_RECIPES.recipeBuilder();
+        // Match narrower choices first when a fixed ingredient is also a valid alternative.
+        items.entrySet().stream()
+                .sorted(Comparator.comparingInt(input -> input.getKey().getInputStacks().length))
+                .forEach(input -> builder.input(input.getKey().copyWithAmount(input.getValue())));
+        fluids.forEach((fluid, amount) -> builder.fluidInputs(new FluidStack(fluid, amount.intValue())));
+        MagicRecipeProperties.thaumcraftResearch(builder, infusion.getResearch());
+        builder.outputs(output.copy()).duration((int) duration).EUt(480).buildAndRegister();
     }
 }
