@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Compact JEI layout for industrial infusion recipes.
  *
- * <p>The default layout places the eight aspect-fluid slots below a 5x5 item
+ * <p>The default layout places the aspect-fluid slots below a 5x5 item
  * grid. That area is also used by JEI for duration, EU/t and recipe-property
  * text, so both layers overlap. This layout keeps all inputs in the upper
  * 92 pixels and reserves the lower half for recipe information.</p>
@@ -58,7 +58,7 @@ public final class IndustrialInfusionUI<R extends RecipeMap<?>> extends RecipeMa
             }
         }
 
-        for (int index = 0; index < 8; index++) {
+        for (int index = 0; index < fluidHandler.getTanks(); index++) {
             int column = index % 2;
             int row = index / 2;
             addSlot(builder, 94 + column * 18, 1 + row * 18, index,
