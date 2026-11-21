@@ -496,22 +496,27 @@ public abstract class MagicRecipeMapMultiblockController extends ManaMultiblockC
     /** Validates non-consumable magic authorizations before a recipe starts. */
     public boolean checkMagicRequirements(Recipe recipe) {
         long manaPerTick = recipe.getProperty(MagicRecipeProperties.MANA_PER_TICK, 0L);
-        if (manaPerTick > 0 && manaPoolHatch == null) return false;
-
         int lifeEssencePerTick = recipe.getProperty(MagicRecipeProperties.LIFE_ESSENCE_PER_TICK, 0);
-        if (lifeEssencePerTick > 0 && bloodMagicHatch == null) return false;
-
-        if (recipe.hasProperty(MagicRecipeProperties.VIS_PER_CRAFT)
-                && recipe.getProperty(MagicRecipeProperties.VIS_PER_CRAFT, 0) > 0
-                && visHatch == null) return false;
-
+        boolean hasExplicitVis = recipe.hasProperty(MagicRecipeProperties.VIS_PER_CRAFT)
+                && recipe.getProperty(MagicRecipeProperties.VIS_PER_CRAFT, 0) > 0;
         AstralCondition condition = recipe.getProperty(MagicRecipeProperties.ASTRAL_CONDITION, AstralCondition.NONE);
-        if (condition.isConfigured() && (astralLensHatch == null || !astralLensHatch.matches(condition))) return false;
-
         String tarot = recipe.getProperty(MagicRecipeProperties.TAROT, "");
-        if (!tarot.isEmpty() && (tarotHatch == null || !tarotHatch.hasTarot(tarot))) return false;
-
         long tags = getMagicProcessTags(recipe);
+        return checkMagicRequirements(manaPerTick, lifeEssencePerTick, hasExplicitVis, condition, tarot, tags);
+    }
+
+    /** Validates non-consumable magic authorizations from snapshotted parameters (reload-safe). */
+    public boolean checkMagicRequirements(long manaPerTick, int lifeEssencePerTick, boolean hasExplicitVis,
+                                          AstralCondition condition, String tarot, long tags) {
+        if (manaPerTick > 0 && manaPoolHatch == null) return false;
+        if (lifeEssencePerTick > 0 && bloodMagicHatch == null) return false;
+        if (hasExplicitVis && visHatch == null) return false;
+
+        if (condition != null && condition.isConfigured()
+                && (astralLensHatch == null || !astralLensHatch.matches(condition))) return false;
+
+        if (tarot != null && !tarot.isEmpty() && (tarotHatch == null || !tarotHatch.hasTarot(tarot))) return false;
+
         if (MagicProcessTag.hasAny(tags, MagicProcessTag.EXPERIMENTAL)
                 && !hasTarot("the_fool")) return false;
         if (MagicProcessTag.hasAny(tags, MagicProcessTag.MAGIC_CONVERSION)

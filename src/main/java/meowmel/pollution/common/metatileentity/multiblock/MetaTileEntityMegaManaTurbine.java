@@ -20,6 +20,8 @@ import gregtech.api.pattern.casing.ICasing;
 import gregtech.api.pattern.element.Elements;
 import gregtech.api.pattern.element.StructureDefinition;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.logic.IRecipeCondition;
+import gregtech.api.recipes.logic.RecipeExecutionContext;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.KeyUtil;
 import gregtech.client.renderer.ICubeRenderer;
@@ -38,6 +40,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.LivingWoodVariant;
 import vazkii.botania.common.block.ModBlocks;
@@ -46,7 +50,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cleanroommc.modularui.api.drawable.IKey.AQUA;
-import static com.cleanroommc.modularui.utils.MathUtils.min;
 
 //巨型魔力轮机，计划是跑MANA_To_EU的配方，提供少量某些材料可以增大输出上限，持续运作有并行加成，白板工作上限为UV，64A IV发电
 //目前计划是可以提供的材料组合包括黑白漫宿（要求几把气线，上限拉到UHV 1A，对应64A LuV），液态超次元秘银和刻金（要求白垩和持续运作的锻炉，上限拉到UEV 2A，对应128A ZPM）
@@ -261,6 +264,36 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         public MegaManaTurbineWorkable(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
             this.megaManaTurbine = (MetaTileEntityMegaManaTurbine) tileEntity;
+            addRecipeCondition(new IRecipeCondition() {
+                @Override
+                @NotNull
+                public String getConditionId() {
+                    return "pollution:mega_mana_turbine";
+                }
+
+                @Override
+                public boolean testTick(@NotNull RecipeExecutionContext context) {
+                    return megaManaTurbine.isEnergyOverFlow() || !megaManaTurbine.isDynamoFull();
+                }
+
+                @Override
+                public void consumeTick(@NotNull RecipeExecutionContext context) {
+                    drainCatalyst();
+                    totalContinuousRunningTime++;
+                }
+
+                @Override
+                @NotNull
+                public TickFailureAction onTickFailed(@NotNull RecipeExecutionContext context, boolean energyShortage) {
+                    totalContinuousRunningTime = 0;
+                    return TickFailureAction.PAUSE;
+                }
+
+                @Override
+                public void onInvalidate(@Nullable RecipeExecutionContext context) {
+                    totalContinuousRunningTime = 0;
+                }
+            });
         }
 
         //判断催化剂等级，优先用高级催化剂
@@ -300,35 +333,37 @@ public class MetaTileEntityMegaManaTurbine extends FuelMultiblockController {
         //消耗催化剂
         protected void drainCatalyst() {
             if (this.totalContinuousRunningTime % 100L == 0L) {
-                if (CatalystLevel() == 1)
+                if (CatalystLevel() == 1) {
                     this.megaManaTurbine.getInputFluidInventory().drain(BlackManSusStack, true);
-                this.megaManaTurbine.getInputFluidInventory().drain(WhiteManSusStack, true);
-            } else if (CatalystLevel() == 2) {
-                this.megaManaTurbine.getInputFluidInventory().drain(KeQinGoldStack, true);
-                this.megaManaTurbine.getInputFluidInventory().drain(ChaoCiYuanYinStack, true);
-            } else if (CatalystLevel() == 3) {
-                this.megaManaTurbine.getInputFluidInventory().drain(GanZhiStack, true);
-                this.megaManaTurbine.getInputFluidInventory().drain(WhiteManSusStack, true);
+                    this.megaManaTurbine.getInputFluidInventory().drain(WhiteManSusStack, true);
+                } else if (CatalystLevel() == 2) {
+                    this.megaManaTurbine.getInputFluidInventory().drain(KeQinGoldStack, true);
+                    this.megaManaTurbine.getInputFluidInventory().drain(ChaoCiYuanYinStack, true);
+                } else if (CatalystLevel() == 3) {
+                    this.megaManaTurbine.getInputFluidInventory().drain(GanZhiStack, true);
+                    this.megaManaTurbine.getInputFluidInventory().drain(YueShuStack, true);
+                }
             }
         }
 
         @Override
-        protected void updateRecipeProgress() {
-            if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-                this.drainCatalyst();
-                this.drawEnergy(this.recipeEUt, false);
-                this.totalContinuousRunningTime++;
-                if (++this.progressTime > this.maxProgressTime) {
-                    this.completeRecipe();
-                }
-            } else {
-                this.totalContinuousRunningTime = 0;
-            }
+        public boolean usesParallelScheduler() {
+            return false;
+        }
+
+        @Override
+        public boolean consumesEnergy() {
+            return false;
+        }
+
+        @Override
+        protected boolean hasEnoughPower(long eut, int duration) {
+            return true;
         }
 
         @Override
         public long getMaxVoltage() {
-            return min((int) CatalystAllowedMaxCapacity(), (int) super.getMaxVoltage());
+            return Math.min(CatalystAllowedMaxCapacity(), super.getMaxVoltage());
         }
 
         @Override

@@ -39,6 +39,7 @@ import meowmel.pollution.POConfig;
 import meowmel.pollution.api.capability.ICleanVis;
 import meowmel.pollution.api.capability.ipml.POMultiblockCleanVisRecipeLogic;
 import meowmel.pollution.api.recipes.PORecipeMaps;
+import meowmel.pollution.api.recipes.condition.CleanVisCondition;
 import meowmel.pollution.api.unification.PollutionMaterials;
 import meowmel.pollution.client.objmodels.ObjModels;
 import meowmel.pollution.client.textures.POTextures;
@@ -499,6 +500,7 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
     protected class NodeFusionReactorRecipeLogic extends POMultiblockCleanVisRecipeLogic {
         public NodeFusionReactorRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
+            addRecipeCondition(new CleanVisCondition(this));
         }
 
         public  NBTTagCompound serializeNBT() {
@@ -560,18 +562,6 @@ public class MetaTileEntityNodeFusionReactor extends MultiMapMultiblockControlle
                 return true;
             } else {
                 return false;
-            }
-        }
-
-        @Override
-        protected void updateRecipeProgress() {
-            this.drawEnergy(this.recipeEUt, false);
-            //不清洁无法工作
-            if (!isCleanVis()) {
-                return;
-            }
-            if (++this.progressTime > this.maxProgressTime) {
-                this.completeRecipe();
             }
         }
 

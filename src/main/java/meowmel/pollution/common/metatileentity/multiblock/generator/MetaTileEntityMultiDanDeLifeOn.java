@@ -428,74 +428,69 @@ public class MetaTileEntityMultiDanDeLifeOn extends FuelMultiblockController {
         private final MetaTileEntityMultiDanDeLifeOn multiDandelifeon;
 
         @Override
-        protected void updateRecipeProgress() {
-            if (this.canRecipeProgress && this.drawEnergy(this.recipeEUt, true)) {
-                this.drawEnergy(this.recipeEUt, false);
-                if (++this.progressTime > this.maxProgressTime) {
-                    this.completeRecipe();
-                    EnumFacing facing = this.multiDandelifeon.getFrontFacing();
-                    int startX = XPos;
-                    int startZ = ZPos;
-                    switch (facing) {
-                        case NORTH:
-                            startX = XPos - 15;
-                            startZ = ZPos + 16;
-                            break;
-                        case SOUTH:
-                            startX = XPos - 15;
-                            startZ = ZPos - 46;
-                            break;
-                        case WEST:
-                            startX = XPos + 16;
-                            startZ = ZPos - 15;
-                            break;
-                        case EAST:
-                            startX = XPos - 46;
-                            startZ = ZPos - 15;
-                            break;
-                    }
-                    //fix "breeding" edge, remove cell block next to the game area
-                    for (int x = -4; x < 35; x++) {
-                        for (int z = -4; z < 35; z++) {
-                            if(z>=0&&z<31 && x>=0&&x<31)continue;
-                            int cellX = startX + x;
-                            int cellZ = startZ + z;
-                            if(this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos).equals(ModBlocks.cellBlock))
-                                this.metaTileEntity.getWorld().setBlockState(
-                                    this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
-                                    Blocks.AIR.getDefaultState()
-                                );
+        protected void completeRecipe() {
+            super.completeRecipe();
+            EnumFacing facing = this.multiDandelifeon.getFrontFacing();
+            int startX = XPos;
+            int startZ = ZPos;
+            switch (facing) {
+                case NORTH:
+                    startX = XPos - 15;
+                    startZ = ZPos + 16;
+                    break;
+                case SOUTH:
+                    startX = XPos - 15;
+                    startZ = ZPos - 46;
+                    break;
+                case WEST:
+                    startX = XPos + 16;
+                    startZ = ZPos - 15;
+                    break;
+                case EAST:
+                    startX = XPos - 46;
+                    startZ = ZPos - 15;
+                    break;
+            }
+            //fix "breeding" edge, remove cell block next to the game area
+            for (int x = -4; x < 35; x++) {
+                for (int z = -4; z < 35; z++) {
+                    if(z>=0&&z<31 && x>=0&&x<31)continue;
+                    int cellX = startX + x;
+                    int cellZ = startZ + z;
+                    if(this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos).equals(ModBlocks.cellBlock))
+                        this.metaTileEntity.getWorld().setBlockState(
+                            this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
+                            Blocks.AIR.getDefaultState()
+                        );
+                }
+            }
+            for (int x = 0; x < 31; x++) {
+                for (int z = 0; z < 31; z++) {
+                    int cellX = startX + x;
+                    int cellZ = startZ + z;
+                    IsCellAlive[x][z] = CellingLiveOrNot(cellX, YPos + 1, cellZ);
+                }
+            }
+            for (int x = 0; x < 31; x++) {
+                for (int z = 0; z < 31; z++) {
+                    int cellX = startX + x;
+                    int cellZ = startZ + z;
+                    if (IsCellAlive[x][z]) {
+                        if(!this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos).equals(ModBlocks.cellBlock)){
+                        this.metaTileEntity.getWorld().setBlockState(
+                                this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
+                                ModBlocks.cellBlock.getDefaultState()
+                        );
                         }
-                    }
-                    for (int x = 0; x < 31; x++) {
-                        for (int z = 0; z < 31; z++) {
-                            int cellX = startX + x;
-                            int cellZ = startZ + z;
-                            IsCellAlive[x][z] = CellingLiveOrNot(cellX, YPos + 1, cellZ);
-                        }
-                    }
-                    for (int x = 0; x < 31; x++) {
-                        for (int z = 0; z < 31; z++) {
-                            int cellX = startX + x;
-                            int cellZ = startZ + z;
-                            if (IsCellAlive[x][z]) {
-                                if(!this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos).equals(ModBlocks.cellBlock)){
-                                this.metaTileEntity.getWorld().setBlockState(
-                                        this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
-                                        ModBlocks.cellBlock.getDefaultState()
-                                );
-                                }
-                                CellAge[x][z]++;
-                            } else {
-                                this.metaTileEntity.getWorld().setBlockState(
-                                        this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
-                                        Blocks.AIR.getDefaultState()
-                                );
-                                if(CellAge[x][z]!=0){
-                                EnergyBuffer +=  EnergyPerAgeForCellDied(CellAge[x][z]);
-                                CellAge[x][z] = 0; // Reset cell age after it dies
-                                }
-                            }
+                        CellAge[x][z]++;
+                    } else {
+                        this.metaTileEntity.getWorld().setBlockState(
+                                this.metaTileEntity.getPos().add(cellX - XPos, 1, cellZ - ZPos),
+                                Blocks.AIR.getDefaultState()
+                        );
+                        if(CellAge[x][z]!=0){
+                        EnergyBuffer +=  EnergyPerAgeForCellDied(CellAge[x][z]);
+                        CellAge[x][z] = 0; // Reset cell age after it dies
                         }
                     }
                 }

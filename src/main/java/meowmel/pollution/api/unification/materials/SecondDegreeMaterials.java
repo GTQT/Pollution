@@ -288,7 +288,7 @@ public class SecondDegreeMaterials {
                 .build();
 
         //氯化亚铁
-        PollutionMaterials.FerrousChloride = new Material.Builder(getMaterialsId(), pollutionId("ferrous_chloride"))
+        PollutionMaterials.FerrousChloride = new Material.Builder(getMaterialsId(), pollutionId("ferrous_chloride_salt"))
                 .color(0x86FF8E)
                 .dust()
                 .iconSet(BRIGHT)
