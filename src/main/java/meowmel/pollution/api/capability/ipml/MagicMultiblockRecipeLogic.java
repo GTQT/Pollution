@@ -249,7 +249,7 @@ public class MagicMultiblockRecipeLogic extends MultiblockRecipeLogic {
      * single 1 mB/t element cost, while new properties scale with the number of
      * parallel operations actually being performed.
      */
-    private int getInfusedFluidPerTick() {
+    protected int getInfusedFluidPerTick() {
         Recipe recipe = previousRecipe;
         if (recipe == null || !recipe.hasProperty(MagicRecipeProperties.INFUSED_FLUID_PER_TICK)) return 1;
         return applyMagicDiscount(scaleInt(recipe.getProperty(MagicRecipeProperties.INFUSED_FLUID_PER_TICK, 0)));
